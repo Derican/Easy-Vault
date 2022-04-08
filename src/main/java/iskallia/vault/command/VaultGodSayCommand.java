@@ -1,0 +1,63 @@
+package iskallia.vault.command;
+
+import com.mojang.brigadier.arguments.ArgumentType;
+import com.mojang.brigadier.builder.LiteralArgumentBuilder;
+import com.mojang.brigadier.context.CommandContext;
+import com.mojang.brigadier.exceptions.CommandSyntaxException;
+import iskallia.vault.world.data.PlayerFavourData;
+import net.minecraft.command.CommandSource;
+import net.minecraft.command.Commands;
+import net.minecraft.command.arguments.MessageArgument;
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.util.Util;
+import net.minecraft.util.text.ChatType;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.event.HoverEvent;
+import net.minecraftforge.server.command.EnumArgument;
+
+public class VaultGodSayCommand extends Command {
+    public String getName() {
+        return "say";
+    }
+
+
+    public int getRequiredPermissionLevel() {
+        return 2;
+    }
+
+
+    public void build(LiteralArgumentBuilder<CommandSource> builder) {
+        builder.then(Commands.argument("sender", (ArgumentType) EnumArgument.enumArgument(PlayerFavourData.VaultGodType.class))
+                .then(Commands.argument("message", (ArgumentType) MessageArgument.message())
+                        .executes(this::onSay)));
+    }
+
+
+    private int onSay(CommandContext<CommandSource> ctx) throws CommandSyntaxException {
+        MinecraftServer srv = ((CommandSource) ctx.getSource()).getServer();
+        ITextComponent text = MessageArgument.getMessage(ctx, "message");
+        PlayerFavourData.VaultGodType sender = (PlayerFavourData.VaultGodType) ctx.getArgument("sender", PlayerFavourData.VaultGodType.class);
+
+        StringTextComponent senderTxt = new StringTextComponent("[VG] ");
+        senderTxt.withStyle(TextFormatting.DARK_PURPLE)
+                .append((ITextComponent) (new StringTextComponent(sender.getName())).withStyle(sender.getChatColor()))
+                .append((ITextComponent) (new StringTextComponent(": ")).withStyle(TextFormatting.WHITE));
+        senderTxt.withStyle(style -> style.withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, sender.getHoverChatComponent())));
+
+        srv.getPlayerList().broadcastMessage((ITextComponent) (new StringTextComponent("")).append((ITextComponent) senderTxt).append(text), ChatType.SYSTEM, Util.NIL_UUID);
+        return 0;
+    }
+
+
+    public boolean isDedicatedServerOnly() {
+        return false;
+    }
+}
+
+
+/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\command\VaultGodSayCommand.class
+ * Java compiler version: 8 (52.0)
+ * JD-Core Version:       1.1.3
+ */
