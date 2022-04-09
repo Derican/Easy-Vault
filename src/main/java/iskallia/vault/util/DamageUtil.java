@@ -23,16 +23,16 @@ public class DamageUtil
         final int prevHurtTicks = e.invulnerableTime;
         if (e instanceof LivingEntity) {
             final LivingEntity le = (LivingEntity)e;
-            final float prevDamage = le.lastHurt;
+//            final float prevDamage = le.lastHurt;
             e.invulnerableTime = 0;
-            le.lastHurt = 0.0f;
-            try {
-                return attackFn.apply(e);
-            }
-            finally {
-                e.invulnerableTime = prevHurtTicks;
-                le.lastHurt = prevDamage;
-            }
+//            le.lastHurt = 0.0f;
+//            try {
+//                return attackFn.apply(e);
+//            }
+//            finally {
+//                e.invulnerableTime = prevHurtTicks;
+//                le.lastHurt = prevDamage;
+//            }
         }
         e.invulnerableTime = 0;
         try {

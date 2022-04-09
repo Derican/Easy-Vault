@@ -72,7 +72,7 @@ public class ExecuteAbility<C extends ExecuteConfig> extends AbilityEffect<C>
             player.removeEffect(ModEffects.EXECUTE);
         }
         else {
-            execute.duration = cfg.getEffectDuration();
+//            execute.duration = cfg.getEffectDuration();
         }
     }
     

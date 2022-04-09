@@ -28,7 +28,7 @@ public abstract class MixinSlot
     
     @Inject(method = { "mayPickup" }, at = { @At("HEAD") }, cancellable = true)
     public void preventRestrictedTake(final PlayerEntity player, final CallbackInfoReturnable<Boolean> cir) {
-        final Slot thisSlot = (Slot)this;
+        final Slot thisSlot = (Slot)(Object)this;
         if (!(thisSlot instanceof CraftingResultSlot)) {
             return;
         }

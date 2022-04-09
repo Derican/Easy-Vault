@@ -19,8 +19,6 @@ import javax.annotation.Nullable;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.util.*;
-import java.util.function.Function;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -49,8 +47,13 @@ public class EternalAuraConfig extends Config
     }
 
     public List<AuraConfig> getAll() {
-        return (List<AuraConfig>) Stream.<List>of(new List[]{this.EFFECT_AURAS, this.PARRY_AURAS, this.RESISTANCE_AURAS, this.TAUNT_AURAS, this.MOB_EFFECT_AURAS
-        }).flatMap(Collection::stream).collect(Collectors.toList());
+        Stream<List<AuraConfig>> stream= Stream.<List<AuraConfig>>of(new List[]{this.EFFECT_AURAS, this.PARRY_AURAS, this.RESISTANCE_AURAS, this.TAUNT_AURAS, this.MOB_EFFECT_AURAS
+        });
+        Stream<AuraConfig> stream1 = stream.flatMap(Collection::stream);
+        List<AuraConfig> list=stream1.collect(Collectors.toList());
+        return list;
+//        return (List<AuraConfig>) Stream.<List<AuraConfig>>of(new List[]{this.EFFECT_AURAS, this.PARRY_AURAS, this.RESISTANCE_AURAS, this.TAUNT_AURAS, this.MOB_EFFECT_AURAS
+//        }).flatMap(Collection::stream).collect(Collectors.toList());
     }
     
     @Override

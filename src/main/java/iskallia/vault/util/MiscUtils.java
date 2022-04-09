@@ -68,11 +68,11 @@ public class MiscUtils
     }
     
     public static <T> List<T> concat(final List<T> list1, final T... elements) {
-        return Stream.concat(list1.stream(), (Stream<?>)Arrays.stream(elements)).collect((Collector<? super Object, ?, List<T>>)Collectors.toList());
+        return Stream.concat(list1.stream(), Arrays.stream(elements)).collect(Collectors.toList());
     }
     
     public static <T> List<T> concat(final List<T> list1, final List<T> list2) {
-        return Stream.concat(list1.stream(), list2.stream()).collect((Collector<? super Object, ?, List<T>>)Collectors.toList());
+        return Stream.concat(list1.stream(), list2.stream()).collect(Collectors.toList());
     }
     
     public static Point2D.Float getMidpoint(final Rectangle r) {
@@ -209,7 +209,7 @@ public class MiscUtils
     }
     
     public static Optional<BlockPos> getEmptyNearby(final IWorldReader world, final BlockPos pos) {
-        return BlockPos.findClosestMatch(pos, 8, 8, (Predicate)world::isEmptyBlock);
+        return BlockPos.findClosestMatch(pos, 8, 8, world::isEmptyBlock);
     }
     
     public static BlockPos getRandomPos(final MutableBoundingBox box, final Random r) {

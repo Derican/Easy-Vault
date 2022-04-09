@@ -195,11 +195,11 @@ public class JigsawGenerator implements VaultJigsawGenerator
                             }
                             final WeightedList<JigsawPiece> weightedPieces = new WeightedList<JigsawPiece>();
                             if (currentDepth != this.maxDepth) {
-                                mainJigsawPattern.get().rawTemplates.forEach(weightedPiece -> weightedPieces.add(weightedPiece.getFirst(), (int)weightedPiece.getSecond()));
-                                fallbackJigsawPattern.get().rawTemplates.forEach(weightedPiece -> weightedPieces.add(weightedPiece.getFirst(), (int)weightedPiece.getSecond()));
+//                                mainJigsawPattern.get().rawTemplates.forEach(weightedPiece -> weightedPieces.add(weightedPiece.getFirst(), (int)weightedPiece.getSecond()));
+//                                fallbackJigsawPattern.get().rawTemplates.forEach(weightedPiece -> weightedPieces.add(weightedPiece.getFirst(), (int)weightedPiece.getSecond()));
                             }
                             else {
-                                fallbackJigsawPattern.get().rawTemplates.forEach(weightedPiece -> weightedPieces.add(weightedPiece.getFirst(), (int)weightedPiece.getSecond()));
+//                                fallbackJigsawPattern.get().rawTemplates.forEach(weightedPiece -> weightedPieces.add(weightedPiece.getFirst(), (int)weightedPiece.getSecond()));
                             }
                             while (!weightedPieces.isEmpty()) {
                                 final JigsawPiece jigsawpiece2 = weightedPieces.removeRandom(this.rand);

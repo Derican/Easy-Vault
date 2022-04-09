@@ -103,7 +103,7 @@ public class JigsawGeneratorLegacy
                 for (final Template.BlockInfo template$blockinfo : jigsawpiece.getShuffledJigsawBlocks(this.templateManager, blockpos, rotation, this.rand)) {
                     final Direction direction = JigsawBlock.getFrontFacing(template$blockinfo.state);
                     final BlockPos blockpos2 = template$blockinfo.pos;
-                    final BlockPos blockpos3 = blockpos2.relative;
+                    final BlockPos blockpos3 = blockpos2.relative(direction);
                     final int j = blockpos2.getY() - i;
                     int k = -1;
                     final ResourceLocation resourcelocation = new ResourceLocation(template$blockinfo.nbt.getString("pool"));

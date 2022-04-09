@@ -68,15 +68,15 @@ public abstract class MixinItemStack {
             return false;
         }
         if (damage > 0) {
-            int unbreakingLevel = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.UNBREAKING, (ItemStack) this);
+            int unbreakingLevel = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.UNBREAKING, (ItemStack) (Object) this);
             if (damager != null) {
                 final TalentTree abilities = PlayerTalentsData.get(damager.getLevel()).getTalents((PlayerEntity) damager);
-                for (final UnbreakableTalent talent : abilities.getTalents(UnbreakableTalent.class)) {
-                    unbreakingLevel += (int) talent.getExtraUnbreaking();
+                for (final Object talent : abilities.getTalents(UnbreakableTalent.class)) {
+                    unbreakingLevel += (int) ((UnbreakableTalent) talent).getExtraUnbreaking();
                 }
             }
             int damageNegation = 0;
-            final boolean isArmor = ((ItemStack) this).getItem() instanceof ArmorItem;
+            final boolean isArmor = ((ItemStack) (Object) this).getItem() instanceof ArmorItem;
             final DurabilityConfig cfg = ModConfigs.DURBILITY;
             final float chance = isArmor ? cfg.getArmorDurabilityIgnoreChance(unbreakingLevel) : cfg.getDurabilityIgnoreChance(unbreakingLevel);
             for (int k = 0; unbreakingLevel > 0 && k < damage; ++k) {
@@ -90,7 +90,7 @@ public abstract class MixinItemStack {
             }
         }
         if (damager != null && damage != 0) {
-            CriteriaTriggers.ITEM_DURABILITY_CHANGED.trigger(damager, (ItemStack) this, this.getDamageValue() + damage);
+            CriteriaTriggers.ITEM_DURABILITY_CHANGED.trigger(damager, (ItemStack) (Object) this, this.getDamageValue() + damage);
         }
         final int absDamage = this.getDamageValue() + damage;
         this.setDamageValue(absDamage);

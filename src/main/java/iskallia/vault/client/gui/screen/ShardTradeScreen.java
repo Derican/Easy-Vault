@@ -110,7 +110,7 @@ public class ShardTradeScreen extends ContainerScreen<ShardTradeContainer>
     }
     
     public boolean mouseReleased(final double mouseX, final double mouseY, final int button) {
-        this.doubleclick = false;
+//        this.doubleclick = false;
         return super.mouseReleased(mouseX, mouseY, button);
     }
     

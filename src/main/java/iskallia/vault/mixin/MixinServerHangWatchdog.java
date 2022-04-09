@@ -23,7 +23,7 @@ public class MixinServerHangWatchdog
         if (obj instanceof ThreadInfo) {
             final StackTraceElement[] trace = ((ThreadInfo)obj).getStackTrace();
             final StringJoiner joiner = new StringJoiner("\n");
-            Arrays.stream(trace).map((Function<? super StackTraceElement, ?>)StackTraceElement::toString).forEach((Consumer<? super Object>)joiner::add);
+            Arrays.stream(trace).map(StackTraceElement::toString).forEach(joiner::add);
             sb.append(obj).append("\n");
             sb.append("Full Trace:\n");
             sb.append(joiner.toString());

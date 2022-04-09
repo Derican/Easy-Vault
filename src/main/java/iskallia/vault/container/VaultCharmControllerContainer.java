@@ -111,13 +111,13 @@ public class VaultCharmControllerContainer extends Container
             final int whitelistIndex = this.currentStart + i;
             if (whitelistIndex >= this.whitelist.size()) {
                 this.visibleItems.setItem(i, ItemStack.EMPTY);
-                this.lastSlots.set(i, ItemStack.EMPTY);
+//                this.lastSlots.set(i, ItemStack.EMPTY);
             }
             else {
                 final ResourceLocation id = this.whitelist.get(whitelistIndex);
                 final ItemStack stack = new ItemStack((IItemProvider)ForgeRegistries.ITEMS.getValue(id));
                 this.visibleItems.setItem(i, stack);
-                this.lastSlots.add(i, stack);
+//                this.lastSlots.add(i, stack);
             }
         }
     }

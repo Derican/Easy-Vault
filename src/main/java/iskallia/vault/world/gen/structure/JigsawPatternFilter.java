@@ -35,12 +35,12 @@ public class JigsawPatternFilter
             return this.filteredPieceCache.getRandom(random);
         }
         this.filteredPieceCache = new WeightedList<JigsawPiece>();
-        pattern.rawTemplates.forEach(weightedPiece -> {
-            if (this.isApplicable((JigsawPiece)weightedPiece.getFirst())) {
-                this.filteredPieceCache.add((JigsawPiece)weightedPiece.getFirst(), (int)weightedPiece.getSecond());
-            }
-            return;
-        });
+//        pattern.rawTemplates.forEach(weightedPiece -> {
+//            if (this.isApplicable((JigsawPiece)weightedPiece.getFirst())) {
+//                this.filteredPieceCache.add((JigsawPiece)weightedPiece.getFirst(), (int)weightedPiece.getSecond());
+//            }
+//            return;
+//        });
         return this.getRandomPiece(pattern, random);
     }
     

@@ -142,12 +142,12 @@ public class VaultRaidControllerTileEntity extends TileEntity implements ITickab
             Vector3d pPos = new Vector3d(this.worldPosition.getX() + 0.5 + VaultRaidControllerTileEntity.rand.nextFloat() * 3.5 * (VaultRaidControllerTileEntity.rand.nextBoolean() ? 1 : -1), this.worldPosition.getY() + 2.1 + VaultRaidControllerTileEntity.rand.nextFloat() * 3.5 * (VaultRaidControllerTileEntity.rand.nextBoolean() ? 1 : -1), this.worldPosition.getZ() + 0.5 + VaultRaidControllerTileEntity.rand.nextFloat() * 3.5 * (VaultRaidControllerTileEntity.rand.nextBoolean() ? 1 : -1));
             SimpleAnimatedParticle fwParticle = (SimpleAnimatedParticle)mgr2.createParticle((IParticleData)ParticleTypes.FIREWORK, pPos.x(), pPos.y(), pPos.z(), 0.0, 0.0, 0.0);
             fwParticle.setColor(c.getRed() / 255.0f, c.getGreen() / 255.0f, c.getBlue() / 255.0f);
-            fwParticle.baseGravity = -0.001f;
+//            fwParticle.baseGravity = -0.001f;
             fwParticle.setLifetime(fwParticle.getLifetime() / 2);
             pPos = new Vector3d(this.worldPosition.getX() + 0.5 + VaultRaidControllerTileEntity.rand.nextFloat() * 0.3 * (VaultRaidControllerTileEntity.rand.nextBoolean() ? 1 : -1), this.worldPosition.getY() + 2.25 + VaultRaidControllerTileEntity.rand.nextFloat() * 0.3 * (VaultRaidControllerTileEntity.rand.nextBoolean() ? 1 : -1), this.worldPosition.getZ() + 0.5 + VaultRaidControllerTileEntity.rand.nextFloat() * 0.3 * (VaultRaidControllerTileEntity.rand.nextBoolean() ? 1 : -1));
             fwParticle = (SimpleAnimatedParticle)mgr2.createParticle((IParticleData)ParticleTypes.FIREWORK, pPos.x(), pPos.y(), pPos.z(), 0.0, 0.0, 0.0);
             fwParticle.setColor(c.getRed() / 255.0f, c.getGreen() / 255.0f, c.getBlue() / 255.0f);
-            fwParticle.baseGravity = 0.0f;
+//            fwParticle.baseGravity = 0.0f;
         }
     }
     

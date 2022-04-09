@@ -14,13 +14,10 @@ import javax.annotation.Nullable;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
-import java.util.function.Function;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class ArchitectEventConfig extends Config
-{
+public class ArchitectEventConfig extends Config {
     public static final String EVENT_KEY = "architect_event";
     @Expose
     private boolean enabled;
@@ -42,13 +39,16 @@ public class ArchitectEventConfig extends Config
     private RangeEntry requiredPolls;
     @Expose
     private WeightedList<String> rolls;
-    
+
     public List<VoteModifier> getAll() {
-        final List<VoteModifier> modifiers = (List<VoteModifier>) Stream.of(new List[] { this.BLOCK_PLACEMENT, this.FLOATING_ITEM_PLACEMENT, this.TIME_MODIFIER, this.ADDITIONAL_MOB_SPAWNS, this.ROOM_SELECTION, this.RANDOM }).flatMap(Collection::stream).collect(Collectors.toList());
+        Stream<List<VoteModifier>> stream = Stream.<List<VoteModifier>>of(new List[]{this.BLOCK_PLACEMENT, this.FLOATING_ITEM_PLACEMENT, this.TIME_MODIFIER, this.ADDITIONAL_MOB_SPAWNS, this.ROOM_SELECTION, this.RANDOM});
+        Stream<VoteModifier> stream1 = stream.flatMap(Collection::stream);
+        List<VoteModifier> modifiers = stream1.collect(Collectors.toList());
+//        final List<VoteModifier> modifiers = (List<VoteModifier>) Stream.of(new List[] { this.BLOCK_PLACEMENT, this.FLOATING_ITEM_PLACEMENT, this.TIME_MODIFIER, this.ADDITIONAL_MOB_SPAWNS, this.ROOM_SELECTION, this.RANDOM }).flatMap(Collection::stream).collect(Collectors.toList());
         modifiers.add(this.BOSS);
         return modifiers;
     }
-    
+
     @Nullable
     public VoteModifier getModifier(final String modifierName) {
         if (modifierName == null) {
@@ -56,29 +56,29 @@ public class ArchitectEventConfig extends Config
         }
         return this.getAll().stream().filter(modifier -> modifierName.equalsIgnoreCase(modifier.getName())).findFirst().orElse(null);
     }
-    
+
     public VoteModifier getBossModifier() {
         return this.BOSS;
     }
-    
+
     @Nullable
     public VoteModifier generateRandomModifier() {
         return this.getModifier(this.rolls.getRandom(ArchitectEventConfig.rand));
     }
-    
+
     public int getRandomTotalRequiredPolls() {
         return this.requiredPolls.getRandom();
     }
-    
+
     public boolean isEnabled() {
         return this.enabled;
     }
-    
+
     @Override
     public String getName() {
         return "architect_event";
     }
-    
+
     @Override
     protected void reset() {
         this.BLOCK_PLACEMENT = Arrays.asList(new BlockPlacementModifier("Treasure", "+Gilded Chests", 30, ModBlocks.VAULT_BONUS_CHEST, 6000));

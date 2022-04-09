@@ -18,6 +18,7 @@ import iskallia.vault.world.data.PlayerTalentsData;
 import iskallia.vault.world.data.VaultRaidData;
 import iskallia.vault.world.vault.VaultRaid;
 import iskallia.vault.world.vault.influence.VaultAttributeInfluence;
+import iskallia.vault.world.vault.influence.VaultInfluence;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
@@ -44,17 +45,17 @@ public class FatalStrikeHelper {
         }
         final VaultRaid vault = VaultRaidData.get(player.getLevel()).getActiveFor(player);
         if (vault != null) {
-            for (final VaultAttributeInfluence influence : vault.getInfluences().getInfluences(VaultAttributeInfluence.class)) {
-                if (influence.getType() == VaultAttributeInfluence.Type.FATAL_STRIKE_CHANCE && !influence.isMultiplicative()) {
-                    chance += influence.getValue();
+            for (final VaultInfluence influence : vault.getInfluences().getInfluences(VaultAttributeInfluence.class)) {
+                if (((VaultAttributeInfluence) influence).getType() == VaultAttributeInfluence.Type.FATAL_STRIKE_CHANCE && !((VaultAttributeInfluence) influence).isMultiplicative()) {
+                    chance += ((VaultAttributeInfluence) influence).getValue();
                 }
             }
         }
         chance += getFatalStrikeChance((LivingEntity) player);
         if (vault != null) {
-            for (final VaultAttributeInfluence influence : vault.getInfluences().getInfluences(VaultAttributeInfluence.class)) {
-                if (influence.getType() == VaultAttributeInfluence.Type.FATAL_STRIKE_CHANCE && influence.isMultiplicative()) {
-                    chance *= influence.getValue();
+            for (final VaultInfluence influence : vault.getInfluences().getInfluences(VaultAttributeInfluence.class)) {
+                if (((VaultAttributeInfluence) influence).getType() == VaultAttributeInfluence.Type.FATAL_STRIKE_CHANCE && ((VaultAttributeInfluence) influence).isMultiplicative()) {
+                    chance *= ((VaultAttributeInfluence) influence).getValue();
                 }
             }
         }
@@ -83,17 +84,17 @@ public class FatalStrikeHelper {
         }
         final VaultRaid vault = VaultRaidData.get(player.getLevel()).getActiveFor(player);
         if (vault != null) {
-            for (final VaultAttributeInfluence influence : vault.getInfluences().getInfluences(VaultAttributeInfluence.class)) {
-                if (influence.getType() == VaultAttributeInfluence.Type.FATAL_STRIKE_DAMAGE && !influence.isMultiplicative()) {
-                    additionalMultiplier += influence.getValue();
+            for (final VaultInfluence influence : vault.getInfluences().getInfluences(VaultAttributeInfluence.class)) {
+                if (((VaultAttributeInfluence) influence).getType() == VaultAttributeInfluence.Type.FATAL_STRIKE_DAMAGE && !((VaultAttributeInfluence) influence).isMultiplicative()) {
+                    additionalMultiplier += ((VaultAttributeInfluence) influence).getValue();
                 }
             }
         }
         additionalMultiplier += getFatalStrikeDamage((LivingEntity) player);
         if (vault != null) {
-            for (final VaultAttributeInfluence influence : vault.getInfluences().getInfluences(VaultAttributeInfluence.class)) {
-                if (influence.getType() == VaultAttributeInfluence.Type.FATAL_STRIKE_DAMAGE && influence.isMultiplicative()) {
-                    additionalMultiplier *= influence.getValue();
+            for (final VaultInfluence influence : vault.getInfluences().getInfluences(VaultAttributeInfluence.class)) {
+                if (((VaultAttributeInfluence) influence).getType() == VaultAttributeInfluence.Type.FATAL_STRIKE_DAMAGE && ((VaultAttributeInfluence) influence).isMultiplicative()) {
+                    additionalMultiplier *= ((VaultAttributeInfluence) influence).getValue();
                 }
             }
         }

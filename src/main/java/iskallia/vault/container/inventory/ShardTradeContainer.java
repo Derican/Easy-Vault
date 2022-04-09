@@ -195,7 +195,7 @@ public class ShardTradeContainer extends AbstractPlayerSensitiveContainer
                         tradeData.useTrade(this.getSlotIndex() - 1);
                         final SoulShardTraderData.SelectedTrade trade = tradeData.getTrades().get(this.getSlotIndex() - 1);
                         if (trade != null && trade.isInfinite()) {
-                            player.containerMenu.lastSlots.set(this.index, ItemStack.EMPTY);
+//                            player.containerMenu.lastSlots.set(this.index, ItemStack.EMPTY);
                             this.getItem().grow(1);
                         }
                     }

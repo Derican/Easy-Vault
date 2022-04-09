@@ -103,7 +103,7 @@ public class RegistryEvents
     public static void onAttributeRegister(final RegistryEvent.Register<Attribute> event) {
         final Attribute attr = Attributes.MAX_HEALTH;
         if (attr instanceof RangedAttribute) {
-            ((RangedAttribute)attr).maxValue = Double.MAX_VALUE;
+//            ((RangedAttribute)attr).maxValue = Double.MAX_VALUE;
         }
         ModAttributes.register(event);
     }

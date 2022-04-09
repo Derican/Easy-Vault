@@ -398,27 +398,27 @@ public class EntityEvents {
     }
 
     private static boolean addShardDrops(final World world, final Entity killed, final ServerPlayerEntity killer, final VaultRaid vault, final Collection<ItemEntity> drops) {
-        final List<TalentNode<SoulShardTalent>> shardNodes = PlayerTalentsData.get(killer.getLevel()).getTalents((PlayerEntity) killer).getLearnedNodes(SoulShardTalent.class);
+        final List<TalentNode<?>> shardNodes = PlayerTalentsData.get(killer.getLevel()).getTalents(killer).getLearnedNodes(SoulShardTalent.class);
         if (shardNodes.isEmpty()) {
             return false;
         }
-        for (final TalentNode<SoulShardTalent> node : shardNodes) {
+        for (final TalentNode<?> node : shardNodes) {
             if (!node.isLearned()) {
                 return false;
             }
         }
         int shardCount = ModConfigs.SOUL_SHARD.getRandomShards((EntityType<?>) killed.getType());
-        for (final VaultAttributeInfluence influence : vault.getInfluences().getInfluences(VaultAttributeInfluence.class)) {
-            if (influence.getType() == VaultAttributeInfluence.Type.SOUL_SHARD_DROPS && !influence.isMultiplicative()) {
-                shardCount += (int) influence.getValue();
+        for (final VaultInfluence influence : vault.getInfluences().getInfluences(VaultAttributeInfluence.class)) {
+            if (((VaultAttributeInfluence) influence).getType() == VaultAttributeInfluence.Type.SOUL_SHARD_DROPS && !((VaultAttributeInfluence) influence).isMultiplicative()) {
+                shardCount += (int) ((VaultAttributeInfluence) influence).getValue();
             }
         }
         if (shardCount <= 0) {
             return false;
         }
         float additionalSoulShardChance = 0.0f;
-        for (final TalentNode<SoulShardTalent> node2 : shardNodes) {
-            additionalSoulShardChance += node2.getTalent().getAdditionalSoulShardChance();
+        for (final TalentNode<?> node2 : shardNodes) {
+            additionalSoulShardChance += ((SoulShardTalent) node2.getTalent()).getAdditionalSoulShardChance();
         }
         final float shShardCount = shardCount * (1.0f + additionalSoulShardChance);
         shardCount = MathHelper.floor(shShardCount);
@@ -426,9 +426,9 @@ public class EntityEvents {
         if (EntityEvents.rand.nextFloat() < decimal) {
             ++shardCount;
         }
-        for (final VaultAttributeInfluence influence2 : vault.getInfluences().getInfluences(VaultAttributeInfluence.class)) {
-            if (influence2.getType() == VaultAttributeInfluence.Type.SOUL_SHARD_DROPS && influence2.isMultiplicative()) {
-                shardCount *= (int) influence2.getValue();
+        for (final VaultInfluence influence2 : vault.getInfluences().getInfluences(VaultAttributeInfluence.class)) {
+            if (((VaultAttributeInfluence) influence2).getType() == VaultAttributeInfluence.Type.SOUL_SHARD_DROPS && ((VaultAttributeInfluence) influence2).isMultiplicative()) {
+                shardCount *= (int) ((VaultAttributeInfluence) influence2).getValue();
             }
         }
         final ItemStack shards = new ItemStack((IItemProvider) ModItems.SOUL_SHARD, shardCount);

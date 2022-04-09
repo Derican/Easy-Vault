@@ -109,14 +109,14 @@ public class FloatingItemEntity extends ItemEntity
             final Vector3d rPos = thisPos.add((double)((this.random.nextFloat() - this.random.nextFloat()) * (this.random.nextFloat() * 8.0f)), (double)((this.random.nextFloat() - this.random.nextFloat()) * (this.random.nextFloat() * 8.0f)), (double)((this.random.nextFloat() - this.random.nextFloat()) * (this.random.nextFloat() * 8.0f)));
             final SimpleAnimatedParticle p = (SimpleAnimatedParticle)mgr.createParticle((IParticleData)ParticleTypes.FIREWORK, rPos.x, rPos.y, rPos.z, 0.0, 0.0, 0.0);
             if (p != null) {
-                p.baseGravity = 0.0f;
+//                p.baseGravity = 0.0f;
                 p.setColor(MiscUtils.blendColors(color1, color2, this.random.nextFloat()));
             }
         }
         if (this.random.nextBoolean()) {
             final SimpleAnimatedParticle p = (SimpleAnimatedParticle)mgr.createParticle((IParticleData)ParticleTypes.FIREWORK, thisPos.x, thisPos.y, thisPos.z, (this.random.nextFloat() - this.random.nextFloat()) * 0.2, (this.random.nextFloat() - this.random.nextFloat()) * 0.2, (this.random.nextFloat() - this.random.nextFloat()) * 0.2);
             if (p != null) {
-                p.baseGravity = 0.0f;
+//                p.baseGravity = 0.0f;
                 p.setColor(MiscUtils.blendColors(color1, color2, this.random.nextFloat()));
             }
         }

@@ -22,7 +22,7 @@ public abstract class MixinWitchEntity
 {
     @Inject(method = { "defineSynchedData" }, at = { @At("TAIL") })
     protected void registerData(final CallbackInfo ci) {
-        final WitchEntity thiz = (WitchEntity)this;
+        final WitchEntity thiz = (WitchEntity)(Object)this;
         if (Witchskall.WITCHSKALL_TICKS == null) {
             Witchskall.WITCHSKALL_TICKS = (DataParameter<Integer>)EntityDataManager.defineId((Class)WitchEntity.class, DataSerializers.INT);
         }
@@ -35,7 +35,7 @@ public abstract class MixinWitchEntity
     
     @Inject(method = { "getAmbientSound" }, at = { @At("HEAD") }, cancellable = true)
     protected void getAmbientSound(final CallbackInfoReturnable<SoundEvent> ci) {
-        final WitchEntity thiz = (WitchEntity)this;
+        final WitchEntity thiz = (WitchEntity)(Object)this;
         if (Witchskall.isWitchskall(thiz)) {
             ci.setReturnValue(ModSounds.WITCHSKALL_IDLE);
         }

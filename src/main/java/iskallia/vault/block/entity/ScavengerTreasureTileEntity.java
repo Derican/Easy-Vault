@@ -47,7 +47,7 @@ public class ScavengerTreasureTileEntity extends TileEntity implements ITickable
             final Vector3d rPos = new Vector3d(pos.getX() + 0.5 + (ScavengerTreasureTileEntity.rand.nextFloat() - ScavengerTreasureTileEntity.rand.nextFloat()) * (ScavengerTreasureTileEntity.rand.nextFloat() * 1.5), pos.getY() + 0.5 + (ScavengerTreasureTileEntity.rand.nextFloat() - ScavengerTreasureTileEntity.rand.nextFloat()) * (ScavengerTreasureTileEntity.rand.nextFloat() * 1.5), pos.getZ() + 0.5 + (ScavengerTreasureTileEntity.rand.nextFloat() - ScavengerTreasureTileEntity.rand.nextFloat()) * (ScavengerTreasureTileEntity.rand.nextFloat() * 1.5));
             final SimpleAnimatedParticle p = (SimpleAnimatedParticle)mgr.createParticle((IParticleData)ParticleTypes.FIREWORK, rPos.x, rPos.y, rPos.z, 0.0, 0.0, 0.0);
             if (p != null) {
-                p.baseGravity = 0.0f;
+//                p.baseGravity = 0.0f;
                 p.setColor(MiscUtils.blendColors(-3241472, -3229440, ScavengerTreasureTileEntity.rand.nextFloat()));
             }
         }

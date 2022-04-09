@@ -15,14 +15,10 @@ import net.minecraft.util.ResourceLocation;
 
 import javax.annotation.Nullable;
 import java.util.*;
-import java.util.function.Consumer;
-import java.util.function.Function;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class VaultModifiersConfig extends Config
-{
+public class VaultModifiersConfig extends Config {
     @Expose
     public List<MaxMobsModifier> MAX_MOBS_MODIFIERS;
     @Expose
@@ -61,20 +57,24 @@ public class VaultModifiersConfig extends Config
     public List<Level> LEVELS;
     @Expose
     public Map<String, List<String>> MODIFIER_PREVENTIONS;
-    
+
     @Override
     public String getName() {
         return "vault_modifiers";
     }
-    
+
     public List<VaultModifier> getAll() {
-        return (List<VaultModifier>) Stream.of((List[])new List[] { this.MAX_MOBS_MODIFIERS, this.TIMER_MODIFIERS, this.LEVEL_MODIFIERS, this.EFFECT_MODIFIERS, this.NO_EXIT_MODIFIERS, this.ADDITIONAL_CHEST_MODIFIERS, this.SCALE_MODIFIERS, this.FRENZY_MODIFIERS, this.TRAPPED_CHESTS_MODIFIERS, this.ARTIFACT_MODIFIERS, this.CATALYST_MODIFIERS, this.LOOTABLE_MODIFIERS, this.INV_RESTORE_MODIFIERS, this.CURSE_ON_HIT_MODIFIERS, this.DURABILITY_DAMAGE_MODIFIERS, this.STAT_MODIFIERS, this.VAULT_FRUIT_PREVENTION_MODIFIERS }).flatMap(Collection::stream).collect(Collectors.toList());
+        Stream<List<VaultModifier>> stream = Stream.<List<VaultModifier>>of(new List[]{this.MAX_MOBS_MODIFIERS, this.TIMER_MODIFIERS, this.LEVEL_MODIFIERS, this.EFFECT_MODIFIERS, this.NO_EXIT_MODIFIERS, this.ADDITIONAL_CHEST_MODIFIERS, this.SCALE_MODIFIERS, this.FRENZY_MODIFIERS, this.TRAPPED_CHESTS_MODIFIERS, this.ARTIFACT_MODIFIERS, this.CATALYST_MODIFIERS, this.LOOTABLE_MODIFIERS, this.INV_RESTORE_MODIFIERS, this.CURSE_ON_HIT_MODIFIERS, this.DURABILITY_DAMAGE_MODIFIERS, this.STAT_MODIFIERS, this.VAULT_FRUIT_PREVENTION_MODIFIERS});
+        Stream<VaultModifier> stream1 = stream.flatMap(Collection::stream);
+        List<VaultModifier> list = stream1.collect(Collectors.toList());
+        return list;
+//        return (List<VaultModifier>) Stream.of((List[])new List[] { this.MAX_MOBS_MODIFIERS, this.TIMER_MODIFIERS, this.LEVEL_MODIFIERS, this.EFFECT_MODIFIERS, this.NO_EXIT_MODIFIERS, this.ADDITIONAL_CHEST_MODIFIERS, this.SCALE_MODIFIERS, this.FRENZY_MODIFIERS, this.TRAPPED_CHESTS_MODIFIERS, this.ARTIFACT_MODIFIERS, this.CATALYST_MODIFIERS, this.LOOTABLE_MODIFIERS, this.INV_RESTORE_MODIFIERS, this.CURSE_ON_HIT_MODIFIERS, this.DURABILITY_DAMAGE_MODIFIERS, this.STAT_MODIFIERS, this.VAULT_FRUIT_PREVENTION_MODIFIERS }).flatMap(Collection::stream).collect(Collectors.toList());
     }
-    
+
     public VaultModifier getByName(final String name) {
         return this.getAll().stream().filter(group -> group.getName().equals(name)).findFirst().orElse(null);
     }
-    
+
     @Override
     protected void reset() {
         this.LEVELS = new ArrayList<Level>();
@@ -105,7 +105,7 @@ public class VaultModifiersConfig extends Config
         preventedModifiers.add("Locked");
         this.MODIFIER_PREVENTIONS.put(Vault.id("scavenger_hunt").toString(), preventedModifiers);
     }
-    
+
     public Set<VaultModifier> getRandom(final Random random, final int level, final ModifierPoolType type, @Nullable final ResourceLocation objectiveKey) {
         final Level override = this.getForLevel(level);
         List<Pool> pools = null;
@@ -136,7 +136,7 @@ public class VaultModifiersConfig extends Config
         }
         return modifiers;
     }
-    
+
     public Level getForLevel(final int level) {
         int i = 0;
         while (i < this.LEVELS.size()) {
@@ -145,8 +145,7 @@ public class VaultModifiersConfig extends Config
                     break;
                 }
                 return this.LEVELS.get(i - 1);
-            }
-            else {
+            } else {
                 if (i == this.LEVELS.size() - 1) {
                     return this.LEVELS.get(i);
                 }
@@ -155,16 +154,14 @@ public class VaultModifiersConfig extends Config
         }
         return Level.EMPTY;
     }
-    
-    public enum ModifierPoolType
-    {
-        DEFAULT, 
-        RAFFLE, 
+
+    public enum ModifierPoolType {
+        DEFAULT,
+        RAFFLE,
         RAID;
     }
-    
-    public static class Level
-    {
+
+    public static class Level {
         public static Level EMPTY;
         @Expose
         public int MIN_LEVEL;
@@ -174,39 +171,38 @@ public class VaultModifiersConfig extends Config
         public List<Pool> RAFFLE_POOLS;
         @Expose
         public List<Pool> RAID_POOLS;
-        
+
         public Level(final int minLevel) {
             this.MIN_LEVEL = minLevel;
             this.DEFAULT_POOLS = new ArrayList<Pool>();
             this.RAFFLE_POOLS = new ArrayList<Pool>();
             this.RAID_POOLS = new ArrayList<Pool>();
         }
-        
+
         static {
             Level.EMPTY = new Level(0);
         }
     }
-    
-    public static class Pool
-    {
+
+    public static class Pool {
         @Expose
         public int MIN_ROLLS;
         @Expose
         public int MAX_ROLLS;
         @Expose
         public WeightedList<String> POOL;
-        
+
         public Pool(final int min, final int max) {
             this.MIN_ROLLS = min;
             this.MAX_ROLLS = max;
             this.POOL = new WeightedList<String>();
         }
-        
+
         public Pool add(final String name, final int weight) {
             this.POOL.add(name, weight);
             return this;
         }
-        
+
         public Set<VaultModifier> getRandom(final Random random) {
             final int rolls = Math.min(this.MIN_ROLLS, this.MAX_ROLLS) + random.nextInt(Math.abs(this.MIN_ROLLS - this.MAX_ROLLS) + 1);
             final Set<String> res = new HashSet<String>();

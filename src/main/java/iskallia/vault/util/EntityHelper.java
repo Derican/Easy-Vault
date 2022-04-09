@@ -35,7 +35,7 @@ public class EntityHelper
     }
     
     public static <T extends Entity> T changeSize(final T entity, final float size) {
-        entity.dimensions = entity.getDimensions(Pose.STANDING).scale(size);
+//        entity.dimensions = entity.getDimensions(Pose.STANDING).scale(size);
         entity.refreshDimensions();
         return entity;
     }
@@ -49,7 +49,7 @@ public class EntityHelper
     
     public static <T extends Entity> List<T> getNearby(final IWorld world, final Vector3i pos, final float radius, final Class<T> entityClass) {
         final AxisAlignedBB selectBox = EntityHelper.BOX.move((double)pos.getX(), (double)pos.getY(), (double)pos.getZ()).inflate((double)radius);
-        return world.getEntitiesOfClass((Class)entityClass, selectBox, entity -> entity.isAlive() && !entity.isSpectator());
+        return world.getEntitiesOfClass(entityClass, selectBox, entity -> entity.isAlive() && !entity.isSpectator());
     }
     
     static {

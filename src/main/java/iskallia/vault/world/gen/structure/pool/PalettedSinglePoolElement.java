@@ -51,11 +51,11 @@ public class PalettedSinglePoolElement extends JigsawPiece
     }
     
     protected static <E extends PalettedSinglePoolElement> RecordCodecBuilder<E, Supplier<StructureProcessorList>> processorsCodec() {
-        return (RecordCodecBuilder<E, Supplier<StructureProcessorList>>)IStructureProcessorType.LIST_CODEC.fieldOf("processors").forGetter(p_236845_0_ -> p_236845_0_.processors);
+        return IStructureProcessorType.LIST_CODEC.fieldOf("processors").forGetter(p_236845_0_ -> p_236845_0_.processors);
     }
     
     protected static <E extends PalettedSinglePoolElement> RecordCodecBuilder<E, Either<ResourceLocation, Template>> templateCodec() {
-        return (RecordCodecBuilder<E, Either<ResourceLocation, Template>>)PalettedSinglePoolElement.TEMPLATE_CODEC.fieldOf("location").forGetter(p_236842_0_ -> p_236842_0_.template);
+        return PalettedSinglePoolElement.TEMPLATE_CODEC.fieldOf("location").forGetter(p_236842_0_ -> p_236842_0_.template);
     }
     
     protected PalettedSinglePoolElement(final Either<ResourceLocation, Template> p_i242008_1_, final Supplier<StructureProcessorList> p_i242008_2_, final JigsawPattern.PlacementBehaviour p_i242008_3_) {
@@ -65,7 +65,7 @@ public class PalettedSinglePoolElement extends JigsawPiece
     }
     
     public PalettedSinglePoolElement(final Template p_i242009_1_) {
-        this((Either<ResourceLocation, Template>)Either.right(p_i242009_1_), () -> ProcessorLists.EMPTY, JigsawPattern.PlacementBehaviour.RIGID);
+        this(Either.right(p_i242009_1_), () -> ProcessorLists.EMPTY, JigsawPattern.PlacementBehaviour.RIGID);
     }
     
     public Either<ResourceLocation, Template> getTemplate() {
@@ -114,8 +114,8 @@ public class PalettedSinglePoolElement extends JigsawPiece
         if (!template.placeInWorld((IServerWorld)world, pos1, pos2, placementsettings, random, updateFlags)) {
             return false;
         }
-        for (final Template.BlockInfo info : Template.processBlockInfos((IWorld)world, pos1, pos2, placementsettings, (List)this.getDataMarkers(templateManager, pos1, rotation, false), template)) {
-            this.handleDataMarker((IWorld)world, info, pos1, rotation, random, box);
+        for (final Object info : Template.processBlockInfos((IWorld)world, pos1, pos2, placementsettings, (List)this.getDataMarkers(templateManager, pos1, rotation, false), template)) {
+            this.handleDataMarker((IWorld)world, ((Template.BlockInfo) info), pos1, rotation, random, box);
         }
         return true;
     }
@@ -148,6 +148,6 @@ public class PalettedSinglePoolElement extends JigsawPiece
     
     static {
         TEMPLATE_CODEC = Codec.of(PalettedSinglePoolElement::encodeTemplate, ResourceLocation.CODEC.map(Either::left));
-        CODEC = RecordCodecBuilder.create(p_236841_0_ -> p_236841_0_.group((App)templateCodec(), (App)processorsCodec(), (App)projectionCodec()).apply((Applicative)p_236841_0_, PalettedSinglePoolElement::new));
+        CODEC = RecordCodecBuilder.create(p_236841_0_ -> p_236841_0_.group(templateCodec(), processorsCodec(), projectionCodec()).apply((Applicative)p_236841_0_, PalettedSinglePoolElement::new));
     }
 }

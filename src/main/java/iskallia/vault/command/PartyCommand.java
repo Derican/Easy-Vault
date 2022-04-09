@@ -101,18 +101,17 @@ public class PartyCommand extends Command
                     return;
                 }
                 else {
-                    new StringTextComponent("Inviting " + target.getName().getString() + " to the party.");
-                    final StringTextComponent stringTextComponent;
-                    final Object o;
-                    ((ServerPlayerEntity)o).sendMessage((ITextComponent)stringTextComponent.withStyle(TextFormatting.GREEN), player.getUUID());
+                    final StringTextComponent stringTextComponent=new StringTextComponent("Inviting " + target.getName().getString() + " to the party.");
+
+                    player2.sendMessage((ITextComponent)stringTextComponent.withStyle(TextFormatting.GREEN), player.getUUID());
                     return;
                 }
             });
             final String partyAccept = "/party accept_invite " + player.getName().getString();
             final IFormattableTextComponent acceptTxt = new StringTextComponent(partyAccept).withStyle(TextFormatting.AQUA);
             acceptTxt.withStyle(style -> {
-                new HoverEvent(HoverEvent.Action.SHOW_TEXT, new StringTextComponent("Click to accept!"));
-                final HoverEvent hoverEvent;
+                final HoverEvent hoverEvent=new HoverEvent(HoverEvent.Action.SHOW_TEXT, new StringTextComponent("Click to accept!"));
+
                 return style.withHoverEvent(hoverEvent).withClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, partyAccept));
             });
             final ITextComponent acceptMessage = (ITextComponent)new StringTextComponent("").append((ITextComponent)new StringTextComponent("Run '").withStyle(TextFormatting.GREEN)).append((ITextComponent)acceptTxt).append((ITextComponent)new StringTextComponent("' to accept their invite!").withStyle(TextFormatting.GREEN));
@@ -142,10 +141,9 @@ public class PartyCommand extends Command
                     return;
                 }
                 else {
-                    new StringTextComponent("Successfully added " + player.getName().getString() + " to the party.");
-                    final StringTextComponent stringTextComponent;
-                    final Object o;
-                    ((ServerPlayerEntity)o).sendMessage((ITextComponent)stringTextComponent.withStyle(TextFormatting.GREEN), player.getUUID());
+                    final StringTextComponent stringTextComponent=new StringTextComponent("Successfully added " + player.getName().getString() + " to the party.");
+
+                    player2.sendMessage((ITextComponent)stringTextComponent.withStyle(TextFormatting.GREEN), player.getUUID());
                     return;
                 }
             });
@@ -180,10 +178,9 @@ public class PartyCommand extends Command
                     return;
                 }
                 else {
-                    new StringTextComponent(target.getName().getString() + " was removed from the party.");
-                    final StringTextComponent stringTextComponent;
-                    final Object o;
-                    ((ServerPlayerEntity)o).sendMessage((ITextComponent)stringTextComponent.withStyle(TextFormatting.GREEN), player.getUUID());
+                    final StringTextComponent stringTextComponent=new StringTextComponent(target.getName().getString() + " was removed from the party.");
+
+                    player2.sendMessage((ITextComponent)stringTextComponent.withStyle(TextFormatting.GREEN), player.getUUID());
                     return;
                 }
             });
@@ -221,10 +218,9 @@ public class PartyCommand extends Command
                         return;
                     }
                     else {
-                        new StringTextComponent(player.getName().getString() + " has left the party.");
-                        final StringTextComponent stringTextComponent;
-                        final Object o;
-                        ((ServerPlayerEntity)o).sendMessage((ITextComponent)stringTextComponent.withStyle(TextFormatting.GREEN), player.getUUID());
+                        final StringTextComponent stringTextComponent=new StringTextComponent(player.getName().getString() + " has left the party.");
+
+                        player2.sendMessage((ITextComponent)stringTextComponent.withStyle(TextFormatting.GREEN), player.getUUID());
                         return;
                     }
                 });

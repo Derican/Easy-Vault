@@ -16,7 +16,7 @@ public class MixinArmorMaterial
 {
     @Inject(method = { "getToughness" }, at = { @At("HEAD") }, cancellable = true)
     public void getToughness(final CallbackInfoReturnable<Float> ci) {
-        final ArmorMaterial material = (ArmorMaterial)this;
+        final ArmorMaterial material = (ArmorMaterial)(Object)this;
         if (material == ArmorMaterial.LEATHER || material == ArmorMaterial.CHAIN || material == ArmorMaterial.GOLD || material == ArmorMaterial.IRON || material == ArmorMaterial.DIAMOND || material == ArmorMaterial.NETHERITE) {
             ci.setReturnValue(0.0f);
         }
@@ -24,7 +24,7 @@ public class MixinArmorMaterial
     
     @Inject(method = { "getKnockbackResistance" }, at = { @At("HEAD") }, cancellable = true)
     public void getKockbackResistance(final CallbackInfoReturnable<Float> ci) {
-        final ArmorMaterial material = (ArmorMaterial)this;
+        final ArmorMaterial material = (ArmorMaterial)(Object)this;
         if (material == ArmorMaterial.LEATHER || material == ArmorMaterial.CHAIN || material == ArmorMaterial.GOLD || material == ArmorMaterial.IRON || material == ArmorMaterial.DIAMOND || material == ArmorMaterial.NETHERITE) {
             ci.setReturnValue(0.0f);
         }
@@ -33,7 +33,7 @@ public class MixinArmorMaterial
     @Inject(method = { "getDefenseForSlot" }, at = { @At("HEAD") }, cancellable = true)
     public void getDefenseForSlot(final EquipmentSlotType slot, final CallbackInfoReturnable<Integer> ci) {
         Label_0549: {
-            switch ((ArmorMaterial)this) {
+            switch ((ArmorMaterial)(Object)this) {
                 case LEATHER: {
                     switch (slot) {
                         case HEAD: {

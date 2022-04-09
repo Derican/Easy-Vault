@@ -66,7 +66,7 @@ public class TrophyStatueTileEntity extends LootStatueTileEntity
             final Vector3d rPos = new Vector3d(pos.getX() + 0.5 + (TrophyStatueTileEntity.rand.nextFloat() - TrophyStatueTileEntity.rand.nextFloat()) * (0.1 + TrophyStatueTileEntity.rand.nextFloat() * 0.6), pos.getY() + 0.5 + (TrophyStatueTileEntity.rand.nextFloat() - TrophyStatueTileEntity.rand.nextFloat()) * (TrophyStatueTileEntity.rand.nextFloat() * 0.2), pos.getZ() + 0.5 + (TrophyStatueTileEntity.rand.nextFloat() - TrophyStatueTileEntity.rand.nextFloat()) * (0.1 + TrophyStatueTileEntity.rand.nextFloat() * 0.6));
             final SimpleAnimatedParticle p = (SimpleAnimatedParticle)mgr.createParticle((IParticleData)ParticleTypes.FIREWORK, rPos.x, rPos.y, rPos.z, 0.0, 0.0, 0.0);
             if (p != null) {
-                p.baseGravity = 0.0f;
+//                p.baseGravity = 0.0f;
                 p.setColor(-3229440);
             }
         }

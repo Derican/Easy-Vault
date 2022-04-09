@@ -47,6 +47,6 @@ public abstract class MixinBossOverlayGui
             else {
                 return (double)player.distanceTo(entity2);
             }
-        })).map(Map.Entry::getValue).collect((Collector<? super Object, ?, Collection<ClientBossInfo>>)Collectors.toList());
+        })).map(Map.Entry::getValue).collect(Collectors.toList());
     }
 }

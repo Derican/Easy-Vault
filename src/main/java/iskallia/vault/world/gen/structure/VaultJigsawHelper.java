@@ -174,7 +174,7 @@ public class VaultJigsawHelper {
     private static WeightedList<JigsawPiece> getRoomList(final ResourceLocation key) {
         final JigsawPattern roomPool = getPool(key);
         final WeightedList<JigsawPiece> pool = new WeightedList<JigsawPiece>();
-        roomPool.rawTemplates.forEach(weightedPiece -> pool.add(weightedPiece.getFirst(), (int) weightedPiece.getSecond()));
+//        roomPool.rawTemplates.forEach(weightedPiece -> pool.add(weightedPiece.getFirst(), (int) weightedPiece.getSecond()));
         return pool;
     }
 

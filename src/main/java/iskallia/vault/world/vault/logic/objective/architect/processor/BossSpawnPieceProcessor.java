@@ -30,7 +30,7 @@ public class BossSpawnPieceProcessor extends VaultPieceProcessor
         if (!(piece instanceof VaultObelisk)) {
             return;
         }
-        final BlockPos stabilizerPos = (BlockPos) BlockPos.betweenClosedStream(piece.getBoundingBox()).map(pos -> new Tuple(pos, world.getBlockState(pos))).filter(tpl -> (tpl.getB()).getBlock() instanceof VaultLootableBlock && ((VaultLootableBlock)(tpl.getB()).getBlock()).getType() == VaultLootableBlock.Type.VAULT_OBJECTIVE).findFirst().map(Tuple::getA).orElse(null);
+        final BlockPos stabilizerPos = (BlockPos) BlockPos.betweenClosedStream(piece.getBoundingBox()).map(pos -> new Tuple<>(pos, world.getBlockState(pos))).filter(tpl -> (tpl.getB()).getBlock() instanceof VaultLootableBlock && ((VaultLootableBlock)(tpl.getB()).getBlock()).getType() == VaultLootableBlock.Type.VAULT_OBJECTIVE).findFirst().map(Tuple::getA).orElse(null);
         if (stabilizerPos != null && world.removeBlock(stabilizerPos, false)) {
             this.objective.spawnBoss(vault, world, stabilizerPos);
         }

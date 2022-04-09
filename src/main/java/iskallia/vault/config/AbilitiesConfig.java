@@ -45,7 +45,7 @@ public class AbilitiesConfig extends Config
     }
     
     public List<AbilityGroup<?, ?>> getAll() {
-        return (List<AbilityGroup<?, ?>>)Arrays.asList(this.VEIN_MINER, this.DASH, this.MEGA_JUMP, this.GHOST_WALK, this.RAMPAGE, this.CLEANSE, this.TANK, this.EXECUTE, this.SUMMON_ETERNAL, this.HUNTER);
+        return Arrays.asList(this.VEIN_MINER, this.DASH, this.MEGA_JUMP, this.GHOST_WALK, this.RAMPAGE, this.CLEANSE, this.TANK, this.EXECUTE, this.SUMMON_ETERNAL, this.HUNTER);
     }
 
     public AbilityGroup<?, ?> getAbilityGroupByName(String name) {

@@ -80,7 +80,7 @@ public class StabilizerTileEntity extends TileEntity implements ITickableTileEnt
             final Vector3d particlePos = new Vector3d((double)(this.worldPosition.getX() + StabilizerTileEntity.rand.nextFloat()), (double)(this.worldPosition.getY() + StabilizerTileEntity.rand.nextFloat() * 2.0f), (double)(this.worldPosition.getZ() + StabilizerTileEntity.rand.nextFloat()));
             final ParticleManager mgr2 = Minecraft.getInstance().particleEngine;
             final SimpleAnimatedParticle p2 = (SimpleAnimatedParticle)mgr2.createParticle((IParticleData)ParticleTypes.FIREWORK, particlePos.x, particlePos.y, particlePos.z, 0.0, 0.0, 0.0);
-            p2.baseGravity = 0.0f;
+//            p2.baseGravity = 0.0f;
             p2.setColor(301982);
         }
     }

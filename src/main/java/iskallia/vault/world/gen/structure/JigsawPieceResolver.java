@@ -132,10 +132,10 @@ public class JigsawPieceResolver
                         }
                         final WeightedList<JigsawPiece> weightedPieces = new WeightedList<JigsawPiece>();
                         if (this.filter.test(connectorPool)) {
-                            mainJigsawPattern.get().rawTemplates.forEach(weightedPiece -> weightedPieces.add(weightedPiece.getFirst(), (int)weightedPiece.getSecond()));
+//                            mainJigsawPattern.get().rawTemplates.forEach(weightedPiece -> weightedPieces.add(weightedPiece.getFirst(), (int)weightedPiece.getSecond()));
                         }
                         if (this.filter.test(fallbackConnectorPool)) {
-                            fallbackJigsawPattern.get().rawTemplates.forEach(weightedPiece -> weightedPieces.add(weightedPiece.getFirst(), (int)weightedPiece.getSecond()));
+//                            fallbackJigsawPattern.get().rawTemplates.forEach(weightedPiece -> weightedPieces.add(weightedPiece.getFirst(), (int)weightedPiece.getSecond()));
                         }
                         while (!weightedPieces.isEmpty()) {
                             final JigsawPiece nextPiece = weightedPieces.removeRandom(JigsawPieceResolver.rand);

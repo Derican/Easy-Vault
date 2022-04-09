@@ -137,7 +137,7 @@ public class VaultRaidData extends WorldSavedData
         digsiteData.addModifier("Locked");
         final ItemStack digsite = new ItemStack((IItemProvider)ModItems.VAULT_CRYSTAL);
         digsite.getOrCreateTag().put("CrystalData", (INBT)digsiteData.serializeNBT());
-        final NonNullList<ItemStack> raidContents = (NonNullList<ItemStack>)NonNullList.create();
+        final NonNullList<ItemStack> raidContents = NonNullList.create();
         raidContents.add(new ItemStack((IItemProvider)ModItems.PANDORAS_BOX));
         raidContents.add(new ItemStack((IItemProvider)ModItems.KNOWLEDGE_STAR));
         raidContents.add(new ItemStack((IItemProvider)ModItems.KNOWLEDGE_STAR));

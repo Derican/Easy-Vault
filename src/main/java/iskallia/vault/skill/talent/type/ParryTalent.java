@@ -38,7 +38,7 @@ public class ParryTalent extends PlayerTalent
         if (world.isClientSide() || event.getSource().isBypassInvul()) {
             return;
         }
-        if (entity.invulnerableTime > 10 && event.getAmount() < entity.lastHurt) {
+        if (entity.invulnerableTime > 10 /* && event.getAmount() < entity.lastHurt */) {
             return;
         }
         float parryChance;

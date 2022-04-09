@@ -59,7 +59,7 @@ public class ScavengerChestTileEntity extends ChestTileEntity
         final Vector3d rPos = new Vector3d(pos.getX() + 0.5 + (ScavengerChestTileEntity.rand.nextFloat() - ScavengerChestTileEntity.rand.nextFloat()) * (ScavengerChestTileEntity.rand.nextFloat() * 3.0f), pos.getY() + 0.5 + (ScavengerChestTileEntity.rand.nextFloat() - ScavengerChestTileEntity.rand.nextFloat()) * (ScavengerChestTileEntity.rand.nextFloat() * 7.0f), pos.getZ() + 0.5 + (ScavengerChestTileEntity.rand.nextFloat() - ScavengerChestTileEntity.rand.nextFloat()) * (ScavengerChestTileEntity.rand.nextFloat() * 3.0f));
         final SimpleAnimatedParticle p = (SimpleAnimatedParticle)mgr.createParticle((IParticleData)ParticleTypes.FIREWORK, rPos.x, rPos.y, rPos.z, 0.0, 0.0, 0.0);
         if (p != null) {
-            p.baseGravity = 0.0f;
+//            p.baseGravity = 0.0f;
             p.setColor(2347008);
         }
     }

@@ -47,8 +47,8 @@ public class DamageTakenInfluence extends VaultInfluence
             final VaultRaid vault = VaultRaidData.get(sPlayer.getLevel()).getAt(sPlayer.getLevel(), sPlayer.blockPosition());
             if (vault != null) {
                 float dmg = event.getAmount();
-                for (final DamageTakenInfluence influence : vault.getInfluences().getInfluences(DamageTakenInfluence.class)) {
-                    dmg *= influence.getDamageTakenMultiplier();
+                for (final VaultInfluence influence : vault.getInfluences().getInfluences(DamageTakenInfluence.class)) {
+                    dmg *= ((DamageTakenInfluence)influence).getDamageTakenMultiplier();
                 }
                 event.setAmount(dmg);
             }

@@ -34,6 +34,6 @@ public class ParticleHelper
         final SimpleAnimatedParticle fwParticle = (SimpleAnimatedParticle)mgr.createParticle((IParticleData)ParticleTypes.FIREWORK, pos.x(), pos.y(), pos.z(), 0.0, 0.0, 0.0);
         final Color c = new Color(color);
         fwParticle.setColor(c.getRed() / 255.0f, c.getGreen() / 255.0f, c.getBlue() / 255.0f);
-        fwParticle.baseGravity = 0.0f;
+//        fwParticle.baseGravity = 0.0f;
     }
 }

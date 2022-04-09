@@ -21,7 +21,7 @@ public class MixinAbstractSkeletonEntity
 {
     @Redirect(method = { "performRangedAttack" }, at = @At(value = "INVOKE", target = "Lnet/minecraft/world/World;addFreshEntity(Lnet/minecraft/entity/Entity;)Z"))
     public boolean applySkeletonDamage(final World world, final Entity entityIn) {
-        final AbstractSkeletonEntity shooter = (AbstractSkeletonEntity)this;
+        final AbstractSkeletonEntity shooter = (AbstractSkeletonEntity)(Object)this;
         final AbstractArrowEntity shot = (AbstractArrowEntity)entityIn;
         final double dmg = shooter.getAttributeValue(Attributes.ATTACK_DAMAGE);
         shot.setBaseDamage(dmg + 1.0 + shooter.getCommandSenderWorld().getDifficulty().getId() * 0.11);

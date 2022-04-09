@@ -55,7 +55,7 @@ public class RampageTimeAbility extends RampageAbility<RampageTimeConfig>
         if (node.getAbility() == this && node.isLearned()) {
             final RampageTimeConfig cfg = (RampageTimeConfig)node.getAbilityConfig();
             final EffectInstance effectInstance = rampage;
-            effectInstance.duration += cfg.getTickTimeIncreasePerHit();
+//            effectInstance.duration += cfg.getTickTimeIncreasePerHit();
             sPlayer.connection.send((IPacket)new SPlayEntityEffectPacket(sPlayer.getId(), rampage));
         }
     }

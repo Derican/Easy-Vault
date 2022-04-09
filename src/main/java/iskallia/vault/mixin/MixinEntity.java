@@ -34,7 +34,7 @@ public class MixinEntity
     
     @Inject(method = { "baseTick" }, at = { @At(value = "INVOKE", target = "Lnet/minecraft/entity/Entity;hurt(Lnet/minecraft/util/DamageSource;F)Z") })
     public void baseTick(final CallbackInfo ci) {
-        final Entity self = (Entity)this;
+        final Entity self = (Entity)(Object)this;
         if (self.level.isClientSide) {
             return;
         }

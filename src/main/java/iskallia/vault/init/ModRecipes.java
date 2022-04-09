@@ -24,17 +24,17 @@ import java.util.function.Function;
 public class ModRecipes
 {
     public static void initialize() {
-        PotionBrewing.CONTAINER_MIXES.removeIf(o -> {
-            final Field f = ObfuscationReflectionHelper.findField(o.getClass(), "ingredient");
-            try {
-                final Ingredient i = (Ingredient)f.get(o);
-                if (i.test(new ItemStack((IItemProvider)Items.DRAGON_BREATH))) {
-                    return true;
-                }
-            }
-            catch (final Exception ex) {}
-            return false;
-        });
+//        PotionBrewing.CONTAINER_MIXES.removeIf(o -> {
+//            final Field f = ObfuscationReflectionHelper.findField(o.getClass(), "ingredient");
+//            try {
+//                final Ingredient i = (Ingredient)f.get(o);
+//                if (i.test(new ItemStack((IItemProvider)Items.DRAGON_BREATH))) {
+//                    return true;
+//                }
+//            }
+//            catch (final Exception ex) {}
+//            return false;
+//        });
     }
     
     public static class Serializer

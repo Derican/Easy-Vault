@@ -17,7 +17,7 @@ public abstract class MixinEnchantment
 {
     @Inject(method = { "canEnchant" }, at = { @At("HEAD") }, cancellable = true)
     private void canEnchant(final ItemStack stack, final CallbackInfoReturnable<Boolean> ci) {
-        if (stack.getItem() instanceof VaultGear && !((VaultGear)stack.getItem()).canApply(stack, (Enchantment)this)) {
+        if (stack.getItem() instanceof VaultGear && !((VaultGear)stack.getItem()).canApply(stack, (Enchantment)(Object)this)) {
             ci.setReturnValue(false);
         }
     }

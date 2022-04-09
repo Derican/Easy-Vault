@@ -85,7 +85,7 @@ public class VaultSetsData extends WorldSavedData
     }
     
     public void load(final CompoundNBT nbt) {
-        this.playerData = NBTHelper.readMap(nbt, "Sets", ListNBT.class, list -> IntStream.range(0, list.size()).mapToObj((IntFunction<?>)list::getString).collect((Collector<? super Object, ?, Set<? super Object>>)Collectors.toSet()));
+        this.playerData = NBTHelper.readMap(nbt, "Sets", ListNBT.class, list -> IntStream.range(0, list.size()).mapToObj(list::getString).collect(Collectors.toSet()));
     }
     
     public CompoundNBT save(final CompoundNBT compound) {
