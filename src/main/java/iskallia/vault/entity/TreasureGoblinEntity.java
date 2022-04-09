@@ -1,3 +1,7 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.entity;
 
 import iskallia.vault.init.ModConfigs;
@@ -31,138 +35,112 @@ import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
+import net.minecraftforge.fml.common.Mod;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
-@EventBusSubscriber
-public class TreasureGoblinEntity
-        extends MonsterEntity {
+@Mod.EventBusSubscriber
+public class TreasureGoblinEntity extends MonsterEntity
+{
     protected int disappearTick;
-
-    public TreasureGoblinEntity(EntityType<? extends MonsterEntity> type, World worldIn) {
-        super(type, worldIn);
-    }
-
     protected boolean shouldDisappear;
     protected PlayerEntity lastAttackedPlayer;
-
+    
+    public TreasureGoblinEntity(final EntityType<? extends MonsterEntity> type, final World worldIn) {
+        super((EntityType)type, worldIn);
+    }
+    
     protected void registerGoals() {
-        this.goalSelector.addGoal(3, (Goal) new AvoidEntityGoal((CreatureEntity) this, PlayerEntity.class, 6.0F, 1.7000000476837158D, 2.0D));
-        this.goalSelector.addGoal(5, (Goal) new LookAtGoal((MobEntity) this, PlayerEntity.class, 20.0F));
-        this.goalSelector.addGoal(5, (Goal) new LookRandomlyGoal((MobEntity) this));
+        this.goalSelector.addGoal(3, (Goal)new AvoidEntityGoal((CreatureEntity)this, (Class)PlayerEntity.class, 6.0f, 1.7000000476837158, 2.0));
+        this.goalSelector.addGoal(5, (Goal)new LookAtGoal((MobEntity)this, (Class)PlayerEntity.class, 20.0f));
+        this.goalSelector.addGoal(5, (Goal)new LookRandomlyGoal((MobEntity)this));
     }
-
+    
     public boolean isHitByPlayer() {
-        return (this.lastAttackedPlayer != null);
+        return this.lastAttackedPlayer != null;
     }
-
-    protected int calcDisappearTicks(PlayerEntity player) {
+    
+    protected int calcDisappearTicks(final PlayerEntity player) {
         return 200;
     }
-
-
-    public boolean hurt(DamageSource source, float amount) {
-        Entity entity = source.getEntity();
-
+    
+    public boolean hurt(final DamageSource source, final float amount) {
+        final Entity entity = source.getEntity();
         if (entity instanceof PlayerEntity && !entity.level.isClientSide) {
-            PlayerEntity player = (PlayerEntity) entity;
-            if (!isHitByPlayer()) {
+            final PlayerEntity player = (PlayerEntity)entity;
+            if (!this.isHitByPlayer()) {
                 this.lastAttackedPlayer = player;
-                this.disappearTick = calcDisappearTicks(player);
-                addEffect(new EffectInstance(Effects.GLOWING, this.disappearTick));
+                this.disappearTick = this.calcDisappearTicks(player);
+                this.addEffect(new EffectInstance(Effects.GLOWING, this.disappearTick));
             }
         }
-
         return super.hurt(source, amount);
     }
-
-
-    protected void dropFromLootTable(DamageSource source, boolean attackedRecently) {
-        ServerWorld world = (ServerWorld) this.level;
-        VaultRaid vault = VaultRaidData.get(world).getAt(world, blockPosition());
-
+    
+    protected void dropFromLootTable(final DamageSource source, final boolean attackedRecently) {
+        final ServerWorld world = (ServerWorld)this.level;
+        final VaultRaid vault = VaultRaidData.get(world).getAt(world, this.blockPosition());
         if (vault != null) {
             vault.getProperties().getBase(VaultRaid.HOST).flatMap(vault::getPlayer).ifPresent(player -> {
-                int level = ((Integer) player.getProperties().getBase(VaultRaid.LEVEL).orElse(Integer.valueOf(0))).intValue();
-
-                ResourceLocation id = ModConfigs.LOOT_TABLES.getForLevel(level).getTreasureGoblin();
-                LootTable loot = this.level.getServer().getLootTables().get(id);
-                LootContext.Builder builder = createLootContext(attackedRecently, source);
-                LootContext ctx = builder.create(LootParameterSets.ENTITY);
+                final int level = player.getProperties().getBase(VaultRaid.LEVEL).orElse(0);
+                final ResourceLocation id = ModConfigs.LOOT_TABLES.getForLevel(level).getTreasureGoblin();
+                final LootTable loot = this.level.getServer().getLootTables().get(id);
+                final LootContext.Builder builder = this.createLootContext(attackedRecently, source);
+                final LootContext ctx = builder.create(LootParameterSets.ENTITY);
                 loot.getRandomItems(ctx).forEach(this::spawnAtLocation);
+                return;
             });
         }
         super.dropFromLootTable(source, attackedRecently);
     }
-
-
+    
     public void tick() {
         super.tick();
-
-        if (isAlive() &&
-                isHitByPlayer()) {
+        if (this.isAlive() && this.isHitByPlayer()) {
             if (this.disappearTick <= 0) {
                 this.shouldDisappear = true;
             }
-            this.disappearTick--;
+            --this.disappearTick;
         }
     }
-
-
-    public void disappear(ServerWorld world) {
-        world.despawn((Entity) this);
-
-
+    
+    public void disappear(final ServerWorld world) {
+        world.despawn((Entity)this);
         if (this.lastAttackedPlayer != null) {
-
-            StringTextComponent bailText = (StringTextComponent) (new StringTextComponent("Treasure Goblin escaped from you.")).withStyle(Style.EMPTY.withColor(Color.fromRgb(8042883)));
-            this.lastAttackedPlayer.displayClientMessage((ITextComponent) bailText, true);
-            this.lastAttackedPlayer.playNotifySound(ModSounds.GOBLIN_BAIL, SoundCategory.MASTER, 0.7F, 1.0F);
-            world.playSound(this.lastAttackedPlayer, getX(), getY(), getZ(), ModSounds.GOBLIN_BAIL, SoundCategory.MASTER, 0.7F, 1.0F);
-        } else {
-
-            world.playSound(null, getX(), getY(), getZ(), ModSounds.GOBLIN_BAIL, SoundCategory.MASTER, 0.7F, 1.0F);
+            final StringTextComponent bailText = (StringTextComponent)new StringTextComponent("Treasure Goblin escaped from you.").withStyle(Style.EMPTY.withColor(Color.fromRgb(8042883)));
+            this.lastAttackedPlayer.displayClientMessage((ITextComponent)bailText, true);
+            this.lastAttackedPlayer.playNotifySound(ModSounds.GOBLIN_BAIL, SoundCategory.MASTER, 0.7f, 1.0f);
+            world.playSound(this.lastAttackedPlayer, this.getX(), this.getY(), this.getZ(), ModSounds.GOBLIN_BAIL, SoundCategory.MASTER, 0.7f, 1.0f);
+        }
+        else {
+            world.playSound((PlayerEntity)null, this.getX(), this.getY(), this.getZ(), ModSounds.GOBLIN_BAIL, SoundCategory.MASTER, 0.7f, 1.0f);
         }
     }
-
-
+    
     @SubscribeEvent
-    public static void onWorldTick(TickEvent.WorldTickEvent event) {
-        if (event.world.isClientSide() || event.phase == TickEvent.Phase.START)
+    public static void onWorldTick(final TickEvent.WorldTickEvent event) {
+        if (event.world.isClientSide() || event.phase == TickEvent.Phase.START) {
             return;
-        ServerWorld world = (ServerWorld) event.world;
-
-
-        List<TreasureGoblinEntity> goblins = (List<TreasureGoblinEntity>) world.getEntities().filter(entity -> entity instanceof TreasureGoblinEntity).map(entity -> (TreasureGoblinEntity) entity).collect(Collectors.toList());
-
-        goblins.stream()
-                .filter(goblin -> goblin.shouldDisappear)
-                .forEach(goblin -> goblin.disappear(world));
+        }
+        final ServerWorld world = (ServerWorld)event.world;
+        final List<TreasureGoblinEntity> goblins = world.getEntities().filter(entity -> entity instanceof TreasureGoblinEntity).map(entity -> (TreasureGoblinEntity)entity).collect(Collectors.toList());
+        goblins.stream().filter(goblin -> goblin.shouldDisappear).forEach(goblin -> goblin.disappear(world));
     }
-
-
+    
     @Nullable
     protected SoundEvent getAmbientSound() {
         return ModSounds.GOBLIN_IDLE;
     }
-
-
+    
     protected SoundEvent getDeathSound() {
         return ModSounds.GOBLIN_DEATH;
     }
-
-
-    protected SoundEvent getHurtSound(@Nonnull DamageSource damageSourceIn) {
+    
+    protected SoundEvent getHurtSound(@Nonnull final DamageSource damageSourceIn) {
         return ModSounds.GOBLIN_HURT;
     }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\entity\TreasureGoblinEntity.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

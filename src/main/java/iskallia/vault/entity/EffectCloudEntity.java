@@ -1,3 +1,7 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.entity;
 
 import com.google.common.collect.Lists;
@@ -32,230 +36,219 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import javax.annotation.Nullable;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 import java.util.function.Function;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
-public class EffectCloudEntity extends Entity {
-    private static final Logger PRIVATE_LOGGER = LogManager.getLogger();
-    private static final DataParameter<Float> RADIUS = EntityDataManager.defineId(EffectCloudEntity.class, DataSerializers.FLOAT);
-    private static final DataParameter<Integer> COLOR = EntityDataManager.defineId(EffectCloudEntity.class, DataSerializers.INT);
-    private static final DataParameter<Boolean> IGNORE_RADIUS = EntityDataManager.defineId(EffectCloudEntity.class, DataSerializers.BOOLEAN);
-    private static final DataParameter<IParticleData> PARTICLE = EntityDataManager.defineId(EffectCloudEntity.class, DataSerializers.PARTICLE);
-    private Potion potion = Potions.EMPTY;
-    private final List<EffectInstance> effects = Lists.newArrayList();
-    private final Map<Entity, Integer> reapplicationDelayMap = Maps.newHashMap();
-    private int duration = 600;
-    private int waitTime = 20;
-    private int reapplicationDelay = 20;
-    private boolean affectsOwner = true;
+public class EffectCloudEntity extends Entity
+{
+    private static final Logger PRIVATE_LOGGER;
+    private static final DataParameter<Float> RADIUS;
+    private static final DataParameter<Integer> COLOR;
+    private static final DataParameter<Boolean> IGNORE_RADIUS;
+    private static final DataParameter<IParticleData> PARTICLE;
+    private Potion potion;
+    private final List<EffectInstance> effects;
+    private final Map<Entity, Integer> reapplicationDelayMap;
+    private int duration;
+    private int waitTime;
+    private int reapplicationDelay;
+    private boolean affectsOwner;
     private boolean colorSet;
     private int durationOnUse;
     private float radiusOnUse;
     private float radiusPerTick;
     private LivingEntity owner;
     private UUID ownerUniqueId;
-
-    public EffectCloudEntity(EntityType<? extends EffectCloudEntity> cloud, World world) {
-        super(cloud, world);
+    
+    public EffectCloudEntity(final EntityType<? extends EffectCloudEntity> cloud, final World world) {
+        super((EntityType)cloud, world);
+        this.potion = Potions.EMPTY;
+        this.effects = Lists.newArrayList();
+        this.reapplicationDelayMap = Maps.newHashMap();
+        this.duration = 600;
+        this.waitTime = 20;
+        this.reapplicationDelay = 20;
+        this.affectsOwner = true;
         this.noPhysics = true;
-        setRadius(3.0F);
+        this.setRadius(3.0f);
     }
-
-    public EffectCloudEntity(World world, double x, double y, double z) {
+    
+    public EffectCloudEntity(final World world, final double x, final double y, final double z) {
         this(ModEntities.EFFECT_CLOUD, world);
-        setPos(x, y, z);
+        this.setPos(x, y, z);
     }
-
+    
     protected void defineSynchedData() {
-        getEntityData().define(COLOR, Integer.valueOf(0));
-        getEntityData().define(RADIUS, Float.valueOf(0.5F));
-        getEntityData().define(IGNORE_RADIUS, Boolean.valueOf(false));
-        getEntityData().define(PARTICLE, ParticleTypes.ENTITY_EFFECT);
+        this.getEntityData().define((DataParameter)EffectCloudEntity.COLOR, 0);
+        this.getEntityData().define((DataParameter)EffectCloudEntity.RADIUS, 0.5f);
+        this.getEntityData().define((DataParameter)EffectCloudEntity.IGNORE_RADIUS, false);
+        this.getEntityData().define((DataParameter)EffectCloudEntity.PARTICLE, ParticleTypes.ENTITY_EFFECT);
     }
-
-    public void setRadius(float radiusIn) {
+    
+    public void setRadius(final float radiusIn) {
         if (!this.level.isClientSide) {
-            getEntityData().set(RADIUS, Float.valueOf(radiusIn));
+            this.getEntityData().set((DataParameter)EffectCloudEntity.RADIUS, radiusIn);
         }
     }
-
-
+    
     public void refreshDimensions() {
-        double d0 = getX();
-        double d1 = getY();
-        double d2 = getZ();
+        final double d0 = this.getX();
+        final double d2 = this.getY();
+        final double d3 = this.getZ();
         super.refreshDimensions();
-        setPos(d0, d1, d2);
+        this.setPos(d0, d2, d3);
     }
-
+    
     public float getRadius() {
-        return ((Float) getEntityData().get(RADIUS)).floatValue();
+        return (float)this.getEntityData().get((DataParameter)EffectCloudEntity.RADIUS);
     }
-
-    public void setPotion(Potion potionIn) {
+    
+    public void setPotion(final Potion potionIn) {
         this.potion = potionIn;
         if (!this.colorSet) {
-            updateFixedColor();
+            this.updateFixedColor();
         }
     }
-
-
+    
     private void updateFixedColor() {
         if (this.potion == Potions.EMPTY && this.effects.isEmpty()) {
-            getEntityData().set(COLOR, Integer.valueOf(0));
-        } else {
-            getEntityData().set(COLOR, Integer.valueOf(PotionUtils.getColor(PotionUtils.getAllEffects(this.potion, this.effects))));
+            this.getEntityData().set((DataParameter)EffectCloudEntity.COLOR, 0);
+        }
+        else {
+            this.getEntityData().set((DataParameter)EffectCloudEntity.COLOR, PotionUtils.getColor((Collection)PotionUtils.getAllEffects(this.potion, (Collection)this.effects)));
         }
     }
-
-
-    public void addEffect(EffectInstance effect) {
+    
+    public void addEffect(final EffectInstance effect) {
         this.effects.add(effect);
         if (!this.colorSet) {
-            updateFixedColor();
+            this.updateFixedColor();
         }
     }
-
-
+    
     public int getColor() {
-        return ((Integer) getEntityData().get(COLOR)).intValue();
+        return (int)this.getEntityData().get((DataParameter)EffectCloudEntity.COLOR);
     }
-
-    public void setColor(int colorIn) {
+    
+    public void setColor(final int colorIn) {
         this.colorSet = true;
-        getEntityData().set(COLOR, Integer.valueOf(colorIn));
+        this.getEntityData().set((DataParameter)EffectCloudEntity.COLOR, colorIn);
     }
-
-
+    
     public boolean affectsOwner() {
         return this.affectsOwner;
     }
-
-    private void setAffectsOwner(boolean affectsOwner) {
+    
+    private void setAffectsOwner(final boolean affectsOwner) {
         this.affectsOwner = affectsOwner;
     }
-
+    
     public IParticleData getParticleData() {
-        return (IParticleData) getEntityData().get(PARTICLE);
+        return (IParticleData)this.getEntityData().get((DataParameter)EffectCloudEntity.PARTICLE);
     }
-
-    public void setParticleData(IParticleData particleData) {
-        getEntityData().set(PARTICLE, particleData);
+    
+    public void setParticleData(final IParticleData particleData) {
+        this.getEntityData().set((DataParameter)EffectCloudEntity.PARTICLE, particleData);
     }
-
-
-    protected void setIgnoreRadius(boolean ignoreRadius) {
-        getEntityData().set(IGNORE_RADIUS, Boolean.valueOf(ignoreRadius));
+    
+    protected void setIgnoreRadius(final boolean ignoreRadius) {
+        this.getEntityData().set((DataParameter)EffectCloudEntity.IGNORE_RADIUS, ignoreRadius);
     }
-
-
+    
     public boolean shouldIgnoreRadius() {
-        return ((Boolean) getEntityData().get(IGNORE_RADIUS)).booleanValue();
+        return (boolean)this.getEntityData().get((DataParameter)EffectCloudEntity.IGNORE_RADIUS);
     }
-
+    
     public int getDuration() {
         return this.duration;
     }
-
-    public void setDuration(int durationIn) {
+    
+    public void setDuration(final int durationIn) {
         this.duration = durationIn;
     }
-
-
-    public void setRemainingFireTicks(int seconds) {
+    
+    public void setRemainingFireTicks(final int seconds) {
         super.setRemainingFireTicks(0);
     }
-
-
+    
     public void tick() {
         super.tick();
         if (this.level.isClientSide) {
-            tickParticles();
-        } else {
-            boolean ignoreRadius = shouldIgnoreRadius();
-            float radius = getRadius();
+            this.tickParticles();
+        }
+        else {
+            final boolean ignoreRadius = this.shouldIgnoreRadius();
+            float radius = this.getRadius();
             if (this.tickCount >= this.waitTime + this.duration) {
-                remove();
-
+                this.remove();
                 return;
             }
-            boolean flag1 = (this.tickCount < this.waitTime);
+            final boolean flag1 = this.tickCount < this.waitTime;
             if (ignoreRadius != flag1) {
-                setIgnoreRadius(flag1);
+                this.setIgnoreRadius(flag1);
             }
-
             if (flag1) {
                 return;
             }
-
-            if (this.radiusPerTick != 0.0F) {
+            if (this.radiusPerTick != 0.0f) {
                 radius += this.radiusPerTick;
-                if (radius < 0.5F) {
-                    remove();
-
+                if (radius < 0.5f) {
+                    this.remove();
                     return;
                 }
-                setRadius(radius);
+                this.setRadius(radius);
             }
-
             if (this.tickCount % 5 == 0) {
-                this.reapplicationDelayMap.entrySet().removeIf(entry -> (this.tickCount >= ((Integer) entry.getValue()).intValue()));
-
-                List<EffectInstance> effectsToApply = Lists.newArrayList();
-                for (EffectInstance effect : this.potion.getEffects()) {
+                this.reapplicationDelayMap.entrySet().removeIf(entry -> this.tickCount >= entry.getValue());
+                final List<EffectInstance> effectsToApply = Lists.newArrayList();
+                for (final EffectInstance effect : this.potion.getEffects()) {
                     effectsToApply.add(new EffectInstance(effect.getEffect(), effect.getDuration() / 4, effect.getAmplifier(), effect.isAmbient(), effect.isVisible()));
                 }
                 effectsToApply.addAll(this.effects);
-
                 if (effectsToApply.isEmpty()) {
                     this.reapplicationDelayMap.clear();
-                } else {
-                    List<LivingEntity> entitiesInRadius = this.level.getEntitiesOfClass(LivingEntity.class, getBoundingBox());
+                }
+                else {
+                    final List<LivingEntity> entitiesInRadius = this.level.getEntitiesOfClass((Class)LivingEntity.class, this.getBoundingBox());
                     if (!entitiesInRadius.isEmpty()) {
-                        for (LivingEntity livingentity : entitiesInRadius) {
-                            if (!canApplyEffects(livingentity)) {
+                        for (final LivingEntity livingentity : entitiesInRadius) {
+                            if (!this.canApplyEffects(livingentity)) {
                                 continue;
                             }
-
-                            if (!this.reapplicationDelayMap.containsKey(livingentity) && livingentity.isAffectedByPotions()) {
-                                double xDiff = livingentity.getX() - getX();
-                                double zDiff = livingentity.getZ() - getZ();
-                                double distance = xDiff * xDiff + zDiff * zDiff;
-                                if (distance <= (radius * radius)) {
-                                    this.reapplicationDelayMap.put(livingentity, Integer.valueOf(this.tickCount + this.reapplicationDelay));
-
-                                    for (EffectInstance effectinstance : effectsToApply) {
-                                        if (effectinstance.getEffect().isInstantenous()) {
-                                            ActiveFlags.IS_AOE_ATTACKING.runIfNotSet(() -> effectinstance.getEffect().applyInstantenousEffect(this, (Entity) getOwner(), livingentity, effectinstance.getAmplifier(), 0.5D));
-
-                                            continue;
-                                        }
-                                        livingentity.addEffect(new EffectInstance(effectinstance));
-                                    }
-
-
-                                    if (this.radiusOnUse != 0.0F) {
-                                        radius += this.radiusOnUse;
-                                        if (radius < 0.5F) {
-                                            remove();
-
-                                            return;
-                                        }
-                                        setRadius(radius);
-                                    }
-
-                                    if (this.durationOnUse != 0) {
-                                        this.duration += this.durationOnUse;
-                                        if (this.duration <= 0) {
-                                            remove();
-                                            return;
-                                        }
-                                    }
+                            if (this.reapplicationDelayMap.containsKey(livingentity) || !livingentity.isAffectedByPotions()) {
+                                continue;
+                            }
+                            final double xDiff = livingentity.getX() - this.getX();
+                            final double zDiff = livingentity.getZ() - this.getZ();
+                            final double distance = xDiff * xDiff + zDiff * zDiff;
+                            if (distance > radius * radius) {
+                                continue;
+                            }
+                            this.reapplicationDelayMap.put((Entity)livingentity, this.tickCount + this.reapplicationDelay);
+                            for (final EffectInstance effectinstance : effectsToApply) {
+                                if (effectinstance.getEffect().isInstantenous()) {
+                                    ActiveFlags.IS_AOE_ATTACKING.runIfNotSet(() -> effectinstance.getEffect().applyInstantenousEffect((Entity)this, (Entity)this.getOwner(), livingentity, effectinstance.getAmplifier(), 0.5));
                                 }
+                                else {
+                                    livingentity.addEffect(new EffectInstance(effectinstance));
+                                }
+                            }
+                            if (this.radiusOnUse != 0.0f) {
+                                radius += this.radiusOnUse;
+                                if (radius < 0.5f) {
+                                    this.remove();
+                                    return;
+                                }
+                                this.setRadius(radius);
+                            }
+                            if (this.durationOnUse == 0) {
+                                continue;
+                            }
+                            this.duration += this.durationOnUse;
+                            if (this.duration <= 0) {
+                                this.remove();
                             }
                         }
                     }
@@ -263,130 +256,126 @@ public class EffectCloudEntity extends Entity {
             }
         }
     }
-
+    
     private void tickParticles() {
-        boolean ignoreRadius = shouldIgnoreRadius();
-        float radius = getRadius();
-        IParticleData iparticledata = getParticleData();
+        final boolean ignoreRadius = this.shouldIgnoreRadius();
+        final float radius = this.getRadius();
+        final IParticleData iparticledata = this.getParticleData();
         if (ignoreRadius) {
             if (this.random.nextBoolean()) {
-                for (int i = 0; i < 2; i++) {
-                    float randomRad = this.random.nextFloat() * 6.2831855F;
-                    float randomDst = MathHelper.sqrt(this.random.nextFloat()) * 0.2F;
-                    float xOffset = MathHelper.cos(randomRad) * randomDst;
-                    float zOffset = MathHelper.sin(randomRad) * randomDst;
+                for (int i = 0; i < 2; ++i) {
+                    final float randomRad = this.random.nextFloat() * 6.2831855f;
+                    final float randomDst = MathHelper.sqrt(this.random.nextFloat()) * 0.2f;
+                    final float xOffset = MathHelper.cos(randomRad) * randomDst;
+                    final float zOffset = MathHelper.sin(randomRad) * randomDst;
                     if (iparticledata.getType() == ParticleTypes.ENTITY_EFFECT) {
-                        int color = this.random.nextBoolean() ? 16777215 : getColor();
-                        int r = color >> 16 & 0xFF;
-                        int g = color >> 8 & 0xFF;
-                        int b = color & 0xFF;
-                        this.level.addAlwaysVisibleParticle(iparticledata, getX() + xOffset, getY(), getZ() + zOffset, (r / 255.0F), (g / 255.0F), (b / 255.0F));
-                    } else {
-                        this.level.addAlwaysVisibleParticle(iparticledata, getX() + xOffset, getY(), getZ() + zOffset, 0.0D, 0.0D, 0.0D);
+                        final int color = this.random.nextBoolean() ? 16777215 : this.getColor();
+                        final int r = color >> 16 & 0xFF;
+                        final int g = color >> 8 & 0xFF;
+                        final int b = color & 0xFF;
+                        this.level.addAlwaysVisibleParticle(iparticledata, this.getX() + xOffset, this.getY(), this.getZ() + zOffset, (double)(r / 255.0f), (double)(g / 255.0f), (double)(b / 255.0f));
+                    }
+                    else {
+                        this.level.addAlwaysVisibleParticle(iparticledata, this.getX() + xOffset, this.getY(), this.getZ() + zOffset, 0.0, 0.0, 0.0);
                     }
                 }
             }
-        } else {
-            float distance = 3.1415927F * radius * radius;
-
-            for (int i = 0; i < distance; i++) {
-                float randomRad = this.random.nextFloat() * 6.2831855F;
-                float randomDst = MathHelper.sqrt(this.random.nextFloat()) * radius;
-                float xOffset = MathHelper.cos(randomRad) * randomDst;
-                float zOffset = MathHelper.sin(randomRad) * randomDst;
+        }
+        else {
+            final float distance = 3.1415927f * radius * radius;
+            for (int j = 0; j < distance; ++j) {
+                final float randomRad2 = this.random.nextFloat() * 6.2831855f;
+                final float randomDst2 = MathHelper.sqrt(this.random.nextFloat()) * radius;
+                final float xOffset2 = MathHelper.cos(randomRad2) * randomDst2;
+                final float zOffset2 = MathHelper.sin(randomRad2) * randomDst2;
                 if (iparticledata.getType() == ParticleTypes.ENTITY_EFFECT) {
-                    int color = getColor();
-                    int r = color >> 16 & 0xFF;
-                    int g = color >> 8 & 0xFF;
-                    int b = color & 0xFF;
-                    this.level.addAlwaysVisibleParticle(iparticledata, getX() + xOffset, getY(), getZ() + zOffset, (r / 255.0F), (g / 255.0F), (b / 255.0F));
-                } else {
-                    this.level.addAlwaysVisibleParticle(iparticledata, getX() + xOffset, getY(), getZ() + zOffset, (0.5D - this.random.nextDouble()) * 0.15D, 0.009999999776482582D, (0.5D - this.random.nextDouble()) * 0.15D);
+                    final int color2 = this.getColor();
+                    final int r2 = color2 >> 16 & 0xFF;
+                    final int g2 = color2 >> 8 & 0xFF;
+                    final int b2 = color2 & 0xFF;
+                    this.level.addAlwaysVisibleParticle(iparticledata, this.getX() + xOffset2, this.getY(), this.getZ() + zOffset2, (double)(r2 / 255.0f), (double)(g2 / 255.0f), (double)(b2 / 255.0f));
+                }
+                else {
+                    this.level.addAlwaysVisibleParticle(iparticledata, this.getX() + xOffset2, this.getY(), this.getZ() + zOffset2, (0.5 - this.random.nextDouble()) * 0.15, 0.009999999776482582, (0.5 - this.random.nextDouble()) * 0.15);
                 }
             }
         }
     }
-
-    protected boolean canApplyEffects(LivingEntity target) {
-        if (!affectsOwner()) {
-
+    
+    protected boolean canApplyEffects(final LivingEntity target) {
+        if (!this.affectsOwner()) {
             if (this.ownerUniqueId == null) {
                 return true;
             }
-            UUID targetUUID = target.getUUID();
+            final UUID targetUUID = target.getUUID();
             if (targetUUID.equals(this.ownerUniqueId)) {
                 return false;
             }
             UUID ownerUUID = this.ownerUniqueId;
-
-            World world = getCommandSenderWorld();
+            final World world = this.getCommandSenderWorld();
             if (!(world instanceof ServerWorld)) {
                 return true;
             }
-            ServerWorld sWorld = (ServerWorld) world;
-
-            LivingEntity owner = getOwner();
+            final ServerWorld sWorld = (ServerWorld)world;
+            final LivingEntity owner = this.getOwner();
             if (owner instanceof EternalEntity) {
-                UUID eternalOwnerUUID = (UUID) ((EternalEntity) owner).getOwner().map(Function.identity(), Entity::getUUID);
+                final UUID eternalOwnerUUID = (UUID)((EternalEntity)owner).getOwner().map(Function.identity(), Entity::getUUID);
                 if (targetUUID.equals(eternalOwnerUUID)) {
                     return false;
                 }
-                VaultPartyData.Party party1 = VaultPartyData.get(sWorld).getParty(eternalOwnerUUID).orElse(null);
-                if (party1 != null && party1.hasMember(targetUUID)) {
+                final VaultPartyData.Party party = VaultPartyData.get(sWorld).getParty(eternalOwnerUUID).orElse(null);
+                if (party != null && party.hasMember(targetUUID)) {
                     return false;
                 }
                 ownerUUID = eternalOwnerUUID;
             }
             if (target instanceof EternalEntity) {
-                UUID eternalTargetOwnerUUID = (UUID) ((EternalEntity) target).getOwner().map(Function.identity(), Entity::getUUID);
+                final UUID eternalTargetOwnerUUID = (UUID)((EternalEntity)target).getOwner().map(Function.identity(), Entity::getUUID);
                 if (eternalTargetOwnerUUID.equals(ownerUUID)) {
                     return false;
                 }
-                VaultPartyData.Party party1 = VaultPartyData.get(sWorld).getParty(eternalTargetOwnerUUID).orElse(null);
-                if (party1 != null && party1.hasMember(ownerUUID)) {
+                final VaultPartyData.Party party = VaultPartyData.get(sWorld).getParty(eternalTargetOwnerUUID).orElse(null);
+                if (party != null && party.hasMember(ownerUUID)) {
                     return false;
                 }
             }
-
-            VaultPartyData.Party party = VaultPartyData.get(sWorld).getParty(ownerUUID).orElse(null);
-            if (party != null && party.hasMember(targetUUID)) {
+            final VaultPartyData.Party party2 = VaultPartyData.get(sWorld).getParty(ownerUUID).orElse(null);
+            if (party2 != null && party2.hasMember(targetUUID)) {
                 return false;
             }
         }
         return true;
     }
-
-    public void setRadiusOnUse(float radiusOnUseIn) {
+    
+    public void setRadiusOnUse(final float radiusOnUseIn) {
         this.radiusOnUse = radiusOnUseIn;
     }
-
-    public void setRadiusPerTick(float radiusPerTickIn) {
+    
+    public void setRadiusPerTick(final float radiusPerTickIn) {
         this.radiusPerTick = radiusPerTickIn;
     }
-
-    public void setWaitTime(int waitTimeIn) {
+    
+    public void setWaitTime(final int waitTimeIn) {
         this.waitTime = waitTimeIn;
     }
-
-    public void setOwner(@Nullable LivingEntity ownerIn) {
+    
+    public void setOwner(@Nullable final LivingEntity ownerIn) {
         this.owner = ownerIn;
-        this.ownerUniqueId = (ownerIn == null) ? null : ownerIn.getUUID();
+        this.ownerUniqueId = ((ownerIn == null) ? null : ownerIn.getUUID());
     }
-
+    
     @Nullable
     public LivingEntity getOwner() {
         if (this.owner == null && this.ownerUniqueId != null && this.level instanceof ServerWorld) {
-            Entity entity = ((ServerWorld) this.level).getEntity(this.ownerUniqueId);
+            final Entity entity = ((ServerWorld)this.level).getEntity(this.ownerUniqueId);
             if (entity instanceof LivingEntity) {
-                this.owner = (LivingEntity) entity;
+                this.owner = (LivingEntity)entity;
             }
         }
-
         return this.owner;
     }
-
-
-    protected void readAdditionalSaveData(CompoundNBT compound) {
+    
+    protected void readAdditionalSaveData(final CompoundNBT compound) {
         this.tickCount = compound.getInt("Age");
         this.duration = compound.getInt("Duration");
         this.waitTime = compound.getInt("WaitTime");
@@ -394,42 +383,37 @@ public class EffectCloudEntity extends Entity {
         this.durationOnUse = compound.getInt("DurationOnUse");
         this.radiusOnUse = compound.getFloat("RadiusOnUse");
         this.radiusPerTick = compound.getFloat("RadiusPerTick");
-        setRadius(compound.getFloat("Radius"));
+        this.setRadius(compound.getFloat("Radius"));
         if (compound.hasUUID("Owner")) {
             this.ownerUniqueId = compound.getUUID("Owner");
         }
-
         if (compound.contains("Particle", 8)) {
             try {
-                setParticleData(ParticleArgument.readParticle(new StringReader(compound.getString("Particle"))));
-            } catch (CommandSyntaxException commandsyntaxexception) {
-                PRIVATE_LOGGER.warn("Couldn't load custom particle {}", compound.getString("Particle"), commandsyntaxexception);
+                this.setParticleData(ParticleArgument.readParticle(new StringReader(compound.getString("Particle"))));
+            }
+            catch (final CommandSyntaxException commandsyntaxexception) {
+                EffectCloudEntity.PRIVATE_LOGGER.warn("Couldn't load custom particle {}", compound.getString("Particle"), commandsyntaxexception);
             }
         }
-
         if (compound.contains("Color", 99)) {
-            setColor(compound.getInt("Color"));
+            this.setColor(compound.getInt("Color"));
         }
-
         if (compound.contains("Potion", 8)) {
-            setPotion(PotionUtils.getPotion(compound));
+            this.setPotion(PotionUtils.getPotion(compound));
         }
-
         if (compound.contains("Effects", 9)) {
-            ListNBT listnbt = compound.getList("Effects", 10);
+            final ListNBT listnbt = compound.getList("Effects", 10);
             this.effects.clear();
-
-            for (int i = 0; i < listnbt.size(); i++) {
-                EffectInstance effectinstance = EffectInstance.load(listnbt.getCompound(i));
+            for (int i = 0; i < listnbt.size(); ++i) {
+                final EffectInstance effectinstance = EffectInstance.load(listnbt.getCompound(i));
                 if (effectinstance != null) {
-                    addEffect(effectinstance);
+                    this.addEffect(effectinstance);
                 }
             }
         }
     }
-
-
-    protected void addAdditionalSaveData(CompoundNBT compound) {
+    
+    protected void addAdditionalSaveData(final CompoundNBT compound) {
         compound.putInt("Age", this.tickCount);
         compound.putInt("Duration", this.duration);
         compound.putInt("WaitTime", this.waitTime);
@@ -437,66 +421,73 @@ public class EffectCloudEntity extends Entity {
         compound.putInt("DurationOnUse", this.durationOnUse);
         compound.putFloat("RadiusOnUse", this.radiusOnUse);
         compound.putFloat("RadiusPerTick", this.radiusPerTick);
-        compound.putFloat("Radius", getRadius());
-        compound.putString("Particle", getParticleData().writeToString());
+        compound.putFloat("Radius", this.getRadius());
+        compound.putString("Particle", this.getParticleData().writeToString());
         if (this.ownerUniqueId != null) {
             compound.putUUID("Owner", this.ownerUniqueId);
         }
-
         if (this.colorSet) {
-            compound.putInt("Color", getColor());
+            compound.putInt("Color", this.getColor());
         }
-
         if (this.potion != Potions.EMPTY && this.potion != null) {
             compound.putString("Potion", Registry.POTION.getKey(this.potion).toString());
         }
-
         if (!this.effects.isEmpty()) {
-            ListNBT listnbt = new ListNBT();
-
-            for (EffectInstance effectinstance : this.effects) {
+            final ListNBT listnbt = new ListNBT();
+            for (final EffectInstance effectinstance : this.effects) {
                 listnbt.add(effectinstance.save(new CompoundNBT()));
             }
-
-            compound.put("Effects", (INBT) listnbt);
+            compound.put("Effects", (INBT)listnbt);
         }
     }
-
-
-    public void onSyncedDataUpdated(DataParameter<?> key) {
-        if (RADIUS.equals(key)) {
-            refreshDimensions();
+    
+    public void onSyncedDataUpdated(final DataParameter<?> key) {
+        if (EffectCloudEntity.RADIUS.equals(key)) {
+            this.refreshDimensions();
         }
-
-        super.onSyncedDataUpdated(key);
+        super.onSyncedDataUpdated((DataParameter)key);
     }
-
+    
     public PushReaction getPistonPushReaction() {
         return PushReaction.IGNORE;
     }
-
-
+    
     public IPacket<?> getAddEntityPacket() {
-        return NetworkHooks.getEntitySpawningPacket(this);
+        return (IPacket<?>)NetworkHooks.getEntitySpawningPacket((Entity)this);
     }
-
-    public EntitySize getDimensions(Pose poseIn) {
-        return EntitySize.scalable(getRadius() * 2.0F, 0.5F);
+    
+    public EntitySize getDimensions(final Pose poseIn) {
+        return EntitySize.scalable(this.getRadius() * 2.0f, 0.5f);
     }
-
-    public static EffectCloudEntity fromConfig(World world, LivingEntity owner, double x, double y, double z, Config config) {
-        EffectCloudEntity cloud = new EffectCloudEntity(world, x, y, z);
+    
+    public static EffectCloudEntity fromConfig(final World world, final LivingEntity owner, final double x, final double y, final double z, final Config config) {
+        final EffectCloudEntity cloud = new EffectCloudEntity(world, x, y, z);
         cloud.setPotion(config.getPotion());
         config.getEffects().forEach(effect -> cloud.addEffect(effect.create()));
-        if (config.getDuration() >= 0) cloud.setDuration(config.getDuration());
-        if (config.getRadius() >= 0.0F) cloud.setRadius(config.getRadius());
-        if (config.getColor() >= 0) cloud.setColor(config.getColor());
+        if (config.getDuration() >= 0) {
+            cloud.setDuration(config.getDuration());
+        }
+        if (config.getRadius() >= 0.0f) {
+            cloud.setRadius(config.getRadius());
+        }
+        if (config.getColor() >= 0) {
+            cloud.setColor(config.getColor());
+        }
         cloud.setAffectsOwner(config.affectsOwner());
         cloud.setOwner(owner);
         return cloud;
     }
-
-    public static class Config implements INBTSerializable<CompoundNBT> {
+    
+    static {
+        PRIVATE_LOGGER = LogManager.getLogger();
+        RADIUS = EntityDataManager.defineId((Class)EffectCloudEntity.class, DataSerializers.FLOAT);
+        COLOR = EntityDataManager.defineId((Class)EffectCloudEntity.class, DataSerializers.INT);
+        IGNORE_RADIUS = EntityDataManager.defineId((Class)EffectCloudEntity.class, DataSerializers.BOOLEAN);
+        PARTICLE = EntityDataManager.defineId((Class)EffectCloudEntity.class, DataSerializers.PARTICLE);
+    }
+    
+    public static class Config implements INBTSerializable<CompoundNBT>
+    {
         @Expose
         private String name;
         @Expose
@@ -513,17 +504,17 @@ public class EffectCloudEntity extends Entity {
         private boolean affectsOwner;
         @Expose
         private float chance;
-
+        
+        @Override
         public String toString() {
             return "Config{name='" + this.name + '\'' + ", potion='" + this.potion + '\'' + ", effects=" + this.effects + '}';
         }
-
-
+        
         public Config() {
-            this("Dummy", Potions.EMPTY, new ArrayList<>(), 600, 3.0F, -1, true, 1.0F);
+            this("Dummy", Potions.EMPTY, new ArrayList<CloudEffect>(), 600, 3.0f, -1, true, 1.0f);
         }
-
-        public Config(String name, Potion potion, List<CloudEffect> effects, int duration, float radius, int color, boolean affectsOwner, float chance) {
+        
+        public Config(final String name, final Potion potion, final List<CloudEffect> effects, final int duration, final float radius, final int color, final boolean affectsOwner, final float chance) {
             this.name = name;
             this.potion = potion.getRegistryName().toString();
             this.effects = effects;
@@ -533,55 +524,52 @@ public class EffectCloudEntity extends Entity {
             this.affectsOwner = affectsOwner;
             this.chance = chance;
         }
-
-        public static Config fromNBT(CompoundNBT nbt) {
-            Config config = new Config();
+        
+        public static Config fromNBT(final CompoundNBT nbt) {
+            final Config config = new Config();
             config.deserializeNBT(nbt);
             return config;
         }
-
+        
         public String getName() {
             return this.name;
         }
-
+        
         public Potion getPotion() {
             return Registry.POTION.getOptional(new ResourceLocation(this.potion)).orElse(Potions.EMPTY);
         }
-
+        
         public List<CloudEffect> getEffects() {
             return this.effects;
         }
-
+        
         public int getDuration() {
             return this.duration;
         }
-
+        
         public float getRadius() {
             return this.radius;
         }
-
+        
         public int getColor() {
             return this.color;
         }
-
+        
         public boolean affectsOwner() {
             return this.affectsOwner;
         }
-
+        
         public float getChance() {
             return this.chance;
         }
-
-
+        
         public CompoundNBT serializeNBT() {
-            CompoundNBT nbt = new CompoundNBT();
+            final CompoundNBT nbt = new CompoundNBT();
             nbt.putString("Name", this.name);
             nbt.putString("Potion", this.potion);
-
-            ListNBT effectsList = new ListNBT();
+            final ListNBT effectsList = new ListNBT();
             this.effects.forEach(cloudEffect -> effectsList.add(cloudEffect.serializeNBT()));
-            nbt.put("Effects", (INBT) effectsList);
-
+            nbt.put("Effects", (INBT)effectsList);
             nbt.putInt("Duration", this.duration);
             nbt.putFloat("Radius", this.radius);
             nbt.putInt("Color", this.color);
@@ -589,23 +577,21 @@ public class EffectCloudEntity extends Entity {
             nbt.putFloat("Chance", this.chance);
             return nbt;
         }
-
-
-        public void deserializeNBT(CompoundNBT nbt) {
+        
+        public void deserializeNBT(final CompoundNBT nbt) {
             this.name = nbt.getString("Name");
             this.potion = nbt.getString("Potion");
-
-            ListNBT effectsList = nbt.getList("Effects", 10);
-            this.effects = (List<CloudEffect>) effectsList.stream().map(inbt -> CloudEffect.fromNBT((CompoundNBT) inbt)).collect(Collectors.toList());
-
+            final ListNBT effectsList = nbt.getList("Effects", 10);
+            this.effects = effectsList.stream().map(inbt -> CloudEffect.fromNBT((CompoundNBT)inbt)).collect(Collectors.toList());
             this.duration = nbt.getInt("Duration");
             this.radius = nbt.getFloat("Radius");
             this.color = nbt.getInt("Color");
             this.affectsOwner = nbt.getBoolean("AffectsOwner");
             this.chance = nbt.getFloat("Chance");
         }
-
-        public static class CloudEffect implements INBTSerializable<CompoundNBT> {
+        
+        public static class CloudEffect implements INBTSerializable<CompoundNBT>
+        {
             @Expose
             private String effect;
             @Expose
@@ -616,51 +602,50 @@ public class EffectCloudEntity extends Entity {
             private boolean showParticles;
             @Expose
             private boolean showIcon;
-
+            
             protected CloudEffect() {
             }
-
-            public CloudEffect(Effect effect, int duration, int amplifier, boolean showParticles, boolean showIcon) {
+            
+            public CloudEffect(final Effect effect, final int duration, final int amplifier, final boolean showParticles, final boolean showIcon) {
                 this.effect = effect.getRegistryName().toString();
                 this.duration = duration;
                 this.amplifier = amplifier;
                 this.showParticles = false;
                 this.showIcon = true;
             }
-
-            public static CloudEffect fromNBT(CompoundNBT nbt) {
-                CloudEffect effect = new CloudEffect();
+            
+            public static CloudEffect fromNBT(final CompoundNBT nbt) {
+                final CloudEffect effect = new CloudEffect();
                 effect.deserializeNBT(nbt);
                 return effect;
             }
-
+            
             public Effect getEffect() {
-                return (Effect) Registry.MOB_EFFECT.get(new ResourceLocation(this.effect));
+                return (Effect)Registry.MOB_EFFECT.get(new ResourceLocation(this.effect));
             }
-
+            
             public int getDuration() {
                 return this.duration;
             }
-
+            
             public int getAmplifier() {
                 return this.amplifier;
             }
-
+            
             public boolean showParticles() {
                 return this.showParticles;
             }
-
+            
             public boolean showIcon() {
                 return this.showIcon;
             }
-
+            
             public EffectInstance create() {
-                return new EffectInstance(getEffect(), getDuration(), getAmplifier(), false, showParticles(), showIcon());
+                return new EffectInstance(this.getEffect(), this.getDuration(), this.getAmplifier(), false, this.showParticles(), this.showIcon());
             }
-
-
+            
             public CompoundNBT serializeNBT() {
-                CompoundNBT nbt = new CompoundNBT();
+                final CompoundNBT nbt = new CompoundNBT();
                 nbt.putString("Effect", this.effect);
                 nbt.putInt("Duration", this.duration);
                 nbt.putInt("Amplifier", this.amplifier);
@@ -668,8 +653,8 @@ public class EffectCloudEntity extends Entity {
                 nbt.putBoolean("ShowIcon", this.showIcon);
                 return nbt;
             }
-
-            public void deserializeNBT(CompoundNBT nbt) {
+            
+            public void deserializeNBT(final CompoundNBT nbt) {
                 this.effect = nbt.getString("Effect");
                 this.duration = nbt.getInt("Duration");
                 this.amplifier = nbt.getInt("Amplifier");
@@ -678,84 +663,4 @@ public class EffectCloudEntity extends Entity {
             }
         }
     }
-
-    public static class CloudEffect implements INBTSerializable<CompoundNBT> {
-        public void deserializeNBT(CompoundNBT nbt) {
-            this.effect = nbt.getString("Effect");
-            this.duration = nbt.getInt("Duration");
-            this.amplifier = nbt.getInt("Amplifier");
-            this.showParticles = nbt.getBoolean("ShowParticles");
-            this.showIcon = nbt.getBoolean("ShowIcon");
-        }
-
-
-        @Expose
-        private String effect;
-        @Expose
-        private int duration;
-        @Expose
-        private int amplifier;
-        @Expose
-        private boolean showParticles;
-        @Expose
-        private boolean showIcon;
-
-        protected CloudEffect() {
-        }
-
-        public CloudEffect(Effect effect, int duration, int amplifier, boolean showParticles, boolean showIcon) {
-            this.effect = effect.getRegistryName().toString();
-            this.duration = duration;
-            this.amplifier = amplifier;
-            this.showParticles = false;
-            this.showIcon = true;
-        }
-
-        public static CloudEffect fromNBT(CompoundNBT nbt) {
-            CloudEffect effect = new CloudEffect();
-            effect.deserializeNBT(nbt);
-            return effect;
-        }
-
-        public Effect getEffect() {
-            return (Effect) Registry.MOB_EFFECT.get(new ResourceLocation(this.effect));
-        }
-
-        public int getDuration() {
-            return this.duration;
-        }
-
-        public int getAmplifier() {
-            return this.amplifier;
-        }
-
-        public boolean showParticles() {
-            return this.showParticles;
-        }
-
-        public boolean showIcon() {
-            return this.showIcon;
-        }
-
-        public EffectInstance create() {
-            return new EffectInstance(getEffect(), getDuration(), getAmplifier(), false, showParticles(), showIcon());
-        }
-
-        public CompoundNBT serializeNBT() {
-            CompoundNBT nbt = new CompoundNBT();
-            nbt.putString("Effect", this.effect);
-            nbt.putInt("Duration", this.duration);
-            nbt.putInt("Amplifier", this.amplifier);
-            nbt.putBoolean("ShowParticles", this.showParticles);
-            nbt.putBoolean("ShowIcon", this.showIcon);
-            return nbt;
-        }
-    }
-
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\entity\EffectCloudEntity.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

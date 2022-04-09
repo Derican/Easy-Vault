@@ -1,3 +1,7 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.entity.ai;
 
 import net.minecraft.entity.LivingEntity;
@@ -7,29 +11,23 @@ import org.apache.commons.lang3.ObjectUtils;
 
 import java.util.Random;
 
-public abstract class GoalTask<T extends LivingEntity>
-        extends Goal {
+public abstract class GoalTask<T extends LivingEntity> extends Goal
+{
     private final T entity;
-
-    public GoalTask(T entity) {
+    
+    public GoalTask(final T entity) {
         this.entity = entity;
     }
-
+    
     public T getEntity() {
         return this.entity;
     }
-
+    
     public World getWorld() {
-        return ((LivingEntity) getEntity()).level;
+        return this.getEntity().level;
     }
-
+    
     public Random getRandom() {
-        return (Random) ObjectUtils.firstNonNull((Object[]) new Random[]{getWorld().getRandom(), getEntity().getRandom()});
+        return (Random)ObjectUtils.firstNonNull((Object[])new Random[] { this.getWorld().getRandom(), this.getEntity().getRandom() });
     }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\entity\ai\GoalTask.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

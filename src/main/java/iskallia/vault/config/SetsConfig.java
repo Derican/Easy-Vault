@@ -1,3 +1,7 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.config;
 
 import com.google.gson.annotations.Expose;
@@ -22,11 +26,6 @@ public class SetsConfig extends Config {
     public SetGroup<CarapaceSet> CARAPACE;
     @Expose
     public SetGroup<PlayerSet> DIVINITY;
-
-    public String getName() {
-        return "sets";
-    }
-
     @Expose
     public SetGroup<DryadSet> DRYAD;
     @Expose
@@ -44,38 +43,36 @@ public class SetsConfig extends Config {
     @Expose
     public SetGroup<PorcupineSet> PORCUPINE;
 
-    public List<SetGroup<?>> getAll() {
-        return Arrays.asList((SetGroup<?>[]) new SetGroup[]{this.DRAGON, this.RIFT, this.GOLEM, this.ASSASSIN, this.VAMPIRE, this.DRYAD, this.NINJA, this.TREASURE, this.ZOD, this.DIVINITY, this.CARAPACE, this.BLOOD, this.DREAM, this.PORCUPINE});
+    @Override
+    public String getName() {
+        return "sets";
     }
 
+    public List<SetGroup<?>> getAll() {
+        return (List<SetGroup<?>>) Arrays.asList(this.DRAGON, this.RIFT, this.GOLEM, this.ASSASSIN, this.VAMPIRE, this.DRYAD, this.NINJA, this.TREASURE, this.ZOD, this.DIVINITY, this.CARAPACE, this.BLOOD, this.DREAM, this.PORCUPINE);
+    }
 
     public SetGroup<?> getByName(String name) {
         return (SetGroup) getAll().stream().filter(group -> group.getParentName().equals(name)).findFirst()
                 .orElseThrow(() -> new IllegalStateException("Unknown set with name " + name));
     }
 
-
+    @Override
     protected void reset() {
-        this.DRAGON = SetGroup.of("Dragon", 1, i -> new DragonSet(0.5F));
+        this.DRAGON = SetGroup.of("Dragon", 1, i -> new DragonSet(0.5f));
         this.ZOD = SetGroup.of("Zod", 1, i -> new PlayerSet(VaultGear.Set.ZOD));
-        this.NINJA = SetGroup.of("Ninja", 1, i -> new NinjaSet(0.3F, 0.1F));
-        this.GOLEM = SetGroup.of("Golem", 1, i -> new GolemSet(0.0F, 20.0F));
+        this.NINJA = SetGroup.of("Ninja", 1, i -> new NinjaSet(0.3f, 0.1f));
+        this.GOLEM = SetGroup.of("Golem", 1, i -> new GolemSet(0.0f, 20.0f));
         this.RIFT = SetGroup.of("Rift", 1, i -> new PlayerSet(VaultGear.Set.RIFT));
-        this.CARAPACE = SetGroup.of("Carapace", 1, i -> new CarapaceSet(0.5F));
+        this.CARAPACE = SetGroup.of("Carapace", 1, i -> new CarapaceSet(0.5f));
         this.DIVINITY = SetGroup.of("Divinity", 1, i -> new PlayerSet(VaultGear.Set.DIVINITY));
-        this.DRYAD = SetGroup.of("Dryad", 1, i -> new DryadSet(20.0F));
-        this.BLOOD = SetGroup.of("Blood", 1, i -> new BloodSet(2.0F));
-        this.VAMPIRE = SetGroup.of("Vampire", 1, i -> new VampirismSet(0.05F));
-        this.TREASURE = SetGroup.of("Treasure", 1, i -> new TreasureSet(2.0F));
+        this.DRYAD = SetGroup.of("Dryad", 1, i -> new DryadSet(20.0f));
+        this.BLOOD = SetGroup.of("Blood", 1, i -> new BloodSet(2.0f));
+        this.VAMPIRE = SetGroup.of("Vampire", 1, i -> new VampirismSet(0.05f));
+        this.TREASURE = SetGroup.of("Treasure", 1, i -> new TreasureSet(2.0f));
         this.PHOENIX = SetGroup.of("Phoenix", 1, i -> new PlayerSet(VaultGear.Set.PHOENIX));
-        this.ASSASSIN = SetGroup.of("Assassin", 1, i -> new AssassinSet(0.4F));
-        this.DREAM = SetGroup.of("Dream", 1, i -> new DreamSet(0.5F, 2, 0.1F, 0.1F, 0.25F));
-        this.PORCUPINE = SetGroup.of("Porcupine", 1, i -> new PorcupineSet(0.4F, 1.0F));
+        this.ASSASSIN = SetGroup.of("Assassin", 1, i -> new AssassinSet(0.4f));
+        this.DREAM = SetGroup.of("Dream", 1, i -> new DreamSet(0.5f, 2, 0.1f, 0.1f, 0.25f));
+        this.PORCUPINE = SetGroup.of("Porcupine", 1, i -> new PorcupineSet(0.4f, 1.0f));
     }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\config\SetsConfig.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

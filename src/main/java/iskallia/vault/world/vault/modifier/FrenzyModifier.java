@@ -1,3 +1,7 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.world.vault.modifier;
 
 import com.google.gson.annotations.Expose;
@@ -13,72 +17,71 @@ import javax.annotation.Nullable;
 import java.util.Random;
 import java.util.UUID;
 
-public class FrenzyModifier
-        extends TexturedVaultModifier {
-    public static final AttributeModifier.Operation FRENZY_HEALTH_OPERATION = AttributeModifier.Operation.MULTIPLY_TOTAL;
-
-
+public class FrenzyModifier extends TexturedVaultModifier
+{
+    public static final AttributeModifier.Operation FRENZY_HEALTH_OPERATION;
     @Expose
     private final float damageMultiplier;
-
-    private UUID healthModifierID = null;
     @Expose
     private final float additionalMovementSpeed;
     @Expose
     private final boolean doHealthReduction;
-    private UUID damageModifierID = null;
-    private UUID movementSpeedModifierID = null;
-
-    public FrenzyModifier(String name, ResourceLocation icon, float damageMultiplier, float additionalMovementSpeed, boolean doHealthReduction) {
+    private UUID healthModifierID;
+    private UUID damageModifierID;
+    private UUID movementSpeedModifierID;
+    
+    public FrenzyModifier(final String name, final ResourceLocation icon, final float damageMultiplier, final float additionalMovementSpeed, final boolean doHealthReduction) {
         super(name, icon);
-
+        this.healthModifierID = null;
+        this.damageModifierID = null;
+        this.movementSpeedModifierID = null;
         this.damageMultiplier = damageMultiplier;
         this.additionalMovementSpeed = additionalMovementSpeed;
         this.doHealthReduction = doHealthReduction;
     }
-
+    
     public float getDamageMultiplier() {
         return this.damageMultiplier;
     }
-
+    
     public UUID getDamageModifierID() {
         if (this.damageModifierID == null) {
-            Random r = new Random(getName().hashCode());
+            final Random r = new Random(this.getName().hashCode());
             this.damageModifierID = new UUID(r.nextLong(), r.nextLong());
         }
         return this.damageModifierID;
     }
-
+    
     public float getAdditionalMovementSpeed() {
         return this.additionalMovementSpeed;
     }
-
+    
     public UUID getMovementSpeedModifierID() {
         if (this.movementSpeedModifierID == null) {
-            Random r = new Random(getName().hashCode());
-            for (int i = 0; i < 5; i++) {
+            final Random r = new Random(this.getName().hashCode());
+            for (int i = 0; i < 5; ++i) {
                 r.nextLong();
             }
             this.movementSpeedModifierID = new UUID(r.nextLong(), r.nextLong());
         }
         return this.movementSpeedModifierID;
     }
-
-    public static boolean isFrenzyHealthModifier(UUID uuid) {
-        for (FrenzyModifier modifier : ModConfigs.VAULT_MODIFIERS.FRENZY_MODIFIERS) {
+    
+    public static boolean isFrenzyHealthModifier(final UUID uuid) {
+        for (final FrenzyModifier modifier : ModConfigs.VAULT_MODIFIERS.FRENZY_MODIFIERS) {
             if (modifier.doHealthReduction && uuid.equals(modifier.getHealthModifierID())) {
                 return true;
             }
         }
         return false;
     }
-
+    
     @Nullable
     public UUID getHealthModifierID() {
         if (this.doHealthReduction) {
             if (this.healthModifierID == null) {
-                Random r = new Random(getName().hashCode());
-                for (int i = 0; i < 10; i++) {
+                final Random r = new Random(this.getName().hashCode());
+                for (int i = 0; i < 10; ++i) {
                     r.nextLong();
                 }
                 this.healthModifierID = new UUID(r.nextLong(), r.nextLong());
@@ -87,28 +90,24 @@ public class FrenzyModifier
         }
         return null;
     }
-
-    public void applyToEntity(LivingEntity entity) {
-        applyModifier(entity, Attributes.ATTACK_DAMAGE, new AttributeModifier(getDamageModifierID(), "Frenzy Damage Multiplier",
-                getDamageMultiplier(), AttributeModifier.Operation.MULTIPLY_BASE));
-        applyModifier(entity, Attributes.MOVEMENT_SPEED, new AttributeModifier(getMovementSpeedModifierID(), "Frenzy MovementSpeed Addition",
-                getAdditionalMovementSpeed(), AttributeModifier.Operation.ADDITION));
+    
+    public void applyToEntity(final LivingEntity entity) {
+        this.applyModifier(entity, Attributes.ATTACK_DAMAGE, new AttributeModifier(this.getDamageModifierID(), "Frenzy Damage Multiplier", (double)this.getDamageMultiplier(), AttributeModifier.Operation.MULTIPLY_BASE));
+        this.applyModifier(entity, Attributes.MOVEMENT_SPEED, new AttributeModifier(this.getMovementSpeedModifierID(), "Frenzy MovementSpeed Addition", (double)this.getAdditionalMovementSpeed(), AttributeModifier.Operation.ADDITION));
         if (this.doHealthReduction) {
-            applyModifier(entity, Attributes.MAX_HEALTH, new AttributeModifier(getHealthModifierID(), "Frenzy MaxHealth 1", 1.0D, FRENZY_HEALTH_OPERATION));
-
-            entity.setHealth(1.0F);
+            this.applyModifier(entity, Attributes.MAX_HEALTH, new AttributeModifier(this.getHealthModifierID(), "Frenzy MaxHealth 1", 1.0, FrenzyModifier.FRENZY_HEALTH_OPERATION));
+            entity.setHealth(1.0f);
         }
     }
-
-    private void applyModifier(LivingEntity entity, Attribute attribute, AttributeModifier modifier) {
-        ModifiableAttributeInstance attributeInstance = entity.getAttribute(attribute);
-        if (attributeInstance != null)
+    
+    private void applyModifier(final LivingEntity entity, final Attribute attribute, final AttributeModifier modifier) {
+        final ModifiableAttributeInstance attributeInstance = entity.getAttribute(attribute);
+        if (attributeInstance != null) {
             attributeInstance.addPermanentModifier(modifier);
+        }
+    }
+    
+    static {
+        FRENZY_HEALTH_OPERATION = AttributeModifier.Operation.MULTIPLY_TOTAL;
     }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\world\vault\modifier\FrenzyModifier.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

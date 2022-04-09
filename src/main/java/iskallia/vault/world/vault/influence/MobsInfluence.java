@@ -1,3 +1,7 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.world.vault.influence;
 
 import iskallia.vault.Vault;
@@ -10,52 +14,50 @@ import net.minecraft.world.server.ServerWorld;
 
 import java.util.Random;
 
-public class MobsInfluence extends VaultInfluence {
-    public static final ResourceLocation ID = Vault.id("mobs");
-
+public class MobsInfluence extends VaultInfluence
+{
+    public static final ResourceLocation ID;
     private int mobsAdded;
-
+    
     MobsInfluence() {
-        super(ID);
+        super(MobsInfluence.ID);
     }
-
-    public MobsInfluence(int mobsAdded) {
+    
+    public MobsInfluence(final int mobsAdded) {
         this();
         this.mobsAdded = mobsAdded;
     }
-
-
-    public void apply(VaultRaid vault, VaultPlayer player, ServerWorld world, Random random) {
+    
+    @Override
+    public void apply(final VaultRaid vault, final VaultPlayer player, final ServerWorld world, final Random random) {
         player.getProperties().get(VaultRaid.SPAWNER).ifPresent(spawner -> {
-            ((VaultSpawner) spawner.getBaseValue()).addMaxMobs(this.mobsAdded);
+            ((VaultSpawner)spawner.getBaseValue()).addMaxMobs(this.mobsAdded);
             spawner.updateNBT();
         });
     }
-
-
-    public void remove(VaultRaid vault, VaultPlayer player, ServerWorld world, Random random) {
+    
+    @Override
+    public void remove(final VaultRaid vault, final VaultPlayer player, final ServerWorld world, final Random random) {
         player.getProperties().get(VaultRaid.SPAWNER).ifPresent(spawner -> {
-            ((VaultSpawner) spawner.getBaseValue()).addMaxMobs(-this.mobsAdded);
+            ((VaultSpawner)spawner.getBaseValue()).addMaxMobs(-this.mobsAdded);
             spawner.updateNBT();
         });
     }
-
-
+    
+    @Override
     public CompoundNBT serializeNBT() {
-        CompoundNBT tag = super.serializeNBT();
+        final CompoundNBT tag = super.serializeNBT();
         tag.putInt("mobsAdded", this.mobsAdded);
         return tag;
     }
-
-
-    public void deserializeNBT(CompoundNBT tag) {
+    
+    @Override
+    public void deserializeNBT(final CompoundNBT tag) {
         super.deserializeNBT(tag);
         this.mobsAdded = tag.getInt("mobsAdded");
     }
+    
+    static {
+        ID = Vault.id("mobs");
+    }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\world\vault\influence\MobsInfluence.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

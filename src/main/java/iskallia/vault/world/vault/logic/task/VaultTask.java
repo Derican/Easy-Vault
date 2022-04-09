@@ -1,3 +1,7 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.world.vault.logic.task;
 
 import iskallia.vault.Vault;
@@ -11,66 +15,59 @@ import net.minecraftforge.common.util.INBTSerializable;
 import java.util.HashMap;
 import java.util.Map;
 
-public class VaultTask
-        implements IVaultTask, INBTSerializable<CompoundNBT> {
-    public static final Map<ResourceLocation, VaultTask> REGISTRY = new HashMap<>();
-    public static final VaultTask EMPTY = register(Vault.id("empty"), (vault, player, world) -> {
-
-    });
-
+public class VaultTask implements IVaultTask, INBTSerializable<CompoundNBT>
+{
+    public static final Map<ResourceLocation, VaultTask> REGISTRY;
+    public static final VaultTask EMPTY;
     private ResourceLocation id;
     protected IVaultTask task;
-
+    
     protected VaultTask() {
     }
-
-    public VaultTask(ResourceLocation id, IVaultTask task) {
+    
+    public VaultTask(final ResourceLocation id, final IVaultTask task) {
         this.id = id;
         this.task = task;
     }
-
+    
     public ResourceLocation getId() {
         return this.id;
     }
-
-
-    public void execute(VaultRaid vault, VaultPlayer player, ServerWorld world) {
+    
+    @Override
+    public void execute(final VaultRaid vault, final VaultPlayer player, final ServerWorld world) {
         this.task.execute(vault, player, world);
     }
-
-    public VaultTask then(VaultTask other) {
+    
+    public VaultTask then(final VaultTask other) {
         return new CompoundVaultTask(this, other, ">", this.task.then(other));
     }
-
-
+    
     public CompoundNBT serializeNBT() {
-        CompoundNBT nbt = new CompoundNBT();
-        nbt.putString("Id", getId().toString());
+        final CompoundNBT nbt = new CompoundNBT();
+        nbt.putString("Id", this.getId().toString());
         return nbt;
     }
-
-
-    public void deserializeNBT(CompoundNBT nbt) {
+    
+    public void deserializeNBT(final CompoundNBT nbt) {
         this.id = new ResourceLocation(nbt.getString("Id"));
     }
-
-    public static VaultTask fromNBT(CompoundNBT nbt) {
+    
+    public static VaultTask fromNBT(final CompoundNBT nbt) {
         if (nbt.contains("Id", 8)) {
-            return REGISTRY.get(new ResourceLocation(nbt.getString("Id")));
+            return VaultTask.REGISTRY.get(new ResourceLocation(nbt.getString("Id")));
         }
-
         return CompoundVaultTask.fromNBT(nbt);
     }
-
-    public static VaultTask register(ResourceLocation id, IVaultTask task) {
-        VaultTask vaultTask = new VaultTask(id, task);
-        REGISTRY.put(id, vaultTask);
+    
+    public static VaultTask register(final ResourceLocation id, final IVaultTask task) {
+        final VaultTask vaultTask = new VaultTask(id, task);
+        VaultTask.REGISTRY.put(id, vaultTask);
         return vaultTask;
     }
+    
+    static {
+        REGISTRY = new HashMap<ResourceLocation, VaultTask>();
+        EMPTY = register(Vault.id("empty"), (vault, player, world) -> {});
+    }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\world\vault\logic\task\VaultTask.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

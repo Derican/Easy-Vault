@@ -1,58 +1,56 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.skill.talent.type;
 
 import com.google.gson.annotations.Expose;
 import iskallia.vault.util.calc.ParryHelper;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.world.World;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
+import net.minecraftforge.fml.common.Mod;
 
-@EventBusSubscriber
-public class ParryTalent extends PlayerTalent {
+@Mod.EventBusSubscriber
+public class ParryTalent extends PlayerTalent
+{
     @Expose
     protected float additionalParryLimit;
-
-    public ParryTalent(int cost, float additionalParryLimit) {
+    
+    public ParryTalent(final int cost, final float additionalParryLimit) {
         super(cost);
         this.additionalParryLimit = additionalParryLimit;
     }
-
+    
     public float getAdditionalParryLimit() {
         return this.additionalParryLimit;
     }
-
+    
     @SubscribeEvent
-    public static void onPlayerDamage(LivingAttackEvent event) {
-        float parryChance;
-        LivingEntity entity = event.getEntityLiving();
-        World world = entity.getCommandSenderWorld();
+    public static void onPlayerDamage(final LivingAttackEvent event) {
+        final LivingEntity entity = event.getEntityLiving();
+        final World world = entity.getCommandSenderWorld();
         if (world.isClientSide() || event.getSource().isBypassInvul()) {
             return;
         }
         if (entity.invulnerableTime > 10 && event.getAmount() < entity.lastHurt) {
             return;
         }
-
-
+        float parryChance;
         if (entity instanceof ServerPlayerEntity) {
-            parryChance = ParryHelper.getPlayerParryChance((ServerPlayerEntity) entity);
-        } else {
+            parryChance = ParryHelper.getPlayerParryChance((ServerPlayerEntity)entity);
+        }
+        else {
             parryChance = ParryHelper.getParryChance(entity);
         }
-
-        if (rand.nextFloat() <= parryChance) {
-            world.playSound(null, entity.getX(), entity.getY(), entity.getZ(), SoundEvents.SHIELD_BLOCK, SoundCategory.MASTER, 0.5F, 1.0F);
+        if (ParryTalent.rand.nextFloat() <= parryChance) {
+            world.playSound((PlayerEntity)null, entity.getX(), entity.getY(), entity.getZ(), SoundEvents.SHIELD_BLOCK, SoundCategory.MASTER, 0.5f, 1.0f);
             event.setCanceled(true);
         }
     }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\skill\talent\type\ParryTalent.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

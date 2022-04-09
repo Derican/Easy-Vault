@@ -1,3 +1,7 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.world.vault.gen.piece;
 
 import iskallia.vault.Vault;
@@ -15,81 +19,83 @@ import net.minecraft.world.server.ServerWorld;
 
 import javax.annotation.Nullable;
 
-public class VaultRoom
-        extends VaultPiece {
-    public static final ResourceLocation ID = Vault.id("room");
-    private boolean cakeEaten = false;
-    private BlockPos cakePos = null;
-
-    protected VaultRoom(ResourceLocation id) {
+public class VaultRoom extends VaultPiece
+{
+    public static final ResourceLocation ID;
+    private boolean cakeEaten;
+    private BlockPos cakePos;
+    
+    protected VaultRoom(final ResourceLocation id) {
         super(id);
+        this.cakeEaten = false;
+        this.cakePos = null;
     }
-
+    
     public VaultRoom() {
-        this(ID);
+        this(VaultRoom.ID);
     }
-
-    protected VaultRoom(ResourceLocation id, ResourceLocation template, MutableBoundingBox boundingBox, Rotation rotation) {
+    
+    protected VaultRoom(final ResourceLocation id, final ResourceLocation template, final MutableBoundingBox boundingBox, final Rotation rotation) {
         super(id, template, boundingBox, rotation);
+        this.cakeEaten = false;
+        this.cakePos = null;
     }
-
-    public VaultRoom(ResourceLocation template, MutableBoundingBox boundingBox, Rotation rotation) {
-        this(ID, template, boundingBox, rotation);
+    
+    public VaultRoom(final ResourceLocation template, final MutableBoundingBox boundingBox, final Rotation rotation) {
+        this(VaultRoom.ID, template, boundingBox, rotation);
     }
-
-
-    public void tick(ServerWorld world, VaultRaid vault) {
+    
+    @Override
+    public void tick(final ServerWorld world, final VaultRaid vault) {
     }
-
-
-    public void setCakeEaten(boolean cakeEaten) {
+    
+    public void setCakeEaten(final boolean cakeEaten) {
         this.cakeEaten = cakeEaten;
     }
-
+    
     public boolean isCakeEaten() {
         return this.cakeEaten;
     }
-
-    public void setCakePos(BlockPos cakePos) {
+    
+    public void setCakePos(final BlockPos cakePos) {
         this.cakePos = cakePos;
     }
-
+    
     @Nullable
     public BlockPos getCakePos() {
         return this.cakePos;
     }
-
+    
     public Vector3i getCenter() {
-        return getBoundingBox().getCenter();
+        return this.getBoundingBox().getCenter();
     }
-
-    public BlockPos getTunnelConnectorPos(Direction dir) {
-        Vector3i center = getCenter();
-        BlockPos size = (new BlockPos(getBoundingBox().getLength())).offset(2, 2, 2);
-        return (new BlockPos(center)).offset(dir.getStepX() * size.getX(), 0, dir.getStepZ() * size.getZ());
+    
+    public BlockPos getTunnelConnectorPos(final Direction dir) {
+        final Vector3i center = this.getCenter();
+        final BlockPos size = new BlockPos(this.getBoundingBox().getLength()).offset(2, 2, 2);
+        return new BlockPos(center).offset(dir.getStepX() * size.getX(), 0, dir.getStepZ() * size.getZ());
     }
-
-
+    
+    @Override
     public CompoundNBT serializeNBT() {
-        CompoundNBT tag = super.serializeNBT();
+        final CompoundNBT tag = super.serializeNBT();
         tag.putBoolean("cakeEaten", this.cakeEaten);
         if (this.cakePos != null) {
-            tag.put("cakePos", (INBT) NBTHelper.serializeBlockPos(this.cakePos));
+            tag.put("cakePos", (INBT)NBTHelper.serializeBlockPos(this.cakePos));
         }
         return tag;
     }
-
-
-    public void deserializeNBT(CompoundNBT tag) {
+    
+    @Override
+    public void deserializeNBT(final CompoundNBT tag) {
         super.deserializeNBT(tag);
         this.cakeEaten = tag.getBoolean("cakeEaten");
-        if (tag.contains("cakePos", 10))
+        if (tag.contains("cakePos", 10)) {
             this.cakePos = NBTHelper.deserializeBlockPos(tag.getCompound("cakePos"));
+        }
+    }
+    
+    static {
+        ID = Vault.id("room");
     }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\world\vault\gen\piece\VaultRoom.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

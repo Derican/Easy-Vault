@@ -1,3 +1,7 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.world.data;
 
 import net.minecraft.entity.player.PlayerEntity;
@@ -12,143 +16,127 @@ import net.minecraft.world.server.ServerWorld;
 import net.minecraft.world.storage.WorldSavedData;
 
 import java.util.*;
+import java.util.function.Supplier;
 
-
-public class PlayerFavourData
-        extends WorldSavedData {
+public class PlayerFavourData extends WorldSavedData
+{
     protected static final String DATA_NAME = "the_vault_PlayerFavour";
-    protected Map<UUID, Map<VaultGodType, Integer>> favourStats = new HashMap<>();
-
+    protected Map<UUID, Map<VaultGodType, Integer>> favourStats;
+    
     public PlayerFavourData() {
         this("the_vault_PlayerFavour");
     }
-
-    public PlayerFavourData(String name) {
+    
+    public PlayerFavourData(final String name) {
         super(name);
+        this.favourStats = new HashMap<UUID, Map<VaultGodType, Integer>>();
     }
-
-    public boolean addFavour(PlayerEntity player, VaultGodType type, int count) {
-        UUID playerUUID = player.getUUID();
-
-        int favour = ((Integer) ((Map) this.favourStats.computeIfAbsent(playerUUID, key -> new HashMap<>())).getOrDefault(type, Integer.valueOf(0))).intValue();
+    
+    public boolean addFavour(final PlayerEntity player, final VaultGodType type, final int count) {
+        final UUID playerUUID = player.getUUID();
+        int favour = (int)this.favourStats.computeIfAbsent(playerUUID, key -> new HashMap()).getOrDefault(type, 0);
         if (Math.abs(favour + count) > 16) {
             return false;
         }
-
         favour += count;
-        ((Map<VaultGodType, Integer>) this.favourStats.computeIfAbsent(playerUUID, key -> new HashMap<>()))
-                .put(type, Integer.valueOf(favour));
-        setDirty();
+        this.favourStats.computeIfAbsent(playerUUID, key -> new HashMap()).put(type, favour);
+        this.setDirty();
         return true;
     }
-
-    public int getFavour(UUID playerUUID, VaultGodType type) {
-        return ((Integer) ((Map) this.favourStats.getOrDefault(playerUUID, Collections.emptyMap()))
-                .getOrDefault(type, Integer.valueOf(0))).intValue();
+    
+    public int getFavour(final UUID playerUUID, final VaultGodType type) {
+        return this.favourStats.getOrDefault(playerUUID, Collections.emptyMap()).getOrDefault(type, 0);
     }
-
-
-    public void load(CompoundNBT nbt) {
+    
+    public void load(final CompoundNBT nbt) {
         this.favourStats.clear();
-
-        for (String key : nbt.getAllKeys()) {
+        for (final String key : nbt.getAllKeys()) {
             UUID playerUUID;
             try {
                 playerUUID = UUID.fromString(key);
-            } catch (IllegalArgumentException exc) {
+            }
+            catch (final IllegalArgumentException exc) {
                 continue;
             }
-
-
-            Map<VaultGodType, Integer> playerFavour = new HashMap<>();
-            CompoundNBT favourTag = nbt.getCompound(key);
-            for (String godKey : favourTag.getAllKeys()) {
+            final Map<VaultGodType, Integer> playerFavour = new HashMap<VaultGodType, Integer>();
+            final CompoundNBT favourTag = nbt.getCompound(key);
+            for (final String godKey : favourTag.getAllKeys()) {
                 try {
-                    playerFavour.put(VaultGodType.valueOf(godKey), Integer.valueOf(favourTag.getInt(godKey)));
-                } catch (IllegalArgumentException illegalArgumentException) {
+                    playerFavour.put(VaultGodType.valueOf(godKey), favourTag.getInt(godKey));
                 }
+                catch (final IllegalArgumentException ex) {}
             }
-
             this.favourStats.put(playerUUID, playerFavour);
         }
     }
-
-
-    public CompoundNBT save(CompoundNBT compound) {
+    
+    public CompoundNBT save(final CompoundNBT compound) {
         this.favourStats.forEach((uuid, playerFavour) -> {
-            CompoundNBT favourTag = new CompoundNBT();
-            playerFavour.forEach(());
-            compound.put(uuid.toString(), (INBT) favourTag);
+            final CompoundNBT favourTag = new CompoundNBT();
+            playerFavour.forEach((type, count) -> favourTag.putInt(type.name(), (int)count));
+            compound.put(uuid.toString(), (INBT)favourTag);
+            return;
         });
         return compound;
     }
-
-    public static PlayerFavourData get(ServerWorld world) {
-        return (PlayerFavourData) world.getServer().overworld().getDataStorage().computeIfAbsent(PlayerFavourData::new, "the_vault_PlayerFavour");
+    
+    public static PlayerFavourData get(final ServerWorld world) {
+        return (PlayerFavourData)world.getServer().overworld().getDataStorage().computeIfAbsent((Supplier)PlayerFavourData::new, "the_vault_PlayerFavour");
     }
-
-    public enum VaultGodType {
-        BENEVOLENT("Velara", "The Benevolent", (String) TextFormatting.GREEN),
-        OMNISCIENT("Tenos", "The Omniscient", (String) TextFormatting.AQUA),
-        TIMEKEEPER("Wendarr", "The Timekeeper", (String) TextFormatting.GOLD),
-        MALEVOLENCE("Idona", "The Malevolence", (String) TextFormatting.RED);
-
+    
+    public enum VaultGodType
+    {
+        BENEVOLENT("Velara", "The Benevolent", TextFormatting.GREEN), 
+        OMNISCIENT("Tenos", "The Omniscient", TextFormatting.AQUA), 
+        TIMEKEEPER("Wendarr", "The Timekeeper", TextFormatting.GOLD), 
+        MALEVOLENCE("Idona", "The Malevolence", TextFormatting.RED);
+        
         private final String name;
         private final String title;
         private final TextFormatting color;
-
-        VaultGodType(String name, String title, TextFormatting color) {
+        
+        private VaultGodType(final String name, final String title, final TextFormatting color) {
             this.name = name;
             this.title = title;
             this.color = color;
         }
-
+        
         public String getName() {
             return this.name;
         }
-
+        
         public String getTitle() {
             return this.title;
         }
-
+        
         public TextFormatting getChatColor() {
             return this.color;
         }
-
+        
         public ITextComponent getHoverChatComponent() {
-            return (ITextComponent) (new StringTextComponent("[Vault God] ")).withStyle(TextFormatting.WHITE)
-                    .append((ITextComponent) (new StringTextComponent(this.name + ", " + this.title)).withStyle(this.color));
+            return (ITextComponent)new StringTextComponent("[Vault God] ").withStyle(TextFormatting.WHITE).append((ITextComponent)new StringTextComponent(this.name + ", " + this.title).withStyle(this.color));
         }
-
+        
         public ITextComponent getIdolDescription() {
-            String s = getName().endsWith("s") ? "" : "s";
-            return (ITextComponent) (new StringTextComponent(String.format("%s'%s Idol", new Object[]{getName(), s}))).withStyle(getChatColor());
+            final String s = this.getName().endsWith("s") ? "" : "s";
+            return (ITextComponent)new StringTextComponent(String.format("%s'%s Idol", this.getName(), s)).withStyle(this.getChatColor());
         }
-
+        
         public IFormattableTextComponent getChosenPrefix() {
-            String prefix = "[" + getName().charAt(0) + "C] ";
-            IFormattableTextComponent cmp = (new StringTextComponent(prefix)).withStyle(this.color);
-
-            String s = getName().endsWith("s") ? "" : "s";
-
-            IFormattableTextComponent hover = (new StringTextComponent(String.format("%s'%s Chosen", new Object[]{getName(), s}))).withStyle(getChatColor());
+            final String prefix = "[" + this.getName().charAt(0) + "C] ";
+            final IFormattableTextComponent cmp = new StringTextComponent(prefix).withStyle(this.color);
+            final String s = this.getName().endsWith("s") ? "" : "s";
+            final IFormattableTextComponent hover = new StringTextComponent(String.format("%s'%s Chosen", this.getName(), s)).withStyle(this.getChatColor());
             cmp.withStyle(style -> style.withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, hover)));
             return cmp;
         }
-
-
-        public VaultGodType getOther(Random rand) {
-            while (true) {
-                int i = rand.nextInt((values()).length);
-                if (i != ordinal())
-                    return values()[i];
-            }
+        
+        public VaultGodType getOther(final Random rand) {
+            int i;
+            do {
+                i = rand.nextInt(values().length);
+            } while (i == this.ordinal());
+            return values()[i];
         }
     }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\world\data\PlayerFavourData.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

@@ -1,3 +1,7 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.config.entry;
 
 import com.google.gson.annotations.Expose;
@@ -6,57 +10,54 @@ import iskallia.vault.item.consumable.ConsumableType;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ConsumableEntry {
+public class ConsumableEntry
+{
     @Expose
     private String itemId;
-    @Expose
-    private List<ConsumableEffect> effects = new ArrayList<>();
     @Expose
     private boolean absorption;
     @Expose
     private float absorptionAmount;
     @Expose
-    private String type = "";
-
-    public ConsumableEntry(String itemId, boolean absorption, float absorptionAmount, ConsumableType type) {
+    private List<ConsumableEffect> effects;
+    @Expose
+    private String type;
+    
+    public ConsumableEntry(final String itemId, final boolean absorption, final float absorptionAmount, final ConsumableType type) {
+        this.effects = new ArrayList<ConsumableEffect>();
+        this.type = "";
         this.itemId = itemId;
         this.absorption = absorption;
         this.absorptionAmount = absorptionAmount;
         this.type = type.toString();
     }
-
-    public ConsumableEntry addEffect(ConsumableEffect entry) {
+    
+    public ConsumableEntry addEffect(final ConsumableEffect entry) {
         this.effects.add(entry);
         return this;
     }
-
+    
     public String getItemId() {
         return this.itemId;
     }
-
+    
     public boolean shouldAddAbsorption() {
         return this.absorption;
     }
-
+    
     public float getAbsorptionAmount() {
         return this.absorptionAmount;
     }
-
+    
     public List<ConsumableEffect> getEffects() {
         return this.effects;
     }
-
+    
     public ConsumableType getType() {
         return ConsumableType.fromString(this.type);
     }
-
+    
     public boolean isPowerup() {
-        return (ConsumableType.fromString(this.type) == ConsumableType.POWERUP);
+        return ConsumableType.fromString(this.type) == ConsumableType.POWERUP;
     }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\config\entry\ConsumableEntry.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

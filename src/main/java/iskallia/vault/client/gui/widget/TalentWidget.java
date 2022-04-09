@@ -1,3 +1,7 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.client.gui.widget;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
@@ -6,9 +10,11 @@ import iskallia.vault.client.gui.overlay.VaultBarOverlay;
 import iskallia.vault.client.gui.widget.connect.ConnectableWidget;
 import iskallia.vault.config.entry.SkillStyle;
 import iskallia.vault.init.ModConfigs;
+import iskallia.vault.skill.talent.ArchetypeTalentGroup;
 import iskallia.vault.skill.talent.TalentGroup;
 import iskallia.vault.skill.talent.TalentNode;
 import iskallia.vault.skill.talent.TalentTree;
+import iskallia.vault.skill.talent.type.PlayerTalent;
 import iskallia.vault.util.ResourceBoundary;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.widget.Widget;
@@ -24,35 +30,28 @@ import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TalentWidget
-        extends Widget
-        implements ConnectableWidget, ComponentWidget {
+public class TalentWidget extends Widget implements ConnectableWidget, ComponentWidget {
     private static final int PIP_SIZE = 8;
     private static final int GAP_SIZE = 2;
     private static final int ICON_SIZE = 30;
     private static final int MAX_PIPs_INLINE = 4;
-    private static final ResourceLocation SKILL_WIDGET_RESOURCE = new ResourceLocation("the_vault", "textures/gui/skill-widget.png");
-    private static final ResourceLocation TALENTS_RESOURCE = new ResourceLocation("the_vault", "textures/gui/talents.png");
-
+    private static final ResourceLocation SKILL_WIDGET_RESOURCE;
+    private static final ResourceLocation TALENTS_RESOURCE;
     TalentGroup<?> talentGroup;
-
     TalentTree talentTree;
     boolean locked;
     SkillStyle style;
     boolean selected;
-    private boolean renderPips = true;
+    private boolean renderPips;
 
-    public TalentWidget(TalentGroup<?> talentGroup, TalentTree talentTree, SkillStyle style) {
-        super(style.x, style.y, 48,
-
-                pipRowCount(talentTree.getNodeOf(talentGroup).getLevel()) * 10 - 2, (ITextComponent) new StringTextComponent("the_vault.widgets.talent"));
-
+    public TalentWidget(final TalentGroup<?> talentGroup, final TalentTree talentTree, final SkillStyle style) {
+        super(style.x, style.y, 48, pipRowCount(talentTree.getNodeOf(talentGroup).getLevel()) * 10 - 2, (ITextComponent) new StringTextComponent("the_vault.widgets.talent"));
+        this.renderPips = true;
         this.style = style;
         this.talentGroup = talentGroup;
         this.talentTree = talentTree;
-        TalentNode<?> existingNode = talentTree.getNodeOf(talentGroup);
-        this
-                .locked = (ModConfigs.SKILL_GATES.getGates().isLocked(talentGroup, talentTree) || VaultBarOverlay.vaultLevel < talentGroup.getTalent(existingNode.getLevel() + 1).getLevelRequirement());
+        final TalentNode<?> existingNode = talentTree.getNodeOf(talentGroup);
+        this.locked = (ModConfigs.SKILL_GATES.getGates().isLocked(talentGroup, talentTree) || VaultBarOverlay.vaultLevel < ((PlayerTalent) talentGroup.getTalent(existingNode.getLevel() + 1)).getLevelRequirement());
         this.selected = false;
     }
 
@@ -65,62 +64,54 @@ public class TalentWidget
     }
 
     public int getClickableWidth() {
-        int onlyIconWidth = 34;
-        int pipLineWidth = Math.min(this.talentGroup.getMaxLevel(), 4) * 10;
-        return hasPips() ?
-                Math.max(pipLineWidth, onlyIconWidth) : onlyIconWidth;
+        final int onlyIconWidth = 34;
+        final int pipLineWidth = Math.min(this.talentGroup.getMaxLevel(), 4) * 10;
+        return this.hasPips() ? Math.max(pipLineWidth, onlyIconWidth) : onlyIconWidth;
     }
-
 
     public int getClickableHeight() {
         int height = 34;
-        if (hasPips()) {
-            int lines = pipRowCount(this.talentGroup.getMaxLevel());
+        if (this.hasPips()) {
+            final int lines = pipRowCount(this.talentGroup.getMaxLevel());
             height += 2;
             height += lines * 8 + (lines - 1) * 2;
         }
         return height;
     }
 
-
     public Point2D.Double getRenderPosition() {
-        return new Point2D.Double(this.x - getRenderWidth() / 2.0D, this.y - getRenderHeight() / 2.0D);
+        return new Point2D.Double(this.x - this.getRenderWidth() / 2.0, this.y - this.getRenderHeight() / 2.0);
     }
-
 
     public double getRenderWidth() {
-        return 22.0D;
+        return 22.0;
     }
-
 
     public double getRenderHeight() {
-        return 22.0D;
+        return 22.0;
     }
 
-
     public Rectangle getClickableBounds() {
-        return new Rectangle(this.x - getClickableWidth() / 2, this.y - 15 - 2,
-                getClickableWidth(), getClickableHeight());
+        return new Rectangle(this.x - this.getClickableWidth() / 2, this.y - 15 - 2, this.getClickableWidth(), this.getClickableHeight());
     }
 
     public boolean hasPips() {
-        return (this.renderPips && this.talentGroup.getMaxLevel() > 1);
+        return this.renderPips && this.talentGroup.getMaxLevel() > 1;
     }
 
-    public void setRenderPips(boolean renderPips) {
+    public void setRenderPips(final boolean renderPips) {
         this.renderPips = renderPips;
     }
 
-
-    public boolean isMouseOver(double mouseX, double mouseY) {
-        return getClickableBounds().contains(mouseX, mouseY);
+    public boolean isMouseOver(final double mouseX, final double mouseY) {
+        return this.getClickableBounds().contains(mouseX, mouseY);
     }
 
-
-    public boolean mouseClicked(double mouseX, double mouseY, int button) {
-        if (this.selected) return false;
-
-        playDownSound(Minecraft.getInstance().getSoundManager());
+    public boolean mouseClicked(final double mouseX, final double mouseY, final int button) {
+        if (this.selected) {
+            return false;
+        }
+        this.playDownSound(Minecraft.getInstance().getSoundManager());
         return true;
     }
 
@@ -132,151 +123,124 @@ public class TalentWidget
         this.selected = false;
     }
 
-
-    public void renderWidget(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks, List<Runnable> postContainerRender) {
-        render(matrixStack, mouseX, mouseY, partialTicks);
-
-        Matrix4f current = matrixStack.last().pose().copy();
+    public void renderWidget(final MatrixStack matrixStack, final int mouseX, final int mouseY, final float partialTicks, final List<Runnable> postContainerRender) {
+        this.render(matrixStack, mouseX, mouseY, partialTicks);
+        final Matrix4f current = matrixStack.last().pose().copy();
         postContainerRender.add(() -> {
             RenderSystem.pushMatrix();
             RenderSystem.multMatrix(current);
-            renderHover(matrixStack, mouseX, mouseY, partialTicks);
+            this.renderHover(matrixStack, mouseX, mouseY, partialTicks);
             RenderSystem.popMatrix();
         });
     }
 
-    private void renderHover(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks) {
-        if (!isMouseOver(mouseX, mouseY)) {
+    private void renderHover(final MatrixStack matrixStack, final int mouseX, final int mouseY, final float partialTicks) {
+        if (!this.isMouseOver(mouseX, mouseY)) {
             return;
         }
-        TalentNode<?> node = this.talentTree.getNodeOf(this.talentGroup);
+        final TalentNode<?> node = this.talentTree.getNodeOf(this.talentGroup);
         if (node == null) {
             return;
         }
-
-        List<ITextComponent> tTip = new ArrayList<>();
-        tTip.add(new StringTextComponent(node.getGroup().getParentName()));
-
+        final List<ITextComponent> tTip = new ArrayList<ITextComponent>();
+        tTip.add((ITextComponent) new StringTextComponent(node.getGroup().getParentName()));
         if (this.locked) {
-            List<TalentGroup<?>> preconditions = ModConfigs.SKILL_GATES.getGates().getDependencyTalents(this.talentGroup.getParentName());
+            final List<TalentGroup<?>> preconditions = ModConfigs.SKILL_GATES.getGates().getDependencyTalents(this.talentGroup.getParentName());
             if (!preconditions.isEmpty()) {
-                tTip.add((new StringTextComponent("Requires:")).withStyle(TextFormatting.RED));
-                preconditions.forEach(talent -> tTip.add((new StringTextComponent("- " + talent.getParentName())).withStyle(TextFormatting.RED)));
+                tTip.add((ITextComponent) new StringTextComponent("Requires:").withStyle(TextFormatting.RED));
+                preconditions.forEach(talent -> {
+
+                    final StringTextComponent stringTextComponent = new StringTextComponent("- " + talent.getParentName());
+                    tTip.add(stringTextComponent.withStyle(TextFormatting.RED));
+                    return;
+                });
             }
         }
-
-
-        List<TalentGroup<?>> conflicts = ModConfigs.SKILL_GATES.getGates().getLockedByTalents(this.talentGroup.getParentName());
+        final List<TalentGroup<?>> conflicts = ModConfigs.SKILL_GATES.getGates().getLockedByTalents(this.talentGroup.getParentName());
         if (!conflicts.isEmpty()) {
-            tTip.add((new StringTextComponent("Cannot be unlocked alongside:")).withStyle(TextFormatting.RED));
-            conflicts.forEach(talent -> tTip.add((new StringTextComponent("- " + talent.getParentName())).withStyle(TextFormatting.RED)));
+            tTip.add((ITextComponent) new StringTextComponent("Cannot be unlocked alongside:").withStyle(TextFormatting.RED));
+            conflicts.forEach(talent -> {
+
+                final StringTextComponent stringTextComponent2 = new StringTextComponent("- " + talent.getParentName());
+                tTip.add(stringTextComponent2.withStyle(TextFormatting.RED));
+                return;
+            });
         }
-
-
-        if (!node.isLearned() && this.talentGroup instanceof iskallia.vault.skill.talent.ArchetypeTalentGroup) {
-            tTip.add((new StringTextComponent("Cannot be unlocked alongside")).withStyle(TextFormatting.RED));
-            tTip.add((new StringTextComponent("other archetype talents.")).withStyle(TextFormatting.RED));
+        if (!node.isLearned() && this.talentGroup instanceof ArchetypeTalentGroup) {
+            tTip.add((ITextComponent) new StringTextComponent("Cannot be unlocked alongside").withStyle(TextFormatting.RED));
+            tTip.add((ITextComponent) new StringTextComponent("other archetype talents.").withStyle(TextFormatting.RED));
         }
         if (node.getLevel() < node.getGroup().getMaxLevel()) {
-            int levelRequirement = node.getGroup().getTalent(node.getLevel() + 1).getLevelRequirement();
+            final int levelRequirement = ((PlayerTalent) node.getGroup().getTalent(node.getLevel() + 1)).getLevelRequirement();
             if (VaultBarOverlay.vaultLevel < levelRequirement) {
-                tTip.add((new StringTextComponent("Requires level: " + levelRequirement)).withStyle(TextFormatting.RED));
+                tTip.add((ITextComponent) new StringTextComponent("Requires level: " + levelRequirement).withStyle(TextFormatting.RED));
             }
         }
-
         matrixStack.pushPose();
-        matrixStack.translate(this.x, (this.y - 15), 0.0D);
-        GuiUtils.drawHoveringText(matrixStack, tTip, 0, 0, 2147483647, 2147483647, -1,
-
-
-                (Minecraft.getInstance()).font);
+        matrixStack.translate((double) this.x, (double) (this.y - 15), 0.0);
+        GuiUtils.drawHoveringText(matrixStack, (List) tTip, 0, 0, Integer.MAX_VALUE, Integer.MAX_VALUE, -1, Minecraft.getInstance().font);
         matrixStack.popPose();
-
         RenderSystem.enableBlend();
     }
 
-
-    public void render(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks) {
-        renderIcon(matrixStack, mouseX, mouseY, partialTicks);
-        if (hasPips()) {
-            renderPips(matrixStack, mouseX, mouseY, partialTicks);
+    public void render(final MatrixStack matrixStack, final int mouseX, final int mouseY, final float partialTicks) {
+        this.renderIcon(matrixStack, mouseX, mouseY, partialTicks);
+        if (this.hasPips()) {
+            this.renderPips(matrixStack, mouseX, mouseY, partialTicks);
         }
     }
 
-    public void renderIcon(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks) {
-        ResourceBoundary resourceBoundary = this.style.frameType.getResourceBoundary();
-
+    public void renderIcon(final MatrixStack matrixStack, final int mouseX, final int mouseY, final float partialTicks) {
+        final ResourceBoundary resourceBoundary = this.style.frameType.getResourceBoundary();
         matrixStack.pushPose();
-        matrixStack.translate(-15.0D, -15.0D, 0.0D);
-        (Minecraft.getInstance()).textureManager.bind(resourceBoundary.getResource());
-
-
-        int vOffset = this.locked ? 62 : ((this.selected || isMouseOver(mouseX, mouseY)) ? -31 : ((this.talentTree.getNodeOf(this.talentGroup).getLevel() >= 1) ? 31 : 0));
-        blit(matrixStack, this.x, this.y, resourceBoundary
-                .getU(), resourceBoundary
-                .getV() + vOffset, resourceBoundary
-                .getW(), resourceBoundary
-                .getH());
+        matrixStack.translate(-15.0, -15.0, 0.0);
+        Minecraft.getInstance().textureManager.bind(resourceBoundary.getResource());
+        final int vOffset = this.locked ? 62 : ((this.selected || this.isMouseOver(mouseX, mouseY)) ? -31 : ((this.talentTree.getNodeOf(this.talentGroup).getLevel() >= 1) ? 31 : 0));
+        this.blit(matrixStack, this.x, this.y, resourceBoundary.getU(), resourceBoundary.getV() + vOffset, resourceBoundary.getW(), resourceBoundary.getH());
         matrixStack.popPose();
-
         matrixStack.pushPose();
-        matrixStack.translate(-8.0D, -8.0D, 0.0D);
-        (Minecraft.getInstance()).textureManager.bind(TALENTS_RESOURCE);
-        blit(matrixStack, this.x, this.y, this.style.u, this.style.v, 16, 16);
-
-
+        matrixStack.translate(-8.0, -8.0, 0.0);
+        Minecraft.getInstance().textureManager.bind(TalentWidget.TALENTS_RESOURCE);
+        this.blit(matrixStack, this.x, this.y, this.style.u, this.style.v, 16, 16);
         matrixStack.popPose();
     }
 
-    public void renderPips(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks) {
-        (Minecraft.getInstance()).textureManager.bind(SKILL_WIDGET_RESOURCE);
-
-        int rowCount = pipRowCount(this.talentGroup.getMaxLevel());
+    public void renderPips(final MatrixStack matrixStack, final int mouseX, final int mouseY, final float partialTicks) {
+        Minecraft.getInstance().textureManager.bind(TalentWidget.SKILL_WIDGET_RESOURCE);
+        final int rowCount = pipRowCount(this.talentGroup.getMaxLevel());
         int remainingPips = this.talentGroup.getMaxLevel();
         int remainingFilledPips = this.talentTree.getNodeOf(this.talentGroup).getLevel();
-        for (int r = 0; r < rowCount; r++) {
-            renderPipLine(matrixStack, this.x, this.y + 15 + 4 + r * 10,
-
-
-                    Math.min(4, remainingPips),
-                    Math.min(4, remainingFilledPips));
-
+        for (int r = 0; r < rowCount; ++r) {
+            this.renderPipLine(matrixStack, this.x, this.y + 15 + 4 + r * 10, Math.min(4, remainingPips), Math.min(4, remainingFilledPips));
             remainingPips -= 4;
             remainingFilledPips -= 4;
         }
     }
 
-    public void renderPipLine(MatrixStack matrixStack, int x, int y, int count, int filledCount) {
-        int lineWidth = count * 8 + (count - 1) * 2;
+    public void renderPipLine(final MatrixStack matrixStack, final int x, final int y, final int count, final int filledCount) {
+        final int lineWidth = count * 8 + (count - 1) * 2;
         int remainingFilled = filledCount;
-
         matrixStack.pushPose();
-        matrixStack.translate(x, y, 0.0D);
-        matrixStack.translate((-lineWidth / 2.0F), -4.0D, 0.0D);
-
-        for (int i = 0; i < count; i++) {
+        matrixStack.translate((double) x, (double) y, 0.0);
+        matrixStack.translate((double) (-lineWidth / 2.0f), -4.0, 0.0);
+        for (int i = 0; i < count; ++i) {
             if (remainingFilled > 0) {
-                blit(matrixStack, 0, 0, 1, 133, 8, 8);
-
-                remainingFilled--;
+                this.blit(matrixStack, 0, 0, 1, 133, 8, 8);
+                --remainingFilled;
             } else {
-
-                blit(matrixStack, 0, 0, 1, 124, 8, 8);
+                this.blit(matrixStack, 0, 0, 1, 124, 8, 8);
             }
-
-            matrixStack.translate(10.0D, 0.0D, 0.0D);
+            matrixStack.translate(10.0, 0.0, 0.0);
         }
-
         matrixStack.popPose();
     }
 
-    public static int pipRowCount(int level) {
-        return (int) Math.ceil((level / 4.0F));
+    public static int pipRowCount(final int level) {
+        return (int) Math.ceil(level / 4.0f);
+    }
+
+    static {
+        SKILL_WIDGET_RESOURCE = new ResourceLocation("the_vault", "textures/gui/skill-widget.png");
+        TALENTS_RESOURCE = new ResourceLocation("the_vault", "textures/gui/talents.png");
     }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\client\gui\widget\TalentWidget.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

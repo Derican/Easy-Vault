@@ -1,3 +1,7 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.block;
 
 import com.google.common.collect.Lists;
@@ -36,132 +40,120 @@ import net.minecraft.world.server.ServerWorld;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class ObeliskBlock extends Block {
-    public static final EnumProperty<DoubleBlockHalf> HALF = BlockStateProperties.DOUBLE_BLOCK_HALF;
-    public static final IntegerProperty COMPLETION = IntegerProperty.create("completion", 0, 4);
-
-    private static final VoxelShape SHAPE = Block.box(2.0D, 0.0D, 2.0D, 14.0D, 32.0D, 14.0D);
-    private static final VoxelShape SHAPE_TOP = SHAPE.move(0.0D, -1.0D, 0.0D);
-
+public class ObeliskBlock extends Block
+{
+    public static final EnumProperty<DoubleBlockHalf> HALF;
+    public static final IntegerProperty COMPLETION;
+    private static final VoxelShape SHAPE;
+    private static final VoxelShape SHAPE_TOP;
+    
     public ObeliskBlock() {
-        super(AbstractBlock.Properties.of(Material.STONE).sound(SoundType.METAL).strength(-1.0F, 3600000.0F).noDrops());
-        registerDefaultState((BlockState) ((BlockState) ((BlockState) this.stateDefinition.any()).setValue((Property) HALF, (Comparable) DoubleBlockHalf.LOWER)).setValue((Property) COMPLETION, Integer.valueOf(0)));
+        super(AbstractBlock.Properties.of(Material.STONE).sound(SoundType.METAL).strength(-1.0f, 3600000.0f).noDrops());
+        this.registerDefaultState(((this.stateDefinition.any()).setValue(ObeliskBlock.HALF, DoubleBlockHalf.LOWER)).setValue(ObeliskBlock.COMPLETION, 0));
     }
-
-
-    public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
-        if (state.getValue((Property) HALF) == DoubleBlockHalf.UPPER) {
-            return SHAPE_TOP;
+    
+    public VoxelShape getShape(final BlockState state, final IBlockReader worldIn, final BlockPos pos, final ISelectionContext context) {
+        if (state.getValue(ObeliskBlock.HALF) == DoubleBlockHalf.UPPER) {
+            return ObeliskBlock.SHAPE_TOP;
         }
-        return SHAPE;
+        return ObeliskBlock.SHAPE;
     }
-
-
-    public boolean hasTileEntity(BlockState state) {
-        return (state.getValue((Property) HALF) == DoubleBlockHalf.LOWER);
+    
+    public boolean hasTileEntity(final BlockState state) {
+        return state.getValue(ObeliskBlock.HALF) == DoubleBlockHalf.LOWER;
     }
-
-
+    
     @Nullable
-    public TileEntity createTileEntity(BlockState state, IBlockReader world) {
-        if (hasTileEntity(state)) {
+    public TileEntity createTileEntity(final BlockState state, final IBlockReader world) {
+        if (this.hasTileEntity(state)) {
             return ModBlocks.OBELISK_TILE_ENTITY.create();
         }
         return null;
     }
-
-
-    public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
-        if (state.getValue((Property) HALF) == DoubleBlockHalf.UPPER) {
-            BlockState downState = world.getBlockState(pos.below());
-            if (!(downState.getBlock() instanceof ObeliskBlock)) {
-                return ActionResultType.PASS;
+    
+    public ActionResultType use(final BlockState state, final World world, final BlockPos pos, final PlayerEntity player, final Hand hand, final BlockRayTraceResult hit) {
+        if (state.getValue(ObeliskBlock.HALF) != DoubleBlockHalf.UPPER) {
+            if ((int)state.getValue(ObeliskBlock.COMPLETION) != 4 && this.newBlockActivated(state, world, pos, player, hand, hit)) {
+                final BlockState newState = state.setValue(ObeliskBlock.COMPLETION, 4);
+                world.setBlockAndUpdate(pos, newState);
+                this.spawnParticles(world, pos);
             }
-            return use(downState, world, pos.below(), player, hand, hit);
+            return ActionResultType.SUCCESS;
         }
-
-        if (((Integer) state.getValue((Property) COMPLETION)).intValue() != 4 &&
-                newBlockActivated(state, world, pos, player, hand, hit)) {
-            BlockState newState = (BlockState) state.setValue((Property) COMPLETION, Integer.valueOf(4));
-            world.setBlockAndUpdate(pos, newState);
-            spawnParticles(world, pos);
+        final BlockState downState = world.getBlockState(pos.below());
+        if (!(downState.getBlock() instanceof ObeliskBlock)) {
+            return ActionResultType.PASS;
         }
-
-
-        return ActionResultType.SUCCESS;
+        return this.use(downState, world, pos.below(), player, hand, hit);
     }
-
-    private boolean newBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
-        if (world.isClientSide) return false;
-        VaultRaid vault = VaultRaidData.get((ServerWorld) world).getAt((ServerWorld) world, pos);
-        if (vault == null) return false;
-
-
-        SummonAndKillBossObjective objective = vault.getPlayer(player.getUUID()).flatMap(vaultPlayer -> vaultPlayer.getActiveObjective(SummonAndKillBossObjective.class)).orElseGet(() -> (SummonAndKillBossObjective) vault.getActiveObjective(SummonAndKillBossObjective.class).orElse(null));
-
-        if (objective != null) {
-            if (objective.allObelisksClicked()) return false;
-            objective.addObelisk();
-
-            if (objective.allObelisksClicked()) {
-                LivingEntity boss = VaultBossSpawner.spawnBoss(vault, (ServerWorld) world, pos);
-                objective.setBoss(boss);
-            }
-            return true;
+    
+    private boolean newBlockActivated(final BlockState state, final World world, final BlockPos pos, final PlayerEntity player, final Hand hand, final BlockRayTraceResult hit) {
+        if (world.isClientSide) {
+            return false;
         }
-        return false;
-    }
-
-    private void spawnParticles(World world, BlockPos pos) {
-        for (int i = 0; i < 20; i++) {
-            double d0 = world.random.nextGaussian() * 0.02D;
-            double d1 = world.random.nextGaussian() * 0.02D;
-            double d2 = world.random.nextGaussian() * 0.02D;
-
-            ((ServerWorld) world).sendParticles((IParticleData) ParticleTypes.POOF, pos
-                    .getX() + world.random.nextDouble() - d0, pos
-                    .getY() + world.random.nextDouble() - d1, pos
-                    .getZ() + world.random.nextDouble() - d2, 10, d0, d1, d2, 1.0D);
+        final VaultRaid vault = VaultRaidData.get((ServerWorld)world).getAt((ServerWorld)world, pos);
+        if (vault == null) {
+            return false;
         }
-
-        world.playSound(null, pos, SoundEvents.CONDUIT_ACTIVATE, SoundCategory.BLOCKS, 1.0F, 1.0F);
+        final SummonAndKillBossObjective objective = vault.getPlayer(player.getUUID()).flatMap(vaultPlayer -> vaultPlayer.getActiveObjective(SummonAndKillBossObjective.class)).orElseGet(() -> vault.getActiveObjective(SummonAndKillBossObjective.class).orElse(null));
+        if (objective == null) {
+            return false;
+        }
+        if (objective.allObelisksClicked()) {
+            return false;
+        }
+        objective.addObelisk();
+        if (objective.allObelisksClicked()) {
+            final LivingEntity boss = VaultBossSpawner.spawnBoss(vault, (ServerWorld)world, pos);
+            objective.setBoss(boss);
+        }
+        return true;
     }
-
-    protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) {
-        builder.add(new Property[]{(Property) HALF}).add(new Property[]{(Property) COMPLETION});
+    
+    private void spawnParticles(final World world, final BlockPos pos) {
+        for (int i = 0; i < 20; ++i) {
+            final double d0 = world.random.nextGaussian() * 0.02;
+            final double d2 = world.random.nextGaussian() * 0.02;
+            final double d3 = world.random.nextGaussian() * 0.02;
+            ((ServerWorld)world).sendParticles((IParticleData)ParticleTypes.POOF, pos.getX() + world.random.nextDouble() - d0, pos.getY() + world.random.nextDouble() - d2, pos.getZ() + world.random.nextDouble() - d3, 10, d0, d2, d3, 1.0);
+        }
+        world.playSound((PlayerEntity)null, pos, SoundEvents.CONDUIT_ACTIVATE, SoundCategory.BLOCKS, 1.0f, 1.0f);
     }
-
-
-    public void onRemove(BlockState state, World world, BlockPos pos, BlockState newState, boolean isMoving) {
+    
+    protected void createBlockStateDefinition(final StateContainer.Builder<Block, BlockState> builder) {
+        builder.add(new Property[] { ObeliskBlock.HALF }).add(new Property[] { ObeliskBlock.COMPLETION });
+    }
+    
+    public void onRemove(final BlockState state, final World world, final BlockPos pos, final BlockState newState, final boolean isMoving) {
         super.onRemove(state, world, pos, newState, isMoving);
         if (!state.is(newState.getBlock())) {
-            if (state.getValue((Property) HALF) == DoubleBlockHalf.UPPER) {
-                BlockState otherState = world.getBlockState(pos.below());
+            if (state.getValue(ObeliskBlock.HALF) == DoubleBlockHalf.UPPER) {
+                final BlockState otherState = world.getBlockState(pos.below());
                 if (otherState.is(state.getBlock())) {
                     world.removeBlock(pos.below(), isMoving);
                 }
-            } else {
-                BlockState otherState = world.getBlockState(pos.above());
+            }
+            else {
+                final BlockState otherState = world.getBlockState(pos.above());
                 if (otherState.is(state.getBlock())) {
                     world.removeBlock(pos.above(), isMoving);
                 }
             }
         }
     }
-
-
-    public List<ItemStack> getDrops(BlockState state, LootContext.Builder builder) {
+    
+    public List<ItemStack> getDrops(final BlockState state, final LootContext.Builder builder) {
         return Lists.newArrayList();
     }
-
-
-    public BlockRenderType getRenderShape(BlockState state) {
+    
+    public BlockRenderType getRenderShape(final BlockState state) {
         return BlockRenderType.MODEL;
     }
+    
+    static {
+        HALF = BlockStateProperties.DOUBLE_BLOCK_HALF;
+        COMPLETION = IntegerProperty.create("completion", 0, 4);
+        SHAPE = Block.box(2.0, 0.0, 2.0, 14.0, 32.0, 14.0);
+        SHAPE_TOP = ObeliskBlock.SHAPE.move(0.0, -1.0, 0.0);
+    }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\block\ObeliskBlock.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

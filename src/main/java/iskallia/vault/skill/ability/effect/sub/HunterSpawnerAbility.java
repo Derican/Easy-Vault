@@ -1,6 +1,9 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.skill.ability.effect.sub;
 
-import iskallia.vault.skill.ability.config.HunterConfig;
 import iskallia.vault.skill.ability.config.sub.HunterSpawnerConfig;
 import iskallia.vault.skill.ability.effect.HunterAbility;
 import net.minecraft.entity.player.PlayerEntity;
@@ -11,23 +14,18 @@ import net.minecraft.world.World;
 import java.awt.*;
 import java.util.List;
 
-
-public class HunterSpawnerAbility
-        extends HunterAbility<HunterSpawnerConfig> {
-    protected List<Tuple<BlockPos, Color>> selectPositions(HunterSpawnerConfig config, World world, PlayerEntity player) {
-        List<Tuple<BlockPos, Color>> entityPositions = super.selectPositions((HunterConfig) config, world, player);
-        Color c = new Color(config.getColor(), false);
-        forEachTileEntity((HunterConfig) config, world, player, (pos, tile) -> {
+public class HunterSpawnerAbility extends HunterAbility<HunterSpawnerConfig>
+{
+    @Override
+    protected List<Tuple<BlockPos, Color>> selectPositions(final HunterSpawnerConfig config, final World world, final PlayerEntity player) {
+        final List<Tuple<BlockPos, Color>> entityPositions = super.selectPositions(config, world, player);
+        final Color c = new Color(config.getColor(), false);
+        this.forEachTileEntity(config, world, player, (pos, tile) -> {
             if (config.shouldHighlightTileEntity(tile)) {
                 entityPositions.add(new Tuple(pos, c));
             }
+            return;
         });
         return entityPositions;
     }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\skill\ability\effect\sub\HunterSpawnerAbility.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

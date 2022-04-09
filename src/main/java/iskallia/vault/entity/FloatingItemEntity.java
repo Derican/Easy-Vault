@@ -1,3 +1,7 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.entity;
 
 import iskallia.vault.client.util.ColorizationHelper;
@@ -28,135 +32,114 @@ import net.minecraftforge.fml.network.NetworkHooks;
 
 import java.awt.*;
 import java.util.Optional;
+import java.util.function.Function;
 
-
-public class FloatingItemEntity
-        extends ItemEntity {
-    private static final DataParameter<Integer> COLOR1 = EntityDataManager.defineId(FloatingItemEntity.class, DataSerializers.INT);
-    private static final DataParameter<Integer> COLOR2 = EntityDataManager.defineId(FloatingItemEntity.class, DataSerializers.INT);
-
-    public FloatingItemEntity(EntityType<? extends ItemEntity> type, World world) {
-        super(type, world);
-        addTag("PreventMagnetMovement");
+public class FloatingItemEntity extends ItemEntity
+{
+    private static final DataParameter<Integer> COLOR1;
+    private static final DataParameter<Integer> COLOR2;
+    
+    public FloatingItemEntity(final EntityType<? extends ItemEntity> type, final World world) {
+        super((EntityType)type, world);
+        this.addTag("PreventMagnetMovement");
     }
-
-    public FloatingItemEntity(World worldIn, double x, double y, double z) {
+    
+    public FloatingItemEntity(final World worldIn, final double x, final double y, final double z) {
         this(ModEntities.FLOATING_ITEM, worldIn);
-        setPos(x, y, z);
-        this.yRot = this.random.nextFloat() * 360.0F;
-        setDeltaMovement(this.random.nextDouble() * 0.2D - 0.1D, 0.2D, this.random.nextDouble() * 0.2D - 0.1D);
+        this.setPos(x, y, z);
+        this.yRot = this.random.nextFloat() * 360.0f;
+        this.setDeltaMovement(this.random.nextDouble() * 0.2 - 0.1, 0.2, this.random.nextDouble() * 0.2 - 0.1);
     }
-
-    public FloatingItemEntity(World worldIn, double x, double y, double z, ItemStack stack) {
+    
+    public FloatingItemEntity(final World worldIn, final double x, final double y, final double z, final ItemStack stack) {
         this(worldIn, x, y, z);
-        setItem(stack);
+        this.setItem(stack);
         this.lifespan = Integer.MAX_VALUE;
     }
-
-    public static FloatingItemEntity create(World world, BlockPos pos, ItemStack stack) {
-        return new FloatingItemEntity(world, pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5D, stack);
+    
+    public static FloatingItemEntity create(final World world, final BlockPos pos, final ItemStack stack) {
+        return new FloatingItemEntity(world, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, stack);
     }
-
+    
     protected void defineSynchedData() {
         super.defineSynchedData();
-
-        getEntityData().define(COLOR1, Integer.valueOf(16777215));
-        getEntityData().define(COLOR2, Integer.valueOf(16777215));
+        this.getEntityData().define((DataParameter)FloatingItemEntity.COLOR1, 16777215);
+        this.getEntityData().define((DataParameter)FloatingItemEntity.COLOR2, 16777215);
     }
-
-    public void setColor(int color) {
-        setColor(color, color);
+    
+    public void setColor(final int color) {
+        this.setColor(color, color);
     }
-
-    public void setColor(int color1, int color2) {
-        this.entityData.set(COLOR1, Integer.valueOf(color1));
-        this.entityData.set(COLOR2, Integer.valueOf(color2));
+    
+    public void setColor(final int color1, final int color2) {
+        this.entityData.set((DataParameter)FloatingItemEntity.COLOR1, color1);
+        this.entityData.set((DataParameter)FloatingItemEntity.COLOR2, color2);
     }
-
-
+    
     public void tick() {
-        setDeltaMovement(Vector3d.ZERO);
+        this.setDeltaMovement(Vector3d.ZERO);
         super.tick();
-
-        if (isAlive() && getCommandSenderWorld().isClientSide()) {
-            playEffects();
+        if (this.isAlive() && this.getCommandSenderWorld().isClientSide()) {
+            this.playEffects();
         }
     }
-
+    
     @OnlyIn(Dist.CLIENT)
     private void playEffects() {
-        ParticleManager mgr = (Minecraft.getInstance()).particleEngine;
-        Vector3d thisPos = position().add(0.0D, (getBbHeight() / 4.0F), 0.0D);
-
-        int color1 = ((Integer) getEntityData().get(COLOR1)).intValue();
-        int color2 = ((Integer) getEntityData().get(COLOR2)).intValue();
-
+        final ParticleManager mgr = Minecraft.getInstance().particleEngine;
+        final Vector3d thisPos = this.position().add(0.0, (double)(this.getBbHeight() / 4.0f), 0.0);
+        int color1 = (int)this.getEntityData().get((DataParameter)FloatingItemEntity.COLOR1);
+        int color2 = (int)this.getEntityData().get((DataParameter)FloatingItemEntity.COLOR2);
         if (color1 == 16777215 && color2 == 16777215) {
-            Optional<Color> override = ColorizationHelper.getCustomColorOverride(getItem());
+            final Optional<Color> override = ColorizationHelper.getCustomColorOverride(this.getItem());
             if (override.isPresent()) {
-                color1 = ((Color) override.get()).getRGB();
-                color2 = color1;
-            } else {
-                color1 = ((Integer) ColorizationHelper.getColor(getItem()).map(Color::getRGB).orElse(Integer.valueOf(16777215))).intValue();
-                this.entityData.set(COLOR1, Integer.valueOf(color1));
-                int r = Math.min((color1 >> 16 & 0xFF) * 2, 255);
-                int g = Math.min((color1 >> 8 & 0xFF) * 2, 255);
-                int b = Math.min((color1 >> 0 & 0xFF) * 2, 255);
-                color2 = r << 16 | g << 8 | b;
-                this.entityData.set(COLOR2, Integer.valueOf(color2));
+                color1 = (color2 = override.get().getRGB());
+            }
+            else {
+                color1 = ColorizationHelper.getColor(this.getItem()).map(Color::getRGB).orElse(16777215);
+                this.entityData.set((DataParameter)FloatingItemEntity.COLOR1, color1);
+                final int r = Math.min((color1 >> 16 & 0xFF) * 2, 255);
+                final int g = Math.min((color1 >> 8 & 0xFF) * 2, 255);
+                final int b = Math.min((color1 >> 0 & 0xFF) * 2, 255);
+                color2 = (r << 16 | g << 8 | b);
+                this.entityData.set((DataParameter)FloatingItemEntity.COLOR2, color2);
             }
         }
-
-
         if (this.random.nextInt(3) == 0) {
-            Vector3d rPos = thisPos.add(((this.random
-                    .nextFloat() - this.random.nextFloat()) * this.random.nextFloat() * 8.0F), ((this.random
-                    .nextFloat() - this.random.nextFloat()) * this.random.nextFloat() * 8.0F), ((this.random
-                    .nextFloat() - this.random.nextFloat()) * this.random.nextFloat() * 8.0F));
-            SimpleAnimatedParticle p = (SimpleAnimatedParticle) mgr.createParticle((IParticleData) ParticleTypes.FIREWORK, rPos.x, rPos.y, rPos.z, 0.0D, 0.0D, 0.0D);
-
-
+            final Vector3d rPos = thisPos.add((double)((this.random.nextFloat() - this.random.nextFloat()) * (this.random.nextFloat() * 8.0f)), (double)((this.random.nextFloat() - this.random.nextFloat()) * (this.random.nextFloat() * 8.0f)), (double)((this.random.nextFloat() - this.random.nextFloat()) * (this.random.nextFloat() * 8.0f)));
+            final SimpleAnimatedParticle p = (SimpleAnimatedParticle)mgr.createParticle((IParticleData)ParticleTypes.FIREWORK, rPos.x, rPos.y, rPos.z, 0.0, 0.0, 0.0);
             if (p != null) {
-//                p.baseGravity = 0.0F;
+                p.baseGravity = 0.0f;
                 p.setColor(MiscUtils.blendColors(color1, color2, this.random.nextFloat()));
             }
         }
-
         if (this.random.nextBoolean()) {
-            SimpleAnimatedParticle p = (SimpleAnimatedParticle) mgr.createParticle((IParticleData) ParticleTypes.FIREWORK, thisPos.x, thisPos.y, thisPos.z, (this.random
-
-                    .nextFloat() - this.random.nextFloat()) * 0.2D, (this.random
-                    .nextFloat() - this.random.nextFloat()) * 0.2D, (this.random
-                    .nextFloat() - this.random.nextFloat()) * 0.2D);
+            final SimpleAnimatedParticle p = (SimpleAnimatedParticle)mgr.createParticle((IParticleData)ParticleTypes.FIREWORK, thisPos.x, thisPos.y, thisPos.z, (this.random.nextFloat() - this.random.nextFloat()) * 0.2, (this.random.nextFloat() - this.random.nextFloat()) * 0.2, (this.random.nextFloat() - this.random.nextFloat()) * 0.2);
             if (p != null) {
-//                p.baseGravity = 0.0F;
+                p.baseGravity = 0.0f;
                 p.setColor(MiscUtils.blendColors(color1, color2, this.random.nextFloat()));
             }
         }
     }
-
-
-    public void playerTouch(PlayerEntity player) {
-        boolean wasAlive = isAlive();
+    
+    public void playerTouch(final PlayerEntity player) {
+        final boolean wasAlive = this.isAlive();
         super.playerTouch(player);
-        if (wasAlive && !isAlive()) {
-            player.getCommandSenderWorld().playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.NOTE_BLOCK_BELL, SoundCategory.PLAYERS, 0.6F, 1.0F);
+        if (wasAlive && !this.isAlive()) {
+            player.getCommandSenderWorld().playSound((PlayerEntity)null, player.getX(), player.getY(), player.getZ(), SoundEvents.NOTE_BLOCK_BELL, SoundCategory.PLAYERS, 0.6f, 1.0f);
         }
     }
-
-
+    
     public boolean isNoGravity() {
         return true;
     }
-
-
+    
     public IPacket<?> getAddEntityPacket() {
-        return NetworkHooks.getEntitySpawningPacket((Entity) this);
+        return (IPacket<?>)NetworkHooks.getEntitySpawningPacket((Entity)this);
+    }
+    
+    static {
+        COLOR1 = EntityDataManager.defineId((Class)FloatingItemEntity.class, DataSerializers.INT);
+        COLOR2 = EntityDataManager.defineId((Class)FloatingItemEntity.class, DataSerializers.INT);
     }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\entity\FloatingItemEntity.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

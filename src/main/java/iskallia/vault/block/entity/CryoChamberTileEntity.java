@@ -1,3 +1,7 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.block.entity;
 
 import com.mojang.authlib.GameProfile;
@@ -53,272 +57,268 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.UUID;
+import java.util.function.Predicate;
 
-public class CryoChamberTileEntity
-        extends TileEntity implements ITickableTileEntity, INamedContainerProvider {
+public class CryoChamberTileEntity extends TileEntity implements ITickableTileEntity, INamedContainerProvider
+{
     protected SkinProfile skin;
     private UUID owner;
-    public List<String> coreNames = new ArrayList<>();
-    private int maxCores = 0;
-
-    private boolean infusing = false;
-    private int infusionTimeRemaining = 0;
-    private boolean growingEternal = false;
-    private int growEternalTimeRemaining = 0;
-
+    public List<String> coreNames;
+    private int maxCores;
+    private boolean infusing;
+    private int infusionTimeRemaining;
+    private boolean growingEternal;
+    private int growEternalTimeRemaining;
     protected UUID eternalId;
     public float lastCoreCount;
-
-    private final ItemStackHandler itemHandler = new ItemStackHandler(1) {
-        protected void onContentsChanged(int slot) {
-            if (getStackInSlot(slot).getItem() == ModItems.TRADER_CORE) {
-                CryoChamberTileEntity.this.addTraderCore(ItemTraderCore.getCoreFromStack(getStackInSlot(slot)));
-                setStackInSlot(slot, ItemStack.EMPTY);
+    private final ItemStackHandler itemHandler;
+    private final LazyOptional<IItemHandler> handler;
+    
+    protected CryoChamberTileEntity(final TileEntityType<?> tileEntityType) {
+        super((TileEntityType)tileEntityType);
+        this.coreNames = new ArrayList<String>();
+        this.maxCores = 0;
+        this.infusing = false;
+        this.infusionTimeRemaining = 0;
+        this.growingEternal = false;
+        this.growEternalTimeRemaining = 0;
+        this.itemHandler = new ItemStackHandler(1) {
+            protected void onContentsChanged(final int slot) {
+                if (this.getStackInSlot(slot).getItem() == ModItems.TRADER_CORE) {
+                    CryoChamberTileEntity.this.addTraderCore(ItemTraderCore.getCoreFromStack(this.getStackInSlot(slot)));
+                    this.setStackInSlot(slot, ItemStack.EMPTY);
+                }
+                CryoChamberTileEntity.this.sendUpdates();
             }
-
-            CryoChamberTileEntity.this.sendUpdates();
-        }
-
-
-        public boolean isItemValid(int slot, ItemStack stack) {
-            return (stack.getItem() == ModItems.TRADER_CORE && !CryoChamberTileEntity.this.isFull() && !CryoChamberTileEntity.this.isInfusing());
-        }
-    };
-
-    private final LazyOptional<IItemHandler> handler = LazyOptional.of(() -> this.itemHandler);
-
-    protected CryoChamberTileEntity(TileEntityType<?> tileEntityType) {
-        super(tileEntityType);
+            
+            public boolean isItemValid(final int slot, final ItemStack stack) {
+                return stack.getItem() == ModItems.TRADER_CORE && !CryoChamberTileEntity.this.isFull() && !CryoChamberTileEntity.this.isInfusing();
+            }
+        };
+        this.handler = LazyOptional.of(() -> this.itemHandler);
         this.skin = new SkinProfile();
     }
-
+    
     public CryoChamberTileEntity() {
         this(ModBlocks.CRYO_CHAMBER_TILE_ENTITY);
     }
-
+    
     public UUID getOwner() {
         return this.owner;
     }
-
-    public void setOwner(UUID owner) {
+    
+    public void setOwner(final UUID owner) {
         this.owner = owner;
     }
-
+    
     public int getMaxCores() {
         return this.maxCores;
     }
-
-    public void setMaxCores(int maxCores) {
+    
+    public void setMaxCores(final int maxCores) {
         this.maxCores = maxCores;
     }
-
+    
     public boolean isInfusing() {
         return this.infusing;
     }
-
+    
     public int getInfusionTimeRemaining() {
         return this.infusionTimeRemaining;
     }
-
+    
     public boolean isGrowingEternal() {
         return this.growingEternal;
     }
-
+    
     public int getGrowEternalTimeRemaining() {
         return this.growEternalTimeRemaining;
     }
-
+    
     public SkinProfile getSkin() {
         return this.skin;
     }
-
+    
     public int getCoreCount() {
         return this.coreNames.size();
     }
-
+    
     public List<String> getCoreNames() {
         return this.coreNames;
     }
-
-    public boolean addTraderCore(TraderCore core) {
-        if (isFull() || isInfusing() || getOwner() == null) {
+    
+    public boolean addTraderCore(final TraderCore core) {
+        if (this.isFull() || this.isInfusing() || this.getOwner() == null) {
             return false;
         }
         if (!(this.level instanceof ServerWorld)) {
             return false;
         }
-        ServerWorld sWorld = (ServerWorld) this.level;
-        sWorld.playSound(null, this.worldPosition.getX(), this.worldPosition.getY(), this.worldPosition.getZ(), SoundEvents.SOUL_ESCAPE, SoundCategory.PLAYERS, 1.0F, 1.0F);
-
-        GameProfile knownProfile = sWorld.getServer().getProfileCache().get(getOwner());
+        final ServerWorld sWorld = (ServerWorld)this.level;
+        sWorld.playSound((PlayerEntity)null, (double)this.worldPosition.getX(), (double)this.worldPosition.getY(), (double)this.worldPosition.getZ(), SoundEvents.SOUL_ESCAPE, SoundCategory.PLAYERS, 1.0f, 1.0f);
+        final GameProfile knownProfile = sWorld.getServer().getProfileCache().get(this.getOwner());
         if (knownProfile == null) {
             return false;
         }
-        int eternals = EternalsData.get(sWorld).getEternals(getOwner()).getNonAncientEternalCount();
-
-        int cores = getMaxCores();
-        int newCores = ModConfigs.CRYO_CHAMBER.getPlayerCoreCount(knownProfile.getName(), eternals);
+        final int eternals = EternalsData.get(sWorld).getEternals(this.getOwner()).getNonAncientEternalCount();
+        final int cores = this.getMaxCores();
+        final int newCores = ModConfigs.CRYO_CHAMBER.getPlayerCoreCount(knownProfile.getName(), eternals);
         if (cores != newCores) {
-            setMaxCores(newCores);
-            sendUpdates();
+            this.setMaxCores(newCores);
+            this.sendUpdates();
         }
-
         this.coreNames.add(core.getName());
-
         if (core.getTrade() != null && !core.getTrade().wasTradeUsed() && sWorld.random.nextFloat() < ModConfigs.CRYO_CHAMBER.getUnusedTraderRewardChance()) {
-            PlayerEntity player = sWorld.getNearestPlayer(this.worldPosition.getX(), this.worldPosition.getY(), this.worldPosition.getZ(), 3.0D, false);
+            final PlayerEntity player = sWorld.getNearestPlayer((double)this.worldPosition.getX(), (double)this.worldPosition.getY(), (double)this.worldPosition.getZ(), 3.0, false);
             if (player instanceof ServerPlayerEntity) {
-                MiscUtils.giveItem((ServerPlayerEntity) player, new ItemStack((IItemProvider) ModItems.PANDORAS_BOX));
-            } else {
-                BlockPos.findClosestMatch(getBlockPos(), 7, 2, sWorld::isEmptyBlock).ifPresent(airPos -> Block.popResource((World) sWorld, airPos, new ItemStack((IItemProvider) ModItems.PANDORAS_BOX)));
+                MiscUtils.giveItem((ServerPlayerEntity)player, new ItemStack((IItemProvider)ModItems.PANDORAS_BOX));
+            }
+            else {
+                BlockPos.findClosestMatch(this.getBlockPos(), 7, 2, sWorld::isEmptyBlock).ifPresent(airPos -> Block.popResource((World)sWorld, (BlockPos) airPos, new ItemStack((IItemProvider)ModItems.PANDORAS_BOX)));
             }
         }
-
-
         this.infusing = true;
         this.infusionTimeRemaining = ModConfigs.CRYO_CHAMBER.getInfusionTime();
-        sendUpdates();
+        this.sendUpdates();
         return true;
     }
-
+    
     @OnlyIn(Dist.CLIENT)
     public void updateSkin() {
         if (this.infusing && !this.coreNames.isEmpty()) {
             this.skin.updateSkin(this.coreNames.get(this.coreNames.size() - 1));
             return;
         }
-        EternalDataSnapshot snapshot = ClientEternalData.getSnapshot(getEternalId());
+        final EternalDataSnapshot snapshot = ClientEternalData.getSnapshot(this.getEternalId());
         if (snapshot == null || snapshot.getName() == null) {
             return;
         }
         this.skin.updateSkin(snapshot.getName());
     }
-
+    
     public void sendUpdates() {
-        this.level.sendBlockUpdated(this.worldPosition, getBlockState(), getBlockState(), 3);
-        this.level.updateNeighborsAt(this.worldPosition, getBlockState().getBlock());
-        setChanged();
+        this.level.sendBlockUpdated(this.worldPosition, this.getBlockState(), this.getBlockState(), 3);
+        this.level.updateNeighborsAt(this.worldPosition, this.getBlockState().getBlock());
+        this.setChanged();
     }
-
+    
     @Nullable
     public EternalData getEternal() {
-        if (getLevel() == null) {
+        if (this.getLevel() == null) {
             return null;
         }
-        if (!getLevel().isClientSide()) {
-            if (this.eternalId == null) {
-                return null;
-            }
-            return EternalsData.get((ServerWorld) getLevel()).getEternals(this.owner).get(this.eternalId);
+        if (this.getLevel().isClientSide()) {
+            return null;
         }
-        return null;
+        if (this.eternalId == null) {
+            return null;
+        }
+        return EternalsData.get((ServerWorld)this.getLevel()).getEternals(this.owner).get(this.eternalId);
     }
-
+    
     public UUID getEternalId() {
         return this.eternalId;
     }
-
+    
     protected boolean isFull() {
-        return (!this.coreNames.isEmpty() && this.coreNames.size() >= this.maxCores);
+        return !this.coreNames.isEmpty() && this.coreNames.size() >= this.maxCores;
     }
-
-
+    
     public void tick() {
-        if (this.level == null || this.level.isClientSide || this.owner == null)
+        if (this.level == null || this.level.isClientSide || this.owner == null) {
             return;
-        if (isFull() && !this.growingEternal && this.eternalId == null) {
+        }
+        if (this.isFull() && !this.growingEternal && this.eternalId == null) {
             this.growingEternal = true;
             this.growEternalTimeRemaining = ModConfigs.CRYO_CHAMBER.getGrowEternalTime();
         }
-
-        if (isFull() && !this.growingEternal && this.level.getGameTime() % 40L == 0L) {
-            this.level.playSound(null, this.worldPosition.getX(), this.worldPosition.getY(), this.worldPosition.getZ(), SoundEvents.CONDUIT_AMBIENT, SoundCategory.PLAYERS, 0.25F, 1.0F);
+        if (this.isFull() && !this.growingEternal && this.level.getGameTime() % 40L == 0L) {
+            this.level.playSound((PlayerEntity)null, (double)this.worldPosition.getX(), (double)this.worldPosition.getY(), (double)this.worldPosition.getZ(), SoundEvents.CONDUIT_AMBIENT, SoundCategory.PLAYERS, 0.25f, 1.0f);
         }
-
         if (this.infusing) {
             if (this.infusionTimeRemaining-- <= 0) {
                 this.infusionTimeRemaining = 0;
                 this.infusing = false;
             }
-
-            sendUpdates();
-        } else if (this.growingEternal) {
+            this.sendUpdates();
+        }
+        else if (this.growingEternal) {
             if (this.growEternalTimeRemaining-- <= 0) {
                 this.growEternalTimeRemaining = 0;
                 this.growingEternal = false;
-                createEternal();
+                this.createEternal();
             }
-
-            sendUpdates();
+            this.sendUpdates();
         }
     }
-
+    
     private void createEternal() {
-        String name;
-        EternalsData.EternalGroup eternals = EternalsData.get((ServerWorld) getLevel()).getEternals(this.owner);
-
+        final EternalsData.EternalGroup eternals = EternalsData.get((ServerWorld)this.getLevel()).getEternals(this.owner);
         int attempts = 100;
+        String name;
         do {
-            attempts--;
-            name = this.coreNames.get(getLevel().getRandom().nextInt(this.coreNames.size()));
+            --attempts;
+            name = this.coreNames.get(this.getLevel().getRandom().nextInt(this.coreNames.size()));
         } while (attempts > 0 && eternals.containsEternal(name));
-        this.eternalId = EternalsData.get((ServerWorld) getLevel()).add(this.owner, name, false);
+        this.eternalId = EternalsData.get((ServerWorld)this.getLevel()).add(this.owner, name, false);
     }
-
-
+    
     public ITextComponent getDisplayName() {
-        EternalData eternal = getEternal();
+        final EternalData eternal = this.getEternal();
         if (eternal != null) {
-            return (ITextComponent) new StringTextComponent(eternal.getName());
+            return (ITextComponent)new StringTextComponent(eternal.getName());
         }
-        return (ITextComponent) new StringTextComponent("Cryo Chamber");
+        return (ITextComponent)new StringTextComponent("Cryo Chamber");
     }
-
-
+    
     @Nullable
-    public Container createMenu(int windowId, PlayerInventory playerInventory, PlayerEntity player) {
-        if (getLevel() == null) {
+    public Container createMenu(final int windowId, final PlayerInventory playerInventory, final PlayerEntity player) {
+        if (this.getLevel() == null) {
             return null;
         }
-        return (Container) new CryochamberContainer(windowId, getLevel(), getBlockPos(), playerInventory);
+        return new CryochamberContainer(windowId, this.getLevel(), this.getBlockPos(), playerInventory);
     }
-
-
-    public CompoundNBT save(CompoundNBT nbt) {
+    
+    public CompoundNBT save(final CompoundNBT nbt) {
         super.save(nbt);
-        if (this.owner != null) nbt.putUUID("Owner", this.owner);
-        if (this.eternalId != null) nbt.putUUID("EternalId", this.eternalId);
-
+        if (this.owner != null) {
+            nbt.putUUID("Owner", this.owner);
+        }
+        if (this.eternalId != null) {
+            nbt.putUUID("EternalId", this.eternalId);
+        }
         if (!this.coreNames.isEmpty()) {
-            ListNBT list = new ListNBT();
-            for (int i = 0; i < this.coreNames.size(); i++) {
-                CompoundNBT nameNbt = new CompoundNBT();
-                String name = this.coreNames.get(i);
+            final ListNBT list = new ListNBT();
+            for (int i = 0; i < this.coreNames.size(); ++i) {
+                final CompoundNBT nameNbt = new CompoundNBT();
+                final String name = this.coreNames.get(i);
                 nameNbt.putString("name" + i, name);
                 list.add(nameNbt);
             }
-            nbt.put("CoresList", (INBT) list);
+            nbt.put("CoresList", (INBT)list);
         }
         nbt.putInt("MaxCoreCount", this.maxCores);
         nbt.putBoolean("Infusing", this.infusing);
         nbt.putInt("InfusionTimeRemaining", this.infusionTimeRemaining);
         nbt.putBoolean("GrowingEternal", this.growingEternal);
         nbt.putInt("GrowEternalTimeRemaining", this.growEternalTimeRemaining);
-        nbt.put("Inventory", (INBT) this.itemHandler.serializeNBT());
+        nbt.put("Inventory", (INBT)this.itemHandler.serializeNBT());
         return nbt;
     }
-
-
-    public void load(BlockState state, CompoundNBT nbt) {
+    
+    public void load(final BlockState state, final CompoundNBT nbt) {
         super.load(state, nbt);
-        if (nbt.contains("Owner")) this.owner = nbt.getUUID("Owner");
-        if (nbt.contains("EternalId")) this.eternalId = nbt.getUUID("EternalId");
-
+        if (nbt.contains("Owner")) {
+            this.owner = nbt.getUUID("Owner");
+        }
+        if (nbt.contains("EternalId")) {
+            this.eternalId = nbt.getUUID("EternalId");
+        }
         if (nbt.contains("CoresList")) {
-            ListNBT list = nbt.getList("CoresList", 10);
-            this.coreNames = new LinkedList<>();
-            for (int i = 0; i < list.size(); i++) {
-                CompoundNBT nameTag = list.getCompound(i);
+            final ListNBT list = nbt.getList("CoresList", 10);
+            this.coreNames = new LinkedList<String>();
+            for (int i = 0; i < list.size(); ++i) {
+                final CompoundNBT nameTag = list.getCompound(i);
                 this.coreNames.add(nameTag.getString("name" + i));
             }
         }
@@ -329,53 +329,43 @@ public class CryoChamberTileEntity
         this.growEternalTimeRemaining = nbt.getInt("GrowEternalTimeRemaining");
         this.itemHandler.deserializeNBT(nbt.getCompound("Inventory"));
     }
-
-
+    
     @Nonnull
-    public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, @Nullable Direction side) {
-        return (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) ? this.handler.cast() : super.getCapability(cap, side);
+    public <T> LazyOptional<T> getCapability(@Nonnull final Capability<T> cap, @Nullable final Direction side) {
+        return (LazyOptional<T>)((cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) ? this.handler.cast() : super.getCapability((Capability)cap, side));
     }
-
-
+    
     public CompoundNBT getUpdateTag() {
-        return save(new CompoundNBT());
+        return this.save(new CompoundNBT());
     }
-
-
-    public void handleUpdateTag(BlockState state, CompoundNBT tag) {
-        load(state, tag);
+    
+    public void handleUpdateTag(final BlockState state, final CompoundNBT tag) {
+        this.load(state, tag);
     }
-
-
+    
     public SUpdateTileEntityPacket getUpdatePacket() {
-        return new SUpdateTileEntityPacket(this.worldPosition, 1, getUpdateTag());
+        return new SUpdateTileEntityPacket(this.worldPosition, 1, this.getUpdateTag());
     }
-
-
-    public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt) {
-        CompoundNBT nbt = pkt.getTag();
-        handleUpdateTag(getBlockState(), nbt);
+    
+    public void onDataPacket(final NetworkManager net, final SUpdateTileEntityPacket pkt) {
+        final CompoundNBT nbt = pkt.getTag();
+        this.handleUpdateTag(this.getBlockState(), nbt);
     }
-
+    
     public CompoundNBT getRenameNBT() {
-        CompoundNBT nbt = new CompoundNBT();
-        EternalData eternal = getEternal();
+        final CompoundNBT nbt = new CompoundNBT();
+        final EternalData eternal = this.getEternal();
         if (eternal == null) {
             return nbt;
         }
-        nbt.put("BlockPos", (INBT) NBTUtil.writeBlockPos(getBlockPos()));
+        nbt.put("BlockPos", (INBT)NBTUtil.writeBlockPos(this.getBlockPos()));
         nbt.putString("EternalName", eternal.getName());
         return nbt;
     }
-
-    public void renameEternal(String name) {
-        if (getEternal() != null)
-            getEternal().setName(name);
+    
+    public void renameEternal(final String name) {
+        if (this.getEternal() != null) {
+            this.getEternal().setName(name);
+        }
     }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\block\entity\CryoChamberTileEntity.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

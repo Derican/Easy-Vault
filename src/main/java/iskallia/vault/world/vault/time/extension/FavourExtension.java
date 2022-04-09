@@ -1,22 +1,24 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.world.vault.time.extension;
 
 import iskallia.vault.Vault;
 import net.minecraft.util.ResourceLocation;
 
-public class FavourExtension
-        extends TimeExtension {
-    public static final ResourceLocation ID = Vault.id("relic_set");
-
+public class FavourExtension extends TimeExtension
+{
+    public static final ResourceLocation ID;
+    
     public FavourExtension() {
     }
-
-    public FavourExtension(long extraTime) {
-        super(ID, extraTime);
+    
+    public FavourExtension(final long extraTime) {
+        super(FavourExtension.ID, extraTime);
+    }
+    
+    static {
+        ID = Vault.id("relic_set");
     }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\world\vault\time\extension\FavourExtension.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

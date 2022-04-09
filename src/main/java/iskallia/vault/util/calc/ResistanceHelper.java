@@ -1,3 +1,7 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.util.calc;
 
 import iskallia.vault.aura.ActiveAura;
@@ -27,90 +31,71 @@ import net.minecraft.world.server.ServerWorld;
 
 import java.util.function.Function;
 
-
-public class ResistanceHelper {
-    public static float getPlayerResistancePercent(ServerPlayerEntity player) {
-        return MathHelper.clamp(getPlayerResistancePercentUnlimited(player), 0.0F, AttributeLimitHelper.getResistanceLimit((PlayerEntity) player));
+public class ResistanceHelper
+{
+    public static float getPlayerResistancePercent(final ServerPlayerEntity player) {
+        return MathHelper.clamp(getPlayerResistancePercentUnlimited(player), 0.0f, AttributeLimitHelper.getResistanceLimit((PlayerEntity)player));
     }
-
-    public static float getPlayerResistancePercentUnlimited(ServerPlayerEntity player) {
-        float resistancePercent = 0.0F;
-
-        resistancePercent += getResistancePercent((LivingEntity) player);
-
-        for (ActiveAura aura : AuraManager.getInstance().getAurasAffecting((Entity) player)) {
+    
+    public static float getPlayerResistancePercentUnlimited(final ServerPlayerEntity player) {
+        float resistancePercent = 0.0f;
+        resistancePercent += getResistancePercent((LivingEntity)player);
+        for (final ActiveAura aura : AuraManager.getInstance().getAurasAffecting((Entity)player)) {
             if (aura.getAura() instanceof ResistanceAuraConfig) {
-                resistancePercent += ((ResistanceAuraConfig) aura.getAura()).getAdditionalResistance();
+                resistancePercent += ((ResistanceAuraConfig)aura.getAura()).getAdditionalResistance();
             }
         }
-
-        VaultRaid vault = VaultRaidData.get(player.getLevel()).getActiveFor(player);
-
+        final VaultRaid vault = VaultRaidData.get(player.getLevel()).getActiveFor(player);
         if (vault != null) {
-            for (VaultAttributeInfluence influence : vault.getInfluences().getInfluences(VaultAttributeInfluence.class)) {
+            for (final VaultAttributeInfluence influence : vault.getInfluences().getInfluences(VaultAttributeInfluence.class)) {
                 if (influence.getType() == VaultAttributeInfluence.Type.RESISTANCE && !influence.isMultiplicative()) {
                     resistancePercent += influence.getValue();
                 }
             }
-
-            for (StatModifier modifier : vault.getActiveModifiersFor(PlayerFilter.of(new PlayerEntity[]{(PlayerEntity) player}, ), StatModifier.class)) {
+            for (final StatModifier modifier : vault.getActiveModifiersFor(PlayerFilter.of((PlayerEntity)player), StatModifier.class)) {
                 if (modifier.getStat() == StatModifier.Statistic.RESISTANCE) {
                     resistancePercent *= modifier.getMultiplier();
                 }
             }
-            for (VaultAttributeInfluence influence : vault.getInfluences().getInfluences(VaultAttributeInfluence.class)) {
+            for (final VaultAttributeInfluence influence : vault.getInfluences().getInfluences(VaultAttributeInfluence.class)) {
                 if (influence.getType() == VaultAttributeInfluence.Type.PARRY && influence.isMultiplicative()) {
                     resistancePercent += influence.getValue();
                 }
             }
         }
-
-        SetTree sets = PlayerSetsData.get((ServerWorld) player.level).getSets((PlayerEntity) player);
-        for (SetNode<?> node : (Iterable<SetNode<?>>) sets.getNodes()) {
+        final SetTree sets = PlayerSetsData.get((ServerWorld)player.level).getSets((PlayerEntity)player);
+        for (final SetNode<?> node : sets.getNodes()) {
             if (node.getSet() instanceof GolemSet) {
-                GolemSet set = (GolemSet) node.getSet();
+                final GolemSet set = (GolemSet)node.getSet();
                 resistancePercent += set.getBonusResistance();
             }
             if (node.getSet() instanceof DreamSet) {
-                DreamSet set = (DreamSet) node.getSet();
-                resistancePercent += set.getIncreasedResistance();
+                final DreamSet set2 = (DreamSet)node.getSet();
+                resistancePercent += set2.getIncreasedResistance();
             }
         }
-
-        resistancePercent += getResistancePercent((LivingEntity) player);
+        resistancePercent += getResistancePercent((LivingEntity)player);
         return resistancePercent;
     }
-
-    public static float getResistancePercent(LivingEntity entity) {
-        float resistancePercent = 0.0F;
+    
+    public static float getResistancePercent(final LivingEntity entity) {
+        float resistancePercent = 0.0f;
         resistancePercent += getGearResistanceChance(entity::getItemBySlot);
-
         if (entity.hasEffect(ModEffects.RESISTANCE)) {
-            resistancePercent += (entity.getEffect(ModEffects.RESISTANCE).getAmplifier() + 1) / 100.0F;
+            resistancePercent += (entity.getEffect(ModEffects.RESISTANCE).getAmplifier() + 1) / 100.0f;
         }
-
         return resistancePercent;
     }
-
-    public static float getGearResistanceChance(Function<EquipmentSlotType, ItemStack> gearProvider) {
-        float resistancePercent = 0.0F;
-        for (EquipmentSlotType slot : EquipmentSlotType.values()) {
-            ItemStack stack = gearProvider.apply(slot);
-            if (!(stack.getItem() instanceof VaultGear) || ((VaultGear) stack.getItem()).isIntendedForSlot(slot)) {
-
-
-                resistancePercent += ((Float) ModAttributes.EXTRA_RESISTANCE.get(stack)
-                        .map(attribute -> (Float) attribute.getValue(stack)).orElse(Float.valueOf(0.0F))).floatValue();
-                resistancePercent += ((Float) ModAttributes.ADD_EXTRA_RESISTANCE.get(stack)
-                        .map(attribute -> (Float) attribute.getValue(stack)).orElse(Float.valueOf(0.0F))).floatValue();
+    
+    public static float getGearResistanceChance(final Function<EquipmentSlotType, ItemStack> gearProvider) {
+        float resistancePercent = 0.0f;
+        for (final EquipmentSlotType slot : EquipmentSlotType.values()) {
+            final ItemStack stack = gearProvider.apply(slot);
+            if (!(stack.getItem() instanceof VaultGear) || ((VaultGear)stack.getItem()).isIntendedForSlot(slot)) {
+                resistancePercent += ModAttributes.EXTRA_RESISTANCE.get(stack).map(attribute -> attribute.getValue(stack)).orElse(0.0f);
+                resistancePercent += ModAttributes.ADD_EXTRA_RESISTANCE.get(stack).map(attribute -> attribute.getValue(stack)).orElse(0.0f);
             }
         }
-        return MathHelper.clamp(resistancePercent, 0.0F, 1.0F);
+        return MathHelper.clamp(resistancePercent, 0.0f, 1.0f);
     }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vaul\\util\calc\ResistanceHelper.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

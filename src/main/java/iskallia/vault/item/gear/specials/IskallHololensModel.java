@@ -1,3 +1,7 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.item.gear.specials;
 
 import iskallia.vault.item.gear.model.VaultGearModel;
@@ -6,20 +10,13 @@ import net.minecraft.client.renderer.model.ModelRenderer;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 
-public class IskallHololensModel<T extends LivingEntity> extends VaultGearModel<T> {
-    public IskallHololensModel(float modelSize, EquipmentSlotType slotType) {
+public class IskallHololensModel<T extends LivingEntity> extends VaultGearModel<T>
+{
+    public IskallHololensModel(final float modelSize, final EquipmentSlotType slotType) {
         super(modelSize, slotType);
         this.texWidth = 32;
         this.texHeight = 32;
-
-        this.Head = new ModelRenderer((Model) this);
-        this.Head.setPos(0.0F, 0.0F, 0.0F);
-        this.Head.texOffs(0, 0).addBox(-4.0F, -8.0F, -4.0F, 8.0F, 8.0F, 8.0F, 1.0F, false);
+        (this.Head = new ModelRenderer((Model)this)).setPos(0.0f, 0.0f, 0.0f);
+        this.Head.texOffs(0, 0).addBox(-4.0f, -8.0f, -4.0f, 8.0f, 8.0f, 8.0f, 1.0f, false);
     }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\item\gear\specials\IskallHololensModel.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

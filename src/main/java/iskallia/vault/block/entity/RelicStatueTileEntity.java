@@ -1,3 +1,7 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.block.entity;
 
 import iskallia.vault.Vault;
@@ -7,71 +11,61 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SUpdateTileEntityPacket;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.ResourceLocation;
 
 import javax.annotation.Nullable;
 
-public class RelicStatueTileEntity
-        extends TileEntity {
-    protected ResourceLocation relicSet = Vault.id("none");
-
+public class RelicStatueTileEntity extends TileEntity
+{
+    protected ResourceLocation relicSet;
+    
     public RelicStatueTileEntity() {
-        super(ModBlocks.RELIC_STATUE_TILE_ENTITY);
+        super((TileEntityType)ModBlocks.RELIC_STATUE_TILE_ENTITY);
+        this.relicSet = Vault.id("none");
     }
-
+    
     public ResourceLocation getRelicSet() {
         return this.relicSet;
     }
-
-    public void setRelicSet(ResourceLocation relicSet) {
+    
+    public void setRelicSet(final ResourceLocation relicSet) {
         this.relicSet = relicSet;
     }
-
+    
     public void sendUpdates() {
-        this.level.sendBlockUpdated(this.worldPosition, getBlockState(), getBlockState(), 3);
-        this.level.updateNeighborsAt(this.worldPosition, getBlockState().getBlock());
-        setChanged();
+        this.level.sendBlockUpdated(this.worldPosition, this.getBlockState(), this.getBlockState(), 3);
+        this.level.updateNeighborsAt(this.worldPosition, this.getBlockState().getBlock());
+        this.setChanged();
     }
-
-
-    public CompoundNBT save(CompoundNBT nbt) {
+    
+    public CompoundNBT save(final CompoundNBT nbt) {
         nbt.putString("RelicSet", this.relicSet.toString());
         return super.save(nbt);
     }
-
-
-    public void load(BlockState state, CompoundNBT nbt) {
+    
+    public void load(final BlockState state, final CompoundNBT nbt) {
         this.relicSet = new ResourceLocation(nbt.getString("RelicSet"));
         super.load(state, nbt);
     }
-
-
+    
     public CompoundNBT getUpdateTag() {
-        CompoundNBT nbt = super.getUpdateTag();
+        final CompoundNBT nbt = super.getUpdateTag();
         nbt.putString("RelicSet", this.relicSet.toString());
         return nbt;
     }
-
-
-    public void handleUpdateTag(BlockState state, CompoundNBT tag) {
-        load(state, tag);
+    
+    public void handleUpdateTag(final BlockState state, final CompoundNBT tag) {
+        this.load(state, tag);
     }
-
-
+    
     @Nullable
     public SUpdateTileEntityPacket getUpdatePacket() {
-        return new SUpdateTileEntityPacket(this.worldPosition, 1, getUpdateTag());
+        return new SUpdateTileEntityPacket(this.worldPosition, 1, this.getUpdateTag());
     }
-
-
-    public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt) {
-        CompoundNBT nbt = pkt.getTag();
-        handleUpdateTag(getBlockState(), nbt);
+    
+    public void onDataPacket(final NetworkManager net, final SUpdateTileEntityPacket pkt) {
+        final CompoundNBT nbt = pkt.getTag();
+        this.handleUpdateTag(this.getBlockState(), nbt);
     }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\block\entity\RelicStatueTileEntity.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

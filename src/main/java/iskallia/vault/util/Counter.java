@@ -1,31 +1,30 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.util;
 
-public class Counter {
+public class Counter
+{
     private int value;
-
+    
     public Counter() {
         this(0);
     }
-
-    public Counter(int value) {
+    
+    public Counter(final int value) {
         this.value = value;
     }
-
+    
     public int getValue() {
         return this.value;
     }
-
+    
     public void decrement() {
-        this.value--;
+        --this.value;
     }
-
+    
     public void increment() {
-        this.value++;
+        ++this.value;
     }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vaul\\util\Counter.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

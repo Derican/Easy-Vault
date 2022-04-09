@@ -1,3 +1,7 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.research.type;
 
 import com.google.gson.annotations.Expose;
@@ -11,30 +15,29 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
-public class ModResearch extends Research {
+public class ModResearch extends Research
+{
     @Expose
     protected Set<String> modIds;
     @Expose
     protected Restrictions restrictions;
-
-    public ModResearch(String name, int cost, String... modIds) {
+    
+    public ModResearch(final String name, final int cost, final String... modIds) {
         super(name, cost);
-        this.modIds = new HashSet<>();
+        this.modIds = new HashSet<String>();
         this.restrictions = Restrictions.forMods();
-
         Collections.addAll(this.modIds, modIds);
     }
-
+    
     public Set<String> getModIds() {
         return this.modIds;
     }
-
+    
     public Restrictions getRestrictions() {
         return this.restrictions;
     }
-
-
-    public ModResearch withRestrictions(boolean hittability, boolean entityIntr, boolean blockIntr, boolean usability, boolean craftability) {
+    
+    public ModResearch withRestrictions(final boolean hittability, final boolean entityIntr, final boolean blockIntr, final boolean usability, final boolean craftability) {
         this.restrictions.set(Restrictions.Type.HITTABILITY, hittability);
         this.restrictions.set(Restrictions.Type.ENTITY_INTERACTABILITY, entityIntr);
         this.restrictions.set(Restrictions.Type.BLOCK_INTERACTABILITY, blockIntr);
@@ -42,34 +45,31 @@ public class ModResearch extends Research {
         this.restrictions.set(Restrictions.Type.CRAFTABILITY, craftability);
         return this;
     }
-
-
-    public boolean restricts(Item item, Restrictions.Type restrictionType) {
-        if (!this.restrictions.restricts(restrictionType)) return false;
-        ResourceLocation registryName = item.getRegistryName();
-        if (registryName == null) return false;
-        return this.modIds.contains(registryName.getNamespace());
+    
+    @Override
+    public boolean restricts(final Item item, final Restrictions.Type restrictionType) {
+        if (!this.restrictions.restricts(restrictionType)) {
+            return false;
+        }
+        final ResourceLocation registryName = item.getRegistryName();
+        return registryName != null && this.modIds.contains(registryName.getNamespace());
     }
-
-
-    public boolean restricts(Block block, Restrictions.Type restrictionType) {
-        if (!this.restrictions.restricts(restrictionType)) return false;
-        ResourceLocation registryName = block.getRegistryName();
-        if (registryName == null) return false;
-        return this.modIds.contains(registryName.getNamespace());
+    
+    @Override
+    public boolean restricts(final Block block, final Restrictions.Type restrictionType) {
+        if (!this.restrictions.restricts(restrictionType)) {
+            return false;
+        }
+        final ResourceLocation registryName = block.getRegistryName();
+        return registryName != null && this.modIds.contains(registryName.getNamespace());
     }
-
-
-    public boolean restricts(EntityType<?> entityType, Restrictions.Type restrictionType) {
-        if (!this.restrictions.restricts(restrictionType)) return false;
-        ResourceLocation registryName = entityType.getRegistryName();
-        if (registryName == null) return false;
-        return this.modIds.contains(registryName.getNamespace());
+    
+    @Override
+    public boolean restricts(final EntityType<?> entityType, final Restrictions.Type restrictionType) {
+        if (!this.restrictions.restricts(restrictionType)) {
+            return false;
+        }
+        final ResourceLocation registryName = entityType.getRegistryName();
+        return registryName != null && this.modIds.contains(registryName.getNamespace());
     }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\research\type\ModResearch.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

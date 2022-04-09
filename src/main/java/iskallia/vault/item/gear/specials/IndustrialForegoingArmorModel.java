@@ -1,3 +1,7 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.item.gear.specials;
 
 import iskallia.vault.item.gear.model.VaultGearModel;
@@ -6,59 +10,36 @@ import net.minecraft.client.renderer.model.ModelRenderer;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 
-public class IndustrialForegoingArmorModel<T extends LivingEntity> extends VaultGearModel<T> {
-    public IndustrialForegoingArmorModel(float modelSize, EquipmentSlotType slotType) {
+public class IndustrialForegoingArmorModel<T extends LivingEntity> extends VaultGearModel<T>
+{
+    public IndustrialForegoingArmorModel(final float modelSize, final EquipmentSlotType slotType) {
         super(modelSize, slotType);
-        this.texWidth = isLayer2() ? 64 : 128;
-        this.texHeight = isLayer2() ? 32 : 128;
-
-        this.Head = new ModelRenderer((Model) this);
-        this.Head.setPos(0.0F, 0.0F, 0.0F);
-        this.Head.texOffs(0, 24).addBox(-4.0F, -8.0F, -4.0F, 8.0F, 8.0F, 8.0F, 1.0F, false);
-        this.Head.texOffs(0, 0).addBox(-6.0F, -10.0F, -6.0F, 12.0F, 12.0F, 12.0F, 0.0F, false);
-        this.Head.texOffs(24, 24).addBox(-3.0F, -11.0F, -3.0F, 6.0F, 1.0F, 6.0F, 0.0F, false);
-        this.Head.texOffs(0, 0).addBox(-1.0F, -18.0F, -1.0F, 2.0F, 2.0F, 2.0F, 0.0F, false);
-        this.Head.texOffs(0, 4).addBox(-0.5F, -16.0F, -0.5F, 1.0F, 5.0F, 1.0F, 0.0F, false);
-
-        this.Body = new ModelRenderer((Model) this);
-        this.Body.setPos(0.0F, 0.0F, 0.0F);
-        this.Body.texOffs(48, 18).addBox(-4.0F, 0.0F, -2.0F, 8.0F, 12.0F, 4.0F, 1.01F, false);
-        this.Body.texOffs(16, 64).addBox(-3.0F, 2.0F, 3.0F, 6.0F, 10.0F, 3.0F, 0.0F, false);
-
-        this.RightArm = new ModelRenderer((Model) this);
-        this.RightArm.setPos(-5.0F, 2.0F, 0.0F);
-        this.RightArm.texOffs(60, 58).addBox(-3.0F, -2.0F, -2.0F, 4.0F, 12.0F, 4.0F, 1.0F, false);
-        this.RightArm.texOffs(48, 0).addBox(-6.0F, -1.0F, -4.0F, 4.0F, 10.0F, 8.0F, 0.0F, false);
-
-        this.LeftArm = new ModelRenderer((Model) this);
-        this.LeftArm.setPos(5.0F, 2.0F, 0.0F);
-        this.LeftArm.texOffs(60, 34).addBox(-1.0F, -2.0F, -2.0F, 4.0F, 12.0F, 4.0F, 1.0F, false);
-        this.LeftArm.texOffs(24, 46).addBox(2.0F, -1.0F, -4.0F, 4.0F, 10.0F, 8.0F, 0.0F, false);
-
-        this.RightBoot = new ModelRenderer((Model) this);
-        this.RightBoot.setPos(-1.9F, 12.0F, 0.0F);
-        this.RightBoot.texOffs(0, 40).addBox(-4.0F, 7.0F, -4.0F, 8.0F, 6.0F, 8.0F, 0.0F, false);
-
-        this.LeftBoot = new ModelRenderer((Model) this);
-        this.LeftBoot.setPos(1.9F, 12.0F, 0.0F);
-        this.LeftBoot.texOffs(24, 32).addBox(-3.8F, 7.0F, -4.0F, 8.0F, 6.0F, 8.0F, 0.0F, false);
-
-        this.Belt = new ModelRenderer((Model) this);
-        this.Belt.setPos(0.0F, 0.0F, 0.0F);
-        this.Belt.texOffs(16, 16).addBox(-4.0F, 0.0F, -2.0F, 8.0F, 12.0F, 4.0F, 0.51F, false);
-
-        this.RightLeg = new ModelRenderer((Model) this);
-        this.RightLeg.setPos(-1.9F, 12.0F, 0.0F);
-        this.RightLeg.texOffs(0, 16).addBox(-2.0F, 0.0F, -2.0F, 4.0F, 12.0F, 4.0F, 0.5F, false);
-
-        this.LeftLeg = new ModelRenderer((Model) this);
-        this.LeftLeg.setPos(1.9F, 12.0F, 0.0F);
-        this.LeftLeg.texOffs(0, 16).addBox(-2.0F, 0.0F, -2.0F, 4.0F, 12.0F, 4.0F, 0.5F, true);
+        this.texWidth = (this.isLayer2() ? 64 : 128);
+        this.texHeight = (this.isLayer2() ? 32 : 128);
+        (this.Head = new ModelRenderer((Model)this)).setPos(0.0f, 0.0f, 0.0f);
+        this.Head.texOffs(0, 24).addBox(-4.0f, -8.0f, -4.0f, 8.0f, 8.0f, 8.0f, 1.0f, false);
+        this.Head.texOffs(0, 0).addBox(-6.0f, -10.0f, -6.0f, 12.0f, 12.0f, 12.0f, 0.0f, false);
+        this.Head.texOffs(24, 24).addBox(-3.0f, -11.0f, -3.0f, 6.0f, 1.0f, 6.0f, 0.0f, false);
+        this.Head.texOffs(0, 0).addBox(-1.0f, -18.0f, -1.0f, 2.0f, 2.0f, 2.0f, 0.0f, false);
+        this.Head.texOffs(0, 4).addBox(-0.5f, -16.0f, -0.5f, 1.0f, 5.0f, 1.0f, 0.0f, false);
+        (this.Body = new ModelRenderer((Model)this)).setPos(0.0f, 0.0f, 0.0f);
+        this.Body.texOffs(48, 18).addBox(-4.0f, 0.0f, -2.0f, 8.0f, 12.0f, 4.0f, 1.01f, false);
+        this.Body.texOffs(16, 64).addBox(-3.0f, 2.0f, 3.0f, 6.0f, 10.0f, 3.0f, 0.0f, false);
+        (this.RightArm = new ModelRenderer((Model)this)).setPos(-5.0f, 2.0f, 0.0f);
+        this.RightArm.texOffs(60, 58).addBox(-3.0f, -2.0f, -2.0f, 4.0f, 12.0f, 4.0f, 1.0f, false);
+        this.RightArm.texOffs(48, 0).addBox(-6.0f, -1.0f, -4.0f, 4.0f, 10.0f, 8.0f, 0.0f, false);
+        (this.LeftArm = new ModelRenderer((Model)this)).setPos(5.0f, 2.0f, 0.0f);
+        this.LeftArm.texOffs(60, 34).addBox(-1.0f, -2.0f, -2.0f, 4.0f, 12.0f, 4.0f, 1.0f, false);
+        this.LeftArm.texOffs(24, 46).addBox(2.0f, -1.0f, -4.0f, 4.0f, 10.0f, 8.0f, 0.0f, false);
+        (this.RightBoot = new ModelRenderer((Model)this)).setPos(-1.9f, 12.0f, 0.0f);
+        this.RightBoot.texOffs(0, 40).addBox(-4.0f, 7.0f, -4.0f, 8.0f, 6.0f, 8.0f, 0.0f, false);
+        (this.LeftBoot = new ModelRenderer((Model)this)).setPos(1.9f, 12.0f, 0.0f);
+        this.LeftBoot.texOffs(24, 32).addBox(-3.8f, 7.0f, -4.0f, 8.0f, 6.0f, 8.0f, 0.0f, false);
+        (this.Belt = new ModelRenderer((Model)this)).setPos(0.0f, 0.0f, 0.0f);
+        this.Belt.texOffs(16, 16).addBox(-4.0f, 0.0f, -2.0f, 8.0f, 12.0f, 4.0f, 0.51f, false);
+        (this.RightLeg = new ModelRenderer((Model)this)).setPos(-1.9f, 12.0f, 0.0f);
+        this.RightLeg.texOffs(0, 16).addBox(-2.0f, 0.0f, -2.0f, 4.0f, 12.0f, 4.0f, 0.5f, false);
+        (this.LeftLeg = new ModelRenderer((Model)this)).setPos(1.9f, 12.0f, 0.0f);
+        this.LeftLeg.texOffs(0, 16).addBox(-2.0f, 0.0f, -2.0f, 4.0f, 12.0f, 4.0f, 0.5f, true);
     }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\item\gear\specials\IndustrialForegoingArmorModel.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

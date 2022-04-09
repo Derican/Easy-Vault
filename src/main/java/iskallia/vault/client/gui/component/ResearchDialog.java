@@ -1,3 +1,7 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.client.gui.component;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
@@ -25,177 +29,124 @@ import net.minecraft.util.text.StringTextComponent;
 
 import java.awt.*;
 
-public class ResearchDialog
-        extends ComponentDialog {
+public class ResearchDialog extends ComponentDialog
+{
     private final ResearchTree researchTree;
-    private String researchName = null;
-    private ResearchWidget researchWidget = null;
-
-    public ResearchDialog(ResearchTree researchTree, SkillTreeScreen skillTreeScreen) {
+    private String researchName;
+    private ResearchWidget researchWidget;
+    
+    public ResearchDialog(final ResearchTree researchTree, final SkillTreeScreen skillTreeScreen) {
         super(skillTreeScreen);
+        this.researchName = null;
+        this.researchWidget = null;
         this.researchTree = researchTree;
     }
-
-
+    
+    @Override
     public Point getIconUV() {
         return new Point(0, 60);
     }
-
-
+    
+    @Override
     public int getHeaderHeight() {
-        return (this.researchWidget.getClickableBounds()).height;
+        return this.researchWidget.getClickableBounds().height;
     }
-
-
+    
+    @Override
     public SkillTab createTab() {
-        return (SkillTab) new ResearchesTab(this, getSkillTreeScreen());
+        return new ResearchesTab(this, this.getSkillTreeScreen());
     }
-
+    
+    @Override
     public void refreshWidgets() {
         if (this.researchName != null) {
-
-            SkillStyle researchStyle = (SkillStyle) ModConfigs.RESEARCHES_GUI.getStyles().get(this.researchName);
-            this.researchWidget = new ResearchWidget(this.researchName, this.researchTree, researchStyle);
-            this.researchWidget.setHoverable(false);
-
-            Research research = ModConfigs.RESEARCHES.getByName(this.researchName);
-            int researchCost = this.researchTree.getResearchCost(research);
-
-            String buttonText = this.researchTree.isResearched(this.researchName) ? "Researched" : ("Research (" + researchCost + ")");
-
-
-            this.selectButton = new Button(10, this.bounds.height - 40, this.bounds.width - 30, 20, (ITextComponent) new StringTextComponent(buttonText), button -> research(), (button, matrixStack, x, y) -> {
-
-            });
-
-
+            final SkillStyle researchStyle = ModConfigs.RESEARCHES_GUI.getStyles().get(this.researchName);
+            (this.researchWidget = new ResearchWidget(this.researchName, this.researchTree, researchStyle)).setHoverable(false);
+            final Research research = ModConfigs.RESEARCHES.getByName(this.researchName);
+            final int researchCost = this.researchTree.getResearchCost(research);
+            final String buttonText = this.researchTree.isResearched(this.researchName) ? "Researched" : ("Research (" + researchCost + ")");
+            this.selectButton = new Button(10, this.bounds.height - 40, this.bounds.width - 30, 20, (ITextComponent)new StringTextComponent(buttonText), button -> this.research(), (button, matrixStack, x, y) -> {});
             this.descriptionComponent = new ScrollableContainer(this::renderDescriptions);
-
-            boolean isLocked = ModConfigs.SKILL_GATES.getGates().isLocked(this.researchName, this.researchTree);
-            this.selectButton
-
-                    .active = (!this.researchTree.isResearched(this.researchName) && !isLocked && (research.usesKnowledge() ? (VaultBarOverlay.unspentKnowledgePoints >= researchCost) : (VaultBarOverlay.unspentSkillPoints >= researchCost)));
+            final boolean isLocked = ModConfigs.SKILL_GATES.getGates().isLocked(this.researchName, this.researchTree);
+            this.selectButton.active = (!this.researchTree.isResearched(this.researchName) && !isLocked && (research.usesKnowledge() ? (VaultBarOverlay.unspentKnowledgePoints >= researchCost) : (VaultBarOverlay.unspentSkillPoints >= researchCost)));
         }
     }
-
-
-    public void setResearchName(String researchName) {
+    
+    public void setResearchName(final String researchName) {
         this.researchName = researchName;
-        refreshWidgets();
+        this.refreshWidgets();
     }
-
+    
     public void research() {
-        Research research = ModConfigs.RESEARCHES.getByName(this.researchName);
-
-        int cost = this.researchTree.getResearchCost(research);
-        int unspentPoints = research.usesKnowledge() ? VaultBarOverlay.unspentKnowledgePoints : VaultBarOverlay.unspentSkillPoints;
-
-
+        final Research research = ModConfigs.RESEARCHES.getByName(this.researchName);
+        final int cost = this.researchTree.getResearchCost(research);
+        final int unspentPoints = research.usesKnowledge() ? VaultBarOverlay.unspentKnowledgePoints : VaultBarOverlay.unspentSkillPoints;
         if (cost > unspentPoints) {
             return;
         }
-        Minecraft minecraft = Minecraft.getInstance();
-
+        final Minecraft minecraft = Minecraft.getInstance();
         if (minecraft.player != null) {
-            minecraft.player.playSound(ModSounds.SKILL_TREE_LEARN_SFX, 1.0F, 1.0F);
+            minecraft.player.playSound(ModSounds.SKILL_TREE_LEARN_SFX, 1.0f, 1.0f);
         }
-
-
         this.researchTree.research(this.researchName);
-        refreshWidgets();
-
+        this.refreshWidgets();
         ModNetwork.CHANNEL.sendToServer(new ResearchMessage(this.researchName));
     }
-
-    public void render(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks) {
+    
+    @Override
+    public void render(final MatrixStack matrixStack, final int mouseX, final int mouseY, final float partialTicks) {
         matrixStack.pushPose();
-
-        renderBackground(matrixStack, mouseX, mouseY, partialTicks);
-
-        if (this.researchName == null)
+        this.renderBackground(matrixStack, mouseX, mouseY, partialTicks);
+        if (this.researchName == null) {
             return;
-        matrixStack.translate((this.bounds.x + 5), (this.bounds.y + 5), 0.0D);
-
-        renderHeading(matrixStack, mouseX, mouseY, partialTicks);
-
-        this.descriptionComponent.setBounds(getDescriptionsBounds());
+        }
+        matrixStack.translate((double)(this.bounds.x + 5), (double)(this.bounds.y + 5), 0.0);
+        this.renderHeading(matrixStack, mouseX, mouseY, partialTicks);
+        this.descriptionComponent.setBounds(this.getDescriptionsBounds());
         this.descriptionComponent.render(matrixStack, mouseX, mouseY, partialTicks);
-
-        renderFooter(matrixStack, mouseX, mouseY, partialTicks);
-
+        this.renderFooter(matrixStack, mouseX, mouseY, partialTicks);
         matrixStack.popPose();
     }
-
-    private void renderHeading(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks) {
+    
+    private void renderHeading(final MatrixStack matrixStack, final int mouseX, final int mouseY, final float partialTicks) {
         Minecraft.getInstance().getTextureManager().bind(SkillTreeScreen.UI_RESOURCE);
-
-        FontRenderer fontRenderer = (Minecraft.getInstance()).font;
-
-        SkillStyle abilityStyle = (SkillStyle) ModConfigs.RESEARCHES_GUI.getStyles().get(this.researchName);
-
-        Rectangle abilityBounds = this.researchWidget.getClickableBounds();
-
-        UIHelper.renderContainerBorder(this, matrixStack,
-                getHeadingBounds(), 14, 44, 2, 2, 2, 2, -7631989);
-
-
-        boolean researched = this.researchTree.getResearchesDone().contains(this.researchName);
-
-        String subText = !researched ? "Not Researched" : "Researched";
-
-        int gap = 5;
-
-        int contentWidth = abilityBounds.width + gap + Math.max(fontRenderer.width(this.researchName), fontRenderer.width(subText));
-
+        final FontRenderer fontRenderer = Minecraft.getInstance().font;
+        final SkillStyle abilityStyle = ModConfigs.RESEARCHES_GUI.getStyles().get(this.researchName);
+        final Rectangle abilityBounds = this.researchWidget.getClickableBounds();
+        UIHelper.renderContainerBorder(this, matrixStack, this.getHeadingBounds(), 14, 44, 2, 2, 2, 2, -7631989);
+        final boolean researched = this.researchTree.getResearchesDone().contains(this.researchName);
+        final String subText = researched ? "Researched" : "Not Researched";
+        final int gap = 5;
+        final int contentWidth = abilityBounds.width + gap + Math.max(fontRenderer.width(this.researchName), fontRenderer.width(subText));
         matrixStack.pushPose();
-        matrixStack.translate(10.0D, 0.0D, 0.0D);
-        FontHelper.drawStringWithBorder(matrixStack, this.researchName, (abilityBounds.width + gap), 13.0F, !researched ? -1 : -1849, !researched ? -16777216 : -12897536);
-
-
-        FontHelper.drawStringWithBorder(matrixStack, subText, (abilityBounds.width + gap), 23.0F, !researched ? -1 : -1849, !researched ? -16777216 : -12897536);
-
-
-        matrixStack.translate(-abilityStyle.x, -abilityStyle.y, 0.0D);
-        matrixStack.translate(abilityBounds.getWidth() / 2.0D, 0.0D, 0.0D);
-        matrixStack.translate(-this.researchWidget.getRenderWidth() / 2.0D, -this.researchWidget.getRenderHeight() / 2.0D, 0.0D);
-        matrixStack.translate(-3.0D, 20.0D, 0.0D);
+        matrixStack.translate(10.0, 0.0, 0.0);
+        FontHelper.drawStringWithBorder(matrixStack, this.researchName, (float)(abilityBounds.width + gap), 13.0f, researched ? -1849 : -1, researched ? -12897536 : -16777216);
+        FontHelper.drawStringWithBorder(matrixStack, subText, (float)(abilityBounds.width + gap), 23.0f, researched ? -1849 : -1, researched ? -12897536 : -16777216);
+        matrixStack.translate((double)(-abilityStyle.x), (double)(-abilityStyle.y), 0.0);
+        matrixStack.translate(abilityBounds.getWidth() / 2.0, 0.0, 0.0);
+        matrixStack.translate(-this.researchWidget.getRenderWidth() / 2.0, -this.researchWidget.getRenderHeight() / 2.0, 0.0);
+        matrixStack.translate(-3.0, 20.0, 0.0);
         this.researchWidget.render(matrixStack, mouseX, mouseY, partialTicks);
         matrixStack.popPose();
     }
-
-    private void renderDescriptions(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks) {
-        Rectangle renderableBounds = this.descriptionComponent.getRenderableBounds();
-
-        IFormattableTextComponent description = ModConfigs.SKILL_DESCRIPTIONS.getDescriptionFor(this.researchName);
-
-        int renderedLineCount = UIHelper.renderWrappedText(matrixStack, (ITextComponent) description, renderableBounds.width, 10);
-
-
+    
+    private void renderDescriptions(final MatrixStack matrixStack, final int mouseX, final int mouseY, final float partialTicks) {
+        final Rectangle renderableBounds = this.descriptionComponent.getRenderableBounds();
+        final IFormattableTextComponent description = ModConfigs.SKILL_DESCRIPTIONS.getDescriptionFor(this.researchName);
+        final int renderedLineCount = UIHelper.renderWrappedText(matrixStack, (ITextComponent)description, renderableBounds.width, 10);
         this.descriptionComponent.setInnerHeight(renderedLineCount * 10 + 20);
-
         RenderSystem.enableDepthTest();
     }
-
-    private void renderFooter(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks) {
-        int containerX = mouseX - this.bounds.x;
-        int containerY = mouseY - this.bounds.y;
-
+    
+    private void renderFooter(final MatrixStack matrixStack, final int mouseX, final int mouseY, final float partialTicks) {
+        final int containerX = mouseX - this.bounds.x;
+        final int containerY = mouseY - this.bounds.y;
         this.selectButton.render(matrixStack, containerX, containerY, partialTicks);
-
         Minecraft.getInstance().getTextureManager().bind(SkillTreeScreen.UI_RESOURCE);
-
-        Research research = ModConfigs.RESEARCHES.getByName(this.researchName);
-        boolean researched = this.researchTree.getResearchesDone().contains(this.researchName);
-
-        if (!researched)
-            blit(matrixStack, 13, this.bounds.height - 40 - 2, 121 + (
-
-                    research.usesKnowledge() ? 15 : 30), 0, 15, 23);
+        final Research research = ModConfigs.RESEARCHES.getByName(this.researchName);
+        final boolean researched = this.researchTree.getResearchesDone().contains(this.researchName);
+        if (!researched) {
+            this.blit(matrixStack, 13, this.bounds.height - 40 - 2, 121 + (research.usesKnowledge() ? 15 : 30), 0, 15, 23);
+        }
     }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\client\gui\component\ResearchDialog.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

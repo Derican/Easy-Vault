@@ -1,3 +1,7 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.vending;
 
 import com.google.gson.annotations.Expose;
@@ -12,8 +16,8 @@ import net.minecraft.util.IItemProvider;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.registries.ForgeRegistries;
 
-public class Product
-        implements INBTSerializable {
+public class Product implements INBTSerializable
+{
     protected Item itemCache;
     protected CompoundNBT nbtCache;
     @Expose
@@ -25,99 +29,85 @@ public class Product
     @Expose
     @NBTSerialize
     protected int amount;
-
+    
     public Product() {
     }
-
-    public Product(Item item, int amount, CompoundNBT nbt) {
+    
+    public Product(final Item item, final int amount, final CompoundNBT nbt) {
         this.itemCache = item;
-        if (this.itemCache != null)
+        if (this.itemCache != null) {
             this.id = item.getRegistryName().toString();
+        }
         this.nbtCache = nbt;
-        if (this.nbtCache != null)
+        if (this.nbtCache != null) {
             this.nbt = this.nbtCache.toString();
+        }
         this.amount = amount;
     }
-
-    public boolean equals(Object obj) {
-        boolean similarNBT;
-        if (obj == null)
+    
+    @Override
+    public boolean equals(final Object obj) {
+        if (obj == null) {
             return false;
-        if (obj == this)
+        }
+        if (obj == this) {
             return true;
-        if (getClass() != obj.getClass()) {
+        }
+        if (this.getClass() != obj.getClass()) {
             return false;
         }
-        Product product = (Product) obj;
-
-
-        if (getNBT() != null && product.getNBT() != null) {
-            similarNBT = getNBT().equals(product.getNBT());
-        } else {
-            similarNBT = true;
-        }
-
-        return (product.getItem() == getItem() && similarNBT);
+        final Product product = (Product)obj;
+        final boolean similarNBT = this.getNBT() == null || product.getNBT() == null || this.getNBT().equals(product.getNBT());
+        return product.getItem() == this.getItem() && similarNBT;
     }
-
+    
     public int getAmount() {
         return this.amount;
     }
-
+    
     public Item getItem() {
-        if (this.itemCache != null)
+        if (this.itemCache != null) {
             return this.itemCache;
-        this.itemCache = (Item) ForgeRegistries.ITEMS.getValue(new ResourceLocation(this.id));
-        if (this.itemCache == null)
+        }
+        this.itemCache = (Item)ForgeRegistries.ITEMS.getValue(new ResourceLocation(this.id));
+        if (this.itemCache == null) {
             System.out.println("Unknown item " + this.id + ".");
+        }
         return this.itemCache;
     }
-
+    
     public String getId() {
         return this.id;
     }
-
+    
     public CompoundNBT getNBT() {
-        if (this.nbt == null)
+        if (this.nbt == null) {
             return null;
+        }
         try {
-            if (this.nbtCache == null)
+            if (this.nbtCache == null) {
                 this.nbtCache = JsonToNBT.parseTag(this.nbt);
-        } catch (Exception e) {
+            }
+        }
+        catch (final Exception e) {
             this.nbtCache = null;
             System.out.println("Unknown NBT for item " + this.id + ".");
         }
         return this.nbtCache;
     }
-
+    
     public boolean isValid() {
-        if (getAmount() <= 0)
-            return false;
-        if (getItem() == null)
-            return false;
-        if (getItem() == Items.AIR)
-            return false;
-        if (getAmount() > getItem().getMaxStackSize())
-            return false;
-        if (this.nbt != null && getNBT() == null)
-            return false;
-        return true;
+        return this.getAmount() > 0 && this.getItem() != null && this.getItem() != Items.AIR && this.getAmount() <= this.getItem().getMaxStackSize() && (this.nbt == null || this.getNBT() != null);
     }
-
+    
     public ItemStack toStack() {
-        ItemStack stack = new ItemStack((IItemProvider) getItem(), getAmount());
-        stack.setTag(getNBT());
+        final ItemStack stack = new ItemStack((IItemProvider)this.getItem(), this.getAmount());
+        stack.setTag(this.getNBT());
         return stack;
     }
-
-
+    
+    @Override
     public String toString() {
         return "{ id='" + this.id + '\'' + ", nbt='" + this.nbt + '\'' + ", amount=" + this.amount + '}';
     }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\vending\Product.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

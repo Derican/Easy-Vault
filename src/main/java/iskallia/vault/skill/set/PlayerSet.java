@@ -1,3 +1,7 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.skill.set;
 
 import com.google.gson.annotations.Expose;
@@ -13,53 +17,44 @@ import java.util.Arrays;
 import java.util.Optional;
 import java.util.function.BiPredicate;
 
-public class PlayerSet {
+public class PlayerSet
+{
     @Expose
     private String set;
-
-    public PlayerSet(VaultGear.Set set) {
+    
+    public PlayerSet(final VaultGear.Set set) {
         this.set = set.name();
     }
-
+    
     public VaultGear.Set getSet() {
         return VaultGear.Set.valueOf(this.set);
     }
-
-    public boolean shouldBeActive(LivingEntity player) {
-        return isActive(getSet(), player);
+    
+    public boolean shouldBeActive(final LivingEntity player) {
+        return isActive(this.getSet(), player);
     }
-
-
-    public void onAdded(PlayerEntity player) {
+    
+    public void onAdded(final PlayerEntity player) {
     }
-
-
-    public void onTick(PlayerEntity player) {
+    
+    public void onTick(final PlayerEntity player) {
     }
-
-
-    public void onRemoved(PlayerEntity player) {
+    
+    public void onRemoved(final PlayerEntity player) {
     }
-
-
-    public static boolean allMatch(LivingEntity player, BiPredicate<EquipmentSlotType, ItemStack> predicate, EquipmentSlotType... slots) {
-        return Arrays.<EquipmentSlotType>stream(slots).allMatch(slot -> predicate.test(slot, player.getItemBySlot(slot)));
+    
+    public static boolean allMatch(final LivingEntity player, final BiPredicate<EquipmentSlotType, ItemStack> predicate, final EquipmentSlotType... slots) {
+        return Arrays.stream(slots).allMatch(slot -> predicate.test(slot, player.getItemBySlot(slot)));
     }
-
-    public static boolean allMatch(LivingEntity player, BiPredicate<EquipmentSlotType, ItemStack> predicate) {
-        return allMatch(player, predicate, new EquipmentSlotType[]{EquipmentSlotType.HEAD, EquipmentSlotType.CHEST, EquipmentSlotType.LEGS, EquipmentSlotType.FEET});
+    
+    public static boolean allMatch(final LivingEntity player, final BiPredicate<EquipmentSlotType, ItemStack> predicate) {
+        return allMatch(player, predicate, EquipmentSlotType.HEAD, EquipmentSlotType.CHEST, EquipmentSlotType.LEGS, EquipmentSlotType.FEET);
     }
-
-    public static boolean isActive(VaultGear.Set set, LivingEntity player) {
+    
+    public static boolean isActive(final VaultGear.Set set, final LivingEntity player) {
         return allMatch(player, (slot, stack) -> {
-            Optional<EnumAttribute<VaultGear.Set>> attribute = ModAttributes.GEAR_SET.get(stack);
-            return (attribute.isPresent() && ((EnumAttribute) attribute.get()).getValue(stack) == set);
+            final Optional<EnumAttribute<VaultGear.Set>> attribute = ModAttributes.GEAR_SET.get(stack);
+            return attribute.isPresent() && attribute.get().getValue(stack) == set;
         });
     }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\skill\set\PlayerSet.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

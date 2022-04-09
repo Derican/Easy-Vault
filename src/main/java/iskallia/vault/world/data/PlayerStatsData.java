@@ -1,3 +1,7 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.world.data;
 
 import iskallia.vault.altar.RequiredItem;
@@ -19,103 +23,107 @@ import net.minecraftforge.common.util.INBTSerializable;
 import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
+import java.util.function.Supplier;
 
-
-public class PlayerStatsData
-        extends WorldSavedData {
+public class PlayerStatsData extends WorldSavedData
+{
     protected static final String DATA_NAME = "the_vault_PlayerStats";
-    protected VMapNBT<UUID, Stats> playerStats = VMapNBT.ofUUID(Stats::new);
-
+    protected VMapNBT<UUID, Stats> playerStats;
+    
     public PlayerStatsData() {
         this("the_vault_PlayerStats");
     }
-
-    public PlayerStatsData(String name) {
+    
+    public PlayerStatsData(final String name) {
         super(name);
+        this.playerStats = VMapNBT.ofUUID(Stats::new);
     }
-
-    public Stats get(PlayerEntity player) {
-        return get(player.getUUID());
+    
+    public Stats get(final PlayerEntity player) {
+        return this.get(player.getUUID());
     }
-
-    public Stats get(UUID playerId) {
-        return (Stats) this.playerStats.computeIfAbsent(playerId, uuid -> new Stats());
+    
+    public Stats get(final UUID playerId) {
+        return this.playerStats.computeIfAbsent(playerId, uuid -> new Stats());
     }
-
-    public void onVaultFinished(UUID playerId, VaultRaid vault) {
-        (get(playerId)).vaults.add(vault);
-        setDirty();
+    
+    public void onVaultFinished(final UUID playerId, final VaultRaid vault) {
+        this.get(playerId).vaults.add(vault);
+        this.setDirty();
     }
-
-    public void onCrystalCrafted(UUID playerId, List<RequiredItem> recipe, CrystalData.Type type) {
-        (get(playerId)).crystals.add(new CrystalStat(recipe, type));
-        setDirty();
+    
+    public void onCrystalCrafted(final UUID playerId, final List<RequiredItem> recipe, final CrystalData.Type type) {
+        this.get(playerId).crystals.add(new CrystalStat(recipe, type));
+        this.setDirty();
     }
-
-    public void onRaffleCompleted(UUID playerId, WeightedList<String> contributors, String winner) {
-        (get(playerId)).raffles.add(new RaffleStat(contributors, winner));
-        setDirty();
+    
+    public void onRaffleCompleted(final UUID playerId, final WeightedList<String> contributors, final String winner) {
+        this.get(playerId).raffles.add(new RaffleStat(contributors, winner));
+        this.setDirty();
     }
-
-    public void setRaidRewardReceived(UUID playerId) {
-        (get(playerId)).finishedRaidReward = true;
-        setDirty();
+    
+    public void setRaidRewardReceived(final UUID playerId) {
+        this.get(playerId).finishedRaidReward = true;
+        this.setDirty();
     }
-
-
-    public void load(CompoundNBT nbt) {
+    
+    public void load(final CompoundNBT nbt) {
         this.playerStats.deserializeNBT(nbt.getList("Stats", 10));
     }
-
-
-    public CompoundNBT save(CompoundNBT nbt) {
-        nbt.put("Stats", (INBT) this.playerStats.serializeNBT());
+    
+    public CompoundNBT save(final CompoundNBT nbt) {
+        nbt.put("Stats", (INBT)this.playerStats.serializeNBT());
         return nbt;
     }
-
-    public static PlayerStatsData get(ServerWorld world) {
+    
+    public static PlayerStatsData get(final ServerWorld world) {
         return get(world.getServer());
     }
-
-    public static PlayerStatsData get(MinecraftServer srv) {
-        return (PlayerStatsData) srv.overworld().getDataStorage().computeIfAbsent(PlayerStatsData::new, "the_vault_PlayerStats");
+    
+    public static PlayerStatsData get(final MinecraftServer srv) {
+        return (PlayerStatsData)srv.overworld().getDataStorage().computeIfAbsent((Supplier)PlayerStatsData::new, "the_vault_PlayerStats");
     }
-
-    public static class Stats
-            implements INBTSerializable<CompoundNBT> {
-        protected VListNBT<VaultRaid, CompoundNBT> vaults = VListNBT.of(VaultRaid::new);
-        protected VListNBT<CrystalStat, CompoundNBT> crystals = VListNBT.of(CrystalStat::new);
-        protected VListNBT<RaffleStat, CompoundNBT> raffles = VListNBT.of(RaffleStat::new);
-        private boolean finishedRaidReward = false;
-
+    
+    public static class Stats implements INBTSerializable<CompoundNBT>
+    {
+        protected VListNBT<VaultRaid, CompoundNBT> vaults;
+        protected VListNBT<CrystalStat, CompoundNBT> crystals;
+        protected VListNBT<RaffleStat, CompoundNBT> raffles;
+        private boolean finishedRaidReward;
+        
+        public Stats() {
+            this.vaults = VListNBT.of(VaultRaid::new);
+            this.crystals = VListNBT.of(CrystalStat::new);
+            this.raffles = VListNBT.of(RaffleStat::new);
+            this.finishedRaidReward = false;
+        }
+        
         public List<VaultRaid> getVaults() {
-            return Collections.unmodifiableList((List) this.vaults);
+            return Collections.unmodifiableList((List<? extends VaultRaid>)this.vaults);
         }
-
+        
         public List<CrystalStat> getCrystals() {
-            return Collections.unmodifiableList((List) this.crystals);
+            return Collections.unmodifiableList((List<? extends CrystalStat>)this.crystals);
         }
-
+        
         public List<RaffleStat> getRaffles() {
-            return Collections.unmodifiableList((List) this.raffles);
+            return Collections.unmodifiableList((List<? extends RaffleStat>)this.raffles);
         }
-
+        
         public boolean hasFinishedRaidReward() {
             return this.finishedRaidReward;
         }
-
-
+        
         public CompoundNBT serializeNBT() {
-            CompoundNBT nbt = new CompoundNBT();
-            nbt.put("Vaults", (INBT) this.vaults.serializeNBT());
-            nbt.put("Crystals", (INBT) this.crystals.serializeNBT());
-            nbt.put("Raffles", (INBT) this.raffles.serializeNBT());
+            final CompoundNBT nbt = new CompoundNBT();
+            nbt.put("Vaults", (INBT)this.vaults.serializeNBT());
+            nbt.put("Crystals", (INBT)this.crystals.serializeNBT());
+            nbt.put("Raffles", (INBT)this.raffles.serializeNBT());
             nbt.putBoolean("finishedRaidReward", this.finishedRaidReward);
             return nbt;
         }
-
-
-        public void deserializeNBT(CompoundNBT nbt) {
+        
+        public void deserializeNBT(final CompoundNBT nbt) {
             this.vaults.deserializeNBT(nbt.getList("Vaults", 10));
             this.crystals.deserializeNBT(nbt.getList("Crystals", 10));
             this.raffles.deserializeNBT(nbt.getList("Raffles", 10));
@@ -123,9 +131,3 @@ public class PlayerStatsData
         }
     }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\world\data\PlayerStatsData.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

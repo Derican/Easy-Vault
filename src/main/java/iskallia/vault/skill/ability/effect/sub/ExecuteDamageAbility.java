@@ -1,3 +1,7 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.skill.ability.effect.sub;
 
 import iskallia.vault.init.ModEffects;
@@ -13,47 +17,38 @@ import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
-public class ExecuteDamageAbility
-        extends ExecuteAbility<ExecuteDamageConfig> {
+public class ExecuteDamageAbility extends ExecuteAbility<ExecuteDamageConfig>
+{
     @SubscribeEvent(priority = EventPriority.HIGH)
-    public void onLivingDamage(LivingDamageEvent event) {
+    public void onLivingDamage(final LivingDamageEvent event) {
         if (event.getEntity().getCommandSenderWorld().isClientSide()) {
             return;
         }
         if (!(event.getSource().getEntity() instanceof PlayerEntity)) {
             return;
         }
-
-        PlayerEntity player = (PlayerEntity) event.getSource().getEntity();
+        final PlayerEntity player = (PlayerEntity)event.getSource().getEntity();
         if (!(player.getCommandSenderWorld() instanceof ServerWorld)) {
             return;
         }
-
-        ServerWorld world = (ServerWorld) player.getCommandSenderWorld();
-        EffectInstance execute = player.getEffect(ModEffects.EXECUTE);
+        final ServerWorld world = (ServerWorld)player.getCommandSenderWorld();
+        final EffectInstance execute = player.getEffect(ModEffects.EXECUTE);
         if (execute == null) {
             return;
         }
-        PlayerAbilitiesData data = PlayerAbilitiesData.get(world);
-        AbilityTree abilities = data.getAbilities(player);
-        AbilityNode<?, ?> node = abilities.getNodeByName("Execute");
+        final PlayerAbilitiesData data = PlayerAbilitiesData.get(world);
+        final AbilityTree abilities = data.getAbilities(player);
+        final AbilityNode<?, ?> node = abilities.getNodeByName("Execute");
         if (node.getAbility() == this && node.isLearned()) {
-            ExecuteDamageConfig cfg = (ExecuteDamageConfig) node.getAbilityConfig();
-
-            float missingHealth = event.getEntityLiving().getMaxHealth() - event.getEntityLiving().getHealth();
-            float damageDealt = missingHealth * cfg.getDamagePercentPerMissingHealthPercent();
+            final ExecuteDamageConfig cfg = (ExecuteDamageConfig)node.getAbilityConfig();
+            final float missingHealth = event.getEntityLiving().getMaxHealth() - event.getEntityLiving().getHealth();
+            final float damageDealt = missingHealth * cfg.getDamagePercentPerMissingHealthPercent();
             event.setAmount(event.getAmount() + damageDealt);
         }
     }
-
-
+    
+    @Override
     protected boolean doCulling() {
         return false;
     }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\skill\ability\effect\sub\ExecuteDamageAbility.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

@@ -1,3 +1,7 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.skill.ability;
 
 import iskallia.vault.init.ModConfigs;
@@ -11,156 +15,151 @@ import net.minecraftforge.common.util.INBTSerializable;
 import javax.annotation.Nullable;
 import java.util.Objects;
 
-public class AbilityNode<T extends AbilityConfig, E extends AbilityEffect<T>>
-        implements INBTSerializable<CompoundNBT> {
+public class AbilityNode<T extends AbilityConfig, E extends AbilityEffect<T>> implements INBTSerializable<CompoundNBT>
+{
     private String groupName;
-    private int level = 0;
-    private String specialization = null;
-
-    public AbilityNode(String groupName, int level, @Nullable String specialization) {
+    private int level;
+    private String specialization;
+    
+    public AbilityNode(final String groupName, final int level, @Nullable final String specialization) {
+        this.level = 0;
+        this.specialization = null;
         this.groupName = groupName;
         this.level = level;
         this.specialization = specialization;
     }
-
-    private AbilityNode(CompoundNBT nbt) {
-        deserializeNBT(nbt);
+    
+    private AbilityNode(final CompoundNBT nbt) {
+        this.level = 0;
+        this.specialization = null;
+        this.deserializeNBT(nbt);
     }
-
+    
     public AbilityGroup<T, E> getGroup() {
-        return (AbilityGroup<T, E>) ModConfigs.ABILITIES.getAbilityGroupByName(this.groupName);
+        return (AbilityGroup<T, E>)ModConfigs.ABILITIES.getAbilityGroupByName(this.groupName);
     }
-
+    
     public int getLevel() {
         return this.level;
     }
-
+    
     @Nullable
     public String getSpecialization() {
         return this.specialization;
     }
-
-    public void setSpecialization(@Nullable String specialization) {
+    
+    public void setSpecialization(@Nullable final String specialization) {
         this.specialization = specialization;
     }
-
+    
     public String getName() {
-        if (!isLearned()) {
-            return getGroup().getName(1);
+        if (!this.isLearned()) {
+            return this.getGroup().getName(1);
         }
-        return getGroup().getName(getLevel());
+        return this.getGroup().getName(this.getLevel());
     }
-
+    
     public String getSpecializationName() {
-        String specialization = getSpecialization();
+        final String specialization = this.getSpecialization();
         if (specialization == null) {
-            return getGroup().getParentName();
+            return this.getGroup().getParentName();
         }
-        return getGroup().getSpecializationName(specialization);
+        return this.getGroup().getSpecializationName(specialization);
     }
-
+    
     public boolean isLearned() {
-        return (getLevel() > 0);
+        return this.getLevel() > 0;
     }
-
+    
     @Nullable
     public T getAbilityConfig() {
-        if (!isLearned()) {
-            return getGroup().getAbilityConfig(null, -1);
+        if (!this.isLearned()) {
+            return this.getGroup().getAbilityConfig(null, -1);
         }
-        return getGroup().getAbilityConfig(getSpecialization(), getLevel() - 1);
+        return this.getGroup().getAbilityConfig(this.getSpecialization(), this.getLevel() - 1);
     }
-
+    
     @Nullable
     public E getAbility() {
-        return getGroup().getAbility(getSpecialization());
+        return this.getGroup().getAbility(this.getSpecialization());
     }
-
-    public void onAdded(PlayerEntity player) {
-        if (isLearned() && getAbility() != null) {
-            getAbility().onAdded( getAbilityConfig(), player);
+    
+    public void onAdded(final PlayerEntity player) {
+        if (this.isLearned() && this.getAbility() != null) {
+            this.getAbility().onAdded(this.getAbilityConfig(), player);
         }
     }
-
-    public void onRemoved(PlayerEntity player) {
-        if (isLearned() && getAbility() != null) {
-            getAbility().onRemoved( getAbilityConfig(), player);
+    
+    public void onRemoved(final PlayerEntity player) {
+        if (this.isLearned() && this.getAbility() != null) {
+            this.getAbility().onRemoved(this.getAbilityConfig(), player);
         }
     }
-
-    public void onFocus(PlayerEntity player) {
-        if (isLearned() && getAbility() != null) {
-            getAbility().onFocus( getAbilityConfig(), player);
+    
+    public void onFocus(final PlayerEntity player) {
+        if (this.isLearned() && this.getAbility() != null) {
+            this.getAbility().onFocus(this.getAbilityConfig(), player);
         }
     }
-
-    public void onBlur(PlayerEntity player) {
-        if (isLearned() && getAbility() != null) {
-            getAbility().onBlur( getAbilityConfig(), player);
+    
+    public void onBlur(final PlayerEntity player) {
+        if (this.isLearned() && this.getAbility() != null) {
+            this.getAbility().onBlur(this.getAbilityConfig(), player);
         }
     }
-
-    public void onTick(PlayerEntity player, boolean active) {
-        if (isLearned() && getAbility() != null) {
-            getAbility().onTick( getAbilityConfig(), player, active);
+    
+    public void onTick(final PlayerEntity player, final boolean active) {
+        if (this.isLearned() && this.getAbility() != null) {
+            this.getAbility().onTick(this.getAbilityConfig(), player, active);
         }
     }
-
-    public boolean onAction(ServerPlayerEntity player, boolean active) {
-        if (isLearned() && getAbility() != null) {
-            return getAbility().onAction( getAbilityConfig(), player, active);
-        }
-        return false;
+    
+    public boolean onAction(final ServerPlayerEntity player, final boolean active) {
+        return this.isLearned() && this.getAbility() != null && this.getAbility().onAction(this.getAbilityConfig(), player, active);
     }
-
-
+    
     public CompoundNBT serializeNBT() {
-        CompoundNBT nbt = new CompoundNBT();
-        nbt.putString("Name", getGroup().getParentName());
-        nbt.putInt("Level", getLevel());
-        if (getSpecialization() != null) {
-            nbt.putString("Specialization", getSpecialization());
+        final CompoundNBT nbt = new CompoundNBT();
+        nbt.putString("Name", this.getGroup().getParentName());
+        nbt.putInt("Level", this.getLevel());
+        if (this.getSpecialization() != null) {
+            nbt.putString("Specialization", this.getSpecialization());
         }
         return nbt;
     }
-
-
-    public void deserializeNBT(CompoundNBT nbt) {
+    
+    public void deserializeNBT(final CompoundNBT nbt) {
         this.groupName = nbt.getString("Name");
         this.level = nbt.getInt("Level");
         if (nbt.contains("Specialization", 8)) {
             this.specialization = nbt.getString("Specialization");
-
-
             if (this.specialization.equals("Rampage_Nocrit") || this.specialization.equals("Ghost Walk_Duration")) {
                 this.specialization = null;
             }
-        } else {
+        }
+        else {
             this.specialization = null;
         }
     }
-
-
-    public boolean equals(Object other) {
-        if (this == other) return true;
-        if (other == null || getClass() != other.getClass()) return false;
-        AbilityNode<?, ?> that = (AbilityNode<?, ?>) other;
-        return (this.level == that.level && Objects.equals(getGroup(), that.getGroup()));
+    
+    @Override
+    public boolean equals(final Object other) {
+        if (this == other) {
+            return true;
+        }
+        if (other == null || this.getClass() != other.getClass()) {
+            return false;
+        }
+        final AbilityNode<?, ?> that = (AbilityNode<?, ?>)other;
+        return this.level == that.level && Objects.equals(this.getGroup(), that.getGroup());
     }
-
-
+    
+    @Override
     public int hashCode() {
-        return Objects.hash(new Object[]{getGroup(), Integer.valueOf(this.level)});
+        return Objects.hash(this.getGroup(), this.level);
     }
-
-
-    public static <T extends AbilityConfig, E extends AbilityEffect<T>> AbilityNode<T, E> fromNBT(CompoundNBT nbt) {
-        return new AbilityNode<>(nbt);
+    
+    public static <T extends AbilityConfig, E extends AbilityEffect<T>> AbilityNode<T, E> fromNBT(final CompoundNBT nbt) {
+        return new AbilityNode<T, E>(nbt);
     }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\skill\ability\AbilityNode.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

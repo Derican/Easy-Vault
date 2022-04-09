@@ -1,3 +1,7 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.block.render;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
@@ -15,51 +19,40 @@ import net.minecraft.util.text.ITextProperties;
 
 import java.util.List;
 
-public class VaultRaidControllerRenderer
-        extends TileEntityRenderer<VaultRaidControllerTileEntity> {
-    public VaultRaidControllerRenderer(TileEntityRendererDispatcher dispatcher) {
+public class VaultRaidControllerRenderer extends TileEntityRenderer<VaultRaidControllerTileEntity>
+{
+    public VaultRaidControllerRenderer(final TileEntityRendererDispatcher dispatcher) {
         super(dispatcher);
     }
-
-
-    public void render(VaultRaidControllerTileEntity te, float partialTicks, MatrixStack renderStack, IRenderTypeBuffer buffer, int combinedLight, int combinedOverlay) {
+    
+    public void render(final VaultRaidControllerTileEntity te, final float partialTicks, final MatrixStack renderStack, final IRenderTypeBuffer buffer, final int combinedLight, final int combinedOverlay) {
         if (te.didTriggerRaid()) {
             return;
         }
-        drawHoveringModifiers(te.getModifierDisplay(), partialTicks, renderStack, buffer, combinedLight);
+        this.drawHoveringModifiers(te.getModifierDisplay(), partialTicks, renderStack, buffer, combinedLight);
     }
-
-    private void drawHoveringModifiers(List<ITextComponent> modifiers, float pTicks, MatrixStack renderStack, IRenderTypeBuffer buffer, int combinedLight) {
-        EntityRendererManager mgr = Minecraft.getInstance().getEntityRenderDispatcher();
-        FontRenderer fr = mgr.getFont();
-
+    
+    private void drawHoveringModifiers(final List<ITextComponent> modifiers, final float pTicks, final MatrixStack renderStack, final IRenderTypeBuffer buffer, final int combinedLight) {
+        final EntityRendererManager mgr = Minecraft.getInstance().getEntityRenderDispatcher();
+        final FontRenderer fr = mgr.getFont();
         renderStack.pushPose();
-        renderStack.translate(0.5D, 2.5D, 0.5D);
+        renderStack.translate(0.5, 2.5, 0.5);
         renderStack.mulPose(mgr.cameraOrientation());
-        renderStack.scale(-0.025F, -0.025F, 0.025F);
-
-        Matrix4f matr = renderStack.last().pose();
-        float textBgOpacity = (Minecraft.getInstance()).options.getBackgroundOpacity(0.25F);
-        int textBgAlpha = (int) (textBgOpacity * 255.0F) << 24;
-
-        for (ITextComponent modifier : modifiers) {
-            float xShift = fr.width((ITextProperties) modifier) / 2.0F;
-            fr.drawInBatch(modifier, -xShift, 0.0F, 553648127, false, matr, buffer, true, textBgAlpha, combinedLight);
-            fr.drawInBatch(modifier, -xShift, 0.0F, -1, false, matr, buffer, false, 0, combinedLight);
-            renderStack.translate(0.0D, -10.0D, 0.0D);
+        renderStack.scale(-0.025f, -0.025f, 0.025f);
+        final Matrix4f matr = renderStack.last().pose();
+        final float textBgOpacity = Minecraft.getInstance().options.getBackgroundOpacity(0.25f);
+        final int textBgAlpha = (int)(textBgOpacity * 255.0f) << 24;
+        for (final ITextComponent modifier : modifiers) {
+            final float xShift = fr.width((ITextProperties)modifier) / 2.0f;
+            fr.drawInBatch(modifier, -xShift, 0.0f, 553648127, false, matr, buffer, true, textBgAlpha, combinedLight);
+            fr.drawInBatch(modifier, -xShift, 0.0f, -1, false, matr, buffer, false, 0, combinedLight);
+            renderStack.translate(0.0, -10.0, 0.0);
         }
-
         renderStack.popPose();
     }
-
-    private boolean isInDrawDistance(BlockPos pos) {
-        EntityRendererManager mgr = Minecraft.getInstance().getEntityRenderDispatcher();
-        return (mgr.distanceToSqr(pos.getX(), pos.getY(), pos.getZ()) < 4096.0D);
+    
+    private boolean isInDrawDistance(final BlockPos pos) {
+        final EntityRendererManager mgr = Minecraft.getInstance().getEntityRenderDispatcher();
+        return mgr.distanceToSqr((double)pos.getX(), (double)pos.getY(), (double)pos.getZ()) < 4096.0;
     }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\block\render\VaultRaidControllerRenderer.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

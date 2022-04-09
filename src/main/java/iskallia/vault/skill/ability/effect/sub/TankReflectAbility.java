@@ -1,3 +1,7 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.skill.ability.effect.sub;
 
 import iskallia.vault.init.ModEffects;
@@ -15,39 +19,30 @@ import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
-public class TankReflectAbility
-        extends TankAbility<TankReflectConfig> {
+public class TankReflectAbility extends TankAbility<TankReflectConfig>
+{
     @SubscribeEvent
-    public void onDamage(LivingDamageEvent event) {
-        EffectInstance tank = event.getEntityLiving().getEffect(ModEffects.TANK);
+    @Override
+    public void onDamage(final LivingDamageEvent event) {
+        final EffectInstance tank = event.getEntityLiving().getEffect(ModEffects.TANK);
         if (tank == null) {
             return;
         }
         if (event.getEntityLiving() instanceof PlayerEntity) {
-            PlayerEntity player = (PlayerEntity) event.getEntityLiving();
+            final PlayerEntity player = (PlayerEntity)event.getEntityLiving();
             if (!player.getCommandSenderWorld().isClientSide() && player.getCommandSenderWorld() instanceof ServerWorld) {
-                ServerWorld world = (ServerWorld) player.getCommandSenderWorld();
-                AbilityTree abilities = PlayerAbilitiesData.get(world).getAbilities(player);
-                AbilityNode<?, ?> tankNode = abilities.getNodeByName("Tank");
-
+                final ServerWorld world = (ServerWorld)player.getCommandSenderWorld();
+                final AbilityTree abilities = PlayerAbilitiesData.get(world).getAbilities(player);
+                final AbilityNode<?, ?> tankNode = abilities.getNodeByName("Tank");
                 if (tankNode.getAbility() == this && tankNode.isLearned()) {
-                    TankReflectConfig config = (TankReflectConfig) tankNode.getAbilityConfig();
-
-                    Entity attacker = event.getSource().getEntity();
-                    if (attacker instanceof LivingEntity && ((LivingEntity) attacker)
-                            .getHealth() > 0.0F && rand
-                            .nextFloat() < config.getDamageReflectChance()) {
-                        float damage = event.getAmount() * config.getDamageReflectPercent();
-                        attacker.hurt(DamageSource.thorns((Entity) player), damage);
+                    final TankReflectConfig config = (TankReflectConfig)tankNode.getAbilityConfig();
+                    final Entity attacker = event.getSource().getEntity();
+                    if (attacker instanceof LivingEntity && ((LivingEntity)attacker).getHealth() > 0.0f && TankReflectAbility.rand.nextFloat() < config.getDamageReflectChance()) {
+                        final float damage = event.getAmount() * config.getDamageReflectPercent();
+                        attacker.hurt(DamageSource.thorns((Entity)player), damage);
                     }
                 }
             }
         }
     }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\skill\ability\effect\sub\TankReflectAbility.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

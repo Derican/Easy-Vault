@@ -1,3 +1,7 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.block;
 
 import com.google.common.collect.Lists;
@@ -39,135 +43,105 @@ import net.minecraftforge.fml.network.PacketDistributor;
 import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Random;
+import java.util.function.Function;
 
-
-public class StabilizerBlock
-        extends Block {
-    private static final Random rand = new Random();
-    public static final EnumProperty<DoubleBlockHalf> HALF = BlockStateProperties.DOUBLE_BLOCK_HALF;
-
-    private static final VoxelShape SHAPE_TOP = makeShape().move(0.0D, -1.0D, 0.0D);
-    private static final VoxelShape SHAPE_BOTTOM = makeShape();
-
+public class StabilizerBlock extends Block
+{
+    private static final Random rand;
+    public static final EnumProperty<DoubleBlockHalf> HALF;
+    private static final VoxelShape SHAPE_TOP;
+    private static final VoxelShape SHAPE_BOTTOM;
+    
     public StabilizerBlock() {
-        super(AbstractBlock.Properties.of(Material.GLASS)
-                .sound(SoundType.GLASS)
-                .strength(-1.0F, 3600000.0F)
-                .noOcclusion()
-                .noDrops());
-
-        registerDefaultState((BlockState) ((BlockState) this.stateDefinition.any())
-                .setValue((Property) HALF, (Comparable) DoubleBlockHalf.LOWER));
+        super(AbstractBlock.Properties.of(Material.GLASS).sound(SoundType.GLASS).strength(-1.0f, 3600000.0f).noOcclusion().noDrops());
+        this.registerDefaultState((this.stateDefinition.any()).setValue(StabilizerBlock.HALF, DoubleBlockHalf.LOWER));
     }
-
+    
     private static VoxelShape makeShape() {
-        VoxelShape m1 = Block.box(0.0D, 0.0D, 0.0D, 16.0D, 2.0D, 16.0D);
-        VoxelShape m2 = Block.box(2.0D, 2.0D, 2.0D, 14.0D, 29.0D, 14.0D);
-        return VoxelUtils.combineAll(IBooleanFunction.OR, new VoxelShape[]{m1, m2});
+        final VoxelShape m1 = Block.box(0.0, 0.0, 0.0, 16.0, 2.0, 16.0);
+        final VoxelShape m2 = Block.box(2.0, 2.0, 2.0, 14.0, 29.0, 14.0);
+        return VoxelUtils.combineAll(IBooleanFunction.OR, m1, m2);
     }
-
-
-    public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
-        if (state.getValue((Property) HALF) == DoubleBlockHalf.UPPER) {
-            return SHAPE_TOP;
+    
+    public VoxelShape getShape(final BlockState state, final IBlockReader worldIn, final BlockPos pos, final ISelectionContext context) {
+        if (state.getValue(StabilizerBlock.HALF) == DoubleBlockHalf.UPPER) {
+            return StabilizerBlock.SHAPE_TOP;
         }
-        return SHAPE_BOTTOM;
+        return StabilizerBlock.SHAPE_BOTTOM;
     }
-
-
-    public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
-        if (state.getValue((Property) HALF) == DoubleBlockHalf.UPPER) {
-            BlockState downState = world.getBlockState(pos.below());
-            if (!(downState.getBlock() instanceof StabilizerBlock)) {
-                return ActionResultType.SUCCESS;
+    
+    public ActionResultType use(final BlockState state, final World world, final BlockPos pos, final PlayerEntity player, final Hand hand, final BlockRayTraceResult hit) {
+        if (state.getValue(StabilizerBlock.HALF) != DoubleBlockHalf.UPPER) {
+            if (!world.isClientSide() && world instanceof ServerWorld && hand == Hand.MAIN_HAND) {
+                if (this.startPoll((ServerWorld)world, pos)) {
+                    return ActionResultType.SUCCESS;
+                }
+                this.spawnNoVoteParticles(world, pos);
             }
-            return use(downState, world, pos.below(), player, hand, hit);
+            return ActionResultType.SUCCESS;
         }
-        if (!world.isClientSide() && world instanceof ServerWorld && hand == Hand.MAIN_HAND) {
-            if (startPoll((ServerWorld) world, pos)) {
-                return ActionResultType.SUCCESS;
-            }
-            spawnNoVoteParticles(world, pos);
+        final BlockState downState = world.getBlockState(pos.below());
+        if (!(downState.getBlock() instanceof StabilizerBlock)) {
+            return ActionResultType.SUCCESS;
         }
-
-        return ActionResultType.SUCCESS;
+        return this.use(downState, world, pos.below(), player, hand, hit);
     }
-
-    private void spawnNoVoteParticles(World world, BlockPos pos) {
-        for (int i = 0; i < 40; i++) {
-
-
-            Vector3d particlePos = new Vector3d(pos.getX() - 0.5D + (rand.nextFloat() * 2.0F), (pos.getY() + rand.nextFloat() * 8.0F), pos.getZ() - 0.5D + (rand.nextFloat() * 2.0F));
-
-            EffectMessage pkt = (new EffectMessage(EffectMessage.Type.COLORED_FIREWORK, particlePos)).addData(buf -> buf.writeInt(10027008));
-
-
+    
+    private void spawnNoVoteParticles(final World world, final BlockPos pos) {
+        for (int i = 0; i < 40; ++i) {
+            final Vector3d particlePos = new Vector3d(pos.getX() - 0.5 + StabilizerBlock.rand.nextFloat() * 2.0f, (double)(pos.getY() + StabilizerBlock.rand.nextFloat() * 8.0f), pos.getZ() - 0.5 + StabilizerBlock.rand.nextFloat() * 2.0f);
+            final EffectMessage pkt = new EffectMessage(EffectMessage.Type.COLORED_FIREWORK, particlePos).addData(buf -> buf.writeInt(10027008));
             ModNetwork.CHANNEL.send(PacketDistributor.ALL.noArg(), pkt);
         }
     }
-
-    private boolean startPoll(ServerWorld world, BlockPos pos) {
-        VaultRaid vault = VaultRaidData.get(world).getAt(world, pos);
-        if (vault == null) {
-            return false;
-        }
-        if (((Boolean) vault.getActiveObjective(ArchitectObjective.class)
-                .map(ArchitectObjective::getActiveSession)
-                .map(VotingSession::getStabilizerPos)
-                .map(stabilizer -> Boolean.valueOf(stabilizer.equals(pos)))
-                .orElse(Boolean.valueOf(false))).booleanValue()) {
-            return true;
-        }
-        return ((Boolean) vault.getActiveObjective(ArchitectObjective.class)
-                .map(objective -> Boolean.valueOf(objective.createVotingSession(vault, world, pos)))
-                .orElse(Boolean.valueOf(false))).booleanValue();
+    
+    private boolean startPoll(final ServerWorld world, final BlockPos pos) {
+        final VaultRaid vault = VaultRaidData.get(world).getAt(world, pos);
+        return vault != null && (vault.getActiveObjective(ArchitectObjective.class).map(ArchitectObjective::getActiveSession).map(VotingSession::getStabilizerPos).map(stabilizer -> stabilizer.equals(pos)).orElse(false) || vault.getActiveObjective(ArchitectObjective.class).map(objective -> objective.createVotingSession(vault, world, pos)).orElse(false));
     }
-
-
-    public void onRemove(BlockState state, World world, BlockPos pos, BlockState newState, boolean isMoving) {
+    
+    public void onRemove(final BlockState state, final World world, final BlockPos pos, final BlockState newState, final boolean isMoving) {
         super.onRemove(state, world, pos, newState, isMoving);
         if (!state.is(newState.getBlock())) {
-            if (state.getValue((Property) HALF) == DoubleBlockHalf.UPPER) {
-                BlockState otherState = world.getBlockState(pos.below());
+            if (state.getValue(StabilizerBlock.HALF) == DoubleBlockHalf.UPPER) {
+                final BlockState otherState = world.getBlockState(pos.below());
                 if (otherState.is(state.getBlock())) {
                     world.removeBlock(pos.below(), isMoving);
                 }
-            } else {
-                BlockState otherState = world.getBlockState(pos.above());
+            }
+            else {
+                final BlockState otherState = world.getBlockState(pos.above());
                 if (otherState.is(state.getBlock())) {
                     world.removeBlock(pos.above(), isMoving);
                 }
             }
         }
     }
-
-
-    public List<ItemStack> getDrops(BlockState state, LootContext.Builder builder) {
+    
+    public List<ItemStack> getDrops(final BlockState state, final LootContext.Builder builder) {
         return Lists.newArrayList();
     }
-
-
-    public boolean hasTileEntity(BlockState state) {
-        return (state.getValue((Property) HALF) == DoubleBlockHalf.LOWER);
+    
+    public boolean hasTileEntity(final BlockState state) {
+        return state.getValue(StabilizerBlock.HALF) == DoubleBlockHalf.LOWER;
     }
-
-
+    
     @Nullable
-    public TileEntity createTileEntity(BlockState state, IBlockReader world) {
-        if (hasTileEntity(state)) {
+    public TileEntity createTileEntity(final BlockState state, final IBlockReader world) {
+        if (this.hasTileEntity(state)) {
             return ModBlocks.STABILIZER_TILE_ENTITY.create();
         }
         return null;
     }
-
-
-    protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) {
-        builder.add(new Property[]{(Property) HALF});
+    
+    protected void createBlockStateDefinition(final StateContainer.Builder<Block, BlockState> builder) {
+        builder.add(new Property[] { StabilizerBlock.HALF });
+    }
+    
+    static {
+        rand = new Random();
+        HALF = BlockStateProperties.DOUBLE_BLOCK_HALF;
+        SHAPE_TOP = makeShape().move(0.0, -1.0, 0.0);
+        SHAPE_BOTTOM = makeShape();
     }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\block\StabilizerBlock.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

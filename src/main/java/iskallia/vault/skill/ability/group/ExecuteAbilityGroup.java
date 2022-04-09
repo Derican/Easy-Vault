@@ -1,3 +1,7 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.skill.ability.group;
 
 import com.google.gson.annotations.Expose;
@@ -11,78 +15,81 @@ import iskallia.vault.skill.ability.effect.ExecuteAbility;
 import java.util.ArrayList;
 import java.util.List;
 
-
-public class ExecuteAbilityGroup
-        extends AbilityGroup<ExecuteConfig, ExecuteAbility<ExecuteConfig>> {
+public class ExecuteAbilityGroup extends AbilityGroup<ExecuteConfig, ExecuteAbility<ExecuteConfig>>
+{
     @Expose
-    private final List<ExecuteBuffConfig> buffLevelConfiguration = new ArrayList<>();
+    private final List<ExecuteBuffConfig> buffLevelConfiguration;
     @Expose
-    private final List<ExecuteDamageConfig> damageLevelConfiguration = new ArrayList<>();
-
+    private final List<ExecuteDamageConfig> damageLevelConfiguration;
+    
     private ExecuteAbilityGroup() {
         super("Execute");
+        this.buffLevelConfiguration = new ArrayList<ExecuteBuffConfig>();
+        this.damageLevelConfiguration = new ArrayList<ExecuteDamageConfig>();
     }
-
-
-    protected ExecuteConfig getSubConfig(String specialization, int level) {
+    
+    @Override
+    protected ExecuteConfig getSubConfig(final String specialization, final int level) {
         switch (specialization) {
-            case "Execute_Buff":
-                return (ExecuteConfig) this.buffLevelConfiguration.get(level);
-            case "Execute_Damage":
-                return (ExecuteConfig) this.damageLevelConfiguration.get(level);
+            case "Execute_Buff": {
+                return this.buffLevelConfiguration.get(level);
+            }
+            case "Execute_Damage": {
+                return this.damageLevelConfiguration.get(level);
+            }
+            default: {
+                return null;
+            }
         }
-        return null;
     }
-
-
-    public String getSpecializationName(String specialization) {
+    
+    @Override
+    public String getSpecializationName(final String specialization) {
         switch (specialization) {
-            case "Execute_Buff":
+            case "Execute_Buff": {
                 return "Combo";
-            case "Execute_Damage":
+            }
+            case "Execute_Damage": {
                 return "Precision";
+            }
+            default: {
+                return "Execute";
+            }
         }
-        return "Execute";
     }
-
+    
     public static ExecuteAbilityGroup defaultConfig() {
-        ExecuteAbilityGroup group = new ExecuteAbilityGroup();
-        group.addLevel((AbilityConfig) new ExecuteConfig(1, AbilityConfig.Behavior.RELEASE_TO_PERFORM, 0.05F, 100));
-        group.addLevel((AbilityConfig) new ExecuteConfig(1, AbilityConfig.Behavior.RELEASE_TO_PERFORM, 0.1F, 100));
-        group.addLevel((AbilityConfig) new ExecuteConfig(2, AbilityConfig.Behavior.RELEASE_TO_PERFORM, 0.15F, 100));
-        group.addLevel((AbilityConfig) new ExecuteConfig(2, AbilityConfig.Behavior.RELEASE_TO_PERFORM, 0.2F, 100));
-        group.addLevel((AbilityConfig) new ExecuteConfig(3, AbilityConfig.Behavior.RELEASE_TO_PERFORM, 0.25F, 100));
-        group.addLevel((AbilityConfig) new ExecuteConfig(3, AbilityConfig.Behavior.RELEASE_TO_PERFORM, 0.3F, 100));
-        group.addLevel((AbilityConfig) new ExecuteConfig(4, AbilityConfig.Behavior.RELEASE_TO_PERFORM, 0.35F, 100));
-        group.addLevel((AbilityConfig) new ExecuteConfig(4, AbilityConfig.Behavior.RELEASE_TO_PERFORM, 0.4F, 100));
-        group.addLevel((AbilityConfig) new ExecuteConfig(5, AbilityConfig.Behavior.RELEASE_TO_PERFORM, 0.45F, 100));
-        group.addLevel((AbilityConfig) new ExecuteConfig(5, AbilityConfig.Behavior.RELEASE_TO_PERFORM, 0.5F, 100));
-        group.buffLevelConfiguration.add(new ExecuteBuffConfig(1, AbilityConfig.Behavior.RELEASE_TO_PERFORM, 0.05F, 100, 0.05F));
-        group.buffLevelConfiguration.add(new ExecuteBuffConfig(1, AbilityConfig.Behavior.RELEASE_TO_PERFORM, 0.1F, 100, 0.1F));
-        group.buffLevelConfiguration.add(new ExecuteBuffConfig(2, AbilityConfig.Behavior.RELEASE_TO_PERFORM, 0.15F, 100, 0.15F));
-        group.buffLevelConfiguration.add(new ExecuteBuffConfig(2, AbilityConfig.Behavior.RELEASE_TO_PERFORM, 0.2F, 100, 0.2F));
-        group.buffLevelConfiguration.add(new ExecuteBuffConfig(3, AbilityConfig.Behavior.RELEASE_TO_PERFORM, 0.25F, 100, 0.25F));
-        group.buffLevelConfiguration.add(new ExecuteBuffConfig(3, AbilityConfig.Behavior.RELEASE_TO_PERFORM, 0.3F, 100, 0.3F));
-        group.buffLevelConfiguration.add(new ExecuteBuffConfig(4, AbilityConfig.Behavior.RELEASE_TO_PERFORM, 0.35F, 100, 0.35F));
-        group.buffLevelConfiguration.add(new ExecuteBuffConfig(4, AbilityConfig.Behavior.RELEASE_TO_PERFORM, 0.4F, 100, 0.4F));
-        group.buffLevelConfiguration.add(new ExecuteBuffConfig(5, AbilityConfig.Behavior.RELEASE_TO_PERFORM, 0.45F, 100, 0.45F));
-        group.buffLevelConfiguration.add(new ExecuteBuffConfig(5, AbilityConfig.Behavior.RELEASE_TO_PERFORM, 0.5F, 100, 0.5F));
-        group.damageLevelConfiguration.add(new ExecuteDamageConfig(1, AbilityConfig.Behavior.RELEASE_TO_PERFORM, 100, 0.1F));
-        group.damageLevelConfiguration.add(new ExecuteDamageConfig(1, AbilityConfig.Behavior.RELEASE_TO_PERFORM, 100, 0.2F));
-        group.damageLevelConfiguration.add(new ExecuteDamageConfig(2, AbilityConfig.Behavior.RELEASE_TO_PERFORM, 100, 0.3F));
-        group.damageLevelConfiguration.add(new ExecuteDamageConfig(2, AbilityConfig.Behavior.RELEASE_TO_PERFORM, 100, 0.4F));
-        group.damageLevelConfiguration.add(new ExecuteDamageConfig(3, AbilityConfig.Behavior.RELEASE_TO_PERFORM, 100, 0.5F));
-        group.damageLevelConfiguration.add(new ExecuteDamageConfig(3, AbilityConfig.Behavior.RELEASE_TO_PERFORM, 100, 0.6F));
-        group.damageLevelConfiguration.add(new ExecuteDamageConfig(4, AbilityConfig.Behavior.RELEASE_TO_PERFORM, 100, 0.7F));
-        group.damageLevelConfiguration.add(new ExecuteDamageConfig(4, AbilityConfig.Behavior.RELEASE_TO_PERFORM, 100, 0.8F));
-        group.damageLevelConfiguration.add(new ExecuteDamageConfig(5, AbilityConfig.Behavior.RELEASE_TO_PERFORM, 100, 0.9F));
-        group.damageLevelConfiguration.add(new ExecuteDamageConfig(5, AbilityConfig.Behavior.RELEASE_TO_PERFORM, 100, 1.0F));
+        final ExecuteAbilityGroup group = new ExecuteAbilityGroup();
+        group.addLevel(new ExecuteConfig(1, AbilityConfig.Behavior.RELEASE_TO_PERFORM, 0.05f, 100));
+        group.addLevel(new ExecuteConfig(1, AbilityConfig.Behavior.RELEASE_TO_PERFORM, 0.1f, 100));
+        group.addLevel(new ExecuteConfig(2, AbilityConfig.Behavior.RELEASE_TO_PERFORM, 0.15f, 100));
+        group.addLevel(new ExecuteConfig(2, AbilityConfig.Behavior.RELEASE_TO_PERFORM, 0.2f, 100));
+        group.addLevel(new ExecuteConfig(3, AbilityConfig.Behavior.RELEASE_TO_PERFORM, 0.25f, 100));
+        group.addLevel(new ExecuteConfig(3, AbilityConfig.Behavior.RELEASE_TO_PERFORM, 0.3f, 100));
+        group.addLevel(new ExecuteConfig(4, AbilityConfig.Behavior.RELEASE_TO_PERFORM, 0.35f, 100));
+        group.addLevel(new ExecuteConfig(4, AbilityConfig.Behavior.RELEASE_TO_PERFORM, 0.4f, 100));
+        group.addLevel(new ExecuteConfig(5, AbilityConfig.Behavior.RELEASE_TO_PERFORM, 0.45f, 100));
+        group.addLevel(new ExecuteConfig(5, AbilityConfig.Behavior.RELEASE_TO_PERFORM, 0.5f, 100));
+        group.buffLevelConfiguration.add(new ExecuteBuffConfig(1, AbilityConfig.Behavior.RELEASE_TO_PERFORM, 0.05f, 100, 0.05f));
+        group.buffLevelConfiguration.add(new ExecuteBuffConfig(1, AbilityConfig.Behavior.RELEASE_TO_PERFORM, 0.1f, 100, 0.1f));
+        group.buffLevelConfiguration.add(new ExecuteBuffConfig(2, AbilityConfig.Behavior.RELEASE_TO_PERFORM, 0.15f, 100, 0.15f));
+        group.buffLevelConfiguration.add(new ExecuteBuffConfig(2, AbilityConfig.Behavior.RELEASE_TO_PERFORM, 0.2f, 100, 0.2f));
+        group.buffLevelConfiguration.add(new ExecuteBuffConfig(3, AbilityConfig.Behavior.RELEASE_TO_PERFORM, 0.25f, 100, 0.25f));
+        group.buffLevelConfiguration.add(new ExecuteBuffConfig(3, AbilityConfig.Behavior.RELEASE_TO_PERFORM, 0.3f, 100, 0.3f));
+        group.buffLevelConfiguration.add(new ExecuteBuffConfig(4, AbilityConfig.Behavior.RELEASE_TO_PERFORM, 0.35f, 100, 0.35f));
+        group.buffLevelConfiguration.add(new ExecuteBuffConfig(4, AbilityConfig.Behavior.RELEASE_TO_PERFORM, 0.4f, 100, 0.4f));
+        group.buffLevelConfiguration.add(new ExecuteBuffConfig(5, AbilityConfig.Behavior.RELEASE_TO_PERFORM, 0.45f, 100, 0.45f));
+        group.buffLevelConfiguration.add(new ExecuteBuffConfig(5, AbilityConfig.Behavior.RELEASE_TO_PERFORM, 0.5f, 100, 0.5f));
+        group.damageLevelConfiguration.add(new ExecuteDamageConfig(1, AbilityConfig.Behavior.RELEASE_TO_PERFORM, 100, 0.1f));
+        group.damageLevelConfiguration.add(new ExecuteDamageConfig(1, AbilityConfig.Behavior.RELEASE_TO_PERFORM, 100, 0.2f));
+        group.damageLevelConfiguration.add(new ExecuteDamageConfig(2, AbilityConfig.Behavior.RELEASE_TO_PERFORM, 100, 0.3f));
+        group.damageLevelConfiguration.add(new ExecuteDamageConfig(2, AbilityConfig.Behavior.RELEASE_TO_PERFORM, 100, 0.4f));
+        group.damageLevelConfiguration.add(new ExecuteDamageConfig(3, AbilityConfig.Behavior.RELEASE_TO_PERFORM, 100, 0.5f));
+        group.damageLevelConfiguration.add(new ExecuteDamageConfig(3, AbilityConfig.Behavior.RELEASE_TO_PERFORM, 100, 0.6f));
+        group.damageLevelConfiguration.add(new ExecuteDamageConfig(4, AbilityConfig.Behavior.RELEASE_TO_PERFORM, 100, 0.7f));
+        group.damageLevelConfiguration.add(new ExecuteDamageConfig(4, AbilityConfig.Behavior.RELEASE_TO_PERFORM, 100, 0.8f));
+        group.damageLevelConfiguration.add(new ExecuteDamageConfig(5, AbilityConfig.Behavior.RELEASE_TO_PERFORM, 100, 0.9f));
+        group.damageLevelConfiguration.add(new ExecuteDamageConfig(5, AbilityConfig.Behavior.RELEASE_TO_PERFORM, 100, 1.0f));
         return group;
     }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\skill\ability\group\ExecuteAbilityGroup.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

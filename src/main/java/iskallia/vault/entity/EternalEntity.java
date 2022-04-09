@@ -1,8 +1,11 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.entity;
 
 import com.mojang.datafixers.util.Either;
 import iskallia.vault.aura.AuraManager;
-import iskallia.vault.aura.AuraProvider;
 import iskallia.vault.aura.EntityAuraProvider;
 import iskallia.vault.config.EternalAuraConfig;
 import iskallia.vault.entity.ai.FollowEntityGoal;
@@ -14,10 +17,8 @@ import iskallia.vault.network.message.FighterSizeMessage;
 import iskallia.vault.skill.ability.AbilityNode;
 import iskallia.vault.skill.ability.AbilityTree;
 import iskallia.vault.skill.ability.config.sub.SummonEternalDebuffConfig;
-import iskallia.vault.skill.talent.TalentGroup;
 import iskallia.vault.skill.talent.TalentTree;
 import iskallia.vault.skill.talent.type.EffectTalent;
-import iskallia.vault.skill.talent.type.archetype.CommanderTalent;
 import iskallia.vault.util.DamageUtil;
 import iskallia.vault.util.EntityHelper;
 import iskallia.vault.util.MiscUtils;
@@ -62,135 +63,124 @@ import java.util.Objects;
 import java.util.UUID;
 import java.util.function.Predicate;
 
-public class EternalEntity extends ZombieEntity {
-    private static final DataParameter<String> ETERNAL_NAME = EntityDataManager.defineId(EternalEntity.class, DataSerializers.STRING);
-
+public class EternalEntity extends ZombieEntity
+{
+    private static final DataParameter<String> ETERNAL_NAME;
     public SkinProfile skin;
-    public float sizeMultiplier = 1.0F;
-    private boolean ancient = false;
-    private long despawnTime = Long.MAX_VALUE;
+    public float sizeMultiplier;
+    private boolean ancient;
+    private long despawnTime;
     private final ServerBossInfo bossInfo;
     private UUID owner;
     private UUID eternalId;
     private String providedAura;
-
-    public EternalEntity(EntityType<? extends ZombieEntity> type, World world) {
-        super(type, world);
+    
+    public EternalEntity(final EntityType<? extends ZombieEntity> type, final World world) {
+        super((EntityType)type, world);
+        this.sizeMultiplier = 1.0f;
+        this.ancient = false;
+        this.despawnTime = Long.MAX_VALUE;
         if (this.level.isClientSide) {
             this.skin = new SkinProfile();
         }
-
-        this.bossInfo = new ServerBossInfo(getDisplayName(), BossInfo.Color.PURPLE, BossInfo.Overlay.PROGRESS);
-        this.bossInfo.setDarkenScreen(true);
+        (this.bossInfo = new ServerBossInfo(this.getDisplayName(), BossInfo.Color.PURPLE, BossInfo.Overlay.PROGRESS)).setDarkenScreen(true);
         this.bossInfo.setVisible(false);
-
-        setCanPickUpLoot(false);
+        this.setCanPickUpLoot(false);
     }
-
-
+    
     protected void defineSynchedData() {
         super.defineSynchedData();
-        this.entityData.define(ETERNAL_NAME, "Eternal");
+        this.entityData.define((DataParameter)EternalEntity.ETERNAL_NAME, "Eternal");
     }
-
-
+    
     protected void addBehaviourGoals() {
-        this.goalSelector.addGoal(2, (Goal) new ZombieAttackGoal(this, 1.1D, false));
-        this.goalSelector.addGoal(6, (Goal) new MoveThroughVillageGoal((CreatureEntity) this, 1.1D, true, 4, this::canBreakDoors));
-        this.goalSelector.addGoal(7, (Goal) new WaterAvoidingRandomWalkingGoal((CreatureEntity) this, 1.1D));
-        this.targetSelector.addGoal(2, (Goal) new FollowEntityGoal((MobEntity) this, 1.1D, 32.0F, 3.0F, false, () -> getOwner().right()));
+        this.goalSelector.addGoal(2, (Goal)new ZombieAttackGoal((ZombieEntity)this, 1.1, false));
+        this.goalSelector.addGoal(6, (Goal)new MoveThroughVillageGoal((CreatureEntity)this, 1.1, true, 4, this::canBreakDoors));
+        this.goalSelector.addGoal(7, (Goal)new WaterAvoidingRandomWalkingGoal((CreatureEntity)this, 1.1));
+        this.targetSelector.addGoal(2, (Goal)new FollowEntityGoal<>(this, 1.1, 32.0f, 3.0f, false, () -> this.getOwner().right()));
     }
-
+    
     @OnlyIn(Dist.CLIENT)
     public ResourceLocation getLocationSkin() {
         return this.skin.getLocationSkin();
     }
-
-    public void setOwner(UUID owner) {
+    
+    public void setOwner(final UUID owner) {
         this.owner = owner;
     }
-
-    public void setSkinName(String skinName) {
-        this.entityData.set(ETERNAL_NAME, skinName);
+    
+    public void setSkinName(final String skinName) {
+        this.entityData.set((DataParameter)EternalEntity.ETERNAL_NAME, skinName);
     }
-
+    
     public String getSkinName() {
-        return (String) this.entityData.get(ETERNAL_NAME);
+        return (String)this.entityData.get((DataParameter)EternalEntity.ETERNAL_NAME);
     }
-
-    public void setAncient(boolean ancient) {
+    
+    public void setAncient(final boolean ancient) {
         this.ancient = ancient;
     }
-
+    
     public boolean isAncient() {
         return this.ancient;
     }
-
-    public void setEternalId(UUID eternalId) {
+    
+    public void setEternalId(final UUID eternalId) {
         this.eternalId = eternalId;
     }
-
+    
     public UUID getEternalId() {
         return this.eternalId;
     }
-
-    public void setProvidedAura(String providedAura) {
+    
+    public void setProvidedAura(final String providedAura) {
         this.providedAura = providedAura;
     }
-
+    
     public String getProvidedAura() {
         return this.providedAura;
     }
-
-    public void setDespawnTime(long despawnTime) {
+    
+    public void setDespawnTime(final long despawnTime) {
         this.despawnTime = despawnTime;
     }
-
-
+    
     public boolean isBaby() {
         return false;
     }
-
-
+    
     protected boolean isSunSensitive() {
         return false;
     }
-
-
+    
     protected void doUnderWaterConversion() {
     }
-
-
+    
     protected boolean convertsInWater() {
         return false;
     }
-
-
+    
     public boolean isInvertedHealAndHarm() {
         return false;
     }
-
-
-    public EntityClassification getClassification(boolean forSpawnCount) {
+    
+    public EntityClassification getClassification(final boolean forSpawnCount) {
         return EntityClassification.MONSTER;
     }
-
+    
     public Either<UUID, ServerPlayerEntity> getOwner() {
         if (this.level.isClientSide()) {
             return Either.left(this.owner);
         }
-        ServerPlayerEntity player = getServer().getPlayerList().getPlayer(this.owner);
-        return (player == null) ? Either.left(this.owner) : Either.right(player);
+        final ServerPlayerEntity player = this.getServer().getPlayerList().getPlayer(this.owner);
+        return (Either<UUID, ServerPlayerEntity>)((player == null) ? Either.left(this.owner) : Either.right(player));
     }
-
-
+    
     public void tick() {
         super.tick();
-
         if (this.level instanceof ServerWorld) {
-            ServerWorld sWorld = (ServerWorld) this.level;
-            int tickCounter = sWorld.getServer().getTickCount();
-
+            final ServerWorld sWorld = (ServerWorld)this.level;
+            final int tickCounter = sWorld.getServer().getTickCount();
             if (tickCounter < this.despawnTime) {
                 ActiveEternalData.getInstance().updateEternal(this);
             }
@@ -198,117 +188,98 @@ public class EternalEntity extends ZombieEntity {
                 return;
             }
             if (tickCounter >= this.despawnTime) {
-                kill();
+                this.kill();
             }
-
-            double amplitude = getDeltaMovement().distanceToSqr(0.0D, getDeltaMovement().y(), 0.0D);
-
-            if (amplitude > 0.004D) {
-                setSprinting(true);
-            } else {
-
-                setSprinting(false);
+            final double amplitude = this.getDeltaMovement().distanceToSqr(0.0, this.getDeltaMovement().y(), 0.0);
+            if (amplitude > 0.004) {
+                this.setSprinting(true);
             }
-
-            this.bossInfo.setPercent(getHealth() / getMaxHealth());
+            else {
+                this.setSprinting(false);
+            }
+            this.bossInfo.setPercent(this.getHealth() / this.getMaxHealth());
             if (this.tickCount % 10 == 0) {
-                updateAttackTarget();
+                this.updateAttackTarget();
             }
             if (this.providedAura != null && this.tickCount % 4 == 0) {
-                getOwner().ifRight(sPlayer -> {
-                    EternalAuraConfig.AuraConfig auraCfg = ModConfigs.ETERNAL_AURAS.getByName(this.providedAura);
-
+                this.getOwner().ifRight(sPlayer -> {
+                    final EternalAuraConfig.AuraConfig auraCfg = ModConfigs.ETERNAL_AURAS.getByName(this.providedAura);
                     if (auraCfg != null) {
-                        AuraManager.getInstance().provideAura((AuraProvider) EntityAuraProvider.ofEntity((LivingEntity) this, auraCfg));
+                        AuraManager.getInstance().provideAura(EntityAuraProvider.ofEntity((LivingEntity)this, auraCfg));
                     }
+                    return;
                 });
             }
-            Map<Effect, EffectTalent.CombinedEffects> combinedEffects = EffectTalent.getGearEffectData((LivingEntity) this);
-            EffectTalent.applyEffects((LivingEntity) this, combinedEffects);
-        } else {
+            final Map<Effect, EffectTalent.CombinedEffects> combinedEffects = EffectTalent.getGearEffectData((LivingEntity)this);
+            EffectTalent.applyEffects((LivingEntity)this, combinedEffects);
+        }
+        else {
             if (this.dead) {
                 return;
             }
-            if (!Objects.equals(getSkinName(), this.skin.getLatestNickname())) {
-                this.skin.updateSkin(getSkinName());
+            if (!Objects.equals(this.getSkinName(), this.skin.getLatestNickname())) {
+                this.skin.updateSkin(this.getSkinName());
             }
         }
     }
-
-
+    
     protected void tickDeath() {
         super.tickDeath();
     }
-
-
-    public void setTarget(LivingEntity entity) {
-        if (entity == getOwner().right().orElse(null) || entity instanceof EternalEntity || entity instanceof PlayerEntity || entity instanceof EtchingVendorEntity) {
+    
+    public void setTarget(final LivingEntity entity) {
+        if (entity == this.getOwner().right().orElse(null) || entity instanceof EternalEntity || entity instanceof PlayerEntity || entity instanceof EtchingVendorEntity) {
             return;
         }
-
         super.setTarget(entity);
     }
-
-
-    public void setLastHurtByMob(LivingEntity entity) {
-        if (entity == getOwner().right().orElse(null) || entity instanceof EternalEntity || entity instanceof PlayerEntity || entity instanceof EtchingVendorEntity) {
+    
+    public void setLastHurtByMob(final LivingEntity entity) {
+        if (entity == this.getOwner().right().orElse(null) || entity instanceof EternalEntity || entity instanceof PlayerEntity || entity instanceof EtchingVendorEntity) {
             return;
         }
-
         super.setLastHurtByMob(entity);
     }
-
+    
     private void updateAttackTarget() {
-        AxisAlignedBB box = getBoundingBox().inflate(32.0D);
-
+        final AxisAlignedBB box = this.getBoundingBox().inflate(32.0);
         this.level.getLoadedEntitiesOfClass(LivingEntity.class, box, e -> {
-                    Either<UUID, ServerPlayerEntity> owner = getOwner();
-
-                    return (owner.right().isPresent() && owner.right().get() == e) ? false : (
-
-
-                            (!(e instanceof EternalEntity) && !(e instanceof PlayerEntity) && !(e instanceof EtchingVendorEntity)));
-
-
-                }).stream()
-                .sorted(Comparator.comparingDouble(e -> e.position().distanceTo(position())))
-                .findFirst()
-                .ifPresent(this::setTarget);
+            final Either<UUID, ServerPlayerEntity> owner = this.getOwner();
+            if (owner.right().isPresent() && owner.right().get() == e) {
+                return false;
+            }
+            else {
+                return !(e instanceof EternalEntity) && !(e instanceof PlayerEntity) && !(e instanceof EtchingVendorEntity);
+            }
+        }).stream().sorted(Comparator.comparingDouble(e -> e.position().distanceTo(this.position()))).findFirst().ifPresent(this::setTarget);
     }
-
+    
     private Predicate<LivingEntity> ignoreEntities() {
-        return e -> (!(e instanceof EternalEntity) && !(e instanceof PlayerEntity));
+        return e -> !(e instanceof EternalEntity) && !(e instanceof PlayerEntity);
     }
-
-
+    
     protected SoundEvent getAmbientSound() {
         return null;
     }
-
-
+    
     protected SoundEvent getDeathSound() {
         return SoundEvents.PLAYER_DEATH;
     }
-
-
-    protected SoundEvent getHurtSound(DamageSource damageSourceIn) {
+    
+    protected SoundEvent getHurtSound(final DamageSource damageSourceIn) {
         return SoundEvents.PLAYER_HURT;
     }
-
-
-    public void setCustomName(ITextComponent name) {
+    
+    public void setCustomName(final ITextComponent name) {
         super.setCustomName(name);
-        this.bossInfo.setName(getDisplayName());
+        this.bossInfo.setName(this.getDisplayName());
     }
-
-
-    public void addAdditionalSaveData(CompoundNBT tag) {
+    
+    public void addAdditionalSaveData(final CompoundNBT tag) {
         super.addAdditionalSaveData(tag);
-
         tag.putBoolean("ancient", this.ancient);
         tag.putFloat("SizeMultiplier", this.sizeMultiplier);
         tag.putLong("DespawnTime", this.despawnTime);
-
         if (this.providedAura != null) {
             tag.putString("providedAura", this.providedAura);
         }
@@ -319,16 +290,12 @@ public class EternalEntity extends ZombieEntity {
             tag.putString("eternalId", this.eternalId.toString());
         }
     }
-
-
-    public void readAdditionalSaveData(CompoundNBT tag) {
+    
+    public void readAdditionalSaveData(final CompoundNBT tag) {
         super.readAdditionalSaveData(tag);
-
         this.ancient = tag.getBoolean("ancient");
-        this.sizeMultiplier = tag.getFloat("SizeMultiplier");
-        changeSize(this.sizeMultiplier);
+        this.changeSize(this.sizeMultiplier = tag.getFloat("SizeMultiplier"));
         this.despawnTime = tag.getLong("DespawnTime");
-
         if (tag.contains("providedAura", 8)) {
             this.providedAura = tag.getString("providedAura");
         }
@@ -338,130 +305,107 @@ public class EternalEntity extends ZombieEntity {
         if (tag.contains("eternalId", 8)) {
             this.eternalId = UUID.fromString(tag.getString("eternalId"));
         }
-
-        this.bossInfo.setName(getDisplayName());
+        this.bossInfo.setName(this.getDisplayName());
     }
-
-
-    public void startSeenByPlayer(ServerPlayerEntity player) {
+    
+    public void startSeenByPlayer(final ServerPlayerEntity player) {
         super.startSeenByPlayer(player);
         this.bossInfo.addPlayer(player);
     }
-
-
-    public void stopSeenByPlayer(ServerPlayerEntity player) {
+    
+    public void stopSeenByPlayer(final ServerPlayerEntity player) {
         super.stopSeenByPlayer(player);
         this.bossInfo.removePlayer(player);
     }
-
-
-    public EntitySize getDimensions(Pose pose) {
+    
+    public EntitySize getDimensions(final Pose pose) {
         return this.getDimensions(pose);
     }
-
+    
     public float getSizeMultiplier() {
         return this.sizeMultiplier;
     }
-
-    public EternalEntity changeSize(float m) {
-        this.sizeMultiplier = m;
-        EntityHelper.changeSize((Entity) this, this.sizeMultiplier);
+    
+    public EternalEntity changeSize(final float m) {
+        EntityHelper.changeSize(this, this.sizeMultiplier = m);
         if (!this.level.isClientSide()) {
-            ModNetwork.CHANNEL.send(PacketDistributor.TRACKING_ENTITY.with(() -> this), new FighterSizeMessage((Entity) this, this.sizeMultiplier));
+            ModNetwork.CHANNEL.send(PacketDistributor.TRACKING_ENTITY.with(() -> this), new FighterSizeMessage((Entity)this, this.sizeMultiplier));
         }
         return this;
     }
-
-
-    protected float getStandingEyeHeight(Pose pose, EntitySize size) {
+    
+    protected float getStandingEyeHeight(final Pose pose, final EntitySize size) {
         return super.getStandingEyeHeight(pose, size) * this.sizeMultiplier;
     }
-
-
-    public void die(DamageSource cause) {
+    
+    public void die(final DamageSource cause) {
         super.die(cause);
         if (this.level instanceof ServerWorld && this.dead && this.owner != null && this.eternalId != null && !cause.isBypassInvul()) {
-            ServerWorld sWorld = (ServerWorld) this.level;
-
-            TalentTree tree = PlayerTalentsData.get(sWorld).getTalents(this.owner);
-            if (tree.hasLearnedNode((TalentGroup) ModConfigs.TALENTS.COMMANDER) &&
-                    !((CommanderTalent) tree.getNodeOf((TalentGroup) ModConfigs.TALENTS.COMMANDER).getTalent()).doEternalsUnaliveWhenDead()) {
+            final ServerWorld sWorld = (ServerWorld)this.level;
+            final TalentTree tree = PlayerTalentsData.get(sWorld).getTalents(this.owner);
+            if (tree.hasLearnedNode(ModConfigs.TALENTS.COMMANDER) && !tree.getNodeOf(ModConfigs.TALENTS.COMMANDER).getTalent().doEternalsUnaliveWhenDead()) {
                 return;
             }
-
-            EternalData eternal = EternalsData.get(sWorld).getEternal(this.eternalId);
+            final EternalData eternal = EternalsData.get(sWorld).getEternal(this.eternalId);
             if (eternal != null) {
                 eternal.setAlive(false);
             }
         }
     }
-
-
-    public ILivingEntityData finalizeSpawn(IServerWorld world, DifficultyInstance difficulty, SpawnReason reason, ILivingEntityData spawnData, CompoundNBT dataTag) {
-        setCustomName(getCustomName());
-        setCanBreakDoors(true);
-        setCanPickUpLoot(false);
-        setPersistenceRequired();
-
-
+    
+    public ILivingEntityData finalizeSpawn(final IServerWorld world, final DifficultyInstance difficulty, final SpawnReason reason, final ILivingEntityData spawnData, final CompoundNBT dataTag) {
+        this.setCustomName(this.getCustomName());
+        this.setCanBreakDoors(true);
+        this.setCanPickUpLoot(false);
+        this.setPersistenceRequired();
         if (this.random.nextInt(100) == 0) {
-            ChickenEntity chicken = (ChickenEntity) EntityType.CHICKEN.create(this.level);
-
+            final ChickenEntity chicken = (ChickenEntity)EntityType.CHICKEN.create(this.level);
             if (chicken != null) {
-                chicken.moveTo(getX(), getY(), getZ(), this.yRot, 0.0F);
+                chicken.moveTo(this.getX(), this.getY(), this.getZ(), this.yRot, 0.0f);
                 chicken.finalizeSpawn(world, difficulty, reason, spawnData, dataTag);
                 chicken.setChickenJockey(true);
-                ((ServerWorld) this.level).addWithUUID((Entity) chicken);
-                startRiding((Entity) chicken);
+                ((ServerWorld)this.level).addWithUUID((Entity)chicken);
+                this.startRiding((Entity)chicken);
             }
         }
-
         return spawnData;
     }
-
-
-    public boolean hurt(DamageSource source, float amount) {
-        Entity src = source.getEntity();
+    
+    public boolean hurt(final DamageSource source, final float amount) {
+        final Entity src = source.getEntity();
         if (src instanceof ServerPlayerEntity) {
-            ServerPlayerEntity player = (ServerPlayerEntity) src;
+            final ServerPlayerEntity player = (ServerPlayerEntity)src;
             if (player.getUUID().equals(this.owner)) {
                 return false;
             }
         }
         return super.hurt(source, amount);
     }
-
-
-    public boolean doHurtTarget(Entity entity) {
+    
+    public boolean doHurtTarget(final Entity entity) {
         if (!this.level.isClientSide() && this.level instanceof ServerWorld) {
-            ServerWorld sWorld = (ServerWorld) this.level;
-
-            sWorld.sendParticles((IParticleData) ParticleTypes.SWEEP_ATTACK, getX(), getY(),
-                    getZ(), 1, 0.0D, 0.0D, 0.0D, 0.0D);
-            this.level.playSound(null, blockPosition(), SoundEvents.PLAYER_ATTACK_SWEEP, SoundCategory.PLAYERS, 1.0F, this.random
-                    .nextFloat() - this.random.nextFloat());
-
+            final ServerWorld sWorld = (ServerWorld)this.level;
+            sWorld.sendParticles((IParticleData)ParticleTypes.SWEEP_ATTACK, this.getX(), this.getY(), this.getZ(), 1, 0.0, 0.0, 0.0, 0.0);
+            this.level.playSound((PlayerEntity)null, this.blockPosition(), SoundEvents.PLAYER_ATTACK_SWEEP, SoundCategory.PLAYERS, 1.0f, this.random.nextFloat() - this.random.nextFloat());
             if (entity instanceof LivingEntity) {
-                getOwner().ifRight(owner -> {
-                    AbilityTree abilityData = PlayerAbilitiesData.get(sWorld).getAbilities((PlayerEntity) owner);
-
-                    AbilityNode<?, ?> eternalsNode = abilityData.getNodeByName("Summon Eternal");
+                this.getOwner().ifRight(owner -> {
+                    final AbilityTree abilityData = PlayerAbilitiesData.get(sWorld).getAbilities((PlayerEntity)owner);
+                    final AbilityNode<?, ?> eternalsNode = abilityData.getNodeByName("Summon Eternal");
                     if ("Summon Eternal_Debuffs".equals(eternalsNode.getSpecialization())) {
-                        SummonEternalDebuffConfig cfg = (SummonEternalDebuffConfig) eternalsNode.getAbilityConfig();
+                        final SummonEternalDebuffConfig cfg = (SummonEternalDebuffConfig) eternalsNode.getAbilityConfig();
                         if (this.random.nextFloat() < cfg.getApplyDebuffChance()) {
-                            Effect debuff = (Effect) MiscUtils.eitherOf(this.random, (Object[]) new Effect[]{Effects.POISON, Effects.WITHER, Effects.MOVEMENT_SLOWDOWN, Effects.DIG_SLOWDOWN});
-                            ((LivingEntity) entity).addEffect(new EffectInstance(debuff, cfg.getDebuffDurationTicks(), cfg.getDebuffAmplifier()));
+                            final Effect debuff = MiscUtils.eitherOf(this.random, Effects.POISON, Effects.WITHER, Effects.MOVEMENT_SLOWDOWN, Effects.DIG_SLOWDOWN);
+                            ((LivingEntity)entity).addEffect(new EffectInstance(debuff, cfg.getDebuffDurationTicks(), cfg.getDebuffAmplifier()));
                         }
                     }
+                    return;
                 });
             }
         }
-        return ((Boolean) DamageUtil.shotgunAttackApply(entity, x$0 -> Boolean.valueOf(super.doHurtTarget(x$0)))).booleanValue();
+        return DamageUtil.shotgunAttackApply(entity, x$0 -> super.doHurtTarget(x$0));
+    }
+    
+    static {
+        ETERNAL_NAME = EntityDataManager.defineId((Class)EternalEntity.class, DataSerializers.STRING);
     }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\entity\EternalEntity.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

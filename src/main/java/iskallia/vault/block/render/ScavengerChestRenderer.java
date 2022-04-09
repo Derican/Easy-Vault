@@ -1,3 +1,7 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.block.render;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
@@ -25,41 +29,37 @@ import net.minecraft.tileentity.TileEntityMerger;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.vector.Vector3f;
 
-public class ScavengerChestRenderer extends TileEntityRenderer<ScavengerChestTileEntity> {
-    public static final RenderMaterial MATERIAL = new RenderMaterial(Atlases.CHEST_SHEET, Vault.id("entity/chest/scavenger_chest"));
-    private static final ScavengerChestModel CHEST_MODEL = new ScavengerChestModel();
+import java.util.function.Function;
 
-    public ScavengerChestRenderer(TileEntityRendererDispatcher terd) {
+public class ScavengerChestRenderer extends TileEntityRenderer<ScavengerChestTileEntity>
+{
+    public static final RenderMaterial MATERIAL;
+    private static final ScavengerChestModel CHEST_MODEL;
+    
+    public ScavengerChestRenderer(final TileEntityRendererDispatcher terd) {
         super(terd);
     }
-
-
-    public void render(ScavengerChestTileEntity tileEntity, float partialTicks, MatrixStack matrixStack, IRenderTypeBuffer buffer, int combinedLight, int combinedOverlay) {
-        boolean isInWorldRender = tileEntity.hasLevel();
-
-        BlockState renderState = isInWorldRender ? tileEntity.getBlockState() : (BlockState) ModBlocks.SCAVENGER_CHEST.defaultBlockState().setValue((Property) ChestBlock.FACING, (Comparable) Direction.SOUTH);
-        float hAngle = ((Direction) renderState.getValue((Property) ChestBlock.FACING)).toYRot();
-        TileEntityMerger.ICallbackWrapper<? extends ChestTileEntity> lidCallback = TileEntityMerger.ICallback::acceptNone;
-
-        float lidRotation = ((Float2FloatFunction) lidCallback.apply(ScavengerChestBlock.opennessCombiner((IChestLid) tileEntity))).get(partialTicks);
-        lidRotation = 1.0F - lidRotation;
-        lidRotation = 1.0F - lidRotation * lidRotation * lidRotation;
-
-        CHEST_MODEL.setLidAngle(lidRotation);
-        int combinedLidLight = ((Int2IntFunction) lidCallback.apply((TileEntityMerger.ICallback) new DualBrightnessCallback())).applyAsInt(combinedLight);
-
-        IVertexBuilder vb = MATERIAL.buffer(buffer, RenderType::entityCutout);
-
+    
+    public void render(final ScavengerChestTileEntity tileEntity, final float partialTicks, final MatrixStack matrixStack, final IRenderTypeBuffer buffer, final int combinedLight, final int combinedOverlay) {
+        final boolean isInWorldRender = tileEntity.hasLevel();
+        final BlockState renderState = (isInWorldRender ? tileEntity.getBlockState() : ModBlocks.SCAVENGER_CHEST.defaultBlockState().setValue(ChestBlock.FACING, Direction.SOUTH));
+        final float hAngle = (renderState.getValue(ChestBlock.FACING)).toYRot();
+        final TileEntityMerger.ICallbackWrapper<? extends ChestTileEntity> lidCallback = (TileEntityMerger.ICallbackWrapper<? extends ChestTileEntity>)TileEntityMerger.ICallback::acceptNone;
+        float lidRotation = ((Float2FloatFunction)lidCallback.apply(ScavengerChestBlock.opennessCombiner((IChestLid)tileEntity))).get(partialTicks);
+        lidRotation = 1.0f - lidRotation;
+        lidRotation = 1.0f - lidRotation * lidRotation * lidRotation;
+        ScavengerChestRenderer.CHEST_MODEL.setLidAngle(lidRotation);
+        final int combinedLidLight = ((Int2IntFunction)lidCallback.apply((TileEntityMerger.ICallback)new DualBrightnessCallback())).applyAsInt(combinedLight);
+        final IVertexBuilder vb = ScavengerChestRenderer.MATERIAL.buffer(buffer, RenderType::entityCutout);
         matrixStack.pushPose();
-        matrixStack.translate(0.5D, 0.5D, 0.5D);
+        matrixStack.translate(0.5, 0.5, 0.5);
         matrixStack.mulPose(Vector3f.YP.rotationDegrees(-hAngle));
-        CHEST_MODEL.renderToBuffer(matrixStack, vb, combinedLidLight, combinedOverlay, 1.0F, 1.0F, 1.0F, 1.0F);
+        ScavengerChestRenderer.CHEST_MODEL.renderToBuffer(matrixStack, vb, combinedLidLight, combinedOverlay, 1.0f, 1.0f, 1.0f, 1.0f);
         matrixStack.popPose();
     }
+    
+    static {
+        MATERIAL = new RenderMaterial(Atlases.CHEST_SHEET, Vault.id("entity/chest/scavenger_chest"));
+        CHEST_MODEL = new ScavengerChestModel();
+    }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\block\render\ScavengerChestRenderer.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

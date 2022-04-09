@@ -1,6 +1,9 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.skill.ability.effect.sub;
 
-import iskallia.vault.skill.ability.config.HunterConfig;
 import iskallia.vault.skill.ability.config.sub.HunterChestsConfig;
 import iskallia.vault.skill.ability.effect.HunterAbility;
 import net.minecraft.entity.player.PlayerEntity;
@@ -12,23 +15,18 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
-
-public class HunterChestAbility
-        extends HunterAbility<HunterChestsConfig> {
-    protected List<Tuple<BlockPos, Color>> selectPositions(HunterChestsConfig config, World world, PlayerEntity player) {
-        List<Tuple<BlockPos, Color>> entityPositions = new ArrayList<>();
-        Color c = new Color(config.getColor(), false);
-        forEachTileEntity((HunterConfig) config, world, player, (pos, tile) -> {
+public class HunterChestAbility extends HunterAbility<HunterChestsConfig>
+{
+    @Override
+    protected List<Tuple<BlockPos, Color>> selectPositions(final HunterChestsConfig config, final World world, final PlayerEntity player) {
+        final List<Tuple<BlockPos, Color>> entityPositions = new ArrayList<Tuple<BlockPos, Color>>();
+        final Color c = new Color(config.getColor(), false);
+        this.forEachTileEntity(config, world, player, (pos, tile) -> {
             if (config.shouldHighlightTileEntity(tile)) {
                 entityPositions.add(new Tuple(pos, c));
             }
+            return;
         });
         return entityPositions;
     }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\skill\ability\effect\sub\HunterChestAbility.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

@@ -1,3 +1,7 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.block;
 
 import iskallia.vault.Vault;
@@ -9,9 +13,9 @@ import iskallia.vault.world.data.VaultRaidData;
 import iskallia.vault.world.vault.VaultRaid;
 import iskallia.vault.world.vault.VaultUtils;
 import iskallia.vault.world.vault.logic.VaultCowOverrides;
-import iskallia.vault.world.vault.logic.objective.SummonAndKillBossObjective;
 import net.minecraft.block.*;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.particles.IParticleData;
 import net.minecraft.particles.ParticleTypes;
@@ -34,126 +38,111 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import java.util.Arrays;
 import java.util.Random;
 
-public class VaultPortalBlock
-        extends NetherPortalBlock {
-    public static final AbstractBlock.IPositionPredicate FRAME = (state, reader, p) -> Arrays.<Block>stream(ModConfigs.VAULT_PORTAL.getValidFrameBlocks()).anyMatch((Block block)->block.defaultBlockState()==state);
-
+public class VaultPortalBlock extends NetherPortalBlock
+{
+    public static final AbstractBlock.IPositionPredicate FRAME;
+    
     public VaultPortalBlock() {
-        super(AbstractBlock.Properties.copy((AbstractBlock) Blocks.NETHER_PORTAL));
-        registerDefaultState((BlockState) ((BlockState) this.stateDefinition.any()).setValue((Property) AXIS, (Comparable) Direction.Axis.X));
+        super(AbstractBlock.Properties.copy((AbstractBlock)Blocks.NETHER_PORTAL));
+        this.registerDefaultState((this.stateDefinition.any()).setValue(VaultPortalBlock.AXIS, Direction.Axis.X));
     }
-
-
-    protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) {
-        super.createBlockStateDefinition(builder);
+    
+    protected void createBlockStateDefinition(final StateContainer.Builder<Block, BlockState> builder) {
+        super.createBlockStateDefinition((StateContainer.Builder)builder);
     }
-
-
-    public void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
+    
+    public void randomTick(final BlockState state, final ServerWorld world, final BlockPos pos, final Random random) {
     }
-
-
-    public void entityInside(BlockState state, World world, BlockPos pos, Entity entity) {
-        if (world.isClientSide || !(entity instanceof net.minecraft.entity.player.PlayerEntity))
+    
+    public void entityInside(final BlockState state, final World world, final BlockPos pos, final Entity entity) {
+        if (world.isClientSide || !(entity instanceof PlayerEntity)) {
             return;
-        if (entity.isPassenger() || entity.isVehicle() || !entity.canChangeDimensions())
+        }
+        if (entity.isPassenger() || entity.isVehicle() || !entity.canChangeDimensions()) {
             return;
-        VoxelShape playerVoxel = VoxelShapes.create(entity.getBoundingBox().move(-pos.getX(), -pos.getY(), -pos.getZ()));
-        if (!VoxelShapes.joinIsNotEmpty(playerVoxel, state.getShape((IBlockReader) world, pos), IBooleanFunction.AND))
+        }
+        final VoxelShape playerVoxel = VoxelShapes.create(entity.getBoundingBox().move((double)(-pos.getX()), (double)(-pos.getY()), (double)(-pos.getZ())));
+        if (!VoxelShapes.joinIsNotEmpty(playerVoxel, state.getShape((IBlockReader)world, pos), IBooleanFunction.AND)) {
             return;
-        RegistryKey<World> destinationKey = (world.dimension() == Vault.VAULT_KEY) ? World.OVERWORLD : Vault.VAULT_KEY;
-        ServerWorld destination = ((ServerWorld) world).getServer().getLevel(destinationKey);
-        if (destination == null)
+        }
+        final RegistryKey<World> destinationKey = (RegistryKey<World>)((world.dimension() == Vault.VAULT_KEY) ? World.OVERWORLD : Vault.VAULT_KEY);
+        final ServerWorld destination = ((ServerWorld)world).getServer().getLevel((RegistryKey)destinationKey);
+        if (destination == null) {
             return;
-        ServerPlayerEntity player = (ServerPlayerEntity) entity;
-
-        TileEntity te = world.getBlockEntity(pos);
-        VaultPortalTileEntity portal = (te instanceof VaultPortalTileEntity) ? (VaultPortalTileEntity) te : null;
-
-
+        }
+        final ServerPlayerEntity player = (ServerPlayerEntity)entity;
+        final TileEntity te = world.getBlockEntity(pos);
+        final VaultPortalTileEntity portal = (te instanceof VaultPortalTileEntity) ? ((VaultPortalTileEntity)te) : null;
         if (player.isOnPortalCooldown()) {
             player.setPortalCooldown();
-
             return;
         }
         if (destinationKey == World.OVERWORLD) {
-            VaultRaid vault = VaultRaidData.get(destination).getActiveFor(player);
-
+            final VaultRaid vault = VaultRaidData.get(destination).getActiveFor(player);
             if (vault == null) {
                 VaultUtils.exitSafely(destination, player);
                 player.setPortalCooldown();
             }
-        } else if (destinationKey == Vault.VAULT_KEY &&
-                portal != null) {
-            CrystalData data = portal.getData();
-            VaultRaid.Builder builder = portal.getData().createVault(destination, player);
-            VaultRaid vault = VaultRaidData.get(destination).startVault(destination, builder);
+        }
+        else if (destinationKey == Vault.VAULT_KEY && portal != null) {
+            final CrystalData data = portal.getData();
+            final VaultRaid.Builder builder = portal.getData().createVault(destination, player);
+            final VaultRaid vault2 = VaultRaidData.get(destination).startVault(destination, builder);
             if (CrystalData.shouldForceCowVault(data)) {
-                vault.getProperties().create(VaultRaid.COW_VAULT, Boolean.valueOf(true));
+                vault2.getProperties().create(VaultRaid.COW_VAULT, true);
                 data.clearModifiers();
-                data.setSelectedObjective(((SummonAndKillBossObjective) VaultRaid.SUMMON_AND_KILL_BOSS.get()).getId());
-                VaultCowOverrides.setupVault(vault);
+                data.setSelectedObjective(VaultRaid.SUMMON_AND_KILL_BOSS.get().getId());
+                VaultCowOverrides.setupVault(vault2);
             }
             world.setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
             player.setPortalCooldown();
         }
     }
-
-
-    public BlockState updateShape(BlockState state, Direction facing, BlockState facingState, IWorld iworld, BlockPos currentPos, BlockPos facingPos) {
-        if (!(iworld instanceof ServerWorld)) return state;
-
-
-        if (((World) iworld).dimension() != Vault.VAULT_KEY) {
-            Direction.Axis facingAxis = facing.getAxis();
-            Direction.Axis portalAxis = (Direction.Axis) state.getValue((Property) AXIS);
-
-            boolean flag = (portalAxis != facingAxis && facingAxis.isHorizontal());
-            return (!flag && !facingState.is((Block) this) && !(new VaultPortalSize(iworld, currentPos, portalAxis, FRAME)).validatePortal()) ? Blocks.AIR
-                    .defaultBlockState() : super.updateShape(state, facing, facingState, iworld, currentPos, facingPos);
+    
+    public BlockState updateShape(final BlockState state, final Direction facing, final BlockState facingState, final IWorld iworld, final BlockPos currentPos, final BlockPos facingPos) {
+        if (!(iworld instanceof ServerWorld)) {
+            return state;
         }
-
-
+        if (((World)iworld).dimension() != Vault.VAULT_KEY) {
+            final Direction.Axis facingAxis = facing.getAxis();
+            final Direction.Axis portalAxis = (Direction.Axis)state.getValue(VaultPortalBlock.AXIS);
+            final boolean flag = portalAxis != facingAxis && facingAxis.isHorizontal();
+            return (flag || facingState.is((Block)this) || new VaultPortalSize(iworld, currentPos, portalAxis, VaultPortalBlock.FRAME).validatePortal()) ? super.updateShape(state, facing, facingState, iworld, currentPos, facingPos) : Blocks.AIR.defaultBlockState();
+        }
         return state;
     }
-
-
+    
     @OnlyIn(Dist.CLIENT)
-    public void animateTick(BlockState state, World world, BlockPos pos, Random rand) {
-        for (int i = 0; i < 4; i++) {
+    public void animateTick(final BlockState state, final World world, final BlockPos pos, final Random rand) {
+        for (int i = 0; i < 4; ++i) {
             double d0 = pos.getX() + rand.nextDouble();
-            double d1 = pos.getY() + rand.nextDouble();
-            double d2 = pos.getZ() + rand.nextDouble();
-            double d3 = (rand.nextFloat() - 0.5D) * 0.5D;
-            double d4 = (rand.nextFloat() - 0.5D) * 0.5D;
-            double d5 = (rand.nextFloat() - 0.5D) * 0.5D;
-            int j = rand.nextInt(2) * 2 - 1;
-
-            if (!world.getBlockState(pos.west()).is((Block) this) && !world.getBlockState(pos.east()).is((Block) this)) {
-                d0 = pos.getX() + 0.5D + 0.25D * j;
-                d3 = (rand.nextFloat() * 2.0F * j);
-            } else {
-                d2 = pos.getZ() + 0.5D + 0.25D * j;
-                d5 = (rand.nextFloat() * 2.0F * j);
+            final double d2 = pos.getY() + rand.nextDouble();
+            double d3 = pos.getZ() + rand.nextDouble();
+            double d4 = (rand.nextFloat() - 0.5) * 0.5;
+            final double d5 = (rand.nextFloat() - 0.5) * 0.5;
+            double d6 = (rand.nextFloat() - 0.5) * 0.5;
+            final int j = rand.nextInt(2) * 2 - 1;
+            if (!world.getBlockState(pos.west()).is((Block)this) && !world.getBlockState(pos.east()).is((Block)this)) {
+                d0 = pos.getX() + 0.5 + 0.25 * j;
+                d4 = rand.nextFloat() * 2.0f * j;
             }
-
-            world.addParticle((IParticleData) ParticleTypes.ASH, d0, d1, d2, d3, d4, d5);
+            else {
+                d3 = pos.getZ() + 0.5 + 0.25 * j;
+                d6 = rand.nextFloat() * 2.0f * j;
+            }
+            world.addParticle((IParticleData)ParticleTypes.ASH, d0, d2, d3, d4, d5, d6);
         }
     }
-
-
-    public boolean hasTileEntity(BlockState state) {
+    
+    public boolean hasTileEntity(final BlockState state) {
         return true;
     }
-
-
-    public TileEntity createTileEntity(BlockState state, IBlockReader world) {
+    
+    public TileEntity createTileEntity(final BlockState state, final IBlockReader world) {
         return ModBlocks.VAULT_PORTAL_TILE_ENTITY.create();
     }
+    
+    static {
+        FRAME = ((state, reader, p) -> Arrays.stream(ModConfigs.VAULT_PORTAL.getValidFrameBlocks()).anyMatch(b -> b == state.getBlock()));
+    }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\block\VaultPortalBlock.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

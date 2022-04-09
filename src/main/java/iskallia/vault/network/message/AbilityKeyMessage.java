@@ -1,3 +1,7 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.network.message;
 
 import iskallia.vault.skill.ability.AbilityGroup;
@@ -11,34 +15,38 @@ import net.minecraftforge.fml.network.NetworkEvent;
 
 import java.util.function.Supplier;
 
-
-public class AbilityKeyMessage {
+public class AbilityKeyMessage
+{
     public boolean keyUp;
     public boolean keyDown;
     public boolean scrollUp;
     public boolean scrollDown;
     public boolean shouldCancelDown;
-    public String selectedAbility = "";
-
+    public String selectedAbility;
+    
     public AbilityKeyMessage() {
+        this.selectedAbility = "";
     }
-
-    public AbilityKeyMessage(boolean keyUp, boolean keyDown, boolean scrollUp, boolean scrollDown) {
+    
+    public AbilityKeyMessage(final boolean keyUp, final boolean keyDown, final boolean scrollUp, final boolean scrollDown) {
+        this.selectedAbility = "";
         this.keyUp = keyUp;
         this.keyDown = keyDown;
         this.scrollUp = scrollUp;
         this.scrollDown = scrollDown;
     }
-
-    public AbilityKeyMessage(boolean shouldCancelDown) {
+    
+    public AbilityKeyMessage(final boolean shouldCancelDown) {
+        this.selectedAbility = "";
         this.shouldCancelDown = shouldCancelDown;
     }
-
-    public AbilityKeyMessage(AbilityGroup<?, ?> selectAbility) {
+    
+    public AbilityKeyMessage(final AbilityGroup<?, ?> selectAbility) {
+        this.selectedAbility = "";
         this.selectedAbility = selectAbility.getParentName();
     }
-
-    public static void encode(AbilityKeyMessage message, PacketBuffer buffer) {
+    
+    public static void encode(final AbilityKeyMessage message, final PacketBuffer buffer) {
         buffer.writeBoolean(message.keyUp);
         buffer.writeBoolean(message.keyDown);
         buffer.writeBoolean(message.scrollUp);
@@ -46,9 +54,9 @@ public class AbilityKeyMessage {
         buffer.writeBoolean(message.shouldCancelDown);
         buffer.writeUtf(message.selectedAbility);
     }
-
-    public static AbilityKeyMessage decode(PacketBuffer buffer) {
-        AbilityKeyMessage message = new AbilityKeyMessage();
+    
+    public static AbilityKeyMessage decode(final PacketBuffer buffer) {
+        final AbilityKeyMessage message = new AbilityKeyMessage();
         message.keyUp = buffer.readBoolean();
         message.keyDown = buffer.readBoolean();
         message.scrollUp = buffer.readBoolean();
@@ -57,39 +65,38 @@ public class AbilityKeyMessage {
         message.selectedAbility = buffer.readUtf(32767);
         return message;
     }
-
-    public static void handle(AbilityKeyMessage message, Supplier<NetworkEvent.Context> contextSupplier) {
-        NetworkEvent.Context context = contextSupplier.get();
+    
+    public static void handle(final AbilityKeyMessage message, final Supplier<NetworkEvent.Context> contextSupplier) {
+        final NetworkEvent.Context context = contextSupplier.get();
         context.enqueueWork(() -> {
-            ServerPlayerEntity sender = context.getSender();
-
+            final ServerPlayerEntity sender = context.getSender();
             if (sender == null) {
                 return;
             }
-
-            PlayerAbilitiesData abilitiesData = PlayerAbilitiesData.get((ServerWorld) sender.level);
-
-            AbilityTree abilityTree = abilitiesData.getAbilities((PlayerEntity) sender);
-            if (message.scrollUp) {
-                abilityTree.scrollUp(sender.server);
-            } else if (message.scrollDown) {
-                abilityTree.scrollDown(sender.server);
-            } else if (message.keyUp) {
-                abilityTree.keyUp(sender.server);
-            } else if (message.keyDown) {
-                abilityTree.keyDown(sender.server);
-            } else if (message.shouldCancelDown) {
-                abilityTree.cancelKeyDown(sender.server);
-            } else if (!message.selectedAbility.isEmpty()) {
-                abilityTree.quickSelectAbility(sender.server, message.selectedAbility);
+            else {
+                final PlayerAbilitiesData abilitiesData = PlayerAbilitiesData.get((ServerWorld)sender.level);
+                final AbilityTree abilityTree = abilitiesData.getAbilities((PlayerEntity)sender);
+                if (message.scrollUp) {
+                    abilityTree.scrollUp(sender.server);
+                }
+                else if (message.scrollDown) {
+                    abilityTree.scrollDown(sender.server);
+                }
+                else if (message.keyUp) {
+                    abilityTree.keyUp(sender.server);
+                }
+                else if (message.keyDown) {
+                    abilityTree.keyDown(sender.server);
+                }
+                else if (message.shouldCancelDown) {
+                    abilityTree.cancelKeyDown(sender.server);
+                }
+                else if (!message.selectedAbility.isEmpty()) {
+                    abilityTree.quickSelectAbility(sender.server, message.selectedAbility);
+                }
+                return;
             }
         });
         context.setPacketHandled(true);
     }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\network\message\AbilityKeyMessage.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

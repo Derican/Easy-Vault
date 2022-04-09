@@ -1,3 +1,7 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.skill.talent;
 
 import com.google.common.collect.BiMap;
@@ -16,7 +20,6 @@ import java.util.function.IntToDoubleFunction;
 import java.util.function.IntUnaryOperator;
 import java.util.stream.IntStream;
 
-
 public class TalentGroup<T extends PlayerTalent> {
     @Expose
     private final String name;
@@ -24,7 +27,7 @@ public class TalentGroup<T extends PlayerTalent> {
     private final T[] levels;
     private BiMap<String, T> registry;
 
-    public TalentGroup(String name, T... levels) {
+    public TalentGroup(final String name, final T... levels) {
         this.name = name;
         this.levels = levels;
     }
@@ -37,14 +40,20 @@ public class TalentGroup<T extends PlayerTalent> {
         return this.name;
     }
 
-    public String getName(int level) {
-        if (level == 0) return this.name + " " + RomanNumber.toRoman(0);
-        return (String) getRegistry().inverse().get(getTalent(level));
+    public String getName(final int level) {
+        if (level == 0) {
+            return this.name + " " + RomanNumber.toRoman(0);
+        }
+        return (String) this.getRegistry().inverse().get(this.getTalent(level));
     }
 
-    public T getTalent(int level) {
-        if (level < 0) return this.levels[0];
-        if (level >= getMaxLevel()) return this.levels[getMaxLevel() - 1];
+    public T getTalent(final int level) {
+        if (level < 0) {
+            return this.levels[0];
+        }
+        if (level >= this.getMaxLevel()) {
+            return this.levels[this.getMaxLevel() - 1];
+        }
         return this.levels[level - 1];
     }
 
@@ -52,48 +61,39 @@ public class TalentGroup<T extends PlayerTalent> {
         return this.levels[0].getCost();
     }
 
-    public int cost(int level) {
-        if (level > getMaxLevel()) return -1;
+    public int cost(final int level) {
+        if (level > this.getMaxLevel()) {
+            return -1;
+        }
         return this.levels[level - 1].getCost();
     }
 
     public BiMap<String, T> getRegistry() {
         if (this.registry == null) {
-            this.registry = (BiMap<String, T>) HashBiMap.create(getMaxLevel());
-
-            if (getMaxLevel() == 1) {
-                this.registry.put(getParentName(), this.levels[0]);
-            } else if (getMaxLevel() > 1) {
-                for (int i = 0; i < getMaxLevel(); i++) {
-                    this.registry.put(getParentName() + " " + RomanNumber.toRoman(i + 1),
-                            getTalent(i + 1));
+            this.registry = HashBiMap.create(this.getMaxLevel());
+            if (this.getMaxLevel() == 1) {
+                this.registry.put(this.getParentName(), this.levels[0]);
+            } else if (this.getMaxLevel() > 1) {
+                for (int i = 0; i < this.getMaxLevel(); ++i) {
+                    this.registry.put((this.getParentName() + " " + RomanNumber.toRoman(i + 1)), this.getTalent(i + 1));
                 }
             }
         }
-
         return this.registry;
     }
 
-
-    public static TalentGroup<EffectTalent> ofEffect(String name, Effect effect, EffectTalent.Type type, int maxLevel, IntUnaryOperator cost, EffectTalent.Operator operator) {
-        EffectTalent[] talents = (EffectTalent[]) IntStream.range(0, maxLevel).mapToObj(i -> new EffectTalent(cost.applyAsInt(i + 1), effect, i, type, operator)).toArray(x$0 -> new EffectTalent[x$0]);
-        return new TalentGroup<>(name, talents);
+    public static TalentGroup<EffectTalent> ofEffect(final String name, final Effect effect, final EffectTalent.Type type, final int maxLevel, final IntUnaryOperator cost, final EffectTalent.Operator operator) {
+        final EffectTalent[] talents = IntStream.range(0, maxLevel).mapToObj(i -> new EffectTalent(cost.applyAsInt(i + 1), effect, i, type, operator)).toArray(EffectTalent[]::new);
+        return new TalentGroup<EffectTalent>(name, talents);
     }
-
 
     public static TalentGroup<AttributeTalent> ofAttribute(String name, Attribute attribute, String modifierName, int maxLevel, IntUnaryOperator cost, IntToDoubleFunction amount, IntFunction<AttributeModifier.Operation> operation) {
         AttributeTalent[] talents = (AttributeTalent[]) IntStream.range(0, maxLevel).mapToObj(i -> new AttributeTalent(cost.applyAsInt(i + 1), attribute, new AttributeTalent.Modifier(modifierName + " " + RomanNumber.toRoman(i + 1), amount.applyAsDouble(i + 1), operation.apply(i + 1)))).toArray(x$0 -> new AttributeTalent[x$0]);
         return new TalentGroup<>(name, talents);
     }
 
-    public static <T extends PlayerTalent> TalentGroup<T> of(String name, int maxLevel, IntFunction<T> supplier) {
-        PlayerTalent[] talents = (PlayerTalent[]) IntStream.range(0, maxLevel).<T>mapToObj(supplier).toArray(x$0 -> new PlayerTalent[x$0]);
-        return new TalentGroup<>(name, (T[]) talents);
+    public static <T extends PlayerTalent> TalentGroup<T> of(final String name, final int maxLevel, final IntFunction<T> supplier) {
+        final PlayerTalent[] talents = IntStream.range(0, maxLevel).mapToObj((IntFunction<?>) supplier).toArray(PlayerTalent[]::new);
+        return new TalentGroup<T>(name, (T[]) talents);
     }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\skill\talent\TalentGroup.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

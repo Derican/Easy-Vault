@@ -1,3 +1,7 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.entity.renderer;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
@@ -34,194 +38,172 @@ import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.math.vector.Vector3f;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.world.World;
 
-public class EternalRenderer extends LivingRenderer<EternalEntity, EternalModel> {
-    public EternalRenderer(EntityRendererManager renderManager) {
+public class EternalRenderer extends LivingRenderer<EternalEntity, EternalModel>
+{
+    public EternalRenderer(final EntityRendererManager renderManager) {
         this(renderManager, false);
     }
-
-    public EternalRenderer(EntityRendererManager renderManager, boolean useSmallArms) {
-        super(renderManager, new EternalModel(0.0F, useSmallArms), 0.5F);
-        addLayer((LayerRenderer) new BipedArmorLayer((IEntityRenderer) this, new BipedModel(0.5F), new BipedModel(1.0F)));
-        addLayer((LayerRenderer) new HeldItemLayer((IEntityRenderer) this));
-        addLayer((LayerRenderer) new ArrowLayer(this));
-
-
-        addLayer((LayerRenderer) new HeadLayer((IEntityRenderer) this));
-        addLayer((LayerRenderer) new ElytraLayer((IEntityRenderer) this));
-
-
-        addLayer((LayerRenderer) new BeeStingerLayer(this));
+    
+    public EternalRenderer(final EntityRendererManager renderManager, final boolean useSmallArms) {
+        super(renderManager, new EternalModel(0.0f, useSmallArms), 0.5f);
+        this.addLayer((LayerRenderer)new BipedArmorLayer((IEntityRenderer)this, new BipedModel(0.5f), new BipedModel(1.0f)));
+        this.addLayer((LayerRenderer)new HeldItemLayer((IEntityRenderer)this));
+        this.addLayer((LayerRenderer)new ArrowLayer((LivingRenderer)this));
+        this.addLayer((LayerRenderer)new HeadLayer((IEntityRenderer)this));
+        this.addLayer((LayerRenderer)new ElytraLayer((IEntityRenderer)this));
+        this.addLayer((LayerRenderer)new BeeStingerLayer((LivingRenderer)this));
     }
-
-
-    protected void preRenderCallback(EternalEntity entity, MatrixStack matrixStack, float partialTickTime) {
-        float f = entity.sizeMultiplier;
+    
+    protected void preRenderCallback(final EternalEntity entity, final MatrixStack matrixStack, final float partialTickTime) {
+        final float f = entity.sizeMultiplier;
         matrixStack.scale(f, f, f);
     }
-
-
-    public void render(EternalEntity entity, float entityYaw, float partialTicks, MatrixStack matrixStack, IRenderTypeBuffer buffer, int packedLightIn) {
-        GlStateManager._color4f(1.0F, 1.0F, 1.0F, 0.5F);
-
-        setModelVisibilities(entity);
+    
+    public void render(final EternalEntity entity, final float entityYaw, final float partialTicks, final MatrixStack matrixStack, final IRenderTypeBuffer buffer, final int packedLightIn) {
+        GlStateManager._color4f(1.0f, 1.0f, 1.0f, 0.5f);
+        this.setModelVisibilities(entity);
         super.render(entity, entityYaw, partialTicks, matrixStack, buffer, packedLightIn);
     }
-
-    public void renderCrown(EternalEntity entity, MatrixStack matrixStack, IRenderTypeBuffer buffer) {
+    
+    public void renderCrown(final EternalEntity entity, final MatrixStack matrixStack, final IRenderTypeBuffer buffer) {
         matrixStack.pushPose();
-        float sizeMultiplier = entity.getSizeMultiplier();
+        final float sizeMultiplier = entity.getSizeMultiplier();
         matrixStack.scale(sizeMultiplier, sizeMultiplier, sizeMultiplier);
-        matrixStack.translate(0.0D, 2.5D, 0.0D);
-        float scale = 2.5F;
+        matrixStack.translate(0.0, 2.5, 0.0);
+        final float scale = 2.5f;
         matrixStack.scale(scale, scale, scale);
-        matrixStack.mulPose(Vector3f.YP.rotationDegrees(entity.tickCount));
-        matrixStack.mulPose(Vector3f.ZP.rotationDegrees(20.0F));
-        ItemStack itemStack = new ItemStack((IItemProvider) Registry.ITEM.get(Vault.id("mvp_crown")));
-
-        IBakedModel ibakedmodel = Minecraft.getInstance().getItemRenderer().getModel(itemStack, null, null);
-        Minecraft.getInstance().getItemRenderer()
-                .render(itemStack, ItemCameraTransforms.TransformType.GROUND, true, matrixStack, buffer, 15728864, 655360, ibakedmodel);
-
+        matrixStack.mulPose(Vector3f.YP.rotationDegrees((float)entity.tickCount));
+        matrixStack.mulPose(Vector3f.ZP.rotationDegrees(20.0f));
+        final ItemStack itemStack = new ItemStack((IItemProvider)Registry.ITEM.get(Vault.id("mvp_crown")));
+        final IBakedModel ibakedmodel = Minecraft.getInstance().getItemRenderer().getModel(itemStack, (World)null, (LivingEntity)null);
+        Minecraft.getInstance().getItemRenderer().render(itemStack, ItemCameraTransforms.TransformType.GROUND, true, matrixStack, buffer, 15728864, 655360, ibakedmodel);
         matrixStack.popPose();
     }
-
-    public Vector3d getRenderOffset(EternalEntity entityIn, float partialTicks) {
-        return entityIn.isCrouching() ? new Vector3d(0.0D, -0.125D, 0.0D) : super.getRenderOffset( entityIn, partialTicks);
+    
+    public Vector3d getRenderOffset(final EternalEntity entityIn, final float partialTicks) {
+        return entityIn.isCrouching() ? new Vector3d(0.0, -0.125, 0.0) : super.getRenderOffset(entityIn, partialTicks);
     }
-
-    private void setModelVisibilities(EternalEntity clientPlayer) {
-        EternalModel playermodel = (EternalModel) getModel();
+    
+    private void setModelVisibilities(final EternalEntity clientPlayer) {
+        final EternalModel playermodel = (EternalModel)this.getModel();
         if (clientPlayer.isSpectator()) {
             playermodel.setAllVisible(false);
             playermodel.head.visible = true;
             playermodel.hat.visible = true;
-        } else {
+        }
+        else {
             playermodel.setAllVisible(true);
-
-
             playermodel.crouching = clientPlayer.isCrouching();
-            BipedModel.ArmPose bipedmodel$armpose = getArmPose(clientPlayer, Hand.MAIN_HAND);
-            BipedModel.ArmPose bipedmodel$armpose1 = getArmPose(clientPlayer, Hand.OFF_HAND);
+            final BipedModel.ArmPose bipedmodel$armpose = getArmPose(clientPlayer, Hand.MAIN_HAND);
+            BipedModel.ArmPose bipedmodel$armpose2 = getArmPose(clientPlayer, Hand.OFF_HAND);
             if (bipedmodel$armpose.isTwoHanded()) {
-                bipedmodel$armpose1 = clientPlayer.getOffhandItem().isEmpty() ? BipedModel.ArmPose.EMPTY : BipedModel.ArmPose.ITEM;
+                bipedmodel$armpose2 = (clientPlayer.getOffhandItem().isEmpty() ? BipedModel.ArmPose.EMPTY : BipedModel.ArmPose.ITEM);
             }
-
             if (clientPlayer.getMainArm() == HandSide.RIGHT) {
                 playermodel.rightArmPose = bipedmodel$armpose;
-                playermodel.leftArmPose = bipedmodel$armpose1;
-            } else {
-                playermodel.rightArmPose = bipedmodel$armpose1;
+                playermodel.leftArmPose = bipedmodel$armpose2;
+            }
+            else {
+                playermodel.rightArmPose = bipedmodel$armpose2;
                 playermodel.leftArmPose = bipedmodel$armpose;
             }
         }
     }
-
-
-    private static BipedModel.ArmPose getArmPose(EternalEntity p_241741_0_, Hand p_241741_1_) {
-        ItemStack itemstack = p_241741_0_.getItemInHand(p_241741_1_);
+    
+    private static BipedModel.ArmPose getArmPose(final EternalEntity p_241741_0_, final Hand p_241741_1_) {
+        final ItemStack itemstack = p_241741_0_.getItemInHand(p_241741_1_);
         if (itemstack.isEmpty()) {
             return BipedModel.ArmPose.EMPTY;
         }
         if (p_241741_0_.getUsedItemHand() == p_241741_1_ && p_241741_0_.getUseItemRemainingTicks() > 0) {
-            UseAction useaction = itemstack.getUseAnimation();
+            final UseAction useaction = itemstack.getUseAnimation();
             if (useaction == UseAction.BLOCK) {
                 return BipedModel.ArmPose.BLOCK;
             }
-
             if (useaction == UseAction.BOW) {
                 return BipedModel.ArmPose.BOW_AND_ARROW;
             }
-
             if (useaction == UseAction.SPEAR) {
                 return BipedModel.ArmPose.THROW_SPEAR;
             }
-
             if (useaction == UseAction.CROSSBOW && p_241741_1_ == p_241741_0_.getUsedItemHand()) {
                 return BipedModel.ArmPose.CROSSBOW_CHARGE;
             }
-        } else if (!p_241741_0_.swinging && itemstack.getItem() == Items.CROSSBOW && CrossbowItem.isCharged(itemstack)) {
+        }
+        else if (!p_241741_0_.swinging && itemstack.getItem() == Items.CROSSBOW && CrossbowItem.isCharged(itemstack)) {
             return BipedModel.ArmPose.CROSSBOW_HOLD;
         }
-
         return BipedModel.ArmPose.ITEM;
     }
-
-
-    public ResourceLocation getTextureLocation(EternalEntity entity) {
+    
+    public ResourceLocation getTextureLocation(final EternalEntity entity) {
         return entity.getLocationSkin();
     }
-
-    protected void preRenderCallback(AbstractClientPlayerEntity entitylivingbaseIn, MatrixStack matrixStackIn, float partialTickTime) {
-        float f = 0.9375F;
-        matrixStackIn.scale(0.9375F, 0.9375F, 0.9375F);
+    
+    protected void preRenderCallback(final AbstractClientPlayerEntity entitylivingbaseIn, final MatrixStack matrixStackIn, final float partialTickTime) {
+        final float f = 0.9375f;
+        matrixStackIn.scale(0.9375f, 0.9375f, 0.9375f);
     }
-
-    protected void renderName(EternalEntity entityIn, ITextComponent displayNameIn, MatrixStack matrixStackIn, IRenderTypeBuffer bufferIn, int packedLightIn) {
-        double d0 = this.entityRenderDispatcher.distanceToSqr((Entity) entityIn);
+    
+    protected void renderName(final EternalEntity entityIn, final ITextComponent displayNameIn, final MatrixStack matrixStackIn, final IRenderTypeBuffer bufferIn, final int packedLightIn) {
+        final double d0 = this.entityRenderDispatcher.distanceToSqr((Entity)entityIn);
         matrixStackIn.pushPose();
-
-
-        super.renderNameTag( entityIn, displayNameIn, matrixStackIn, bufferIn, packedLightIn);
+        super.renderNameTag(entityIn, displayNameIn, matrixStackIn, bufferIn, packedLightIn);
         matrixStackIn.popPose();
     }
-
-    public void renderRightArm(MatrixStack matrixStackIn, IRenderTypeBuffer bufferIn, int combinedLightIn, EternalEntity playerIn) {
-        renderItem(matrixStackIn, bufferIn, combinedLightIn, playerIn, ((EternalModel) this.model).rightArm, ((EternalModel) this.model).rightSleeve);
+    
+    public void renderRightArm(final MatrixStack matrixStackIn, final IRenderTypeBuffer bufferIn, final int combinedLightIn, final EternalEntity playerIn) {
+        this.renderItem(matrixStackIn, bufferIn, combinedLightIn, playerIn, ((EternalModel)this.model).rightArm, ((EternalModel)this.model).rightSleeve);
     }
-
-    public void renderLeftArm(MatrixStack matrixStackIn, IRenderTypeBuffer bufferIn, int combinedLightIn, EternalEntity playerIn) {
-        renderItem(matrixStackIn, bufferIn, combinedLightIn, playerIn, ((EternalModel) this.model).leftArm, ((EternalModel) this.model).leftSleeve);
+    
+    public void renderLeftArm(final MatrixStack matrixStackIn, final IRenderTypeBuffer bufferIn, final int combinedLightIn, final EternalEntity playerIn) {
+        this.renderItem(matrixStackIn, bufferIn, combinedLightIn, playerIn, ((EternalModel)this.model).leftArm, ((EternalModel)this.model).leftSleeve);
     }
-
-    private void renderItem(MatrixStack matrixStackIn, IRenderTypeBuffer buffer, int combinedLight, EternalEntity entity, ModelRenderer rendererArm, ModelRenderer rendererArmWear) {
-        EternalModel playermodel = (EternalModel) getModel();
-        setModelVisibilities(entity);
-        playermodel.attackTime = 0.0F;
+    
+    private void renderItem(final MatrixStack matrixStackIn, final IRenderTypeBuffer buffer, final int combinedLight, final EternalEntity entity, final ModelRenderer rendererArm, final ModelRenderer rendererArmWear) {
+        final EternalModel playermodel = (EternalModel)this.getModel();
+        this.setModelVisibilities(entity);
+        playermodel.attackTime = 0.0f;
         playermodel.crouching = false;
-        playermodel.swimAmount = 0.0F;
-        playermodel.setupAnim( entity, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F);
-        rendererArm.xRot = 0.0F;
-        rendererArm.render(matrixStackIn, buffer.getBuffer(RenderType.entitySolid(getTextureLocation(entity))), combinedLight, OverlayTexture.NO_OVERLAY);
-        rendererArmWear.xRot = 0.0F;
-        rendererArmWear.render(matrixStackIn, buffer.getBuffer(RenderType.entityTranslucent(getTextureLocation(entity))), combinedLight, OverlayTexture.NO_OVERLAY);
+        playermodel.setupAnim(entity, playermodel.swimAmount = 0.0f, 0.0f, 0.0f, 0.0f, 0.0f);
+        rendererArm.xRot = 0.0f;
+        rendererArm.render(matrixStackIn, buffer.getBuffer(RenderType.entitySolid(this.getTextureLocation(entity))), combinedLight, OverlayTexture.NO_OVERLAY);
+        rendererArmWear.xRot = 0.0f;
+        rendererArmWear.render(matrixStackIn, buffer.getBuffer(RenderType.entityTranslucent(this.getTextureLocation(entity))), combinedLight, OverlayTexture.NO_OVERLAY);
     }
-
-    protected void applyRotations(EternalEntity entityLiving, MatrixStack matrixStack, float ageInTicks, float rotationYaw, float partialTicks) {
-        float f = entityLiving.getSwimAmount(partialTicks);
+    
+    protected void applyRotations(final EternalEntity entityLiving, final MatrixStack matrixStack, final float ageInTicks, final float rotationYaw, final float partialTicks) {
+        final float f = entityLiving.getSwimAmount(partialTicks);
         if (entityLiving.isFallFlying()) {
-            super.setupRotations( entityLiving, matrixStack, ageInTicks, rotationYaw, partialTicks);
-            float f1 = entityLiving.getFallFlyingTicks() + partialTicks;
-            float f2 = MathHelper.clamp(f1 * f1 / 100.0F, 0.0F, 1.0F);
-            if (!entityLiving.isAutoSpinAttack()) {
-                matrixStack.mulPose(Vector3f.XP.rotationDegrees(f2 * (-90.0F - entityLiving.xRot)));
-            }
-
-            Vector3d vector3d = entityLiving.getViewVector(partialTicks);
-            Vector3d vector3d1 = entityLiving.getDeltaMovement();
-            double d0 = Entity.getHorizontalDistanceSqr(vector3d1);
-            double d1 = Entity.getHorizontalDistanceSqr(vector3d);
-            if (d0 > 0.0D && d1 > 0.0D) {
-                double d2 = (vector3d1.x * vector3d.x + vector3d1.z * vector3d.z) / Math.sqrt(d0 * d1);
-                double d3 = vector3d1.x * vector3d.z - vector3d1.z * vector3d.x;
-                matrixStack.mulPose(Vector3f.YP.rotation((float) (Math.signum(d3) * Math.acos(d2))));
-            }
-        } else if (f > 0.0F) {
             super.setupRotations(entityLiving, matrixStack, ageInTicks, rotationYaw, partialTicks);
-            float f3 = entityLiving.isInWater() ? (-90.0F - entityLiving.xRot) : -90.0F;
-            float f4 = MathHelper.lerp(f, 0.0F, f3);
-            matrixStack.mulPose(Vector3f.XP.rotationDegrees(f4));
-            if (entityLiving.isVisuallySwimming()) {
-                matrixStack.translate(0.0D, -1.0D, 0.30000001192092896D);
+            final float f2 = entityLiving.getFallFlyingTicks() + partialTicks;
+            final float f3 = MathHelper.clamp(f2 * f2 / 100.0f, 0.0f, 1.0f);
+            if (!entityLiving.isAutoSpinAttack()) {
+                matrixStack.mulPose(Vector3f.XP.rotationDegrees(f3 * (-90.0f - entityLiving.xRot)));
             }
-        } else {
+            final Vector3d vector3d = entityLiving.getViewVector(partialTicks);
+            final Vector3d vector3d2 = entityLiving.getDeltaMovement();
+            final double d0 = Entity.getHorizontalDistanceSqr(vector3d2);
+            final double d2 = Entity.getHorizontalDistanceSqr(vector3d);
+            if (d0 > 0.0 && d2 > 0.0) {
+                final double d3 = (vector3d2.x * vector3d.x + vector3d2.z * vector3d.z) / Math.sqrt(d0 * d2);
+                final double d4 = vector3d2.x * vector3d.z - vector3d2.z * vector3d.x;
+                matrixStack.mulPose(Vector3f.YP.rotation((float)(Math.signum(d4) * Math.acos(d3))));
+            }
+        }
+        else if (f > 0.0f) {
+            super.setupRotations(entityLiving, matrixStack, ageInTicks, rotationYaw, partialTicks);
+            final float f4 = entityLiving.isInWater() ? (-90.0f - entityLiving.xRot) : -90.0f;
+            final float f5 = MathHelper.lerp(f, 0.0f, f4);
+            matrixStack.mulPose(Vector3f.XP.rotationDegrees(f5));
+            if (entityLiving.isVisuallySwimming()) {
+                matrixStack.translate(0.0, -1.0, 0.30000001192092896);
+            }
+        }
+        else {
             super.setupRotations(entityLiving, matrixStack, ageInTicks, rotationYaw, partialTicks);
         }
     }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\entity\renderer\EternalRenderer.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

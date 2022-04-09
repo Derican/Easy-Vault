@@ -1,3 +1,7 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.mixin;
 
 import net.minecraft.util.Rotation;
@@ -14,42 +18,36 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
 
+import java.util.function.Consumer;
 import java.util.function.Supplier;
 
-
-@Mixin(value = {SingleJigsawPiece.class}, priority = 1001)
-public abstract class MixinSingleJigsawPiece
-        extends JigsawPiece {
-    protected MixinSingleJigsawPiece(JigsawPattern.PlacementBehaviour projection) {
-        super(projection);
-    }
-
+@Mixin(value = { SingleJigsawPiece.class }, priority = 1001)
+public abstract class MixinSingleJigsawPiece extends JigsawPiece
+{
     @Shadow
     @Final
     protected Supplier<StructureProcessorList> processors;
-
+    
+    protected MixinSingleJigsawPiece(final JigsawPattern.PlacementBehaviour projection) {
+        super(projection);
+    }
+    
+    /**
+     * @author
+     */
     @Overwrite
-    protected PlacementSettings getSettings(Rotation p_230379_1_, MutableBoundingBox p_230379_2_, boolean p_230379_3_) {
-        PlacementSettings placementsettings = new PlacementSettings();
+    protected PlacementSettings getSettings(final Rotation p_230379_1_, final MutableBoundingBox p_230379_2_, final boolean p_230379_3_) {
+        final PlacementSettings placementsettings = new PlacementSettings();
         placementsettings.setBoundingBox(p_230379_2_);
         placementsettings.setRotation(p_230379_1_);
         placementsettings.setKnownShape(true);
         placementsettings.setIgnoreEntities(false);
-
         placementsettings.setFinalizeEntities(true);
-
         if (!p_230379_3_) {
-            placementsettings.addProcessor((StructureProcessor) JigsawReplacementStructureProcessor.INSTANCE);
+            placementsettings.addProcessor((StructureProcessor)JigsawReplacementStructureProcessor.INSTANCE);
         }
-
-        ((StructureProcessorList) this.processors.get()).list().forEach(placementsettings::addProcessor);
-        getProjection().getProcessors().forEach(placementsettings::addProcessor);
+        this.processors.get().list().forEach(placementsettings::addProcessor);
+        this.getProjection().getProcessors().forEach(placementsettings::addProcessor);
         return placementsettings;
     }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\mixin\MixinSingleJigsawPiece.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

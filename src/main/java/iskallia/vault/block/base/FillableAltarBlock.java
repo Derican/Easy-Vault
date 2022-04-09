@@ -1,3 +1,7 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.block.base;
 
 import iskallia.vault.init.ModAttributes;
@@ -23,7 +27,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.util.text.IFormattableTextComponent;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
@@ -35,107 +38,95 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 
 import java.util.Random;
 
-
-public abstract class FillableAltarBlock<T extends FillableAltarTileEntity>
-        extends FacedBlock {
-    protected static final Random rand = new Random();
-    public static final float FAVOUR_CHANCE = 0.05F;
-    public static final VoxelShape SHAPE = Block.box(0.0D, 0.0D, 0.0D, 16.0D, 13.0D, 16.0D);
-
+public abstract class FillableAltarBlock<T extends FillableAltarTileEntity> extends FacedBlock
+{
+    protected static final Random rand;
+    public static final float FAVOUR_CHANCE = 0.05f;
+    public static final VoxelShape SHAPE;
+    
     public FillableAltarBlock() {
-        super(AbstractBlock.Properties.of(Material.STONE)
-                .strength(-1.0F, 3600000.0F)
-                .noDrops()
-                .noOcclusion());
+        super(AbstractBlock.Properties.of(Material.STONE).strength(-1.0f, 3600000.0f).noDrops().noOcclusion());
     }
-
-
-    public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
-        return SHAPE;
+    
+    public VoxelShape getShape(final BlockState state, final IBlockReader worldIn, final BlockPos pos, final ISelectionContext context) {
+        return FillableAltarBlock.SHAPE;
     }
-
-
-    public boolean hasTileEntity(BlockState state) {
+    
+    public boolean hasTileEntity(final BlockState state) {
         return true;
     }
-
-
-    public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
-        if (world.isClientSide) return ActionResultType.SUCCESS;
-
-        TileEntity tileEntity = world.getBlockEntity(pos);
-        ItemStack heldStack = player.getItemInHand(hand);
-
+    
+    public abstract T createTileEntity(final BlockState p0, final IBlockReader p1);
+    
+    public abstract IParticleData getFlameParticle();
+    
+    public abstract PlayerFavourData.VaultGodType getAssociatedVaultGod();
+    
+    public abstract ActionResultType rightClicked(final BlockState p0, final ServerWorld p1, final BlockPos p2, final T p3, final ServerPlayerEntity p4, final ItemStack p5);
+    
+    public ActionResultType use(final BlockState state, final World world, final BlockPos pos, final PlayerEntity player, final Hand hand, final BlockRayTraceResult hit) {
+        if (world.isClientSide) {
+            return ActionResultType.SUCCESS;
+        }
+        final TileEntity tileEntity = world.getBlockEntity(pos);
+        final ItemStack heldStack = player.getItemInHand(hand);
         if (tileEntity != null) {
             try {
-                if (((FillableAltarTileEntity) tileEntity).isMaxedOut()) {
-                    world.setBlockAndUpdate(pos, getSuccessChestState(state));
+                if (((FillableAltarTileEntity)tileEntity).isMaxedOut()) {
+                    world.setBlockAndUpdate(pos, this.getSuccessChestState(state));
                     return ActionResultType.SUCCESS;
                 }
-                return rightClicked(state, (ServerWorld) world, pos, (T) tileEntity, (ServerPlayerEntity) player, heldStack);
-            } catch (ClassCastException classCastException) {
+                return this.rightClicked(state, (ServerWorld)world, pos, (T) tileEntity, (ServerPlayerEntity)player, heldStack);
             }
+            catch (final ClassCastException ex) {}
         }
-
         return ActionResultType.FAIL;
     }
-
-    protected BlockState getSuccessChestState(BlockState altarState) {
-        return (BlockState) ModBlocks.VAULT_ALTAR_CHEST.defaultBlockState().setValue((Property) ChestBlock.FACING, altarState.getValue((Property) FACING));
+    
+    protected BlockState getSuccessChestState(final BlockState altarState) {
+        return ModBlocks.VAULT_ALTAR_CHEST.defaultBlockState().setValue(ChestBlock.FACING, altarState.getValue(FillableAltarBlock.FACING));
     }
-
-    public static float getFavourChance(PlayerEntity player, PlayerFavourData.VaultGodType favourType) {
-        ItemStack offHand = player.getItemInHand(Hand.OFF_HAND);
+    
+    public static float getFavourChance(final PlayerEntity player, final PlayerFavourData.VaultGodType favourType) {
+        final ItemStack offHand = player.getItemInHand(Hand.OFF_HAND);
         if (offHand.isEmpty() || !(offHand.getItem() instanceof IdolItem)) {
-            return 0.05F;
+            return 0.05f;
         }
-        if (favourType != ((IdolItem) offHand.getItem()).getType()) {
-            return 0.05F;
+        if (favourType != ((IdolItem)offHand.getItem()).getType()) {
+            return 0.05f;
         }
         int multiplier = 2;
         if (ModAttributes.IDOL_AUGMENTED.exists(offHand)) {
             multiplier = 3;
         }
-        return 0.05F * multiplier;
+        return 0.05f * multiplier;
     }
-
-    public static void playFavourInfo(ServerPlayerEntity sPlayer) {
-        BlockPos pos = sPlayer.blockPosition();
-        sPlayer.level.playSound(null, pos.getX(), pos.getY(), pos.getZ(), ModSounds.FAVOUR_UP, SoundCategory.PLAYERS, 0.4F, 0.7F);
-
-
-        IFormattableTextComponent iFormattableTextComponent = (new StringTextComponent("You gained a favour!")).withStyle(TextFormatting.DARK_GREEN).withStyle(TextFormatting.BOLD);
-        sPlayer.displayClientMessage((ITextComponent) iFormattableTextComponent, true);
+    
+    public static void playFavourInfo(final ServerPlayerEntity sPlayer) {
+        final BlockPos pos = sPlayer.blockPosition();
+        sPlayer.level.playSound((PlayerEntity)null, (double)pos.getX(), (double)pos.getY(), (double)pos.getZ(), ModSounds.FAVOUR_UP, SoundCategory.PLAYERS, 0.4f, 0.7f);
+        final ITextComponent msg = (ITextComponent)new StringTextComponent("You gained a favour!").withStyle(TextFormatting.DARK_GREEN).withStyle(TextFormatting.BOLD);
+        sPlayer.displayClientMessage(msg, true);
     }
-
-
+    
     @OnlyIn(Dist.CLIENT)
-    public void animateTick(BlockState stateIn, World world, BlockPos pos, Random rand) {
-        addFlameParticle(world, pos, 1.0D, 17.0D, 15.0D);
-        addFlameParticle(world, pos, 15.0D, 17.0D, 15.0D);
-        addFlameParticle(world, pos, 15.0D, 17.0D, 1.0D);
-        addFlameParticle(world, pos, 1.0D, 17.0D, 1.0D);
+    public void animateTick(final BlockState stateIn, final World world, final BlockPos pos, final Random rand) {
+        this.addFlameParticle(world, pos, 1.0, 17.0, 15.0);
+        this.addFlameParticle(world, pos, 15.0, 17.0, 15.0);
+        this.addFlameParticle(world, pos, 15.0, 17.0, 1.0);
+        this.addFlameParticle(world, pos, 1.0, 17.0, 1.0);
     }
-
+    
     @OnlyIn(Dist.CLIENT)
-    public void addFlameParticle(World world, BlockPos pos, double xOffset, double yOffset, double zOffset) {
-        double x = pos.getX() + xOffset / 16.0D;
-        double y = pos.getY() + yOffset / 16.0D;
-        double z = pos.getZ() + zOffset / 16.0D;
-        world.addParticle(getFlameParticle(), x, y, z, 0.0D, 0.0D, 0.0D);
+    public void addFlameParticle(final World world, final BlockPos pos, final double xOffset, final double yOffset, final double zOffset) {
+        final double x = pos.getX() + xOffset / 16.0;
+        final double y = pos.getY() + yOffset / 16.0;
+        final double z = pos.getZ() + zOffset / 16.0;
+        world.addParticle(this.getFlameParticle(), x, y, z, 0.0, 0.0, 0.0);
     }
-
-    public abstract T createTileEntity(BlockState paramBlockState, IBlockReader paramIBlockReader);
-
-    public abstract IParticleData getFlameParticle();
-
-    public abstract PlayerFavourData.VaultGodType getAssociatedVaultGod();
-
-    public abstract ActionResultType rightClicked(BlockState paramBlockState, ServerWorld paramServerWorld, BlockPos paramBlockPos, T paramT, ServerPlayerEntity paramServerPlayerEntity, ItemStack paramItemStack);
+    
+    static {
+        rand = new Random();
+        SHAPE = Block.box(0.0, 0.0, 0.0, 16.0, 13.0, 16.0);
+    }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\block\base\FillableAltarBlock.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

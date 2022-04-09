@@ -1,3 +1,7 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.util;
 
 import net.minecraft.entity.player.ServerPlayerEntity;
@@ -10,31 +14,23 @@ import java.util.UUID;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
-
-public class NetcodeUtils {
-    public static void runIfPresent(@Nullable MinecraftServer server, @Nonnull UUID uuid, Consumer<ServerPlayerEntity> action) {
+public class NetcodeUtils
+{
+    public static void runIfPresent(@Nullable final MinecraftServer server, @Nonnull final UUID uuid, final Consumer<ServerPlayerEntity> action) {
         runIfPresent(server, uuid, sPlayer -> {
             action.accept(sPlayer);
             return null;
         });
     }
-
-    public static <T> Optional<T> runIfPresent(@Nullable MinecraftServer server, @Nonnull UUID uuid, Function<ServerPlayerEntity, T> action) {
+    
+    public static <T> Optional<T> runIfPresent(@Nullable final MinecraftServer server, @Nonnull final UUID uuid, final Function<ServerPlayerEntity, T> action) {
         if (server == null) {
             return Optional.empty();
         }
-
-        ServerPlayerEntity player = server.getPlayerList().getPlayer(uuid);
+        final ServerPlayerEntity player = server.getPlayerList().getPlayer(uuid);
         if (player == null) {
             return Optional.empty();
         }
-
         return Optional.ofNullable(action.apply(player));
     }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vaul\\util\NetcodeUtils.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

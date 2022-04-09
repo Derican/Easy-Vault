@@ -1,3 +1,7 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.command;
 
 import com.mojang.brigadier.arguments.ArgumentType;
@@ -14,58 +18,46 @@ import net.minecraft.command.Commands;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.util.Direction;
 
-
-public class InternalCommand
-        extends Command {
+public class InternalCommand extends Command
+{
+    @Override
     public String getName() {
         return "internal";
     }
-
-
+    
+    @Override
     public int getRequiredPermissionLevel() {
         return 2;
     }
-
-
-    public void build(LiteralArgumentBuilder<CommandSource> builder) {
-        builder.then(Commands.literal("reset_shard_trades")
-                .executes(this::resetShardTrader));
-
-        builder.then(Commands.literal("player_vote")
-                .then(Commands.argument("a", (ArgumentType) StringArgumentType.word())
-                        .then(Commands.argument("b", (ArgumentType) StringArgumentType.word())
-                                .executes(ctx -> voteFor((CommandSource) ctx.getSource(), StringArgumentType.getString(ctx, "a"), Direction.byName(StringArgumentType.getString(ctx, "b")))))));
+    
+    @Override
+    public void build(final LiteralArgumentBuilder<CommandSource> builder) {
+        builder.then(Commands.literal("reset_shard_trades").executes(this::resetShardTrader));
+        builder.then(Commands.literal("player_vote").then(Commands.argument("a", (ArgumentType)StringArgumentType.word()).then(Commands.argument("b", (ArgumentType)StringArgumentType.word()).executes(ctx -> this.voteFor((CommandSource)ctx.getSource(), StringArgumentType.getString(ctx, "a"), Direction.byName(StringArgumentType.getString(ctx, "b")))))));
     }
-
-
-    private int resetShardTrader(CommandContext<CommandSource> ctx) throws CommandSyntaxException {
-        SoulShardTraderData.get(((CommandSource) ctx.getSource()).getServer()).resetTrades();
+    
+    private int resetShardTrader(final CommandContext<CommandSource> ctx) throws CommandSyntaxException {
+        SoulShardTraderData.get(((CommandSource)ctx.getSource()).getServer()).resetTrades();
         return 0;
     }
-
-    private int voteFor(CommandSource src, String voter, Direction direction) throws CommandSyntaxException {
-        ServerPlayerEntity sPlayer = src.getPlayerOrException();
-        VaultRaid vault = VaultRaidData.get(sPlayer.getLevel()).getActiveFor(sPlayer);
+    
+    private int voteFor(final CommandSource src, final String voter, final Direction direction) throws CommandSyntaxException {
+        final ServerPlayerEntity sPlayer = src.getPlayerOrException();
+        final VaultRaid vault = VaultRaidData.get(sPlayer.getLevel()).getActiveFor(sPlayer);
         if (direction == null) {
             return 0;
         }
         if (vault == null) {
             return 0;
         }
-        if (!((Boolean) vault.getActiveObjective(ArchitectObjective.class).map(objective -> Boolean.valueOf(objective.handleVote(voter, direction))).orElse(Boolean.valueOf(false))).booleanValue()) {
+        if (!vault.getActiveObjective(ArchitectObjective.class).map(objective -> objective.handleVote(voter, direction)).orElse(false)) {
             return 0;
         }
         return 1;
     }
-
-
+    
+    @Override
     public boolean isDedicatedServerOnly() {
         return false;
     }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\command\InternalCommand.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

@@ -1,3 +1,7 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.attribute;
 
 import com.google.gson.annotations.Expose;
@@ -8,41 +12,33 @@ import net.minecraft.nbt.CompoundNBT;
 import java.util.Optional;
 import java.util.Random;
 
-
-public class StringAttribute
-        extends PooledAttribute<String> {
+public class StringAttribute extends PooledAttribute<String> {
     public StringAttribute() {
     }
 
-    public StringAttribute(VAttribute.Modifier<String> modifier) {
+    public StringAttribute(final VAttribute.Modifier<String> modifier) {
         super(modifier);
     }
 
-
-    public void write(CompoundNBT nbt) {
-        nbt.putString("BaseValue", getBaseValue());
+    @Override
+    public void write(final CompoundNBT nbt) {
+        nbt.putString("BaseValue", (String) this.getBaseValue());
     }
 
-
-    public void read(CompoundNBT nbt) {
-        setBaseValue(nbt.getString("BaseValue"));
+    @Override
+    public void read(final CompoundNBT nbt) {
+        this.setBaseValue(nbt.getString("BaseValue"));
     }
 
-    public static class Generator
-            extends PooledAttribute.Generator<String, Generator.Operator> {
-        public String getDefaultValue(Random random) {
+    public static class Generator extends PooledAttribute.Generator<String, Generator.Operator> {
+        @Override
+        public String getDefaultValue(final Random random) {
             return "";
         }
 
-        public static class Operator
-                extends PooledAttribute.Generator.Operator<String> {
+        public static class Operator extends PooledAttribute.Generator.Operator<String> {
             @Expose
             protected String type;
-
-            public Operator(StringAttribute.Type type) {
-                this.type = type.name();
-            }
-
             @Expose
             @JsonAdapter(IgnoreEmpty.StringAdapter.class)
             protected String delimiter;
@@ -50,50 +46,54 @@ public class StringAttribute
             @JsonAdapter(IgnoreEmpty.StringAdapter.class)
             protected String regex;
 
+            public Operator(final Type type) {
+                this.type = type.name();
+            }
+
             public StringAttribute.Type getType() throws Throwable {
                 return StringAttribute.Type.getByName(this.type).<Throwable>orElseThrow(() -> new IllegalStateException("Unknown type \"" + this.type + "\""));
             }
 
-
-            public String apply(String value, String modifier) {
+            @Override
+            public String apply(final String value, final String modifier) {
                 try {
-                    if (getType() == StringAttribute.Type.SET)
+                    if (this.getType() == Type.SET) {
                         return modifier;
-                    if (getType() == StringAttribute.Type.APPEND)
+                    }
+                    if (this.getType() == Type.APPEND) {
                         return value + modifier;
-                    if (getType() == StringAttribute.Type.JOIN)
+                    }
+                    if (this.getType() == Type.JOIN) {
                         return value + this.delimiter + modifier;
-                    if (getType() == StringAttribute.Type.REPLACE_FIRST)
+                    }
+                    if (this.getType() == Type.REPLACE_FIRST) {
                         return value.replaceFirst(this.regex, modifier);
-                    if (getType() == StringAttribute.Type.REPLACE_ALL) {
+                    }
+                    if (this.getType() == Type.REPLACE_ALL) {
                         return value.replaceAll(this.regex, modifier);
                     }
                 } catch (Throwable e) {
 
                 }
-
                 return value;
             }
         }
     }
 
     public enum Type {
-        SET, APPEND, JOIN, REPLACE_FIRST, REPLACE_ALL;
+        SET,
+        APPEND,
+        JOIN,
+        REPLACE_FIRST,
+        REPLACE_ALL;
 
-        public static Optional<Type> getByName(String name) {
-            for (Type value : values()) {
+        public static Optional<Type> getByName(final String name) {
+            for (final Type value : values()) {
                 if (value.name().equalsIgnoreCase(name)) {
                     return Optional.of(value);
                 }
             }
-
             return Optional.empty();
         }
     }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\attribute\StringAttribute.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

@@ -1,3 +1,7 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.item.catalyst;
 
 import com.google.gson.annotations.Expose;
@@ -6,31 +10,25 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-
-public class CompoundModifierOutcome {
+public class CompoundModifierOutcome
+{
     @Expose
     private final List<SingleModifierOutcome> rolls;
-
+    
     public CompoundModifierOutcome() {
-        this(new ArrayList<>());
+        this(new ArrayList<SingleModifierOutcome>());
     }
-
-    private CompoundModifierOutcome(List<SingleModifierOutcome> rolls) {
+    
+    private CompoundModifierOutcome(final List<SingleModifierOutcome> rolls) {
         this.rolls = rolls;
     }
-
-    public CompoundModifierOutcome addOutcome(SingleModifierOutcome outcome) {
+    
+    public CompoundModifierOutcome addOutcome(final SingleModifierOutcome outcome) {
         this.rolls.add(outcome);
         return this;
     }
-
+    
     public List<SingleModifierOutcome> getRolls() {
-        return Collections.unmodifiableList(this.rolls);
+        return Collections.unmodifiableList((List<? extends SingleModifierOutcome>)this.rolls);
     }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\item\catalyst\CompoundModifierOutcome.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

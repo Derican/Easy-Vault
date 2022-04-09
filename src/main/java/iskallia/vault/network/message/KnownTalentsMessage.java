@@ -1,3 +1,7 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.network.message;
 
 import iskallia.vault.client.ClientTalentData;
@@ -11,51 +15,46 @@ import net.minecraftforge.fml.network.NetworkEvent;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Function;
 import java.util.function.Supplier;
 
-
-public class KnownTalentsMessage {
+public class KnownTalentsMessage
+{
     private final List<TalentNode<?>> learnedTalents;
-
-    public KnownTalentsMessage(TalentTree talentTree) {
+    
+    public KnownTalentsMessage(final TalentTree talentTree) {
         this(talentTree.getLearnedNodes());
     }
-
-    private KnownTalentsMessage(List<TalentNode<?>> learnedTalents) {
+    
+    private KnownTalentsMessage(final List<TalentNode<?>> learnedTalents) {
         this.learnedTalents = learnedTalents;
     }
-
+    
     public List<TalentNode<?>> getLearnedTalents() {
         return this.learnedTalents;
     }
-
-    public static void encode(KnownTalentsMessage message, PacketBuffer buffer) {
-        CompoundNBT nbt = new CompoundNBT();
-        ListNBT talents = new ListNBT();
+    
+    public static void encode(final KnownTalentsMessage message, final PacketBuffer buffer) {
+        final CompoundNBT nbt = new CompoundNBT();
+        final ListNBT talents = new ListNBT();
         message.learnedTalents.stream().map(TalentNode::serializeNBT).forEach(talents::add);
-        nbt.put("LearnedTalents", (INBT) talents);
+        nbt.put("LearnedTalents", (INBT)talents);
         buffer.writeNbt(nbt);
     }
-
-    public static KnownTalentsMessage decode(PacketBuffer buffer) {
-        List<TalentNode<?>> abilities = new ArrayList<>();
-        CompoundNBT nbt = buffer.readNbt();
-        ListNBT learnedTalents = nbt.getList("LearnedTalents", 10);
-        for (int i = 0; i < learnedTalents.size(); i++) {
+    
+    public static KnownTalentsMessage decode(final PacketBuffer buffer) {
+        final List<TalentNode<?>> abilities = new ArrayList<TalentNode<?>>();
+        final CompoundNBT nbt = buffer.readNbt();
+        final ListNBT learnedTalents = nbt.getList("LearnedTalents", 10);
+        for (int i = 0; i < learnedTalents.size(); ++i) {
             abilities.add(TalentNode.fromNBT(null, learnedTalents.getCompound(i), 2));
         }
         return new KnownTalentsMessage(abilities);
     }
-
-    public static void handle(KnownTalentsMessage message, Supplier<NetworkEvent.Context> contextSupplier) {
-        NetworkEvent.Context context = contextSupplier.get();
+    
+    public static void handle(final KnownTalentsMessage message, final Supplier<NetworkEvent.Context> contextSupplier) {
+        final NetworkEvent.Context context = contextSupplier.get();
         context.enqueueWork(() -> ClientTalentData.updateTalents(message));
         context.setPacketHandled(true);
     }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\network\message\KnownTalentsMessage.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

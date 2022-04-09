@@ -1,3 +1,7 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.client.gui.component;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
@@ -28,265 +32,217 @@ import net.minecraft.util.text.*;
 
 import java.awt.*;
 
-public class AbilityDialog extends ComponentDialog {
+public class AbilityDialog extends ComponentDialog
+{
     private final AbilityTree abilityTree;
-    private String selectedAbility = null;
-    private AbilityWidget selectedAbilityWidget = null;
-
-    public AbilityDialog(AbilityTree abilityTree, SkillTreeScreen skillTreeScreen) {
+    private String selectedAbility;
+    private AbilityWidget selectedAbilityWidget;
+    
+    public AbilityDialog(final AbilityTree abilityTree, final SkillTreeScreen skillTreeScreen) {
         super(skillTreeScreen);
+        this.selectedAbility = null;
+        this.selectedAbilityWidget = null;
         this.abilityTree = abilityTree;
     }
-
-
+    
+    @Override
     public Point getIconUV() {
         return new Point(32, 60);
     }
-
-
+    
+    @Override
     public int getHeaderHeight() {
-        return (this.selectedAbilityWidget.getClickableBounds()).height;
+        return this.selectedAbilityWidget.getClickableBounds().height;
     }
-
-
+    
+    @Override
     public SkillTab createTab() {
-        return (SkillTab) new AbilitiesTab(this, getSkillTreeScreen());
+        return new AbilitiesTab(this, this.getSkillTreeScreen());
     }
-
+    
+    @Override
     public void refreshWidgets() {
         if (this.selectedAbility != null) {
-            Button.IPressable pressAction;
-            String buttonText;
-            boolean activeState;
-            SkillStyle abilityStyle = (SkillStyle) ModConfigs.ABILITIES_GUI.getStyles().get(this.selectedAbility);
-            this.selectedAbilityWidget = new AbilityWidget(this.selectedAbility, this.abilityTree, abilityStyle);
-            this.selectedAbilityWidget.setHoverable(false);
+            final SkillStyle abilityStyle = ModConfigs.ABILITIES_GUI.getStyles().get(this.selectedAbility);
+            (this.selectedAbilityWidget = new AbilityWidget(this.selectedAbility, this.abilityTree, abilityStyle)).setHoverable(false);
             this.selectedAbilityWidget.setRenderPips(false);
-
-            AbilityNode<?, ?> existingNode = this.abilityTree.getNodeOf(AbilityRegistry.getAbility(this.selectedAbility));
-
-            AbilityNode<?, ?> targetAbilityNode = this.selectedAbilityWidget.makeAbilityNode();
-            AbilityGroup<?, ?> targetAbilityGroup = targetAbilityNode.getGroup();
-
-
+            final AbilityNode<?, ?> existingNode = this.abilityTree.getNodeOf(AbilityRegistry.getAbility(this.selectedAbility));
+            final AbilityNode<?, ?> targetAbilityNode = this.selectedAbilityWidget.makeAbilityNode();
+            final AbilityGroup<?, ?> targetAbilityGroup = targetAbilityNode.getGroup();
+            String buttonText;
+            Button.IPressable pressAction;
+            boolean activeState;
             if (targetAbilityNode.getSpecialization() != null) {
                 buttonText = "Select Specialization";
-                pressAction = (button -> selectSpecialization());
-
-
-                activeState = (existingNode.getSpecialization() == null && existingNode.isLearned() && VaultBarOverlay.vaultLevel >= targetAbilityNode.getAbilityConfig().getLevelRequirement());
-            } else {
+                pressAction = (button -> this.selectSpecialization());
+                activeState = (existingNode.getSpecialization() == null && existingNode.isLearned() && VaultBarOverlay.vaultLevel >= ((AbilityConfig)targetAbilityNode.getAbilityConfig()).getLevelRequirement());
+            }
+            else {
                 if (!targetAbilityNode.isLearned()) {
                     buttonText = "Learn (" + targetAbilityGroup.learningCost() + ")";
-                } else {
-
-                    buttonText = (existingNode.getLevel() >= targetAbilityGroup.getMaxLevel()) ? "Fully Learned" : ("Upgrade (" + targetAbilityGroup.levelUpCost(targetAbilityNode.getSpecialization(), targetAbilityNode.getLevel()) + ")");
                 }
-                pressAction = (button -> upgradeAbility());
-                AbilityConfig ability = targetAbilityNode.getAbilityConfig();
-                int cost = (ability == null) ? targetAbilityGroup.learningCost() : targetAbilityGroup.levelUpCost(targetAbilityNode.getSpecialization(), targetAbilityNode.getLevel());
-
-
-                activeState = (cost <= VaultBarOverlay.unspentSkillPoints && existingNode.getLevel() < targetAbilityGroup.getMaxLevel() && targetAbilityNode.getLevel() < targetAbilityGroup.getMaxLevel() + 1 && VaultBarOverlay.vaultLevel >= targetAbilityNode.getAbilityConfig().getLevelRequirement());
+                else {
+                    buttonText = ((existingNode.getLevel() >= targetAbilityGroup.getMaxLevel()) ? "Fully Learned" : ("Upgrade (" + targetAbilityGroup.levelUpCost(targetAbilityNode.getSpecialization(), targetAbilityNode.getLevel()) + ")"));
+                }
+                pressAction = (button -> this.upgradeAbility());
+                final AbilityConfig ability = (AbilityConfig)targetAbilityNode.getAbilityConfig();
+                final int cost = (ability == null) ? targetAbilityGroup.learningCost() : targetAbilityGroup.levelUpCost(targetAbilityNode.getSpecialization(), targetAbilityNode.getLevel());
+                activeState = (cost <= VaultBarOverlay.unspentSkillPoints && existingNode.getLevel() < targetAbilityGroup.getMaxLevel() && targetAbilityNode.getLevel() < targetAbilityGroup.getMaxLevel() + 1 && VaultBarOverlay.vaultLevel >= ((AbilityConfig)targetAbilityNode.getAbilityConfig()).getLevelRequirement());
             }
-
             this.descriptionComponent = new ScrollableContainer(this::renderDescriptions);
-            this.selectButton = new Button(10, this.bounds.height - 40, this.bounds.width - 30, 20, (ITextComponent) new StringTextComponent(buttonText), pressAction, (button, matrixStack, x, y) -> {
-
-            });
+            this.selectButton = new Button(10, this.bounds.height - 40, this.bounds.width - 30, 20, (ITextComponent)new StringTextComponent(buttonText), pressAction, (button, matrixStack, x, y) -> {});
             this.selectButton.active = activeState;
         }
     }
-
-    public void setAbilityWidget(String abilityName) {
+    
+    public void setAbilityWidget(final String abilityName) {
         this.selectedAbility = abilityName;
-        refreshWidgets();
+        this.refreshWidgets();
     }
-
+    
     private void upgradeAbility() {
-        AbilityNode<?, ?> abilityNode = this.abilityTree.getNodeByName(AbilityRegistry.getAbility(this.selectedAbility).getAbilityGroupName());
-
+        final AbilityNode<?, ?> abilityNode = this.abilityTree.getNodeByName(AbilityRegistry.getAbility(this.selectedAbility).getAbilityGroupName());
         if (abilityNode.getLevel() >= abilityNode.getGroup().getMaxLevel()) {
             return;
         }
-        (Minecraft.getInstance()).player.playSound(
-                abilityNode.isLearned() ? ModSounds.SKILL_TREE_UPGRADE_SFX : ModSounds.SKILL_TREE_LEARN_SFX, 1.0F, 1.0F);
-
-
+        Minecraft.getInstance().player.playSound(abilityNode.isLearned() ? ModSounds.SKILL_TREE_UPGRADE_SFX : ModSounds.SKILL_TREE_LEARN_SFX, 1.0f, 1.0f);
         this.abilityTree.upgradeAbility(null, abilityNode);
-        refreshWidgets();
-
+        this.refreshWidgets();
         ModNetwork.CHANNEL.sendToServer(new AbilityUpgradeMessage(abilityNode.getGroup().getParentName()));
     }
-
+    
     private void selectSpecialization() {
-        AbilityNode<?, ?> targetNode = this.selectedAbilityWidget.makeAbilityNode();
-        AbilityNode<?, ?> existingNode = this.abilityTree.getNodeByName(AbilityRegistry.getAbility(this.selectedAbility).getAbilityGroupName());
-        String toSelect = targetNode.getSpecialization();
-        String abilityName = existingNode.getGroup().getParentName();
-
+        final AbilityNode<?, ?> targetNode = this.selectedAbilityWidget.makeAbilityNode();
+        final AbilityNode<?, ?> existingNode = this.abilityTree.getNodeByName(AbilityRegistry.getAbility(this.selectedAbility).getAbilityGroupName());
+        final String toSelect = targetNode.getSpecialization();
+        final String abilityName = existingNode.getGroup().getParentName();
         if (existingNode.getSpecialization() != null && targetNode.getGroup().equals(existingNode.getGroup())) {
             return;
         }
-        if (VaultBarOverlay.vaultLevel < targetNode.getAbilityConfig().getLevelRequirement()) {
+        if (VaultBarOverlay.vaultLevel < ((AbilityConfig)targetNode.getAbilityConfig()).getLevelRequirement()) {
             return;
         }
-
-        (Minecraft.getInstance()).player.playSound(ModSounds.SKILL_TREE_UPGRADE_SFX, 1.0F, 1.0F);
-
+        Minecraft.getInstance().player.playSound(ModSounds.SKILL_TREE_UPGRADE_SFX, 1.0f, 1.0f);
         this.abilityTree.selectSpecialization(abilityName, toSelect);
-        getSkillTreeScreen().refreshWidgets();
-
+        this.getSkillTreeScreen().refreshWidgets();
         ModNetwork.CHANNEL.sendToServer(new AbilitySelectSpecializationMessage(abilityName, toSelect));
     }
-
-    public void render(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks) {
-        renderBackground(matrixStack, mouseX, mouseY, partialTicks);
-
+    
+    @Override
+    public void render(final MatrixStack matrixStack, final int mouseX, final int mouseY, final float partialTicks) {
+        this.renderBackground(matrixStack, mouseX, mouseY, partialTicks);
         if (this.selectedAbility == null || this.selectedAbilityWidget == null) {
             return;
         }
-
         matrixStack.pushPose();
-        matrixStack.translate((this.bounds.x + 5), (this.bounds.y + 5), 0.0D);
-
-        renderHeading(matrixStack, mouseX, mouseY, partialTicks);
-
-        this.descriptionComponent.setBounds(getDescriptionsBounds());
+        matrixStack.translate((double)(this.bounds.x + 5), (double)(this.bounds.y + 5), 0.0);
+        this.renderHeading(matrixStack, mouseX, mouseY, partialTicks);
+        this.descriptionComponent.setBounds(this.getDescriptionsBounds());
         this.descriptionComponent.render(matrixStack, mouseX, mouseY, partialTicks);
-
-        renderFooter(matrixStack, mouseX, mouseY, partialTicks);
-
+        this.renderFooter(matrixStack, mouseX, mouseY, partialTicks);
         matrixStack.popPose();
     }
-
-    private void renderHeading(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks) {
-        boolean learned;
-        String abilityName, subText;
+    
+    private void renderHeading(final MatrixStack matrixStack, final int mouseX, final int mouseY, final float partialTicks) {
         Minecraft.getInstance().getTextureManager().bind(SkillTreeScreen.UI_RESOURCE);
-
-        FontRenderer fontRenderer = (Minecraft.getInstance()).font;
-        SkillStyle abilityStyle = (SkillStyle) ModConfigs.ABILITIES_GUI.getStyles().get(this.selectedAbility);
-
-
-        AbilityNode<?, ?> targetAbilityNode = this.selectedAbilityWidget.makeAbilityNode();
-
-
-        AbilityNode<?, ?> currentAbilityNode = this.abilityTree.getNodeOf(targetAbilityNode.getGroup());
+        final FontRenderer fontRenderer = Minecraft.getInstance().font;
+        final SkillStyle abilityStyle = ModConfigs.ABILITIES_GUI.getStyles().get(this.selectedAbility);
+        final AbilityNode<?, ?> targetAbilityNode = this.selectedAbilityWidget.makeAbilityNode();
+        final AbilityNode<?, ?> currentAbilityNode = this.abilityTree.getNodeOf(targetAbilityNode.getGroup());
+        boolean learned;
+        String abilityName;
+        String subText;
         if (targetAbilityNode.getSpecialization() != null) {
             learned = targetAbilityNode.getSpecialization().equals(currentAbilityNode.getSpecialization());
             abilityName = targetAbilityNode.getGroup().getParentName() + ": " + targetAbilityNode.getSpecializationName();
-            subText = learned ? "Selected" : "Not selected";
-        } else {
+            subText = (learned ? "Selected" : "Not selected");
+        }
+        else {
             learned = targetAbilityNode.isLearned();
             abilityName = targetAbilityNode.getGroup().getParentName();
             if (!learned) {
                 subText = "Not learned yet";
-            } else {
+            }
+            else {
                 subText = "Level: " + currentAbilityNode.getLevel() + "/" + targetAbilityNode.getGroup().getMaxLevel();
             }
         }
-
-        Rectangle abilityBounds = this.selectedAbilityWidget.getClickableBounds();
-        UIHelper.renderContainerBorder(this, matrixStack,
-                getHeadingBounds(), 14, 44, 2, 2, 2, 2, -7631989);
-
-
-        int gap = 5;
-
-        int contentWidth = abilityBounds.width + gap + Math.max(fontRenderer.width(abilityName), fontRenderer.width(subText));
-
+        final Rectangle abilityBounds = this.selectedAbilityWidget.getClickableBounds();
+        UIHelper.renderContainerBorder(this, matrixStack, this.getHeadingBounds(), 14, 44, 2, 2, 2, 2, -7631989);
+        final int gap = 5;
+        final int contentWidth = abilityBounds.width + gap + Math.max(fontRenderer.width(abilityName), fontRenderer.width(subText));
         matrixStack.pushPose();
-        matrixStack.translate(10.0D, 0.0D, 0.0D);
-        FontHelper.drawStringWithBorder(matrixStack, abilityName, (abilityBounds.width + gap), 13.0F, !learned ? -1 : -1849, !learned ? -16777216 : -12897536);
-
-
-        FontHelper.drawStringWithBorder(matrixStack, subText, (abilityBounds.width + gap), 23.0F, !learned ? -1 : -1849, !learned ? -16777216 : -12897536);
-
-
-        matrixStack.translate(-abilityStyle.x, -abilityStyle.y, 0.0D);
-        matrixStack.translate(abilityBounds.getWidth() / 2.0D, 0.0D, 0.0D);
-        matrixStack.translate(0.0D, 23.0D, 0.0D);
+        matrixStack.translate(10.0, 0.0, 0.0);
+        FontHelper.drawStringWithBorder(matrixStack, abilityName, (float)(abilityBounds.width + gap), 13.0f, learned ? -1849 : -1, learned ? -12897536 : -16777216);
+        FontHelper.drawStringWithBorder(matrixStack, subText, (float)(abilityBounds.width + gap), 23.0f, learned ? -1849 : -1, learned ? -12897536 : -16777216);
+        matrixStack.translate((double)(-abilityStyle.x), (double)(-abilityStyle.y), 0.0);
+        matrixStack.translate(abilityBounds.getWidth() / 2.0, 0.0, 0.0);
+        matrixStack.translate(0.0, 23.0, 0.0);
         this.selectedAbilityWidget.render(matrixStack, mouseX, mouseY, partialTicks);
         matrixStack.popPose();
     }
-
-    private void renderDescriptions(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks) {
-        AbilityNode<?, ?> targetAbilityNode = this.selectedAbilityWidget.makeAbilityNode();
-
-        Rectangle renderableBounds = this.descriptionComponent.getRenderableBounds();
-
-        StringTextComponent text = new StringTextComponent("");
-        text.append((ITextComponent) ModConfigs.SKILL_DESCRIPTIONS.getDescriptionFor(this.selectedAbilityWidget.getAbilityName()));
+    
+    private void renderDescriptions(final MatrixStack matrixStack, final int mouseX, final int mouseY, final float partialTicks) {
+        final AbilityNode<?, ?> targetAbilityNode = this.selectedAbilityWidget.makeAbilityNode();
+        final Rectangle renderableBounds = this.descriptionComponent.getRenderableBounds();
+        final StringTextComponent text = new StringTextComponent("");
+        text.append((ITextComponent)ModConfigs.SKILL_DESCRIPTIONS.getDescriptionFor(this.selectedAbilityWidget.getAbilityName()));
         if (targetAbilityNode.getSpecialization() == null) {
-            text.append("\n\n").append(getAdditionalDescription(targetAbilityNode));
+            text.append("\n\n").append(this.getAdditionalDescription(targetAbilityNode));
         }
-
-        int renderedLineCount = UIHelper.renderWrappedText(matrixStack, (ITextComponent) text, renderableBounds.width, 10);
+        final int renderedLineCount = UIHelper.renderWrappedText(matrixStack, (ITextComponent)text, renderableBounds.width, 10);
         this.descriptionComponent.setInnerHeight(renderedLineCount * 10 + 20);
         RenderSystem.enableDepthTest();
     }
-
-    private ITextComponent getAdditionalDescription(AbilityNode<?, ?> abilityNode) {
-        String arrow = String.valueOf('▶');
-        IFormattableTextComponent iFormattableTextComponent1 = (new StringTextComponent(" " + arrow + " ")).withStyle(Style.EMPTY.withColor(Color.fromRgb(4737095)));
-
-        IFormattableTextComponent txt = (new StringTextComponent("Cost: ")).withStyle(Style.EMPTY.withColor(Color.fromRgb(4737095)));
-        for (int lvl = 1; lvl <= abilityNode.getGroup().getMaxLevel(); lvl++) {
+    
+    private ITextComponent getAdditionalDescription(final AbilityNode<?, ?> abilityNode) {
+        final String arrow = String.valueOf('\u25b6');
+        final ITextComponent arrowTxt = (ITextComponent)new StringTextComponent(" " + arrow + " ").withStyle(Style.EMPTY.withColor(Color.fromRgb(4737095)));
+        final IFormattableTextComponent txt = new StringTextComponent("Cost: ").withStyle(Style.EMPTY.withColor(Color.fromRgb(4737095)));
+        for (int lvl = 1; lvl <= abilityNode.getGroup().getMaxLevel(); ++lvl) {
             if (lvl > 1) {
-                txt.append((ITextComponent) iFormattableTextComponent1);
+                txt.append(arrowTxt);
             }
-            int cost = abilityNode.getGroup().levelUpCost(null, lvl);
-            txt.append((ITextComponent) (new StringTextComponent(String.valueOf(cost))).withStyle(TextFormatting.WHITE));
+            final int cost = abilityNode.getGroup().levelUpCost(null, lvl);
+            txt.append((ITextComponent)new StringTextComponent(String.valueOf(cost)).withStyle(TextFormatting.WHITE));
         }
-
         boolean displayRequirements = false;
-        IFormattableTextComponent lvlReq = (new StringTextComponent("\n\nLevel requirement: ")).withStyle(Style.EMPTY.withColor(Color.fromRgb(4737095)));
-        for (int i = 0; i < abilityNode.getGroup().getMaxLevel(); i++) {
-            if (i > 0) {
-                lvlReq.append((ITextComponent) iFormattableTextComponent1);
+        final IFormattableTextComponent lvlReq = new StringTextComponent("\n\nLevel requirement: ").withStyle(Style.EMPTY.withColor(Color.fromRgb(4737095)));
+        for (int lvl2 = 0; lvl2 < abilityNode.getGroup().getMaxLevel(); ++lvl2) {
+            if (lvl2 > 0) {
+                lvlReq.append(arrowTxt);
             }
-            int levelRequirement = abilityNode.getGroup().getAbilityConfig(null, i).getLevelRequirement();
-            StringTextComponent lvlReqPart = new StringTextComponent(String.valueOf(levelRequirement));
+            final int levelRequirement = ((AbilityConfig)abilityNode.getGroup().getAbilityConfig(null, lvl2)).getLevelRequirement();
+            final StringTextComponent lvlReqPart = new StringTextComponent(String.valueOf(levelRequirement));
             if (VaultBarOverlay.vaultLevel < levelRequirement) {
                 lvlReqPart.withStyle(Style.EMPTY.withColor(Color.fromRgb(8257536)));
-            } else {
+            }
+            else {
                 lvlReqPart.withStyle(TextFormatting.WHITE);
             }
-            lvlReq.append((ITextComponent) lvlReqPart);
+            lvlReq.append((ITextComponent)lvlReqPart);
             if (levelRequirement > 0) {
                 displayRequirements = true;
             }
         }
         if (displayRequirements) {
-            txt.append((ITextComponent) lvlReq);
-        } else {
-            txt.append((ITextComponent) new StringTextComponent("\n\nNo Level requirements"));
+            txt.append((ITextComponent)lvlReq);
         }
-        return (ITextComponent) txt;
+        else {
+            txt.append((ITextComponent)new StringTextComponent("\n\nNo Level requirements"));
+        }
+        return (ITextComponent)txt;
     }
-
-    private void renderFooter(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks) {
-        int containerX = mouseX - this.bounds.x;
-        int containerY = mouseY - this.bounds.y;
-
+    
+    private void renderFooter(final MatrixStack matrixStack, final int mouseX, final int mouseY, final float partialTicks) {
+        final int containerX = mouseX - this.bounds.x;
+        final int containerY = mouseY - this.bounds.y;
         this.selectButton.render(matrixStack, containerX, containerY, partialTicks);
-
         Minecraft.getInstance().getTextureManager().bind(SkillTreeScreen.UI_RESOURCE);
-
-        AbilityNode<?, ?> targetAbilityNode = this.selectedAbilityWidget.makeAbilityNode();
-        AbilityNode<?, ?> existingNode = this.abilityTree.getNodeOf(targetAbilityNode.getGroup());
-
-        if (targetAbilityNode.getSpecialization() == null && targetAbilityNode
-                .isLearned() && existingNode
-                .getLevel() < targetAbilityNode.getGroup().getMaxLevel() && targetAbilityNode
-                .getLevel() < targetAbilityNode.getGroup().getMaxLevel() + 1)
-            blit(matrixStack, 13, this.bounds.height - 40 - 2, 121, 0, 15, 23);
+        final AbilityNode<?, ?> targetAbilityNode = this.selectedAbilityWidget.makeAbilityNode();
+        final AbilityNode<?, ?> existingNode = this.abilityTree.getNodeOf(targetAbilityNode.getGroup());
+        if (targetAbilityNode.getSpecialization() == null && targetAbilityNode.isLearned() && existingNode.getLevel() < targetAbilityNode.getGroup().getMaxLevel() && targetAbilityNode.getLevel() < targetAbilityNode.getGroup().getMaxLevel() + 1) {
+            this.blit(matrixStack, 13, this.bounds.height - 40 - 2, 121, 0, 15, 23);
+        }
     }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\client\gui\component\AbilityDialog.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

@@ -1,3 +1,7 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.block;
 
 import iskallia.vault.block.base.FillableAltarBlock;
@@ -20,62 +24,55 @@ import net.minecraft.world.server.ServerWorld;
 
 import javax.annotation.Nonnull;
 
-public class XPAltarBlock extends FillableAltarBlock<XpAltarTileEntity> {
-    public XpAltarTileEntity createTileEntity(BlockState state, IBlockReader world) {
-        return (XpAltarTileEntity) ModBlocks.XP_ALTAR_TILE_ENTITY.create();
+public class XPAltarBlock extends FillableAltarBlock<XpAltarTileEntity>
+{
+    @Override
+    public XpAltarTileEntity createTileEntity(final BlockState state, final IBlockReader world) {
+        return (XpAltarTileEntity)ModBlocks.XP_ALTAR_TILE_ENTITY.create();
     }
-
-
+    
+    @Override
     public IParticleData getFlameParticle() {
-        return (IParticleData) ModParticles.BLUE_FLAME.get();
+        return (IParticleData)ModParticles.BLUE_FLAME.get();
     }
-
-
+    
+    @Override
     public PlayerFavourData.VaultGodType getAssociatedVaultGod() {
         return PlayerFavourData.VaultGodType.OMNISCIENT;
     }
-
-
+    
     @Nonnull
-    public BlockState getStateForPlacement(BlockItemUseContext context) {
-        BlockState state = super.getStateForPlacement(context);
-        return (BlockState) state
-                .setValue((Property) FACING, (Comparable) ((Direction) state.getValue((Property) FACING)).getOpposite());
+    @Override
+    public BlockState getStateForPlacement(final BlockItemUseContext context) {
+        final BlockState state = super.getStateForPlacement(context);
+        return state.setValue(XPAltarBlock.FACING, (state.getValue(XPAltarBlock.FACING)).getOpposite());
     }
-
-
-    public ActionResultType rightClicked(BlockState state, ServerWorld world, BlockPos pos, XpAltarTileEntity tileEntity, ServerPlayerEntity player, ItemStack heldStack) {
+    
+    @Override
+    public ActionResultType rightClicked(final BlockState state, final ServerWorld world, final BlockPos pos, final XpAltarTileEntity tileEntity, final ServerPlayerEntity player, final ItemStack heldStack) {
         if (!tileEntity.initialized()) {
             return ActionResultType.SUCCESS;
         }
         if (player.isCreative()) {
-            tileEntity.makeProgress(player, tileEntity.getMaxProgress() - tileEntity.getCurrentProgress(), sPlayer -> {
-            });
+            tileEntity.makeProgress(player, tileEntity.getMaxProgress() - tileEntity.getCurrentProgress(), sPlayer -> {});
             return ActionResultType.SUCCESS;
         }
         if (player.experienceLevel <= 0) {
             return ActionResultType.FAIL;
         }
-
-        int levelDrain = Math.min(player.experienceLevel, tileEntity.getMaxProgress() - tileEntity.getCurrentProgress());
+        final int levelDrain = Math.min(player.experienceLevel, tileEntity.getMaxProgress() - tileEntity.getCurrentProgress());
         player.setExperienceLevels(player.experienceLevel - levelDrain);
-
         tileEntity.makeProgress(player, levelDrain, sPlayer -> {
-            PlayerFavourData data = PlayerFavourData.get(sPlayer.getLevel());
-            if (rand.nextFloat() < getFavourChance((PlayerEntity) sPlayer, PlayerFavourData.VaultGodType.OMNISCIENT)) {
-                PlayerFavourData.VaultGodType vg = getAssociatedVaultGod();
-                if (data.addFavour((PlayerEntity) sPlayer, vg, 1)) {
-                    data.addFavour((PlayerEntity) sPlayer, vg.getOther(rand), -1);
+            final PlayerFavourData data = PlayerFavourData.get(sPlayer.getLevel());
+            if (XPAltarBlock.rand.nextFloat() < FillableAltarBlock.getFavourChance((PlayerEntity)sPlayer, PlayerFavourData.VaultGodType.OMNISCIENT)) {
+                final PlayerFavourData.VaultGodType vg = this.getAssociatedVaultGod();
+                if (data.addFavour((PlayerEntity)sPlayer, vg, 1)) {
+                    data.addFavour((PlayerEntity)sPlayer, vg.getOther(XPAltarBlock.rand), -1);
                     FillableAltarBlock.playFavourInfo(sPlayer);
                 }
             }
+            return;
         });
         return ActionResultType.SUCCESS;
     }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\block\XPAltarBlock.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

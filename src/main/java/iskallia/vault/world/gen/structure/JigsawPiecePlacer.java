@@ -1,3 +1,7 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.world.gen.structure;
 
 import iskallia.vault.world.gen.structure.pool.PalettedListPoolElement;
@@ -23,86 +27,81 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Random;
 import java.util.function.Predicate;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
-public class JigsawPiecePlacer {
-    private static final Random rand = new Random();
-    public static int generationPlacementCount = 0;
-
+public class JigsawPiecePlacer
+{
+    private static final Random rand;
+    public static int generationPlacementCount;
     private final ServerWorld world;
-
     private final JigsawPieceResolver resolver;
     private final TemplateManager templateManager;
     private final StructureManager structureManager;
     private final ChunkGenerator chunkGenerator;
     private final Registry<JigsawPattern> jigsawPatternRegistry;
-
-    private JigsawPiecePlacer(JigsawPiece piece, ServerWorld world, BlockPos pos) {
+    
+    private JigsawPiecePlacer(final JigsawPiece piece, final ServerWorld world, final BlockPos pos) {
         this.world = world;
         this.resolver = JigsawPieceResolver.newResolver(piece, pos);
-
         this.templateManager = world.getStructureManager();
         this.structureManager = world.structureFeatureManager();
-        this.chunkGenerator = (world.getChunkSource()).generator;
-        this.jigsawPatternRegistry = (Registry<JigsawPattern>) world.getServer().registryAccess().registryOrThrow(Registry.TEMPLATE_POOL_REGISTRY);
+        this.chunkGenerator = world.getChunkSource().generator;
+        this.jigsawPatternRegistry = (Registry<JigsawPattern>)world.getServer().registryAccess().registryOrThrow(Registry.TEMPLATE_POOL_REGISTRY);
     }
-
-    public static JigsawPiecePlacer newPlacer(JigsawPiece piece, ServerWorld world, BlockPos pos) {
+    
+    public static JigsawPiecePlacer newPlacer(final JigsawPiece piece, final ServerWorld world, final BlockPos pos) {
         return new JigsawPiecePlacer(piece, world, pos);
     }
-
-    public JigsawPiecePlacer withRotation(Rotation rotation) {
+    
+    public JigsawPiecePlacer withRotation(final Rotation rotation) {
         this.resolver.withRotation(rotation);
         return this;
     }
-
-    public JigsawPiecePlacer andJigsawFilter(Predicate<ResourceLocation> filter) {
+    
+    public JigsawPiecePlacer andJigsawFilter(final Predicate<ResourceLocation> filter) {
         this.resolver.andJigsawFilter(filter);
         return this;
     }
-
+    
     public List<VaultPiece> placeJigsaw() {
-        List<AbstractVillagePiece> resolvedPieces = this.resolver.resolveJigsawPieces(this.templateManager, this.jigsawPatternRegistry);
-
+        final List<AbstractVillagePiece> resolvedPieces = this.resolver.resolveJigsawPieces(this.templateManager, this.jigsawPatternRegistry);
         resolvedPieces.forEach(this::placeStructurePiece);
-        return (List<VaultPiece>) resolvedPieces.stream()
-                .flatMap(piece -> VaultPiece.of((StructurePiece) piece).stream())
-                .filter(Objects::nonNull)
-                .collect(Collectors.toList());
+        return resolvedPieces.stream().flatMap(piece -> VaultPiece.of((StructurePiece)piece).stream()).filter(Objects::nonNull).collect(Collectors.toList());
     }
-
-    private void placeStructurePiece(AbstractVillagePiece structurePiece) {
-        MutableBoundingBox structureBox = structurePiece.getBoundingBox();
-        Vector3i center = structureBox.getCenter();
-        BlockPos generationPos = new BlockPos(center.getX(), structureBox.y0, center.getZ());
-        JigsawPiece toGenerate = structurePiece.getElement();
+    
+    private void placeStructurePiece(final AbstractVillagePiece structurePiece) {
+        final MutableBoundingBox structureBox = structurePiece.getBoundingBox();
+        final Vector3i center = structureBox.getCenter();
+        final BlockPos generationPos = new BlockPos(center.getX(), structureBox.y0, center.getZ());
+        final JigsawPiece toGenerate = structurePiece.getElement();
         try {
-            generationPlacementCount++;
-            placeJigsawPiece(toGenerate, structurePiece.getPosition(), generationPos, structurePiece.getRotation(), structureBox);
-        } finally {
-            generationPlacementCount--;
+            ++JigsawPiecePlacer.generationPlacementCount;
+            this.placeJigsawPiece(toGenerate, structurePiece.getPosition(), generationPos, structurePiece.getRotation(), structureBox);
+        }
+        finally {
+            --JigsawPiecePlacer.generationPlacementCount;
         }
     }
-
-    private void placeJigsawPiece(JigsawPiece jigsawPiece, BlockPos seedPos, BlockPos generationPos, Rotation pieceRotation, MutableBoundingBox pieceBox) {
+    
+    private void placeJigsawPiece(final JigsawPiece jigsawPiece, final BlockPos seedPos, final BlockPos generationPos, final Rotation pieceRotation, final MutableBoundingBox pieceBox) {
         if (jigsawPiece instanceof PalettedListPoolElement) {
-            ((PalettedListPoolElement) jigsawPiece).generate(this.templateManager, (ISeedReader) this.world, this.structureManager, this.chunkGenerator, seedPos, generationPos, pieceRotation, pieceBox, rand, false, 18);
-        } else if (jigsawPiece instanceof PalettedSinglePoolElement) {
-            ((PalettedSinglePoolElement) jigsawPiece).generate(null, this.templateManager, (ISeedReader) this.world, this.structureManager, this.chunkGenerator, seedPos, generationPos, pieceRotation, pieceBox, rand, false, 18);
-        } else {
-
-            jigsawPiece.place(this.templateManager, (ISeedReader) this.world, this.structureManager, this.chunkGenerator, seedPos, generationPos, pieceRotation, pieceBox, rand, false);
+            ((PalettedListPoolElement)jigsawPiece).generate(this.templateManager, (ISeedReader)this.world, this.structureManager, this.chunkGenerator, seedPos, generationPos, pieceRotation, pieceBox, JigsawPiecePlacer.rand, false, 18);
+        }
+        else if (jigsawPiece instanceof PalettedSinglePoolElement) {
+            ((PalettedSinglePoolElement)jigsawPiece).generate(null, this.templateManager, (ISeedReader)this.world, this.structureManager, this.chunkGenerator, seedPos, generationPos, pieceRotation, pieceBox, JigsawPiecePlacer.rand, false, 18);
+        }
+        else {
+            jigsawPiece.place(this.templateManager, (ISeedReader)this.world, this.structureManager, this.chunkGenerator, seedPos, generationPos, pieceRotation, pieceBox, JigsawPiecePlacer.rand, false);
         }
     }
-
-
+    
     public static boolean isPlacingRoom() {
-        return (generationPlacementCount > 0);
+        return JigsawPiecePlacer.generationPlacementCount > 0;
+    }
+    
+    static {
+        rand = new Random();
+        JigsawPiecePlacer.generationPlacementCount = 0;
     }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\world\gen\structure\JigsawPiecePlacer.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

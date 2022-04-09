@@ -1,3 +1,7 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.research;
 
 import iskallia.vault.config.ResearchGroupConfig;
@@ -22,110 +26,107 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.UUID;
 
-public class ResearchTree
-        implements INBTSerializable<CompoundNBT> {
+public class ResearchTree implements INBTSerializable<CompoundNBT>
+{
     protected UUID playerUUID;
     protected List<String> researchesDone;
-
-    public ResearchTree(UUID playerUUID) {
+    
+    public ResearchTree(final UUID playerUUID) {
         this.playerUUID = playerUUID;
-        this.researchesDone = new LinkedList<>();
+        this.researchesDone = new LinkedList<String>();
     }
-
+    
     public List<String> getResearchesDone() {
         return this.researchesDone;
     }
-
-    public boolean isResearched(String researchName) {
+    
+    public boolean isResearched(final String researchName) {
         return this.researchesDone.contains(researchName);
     }
-
-    public void research(String researchName) {
+    
+    public void research(final String researchName) {
         this.researchesDone.add(researchName);
     }
-
+    
     public void resetAll() {
         this.researchesDone.clear();
     }
-
-    public int getResearchCost(Research research) {
-        float cost = research.getCost();
-        ResearchGroupConfig config = ModConfigs.RESEARCH_GROUPS;
-
-        ResearchGroup thisGroup = config.getResearchGroup(research);
-        String thisGroupId = config.getResearchGroupId(thisGroup);
-
-        for (String doneResearch : getResearchesDone()) {
-            ResearchGroup otherGroup = config.getResearchGroup(doneResearch);
+    
+    public int getResearchCost(final Research research) {
+        float cost = (float)research.getCost();
+        final ResearchGroupConfig config = ModConfigs.RESEARCH_GROUPS;
+        final ResearchGroup thisGroup = config.getResearchGroup(research);
+        final String thisGroupId = config.getResearchGroupId(thisGroup);
+        for (final String doneResearch : this.getResearchesDone()) {
+            final ResearchGroup otherGroup = config.getResearchGroup(doneResearch);
             if (otherGroup != null) {
                 cost += otherGroup.getGroupIncreasedResearchCost(thisGroupId);
             }
         }
-
         return Math.max(1, Math.round(cost));
     }
-
-    public String restrictedBy(Item item, Restrictions.Type restrictionType) {
-        for (Research research : ModConfigs.RESEARCHES.getAll()) {
-            if (!this.researchesDone.contains(research.getName()) &&
-                    research.restricts(item, restrictionType)) return research.getName();
+    
+    public String restrictedBy(final Item item, final Restrictions.Type restrictionType) {
+        for (final Research research : ModConfigs.RESEARCHES.getAll()) {
+            if (this.researchesDone.contains(research.getName())) {
+                continue;
+            }
+            if (research.restricts(item, restrictionType)) {
+                return research.getName();
+            }
         }
         return null;
     }
-
-    public String restrictedBy(Block block, Restrictions.Type restrictionType) {
-        for (Research research : ModConfigs.RESEARCHES.getAll()) {
-            if (!this.researchesDone.contains(research.getName()) &&
-                    research.restricts(block, restrictionType)) return research.getName();
+    
+    public String restrictedBy(final Block block, final Restrictions.Type restrictionType) {
+        for (final Research research : ModConfigs.RESEARCHES.getAll()) {
+            if (this.researchesDone.contains(research.getName())) {
+                continue;
+            }
+            if (research.restricts(block, restrictionType)) {
+                return research.getName();
+            }
         }
         return null;
     }
-
-    public String restrictedBy(EntityType<?> entityType, Restrictions.Type restrictionType) {
-        for (Research research : ModConfigs.RESEARCHES.getAll()) {
-            if (!this.researchesDone.contains(research.getName()) &&
-                    research.restricts(entityType, restrictionType)) return research.getName();
+    
+    public String restrictedBy(final EntityType<?> entityType, final Restrictions.Type restrictionType) {
+        for (final Research research : ModConfigs.RESEARCHES.getAll()) {
+            if (this.researchesDone.contains(research.getName())) {
+                continue;
+            }
+            if (research.restricts(entityType, restrictionType)) {
+                return research.getName();
+            }
         }
         return null;
     }
-
-    public void sync(MinecraftServer server) {
+    
+    public void sync(final MinecraftServer server) {
         NetcodeUtils.runIfPresent(server, this.playerUUID, (ServerPlayerEntity player) -> ModNetwork.CHANNEL.sendTo(new ResearchTreeMessage(this, player.getUUID()), player.connection.connection, NetworkDirection.PLAY_TO_CLIENT));
     }
-
-
+    
     public CompoundNBT serializeNBT() {
-        CompoundNBT nbt = new CompoundNBT();
-
+        final CompoundNBT nbt = new CompoundNBT();
         nbt.putUUID("playerUUID", this.playerUUID);
-
-        ListNBT researches = new ListNBT();
-        for (int i = 0; i < this.researchesDone.size(); i++) {
-            CompoundNBT research = new CompoundNBT();
-            research.putString("name", this.researchesDone.get(i));
-            researches.add(i, (INBT) research);
+        final ListNBT researches = new ListNBT();
+        for (int i = 0; i < this.researchesDone.size(); ++i) {
+            final CompoundNBT research = new CompoundNBT();
+            research.putString("name", (String)this.researchesDone.get(i));
+            researches.add(i, (INBT)research);
         }
-        nbt.put("researches", (INBT) researches);
-
+        nbt.put("researches", (INBT)researches);
         return nbt;
     }
-
-
-    public void deserializeNBT(CompoundNBT nbt) {
+    
+    public void deserializeNBT(final CompoundNBT nbt) {
         this.playerUUID = nbt.getUUID("playerUUID");
-
-        ListNBT researches = nbt.getList("researches", 10);
-        this.researchesDone = new LinkedList<>();
-        for (int i = 0; i < researches.size(); i++) {
-            CompoundNBT researchNBT = researches.getCompound(i);
-            String name = researchNBT.getString("name");
+        final ListNBT researches = nbt.getList("researches", 10);
+        this.researchesDone = new LinkedList<String>();
+        for (int i = 0; i < researches.size(); ++i) {
+            final CompoundNBT researchNBT = researches.getCompound(i);
+            final String name = researchNBT.getString("name");
             this.researchesDone.add(name);
         }
     }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\research\ResearchTree.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

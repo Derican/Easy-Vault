@@ -1,3 +1,7 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.world.vault.player;
 
 import iskallia.vault.Vault;
@@ -16,115 +20,126 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-public class VaultSpectator extends VaultPlayer {
-    public static final ResourceLocation ID = Vault.id("spectator");
-
-    private VaultRunner delegate = new VaultRunner(null);
-    public GameType oldGameType = GameType.NOT_SET;
-
-
-    private boolean initialized = false;
-
-
-    public VaultSpectator(VaultRunner delegate) {
-        this(ID, delegate);
+public class VaultSpectator extends VaultPlayer
+{
+    public static final ResourceLocation ID;
+    private VaultRunner delegate;
+    public GameType oldGameType;
+    private boolean initialized;
+    
+    public VaultSpectator() {
+        this.delegate = new VaultRunner(null);
+        this.oldGameType = GameType.NOT_SET;
+        this.initialized = false;
     }
-
-    public VaultSpectator(ResourceLocation id, VaultRunner delegate) {
+    
+    public VaultSpectator(final VaultRunner delegate) {
+        this(VaultSpectator.ID, delegate);
+    }
+    
+    public VaultSpectator(final ResourceLocation id, final VaultRunner delegate) {
         super(id, delegate.getPlayerId());
+        this.delegate = new VaultRunner(null);
+        this.oldGameType = GameType.NOT_SET;
+        this.initialized = false;
         this.delegate = delegate;
     }
-
+    
     public boolean isInitialized() {
         return this.initialized;
     }
-
+    
+    @Override
     public UUID getPlayerId() {
         return this.delegate.getPlayerId();
     }
-
+    
+    @Override
     public boolean hasExited() {
         return this.delegate.hasExited();
     }
-
+    
+    @Override
     public VaultTimer getTimer() {
         return this.delegate.getTimer();
     }
-
+    
+    @Override
     public RaidProperties getProperties() {
         return this.delegate.getProperties();
     }
-
+    
+    @Override
     public List<VaultBehaviour> getBehaviours() {
         return this.delegate.getBehaviours();
     }
-
+    
+    @Override
     public List<VaultObjective> getObjectives() {
         return this.delegate.getObjectives();
     }
-
+    
+    @Override
     public List<VaultObjective> getAllObjectives() {
         return this.delegate.getAllObjectives();
     }
-
-    public <T extends VaultObjective> Optional<T> getActiveObjective(Class<T> type) {
+    
+    @Override
+    public <T extends VaultObjective> Optional<T> getActiveObjective(final Class<T> type) {
         return this.delegate.getActiveObjective(type);
     }
-
+    
     public void setInitialized() {
         this.initialized = true;
     }
-
+    
+    @Override
     public void exit() {
         this.delegate.exit();
     }
-
-
-    public void tick(VaultRaid vault, ServerWorld world) {
-        if (hasExited())
+    
+    @Override
+    public void tick(final VaultRaid vault, final ServerWorld world) {
+        if (this.hasExited()) {
             return;
-        if (!isInitialized()) {
-            runIfPresent(world.getServer(), playerEntity -> {
+        }
+        if (!this.isInitialized()) {
+            this.runIfPresent(world.getServer(), playerEntity -> {
                 this.oldGameType = playerEntity.gameMode.getGameModeForPlayer();
-
                 playerEntity.setGameMode(GameType.SPECTATOR);
-                setInitialized();
+                this.setInitialized();
+                return;
             });
         }
         super.tick(vault, world);
     }
-
-
-    public void tickTimer(VaultRaid vault, ServerWorld world, VaultTimer timer) {
+    
+    @Override
+    public void tickTimer(final VaultRaid vault, final ServerWorld world, final VaultTimer timer) {
     }
-
-
-    public void tickObjectiveUpdates(VaultRaid vault, ServerWorld world) {
+    
+    @Override
+    public void tickObjectiveUpdates(final VaultRaid vault, final ServerWorld world) {
     }
-
-
+    
+    @Override
     public CompoundNBT serializeNBT() {
-        CompoundNBT nbt = super.serializeNBT();
+        final CompoundNBT nbt = super.serializeNBT();
         nbt.putInt("OldGameType", this.oldGameType.ordinal());
         nbt.putBoolean("Initialized", this.initialized);
-        nbt.put("Delegate", (INBT) this.delegate.serializeNBT());
+        nbt.put("Delegate", (INBT)this.delegate.serializeNBT());
         return nbt;
     }
-
-
-    public void deserializeNBT(CompoundNBT nbt) {
+    
+    @Override
+    public void deserializeNBT(final CompoundNBT nbt) {
         this.oldGameType = GameType.values()[nbt.getInt("OldGameType")];
         this.initialized = nbt.getBoolean("Initialized");
         this.delegate.deserializeNBT(nbt.getCompound("Delegate"));
         super.deserializeNBT(nbt);
     }
-
-    public VaultSpectator() {
+    
+    static {
+        ID = Vault.id("spectator");
     }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\world\vault\player\VaultSpectator.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

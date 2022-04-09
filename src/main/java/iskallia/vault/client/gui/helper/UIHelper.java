@@ -1,9 +1,12 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.client.gui.helper;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.entity.player.ClientPlayerEntity;
 import net.minecraft.client.gui.AbstractGui;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
@@ -11,6 +14,7 @@ import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.IReorderingProcessor;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.vector.Quaternion;
@@ -20,268 +24,206 @@ import net.minecraft.util.text.*;
 import java.awt.*;
 import java.util.List;
 import java.util.function.Consumer;
+import java.util.function.ToDoubleFunction;
+import java.util.function.ToIntFunction;
 
-public class UIHelper {
-    public static final ResourceLocation UI_RESOURCE = new ResourceLocation("the_vault", "textures/gui/ability-tree.png");
-
-    public static void renderOverflowHidden(MatrixStack matrixStack, Consumer<MatrixStack> backgroundRenderer, Consumer<MatrixStack> innerRenderer) {
+public class UIHelper
+{
+    public static final ResourceLocation UI_RESOURCE;
+    private static final int[] LINE_BREAK_VALUES;
+    
+    public static void renderOverflowHidden(final MatrixStack matrixStack, final Consumer<MatrixStack> backgroundRenderer, final Consumer<MatrixStack> innerRenderer) {
         matrixStack.pushPose();
         RenderSystem.enableDepthTest();
-
-        matrixStack.translate(0.0D, 0.0D, 950.0D);
+        matrixStack.translate(0.0, 0.0, 950.0);
         RenderSystem.colorMask(false, false, false, false);
         AbstractGui.fill(matrixStack, 4680, 2260, -4680, -2260, -16777216);
         RenderSystem.colorMask(true, true, true, true);
-        matrixStack.translate(0.0D, 0.0D, -950.0D);
-
+        matrixStack.translate(0.0, 0.0, -950.0);
         RenderSystem.depthFunc(518);
         backgroundRenderer.accept(matrixStack);
         RenderSystem.depthFunc(515);
         innerRenderer.accept(matrixStack);
         RenderSystem.depthFunc(518);
-
-        matrixStack.translate(0.0D, 0.0D, -950.0D);
+        matrixStack.translate(0.0, 0.0, -950.0);
         RenderSystem.colorMask(false, false, false, false);
         AbstractGui.fill(matrixStack, 4680, 2260, -4680, -2260, -16777216);
         RenderSystem.colorMask(true, true, true, true);
-        matrixStack.translate(0.0D, 0.0D, 950.0D);
+        matrixStack.translate(0.0, 0.0, 950.0);
         RenderSystem.depthFunc(515);
-
         RenderSystem.disableDepthTest();
         matrixStack.popPose();
     }
-
-    public static void drawFacingPlayer(MatrixStack renderStack, int containerMouseX, int containerMouseY) {
-        ClientPlayerEntity clientPlayerEntity = (Minecraft.getInstance()).player;
-        if (clientPlayerEntity != null) {
-            drawFacingEntity((LivingEntity) clientPlayerEntity, renderStack, containerMouseX, containerMouseY);
+    
+    public static void drawFacingPlayer(final MatrixStack renderStack, final int containerMouseX, final int containerMouseY) {
+        final PlayerEntity player = (PlayerEntity)Minecraft.getInstance().player;
+        if (player != null) {
+            drawFacingEntity((LivingEntity)player, renderStack, containerMouseX, containerMouseY);
         }
     }
-
-    public static void drawFacingEntity(LivingEntity entity, MatrixStack renderStack, int containerMouseX, int containerMouseY) {
-        float xYaw = (float) -Math.atan((containerMouseX / 40.0F));
-        float yPitch = (float) -Math.atan(((containerMouseY + 50) / 40.0F));
-
+    
+    public static void drawFacingEntity(final LivingEntity entity, final MatrixStack renderStack, final int containerMouseX, final int containerMouseY) {
+        final float xYaw = (float)(-Math.atan(containerMouseX / 40.0f));
+        final float yPitch = (float)(-Math.atan((containerMouseY + 50) / 40.0f));
         renderStack.pushPose();
-        renderStack.scale(1.0F, 1.0F, -1.0F);
-        renderStack.translate(0.0D, 0.0D, -500.0D);
-        renderStack.scale(30.0F, 30.0F, 30.0F);
-
-        Quaternion rotation = Vector3f.ZP.rotationDegrees(180.0F);
-        Quaternion viewRotation = Vector3f.XP.rotationDegrees(yPitch * 20.0F);
+        renderStack.scale(1.0f, 1.0f, -1.0f);
+        renderStack.translate(0.0, 0.0, -500.0);
+        renderStack.scale(30.0f, 30.0f, 30.0f);
+        final Quaternion rotation = Vector3f.ZP.rotationDegrees(180.0f);
+        final Quaternion viewRotation = Vector3f.XP.rotationDegrees(yPitch * 20.0f);
         rotation.mul(viewRotation);
         renderStack.mulPose(rotation);
-
-        float f2 = entity.yBodyRot;
-        float f3 = entity.yRot;
-        float f4 = entity.xRot;
-        float f5 = entity.yHeadRotO;
-        float f6 = entity.yHeadRot;
-        entity.yBodyRot = 180.0F + xYaw * 20.0F;
-        entity.yRot = 180.0F + xYaw * 40.0F;
-        entity.xRot = -yPitch * 20.0F;
+        final float f2 = entity.yBodyRot;
+        final float f3 = entity.yRot;
+        final float f4 = entity.xRot;
+        final float f5 = entity.yHeadRotO;
+        final float f6 = entity.yHeadRot;
+        entity.yBodyRot = 180.0f + xYaw * 20.0f;
+        entity.yRot = 180.0f + xYaw * 40.0f;
+        entity.xRot = -yPitch * 20.0f;
         entity.yHeadRot = entity.yRot;
         entity.yHeadRotO = entity.yRot;
-
-        EntityRendererManager entityrenderermanager = Minecraft.getInstance().getEntityRenderDispatcher();
+        final EntityRendererManager entityrenderermanager = Minecraft.getInstance().getEntityRenderDispatcher();
         viewRotation.conj();
         entityrenderermanager.overrideCameraOrientation(viewRotation);
         entityrenderermanager.setRenderShadow(false);
         RenderHelper.setupForFlatItems();
-
-        IRenderTypeBuffer.Impl buffers = Minecraft.getInstance().renderBuffers().bufferSource();
-        entityrenderermanager.render((Entity) entity, 0.0D, 0.0D, 0.0D, 0.0F, 1.0F, renderStack, (IRenderTypeBuffer) buffers, LightmapHelper.getPackedFullbrightCoords());
+        final IRenderTypeBuffer.Impl buffers = Minecraft.getInstance().renderBuffers().bufferSource();
+        entityrenderermanager.render((Entity)entity, 0.0, 0.0, 0.0, 0.0f, 1.0f, renderStack, (IRenderTypeBuffer)buffers, LightmapHelper.getPackedFullbrightCoords());
         buffers.endBatch();
-
         RenderSystem.enableDepthTest();
         RenderSystem.enableAlphaTest();
         RenderSystem.enableBlend();
         RenderSystem.enableTexture();
-
         RenderHelper.setupFor3DItems();
         entityrenderermanager.setRenderShadow(true);
-
         entity.yBodyRot = f2;
         entity.yRot = f3;
         entity.xRot = f4;
         entity.yHeadRotO = f5;
         entity.yHeadRot = f6;
-
         renderStack.popPose();
     }
-
-
-    public static void renderContainerBorder(AbstractGui gui, MatrixStack matrixStack, Rectangle screenBounds, int u, int v, int lw, int rw, int th, int bh, int contentColor) {
-        int width = screenBounds.width;
-        int height = screenBounds.height;
+    
+    public static void renderContainerBorder(final AbstractGui gui, final MatrixStack matrixStack, final Rectangle screenBounds, final int u, final int v, final int lw, final int rw, final int th, final int bh, final int contentColor) {
+        final int width = screenBounds.width;
+        final int height = screenBounds.height;
         renderContainerBorder(gui, matrixStack, screenBounds.x, screenBounds.y, width, height, u, v, lw, rw, th, bh, contentColor);
     }
-
-
-    public static void renderContainerBorder(AbstractGui gui, MatrixStack matrixStack, int x, int y, int width, int height, int u, int v, int lw, int rw, int th, int bh, int contentColor) {
-        int horizontalGap = width - lw - rw;
-        int verticalGap = height - th - bh;
-
+    
+    public static void renderContainerBorder(final AbstractGui gui, final MatrixStack matrixStack, final int x, final int y, final int width, final int height, final int u, final int v, final int lw, final int rw, final int th, final int bh, final int contentColor) {
+        final int horizontalGap = width - lw - rw;
+        final int verticalGap = height - th - bh;
         if (contentColor != 0) {
             AbstractGui.fill(matrixStack, x + lw, y + th, x + lw + horizontalGap, y + th + verticalGap, contentColor);
         }
-
-
         gui.blit(matrixStack, x, y, u, v, lw, th);
-
-
         gui.blit(matrixStack, x + lw + horizontalGap, y, u + lw + 3, v, rw, th);
-
-
         gui.blit(matrixStack, x, y + th + verticalGap, u, v + th + 3, lw, bh);
-
-
         gui.blit(matrixStack, x + lw + horizontalGap, y + th + verticalGap, u + lw + 3, v + th + 3, rw, bh);
-
-
         matrixStack.pushPose();
-        matrixStack.translate((x + lw), y, 0.0D);
-        matrixStack.scale(horizontalGap, 1.0F, 1.0F);
+        matrixStack.translate((double)(x + lw), (double)y, 0.0);
+        matrixStack.scale((float)horizontalGap, 1.0f, 1.0f);
         gui.blit(matrixStack, 0, 0, u + lw + 1, v, 1, th);
-
-
-        matrixStack.translate(0.0D, (th + verticalGap), 0.0D);
+        matrixStack.translate(0.0, (double)(th + verticalGap), 0.0);
         gui.blit(matrixStack, 0, 0, u + lw + 1, v + th + 3, 1, bh);
-
-
         matrixStack.popPose();
-
         matrixStack.pushPose();
-        matrixStack.translate(x, (y + th), 0.0D);
-        matrixStack.scale(1.0F, verticalGap, 1.0F);
+        matrixStack.translate((double)x, (double)(y + th), 0.0);
+        matrixStack.scale(1.0f, (float)verticalGap, 1.0f);
         gui.blit(matrixStack, 0, 0, u, v + th + 1, lw, 1);
-
-
-        matrixStack.translate((lw + horizontalGap), 0.0D, 0.0D);
+        matrixStack.translate((double)(lw + horizontalGap), 0.0, 0.0);
         gui.blit(matrixStack, 0, 0, u + lw + 3, v + th + 1, rw, 1);
-
-
         matrixStack.popPose();
     }
-
-    public static void renderLabelAtRight(AbstractGui gui, MatrixStack matrixStack, String text, int x, int y) {
-        Minecraft minecraft = Minecraft.getInstance();
-        minecraft.getTextureManager().bind(UI_RESOURCE);
-
-        FontRenderer fontRenderer = minecraft.font;
-        int textWidth = fontRenderer.width(text);
-
+    
+    public static void renderLabelAtRight(final AbstractGui gui, final MatrixStack matrixStack, final String text, final int x, final int y) {
+        final Minecraft minecraft = Minecraft.getInstance();
+        minecraft.getTextureManager().bind(UIHelper.UI_RESOURCE);
+        final FontRenderer fontRenderer = minecraft.font;
+        final int textWidth = fontRenderer.width(text);
         matrixStack.pushPose();
-        matrixStack.translate(x, y, 0.0D);
-
-        float scale = 0.75F;
+        matrixStack.translate((double)x, (double)y, 0.0);
+        final float scale = 0.75f;
         matrixStack.scale(scale, scale, scale);
-        matrixStack.translate(-9.0D, 0.0D, 0.0D);
+        matrixStack.translate(-9.0, 0.0, 0.0);
         gui.blit(matrixStack, 0, 0, 143, 36, 9, 24);
-
-        int gap = 5;
+        final int gap = 5;
         int remainingWidth = textWidth + 2 * gap;
-        matrixStack.translate(-remainingWidth, 0.0D, 0.0D);
+        matrixStack.translate((double)(-remainingWidth), 0.0, 0.0);
         while (remainingWidth > 0) {
             gui.blit(matrixStack, 0, 0, 136, 36, 6, 24);
             remainingWidth -= 6;
-            matrixStack.translate(Math.min(6, remainingWidth), 0.0D, 0.0D);
+            matrixStack.translate((double)Math.min(6, remainingWidth), 0.0, 0.0);
         }
-
-        matrixStack.translate((-textWidth - 2 * gap - 6), 0.0D, 0.0D);
+        matrixStack.translate((double)(-textWidth - 2 * gap - 6), 0.0, 0.0);
         gui.blit(matrixStack, 0, 0, 121, 36, 14, 24);
-
-        fontRenderer.draw(matrixStack, text, (14 + gap), 9.0F, -12305893);
-
-
+        fontRenderer.draw(matrixStack, text, (float)(14 + gap), 9.0f, -12305893);
         matrixStack.popPose();
     }
-
-    public static int renderCenteredWrappedText(MatrixStack matrixStack, ITextComponent text, int maxWidth, int padding) {
-        Minecraft minecraft = Minecraft.getInstance();
-        FontRenderer fontRenderer = minecraft.font;
-
-        List<ITextProperties> lines = getLines(
-                (ITextComponent) TextComponentUtils.mergeStyles(text.copy(), text.getStyle()), maxWidth - 3 * padding);
-
-
-        int length = lines.stream().mapToInt(fontRenderer::width).max().orElse(0);
-        List<IReorderingProcessor> processors = LanguageMap.getInstance().getVisualOrder(lines);
-
+    
+    public static int renderCenteredWrappedText(final MatrixStack matrixStack, final ITextComponent text, final int maxWidth, final int padding) {
+        final Minecraft minecraft = Minecraft.getInstance();
+        final FontRenderer fontRenderer = minecraft.font;
+        final List<ITextProperties> lines = getLines((ITextComponent)TextComponentUtils.mergeStyles(text.copy(), text.getStyle()), maxWidth - 3 * padding);
+        final int length = lines.stream().mapToInt(fontRenderer::width).max().orElse(0);
+        final List<IReorderingProcessor> processors = LanguageMap.getInstance().getVisualOrder((List)lines);
         matrixStack.pushPose();
-        matrixStack.translate((-length / 2.0F), 0.0D, 0.0D);
-        for (int i = 0; i < processors.size(); i++) {
-            fontRenderer.draw(matrixStack, processors.get(i), padding, (10 * i + padding), -15130590);
+        matrixStack.translate((double)(-length / 2.0f), 0.0, 0.0);
+        for (int i = 0; i < processors.size(); ++i) {
+            fontRenderer.draw(matrixStack, (IReorderingProcessor)processors.get(i), (float)padding, (float)(10 * i + padding), -15130590);
         }
-
         matrixStack.popPose();
-
         return processors.size();
     }
-
-    public static int renderWrappedText(MatrixStack matrixStack, ITextComponent text, int maxWidth, int padding) {
+    
+    public static int renderWrappedText(final MatrixStack matrixStack, final ITextComponent text, final int maxWidth, final int padding) {
         return renderWrappedText(matrixStack, text, maxWidth, padding, -15130590);
     }
-
-    public static int renderWrappedText(MatrixStack matrixStack, ITextComponent text, int maxWidth, int padding, int color) {
-        Minecraft minecraft = Minecraft.getInstance();
-        FontRenderer fontRenderer = minecraft.font;
-
-        List<ITextProperties> lines = getLines(
-                (ITextComponent) TextComponentUtils.mergeStyles(text.copy(), text.getStyle()), maxWidth - 3 * padding);
-
-
-        List<IReorderingProcessor> processors = LanguageMap.getInstance().getVisualOrder(lines);
-
-        for (int i = 0; i < processors.size(); i++) {
-            fontRenderer.draw(matrixStack, processors.get(i), padding, (10 * i + padding), color);
+    
+    public static int renderWrappedText(final MatrixStack matrixStack, final ITextComponent text, final int maxWidth, final int padding, final int color) {
+        final Minecraft minecraft = Minecraft.getInstance();
+        final FontRenderer fontRenderer = minecraft.font;
+        final List<ITextProperties> lines = getLines((ITextComponent)TextComponentUtils.mergeStyles(text.copy(), text.getStyle()), maxWidth - 3 * padding);
+        final List<IReorderingProcessor> processors = LanguageMap.getInstance().getVisualOrder((List)lines);
+        for (int i = 0; i < processors.size(); ++i) {
+            fontRenderer.draw(matrixStack, (IReorderingProcessor)processors.get(i), (float)padding, (float)(10 * i + padding), color);
         }
-
-
         return processors.size();
     }
-
-    private static final int[] LINE_BREAK_VALUES = new int[]{0, 10, -10, 25, -25};
-
-    private static List<ITextProperties> getLines(ITextComponent component, int maxWidth) {
-        Minecraft minecraft = Minecraft.getInstance();
-
-        CharacterManager charactermanager = minecraft.font.getSplitter();
+    
+    private static List<ITextProperties> getLines(final ITextComponent component, final int maxWidth) {
+        final Minecraft minecraft = Minecraft.getInstance();
+        final CharacterManager charactermanager = minecraft.font.getSplitter();
         List<ITextProperties> list = null;
         float f = Float.MAX_VALUE;
-
-        for (int i : LINE_BREAK_VALUES) {
-            List<ITextProperties> list1 = charactermanager.splitLines((ITextProperties) component, maxWidth - i, Style.EMPTY);
-            float f1 = Math.abs(getTextWidth(charactermanager, list1) - maxWidth);
-            if (f1 <= 10.0F) {
-                return list1;
+        for (final int i : UIHelper.LINE_BREAK_VALUES) {
+            final List<ITextProperties> list2 = charactermanager.splitLines((ITextProperties)component, maxWidth - i, Style.EMPTY);
+            final float f2 = Math.abs(getTextWidth(charactermanager, list2) - maxWidth);
+            if (f2 <= 10.0f) {
+                return list2;
             }
-
-            if (f1 < f) {
-                f = f1;
-                list = list1;
+            if (f2 < f) {
+                f = f2;
+                list = list2;
             }
         }
-
         return list;
     }
-
-    private static float getTextWidth(CharacterManager manager, List<ITextProperties> text) {
-        return (float) text.stream().mapToDouble(manager::stringWidth).max().orElse(0.0D);
+    
+    private static float getTextWidth(final CharacterManager manager, final List<ITextProperties> text) {
+        return (float)text.stream().mapToDouble(manager::stringWidth).max().orElse(0.0);
     }
-
-    public static String formatTimeString(int remainingTicks) {
-        long seconds = (remainingTicks / 20 % 60);
-        long minutes = (remainingTicks / 20 / 60 % 60);
-        long hours = (remainingTicks / 20 / 60 / 60);
-        return (hours > 0L) ?
-                String.format("%02d:%02d:%02d", new Object[]{Long.valueOf(hours), Long.valueOf(minutes), Long.valueOf(seconds)
-                }) : String.format("%02d:%02d", new Object[]{Long.valueOf(minutes), Long.valueOf(seconds)});
+    
+    public static String formatTimeString(final int remainingTicks) {
+        final long seconds = remainingTicks / 20 % 60;
+        final long minutes = remainingTicks / 20 / 60 % 60;
+        final long hours = remainingTicks / 20 / 60 / 60;
+        return (hours > 0L) ? String.format("%02d:%02d:%02d", hours, minutes, seconds) : String.format("%02d:%02d", minutes, seconds);
+    }
+    
+    static {
+        UI_RESOURCE = new ResourceLocation("the_vault", "textures/gui/ability-tree.png");
+        LINE_BREAK_VALUES = new int[] { 0, 10, -10, 25, -25 };
     }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\client\gui\helper\UIHelper.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

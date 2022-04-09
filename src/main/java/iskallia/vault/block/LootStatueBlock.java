@@ -1,3 +1,7 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.block;
 
 import iskallia.vault.block.entity.LootStatueTileEntity;
@@ -45,102 +49,86 @@ import net.minecraftforge.fml.network.NetworkHooks;
 
 import javax.annotation.Nullable;
 
-public class LootStatueBlock extends Block {
-    public static final VoxelShape SHAPE_GIFT_NORMAL = Block.box(1.0D, 0.0D, 1.0D, 15.0D, 5.0D, 15.0D);
-    public static final VoxelShape SHAPE_GIFT_MEGA = Block.box(1.0D, 0.0D, 1.0D, 15.0D, 13.0D, 15.0D);
-    public static final VoxelShape SHAPE_PLAYER_STATUE = Block.box(1.0D, 0.0D, 1.0D, 15.0D, 5.0D, 15.0D);
-    public static final VoxelShape SHAPE_OMEGA_VARIANT = Block.box(0.0D, 0.0D, 0.0D, 16.0D, 8.0D, 16.0D);
-    public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
-
+public class LootStatueBlock extends Block
+{
+    public static final VoxelShape SHAPE_GIFT_NORMAL;
+    public static final VoxelShape SHAPE_GIFT_MEGA;
+    public static final VoxelShape SHAPE_PLAYER_STATUE;
+    public static final VoxelShape SHAPE_OMEGA_VARIANT;
+    public static final DirectionProperty FACING;
     public StatueType type;
-
-    protected LootStatueBlock(StatueType type, AbstractBlock.Properties properties) {
+    
+    protected LootStatueBlock(final StatueType type, final AbstractBlock.Properties properties) {
         super(properties);
-
-        registerDefaultState((BlockState) ((BlockState) getStateDefinition().any()).setValue((Property) FACING, (Comparable) Direction.SOUTH));
+        this.registerDefaultState((this.getStateDefinition().any()).setValue(LootStatueBlock.FACING, Direction.SOUTH));
         this.type = type;
     }
-
-    public LootStatueBlock(StatueType type) {
-        this(type, AbstractBlock.Properties.of(Material.STONE, MaterialColor.STONE)
-                .strength(1.0F, 3600000.0F)
-                .noOcclusion()
-                .noCollission());
+    
+    public LootStatueBlock(final StatueType type) {
+        this(type, AbstractBlock.Properties.of(Material.STONE, MaterialColor.STONE).strength(1.0f, 3600000.0f).noOcclusion().noCollission());
     }
-
-
-    public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
-        if (world.isClientSide) return ActionResultType.SUCCESS;
-
-        TileEntity te = world.getBlockEntity(pos);
-        if (!(te instanceof LootStatueTileEntity)) return ActionResultType.SUCCESS;
-
-        LootStatueTileEntity statue = (LootStatueTileEntity) te;
-
-
-        if (player.isShiftKeyDown()) {
-            ItemStack chip = statue.removeChip();
-            if (chip != ItemStack.EMPTY &&
-                    !player.addItem(chip)) {
-                player.drop(chip, false);
-            }
-
+    
+    public ActionResultType use(final BlockState state, final World world, final BlockPos pos, final PlayerEntity player, final Hand handIn, final BlockRayTraceResult hit) {
+        if (world.isClientSide) {
             return ActionResultType.SUCCESS;
         }
-        ItemStack heldItem = player.getMainHandItem();
+        final TileEntity te = world.getBlockEntity(pos);
+        if (!(te instanceof LootStatueTileEntity)) {
+            return ActionResultType.SUCCESS;
+        }
+        final LootStatueTileEntity statue = (LootStatueTileEntity)te;
+        if (player.isShiftKeyDown()) {
+            final ItemStack chip = statue.removeChip();
+            if (chip != ItemStack.EMPTY && !player.addItem(chip)) {
+                player.drop(chip, false);
+            }
+            return ActionResultType.SUCCESS;
+        }
+        final ItemStack heldItem = player.getMainHandItem();
         if (heldItem.isEmpty()) {
             if (statue.getStatueType().allowsRenaming()) {
                 final CompoundNBT nbt = new CompoundNBT();
                 nbt.putInt("RenameType", RenameType.PLAYER_STATUE.ordinal());
-                nbt.put("Data", (INBT) statue.serializeNBT());
-
-                NetworkHooks.openGui((ServerPlayerEntity) player, new INamedContainerProvider() {
-
+                nbt.put("Data", (INBT)statue.serializeNBT());
+                NetworkHooks.openGui((ServerPlayerEntity)player, (INamedContainerProvider)new INamedContainerProvider() {
                     public ITextComponent getDisplayName() {
-                        return (ITextComponent) new StringTextComponent("Player Statue");
+                        return (ITextComponent)new StringTextComponent("Player Statue");
                     }
-
-
+                    
                     @Nullable
-                    public Container createMenu(int windowId, PlayerInventory playerInventory, PlayerEntity playerEntity) {
-                        return (Container) new RenamingContainer(windowId, nbt);
+                    public Container createMenu(final int windowId, final PlayerInventory playerInventory, final PlayerEntity playerEntity) {
+                        return new RenamingContainer(windowId, nbt);
                     }
-                },buffer -> buffer.writeNbt(nbt));
+                }, buffer -> buffer.writeNbt(nbt));
             }
-
-
-            return ActionResultType.SUCCESS;
-        } if (heldItem.getItem() == ModItems.ACCELERATION_CHIP &&
-                statue.addChip()) {
-            if (!player.isCreative())
-                heldItem.shrink(1);
             return ActionResultType.SUCCESS;
         }
-
-
+        if (heldItem.getItem() == ModItems.ACCELERATION_CHIP && statue.addChip()) {
+            if (!player.isCreative()) {
+                heldItem.shrink(1);
+            }
+            return ActionResultType.SUCCESS;
+        }
         return super.use(state, world, pos, player, handIn, hit);
     }
-
-
-    public void setPlacedBy(World world, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack) {
+    
+    public void setPlacedBy(final World world, final BlockPos pos, final BlockState state, @Nullable final LivingEntity placer, final ItemStack stack) {
         if (!world.isClientSide) {
-            TileEntity tileEntity = world.getBlockEntity(pos);
-
+            final TileEntity tileEntity = world.getBlockEntity(pos);
             if (tileEntity instanceof LootStatueTileEntity) {
-                LootStatueTileEntity lootStatue = (LootStatueTileEntity) tileEntity;
+                final LootStatueTileEntity lootStatue = (LootStatueTileEntity)tileEntity;
                 if (stack.hasTag()) {
-                    CompoundNBT nbt = stack.getOrCreateTag();
-                    setStatueTileData(lootStatue, nbt.getCompound("BlockEntityTag"));
+                    final CompoundNBT nbt = stack.getOrCreateTag();
+                    this.setStatueTileData(lootStatue, nbt.getCompound("BlockEntityTag"));
                     lootStatue.setChanged();
                 }
             }
         }
     }
-
-    protected void setStatueTileData(LootStatueTileEntity lootStatue, CompoundNBT blockEntityTag) {
-        StatueType statueType = StatueType.values()[blockEntityTag.getInt("StatueType")];
-        String playerNickname = blockEntityTag.getString("PlayerNickname");
-
+    
+    protected void setStatueTileData(final LootStatueTileEntity lootStatue, final CompoundNBT blockEntityTag) {
+        final StatueType statueType = StatueType.values()[blockEntityTag.getInt("StatueType")];
+        final String playerNickname = blockEntityTag.getString("PlayerNickname");
         lootStatue.setStatueType(statueType);
         lootStatue.setCurrentTick(blockEntityTag.getInt("CurrentTick"));
         lootStatue.getSkin().updateSkin(playerNickname);
@@ -148,87 +136,85 @@ public class LootStatueBlock extends Block {
         lootStatue.setTotalItems(blockEntityTag.getInt("TotalItems"));
         lootStatue.setLootItem(ItemStack.of(blockEntityTag.getCompound("LootItem")));
     }
-
-
-    public void playerWillDestroy(World world, BlockPos pos, BlockState state, PlayerEntity player) {
+    
+    public void playerWillDestroy(final World world, final BlockPos pos, final BlockState state, final PlayerEntity player) {
         if (!world.isClientSide) {
-            TileEntity tileEntity = world.getBlockEntity(pos);
-            ItemStack itemStack = new ItemStack((IItemProvider) getBlock());
-
+            final TileEntity tileEntity = world.getBlockEntity(pos);
+            final ItemStack itemStack = new ItemStack((IItemProvider)this.getBlock());
             if (tileEntity instanceof LootStatueTileEntity) {
-                LootStatueTileEntity statueTileEntity = (LootStatueTileEntity) tileEntity;
-
-                CompoundNBT statueNBT = statueTileEntity.serializeNBT();
-                CompoundNBT stackNBT = new CompoundNBT();
-                stackNBT.put("BlockEntityTag", (INBT) statueNBT);
-
+                final LootStatueTileEntity statueTileEntity = (LootStatueTileEntity)tileEntity;
+                final CompoundNBT statueNBT = statueTileEntity.serializeNBT();
+                final CompoundNBT stackNBT = new CompoundNBT();
+                stackNBT.put("BlockEntityTag", (INBT)statueNBT);
                 itemStack.setTag(stackNBT);
             }
-
-            ItemEntity itemEntity = new ItemEntity(world, pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5D, itemStack);
+            final ItemEntity itemEntity = new ItemEntity(world, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, itemStack);
             itemEntity.setDefaultPickUpDelay();
-            world.addFreshEntity((Entity) itemEntity);
+            world.addFreshEntity((Entity)itemEntity);
         }
-
         super.playerWillDestroy(world, pos, state, player);
     }
-
-
-    public boolean hasTileEntity(BlockState state) {
+    
+    public boolean hasTileEntity(final BlockState state) {
         return true;
     }
-
-
+    
     @Nullable
-    public TileEntity createTileEntity(BlockState state, IBlockReader world) {
+    public TileEntity createTileEntity(final BlockState state, final IBlockReader world) {
         return ModBlocks.LOOT_STATUE_TILE_ENTITY.create();
     }
-
-
-    protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) {
-        builder.add(new Property[]{(Property) FACING});
+    
+    protected void createBlockStateDefinition(final StateContainer.Builder<Block, BlockState> builder) {
+        builder.add(new Property[] { LootStatueBlock.FACING });
     }
-
-
+    
     @Nullable
-    public BlockState getStateForPlacement(BlockItemUseContext context) {
-        BlockPos pos = context.getClickedPos();
-        World world = context.getLevel();
+    public BlockState getStateForPlacement(final BlockItemUseContext context) {
+        final BlockPos pos = context.getClickedPos();
+        final World world = context.getLevel();
         if (pos.getY() < 255 && world.getBlockState(pos.above()).canBeReplaced(context)) {
-            return (BlockState) defaultBlockState().setValue((Property) FACING, (Comparable) context.getHorizontalDirection());
+            return this.defaultBlockState().setValue(LootStatueBlock.FACING, context.getHorizontalDirection());
         }
         return null;
     }
-
-
-    public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
-        switch (getType()) {
-            case GIFT_NORMAL:
-                return SHAPE_GIFT_NORMAL;
-            case GIFT_MEGA:
-                return SHAPE_GIFT_MEGA;
-            case VAULT_BOSS:
-                return SHAPE_PLAYER_STATUE;
-            case OMEGA_VARIANT:
-                return SHAPE_OMEGA_VARIANT;
+    
+    public VoxelShape getShape(final BlockState state, final IBlockReader worldIn, final BlockPos pos, final ISelectionContext context) {
+        switch (this.getType()) {
+            case GIFT_NORMAL: {
+                return LootStatueBlock.SHAPE_GIFT_NORMAL;
+            }
+            case GIFT_MEGA: {
+                return LootStatueBlock.SHAPE_GIFT_MEGA;
+            }
+            case VAULT_BOSS: {
+                return LootStatueBlock.SHAPE_PLAYER_STATUE;
+            }
+            case OMEGA_VARIANT: {
+                return LootStatueBlock.SHAPE_OMEGA_VARIANT;
+            }
+            default: {
+                return VoxelShapes.block();
+            }
         }
-        return VoxelShapes.block();
     }
-
+    
     public StatueType getType() {
         return this.type;
     }
-
-    protected LootStatueTileEntity getStatueTileEntity(World world, BlockPos pos) {
-        TileEntity tileEntity = world.getBlockEntity(pos);
-        if (tileEntity instanceof LootStatueTileEntity) return (LootStatueTileEntity) tileEntity;
-
+    
+    protected LootStatueTileEntity getStatueTileEntity(final World world, final BlockPos pos) {
+        final TileEntity tileEntity = world.getBlockEntity(pos);
+        if (tileEntity instanceof LootStatueTileEntity) {
+            return (LootStatueTileEntity)tileEntity;
+        }
         return null;
     }
+    
+    static {
+        SHAPE_GIFT_NORMAL = Block.box(1.0, 0.0, 1.0, 15.0, 5.0, 15.0);
+        SHAPE_GIFT_MEGA = Block.box(1.0, 0.0, 1.0, 15.0, 13.0, 15.0);
+        SHAPE_PLAYER_STATUE = Block.box(1.0, 0.0, 1.0, 15.0, 5.0, 15.0);
+        SHAPE_OMEGA_VARIANT = Block.box(0.0, 0.0, 0.0, 16.0, 8.0, 16.0);
+        FACING = BlockStateProperties.HORIZONTAL_FACING;
+    }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\block\LootStatueBlock.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

@@ -1,3 +1,7 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.block;
 
 import iskallia.vault.block.base.FillableAltarBlock;
@@ -17,46 +21,38 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.server.ServerWorld;
 
-
-public class SoulAltarBlock
-        extends FillableAltarBlock<SoulAltarTileEntity> {
-    public SoulAltarTileEntity createTileEntity(BlockState state, IBlockReader world) {
-        return (SoulAltarTileEntity) ModBlocks.SOUL_ALTAR_TILE_ENTITY.create();
+public class SoulAltarBlock extends FillableAltarBlock<SoulAltarTileEntity>
+{
+    @Override
+    public SoulAltarTileEntity createTileEntity(final BlockState state, final IBlockReader world) {
+        return (SoulAltarTileEntity)ModBlocks.SOUL_ALTAR_TILE_ENTITY.create();
     }
-
-
+    
+    @Override
     public IParticleData getFlameParticle() {
-        return (IParticleData) ModParticles.RED_FLAME.get();
+        return (IParticleData)ModParticles.RED_FLAME.get();
     }
-
-
+    
+    @Override
     public PlayerFavourData.VaultGodType getAssociatedVaultGod() {
         return PlayerFavourData.VaultGodType.MALEVOLENCE;
     }
-
-
-    public ActionResultType rightClicked(BlockState state, ServerWorld world, BlockPos pos, SoulAltarTileEntity tileEntity, ServerPlayerEntity player, ItemStack heldStack) {
+    
+    @Override
+    public ActionResultType rightClicked(final BlockState state, final ServerWorld world, final BlockPos pos, final SoulAltarTileEntity tileEntity, final ServerPlayerEntity player, final ItemStack heldStack) {
         if (!tileEntity.initialized()) {
             return ActionResultType.SUCCESS;
         }
         if (player.isCreative()) {
-            tileEntity.makeProgress(player, 1, sPlayer -> {
-            });
+            tileEntity.makeProgress(player, 1, sPlayer -> {});
             return ActionResultType.SUCCESS;
         }
-
         return ActionResultType.FAIL;
     }
-
-
-    protected BlockState getSuccessChestState(BlockState altarState) {
-        BlockState chestState = super.getSuccessChestState(altarState);
-        return (BlockState) chestState.setValue((Property) ChestBlock.FACING, (Comparable) ((Direction) chestState.getValue((Property) FACING)).getOpposite());
+    
+    @Override
+    protected BlockState getSuccessChestState(final BlockState altarState) {
+        final BlockState chestState = super.getSuccessChestState(altarState);
+        return chestState.setValue(ChestBlock.FACING, (chestState.getValue(SoulAltarBlock.FACING)).getOpposite());
     }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\block\SoulAltarBlock.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

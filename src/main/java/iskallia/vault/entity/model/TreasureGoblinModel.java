@@ -1,3 +1,7 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.entity.model;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
@@ -8,70 +12,55 @@ import net.minecraft.client.renderer.model.Model;
 import net.minecraft.client.renderer.model.ModelRenderer;
 import net.minecraft.entity.LivingEntity;
 
-public class TreasureGoblinModel extends PlayerModel<TreasureGoblinEntity> {
+public class TreasureGoblinModel extends PlayerModel<TreasureGoblinEntity>
+{
     public TreasureGoblinModel() {
-        super(1.0F, false);
+        super(1.0f, false);
         this.texWidth = 64;
         this.texHeight = 64;
-
-        this.head = new ModelRenderer((Model) this);
-        this.head.setPos(0.0F, 0.0F, 0.0F);
-        this.head.texOffs(0, 0).addBox(-4.0F, -7.0F, -4.0F, 8.0F, 8.0F, 8.0F, 1.0F, false);
-        this.head.texOffs(0, 26).addBox(-1.0F, -2.0F, -7.0F, 2.0F, 4.0F, 2.0F, 0.0F, false);
-        this.head.texOffs(0, 21).addBox(-4.0F, -4.0F, -6.0F, 8.0F, 1.0F, 1.0F, 0.0F, false);
-
-        ModelRenderer ear6_r1 = new ModelRenderer((Model) this);
-        ear6_r1.setPos(6.375F, -4.875F, 2.125F);
+        (this.head = new ModelRenderer((Model)this)).setPos(0.0f, 0.0f, 0.0f);
+        this.head.texOffs(0, 0).addBox(-4.0f, -7.0f, -4.0f, 8.0f, 8.0f, 8.0f, 1.0f, false);
+        this.head.texOffs(0, 26).addBox(-1.0f, -2.0f, -7.0f, 2.0f, 4.0f, 2.0f, 0.0f, false);
+        this.head.texOffs(0, 21).addBox(-4.0f, -4.0f, -6.0f, 8.0f, 1.0f, 1.0f, 0.0f, false);
+        final ModelRenderer ear6_r1 = new ModelRenderer((Model)this);
+        ear6_r1.setPos(6.375f, -4.875f, 2.125f);
         this.head.addChild(ear6_r1);
-        setRotationAngle(ear6_r1, 0.0F, 0.3927F, 0.0F);
-        ear6_r1.texOffs(0, 0).addBox(-0.125F, -2.125F, 0.875F, 0.0F, 1.0F, 2.0F, 0.0F, false);
-        ear6_r1.texOffs(0, 0).addBox(-0.125F, -1.125F, -1.125F, 0.0F, 1.0F, 3.0F, 0.0F, false);
-        ear6_r1.texOffs(0, 0).addBox(-0.125F, -0.125F, -2.125F, 0.0F, 1.0F, 3.0F, 0.0F, false);
-        ear6_r1.texOffs(0, 0).addBox(-0.125F, 0.875F, -3.125F, 0.0F, 2.0F, 3.0F, 0.0F, false);
-
-        ModelRenderer ear5_r1 = new ModelRenderer((Model) this);
-        ear5_r1.setPos(-6.625F, -4.875F, 2.125F);
+        this.setRotationAngle(ear6_r1, 0.0f, 0.3927f, 0.0f);
+        ear6_r1.texOffs(0, 0).addBox(-0.125f, -2.125f, 0.875f, 0.0f, 1.0f, 2.0f, 0.0f, false);
+        ear6_r1.texOffs(0, 0).addBox(-0.125f, -1.125f, -1.125f, 0.0f, 1.0f, 3.0f, 0.0f, false);
+        ear6_r1.texOffs(0, 0).addBox(-0.125f, -0.125f, -2.125f, 0.0f, 1.0f, 3.0f, 0.0f, false);
+        ear6_r1.texOffs(0, 0).addBox(-0.125f, 0.875f, -3.125f, 0.0f, 2.0f, 3.0f, 0.0f, false);
+        final ModelRenderer ear5_r1 = new ModelRenderer((Model)this);
+        ear5_r1.setPos(-6.625f, -4.875f, 2.125f);
         this.head.addChild(ear5_r1);
-        setRotationAngle(ear5_r1, 0.0F, -0.7854F, 0.0F);
-        ear5_r1.texOffs(0, 0).addBox(-0.125F, -2.125F, 0.875F, 0.0F, 1.0F, 2.0F, 0.0F, false);
-        ear5_r1.texOffs(0, 0).addBox(-0.125F, -1.125F, -1.125F, 0.0F, 1.0F, 3.0F, 0.0F, false);
-        ear5_r1.texOffs(0, 0).addBox(-0.125F, -0.125F, -2.125F, 0.0F, 1.0F, 3.0F, 0.0F, false);
-        ear5_r1.texOffs(0, 1).addBox(-0.125F, 0.875F, -3.125F, 0.0F, 2.0F, 3.0F, 0.0F, false);
-
-        this.body = new ModelRenderer((Model) this, 16, 16);
-        this.body.setPos(0.0F, 0.0F, 0.0F);
-        this.body.addBox(-4.0F, 0.0F, -2.0F, 8.0F, 12.0F, 4.0F);
-        this.body.setPos(0.0F, 0.0F, 0.0F);
-
-        this.rightArm = new ModelRenderer((Model) this, 40, 16);
-        this.rightArm.addBox(-3.0F, -2.0F, -2.0F, 4.0F, 12.0F, 4.0F);
-        this.rightArm.setPos(-5.0F, 2.0F, 0.0F);
-
-        this.leftArm = new ModelRenderer((Model) this, 40, 16);
+        this.setRotationAngle(ear5_r1, 0.0f, -0.7854f, 0.0f);
+        ear5_r1.texOffs(0, 0).addBox(-0.125f, -2.125f, 0.875f, 0.0f, 1.0f, 2.0f, 0.0f, false);
+        ear5_r1.texOffs(0, 0).addBox(-0.125f, -1.125f, -1.125f, 0.0f, 1.0f, 3.0f, 0.0f, false);
+        ear5_r1.texOffs(0, 0).addBox(-0.125f, -0.125f, -2.125f, 0.0f, 1.0f, 3.0f, 0.0f, false);
+        ear5_r1.texOffs(0, 1).addBox(-0.125f, 0.875f, -3.125f, 0.0f, 2.0f, 3.0f, 0.0f, false);
+        (this.body = new ModelRenderer((Model)this, 16, 16)).setPos(0.0f, 0.0f, 0.0f);
+        this.body.addBox(-4.0f, 0.0f, -2.0f, 8.0f, 12.0f, 4.0f);
+        this.body.setPos(0.0f, 0.0f, 0.0f);
+        (this.rightArm = new ModelRenderer((Model)this, 40, 16)).addBox(-3.0f, -2.0f, -2.0f, 4.0f, 12.0f, 4.0f);
+        this.rightArm.setPos(-5.0f, 2.0f, 0.0f);
+        this.leftArm = new ModelRenderer((Model)this, 40, 16);
         this.leftArm.mirror = true;
-        this.leftArm.addBox(-1.0F, -2.0F, -2.0F, 4.0F, 12.0F, 4.0F);
-        this.leftArm.setPos(5.0F, 2.0F, 0.0F);
-
-        this.rightLeg = new ModelRenderer((Model) this, 0, 16);
-        this.rightLeg.addBox(-2.0F, 0.0F, -2.0F, 4.0F, 12.0F, 4.0F);
-        this.rightLeg.setPos(-1.9F, 12.0F, 0.0F);
-
-        this.leftLeg = new ModelRenderer((Model) this, 0, 16);
+        this.leftArm.addBox(-1.0f, -2.0f, -2.0f, 4.0f, 12.0f, 4.0f);
+        this.leftArm.setPos(5.0f, 2.0f, 0.0f);
+        (this.rightLeg = new ModelRenderer((Model)this, 0, 16)).addBox(-2.0f, 0.0f, -2.0f, 4.0f, 12.0f, 4.0f);
+        this.rightLeg.setPos(-1.9f, 12.0f, 0.0f);
+        this.leftLeg = new ModelRenderer((Model)this, 0, 16);
         this.leftLeg.mirror = true;
-        this.leftLeg.addBox(-2.0F, 0.0F, -2.0F, 4.0F, 12.0F, 4.0F);
-        this.leftLeg.setPos(1.9F, 12.0F, 0.0F);
+        this.leftLeg.addBox(-2.0f, 0.0f, -2.0f, 4.0f, 12.0f, 4.0f);
+        this.leftLeg.setPos(1.9f, 12.0f, 0.0f);
     }
-
-
-    public void setRotationAngles(TreasureGoblinEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netbipedHeadYaw, float bipedHeadPitch) {
-        super.setupAnim( entity, limbSwing, limbSwingAmount, ageInTicks, netbipedHeadYaw, bipedHeadPitch);
+    
+    public void setRotationAngles(final TreasureGoblinEntity entity, final float limbSwing, final float limbSwingAmount, final float ageInTicks, final float netbipedHeadYaw, final float bipedHeadPitch) {
+        super.setupAnim(entity, limbSwing, limbSwingAmount, ageInTicks, netbipedHeadYaw, bipedHeadPitch);
     }
-
-
-    public void renderToBuffer(MatrixStack matrixStack, IVertexBuilder buffer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
+    
+    public void renderToBuffer(final MatrixStack matrixStack, final IVertexBuilder buffer, final int packedLight, final int packedOverlay, final float red, final float green, final float blue, final float alpha) {
         matrixStack.pushPose();
-
-
         this.head.render(matrixStack, buffer, packedLight, packedOverlay);
         this.body.render(matrixStack, buffer, packedLight, packedOverlay);
         this.rightArm.render(matrixStack, buffer, packedLight, packedOverlay);
@@ -80,16 +69,10 @@ public class TreasureGoblinModel extends PlayerModel<TreasureGoblinEntity> {
         this.leftLeg.render(matrixStack, buffer, packedLight, packedOverlay);
         matrixStack.popPose();
     }
-
-    public void setRotationAngle(ModelRenderer modelRenderer, float x, float y, float z) {
+    
+    public void setRotationAngle(final ModelRenderer modelRenderer, final float x, final float y, final float z) {
         modelRenderer.xRot = x;
         modelRenderer.yRot = y;
         modelRenderer.zRot = z;
     }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\entity\model\TreasureGoblinModel.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

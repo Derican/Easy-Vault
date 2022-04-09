@@ -1,3 +1,7 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.world.vault.logic.objective.raid.modifier;
 
 import iskallia.vault.world.vault.VaultRaid;
@@ -9,30 +13,23 @@ import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.server.ServerWorld;
 
-public class MonsterAmountModifier
-        extends RaidModifier {
-    public MonsterAmountModifier(String name) {
+public class MonsterAmountModifier extends RaidModifier
+{
+    public MonsterAmountModifier(final String name) {
         super(true, false, name);
     }
-
-
-    public void affectRaidMob(MobEntity mob, float value) {
+    
+    @Override
+    public void affectRaidMob(final MobEntity mob, final float value) {
     }
-
-
-    public void onVaultRaidFinish(VaultRaid vault, ServerWorld world, BlockPos controller, ActiveRaid raid, float value) {
+    
+    @Override
+    public void onVaultRaidFinish(final VaultRaid vault, final ServerWorld world, final BlockPos controller, final ActiveRaid raid, final float value) {
     }
-
-
-    public ITextComponent getDisplay(float value) {
-        int percDisplay = Math.round(value * 100.0F);
-        return (ITextComponent) (new StringTextComponent("+" + percDisplay + "% increased Amount of Monsters"))
-                .withStyle(TextFormatting.RED);
+    
+    @Override
+    public ITextComponent getDisplay(final float value) {
+        final int percDisplay = Math.round(value * 100.0f);
+        return (ITextComponent)new StringTextComponent("+" + percDisplay + "% increased Amount of Monsters").withStyle(TextFormatting.RED);
     }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\world\vault\logic\objective\raid\modifier\MonsterAmountModifier.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

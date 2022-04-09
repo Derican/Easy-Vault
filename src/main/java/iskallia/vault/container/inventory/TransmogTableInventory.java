@@ -1,3 +1,7 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.container.inventory;
 
 import iskallia.vault.attribute.IntegerAttribute;
@@ -5,147 +9,115 @@ import iskallia.vault.container.base.RecipeInventory;
 import iskallia.vault.init.ModAttributes;
 import iskallia.vault.init.ModItems;
 import iskallia.vault.init.ModModels;
+import iskallia.vault.item.gear.VaultArmorItem;
 import iskallia.vault.item.gear.VaultGear;
+import iskallia.vault.item.gear.VaultSwordItem;
 import net.minecraft.entity.MobEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.MathHelper;
 
-
-public class TransmogTableInventory
-        extends RecipeInventory {
+public class TransmogTableInventory extends RecipeInventory
+{
     public static final int GEAR_SLOT = 0;
     public static final int APPEARANCE_SLOT = 1;
     public static final int BRONZE_SLOT = 2;
-
+    
     public TransmogTableInventory() {
         super(3);
     }
-
+    
     public int requiredVaultBronze() {
-        ItemStack gearStack = getItem(0);
-
-        if (gearStack.isEmpty()) return -1;
-
-        IntegerAttribute levelAttr = (IntegerAttribute) ModAttributes.MIN_VAULT_LEVEL.getOrDefault(gearStack, Integer.valueOf(1));
-        int gearLevel = ((Integer) levelAttr.getValue(gearStack)).intValue();
-
+        final ItemStack gearStack = this.getItem(0);
+        if (gearStack.isEmpty()) {
+            return -1;
+        }
+        final IntegerAttribute levelAttr = ModAttributes.MIN_VAULT_LEVEL.getOrDefault(gearStack, 1);
+        final int gearLevel = levelAttr.getValue(gearStack);
         return MathHelper.clamp(gearLevel, 1, 64);
     }
-
-
+    
+    @Override
     public boolean recipeFulfilled() {
-        ItemStack gearStack = getItem(0);
-        ItemStack appearanceStack = getItem(1);
-        ItemStack bronzeStack = getItem(2);
-
-        if (gearStack.getItem() instanceof iskallia.vault.item.gear.VaultArmorItem && appearanceStack
-                .getItem() instanceof iskallia.vault.item.gear.VaultArmorItem) {
-            return armorRecipeFulfilled(gearStack, appearanceStack, bronzeStack);
+        final ItemStack gearStack = this.getItem(0);
+        final ItemStack appearanceStack = this.getItem(1);
+        final ItemStack bronzeStack = this.getItem(2);
+        if (gearStack.getItem() instanceof VaultArmorItem && appearanceStack.getItem() instanceof VaultArmorItem) {
+            return this.armorRecipeFulfilled(gearStack, appearanceStack, bronzeStack);
         }
-
-        if (gearStack.getItem() instanceof iskallia.vault.item.gear.VaultSwordItem && appearanceStack
-                .getItem() instanceof iskallia.vault.item.gear.VaultSwordItem) {
-            return swordRecipeFulfilled(gearStack, appearanceStack, bronzeStack);
-        }
-
-        return false;
+        return gearStack.getItem() instanceof VaultSwordItem && appearanceStack.getItem() instanceof VaultSwordItem && this.swordRecipeFulfilled(gearStack, appearanceStack, bronzeStack);
     }
-
-    private boolean armorRecipeFulfilled(ItemStack armorStack, ItemStack appearanceStack, ItemStack bronzeStack) {
-        VaultGear.Rarity armorRarity = ModAttributes.GEAR_RARITY.getBase(armorStack).orElse(VaultGear.Rarity.SCRAPPY);
-        VaultGear.Rarity appearanceRarity = ModAttributes.GEAR_RARITY.getBase(appearanceStack).orElse(VaultGear.Rarity.SCRAPPY);
-
-
-        if (armorRarity == VaultGear.Rarity.SCRAPPY)
+    
+    private boolean armorRecipeFulfilled(final ItemStack armorStack, final ItemStack appearanceStack, final ItemStack bronzeStack) {
+        final VaultGear.Rarity armorRarity = ModAttributes.GEAR_RARITY.getBase(armorStack).orElse(VaultGear.Rarity.SCRAPPY);
+        final VaultGear.Rarity appearanceRarity = ModAttributes.GEAR_RARITY.getBase(appearanceStack).orElse(VaultGear.Rarity.SCRAPPY);
+        if (armorRarity == VaultGear.Rarity.SCRAPPY) {
             return false;
+        }
         if (appearanceRarity == VaultGear.Rarity.SCRAPPY) {
             return false;
         }
-        EquipmentSlotType armorSlot = MobEntity.getEquipmentSlotForItem(appearanceStack);
-        EquipmentSlotType appearanceSlot = MobEntity.getEquipmentSlotForItem(armorStack);
-
-
+        final EquipmentSlotType armorSlot = MobEntity.getEquipmentSlotForItem(appearanceStack);
+        final EquipmentSlotType appearanceSlot = MobEntity.getEquipmentSlotForItem(armorStack);
         if (armorSlot != appearanceSlot) {
             return false;
         }
-        int armorSpecialModel = ((Integer) ModAttributes.GEAR_SPECIAL_MODEL.getBase(armorStack).orElse(Integer.valueOf(-1))).intValue();
-        int appearanceSpecialModel = ((Integer) ModAttributes.GEAR_SPECIAL_MODEL.getBase(appearanceStack).orElse(Integer.valueOf(-1))).intValue();
-
-
+        final int armorSpecialModel = ModAttributes.GEAR_SPECIAL_MODEL.getBase(armorStack).orElse(-1);
+        final int appearanceSpecialModel = ModAttributes.GEAR_SPECIAL_MODEL.getBase(appearanceStack).orElse(-1);
         if (armorSpecialModel != -1) {
             return false;
         }
-
         if (appearanceSpecialModel != -1) {
-            ModModels.SpecialGearModel specialGearModel = ModModels.SpecialGearModel.getModel(appearanceSlot, appearanceSpecialModel);
+            final ModModels.SpecialGearModel specialGearModel = ModModels.SpecialGearModel.getModel(appearanceSlot, appearanceSpecialModel);
             if (specialGearModel != null && !specialGearModel.getModelProperties().doesAllowTransmogrification()) {
                 return false;
             }
         }
-
-
-        return (bronzeStack.getItem() == ModItems.VAULT_BRONZE && bronzeStack
-                .getCount() >= requiredVaultBronze());
+        return bronzeStack.getItem() == ModItems.VAULT_BRONZE && bronzeStack.getCount() >= this.requiredVaultBronze();
     }
-
-    private boolean swordRecipeFulfilled(ItemStack swordStack, ItemStack appearanceStack, ItemStack bronzeStack) {
-        VaultGear.Rarity swordRarity = ModAttributes.GEAR_RARITY.getBase(swordStack).orElse(VaultGear.Rarity.SCRAPPY);
-        VaultGear.Rarity appearanceRarity = ModAttributes.GEAR_RARITY.getBase(appearanceStack).orElse(VaultGear.Rarity.SCRAPPY);
-
-
-        if (swordRarity == VaultGear.Rarity.SCRAPPY)
+    
+    private boolean swordRecipeFulfilled(final ItemStack swordStack, final ItemStack appearanceStack, final ItemStack bronzeStack) {
+        final VaultGear.Rarity swordRarity = ModAttributes.GEAR_RARITY.getBase(swordStack).orElse(VaultGear.Rarity.SCRAPPY);
+        final VaultGear.Rarity appearanceRarity = ModAttributes.GEAR_RARITY.getBase(appearanceStack).orElse(VaultGear.Rarity.SCRAPPY);
+        if (swordRarity == VaultGear.Rarity.SCRAPPY) {
             return false;
+        }
         if (appearanceRarity == VaultGear.Rarity.SCRAPPY) {
             return false;
         }
-        int armorSpecialModel = ((Integer) ModAttributes.GEAR_SPECIAL_MODEL.getBase(swordStack).orElse(Integer.valueOf(-1))).intValue();
-        int appearanceSpecialModel = ((Integer) ModAttributes.GEAR_SPECIAL_MODEL.getBase(appearanceStack).orElse(Integer.valueOf(-1))).intValue();
-
-
+        final int armorSpecialModel = ModAttributes.GEAR_SPECIAL_MODEL.getBase(swordStack).orElse(-1);
+        final int appearanceSpecialModel = ModAttributes.GEAR_SPECIAL_MODEL.getBase(appearanceStack).orElse(-1);
         if (armorSpecialModel != -1) {
             return false;
         }
-
         if (appearanceSpecialModel != -1) {
-            ModModels.SpecialSwordModel specialSwordModel = ModModels.SpecialSwordModel.getModel(appearanceSpecialModel);
+            final ModModels.SpecialSwordModel specialSwordModel = ModModels.SpecialSwordModel.getModel(appearanceSpecialModel);
             if (specialSwordModel != null && !specialSwordModel.getModelProperties().doesAllowTransmogrification()) {
                 return false;
             }
         }
-
-
-        return (bronzeStack.getItem() == ModItems.VAULT_BRONZE && bronzeStack
-                .getCount() >= requiredVaultBronze());
+        return bronzeStack.getItem() == ModItems.VAULT_BRONZE && bronzeStack.getCount() >= this.requiredVaultBronze();
     }
-
-
+    
+    @Override
     public ItemStack resultingItemStack() {
-        ItemStack gearStack = getItem(0);
-        ItemStack appearanceStack = getItem(1);
-
-        IntegerAttribute modelAttr = (IntegerAttribute) ModAttributes.GEAR_MODEL.getOrDefault(appearanceStack, Integer.valueOf(0));
-        int modelId = ((Integer) modelAttr.getValue(appearanceStack)).intValue();
-
-        IntegerAttribute specialModelAttr = (IntegerAttribute) ModAttributes.GEAR_SPECIAL_MODEL.getOrDefault(appearanceStack, Integer.valueOf(-1));
-        int specialModelId = ((Integer) specialModelAttr.getValue(appearanceStack)).intValue();
-
-        ItemStack resultingStack = gearStack.copy();
-        ModAttributes.GEAR_MODEL.create(resultingStack, Integer.valueOf(modelId));
-        if (specialModelId != -1)
-            ModAttributes.GEAR_SPECIAL_MODEL.create(resultingStack, Integer.valueOf(specialModelId));
+        final ItemStack gearStack = this.getItem(0);
+        final ItemStack appearanceStack = this.getItem(1);
+        final IntegerAttribute modelAttr = ModAttributes.GEAR_MODEL.getOrDefault(appearanceStack, 0);
+        final int modelId = modelAttr.getValue(appearanceStack);
+        final IntegerAttribute specialModelAttr = ModAttributes.GEAR_SPECIAL_MODEL.getOrDefault(appearanceStack, -1);
+        final int specialModelId = specialModelAttr.getValue(appearanceStack);
+        final ItemStack resultingStack = gearStack.copy();
+        ModAttributes.GEAR_MODEL.create(resultingStack, modelId);
+        if (specialModelId != -1) {
+            ModAttributes.GEAR_SPECIAL_MODEL.create(resultingStack, specialModelId);
+        }
         return resultingStack;
     }
-
-
+    
+    @Override
     public void consumeIngredients() {
-        removeItem(2, requiredVaultBronze());
-        removeItem(0, 1);
+        this.removeItem(2, this.requiredVaultBronze());
+        this.removeItem(0, 1);
     }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\container\inventory\TransmogTableInventory.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

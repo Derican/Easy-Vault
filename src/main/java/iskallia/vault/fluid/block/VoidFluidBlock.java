@@ -1,3 +1,7 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.fluid.block;
 
 import iskallia.vault.block.VaultOreBlock;
@@ -9,6 +13,7 @@ import net.minecraft.block.Blocks;
 import net.minecraft.block.FlowingFluidBlock;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.ItemEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
@@ -28,95 +33,72 @@ import net.minecraft.world.server.ServerWorld;
 import javax.annotation.Nonnull;
 import java.util.function.Supplier;
 
-public class VoidFluidBlock
-        extends FlowingFluidBlock {
-    public VoidFluidBlock(Supplier<? extends VoidFluid> supplier, AbstractBlock.Properties properties) {
-        super(supplier, properties);
+public class VoidFluidBlock extends FlowingFluidBlock
+{
+    public VoidFluidBlock(final Supplier<? extends VoidFluid> supplier, final AbstractBlock.Properties properties) {
+        super((Supplier)supplier, properties);
     }
-
-
-    public void entityInside(BlockState state, World world, BlockPos pos, Entity entity) {
+    
+    public void entityInside(final BlockState state, final World world, final BlockPos pos, final Entity entity) {
         super.entityInside(state, world, pos, entity);
-
         entity.clearFire();
-
-        if (!world.isClientSide && entity instanceof net.minecraft.entity.player.PlayerEntity) {
-            ServerPlayerEntity player = (ServerPlayerEntity) entity;
+        if (!world.isClientSide && entity instanceof PlayerEntity) {
+            final ServerPlayerEntity player = (ServerPlayerEntity)entity;
             affectPlayer(player);
-        } else if (entity instanceof ItemEntity && state.getFluidState().isSource()) {
-            ItemEntity itemEntity = (ItemEntity) entity;
-            ItemStack itemStack = itemEntity.getItem();
-            Item item = itemStack.getItem();
+        }
+        else if (entity instanceof ItemEntity && state.getFluidState().isSource()) {
+            final ItemEntity itemEntity = (ItemEntity)entity;
+            final ItemStack itemStack = itemEntity.getItem();
+            final Item item = itemStack.getItem();
             if (item instanceof BlockItem) {
-                BlockItem blockItem = (BlockItem) item;
+                final BlockItem blockItem = (BlockItem)item;
                 if (blockItem.getBlock() instanceof VaultOreBlock) {
                     world.setBlock(pos, Blocks.AIR.defaultBlockState(), 3);
-                    transformOre(itemEntity, (VaultOreBlock) blockItem.getBlock());
+                    transformOre(itemEntity, (VaultOreBlock)blockItem.getBlock());
                 }
             }
         }
     }
-
-
-    public static void affectPlayer(ServerPlayerEntity player) {
-        if (!player.hasEffect(ModEffects.TIMER_ACCELERATION) || player
-                .getEffect(ModEffects.TIMER_ACCELERATION).getDuration() < 40) {
-            int duration = 100;
-            int amplifier = 1;
-            EffectInstance acceleration = new EffectInstance(ModEffects.TIMER_ACCELERATION, duration, amplifier);
-            EffectInstance blindness = new EffectInstance(Effects.BLINDNESS, duration, amplifier);
+    
+    public static void affectPlayer(final ServerPlayerEntity player) {
+        if (!player.hasEffect(ModEffects.TIMER_ACCELERATION) || player.getEffect(ModEffects.TIMER_ACCELERATION).getDuration() < 40) {
+            final int duration = 100;
+            final int amplifier = 1;
+            final EffectInstance acceleration = new EffectInstance(ModEffects.TIMER_ACCELERATION, duration, amplifier);
+            final EffectInstance blindness = new EffectInstance(Effects.BLINDNESS, duration, amplifier);
             player.addEffect(acceleration);
             player.addEffect(blindness);
         }
     }
-
-    public static void transformOre(ItemEntity itemEntity, VaultOreBlock oreBlock) {
-        World world = itemEntity.level;
-        BlockPos pos = itemEntity.blockPosition();
-
-        ItemStack itemStack = itemEntity.getItem();
+    
+    public static void transformOre(final ItemEntity itemEntity, final VaultOreBlock oreBlock) {
+        final World world = itemEntity.level;
+        final BlockPos pos = itemEntity.blockPosition();
+        final ItemStack itemStack = itemEntity.getItem();
         itemStack.shrink(1);
-
         if (itemStack.getCount() <= 0) {
             itemEntity.remove();
         }
-
         if (!world.isClientSide) {
-            ServerWorld serverWorld = (ServerWorld) world;
-            serverWorld.playSound(null, pos
-                            .getX(), pos.getY(), pos.getZ(), SoundEvents.ITEM_FRAME_REMOVE_ITEM, SoundCategory.MASTER, 1.0F,
-
-                    (float) Math.random());
-            serverWorld.sendParticles((IParticleData) ParticleTypes.WITCH, pos
-                    .getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5D, 100, 0.0D, 0.0D, 0.0D, Math.PI);
+            final ServerWorld serverWorld = (ServerWorld)world;
+            serverWorld.playSound((PlayerEntity)null, (double)pos.getX(), (double)pos.getY(), (double)pos.getZ(), SoundEvents.ITEM_FRAME_REMOVE_ITEM, SoundCategory.MASTER, 1.0f, (float)Math.random());
+            serverWorld.sendParticles((IParticleData)ParticleTypes.WITCH, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, 100, 0.0, 0.0, 0.0, 3.141592653589793);
         }
-
-
-        ItemEntity gemEntity = createGemEntity(world, oreBlock, pos);
-        world.addFreshEntity((Entity) gemEntity);
+        final ItemEntity gemEntity = createGemEntity(world, oreBlock, pos);
+        world.addFreshEntity((Entity)gemEntity);
     }
-
+    
     @Nonnull
-    private static ItemEntity createGemEntity(World world, VaultOreBlock oreBlock, BlockPos pos) {
-        double x = (pos.getX() + 0.5F);
-        double y = (pos.getY() + 0.5F);
-        double z = (pos.getZ() + 0.5F);
-        ItemStack itemStack = new ItemStack((IItemProvider) oreBlock.getAssociatedGem(), 2);
-        ItemEntity itemEntity = new ItemEntity(world, x, y, z, itemStack);
-
+    private static ItemEntity createGemEntity(final World world, final VaultOreBlock oreBlock, final BlockPos pos) {
+        final double x = pos.getX() + 0.5f;
+        final double y = pos.getY() + 0.5f;
+        final double z = pos.getZ() + 0.5f;
+        final ItemStack itemStack = new ItemStack((IItemProvider)oreBlock.getAssociatedGem(), 2);
+        final ItemEntity itemEntity = new ItemEntity(world, x, y, z, itemStack);
         itemEntity.setPickUpDelay(40);
-
-
-        float mag = world.random.nextFloat() * 0.2F;
-        float angle = world.random.nextFloat() * 6.2831855F;
-        itemEntity.setDeltaMovement((-MathHelper.sin(angle) * mag), 0.20000000298023224D, (MathHelper.cos(angle) * mag));
-
+        final float mag = world.random.nextFloat() * 0.2f;
+        final float angle = world.random.nextFloat() * 6.2831855f;
+        itemEntity.setDeltaMovement((double)(-MathHelper.sin(angle) * mag), 0.20000000298023224, (double)(MathHelper.cos(angle) * mag));
         return itemEntity;
     }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\fluid\block\VoidFluidBlock.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

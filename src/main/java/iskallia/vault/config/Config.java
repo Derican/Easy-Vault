@@ -1,66 +1,72 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.config;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import net.minecraft.world.gen.feature.IFeatureConfig;
 
 import java.io.*;
+import java.lang.reflect.Type;
 import java.util.Random;
 
-public abstract class Config {
-    protected static final Random rand = new Random();
-
-    private static final Gson GSON = (new GsonBuilder())
-            .excludeFieldsWithoutExposeAnnotation()
-            .setPrettyPrinting()
-            .create();
-    protected String root = "config/the_vault/";
-    protected String extension = ".json";
-
+public abstract class Config implements IFeatureConfig {
+    protected static final Random rand;
+    private static final Gson GSON;
+    protected String root;
+    protected String extension;
+    
+    public Config() {
+        this.root = "config/the_vault/";
+        this.extension = ".json";
+    }
+    
     public void generateConfig() {
-        reset();
-
+        this.reset();
         try {
-            writeConfig();
-        } catch (IOException e) {
+            this.writeConfig();
+        }
+        catch (final IOException e) {
             e.printStackTrace();
         }
     }
-
+    
     private File getConfigFile() {
-        return new File(this.root + getName() + this.extension);
+        return new File(this.root + this.getName() + this.extension);
     }
-
+    
     public abstract String getName();
-
+    
     public <T extends Config> T readConfig() {
         try {
-            return (T) GSON.fromJson(new FileReader(getConfigFile()), getClass());
-        } catch (FileNotFoundException e) {
-            generateConfig();
-
-
-            return (T) this;
+            return (T)Config.GSON.fromJson((Reader)new FileReader(this.getConfigFile()), (Type)this.getClass());
+        }
+        catch (final FileNotFoundException e) {
+            this.generateConfig();
+            return (T)this;
         }
     }
-
-
+    
+    protected abstract void reset();
+    
     public void writeConfig() throws IOException {
-        File dir = new File(this.root);
-        if (!dir.exists() && !dir.mkdirs())
+        final File dir = new File(this.root);
+        if (!dir.exists() && !dir.mkdirs()) {
             return;
-        if (!getConfigFile().exists() && !getConfigFile().createNewFile())
+        }
+        if (!this.getConfigFile().exists() && !this.getConfigFile().createNewFile()) {
             return;
-        FileWriter writer = new FileWriter(getConfigFile());
-        GSON.toJson(this, writer);
+        }
+        final FileWriter writer = new FileWriter(this.getConfigFile());
+        Config.GSON.toJson(this, (Appendable)writer);
         writer.flush();
         writer.close();
     }
-
-    protected abstract void reset();
+    
+    static {
+        rand = new Random();
+        GSON = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().setPrettyPrinting().create();
+    }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\config\Config.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

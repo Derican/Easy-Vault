@@ -1,3 +1,7 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.world.vault.modifier;
 
 import com.google.gson.annotations.Expose;
@@ -9,42 +13,38 @@ import net.minecraft.world.server.ServerWorld;
 
 import java.util.Random;
 
-public class MaxMobsModifier
-        extends TexturedVaultModifier {
-    public MaxMobsModifier(String name, ResourceLocation icon, int maxMobsAddend) {
-        super(name, icon);
-        this.maxMobsAddend = maxMobsAddend;
-
-        if (this.maxMobsAddend > 0) {
-            format(getColor(), "Spawns " + this.maxMobsAddend + ((this.maxMobsAddend == 1) ? " more mob." : " more mobs."));
-        } else if (this.maxMobsAddend < 0) {
-            format(getColor(), "Spawns " + -this.maxMobsAddend + ((-this.maxMobsAddend == 1) ? " less mob." : " less mobs."));
-        } else {
-            format(getColor(), "Does nothing at all. A bit of a waste of a modifier...");
-        }
-    }
-
+public class MaxMobsModifier extends TexturedVaultModifier
+{
     @Expose
     private final int maxMobsAddend;
-
-    public void apply(VaultRaid vault, VaultPlayer player, ServerWorld world, Random random) {
+    
+    public MaxMobsModifier(final String name, final ResourceLocation icon, final int maxMobsAddend) {
+        super(name, icon);
+        this.maxMobsAddend = maxMobsAddend;
+        if (this.maxMobsAddend > 0) {
+            this.format(this.getColor(), "Spawns " + this.maxMobsAddend + ((this.maxMobsAddend == 1) ? " more mob." : " more mobs."));
+        }
+        else if (this.maxMobsAddend < 0) {
+            this.format(this.getColor(), "Spawns " + -this.maxMobsAddend + ((-this.maxMobsAddend == 1) ? " less mob." : " less mobs."));
+        }
+        else {
+            this.format(this.getColor(), "Does nothing at all. A bit of a waste of a modifier...");
+        }
+    }
+    
+    @Override
+    public void apply(final VaultRaid vault, final VaultPlayer player, final ServerWorld world, final Random random) {
         player.getProperties().get(VaultRaid.SPAWNER).ifPresent(spawner -> {
-            ((VaultSpawner) spawner.getBaseValue()).addMaxMobs(this.maxMobsAddend);
+            ((VaultSpawner)spawner.getBaseValue()).addMaxMobs(this.maxMobsAddend);
             spawner.updateNBT();
         });
     }
-
-
-    public void remove(VaultRaid vault, VaultPlayer player, ServerWorld world, Random random) {
+    
+    @Override
+    public void remove(final VaultRaid vault, final VaultPlayer player, final ServerWorld world, final Random random) {
         player.getProperties().get(VaultRaid.SPAWNER).ifPresent(spawner -> {
-            ((VaultSpawner) spawner.getBaseValue()).addMaxMobs(-this.maxMobsAddend);
+            ((VaultSpawner)spawner.getBaseValue()).addMaxMobs(-this.maxMobsAddend);
             spawner.updateNBT();
         });
     }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\world\vault\modifier\MaxMobsModifier.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

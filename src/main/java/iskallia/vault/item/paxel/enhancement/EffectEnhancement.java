@@ -1,3 +1,7 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.item.paxel.enhancement;
 
 import iskallia.vault.skill.talent.type.EffectTalent;
@@ -17,104 +21,94 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.UUID;
 
-public class EffectEnhancement
-        extends PaxelEnhancement {
-    public Map<UUID, EffectInstance> EFFECT_INSTANCE_CAPTURES = new HashMap<>();
-
+public class EffectEnhancement extends PaxelEnhancement
+{
+    public Map<UUID, EffectInstance> EFFECT_INSTANCE_CAPTURES;
     protected String effectName;
     protected int extraAmplifier;
     protected Effect effect;
-
-    public EffectEnhancement(Effect effect, int extraAmplifier) {
-        this.effectName = ((ResourceLocation) Objects.<ResourceLocation>requireNonNull(Registry.MOB_EFFECT.getKey(effect))).toString();
+    
+    public EffectEnhancement(final Effect effect, final int extraAmplifier) {
+        this.EFFECT_INSTANCE_CAPTURES = new HashMap<UUID, EffectInstance>();
+        this.effectName = Objects.requireNonNull(Registry.MOB_EFFECT.getKey(effect)).toString();
         this.extraAmplifier = extraAmplifier;
     }
-
-
+    
+    @Override
     public Color getColor() {
         return Color.fromRgb(-10047745);
     }
-
-
+    
+    @Override
     public IFormattableTextComponent getDescription() {
-        return (IFormattableTextComponent) new TranslationTextComponent("paxel_enhancement.the_vault.effects.desc", new Object[]{
-                Integer.valueOf(this.extraAmplifier),
-                getEffect().getDisplayName().getString()});
+        return (IFormattableTextComponent)new TranslationTextComponent("paxel_enhancement.the_vault.effects.desc", new Object[] { this.extraAmplifier, this.getEffect().getDisplayName().getString() });
     }
-
+    
     public Effect getEffect() {
         if (this.effect == null) {
-            this.effect = (Effect) Registry.MOB_EFFECT.get(new ResourceLocation(this.effectName));
+            this.effect = (Effect)Registry.MOB_EFFECT.get(new ResourceLocation(this.effectName));
         }
         return this.effect;
     }
-
+    
     public int getExtraAmplifier() {
         return this.extraAmplifier;
     }
-
-
+    
+    @Override
     public CompoundNBT serializeNBT() {
-        CompoundNBT nbt = super.serializeNBT();
+        final CompoundNBT nbt = super.serializeNBT();
         nbt.putString("EffectName", this.effectName);
         nbt.putInt("ExtraAmplifier", this.extraAmplifier);
         return nbt;
     }
-
-
-    public void deserializeNBT(CompoundNBT nbt) {
+    
+    @Override
+    public void deserializeNBT(final CompoundNBT nbt) {
         super.deserializeNBT(nbt);
         this.effectName = nbt.getString("EffectName");
         this.extraAmplifier = nbt.getInt("ExtraAmplifier");
     }
-
-    public void captureEffect(ServerPlayerEntity player, EffectInstance instance) {
-        UUID playerUUID = player.getUUID();
-
+    
+    public void captureEffect(final ServerPlayerEntity player, final EffectInstance instance) {
+        final UUID playerUUID = player.getUUID();
         if (instance == null) {
             this.EFFECT_INSTANCE_CAPTURES.put(playerUUID, null);
-        } else {
-            EffectInstance copiedInstance = new EffectInstance(instance);
+        }
+        else {
+            final EffectInstance copiedInstance = new EffectInstance(instance);
             this.EFFECT_INSTANCE_CAPTURES.put(playerUUID, copiedInstance);
         }
     }
-
-    public void revertCapturedEffect(ServerPlayerEntity player) {
-        EffectInstance capturedInstance = this.EFFECT_INSTANCE_CAPTURES.remove(player.getUUID());
+    
+    public void revertCapturedEffect(final ServerPlayerEntity player) {
+        final EffectInstance capturedInstance = this.EFFECT_INSTANCE_CAPTURES.remove(player.getUUID());
         if (capturedInstance != null) {
             player.addEffect(capturedInstance);
         }
     }
-
-
-    public void onEnhancementActivated(ServerPlayerEntity player, ItemStack paxelStack) {
+    
+    @Override
+    public void onEnhancementActivated(final ServerPlayerEntity player, final ItemStack paxelStack) {
     }
-
-
-    public void onEnhancementDeactivated(ServerPlayerEntity player, ItemStack paxelStack) {
+    
+    @Override
+    public void onEnhancementDeactivated(final ServerPlayerEntity player, final ItemStack paxelStack) {
     }
-
-
-    public void heldTick(ServerPlayerEntity player, ItemStack paxelStack, int slotIndex) {
+    
+    @Override
+    public void heldTick(final ServerPlayerEntity player, final ItemStack paxelStack, final int slotIndex) {
     }
-
-
-    public EffectInstance createEnhancedEffect(EffectInstance instance) {
-        return createEnhancedEffect(instance.getAmplifier(), instance.isVisible(), instance.showIcon());
+    
+    public EffectInstance createEnhancedEffect(final EffectInstance instance) {
+        return this.createEnhancedEffect(instance.getAmplifier(), instance.isVisible(), instance.showIcon());
     }
-
-    public EffectInstance createEnhancedEffect(int baseAmplifier, boolean doesShowParticles, boolean doesShowIcon) {
-        return new EffectInstance(getEffect(), 310, baseAmplifier + this.extraAmplifier, false, doesShowParticles, doesShowIcon);
+    
+    public EffectInstance createEnhancedEffect(final int baseAmplifier, final boolean doesShowParticles, final boolean doesShowIcon) {
+        return new EffectInstance(this.getEffect(), 310, baseAmplifier + this.extraAmplifier, false, doesShowParticles, doesShowIcon);
     }
-
-
+    
     public EffectTalent makeTalent() {
-        return new EffectTalent(0, getEffect(), getExtraAmplifier(), EffectTalent.Type.ICON_ONLY, EffectTalent.Operator.ADD);
+        return new EffectTalent(0, this.getEffect(), this.getExtraAmplifier(), EffectTalent.Type.ICON_ONLY, EffectTalent.Operator.ADD);
     }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\item\paxel\enhancement\EffectEnhancement.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

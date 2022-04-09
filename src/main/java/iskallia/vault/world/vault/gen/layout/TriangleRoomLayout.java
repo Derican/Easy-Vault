@@ -1,3 +1,7 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.world.vault.gen.layout;
 
 import iskallia.vault.Vault;
@@ -6,76 +10,71 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.vector.Vector3i;
 
-public class TriangleRoomLayout
-        extends ConnectedRoomGenerator {
-    public static final ResourceLocation ID = Vault.id("triangle");
+public class TriangleRoomLayout extends ConnectedRoomGenerator
+{
+    public static final ResourceLocation ID;
     private int size;
-
+    
     public TriangleRoomLayout() {
         this(11);
     }
-
-    public TriangleRoomLayout(int size) {
-        super(ID);
+    
+    public TriangleRoomLayout(final int size) {
+        super(TriangleRoomLayout.ID);
         this.size = size;
     }
-
-
-    public void setSize(int size) {
+    
+    @Override
+    public void setSize(final int size) {
         this.size = size;
     }
-
-
-    public VaultRoomLayoutGenerator.Layout generateLayout() {
-        VaultRoomLayoutGenerator.Layout layout = new VaultRoomLayoutGenerator.Layout();
+    
+    @Override
+    public Layout generateLayout() {
+        final Layout layout = new Layout();
         if (this.size % 2 == 0) {
             throw new IllegalArgumentException("Cannot generate vault square shape with even size!");
         }
-        calculateRooms(layout, this.size);
-        connectRooms(layout, this.size + 2);
+        this.calculateRooms(layout, this.size);
+        this.connectRooms(layout, this.size + 2);
         return layout;
     }
-
-    private void calculateRooms(VaultRoomLayoutGenerator.Layout layout, int size) {
-        int halfSize = size / 2;
-        Direction facing = Direction.from2DDataValue(rand.nextInt(4));
-        Vector3i directionVec = facing.getNormal();
-        Vector3i offset = directionVec.relative(facing, -halfSize);
-
-        Direction edgeFacing = facing.getClockWise();
-        Vector3i corner = offset.relative(edgeFacing, -halfSize);
-
-        for (int hItr = 0; hItr <= size; hItr++) {
-            float allowedDst = (size - hItr) / size;
-            for (int wItr = 0; wItr <= size; wItr++) {
-                float dst = Math.abs(wItr - halfSize) / halfSize;
+    
+    private void calculateRooms(final Layout layout, final int size) {
+        final int halfSize = size / 2;
+        final Direction facing = Direction.from2DDataValue(TriangleRoomLayout.rand.nextInt(4));
+        final Vector3i directionVec = facing.getNormal();
+        final Vector3i offset = directionVec.relative(facing, -halfSize);
+        final Direction edgeFacing = facing.getClockWise();
+        final Vector3i corner = offset.relative(edgeFacing, -halfSize);
+        for (int hItr = 0; hItr <= size; ++hItr) {
+            final float allowedDst = (size - hItr) / (float)size;
+            for (int wItr = 0; wItr <= size; ++wItr) {
+                final float dst = Math.abs(wItr - halfSize) / (float)halfSize;
                 if (dst <= allowedDst) {
-
-
-                    Vector3i roomPos = corner.relative(edgeFacing, wItr).relative(facing, hItr);
+                    final Vector3i roomPos = corner.relative(edgeFacing, wItr).relative(facing, hItr);
                     layout.putRoom(roomPos);
                 }
             }
         }
     }
-
-    protected void deserialize(CompoundNBT tag) {
+    
+    @Override
+    protected void deserialize(final CompoundNBT tag) {
         super.deserialize(tag);
         if (tag.contains("size", 3)) {
             this.size = tag.getInt("size");
         }
     }
-
-
+    
+    @Override
     protected CompoundNBT serialize() {
-        CompoundNBT tag = super.serialize();
+        final CompoundNBT tag = super.serialize();
         tag.putInt("size", this.size);
         return tag;
     }
+    
+    static {
+        ID = Vault.id("triangle");
+    }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\world\vault\gen\layout\TriangleRoomLayout.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

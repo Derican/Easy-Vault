@@ -1,3 +1,7 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.block.entity;
 
 import iskallia.vault.init.ModBlocks;
@@ -17,46 +21,39 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 
 import java.util.Random;
 
-public class ScavengerTreasureTileEntity
-        extends TileEntity implements ITickableTileEntity {
-    private static final Random rand = new Random();
-
-    protected ScavengerTreasureTileEntity(TileEntityType<?> tileEntityTypeIn) {
-        super(tileEntityTypeIn);
+public class ScavengerTreasureTileEntity extends TileEntity implements ITickableTileEntity
+{
+    private static final Random rand;
+    
+    protected ScavengerTreasureTileEntity(final TileEntityType<?> tileEntityTypeIn) {
+        super((TileEntityType)tileEntityTypeIn);
     }
-
+    
     public ScavengerTreasureTileEntity() {
-        super(ModBlocks.SCAVENGER_TREASURE_TILE_ENTITY);
+        super((TileEntityType)ModBlocks.SCAVENGER_TREASURE_TILE_ENTITY);
     }
-
-
+    
     public void tick() {
         if (this.level.isClientSide()) {
-            playEffects();
+            this.playEffects();
         }
     }
-
+    
     @OnlyIn(Dist.CLIENT)
     private void playEffects() {
-        if (rand.nextInt(4) == 0) {
-            ParticleManager mgr = (Minecraft.getInstance()).particleEngine;
-            BlockPos pos = getBlockPos();
-
-
-            Vector3d rPos = new Vector3d(pos.getX() + 0.5D + (rand.nextFloat() - rand.nextFloat()) * rand.nextFloat() * 1.5D, pos.getY() + 0.5D + (rand.nextFloat() - rand.nextFloat()) * rand.nextFloat() * 1.5D, pos.getZ() + 0.5D + (rand.nextFloat() - rand.nextFloat()) * rand.nextFloat() * 1.5D);
-            SimpleAnimatedParticle p = (SimpleAnimatedParticle) mgr.createParticle((IParticleData) ParticleTypes.FIREWORK, rPos.x, rPos.y, rPos.z, 0.0D, 0.0D, 0.0D);
-
-
+        if (ScavengerTreasureTileEntity.rand.nextInt(4) == 0) {
+            final ParticleManager mgr = Minecraft.getInstance().particleEngine;
+            final BlockPos pos = this.getBlockPos();
+            final Vector3d rPos = new Vector3d(pos.getX() + 0.5 + (ScavengerTreasureTileEntity.rand.nextFloat() - ScavengerTreasureTileEntity.rand.nextFloat()) * (ScavengerTreasureTileEntity.rand.nextFloat() * 1.5), pos.getY() + 0.5 + (ScavengerTreasureTileEntity.rand.nextFloat() - ScavengerTreasureTileEntity.rand.nextFloat()) * (ScavengerTreasureTileEntity.rand.nextFloat() * 1.5), pos.getZ() + 0.5 + (ScavengerTreasureTileEntity.rand.nextFloat() - ScavengerTreasureTileEntity.rand.nextFloat()) * (ScavengerTreasureTileEntity.rand.nextFloat() * 1.5));
+            final SimpleAnimatedParticle p = (SimpleAnimatedParticle)mgr.createParticle((IParticleData)ParticleTypes.FIREWORK, rPos.x, rPos.y, rPos.z, 0.0, 0.0, 0.0);
             if (p != null) {
-//                p.baseGravity = 0.0F;
-                p.setColor(MiscUtils.blendColors(-3241472, -3229440, rand.nextFloat()));
+                p.baseGravity = 0.0f;
+                p.setColor(MiscUtils.blendColors(-3241472, -3229440, ScavengerTreasureTileEntity.rand.nextFloat()));
             }
         }
     }
+    
+    static {
+        rand = new Random();
+    }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\block\entity\ScavengerTreasureTileEntity.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

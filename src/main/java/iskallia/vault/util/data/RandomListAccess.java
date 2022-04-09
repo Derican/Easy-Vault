@@ -1,3 +1,7 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.util.data;
 
 import javax.annotation.Nullable;
@@ -5,31 +9,26 @@ import java.util.Optional;
 import java.util.Random;
 import java.util.function.BiConsumer;
 
-public interface RandomListAccess<T> {
+public interface RandomListAccess<T>
+{
     @Nullable
-    T getRandom(Random paramRandom);
-
-    default Optional<T> getOptionalRandom(Random random) {
-        return Optional.ofNullable(getRandom(random));
+    T getRandom(final Random p0);
+    
+    default Optional<T> getOptionalRandom(final Random random) {
+        return Optional.ofNullable(this.getRandom(random));
     }
-
-    void forEach(BiConsumer<T, Number> paramBiConsumer);
-
-    boolean removeEntry(T paramT);
-
+    
+    void forEach(final BiConsumer<T, Number> p0);
+    
+    boolean removeEntry(final T p0);
+    
     @Nullable
-    default T removeRandom(Random random) {
-        T element = getRandom(random);
+    default T removeRandom(final Random random) {
+        final T element = this.getRandom(random);
         if (element != null) {
-            removeEntry(element);
+            this.removeEntry(element);
             return element;
         }
         return null;
     }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vaul\\util\data\RandomListAccess.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

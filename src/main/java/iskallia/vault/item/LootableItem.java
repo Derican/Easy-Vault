@@ -1,3 +1,7 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.item;
 
 import net.minecraft.entity.player.PlayerEntity;
@@ -10,39 +14,29 @@ import net.minecraft.world.World;
 
 import java.util.function.Supplier;
 
-public class LootableItem
-        extends BasicItem {
+public class LootableItem extends BasicItem
+{
     private final Supplier<ItemStack> supplier;
-
-    public LootableItem(ResourceLocation id, Item.Properties properties, Supplier<ItemStack> supplier) {
+    
+    public LootableItem(final ResourceLocation id, final Item.Properties properties, final Supplier<ItemStack> supplier) {
         super(id, properties);
         this.supplier = supplier;
     }
-
-
-    public ActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand) {
+    
+    public ActionResult<ItemStack> use(final World world, final PlayerEntity player, final Hand hand) {
         if (!world.isClientSide) {
-            ItemStack heldStack = player.getItemInHand(hand);
+            final ItemStack heldStack = player.getItemInHand(hand);
             ItemRelicBoosterPack.successEffects(world, player.position());
-
-            ItemStack randomLoot = this.supplier.get();
+            final ItemStack randomLoot = this.supplier.get();
             while (randomLoot.getCount() > 0) {
-                int amount = Math.min(randomLoot.getCount(), randomLoot.getMaxStackSize());
-                ItemStack copy = randomLoot.copy();
+                final int amount = Math.min(randomLoot.getCount(), randomLoot.getMaxStackSize());
+                final ItemStack copy = randomLoot.copy();
                 copy.setCount(amount);
                 randomLoot.shrink(amount);
                 player.drop(copy, false, false);
             }
-
             heldStack.shrink(1);
         }
-
-        return super.use(world, player, hand);
+        return (ActionResult<ItemStack>)super.use(world, player, hand);
     }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\item\LootableItem.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

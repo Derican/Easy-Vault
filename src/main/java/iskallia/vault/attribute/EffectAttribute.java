@@ -1,3 +1,7 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.attribute;
 
 import com.google.gson.annotations.Expose;
@@ -14,23 +18,21 @@ import java.util.Optional;
 import java.util.Random;
 import java.util.stream.Collectors;
 
-
-public class EffectAttribute
-        extends PooledAttribute<List<EffectAttribute.Instance>> {
+public class EffectAttribute extends PooledAttribute<List<EffectAttribute.Instance>> {
     public EffectAttribute() {
     }
 
-    public EffectAttribute(VAttribute.Modifier<List<Instance>> modifier) {
+    public EffectAttribute(final VAttribute.Modifier<List<Instance>> modifier) {
         super(modifier);
     }
 
-
-    public void write(CompoundNBT nbt) {
-        if (getBaseValue() == null)
+    @Override
+    public void write(final CompoundNBT nbt) {
+        if (this.getBaseValue() == null) {
             return;
-        CompoundNBT tag = new CompoundNBT();
-        ListNBT effectsList = new ListNBT();
-
+        }
+        final CompoundNBT tag = new CompoundNBT();
+        final ListNBT effectsList = new ListNBT();
         getBaseValue().forEach(effect -> {
             CompoundNBT effectTag = new CompoundNBT();
 
@@ -41,16 +43,14 @@ public class EffectAttribute
         nbt.put("BaseValue", (INBT) tag);
     }
 
-
-    public void read(CompoundNBT nbt) {
+    @Override
+    public void read(final CompoundNBT nbt) {
         if (!nbt.contains("BaseValue", 10)) {
-            setBaseValue(new ArrayList<>());
-
+            setBaseValue(new ArrayList<Instance>());
             return;
         }
-        CompoundNBT tag = nbt.getCompound("BaseValue");
-        ListNBT effectsList = tag.getList("Effects", 10);
-
+        final CompoundNBT tag = nbt.getCompound("BaseValue");
+        final ListNBT effectsList = tag.getList("Effects", 10);
         setBaseValue((List<Instance>) effectsList.stream()
                 .map(inbt -> (CompoundNBT) inbt)
                 .map(effect -> new Instance(tag.getString("Id")))
@@ -61,7 +61,7 @@ public class EffectAttribute
         return new Generator();
     }
 
-    public static Generator.Operator of(Type type) {
+    public static Generator.Operator of(final Type type) {
         return new Generator.Operator(type);
     }
 
@@ -69,11 +69,11 @@ public class EffectAttribute
         @Expose
         protected String effect;
 
-        public Instance(String effect) {
+        public Instance(final String effect) {
             this.effect = effect;
         }
 
-        public Instance(Effect effect) {
+        public Instance(final Effect effect) {
             this(effect.getRegistryName().toString());
         }
 
@@ -85,24 +85,23 @@ public class EffectAttribute
             return Registry.MOB_EFFECT.getOptional(new ResourceLocation(this.effect)).orElse(null);
         }
 
-
+        @Override
         public String toString() {
             return "Instance{effect='" + this.effect + '\'' + '}';
         }
     }
 
-
-    public static class Generator
-            extends PooledAttribute.Generator<List<Instance>, Generator.Operator> {
-        public List<EffectAttribute.Instance> getDefaultValue(Random random) {
-            return new ArrayList<>();
+    public static class Generator extends PooledAttribute.Generator<List<EffectAttribute.Instance>, Generator.Operator> {
+        @Override
+        public List<EffectAttribute.Instance> getDefaultValue(final Random random) {
+            return new ArrayList<EffectAttribute.Instance>();
         }
 
         public static class Operator extends PooledAttribute.Generator.Operator<List<EffectAttribute.Instance>> {
             @Expose
             protected String type;
 
-            public Operator(EffectAttribute.Type type) {
+            public Operator(final Type type) {
                 this.type = type.name();
             }
 
@@ -110,68 +109,36 @@ public class EffectAttribute
                 return EffectAttribute.Type.getByName(this.type).<Throwable>orElseThrow(() -> new IllegalStateException("Unknown type \"" + this.type + "\""));
             }
 
-            public List<EffectAttribute.Instance> apply(List<EffectAttribute.Instance> value, List<EffectAttribute.Instance> modifier) {
+            @Override
+            public List<EffectAttribute.Instance> apply(final List<EffectAttribute.Instance> value, final List<EffectAttribute.Instance> modifier) {
                 try {
-                    if (getType() == EffectAttribute.Type.SET)
+                    if (this.getType() == Type.SET) {
                         return modifier;
-                    if (getType() == EffectAttribute.Type.MERGE) {
-                        List<EffectAttribute.Instance> res = new ArrayList<>(value);
+                    }
+                    if (this.getType() == Type.MERGE) {
+                        final List<EffectAttribute.Instance> res = new ArrayList<EffectAttribute.Instance>(value);
                         res.addAll(modifier);
                         return res;
                     }
                 } catch (Throwable e) {
 
                 }
-
                 return value;
             }
         }
     }
 
-    public static class Operator extends PooledAttribute.Generator.Operator<List<Instance>> {
-        public List<EffectAttribute.Instance> apply(List<EffectAttribute.Instance> value, List<EffectAttribute.Instance> modifier) {
-            try {
-                if (getType() == EffectAttribute.Type.SET) return modifier;
-                if (getType() == EffectAttribute.Type.MERGE) {
-                    List<EffectAttribute.Instance> res = new ArrayList<>(value);
-                    res.addAll(modifier);
-                    return res;
-                }
-            } catch (Throwable e) {
-            }
-            return value;
-        }
-
-        @Expose
-        protected String type;
-
-        public Operator(EffectAttribute.Type type) {
-            this.type = type.name();
-        }
-
-        public EffectAttribute.Type getType() throws Throwable {
-            return EffectAttribute.Type.getByName(this.type).<Throwable>orElseThrow(() -> new IllegalStateException("Unknown type \"" + this.type + "\""));
-        }
-    }
-
     public enum Type {
-        SET, MERGE;
+        SET,
+        MERGE;
 
-        public static Optional<Type> getByName(String name) {
-            for (Type value : values()) {
+        public static Optional<Type> getByName(final String name) {
+            for (final Type value : values()) {
                 if (value.name().equalsIgnoreCase(name)) {
                     return Optional.of(value);
                 }
             }
-
             return Optional.empty();
         }
     }
-
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\attribute\EffectAttribute.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

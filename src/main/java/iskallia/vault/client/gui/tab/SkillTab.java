@@ -1,3 +1,7 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.client.gui.tab;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
@@ -20,136 +24,117 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public abstract class SkillTab
-        extends Screen {
+public abstract class SkillTab extends Screen
+{
     protected SkillTreeScreen parentScreen;
-    protected static Map<Class<? extends SkillTab>, Vector2f> persistedTranslations = new HashMap<>();
-    protected static Map<Class<? extends SkillTab>, Float> persistedScales = new HashMap<>();
-
-    private boolean scrollable = true;
-
+    protected static Map<Class<? extends SkillTab>, Vector2f> persistedTranslations;
+    protected static Map<Class<? extends SkillTab>, Float> persistedScales;
+    private boolean scrollable;
     protected Vector2f viewportTranslation;
     protected float viewportScale;
     protected boolean dragging;
     protected Vector2f grabbedPos;
-
-    protected SkillTab(SkillTreeScreen parentScreen, ITextComponent title) {
+    
+    protected SkillTab(final SkillTreeScreen parentScreen, final ITextComponent title) {
         super(title);
+        this.scrollable = true;
         this.parentScreen = parentScreen;
-        this.viewportTranslation = persistedTranslations.computeIfAbsent(getClass(), clazz -> new Vector2f(0.0F, 0.0F));
-        this.viewportScale = ((Float) persistedScales.computeIfAbsent(getClass(), clazz -> Float.valueOf(1.0F))).floatValue();
+        this.viewportTranslation = SkillTab.persistedTranslations.computeIfAbsent(this.getClass(), clazz -> new Vector2f(0.0f, 0.0f));
+        this.viewportScale = SkillTab.persistedScales.computeIfAbsent(this.getClass(), clazz -> 1.0f);
         this.dragging = false;
-        this.grabbedPos = new Vector2f(0.0F, 0.0F);
+        this.grabbedPos = new Vector2f(0.0f, 0.0f);
     }
-
-    protected void setScrollable(boolean scrollable) {
+    
+    protected void setScrollable(final boolean scrollable) {
         this.scrollable = scrollable;
     }
-
-
-    public boolean mouseClicked(double mouseX, double mouseY, int button) {
+    
+    public abstract void refresh();
+    
+    public abstract String getTabName();
+    
+    public boolean mouseClicked(final double mouseX, final double mouseY, final int button) {
         if (this.scrollable) {
             this.dragging = true;
-            this.grabbedPos = new Vector2f((float) mouseX, (float) mouseY);
+            this.grabbedPos = new Vector2f((float)mouseX, (float)mouseY);
         }
         return super.mouseClicked(mouseX, mouseY, button);
     }
-
-
-    public boolean mouseReleased(double mouseX, double mouseY, int button) {
+    
+    public boolean mouseReleased(final double mouseX, final double mouseY, final int button) {
         if (this.scrollable) {
             this.dragging = false;
         }
         return super.mouseReleased(mouseX, mouseY, button);
     }
-
-
-    public void mouseMoved(double mouseX, double mouseY) {
+    
+    public void mouseMoved(final double mouseX, final double mouseY) {
         if (this.scrollable && this.dragging) {
-            float dx = (float) (mouseX - this.grabbedPos.x) / this.viewportScale;
-            float dy = (float) (mouseY - this.grabbedPos.y) / this.viewportScale;
+            final float dx = (float)(mouseX - this.grabbedPos.x) / this.viewportScale;
+            final float dy = (float)(mouseY - this.grabbedPos.y) / this.viewportScale;
             this.viewportTranslation = new Vector2f(this.viewportTranslation.x + dx, this.viewportTranslation.y + dy);
-
-
-            this.grabbedPos = new Vector2f((float) mouseX, (float) mouseY);
+            this.grabbedPos = new Vector2f((float)mouseX, (float)mouseY);
         }
     }
-
-
-    public boolean mouseScrolled(double mouseX, double mouseY, double delta) {
-        boolean mouseScrolled = super.mouseScrolled(mouseX, mouseY, delta);
+    
+    public boolean mouseScrolled(final double mouseX, final double mouseY, final double delta) {
+        final boolean mouseScrolled = super.mouseScrolled(mouseX, mouseY, delta);
         if (!this.scrollable) {
             return mouseScrolled;
         }
-        Point2D.Float midpoint = MiscUtils.getMidpoint(this.parentScreen.getContainerBounds());
-
-        double zoomingX = (mouseX - midpoint.x) / this.viewportScale + this.viewportTranslation.x;
-        double zoomingY = (mouseY - midpoint.y) / this.viewportScale + this.viewportTranslation.y;
-
-        int wheel = (delta < 0.0D) ? -1 : 1;
-
-        double zoomTargetX = (zoomingX - this.viewportTranslation.x) / this.viewportScale;
-        double zoomTargetY = (zoomingY - this.viewportTranslation.y) / this.viewportScale;
-
-        this.viewportScale = (float) (this.viewportScale + 0.25D * wheel * this.viewportScale);
-        this.viewportScale = (float) MathHelper.clamp(this.viewportScale, 0.5D, 5.0D);
-
-        this.viewportTranslation = new Vector2f((float) (-zoomTargetX * this.viewportScale + zoomingX), (float) (-zoomTargetY * this.viewportScale + zoomingY));
-
-
+        final Point2D.Float midpoint = MiscUtils.getMidpoint(this.parentScreen.getContainerBounds());
+        final double zoomingX = (mouseX - midpoint.x) / this.viewportScale + this.viewportTranslation.x;
+        final double zoomingY = (mouseY - midpoint.y) / this.viewportScale + this.viewportTranslation.y;
+        final int wheel = (delta < 0.0) ? -1 : 1;
+        final double zoomTargetX = (zoomingX - this.viewportTranslation.x) / this.viewportScale;
+        final double zoomTargetY = (zoomingY - this.viewportTranslation.y) / this.viewportScale;
+        this.viewportScale += (float)(0.25 * wheel * this.viewportScale);
+        this.viewportScale = (float)MathHelper.clamp((double)this.viewportScale, 0.5, 5.0);
+        this.viewportTranslation = new Vector2f((float)(-zoomTargetX * this.viewportScale + zoomingX), (float)(-zoomTargetY * this.viewportScale + zoomingY));
         return mouseScrolled;
     }
-
-
+    
     public void removed() {
-        persistedTranslations.put(getClass(), this.viewportTranslation);
-        persistedScales.put(getClass(), Float.valueOf(this.viewportScale));
+        SkillTab.persistedTranslations.put(this.getClass(), this.viewportTranslation);
+        SkillTab.persistedScales.put(this.getClass(), this.viewportScale);
     }
-
-    public List<Runnable> renderTab(Rectangle containerBounds, MatrixStack renderStack, int mouseX, int mouseY, float pTicks) {
-        List<Runnable> postRender = new ArrayList<>();
-        UIHelper.renderOverflowHidden(renderStack, ms -> renderTabBackground(ms, containerBounds), ms -> renderTabForeground(ms, mouseX, mouseY, pTicks, postRender));
-
-
+    
+    public List<Runnable> renderTab(final Rectangle containerBounds, final MatrixStack renderStack, final int mouseX, final int mouseY, final float pTicks) {
+        final List<Runnable> postRender = new ArrayList<Runnable>();
+        UIHelper.renderOverflowHidden(renderStack, ms -> this.renderTabBackground(ms, containerBounds), ms -> this.renderTabForeground(ms, mouseX, mouseY, pTicks, postRender));
         return postRender;
     }
-
-    public void renderTabForeground(MatrixStack renderStack, int mouseX, int mouseY, float pTicks, List<Runnable> postContainerRender) {
-        render(renderStack, mouseX, mouseY, pTicks);
+    
+    public void renderTabForeground(final MatrixStack renderStack, final int mouseX, final int mouseY, final float pTicks, final List<Runnable> postContainerRender) {
+        this.render(renderStack, mouseX, mouseY, pTicks);
     }
-
-    public void renderTabBackground(MatrixStack matrixStack, Rectangle containerBounds) {
+    
+    public void renderTabBackground(final MatrixStack matrixStack, final Rectangle containerBounds) {
         Minecraft.getInstance().getTextureManager().bind(SkillTreeScreen.BACKGROUNDS_RESOURCE);
-
         ScreenDrawHelper.draw(7, DefaultVertexFormats.POSITION_COLOR_TEX, buf -> {
-            float textureSize = 16.0F * this.viewportScale;
-            float currentX = containerBounds.x;
-            float currentY = containerBounds.y;
-            float uncoveredWidth = containerBounds.width;
-            float uncoveredHeight = containerBounds.height;
-            while (uncoveredWidth > 0.0F) {
-                while (uncoveredHeight > 0.0F) {
-                    float pWidth = Math.min(textureSize, uncoveredWidth) / textureSize;
-                    float pHeight = Math.min(textureSize, uncoveredHeight) / textureSize;
-                    ScreenDrawHelper.rect((IVertexBuilder) buf, matrixStack, currentX, currentY, 0.0F, pWidth * textureSize, pHeight * textureSize).tex(0.31254F, 0.0F, 0.999F * pWidth / 16.0F, 0.999F * pHeight / 16.0F).draw();
+            final float textureSize = 16.0f * this.viewportScale;
+            float currentX = (float)containerBounds.x;
+            float currentY = (float)containerBounds.y;
+            float uncoveredWidth = (float)containerBounds.width;
+            float uncoveredHeight = (float)containerBounds.height;
+            while (uncoveredWidth > 0.0f) {
+                while (uncoveredHeight > 0.0f) {
+                    final float pWidth = Math.min(textureSize, uncoveredWidth) / textureSize;
+                    final float pHeight = Math.min(textureSize, uncoveredHeight) / textureSize;
+                    ScreenDrawHelper.rect((IVertexBuilder)buf, matrixStack, currentX, currentY, 0.0f, pWidth * textureSize, pHeight * textureSize).tex(0.31254f, 0.0f, 0.999f * pWidth / 16.0f, 0.999f * pHeight / 16.0f).draw();
                     uncoveredHeight -= textureSize;
                     currentY += textureSize;
                 }
                 uncoveredWidth -= textureSize;
                 currentX += textureSize;
-                uncoveredHeight = containerBounds.height;
-                currentY = containerBounds.y;
+                uncoveredHeight = (float)containerBounds.height;
+                currentY = (float)containerBounds.y;
             }
         });
     }
-
-    public abstract void refresh();
-
-    public abstract String getTabName();
+    
+    static {
+        SkillTab.persistedTranslations = new HashMap<Class<? extends SkillTab>, Vector2f>();
+        SkillTab.persistedScales = new HashMap<Class<? extends SkillTab>, Float>();
+    }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\client\gui\tab\SkillTab.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

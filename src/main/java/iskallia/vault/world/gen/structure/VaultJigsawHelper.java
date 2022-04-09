@@ -1,3 +1,7 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.world.gen.structure;
 
 import iskallia.vault.Vault;
@@ -27,135 +31,110 @@ import net.minecraftforge.fml.event.server.FMLServerStartedEvent;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 import java.util.function.Predicate;
+import java.util.function.Supplier;
 
 public class VaultJigsawHelper {
+    private static final Random rand;
     public static final int ROOM_WIDTH_HEIGHT = 47;
     public static final int TUNNEL_LENGTH = 48;
-    private static final Random rand = new Random();
     private static final Predicate<ResourceLocation> TUNNEL_FILTER;
     private static final Predicate<ResourceLocation> ROOM_FILTER;
 
-    static {
-        TUNNEL_FILTER = (key -> {
-            String path = key.getPath();
-            return (!path.contains("treasure_rooms") && !path.contains("rooms"));
-        });
-        ROOM_FILTER = (key -> {
-            String path = key.getPath();
-            return (!path.contains("treasure_rooms") && !path.contains("tunnels"));
-        });
-    }
-
-    public static List<VaultPiece> expandVault(VaultRaid vault, ServerWorld sWorld, VaultRoom fromRoom, Direction targetDir) {
+    public static List<VaultPiece> expandVault(final VaultRaid vault, final ServerWorld sWorld, final VaultRoom fromRoom, final Direction targetDir) {
         return expandVault(vault, sWorld, fromRoom, targetDir, null);
     }
 
-    public static List<VaultPiece> expandVault(VaultRaid vault, ServerWorld sWorld, VaultRoom fromRoom, Direction targetDir, @Nullable JigsawPiece roomToGenerate) {
+    public static List<VaultPiece> expandVault(final VaultRaid vault, final ServerWorld sWorld, final VaultRoom fromRoom, final Direction targetDir, @Nullable final JigsawPiece roomToGenerate) {
         if (targetDir.getAxis() == Direction.Axis.Y) {
             return Collections.emptyList();
         }
+        final BlockPos side = fromRoom.getTunnelConnectorPos(targetDir);
+        final BlockPos.Mutable mutableGenPos = side.mutable();
+        final VaultGenerator generator = vault.getGenerator();
+        final int vaultLevel = vault.getProperties().getBase(VaultRaid.LEVEL).orElse(0);
+        final List<VaultPiece> pieces = new ArrayList<VaultPiece>();
+        try {
+            final JigsawPiece roomPiece = (roomToGenerate == null) ? getRandomVaultRoom(vaultLevel) : roomToGenerate;
+            pieces.addAll(placeRandomTunnel(sWorld, mutableGenPos, targetDir));
+            pieces.addAll(placeRandomRoom(sWorld, mutableGenPos, targetDir, roomPiece));
+            generator.addPieces(pieces);
+        } catch (Throwable e) {
 
-        BlockPos side = fromRoom.getTunnelConnectorPos(targetDir);
-        BlockPos.Mutable mutableGenPos = side.mutable();
-
-        VaultGenerator generator = vault.getGenerator();
-        int vaultLevel = ((Integer) vault.getProperties().getBase(VaultRaid.LEVEL).orElse(Integer.valueOf(0))).intValue();
-        JigsawPiece roomPiece = (roomToGenerate == null) ? getRandomVaultRoom(vaultLevel) : roomToGenerate;
-
-        List<VaultPiece> pieces = new ArrayList<>();
-        pieces.addAll(placeRandomTunnel(sWorld, mutableGenPos, targetDir));
-        pieces.addAll(placeRandomRoom(sWorld, mutableGenPos, targetDir, roomPiece));
-        generator.addPieces(pieces);
+        }
         return pieces;
     }
 
-    public static boolean canExpand(VaultRaid vault, VaultRoom fromRoom, Direction targetDir) {
-        BlockPos roomCenter = new BlockPos(fromRoom.getCenter());
-
+    public static boolean canExpand(final VaultRaid vault, final VaultRoom fromRoom, final Direction targetDir) {
+        final BlockPos roomCenter = new BlockPos(fromRoom.getCenter());
         if (!vault.getGenerator().getPiecesAt(roomCenter.relative(targetDir, 28)).isEmpty()) {
             return false;
         }
-        BlockPos nextRoom = roomCenter.relative(targetDir, 95);
-        BlockPos nextRoomEdge = nextRoom.relative(targetDir, 24);
-        if (((Boolean) vault.getProperties().getBase(VaultRaid.BOUNDING_BOX).map(box -> Boolean.valueOf(!box.isInside((Vector3i) nextRoomEdge))).orElse(Boolean.valueOf(true))).booleanValue()) {
-            return false;
-        }
-        return vault.getGenerator().getPiecesAt(nextRoom).isEmpty();
+        final BlockPos nextRoom = roomCenter.relative(targetDir, 95);
+        final BlockPos nextRoomEdge = nextRoom.relative(targetDir, 24);
+        return !vault.getProperties().getBase(VaultRaid.BOUNDING_BOX).map(box -> !box.isInside((Vector3i) nextRoomEdge)).orElse(true) && vault.getGenerator().getPiecesAt(nextRoom).isEmpty();
     }
 
-
-    private static List<VaultPiece> placeRandomRoom(ServerWorld sWorld, BlockPos.Mutable generationPos, Direction toCenter, JigsawPiece roomToGenerate) {
-        int jigsawGroundOffset = 22;
-
-        BlockPos at = generationPos.immutable();
-
-        Rotation roomRotation = Rotation.getRandom(rand);
-        TemplateManager tplMgr = sWorld.getStructureManager();
-        MutableBoundingBox jigsawBox = roomToGenerate.getBoundingBox(tplMgr, at, roomRotation);
-
-        Vector3i size = jigsawBox.getLength();
-        BlockPos directionOffset = new BlockPos(toCenter.getStepX() * size.getX() / 2, -jigsawGroundOffset + size.getY() / 2, toCenter.getStepZ() * size.getZ() / 2);
+    private static List<VaultPiece> placeRandomRoom(final ServerWorld sWorld, final BlockPos.Mutable generationPos, final Direction toCenter, final JigsawPiece roomToGenerate) {
+        final int jigsawGroundOffset = 22;
+        final BlockPos at = generationPos.immutable();
+        final Rotation roomRotation = Rotation.getRandom(VaultJigsawHelper.rand);
+        final TemplateManager tplMgr = sWorld.getStructureManager();
+        final MutableBoundingBox jigsawBox = roomToGenerate.getBoundingBox(tplMgr, at, roomRotation);
+        final Vector3i size = jigsawBox.getLength();
+        final BlockPos directionOffset = new BlockPos(toCenter.getStepX() * size.getX() / 2, -jigsawGroundOffset + size.getY() / 2, toCenter.getStepZ() * size.getZ() / 2);
         BlockPos genPos = at.offset((Vector3i) directionOffset);
-
-        Vector3i center = jigsawBox.getCenter();
+        final Vector3i center = jigsawBox.getCenter();
         genPos = genPos.offset((Vector3i) at.subtract(center));
-
-
-        List<VaultPiece> vaultPieces = JigsawPiecePlacer.newPlacer(roomToGenerate, sWorld, genPos).withRotation(roomRotation).andJigsawFilter(ROOM_FILTER).placeJigsaw();
-
+        final List<VaultPiece> vaultPieces = JigsawPiecePlacer.newPlacer(roomToGenerate, sWorld, genPos).withRotation(roomRotation).andJigsawFilter(VaultJigsawHelper.ROOM_FILTER).placeJigsaw();
         generationPos.move(toCenter, 23);
         return vaultPieces;
     }
 
-
-    private static List<VaultPiece> placeRandomTunnel(ServerWorld sWorld, BlockPos.Mutable generationPos, Direction targetDir) {
-        int jigsawGroundOffset = 2;
-
-        JigsawPiece tunnel = getRandomVaultTunnel();
-        BlockPos at = generationPos.immutable();
-
-        Rotation tunnelRotation = getTunnelRotation(targetDir);
-        Direction shift = targetDir.getClockWise();
-        TemplateManager tplMgr = sWorld.getStructureManager();
-        MutableBoundingBox jigsawBox = tunnel.getBoundingBox(tplMgr, at, tunnelRotation);
-        Vector3i size = jigsawBox.getLength();
+    private static List<VaultPiece> placeRandomTunnel(final ServerWorld sWorld, final BlockPos.Mutable generationPos, final Direction targetDir) {
+        final int jigsawGroundOffset = 2;
+        final JigsawPiece tunnel = getRandomVaultTunnel();
+        final BlockPos at = generationPos.immutable();
+        final Rotation tunnelRotation = getTunnelRotation(targetDir);
+        final Direction shift = targetDir.getClockWise();
+        final TemplateManager tplMgr = sWorld.getStructureManager();
+        final MutableBoundingBox jigsawBox = tunnel.getBoundingBox(tplMgr, at, tunnelRotation);
+        final Vector3i size = jigsawBox.getLength();
         BlockPos directionOffset = new BlockPos(targetDir.getStepX() * size.getX() / 2, 0, targetDir.getStepZ() * size.getZ() / 2);
         directionOffset = directionOffset.offset(-(shift.getStepX() * size.getX()) / 2, -size.getY() / 2 + jigsawGroundOffset, -(shift.getStepZ() * size.getZ()) / 2);
-        BlockPos genPos = at.offset((Vector3i) directionOffset);
-
-
-        List<VaultPiece> vaultPieces = JigsawPiecePlacer.newPlacer(tunnel, sWorld, genPos).withRotation(tunnelRotation).andJigsawFilter(TUNNEL_FILTER).placeJigsaw();
-
-        generationPos.move(targetDir.getStepX() * size.getX() / 2, 0, targetDir.getStepZ() * size.getZ() / 2)
-                .move(targetDir);
+        final BlockPos genPos = at.offset((Vector3i) directionOffset);
+        final List<VaultPiece> vaultPieces = JigsawPiecePlacer.newPlacer(tunnel, sWorld, genPos).withRotation(tunnelRotation).andJigsawFilter(VaultJigsawHelper.TUNNEL_FILTER).placeJigsaw();
+        generationPos.move(targetDir.getStepX() * size.getX() / 2, 0, targetDir.getStepZ() * size.getZ() / 2).move(targetDir);
         return vaultPieces;
     }
 
-    private static Rotation getTunnelRotation(Direction direction) {
-        switch (direction) {
-            case SOUTH:
+    private static Rotation getTunnelRotation(final Direction direction) {
+        switch(direction)  {
+            case SOUTH: {
                 return Rotation.CLOCKWISE_180;
-            case WEST:
+            }
+            case WEST: {
                 return Rotation.COUNTERCLOCKWISE_90;
-            case EAST:
+            }
+            case EAST: {
                 return Rotation.CLOCKWISE_90;
+            }
+            default: {
+                return Rotation.NONE;
+            }
         }
-
-        return Rotation.NONE;
     }
 
-
-    public static void preloadVaultRooms(FMLServerStartedEvent event) {
-        Random rand = new Random();
-        TemplateManager mgr = event.getServer().getStructureManager();
-
-        getVaultRoomList(2147483647).forEach((piece, weight) -> {
+    public static void preloadVaultRooms(final FMLServerStartedEvent event) {
+        final Random rand = new Random();
+        final TemplateManager mgr = event.getServer().getStructureManager();
+        getVaultRoomList(Integer.MAX_VALUE).forEach((piece, weight) -> {
             if (piece instanceof PalettedListPoolElement) {
-                for (JigsawPiece listPiece : ((PalettedListPoolElement) piece).getElements()) {
+
+                final Iterator<JigsawPiece> iterator = ((PalettedListPoolElement) piece).getElements().iterator();
+                while (iterator.hasNext()) {
+                    final JigsawPiece listPiece = iterator.next();
                     listPiece.getShuffledJigsawBlocks(mgr, BlockPos.ZERO, Rotation.getRandom(rand), rand);
                 }
             } else {
@@ -170,10 +149,9 @@ public class VaultJigsawHelper {
     }
 
     @Nonnull
-    public static JigsawPiece getRandomVaultRoom(int vaultLevel) {
-        WeightedList<JigsawPiece> rooms = getRoomList(Vault.id("vault/rooms"));
-        return (JigsawPiece) rooms.copyFiltered(piece -> VaultRoomLevelRestrictions.canGenerate(piece, vaultLevel))
-                .getOptionalRandom(rand).orElseThrow(RuntimeException::new);
+    public static JigsawPiece getRandomVaultRoom(final int vaultLevel) throws Throwable {
+        final WeightedList<JigsawPiece> rooms = getRoomList(Vault.id("vault/rooms"));
+        return rooms.copyFiltered(piece -> VaultRoomLevelRestrictions.canGenerate(piece, vaultLevel)).getOptionalRandom(VaultJigsawHelper.rand).orElseThrow((Supplier<? extends Throwable>) RuntimeException::new);
     }
 
     @Nonnull
@@ -187,36 +165,44 @@ public class VaultJigsawHelper {
     }
 
     @Nonnull
-    public static WeightedList<JigsawPiece> getVaultRoomList(int vaultLevel) {
-        WeightedList<JigsawPiece> rooms = getRoomList(Vault.id("vault/rooms"));
+    public static WeightedList<JigsawPiece> getVaultRoomList(final int vaultLevel) {
+        final WeightedList<JigsawPiece> rooms = getRoomList(Vault.id("vault/rooms"));
         return rooms.copyFiltered(piece -> VaultRoomLevelRestrictions.canGenerate(piece, vaultLevel));
     }
 
     @Nonnull
-    private static WeightedList<JigsawPiece> getRoomList(ResourceLocation key) {
-        JigsawPattern roomPool = getPool(key);
-        WeightedList<JigsawPiece> pool = new WeightedList();
-        roomPool.rawTemplates.forEach(weightedPiece -> pool.add(weightedPiece.getFirst(), ((Integer) weightedPiece.getSecond()).intValue()));
-
-
+    private static WeightedList<JigsawPiece> getRoomList(final ResourceLocation key) {
+        final JigsawPattern roomPool = getPool(key);
+        final WeightedList<JigsawPiece> pool = new WeightedList<JigsawPiece>();
+        roomPool.rawTemplates.forEach(weightedPiece -> pool.add(weightedPiece.getFirst(), (int) weightedPiece.getSecond()));
         return pool;
     }
 
     @Nonnull
-    private static JigsawPattern getPool(ResourceLocation key) {
-        MinecraftServer srv = (MinecraftServer) LogicalSidedProvider.INSTANCE.get(LogicalSide.SERVER);
-        MutableRegistry<JigsawPattern> jigsawRegistry = srv.registryAccess().registryOrThrow(Registry.TEMPLATE_POOL_REGISTRY);
-        return (JigsawPattern) jigsawRegistry.getOptional(key).orElseThrow(RuntimeException::new);
+    private static JigsawPattern getPool(final ResourceLocation key) {
+        final MinecraftServer srv = (MinecraftServer) LogicalSidedProvider.INSTANCE.get(LogicalSide.SERVER);
+        final MutableRegistry<JigsawPattern> jigsawRegistry = (MutableRegistry<JigsawPattern>) srv.registryAccess().registryOrThrow(Registry.TEMPLATE_POOL_REGISTRY);
+        return jigsawRegistry.getOptional(key).orElseThrow(RuntimeException::new);
     }
 
     @Nonnull
-    private static JigsawPiece getRandomPiece(ResourceLocation key) {
-        return (JigsawPiece) getRoomList(key).getOptionalRandom(rand).orElseThrow(RuntimeException::new);
+    private static JigsawPiece getRandomPiece(final ResourceLocation key) {
+        try {
+            return getRoomList(key).getOptionalRandom(VaultJigsawHelper.rand).orElseThrow((Supplier<? extends Throwable>) RuntimeException::new);
+        } catch (Throwable e) {
+            return null;
+        }
+    }
+
+    static {
+        rand = new Random();
+        TUNNEL_FILTER = (key -> {
+            final String path = key.getPath();
+            return !path.contains("treasure_rooms") && !path.contains("rooms");
+        });
+        ROOM_FILTER = (key -> {
+            final String path2 = key.getPath();
+            return !path2.contains("treasure_rooms") && !path2.contains("tunnels");
+        });
     }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\world\gen\structure\VaultJigsawHelper.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

@@ -1,3 +1,7 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.util;
 
 import com.mojang.serialization.Codec;
@@ -10,40 +14,29 @@ import net.minecraft.nbt.NBTDynamicOps;
 import java.util.Optional;
 import java.util.function.Consumer;
 
-
-public class CodecUtils {
-    public static <T> T readNBT(Codec<T> codec, CompoundNBT tag, String targetKey, T defaultValue) {
+public class CodecUtils
+{
+    public static <T> T readNBT(final Codec<T> codec, final CompoundNBT tag, final String targetKey, final T defaultValue) {
         return readNBT(codec, tag.get(targetKey)).orElse(defaultValue);
     }
-
-    public static <T> T readNBT(Codec<T> codec, INBT nbt, T defaultValue) {
+    
+    public static <T> T readNBT(final Codec<T> codec, final INBT nbt, final T defaultValue) {
         return readNBT(codec, nbt).orElse(defaultValue);
     }
-
-    public static <T> Optional<T> readNBT(Codec<T> codec, INBT nbt) {
-        return codec.parse((DynamicOps) NBTDynamicOps.INSTANCE, nbt)
-                .resultOrPartial(Vault.LOGGER::error);
+    
+    public static <T> Optional<T> readNBT(final Codec<T> codec, final INBT nbt) {
+        return codec.parse((DynamicOps)NBTDynamicOps.INSTANCE, nbt).resultOrPartial(Vault.LOGGER::error);
     }
-
-    public static <T> void writeNBT(Codec<T> codec, T value, CompoundNBT targetTag, String targetKey) {
+    
+    public static <T> void writeNBT(final Codec<T> codec, final T value, final CompoundNBT targetTag, final String targetKey) {
         writeNBT(codec, value, nbt -> targetTag.put(targetKey, nbt));
     }
-
-    public static <T> void writeNBT(Codec<T> codec, T value, Consumer<INBT> successConsumer) {
-        codec.encodeStart((DynamicOps) NBTDynamicOps.INSTANCE, value)
-                .resultOrPartial(Vault.LOGGER::error)
-                .ifPresent(successConsumer);
+    
+    public static <T> void writeNBT(final Codec<T> codec, final T value, final Consumer<INBT> successConsumer) {
+        codec.encodeStart((DynamicOps)NBTDynamicOps.INSTANCE, value).resultOrPartial(Vault.LOGGER::error).ifPresent(successConsumer);
     }
-
-
-    public static <T> INBT writeNBT(Codec<T> codec, T value) {
-        return (INBT) codec.encodeStart((DynamicOps) NBTDynamicOps.INSTANCE, value)
-                .getOrThrow(false, Vault.LOGGER::error);
+    
+    public static <T> INBT writeNBT(final Codec<T> codec, final T value) {
+        return (INBT)codec.encodeStart((DynamicOps)NBTDynamicOps.INSTANCE, value).getOrThrow(false, Vault.LOGGER::error);
     }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vaul\\util\CodecUtils.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

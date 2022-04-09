@@ -1,3 +1,7 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.client.gui.tab;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
@@ -16,7 +20,10 @@ import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.StringUtils;
 import net.minecraft.util.Tuple;
-import net.minecraft.util.text.*;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.ITextProperties;
+import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.TranslationTextComponent;
 
 import java.awt.*;
 import java.text.DecimalFormat;
@@ -24,150 +31,120 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class PlayerStatisticsTab
-        extends SkillTab {
-    public PlayerStatisticsTab(SkillTreeScreen parentScreen) {
-        super(parentScreen, (ITextComponent) new StringTextComponent("Statistics Tab"));
-        setScrollable(false);
+public class PlayerStatisticsTab extends SkillTab
+{
+    public PlayerStatisticsTab(final SkillTreeScreen parentScreen) {
+        super(parentScreen, (ITextComponent)new StringTextComponent("Statistics Tab"));
+        this.setScrollable(false);
     }
-
-
+    
+    @Override
     public String getTabName() {
         return "Statistics";
     }
-
-
+    
+    @Override
     public void refresh() {
     }
-
-
-    public List<Runnable> renderTab(Rectangle containerBounds, MatrixStack renderStack, int mouseX, int mouseY, float pTicks) {
-        renderTabBackground(renderStack, containerBounds);
-        renderBookBackground(containerBounds, renderStack);
-
-        int pxOffsetX = 38;
-        int pxOffsetY = 16;
-
-        float pxWidth = containerBounds.width / 192.0F;
-        float pxHeight = containerBounds.height / 192.0F;
-        int offsetX = containerBounds.x + Math.round(pxWidth * pxOffsetX);
-        int offsetY = containerBounds.y + Math.round(pxHeight * pxOffsetY);
-        Rectangle bookCt = new Rectangle(offsetX, offsetY, Math.round(108.0F * pxWidth), Math.round(104.0F * pxWidth));
-
+    
+    @Override
+    public List<Runnable> renderTab(final Rectangle containerBounds, final MatrixStack renderStack, final int mouseX, final int mouseY, final float pTicks) {
+        this.renderTabBackground(renderStack, containerBounds);
+        this.renderBookBackground(containerBounds, renderStack);
+        final int pxOffsetX = 38;
+        final int pxOffsetY = 16;
+        final float pxWidth = containerBounds.width / 192.0f;
+        final float pxHeight = containerBounds.height / 192.0f;
+        final int offsetX = containerBounds.x + Math.round(pxWidth * pxOffsetX);
+        final int offsetY = containerBounds.y + Math.round(pxHeight * pxOffsetY);
+        final Rectangle bookCt = new Rectangle(offsetX, offsetY, Math.round(108.0f * pxWidth), Math.round(104.0f * pxWidth));
         renderStack.pushPose();
-        renderStack.translate((offsetX + 5), (offsetY + 5), 0.0D);
-        renderPlayerAttributes(bookCt, renderStack, mouseX, mouseY, pTicks);
+        renderStack.translate((double)(offsetX + 5), (double)(offsetY + 5), 0.0);
+        this.renderPlayerAttributes(bookCt, renderStack, mouseX, mouseY, pTicks);
         renderStack.popPose();
-
         return Collections.emptyList();
     }
-
-
-    private void renderPlayerAttributes(Rectangle containerBounds, MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks) {
-        FontRenderer fr = (Minecraft.getInstance()).font;
-        CompoundNBT vaultStats = ClientStatisticsData.getSerializedVaultStats();
-
-        List<Tuple<ITextComponent, Tuple<ITextComponent, Integer>>> statDisplay = new ArrayList<>();
-        int numberOffset = buildVaultStatisticsDisplay(vaultStats, statDisplay);
-
+    
+    private void renderPlayerAttributes(final Rectangle containerBounds, final MatrixStack matrixStack, final int mouseX, final int mouseY, final float partialTicks) {
+        final FontRenderer fr = Minecraft.getInstance().font;
+        final CompoundNBT vaultStats = ClientStatisticsData.getSerializedVaultStats();
+        final List<Tuple<ITextComponent, Tuple<ITextComponent, Integer>>> statDisplay = new ArrayList<Tuple<ITextComponent, Tuple<ITextComponent, Integer>>>();
+        final int numberOffset = this.buildVaultStatisticsDisplay(vaultStats, statDisplay);
         int maxLength = 0;
-
-        StringTextComponent text = new StringTextComponent("");
-        for (Tuple<ITextComponent, Tuple<ITextComponent, Integer>> statTpl : statDisplay) {
-            text.append((ITextComponent) statTpl.getA()).append("\n");
-
-            int length = fr.width((ITextProperties) statTpl.getA());
+        final StringTextComponent text = new StringTextComponent("");
+        for (final Tuple<ITextComponent, Tuple<ITextComponent, Integer>> statTpl : statDisplay) {
+            text.append((ITextComponent)statTpl.getA()).append("\n");
+            final int length = fr.width((ITextProperties)statTpl.getA());
             if (length > maxLength) {
                 maxLength = length;
             }
         }
-
         maxLength += 5;
         maxLength += numberOffset;
-
         matrixStack.pushPose();
-        int yOffset = renderFastestVaultDisplay(matrixStack, vaultStats, maxLength);
-        matrixStack.translate(0.0D, yOffset, 0.0D);
-        UIHelper.renderWrappedText(matrixStack, (ITextComponent) text, containerBounds.width, 0);
-
-        matrixStack.translate(maxLength, 0.0D, 0.0D);
-        for (Tuple<ITextComponent, Tuple<ITextComponent, Integer>> statTpl : statDisplay) {
-            Tuple<ITextComponent, Integer> valueDisplayTpl = (Tuple<ITextComponent, Integer>) statTpl.getB();
-
+        final int yOffset = this.renderFastestVaultDisplay(matrixStack, vaultStats, maxLength);
+        matrixStack.translate(0.0, (double)yOffset, 0.0);
+        UIHelper.renderWrappedText(matrixStack, (ITextComponent)text, containerBounds.width, 0);
+        matrixStack.translate((double)maxLength, 0.0, 0.0);
+        for (final Tuple<ITextComponent, Tuple<ITextComponent, Integer>> statTpl2 : statDisplay) {
+            final Tuple<ITextComponent, Integer> valueDisplayTpl = (Tuple<ITextComponent, Integer>)statTpl2.getB();
             matrixStack.pushPose();
-            matrixStack.translate(-((Integer) valueDisplayTpl.getB()).intValue(), 0.0D, 0.0D);
-            fr.draw(matrixStack, (ITextComponent) valueDisplayTpl.getA(), 0.0F, 0.0F, -15130590);
-
+            matrixStack.translate((double)(-(int)valueDisplayTpl.getB()), 0.0, 0.0);
+            fr.draw(matrixStack, (ITextComponent)valueDisplayTpl.getA(), 0.0f, 0.0f, -15130590);
             matrixStack.popPose();
-
-            matrixStack.translate(0.0D, 10.0D, 0.0D);
+            matrixStack.translate(0.0, 10.0, 0.0);
         }
         matrixStack.popPose();
-
         RenderSystem.enableDepthTest();
     }
-
-    private int renderFastestVaultDisplay(MatrixStack matrixStack, CompoundNBT vaultStats, int rightShift) {
-        PlayerVaultStatsData.PlayerRecordEntry entry = PlayerVaultStatsData.PlayerRecordEntry.deserialize(vaultStats.getCompound("fastestVault"));
-        String displayName = StringUtils.isNullOrEmpty(entry.getPlayerName()) ? "Unclaimed" : entry.getPlayerName();
-        FontRenderer fr = (Minecraft.getInstance()).font;
-
-        IFormattableTextComponent iFormattableTextComponent = (new TranslationTextComponent("stat.the_vault.fastestVault")).append(":");
-        fr.draw(matrixStack, iFormattableTextComponent.getVisualOrderText(), 0.0F, 0.0F, -15130590);
-        fr.draw(matrixStack, (new StringTextComponent(displayName)).getVisualOrderText(), 0.0F, 10.0F, -15130590);
-
-        StringTextComponent stringTextComponent = new StringTextComponent(UIHelper.formatTimeString(entry.getTickCount()));
-        int xOffset = rightShift - fr.width((ITextProperties) stringTextComponent);
-        fr.draw(matrixStack, stringTextComponent.getVisualOrderText(), xOffset, 10.0F, -15130590);
-
+    
+    private int renderFastestVaultDisplay(final MatrixStack matrixStack, final CompoundNBT vaultStats, final int rightShift) {
+        final PlayerVaultStatsData.PlayerRecordEntry entry = PlayerVaultStatsData.PlayerRecordEntry.deserialize(vaultStats.getCompound("fastestVault"));
+        final String displayName = StringUtils.isNullOrEmpty(entry.getPlayerName()) ? "Unclaimed" : entry.getPlayerName();
+        final FontRenderer fr = Minecraft.getInstance().font;
+        final ITextComponent display = (ITextComponent)new TranslationTextComponent("stat.the_vault.fastestVault").append(":");
+        fr.draw(matrixStack, display.getVisualOrderText(), 0.0f, 0.0f, -15130590);
+        fr.draw(matrixStack, new StringTextComponent(displayName).getVisualOrderText(), 0.0f, 10.0f, -15130590);
+        final ITextComponent timeString = (ITextComponent)new StringTextComponent(UIHelper.formatTimeString(entry.getTickCount()));
+        final int xOffset = rightShift - fr.width((ITextProperties)timeString);
+        fr.draw(matrixStack, timeString.getVisualOrderText(), (float)xOffset, 10.0f, -15130590);
         return 25;
     }
-
-    private int buildVaultStatisticsDisplay(CompoundNBT vaultStats, List<Tuple<ITextComponent, Tuple<ITextComponent, Integer>>> out) {
-        DecimalFormat decFormat = new DecimalFormat("0.##");
+    
+    private int buildVaultStatisticsDisplay(final CompoundNBT vaultStats, final List<Tuple<ITextComponent, Tuple<ITextComponent, Integer>>> out) {
+        final DecimalFormat decFormat = new DecimalFormat("0.##");
         int numberOffset = 0;
-
-        numberOffset = addVaultStat(out, "powerLevel", String.valueOf(vaultStats.getInt("powerLevel")), numberOffset);
-        numberOffset = addVaultStat(out, "knowledgeLevel", String.valueOf(vaultStats.getInt("knowledgeLevel")), numberOffset);
-        numberOffset = addVaultStat(out, "crystalsCrafted", String.valueOf(vaultStats.getInt("crystalsCrafted")), numberOffset);
-        numberOffset = addVaultStat(out, "vaultArtifacts", String.valueOf(vaultStats.getInt("vaultArtifacts")), numberOffset);
-        numberOffset = addVaultStat(out, "vaultTotal", String.valueOf(vaultStats.getInt("vaultTotal")), numberOffset);
-        numberOffset = addVaultStat(out, "vaultDeaths", String.valueOf(vaultStats.getInt("vaultDeaths")), numberOffset);
-        numberOffset = addVaultStat(out, "vaultBails", String.valueOf(vaultStats.getInt("vaultBails")), numberOffset);
-        numberOffset = addVaultStat(out, "vaultBossKills", String.valueOf(vaultStats.getInt("vaultBossKills")), numberOffset);
+        numberOffset = this.addVaultStat(out, "powerLevel", String.valueOf(vaultStats.getInt("powerLevel")), numberOffset);
+        numberOffset = this.addVaultStat(out, "knowledgeLevel", String.valueOf(vaultStats.getInt("knowledgeLevel")), numberOffset);
+        numberOffset = this.addVaultStat(out, "crystalsCrafted", String.valueOf(vaultStats.getInt("crystalsCrafted")), numberOffset);
+        numberOffset = this.addVaultStat(out, "vaultArtifacts", String.valueOf(vaultStats.getInt("vaultArtifacts")), numberOffset);
+        numberOffset = this.addVaultStat(out, "vaultTotal", String.valueOf(vaultStats.getInt("vaultTotal")), numberOffset);
+        numberOffset = this.addVaultStat(out, "vaultDeaths", String.valueOf(vaultStats.getInt("vaultDeaths")), numberOffset);
+        numberOffset = this.addVaultStat(out, "vaultBails", String.valueOf(vaultStats.getInt("vaultBails")), numberOffset);
+        numberOffset = this.addVaultStat(out, "vaultBossKills", String.valueOf(vaultStats.getInt("vaultBossKills")), numberOffset);
         if (vaultStats.contains("vaultRaids", 3)) {
-            numberOffset = addVaultStat(out, "vaultRaids", String.valueOf(vaultStats.getInt("vaultRaids")), numberOffset);
+            numberOffset = this.addVaultStat(out, "vaultRaids", String.valueOf(vaultStats.getInt("vaultRaids")), numberOffset);
         }
-
-
         return numberOffset;
     }
-
-
-    private int addVaultStat(List<Tuple<ITextComponent, Tuple<ITextComponent, Integer>>> out, String key, String value, int currentMaxOffset) {
-        return addVaultStat(out, key, value, value, currentMaxOffset);
+    
+    private int addVaultStat(final List<Tuple<ITextComponent, Tuple<ITextComponent, Integer>>> out, final String key, final String value, final int currentMaxOffset) {
+        return this.addVaultStat(out, key, value, value, currentMaxOffset);
     }
-
-
-    private int addVaultStat(List<Tuple<ITextComponent, Tuple<ITextComponent, Integer>>> out, String key, String value, String valueLengthStr, int currentMaxOffset) {
-        FontRenderer fr = (Minecraft.getInstance()).font;
-        int valueStrLength = fr.width(valueLengthStr);
+    
+    private int addVaultStat(final List<Tuple<ITextComponent, Tuple<ITextComponent, Integer>>> out, final String key, final String value, final String valueLengthStr, int currentMaxOffset) {
+        final FontRenderer fr = Minecraft.getInstance().font;
+        final int valueStrLength = fr.width(valueLengthStr);
         if (valueStrLength > currentMaxOffset) {
             currentMaxOffset = valueStrLength;
         }
-        Tuple<ITextComponent, Integer> valueDisplayTpl = new Tuple(new StringTextComponent(value), Integer.valueOf(valueStrLength));
-        out.add(new Tuple(new TranslationTextComponent("stat.the_vault." + key), valueDisplayTpl));
+        final Tuple<ITextComponent, Integer> valueDisplayTpl = (Tuple<ITextComponent, Integer>)new Tuple(new StringTextComponent(value), valueStrLength);
+        out.add((Tuple<ITextComponent, Tuple<ITextComponent, Integer>>)new Tuple(new TranslationTextComponent("stat.the_vault." + key), valueDisplayTpl));
         return currentMaxOffset;
     }
-
-    private void renderBookBackground(Rectangle containerBounds, MatrixStack renderStack) {
+    
+    private void renderBookBackground(final Rectangle containerBounds, final MatrixStack renderStack) {
         Minecraft.getInstance().getTextureManager().bind(ReadBookScreen.BOOK_LOCATION);
-        ScreenDrawHelper.draw(7, DefaultVertexFormats.POSITION_COLOR_TEX, (BufferBuilder buf) -> ScreenDrawHelper.rect((IVertexBuilder) buf, renderStack, containerBounds.width, containerBounds.height).at(containerBounds.x, containerBounds.y).texVanilla(0.0F, 0.0F, 192.0F, 192.0F).draw());
+        ScreenDrawHelper.draw(7, DefaultVertexFormats.POSITION_COLOR_TEX, (BufferBuilder buf) -> ScreenDrawHelper.rect((IVertexBuilder)buf, renderStack, (float)containerBounds.width, (float)containerBounds.height).at((float)containerBounds.x, (float)containerBounds.y).texVanilla(0.0f, 0.0f, 192.0f, 192.0f).draw());
     }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\client\gui\tab\PlayerStatisticsTab.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

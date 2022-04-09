@@ -1,3 +1,7 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.block.base;
 
 import net.minecraft.block.AbstractBlock;
@@ -19,47 +23,41 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 
 import javax.annotation.Nonnull;
 
-public abstract class FacedBlock extends Block {
-    public static final DirectionProperty FACING = HorizontalBlock.FACING;
-
-    public FacedBlock(AbstractBlock.Properties properties) {
+public abstract class FacedBlock extends Block
+{
+    public static final DirectionProperty FACING;
+    
+    public FacedBlock(final AbstractBlock.Properties properties) {
         super(properties);
     }
-
+    
     @Nonnull
-    public BlockState getStateForPlacement(BlockItemUseContext context) {
-        return (BlockState) defaultBlockState()
-                .setValue((Property) FACING, (Comparable) context.getHorizontalDirection());
+    public BlockState getStateForPlacement(final BlockItemUseContext context) {
+        return this.defaultBlockState().setValue(FacedBlock.FACING, context.getHorizontalDirection());
     }
-
-
-    public BlockState rotate(BlockState state, Rotation rot) {
-        return (BlockState) state.setValue((Property) FACING, (Comparable) rot.rotate((Direction) state.getValue((Property) FACING)));
+    
+    public BlockState rotate(final BlockState state, final Rotation rot) {
+        return state.setValue(FacedBlock.FACING, rot.rotate(state.getValue(FacedBlock.FACING)));
     }
-
-
-    public BlockState mirror(BlockState state, Mirror mirrorIn) {
-        return state.rotate(mirrorIn.getRotation((Direction) state.getValue((Property) FACING)));
+    
+    public BlockState mirror(final BlockState state, final Mirror mirrorIn) {
+        return state.rotate(mirrorIn.getRotation(state.getValue(FacedBlock.FACING)));
     }
-
-
-    protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) {
-        builder.add(new Property[]{(Property) FACING});
+    
+    protected void createBlockStateDefinition(final StateContainer.Builder<Block, BlockState> builder) {
+        builder.add(new Property[] { FacedBlock.FACING });
     }
-
-
-    public boolean isPathfindable(BlockState state, IBlockReader worldIn, BlockPos pos, PathType type) {
+    
+    public boolean isPathfindable(final BlockState state, final IBlockReader worldIn, final BlockPos pos, final PathType type) {
         return false;
     }
-
+    
     @OnlyIn(Dist.CLIENT)
-    public int getDustColor(BlockState state, IBlockReader reader, BlockPos pos) {
-        return (state.getMapColor(reader, pos)).col;
+    public int getDustColor(final BlockState state, final IBlockReader reader, final BlockPos pos) {
+        return state.getMapColor(reader, pos).col;
+    }
+    
+    static {
+        FACING = HorizontalBlock.FACING;
     }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\block\base\FacedBlock.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

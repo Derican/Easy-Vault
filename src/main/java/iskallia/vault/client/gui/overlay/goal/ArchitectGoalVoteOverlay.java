@@ -1,3 +1,7 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.client.gui.overlay.goal;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
@@ -21,278 +25,233 @@ import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.util.IReorderingProcessor;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.text.*;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.ITextProperties;
+import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-@Mod.EventBusSubscriber(value = {Dist.CLIENT}, bus = Mod.EventBusSubscriber.Bus.FORGE)
-public class ArchitectGoalVoteOverlay extends BossBarOverlay {
-    private static final ResourceLocation ARCHITECT_HUD = new ResourceLocation("the_vault", "textures/gui/architect_event_bar.png");
-
+@Mod.EventBusSubscriber(value = { Dist.CLIENT }, bus = Mod.EventBusSubscriber.Bus.FORGE)
+public class ArchitectGoalVoteOverlay extends BossBarOverlay
+{
+    private static final ResourceLocation ARCHITECT_HUD;
     private final ArchitectGoalData data;
-
-    public ArchitectGoalVoteOverlay(ArchitectGoalData data) {
+    
+    public ArchitectGoalVoteOverlay(final ArchitectGoalData data) {
         this.data = data;
     }
-
+    
     @SubscribeEvent
-    public static void onArchitectBuild(RenderGameOverlayEvent.Post event) {
-        VaultOverlayMessage.OverlayType type = ClientVaultRaidData.getOverlayType();
+    public static void onArchitectBuild(final RenderGameOverlayEvent.Post event) {
+        final VaultOverlayMessage.OverlayType type = ClientVaultRaidData.getOverlayType();
         if (event.getType() != RenderGameOverlayEvent.ElementType.HOTBAR || type != VaultOverlayMessage.OverlayType.VAULT) {
             return;
         }
-
-
-        Minecraft mc = Minecraft.getInstance();
-        VaultGoalData data = VaultGoalData.CURRENT_DATA;
+        final Minecraft mc = Minecraft.getInstance();
+        final VaultGoalData data = VaultGoalData.CURRENT_DATA;
         if (data instanceof ArchitectGoalData) {
-            ArchitectGoalData displayData = (ArchitectGoalData) data;
-            MatrixStack renderStack = event.getMatrixStack();
-            IRenderTypeBuffer.Impl buffer = IRenderTypeBuffer.immediate(Tessellator.getInstance().getBuilder());
-            FontRenderer fr = mc.font;
-            int bottom = mc.getWindow().getGuiScaledHeight();
-            float part = displayData.getCompletedPercent();
-
-            IFormattableTextComponent iFormattableTextComponent2 = (new StringTextComponent("Build the vault!")).withStyle(TextFormatting.AQUA);
-            fr.drawInBatch(iFormattableTextComponent2.getVisualOrderText(), 8.0F, (bottom - 60), -1, true, renderStack.last().pose(), (IRenderTypeBuffer) buffer, false, 0,
-                    LightmapHelper.getPackedFullbrightCoords());
-
-            int lockTime = displayData.getTotalTicksUntilNextVote();
-            String duration = UIHelper.formatTimeString(lockTime);
-            StringTextComponent stringTextComponent = new StringTextComponent("Vote Lock Time");
-            fr.drawInBatch(stringTextComponent.getVisualOrderText(), 8.0F, (bottom - 42), -1, true, renderStack.last().pose(), (IRenderTypeBuffer) buffer, false, 0,
-                    LightmapHelper.getPackedFullbrightCoords());
-            IFormattableTextComponent iFormattableTextComponent1 = (new StringTextComponent(duration)).withStyle((lockTime > 0) ? TextFormatting.RED : TextFormatting.GREEN);
-            fr.drawInBatch(iFormattableTextComponent1.getVisualOrderText(), 28.0F, (bottom - 32), -1, true, renderStack.last().pose(), (IRenderTypeBuffer) buffer, false, 0,
-                    LightmapHelper.getPackedFullbrightCoords());
+            final ArchitectGoalData displayData = (ArchitectGoalData)data;
+            final MatrixStack renderStack = event.getMatrixStack();
+            final IRenderTypeBuffer.Impl buffer = IRenderTypeBuffer.immediate(Tessellator.getInstance().getBuilder());
+            final FontRenderer fr = mc.font;
+            final int bottom = mc.getWindow().getGuiScaledHeight();
+            final float part = displayData.getCompletedPercent();
+            ITextComponent txt = (ITextComponent)new StringTextComponent("Build the vault!").withStyle(TextFormatting.AQUA);
+            fr.drawInBatch(txt.getVisualOrderText(), 8.0f, (float)(bottom - 60), -1, true, renderStack.last().pose(), (IRenderTypeBuffer)buffer, false, 0, LightmapHelper.getPackedFullbrightCoords());
+            final int lockTime = displayData.getTotalTicksUntilNextVote();
+            final String duration = UIHelper.formatTimeString(lockTime);
+            txt = (ITextComponent)new StringTextComponent("Vote Lock Time");
+            fr.drawInBatch(txt.getVisualOrderText(), 8.0f, (float)(bottom - 42), -1, true, renderStack.last().pose(), (IRenderTypeBuffer)buffer, false, 0, LightmapHelper.getPackedFullbrightCoords());
+            txt = (ITextComponent)new StringTextComponent(duration).withStyle((lockTime > 0) ? TextFormatting.RED : TextFormatting.GREEN);
+            fr.drawInBatch(txt.getVisualOrderText(), 28.0f, (float)(bottom - 32), -1, true, renderStack.last().pose(), (IRenderTypeBuffer)buffer, false, 0, LightmapHelper.getPackedFullbrightCoords());
             buffer.endBatch();
-
             RenderSystem.enableBlend();
             RenderSystem.defaultBlendFunc();
-
-            mc.getTextureManager().bind(ARCHITECT_HUD);
+            mc.getTextureManager().bind(ArchitectGoalVoteOverlay.ARCHITECT_HUD);
             ScreenDrawHelper.drawQuad(buf -> {
-                ScreenDrawHelper.rect((IVertexBuilder) buf, renderStack).at(15.0F, (bottom - 51)).dim(54.0F, 7.0F).texVanilla(0.0F, 105.0F, 54.0F, 7.0F).draw();
-
-
-                ScreenDrawHelper.rect((IVertexBuilder) buf, renderStack).at(16.0F, (bottom - 50)).dim(52.0F * part, 5.0F).texVanilla(0.0F, 113.0F, 52.0F * part, 5.0F).draw();
+                ScreenDrawHelper.rect((IVertexBuilder)buf, renderStack).at(15.0f, (float)(bottom - 51)).dim(54.0f, 7.0f).texVanilla(0.0f, 105.0f, 54.0f, 7.0f).draw();
+                ScreenDrawHelper.rect((IVertexBuilder)buf, renderStack).at(16.0f, (float)(bottom - 50)).dim(52.0f * part, 5.0f).texVanilla(0.0f, 113.0f, 52.0f * part, 5.0f).draw();
+                return;
             });
         }
-
-
         mc.getTextureManager().bind(AbstractGui.GUI_ICONS_LOCATION);
     }
-
-
+    
+    @Override
     public boolean shouldDisplay() {
-        return (this.data.getTicksUntilNextVote() > 0 || (this.data
-                .getActiveSession() != null && !this.data.getActiveSession().getDirections().isEmpty()));
+        return this.data.getTicksUntilNextVote() > 0 || (this.data.getActiveSession() != null && !this.data.getActiveSession().getDirections().isEmpty());
     }
-
-
-    public int drawOverlay(MatrixStack renderStack, float pTicks) {
-        VotingSession activeSession = this.data.getActiveSession();
-        if (!shouldDisplay()) {
+    
+    @Override
+    public int drawOverlay(final MatrixStack renderStack, final float pTicks) {
+        final VotingSession activeSession = this.data.getActiveSession();
+        if (!this.shouldDisplay()) {
             return 0;
         }
-        Minecraft mc = Minecraft.getInstance();
-
+        final Minecraft mc = Minecraft.getInstance();
         int offsetY = 5;
         if (this.data.getTicksUntilNextVote() > 0) {
-            offsetY = drawVotingTimer(this.data.getTicksUntilNextVote(), renderStack, offsetY);
+            offsetY = this.drawVotingTimer(this.data.getTicksUntilNextVote(), renderStack, offsetY);
         }
         if (activeSession != null && !activeSession.getDirections().isEmpty()) {
-            offsetY = drawVotingSession(activeSession, renderStack, offsetY);
+            offsetY = this.drawVotingSession(activeSession, renderStack, offsetY);
         }
-
         mc.getTextureManager().bind(AbstractGui.GUI_ICONS_LOCATION);
         return offsetY;
     }
-
-    private int drawVotingTimer(int ticksUntilNextVote, MatrixStack renderStack, int offsetY) {
-        IRenderTypeBuffer.Impl buffer = IRenderTypeBuffer.immediate(Tessellator.getInstance().getBuilder());
-        Minecraft mc = Minecraft.getInstance();
-        FontRenderer fr = mc.font;
-        int midX = mc.getWindow().getGuiScaledWidth() / 2;
-
-        float scale = 1.25F;
-
-        String tplText = "Voting locked: ";
-        String text = tplText + UIHelper.formatTimeString(ticksUntilNextVote);
-        float shift = fr.width(tplText + "00:00") * 1.25F;
-        IFormattableTextComponent iFormattableTextComponent = (new StringTextComponent(text)).withStyle(TextFormatting.RED);
-
+    
+    private int drawVotingTimer(final int ticksUntilNextVote, final MatrixStack renderStack, final int offsetY) {
+        final IRenderTypeBuffer.Impl buffer = IRenderTypeBuffer.immediate(Tessellator.getInstance().getBuilder());
+        final Minecraft mc = Minecraft.getInstance();
+        final FontRenderer fr = mc.font;
+        final int midX = mc.getWindow().getGuiScaledWidth() / 2;
+        final float scale = 1.25f;
+        final String tplText = "Voting locked: ";
+        final String text = tplText + UIHelper.formatTimeString(ticksUntilNextVote);
+        final float shift = fr.width(tplText + "00:00") * 1.25f;
+        final ITextComponent textCmp = (ITextComponent)new StringTextComponent(text).withStyle(TextFormatting.RED);
         renderStack.pushPose();
-        renderStack.translate((midX - shift / 2.0F), offsetY, 0.0D);
-        renderStack.scale(scale, scale, 1.0F);
-        fr.drawInBatch((ITextComponent) iFormattableTextComponent, 0.0F, 0.0F, -1, false, renderStack
-                .last().pose(), (IRenderTypeBuffer) buffer, true, 0, LightmapHelper.getPackedFullbrightCoords());
+        renderStack.translate((double)(midX - shift / 2.0f), (double)offsetY, 0.0);
+        renderStack.scale(scale, scale, 1.0f);
+        fr.drawInBatch(textCmp, 0.0f, 0.0f, -1, false, renderStack.last().pose(), (IRenderTypeBuffer)buffer, true, 0, LightmapHelper.getPackedFullbrightCoords());
         buffer.endBatch();
         renderStack.popPose();
-
         return offsetY + 13;
     }
-
-    private int drawVotingSession(VotingSession activeSession, MatrixStack renderStack, int offsetY) {
-        IRenderTypeBuffer.Impl buffer = IRenderTypeBuffer.immediate(Tessellator.getInstance().getBuilder());
-        Minecraft mc = Minecraft.getInstance();
-        FontRenderer fr = mc.font;
-        int midX = mc.getWindow().getGuiScaledWidth() / 2;
-
-        int segmentWidth = 8;
-        int barSegments = 22;
-        int startEndWith = 4;
-        int barWidth = segmentWidth * barSegments;
-        int totalWidth = barWidth + startEndWith * 2;
-
-        int offsetX = midX - totalWidth / 2;
-
-        Map<DirectionChoice, Float> barParts = new LinkedHashMap<>();
-        for (DirectionChoice choice : activeSession.getDirections()) {
-            barParts.put(choice, Float.valueOf(activeSession.getChoicePercentage(choice)));
+    
+    private int drawVotingSession(final VotingSession activeSession, final MatrixStack renderStack, int offsetY) {
+        final IRenderTypeBuffer.Impl buffer = IRenderTypeBuffer.immediate(Tessellator.getInstance().getBuilder());
+        final Minecraft mc = Minecraft.getInstance();
+        final FontRenderer fr = mc.font;
+        final int midX = mc.getWindow().getGuiScaledWidth() / 2;
+        final int segmentWidth = 8;
+        final int barSegments = 22;
+        final int startEndWith = 4;
+        final int barWidth = segmentWidth * barSegments;
+        final int totalWidth = barWidth + startEndWith * 2;
+        final int offsetX = midX - totalWidth / 2;
+        final Map<DirectionChoice, Float> barParts = new LinkedHashMap<DirectionChoice, Float>();
+        for (final DirectionChoice choice : activeSession.getDirections()) {
+            barParts.put(choice, activeSession.getChoicePercentage(choice));
         }
-
-        float shiftTitleX = fr.width("Vote! 00:00") * 1.25F;
-        String timeRemainingStr = UIHelper.formatTimeString(activeSession.getRemainingVoteTicks());
-        IFormattableTextComponent iFormattableTextComponent = (new StringTextComponent("Vote! ")).append(timeRemainingStr).withStyle(TextFormatting.AQUA);
-
+        final float shiftTitleX = fr.width("Vote! 00:00") * 1.25f;
+        final String timeRemainingStr = UIHelper.formatTimeString(activeSession.getRemainingVoteTicks());
+        final ITextComponent title = (ITextComponent)new StringTextComponent("Vote! ").append(timeRemainingStr).withStyle(TextFormatting.AQUA);
         renderStack.pushPose();
-        renderStack.translate((midX - shiftTitleX / 2.0F), offsetY, 0.0D);
-        renderStack.scale(1.25F, 1.25F, 1.0F);
-        fr.drawInBatch((ITextComponent) iFormattableTextComponent, 0.0F, 0.0F, -1, false, renderStack
-                .last().pose(), (IRenderTypeBuffer) buffer, true, 0, LightmapHelper.getPackedFullbrightCoords());
+        renderStack.translate((double)(midX - shiftTitleX / 2.0f), (double)offsetY, 0.0);
+        renderStack.scale(1.25f, 1.25f, 1.0f);
+        fr.drawInBatch(title, 0.0f, 0.0f, -1, false, renderStack.last().pose(), (IRenderTypeBuffer)buffer, true, 0, LightmapHelper.getPackedFullbrightCoords());
         buffer.endBatch();
         renderStack.popPose();
-        offsetY = (int) (offsetY + 12.5F);
-
+        offsetY += (int)12.5f;
         RenderSystem.enableBlend();
         RenderSystem.defaultBlendFunc();
-
-        mc.getTextureManager().bind(ARCHITECT_HUD);
-        drawBarContent(renderStack, offsetX + 1, offsetY + 1, barWidth, barParts);
-        drawBarFrame(renderStack, offsetX, offsetY);
+        mc.getTextureManager().bind(ArchitectGoalVoteOverlay.ARCHITECT_HUD);
+        this.drawBarContent(renderStack, offsetX + 1, offsetY + 1, barWidth, barParts);
+        this.drawBarFrame(renderStack, offsetX, offsetY);
         offsetY += 12;
-        offsetY += drawVoteChoices(renderStack, offsetX, offsetY, totalWidth, activeSession.getDirections());
+        offsetY += this.drawVoteChoices(renderStack, offsetX, offsetY, totalWidth, activeSession.getDirections());
         return offsetY;
     }
-
-    private int drawVoteChoices(MatrixStack renderStack, int offsetX, int offsetY, int totalWidth, List<DirectionChoice> choices) {
-        IRenderTypeBuffer.Impl buffer = IRenderTypeBuffer.immediate(Tessellator.getInstance().getBuilder());
-        Minecraft mc = Minecraft.getInstance();
-        FontRenderer fr = mc.font;
-
+    
+    private int drawVoteChoices(final MatrixStack renderStack, final int offsetX, final int offsetY, final int totalWidth, final List<DirectionChoice> choices) {
+        final IRenderTypeBuffer.Impl buffer = IRenderTypeBuffer.immediate(Tessellator.getInstance().getBuilder());
+        final Minecraft mc = Minecraft.getInstance();
+        final FontRenderer fr = mc.font;
         int maxHeight = 0;
-
-        for (int i = 0; i < choices.size(); i++) {
-            DirectionChoice choice = choices.get(i);
-            float offsetPart = (i + 0.5F) / choices.size();
-            float barMid = offsetX + offsetPart * totalWidth;
+        for (int i = 0; i < choices.size(); ++i) {
+            final DirectionChoice choice = choices.get(i);
+            final float offsetPart = (i + 0.5f) / choices.size();
+            final float barMid = offsetX + offsetPart * totalWidth;
             int yShift = 0;
-
-            IReorderingProcessor bidiDir = choice.getDirectionDisplay("/").getVisualOrderText();
-            int dirLength = fr.width(bidiDir);
-            fr.drawInBatch(bidiDir, barMid - dirLength / 2.0F, (yShift + offsetY), -1, false, renderStack
-                    .last().pose(), (IRenderTypeBuffer) buffer, true, 0, LightmapHelper.getPackedFullbrightCoords());
+            final IReorderingProcessor bidiDir = choice.getDirectionDisplay("/").getVisualOrderText();
+            final int dirLength = fr.width(bidiDir);
+            fr.drawInBatch(bidiDir, barMid - dirLength / 2.0f, (float)(yShift + offsetY), -1, false, renderStack.last().pose(), (IRenderTypeBuffer)buffer, true, 0, LightmapHelper.getPackedFullbrightCoords());
             yShift += 9;
-
-            float scaledShift = 0.0F;
-            float modifierScale = 0.75F;
+            float scaledShift = 0.0f;
+            final float modifierScale = 0.75f;
             renderStack.pushPose();
-            renderStack.translate(barMid, (offsetY + yShift), 0.0D);
-            renderStack.scale(modifierScale, modifierScale, 1.0F);
-            for (VoteModifier modifier : choice.getModifiers()) {
-                int changeSeconds = modifier.getVoteLockDurationChangeSeconds();
+            renderStack.translate((double)barMid, (double)(offsetY + yShift), 0.0);
+            renderStack.scale(modifierScale, modifierScale, 1.0f);
+            for (final VoteModifier modifier : choice.getModifiers()) {
+                final int changeSeconds = modifier.getVoteLockDurationChangeSeconds();
                 if (changeSeconds != 0) {
-                    TextFormatting color = (changeSeconds > 0) ? TextFormatting.RED : TextFormatting.GREEN;
-                    String changeDesc = (changeSeconds > 0) ? ("+" + changeSeconds) : String.valueOf(changeSeconds);
-                    IFormattableTextComponent iFormattableTextComponent = (new StringTextComponent(changeDesc + "s Vote Lock")).withStyle(color);
-
-                    int voteLockLength = fr.width((ITextProperties) iFormattableTextComponent);
-                    fr.drawInBatch(iFormattableTextComponent.getVisualOrderText(), -voteLockLength / 2.0F, 0.0F, -1, false, renderStack
-                            .last().pose(), (IRenderTypeBuffer) buffer, true, 0, LightmapHelper.getPackedFullbrightCoords());
-                    renderStack.translate(0.0D, 9.0D, 0.0D);
-                    scaledShift += 9.0F;
+                    final TextFormatting color = (changeSeconds > 0) ? TextFormatting.RED : TextFormatting.GREEN;
+                    final String changeDesc = (changeSeconds > 0) ? ("+" + changeSeconds) : String.valueOf(changeSeconds);
+                    final ITextComponent line = (ITextComponent)new StringTextComponent(changeDesc + "s Vote Lock").withStyle(color);
+                    final int voteLockLength = fr.width((ITextProperties)line);
+                    fr.drawInBatch(line.getVisualOrderText(), -voteLockLength / 2.0f, 0.0f, -1, false, renderStack.last().pose(), (IRenderTypeBuffer)buffer, true, 0, LightmapHelper.getPackedFullbrightCoords());
+                    renderStack.translate(0.0, 9.0, 0.0);
+                    scaledShift += 9.0f;
                 }
-
-                IReorderingProcessor bidiDesc = modifier.getDescription().getVisualOrderText();
-                int descLength = fr.width(bidiDesc);
-                fr.drawInBatch(bidiDesc, -descLength / 2.0F, 0.0F, -1, false, renderStack
-                        .last().pose(), (IRenderTypeBuffer) buffer, true, 0, LightmapHelper.getPackedFullbrightCoords());
-                renderStack.translate(0.0D, 9.0D, 0.0D);
-                scaledShift += 9.0F;
+                final IReorderingProcessor bidiDesc = modifier.getDescription().getVisualOrderText();
+                final int descLength = fr.width(bidiDesc);
+                fr.drawInBatch(bidiDesc, -descLength / 2.0f, 0.0f, -1, false, renderStack.last().pose(), (IRenderTypeBuffer)buffer, true, 0, LightmapHelper.getPackedFullbrightCoords());
+                renderStack.translate(0.0, 9.0, 0.0);
+                scaledShift += 9.0f;
             }
             renderStack.popPose();
             yShift += MathHelper.ceil(scaledShift * modifierScale);
-
             if (yShift > maxHeight) {
                 maxHeight = yShift;
             }
         }
-
         buffer.endBatch();
         return maxHeight;
     }
-
-    private void drawBarContent(MatrixStack renderStack, int offsetX, int offsetY, int barWidth, Map<DirectionChoice, Float> barParts) {
+    
+    private void drawBarContent(final MatrixStack renderStack, final int offsetX, final int offsetY, final int barWidth, final Map<DirectionChoice, Float> barParts) {
         ScreenDrawHelper.drawQuad(buf -> {
-            float drawX = offsetX;
+            float drawX = (float)offsetX;
             DirectionChoice lastChoice = null;
             boolean drawStart = true;
-            for (DirectionChoice choice : barParts.keySet()) {
-                float part = ((Float) barParts.get(choice)).floatValue() * barWidth;
-                int i = DirectionChoice.getVOffset(choice.getDirection());
+            Iterator iterator=barParts.keySet().iterator();
+            while (iterator.hasNext()) {
+                final DirectionChoice choice = (DirectionChoice) iterator.next();
+                float part = barParts.get(choice) * barWidth;
+                final int vOffset = DirectionChoice.getVOffset(choice.getDirection());
                 lastChoice = choice;
                 if (drawStart) {
-                    ScreenDrawHelper.rect((IVertexBuilder) buf, renderStack).at(offsetX, offsetY).dim(3.0F, 8.0F).texVanilla(0.0F, i, 3.0F, 8.0F).draw();
-                    drawX += 3.0F;
+                    ScreenDrawHelper.rect((IVertexBuilder)buf, renderStack).at((float)offsetX, (float)offsetY).dim(3.0f, 8.0f).texVanilla(0.0f, (float)vOffset, 3.0f, 8.0f).draw();
+                    drawX += 3.0f;
                     drawStart = false;
                 }
-                while (part > 0.0F) {
-                    float length = Math.min(8.0F, part);
+                while (part > 0.0f) {
+                    final float length = Math.min(8.0f, part);
                     part -= length;
-                    ScreenDrawHelper.rect((IVertexBuilder) buf, renderStack).at(drawX, offsetY).dim(length, 8.0F).texVanilla(100.0F, i, length, 8.0F).draw();
+                    ScreenDrawHelper.rect((IVertexBuilder)buf, renderStack).at(drawX, (float)offsetY).dim(length, 8.0f).texVanilla(100.0f, (float)vOffset, length, 8.0f).draw();
                     drawX += length;
                 }
             }
-            int vOffset = DirectionChoice.getVOffset(lastChoice.getDirection());
-            ScreenDrawHelper.rect((IVertexBuilder) buf, renderStack).at(drawX, offsetY).dim(3.0F, 8.0F).texVanilla(96.0F, vOffset, 3.0F, 8.0F).draw();
+            final int vOffset2 = DirectionChoice.getVOffset(lastChoice.getDirection());
+            ScreenDrawHelper.rect((IVertexBuilder)buf, renderStack).at(drawX, (float)offsetY).dim(3.0f, 8.0f).texVanilla(96.0f, (float)vOffset2, 3.0f, 8.0f).draw();
         });
     }
-
-
-    private void drawBarFrame(MatrixStack renderStack, int offsetX, int offsetY) {
+    
+    private void drawBarFrame(final MatrixStack renderStack, final int offsetX, final int offsetY) {
         renderStack.pushPose();
         ScreenDrawHelper.drawQuad(buf -> {
-            ScreenDrawHelper.rect((IVertexBuilder) buf, renderStack).at(offsetX, offsetY).dim(4.0F, 10.0F).texVanilla(0.0F, 11.0F, 4.0F, 10.0F).draw();
-
-
+            ScreenDrawHelper.rect((IVertexBuilder)buf, renderStack).at((float)offsetX, (float)offsetY).dim(4.0f, 10.0f).texVanilla(0.0f, 11.0f, 4.0f, 10.0f).draw();
             int barOffsetX = offsetX + 4;
-
-
-            for (int i = 0; i < 22; i++) {
-                ScreenDrawHelper.rect((IVertexBuilder) buf, renderStack).at(barOffsetX, offsetY).dim(8.0F, 10.0F).texVanilla(0.0F, 0.0F, 8.0F, 10.0F).draw();
-
-
+            for (int i = 0; i < 22; ++i) {
+                ScreenDrawHelper.rect((IVertexBuilder)buf, renderStack).at((float)barOffsetX, (float)offsetY).dim(8.0f, 10.0f).texVanilla(0.0f, 0.0f, 8.0f, 10.0f).draw();
                 barOffsetX += 8;
             }
-
-
-            ScreenDrawHelper.rect((IVertexBuilder) buf, renderStack).at(barOffsetX, offsetY).dim(4.0F, 10.0F).texVanilla(97.0F, 11.0F, 4.0F, 10.0F).draw();
+            ScreenDrawHelper.rect((IVertexBuilder)buf, renderStack).at((float)barOffsetX, (float)offsetY).dim(4.0f, 10.0f).texVanilla(97.0f, 11.0f, 4.0f, 10.0f).draw();
+            return;
         });
-
-
         renderStack.popPose();
     }
+    
+    static {
+        ARCHITECT_HUD = new ResourceLocation("the_vault", "textures/gui/architect_event_bar.png");
+    }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\client\gui\overlay\goal\ArchitectGoalVoteOverlay.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

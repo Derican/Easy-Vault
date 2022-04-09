@@ -1,7 +1,10 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.skill.ability.effect.sub;
 
 import iskallia.vault.init.ModEntities;
-import iskallia.vault.skill.ability.config.HunterConfig;
 import iskallia.vault.skill.ability.config.sub.HunterObjectiveConfig;
 import iskallia.vault.skill.ability.effect.HunterAbility;
 import net.minecraft.entity.LivingEntity;
@@ -14,27 +17,23 @@ import java.awt.*;
 import java.util.List;
 import java.util.function.Predicate;
 
-public class HunterObjectiveAbility
-        extends HunterAbility<HunterObjectiveConfig> {
+public class HunterObjectiveAbility extends HunterAbility<HunterObjectiveConfig>
+{
+    @Override
     protected Predicate<LivingEntity> getEntityFilter() {
-        return e -> (e.isAlive() && !e.isSpectator() && e.getType().equals(ModEntities.TREASURE_GOBLIN));
+        return e -> e.isAlive() && !e.isSpectator() && e.getType().equals(ModEntities.TREASURE_GOBLIN);
     }
-
-
-    protected List<Tuple<BlockPos, Color>> selectPositions(HunterObjectiveConfig config, World world, PlayerEntity player) {
-        List<Tuple<BlockPos, Color>> entityPositions = super.selectPositions((HunterConfig) config, world, player);
-        Color c = new Color(config.getColor(), false);
-        forEachTileEntity((HunterConfig) config, world, player, (pos, tile) -> {
+    
+    @Override
+    protected List<Tuple<BlockPos, Color>> selectPositions(final HunterObjectiveConfig config, final World world, final PlayerEntity player) {
+        final List<Tuple<BlockPos, Color>> entityPositions = super.selectPositions(config, world, player);
+        final Color c = new Color(config.getColor(), false);
+        this.forEachTileEntity(config, world, player, (pos, tile) -> {
             if (config.shouldHighlightTileEntity(tile)) {
                 entityPositions.add(new Tuple(pos, c));
             }
+            return;
         });
         return entityPositions;
     }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\skill\ability\effect\sub\HunterObjectiveAbility.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

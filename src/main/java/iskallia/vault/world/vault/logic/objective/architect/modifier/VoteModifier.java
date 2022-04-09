@@ -1,3 +1,7 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.world.vault.logic.objective.architect.modifier;
 
 import com.google.gson.annotations.Expose;
@@ -14,57 +18,55 @@ import net.minecraft.world.server.ServerWorld;
 import javax.annotation.Nullable;
 import java.util.Random;
 
-public class VoteModifier {
+public class VoteModifier
+{
+    protected static final Random rand;
     @Expose
     private final String name;
-    protected static final Random rand = new Random();
     @Expose
     private final String description;
     @Expose
-    private final String color = String.valueOf(65535);
-
-
-    public VoteModifier(String name, String description, int voteLockDurationChangeSeconds) {
+    private final String color;
+    @Expose
+    private final int voteLockDurationChangeSeconds;
+    
+    public VoteModifier(final String name, final String description, final int voteLockDurationChangeSeconds) {
+        this.color = String.valueOf(65535);
         this.name = name;
         this.description = description;
         this.voteLockDurationChangeSeconds = voteLockDurationChangeSeconds;
     }
-
-    @Expose
-    private final int voteLockDurationChangeSeconds;
-
+    
     public String getName() {
         return this.name;
     }
-
+    
     public String getDescriptionText() {
         return this.description;
     }
-
+    
     public int getVoteLockDurationChangeSeconds() {
         return this.voteLockDurationChangeSeconds;
     }
-
+    
     public ITextComponent getDescription() {
-        return (ITextComponent) (new StringTextComponent(getDescriptionText())).withStyle(Style.EMPTY.withColor(Color.fromRgb(Integer.parseInt(this.color))));
+        return (ITextComponent)new StringTextComponent(this.getDescriptionText()).withStyle(Style.EMPTY.withColor(Color.fromRgb(Integer.parseInt(this.color))));
     }
-
+    
     @Nullable
-    public JigsawPiece getSpecialRoom(ArchitectObjective objective, VaultRaid vault) {
+    public JigsawPiece getSpecialRoom(final ArchitectObjective objective, final VaultRaid vault) {
         return null;
     }
-
+    
     @Nullable
-    public VaultPieceProcessor getPostProcessor(ArchitectObjective objective, VaultRaid vault) {
+    public VaultPieceProcessor getPostProcessor(final ArchitectObjective objective, final VaultRaid vault) {
         return null;
     }
-
-    public void onApply(ArchitectObjective objective, VaultRaid vault, ServerWorld world) {
+    
+    public void onApply(final ArchitectObjective objective, final VaultRaid vault, final ServerWorld world) {
+    }
+    
+    static {
+        rand = new Random();
     }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\world\vault\logic\objective\architect\modifier\VoteModifier.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

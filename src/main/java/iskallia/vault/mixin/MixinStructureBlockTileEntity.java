@@ -1,3 +1,7 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.mixin;
 
 import net.minecraft.tileentity.StructureBlockTileEntity;
@@ -9,24 +13,20 @@ import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
-
-@Mixin({StructureBlockTileEntity.class})
-public abstract class MixinStructureBlockTileEntity {
-    @Redirect(method = {"read"}, at = @At(value = "INVOKE", target = "Lnet/minecraft/util/math/MathHelper;clamp(III)I"))
-    private int read(int num, int min, int max) {
+@Mixin({ StructureBlockTileEntity.class })
+public abstract class MixinStructureBlockTileEntity
+{
+    @Redirect(method = { "load" }, at = @At(value = "INVOKE", target = "Lnet/minecraft/util/math/MathHelper;clamp(III)I"))
+    private int read(final int num, final int min, final int max) {
         return MathHelper.clamp(num, min * 11, max * 11);
     }
-
-
+    
+    /**
+     * @author
+     */
     @OnlyIn(Dist.CLIENT)
     @Overwrite
     public double getViewDistance() {
-        return 816.0D;
+        return 816.0;
     }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\mixin\MixinStructureBlockTileEntity.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

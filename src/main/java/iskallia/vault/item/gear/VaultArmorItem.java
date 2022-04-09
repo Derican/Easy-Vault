@@ -1,3 +1,7 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.item.gear;
 
 import com.google.common.collect.Multimap;
@@ -5,6 +9,7 @@ import iskallia.vault.attribute.EnumAttribute;
 import iskallia.vault.init.ModAttributes;
 import iskallia.vault.init.ModModels;
 import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.client.renderer.entity.model.BipedModel;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
@@ -14,10 +19,7 @@ import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.DyeableArmorItem;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemGroup;
-import net.minecraft.item.ItemStack;
+import net.minecraft.item.*;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.NonNullList;
@@ -30,127 +32,98 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class VaultArmorItem
-        extends DyeableArmorItem
-        implements VaultGear<VaultArmorItem> {
-    public VaultArmorItem(ResourceLocation id, EquipmentSlotType slot, Item.Properties builder) {
-        super(VaultGear.Material.INSTANCE, slot, builder);
-        setRegistryName(id);
+public class VaultArmorItem extends DyeableArmorItem implements VaultGear<VaultArmorItem>
+{
+    public VaultArmorItem(final ResourceLocation id, final EquipmentSlotType slot, final Item.Properties builder) {
+        super((IArmorMaterial)Material.INSTANCE, slot, builder);
+        this.setRegistryName(id);
     }
-
-
-    public EquipmentSlotType getEquipmentSlot(ItemStack stack) {
-        return getSlot();
+    
+    public EquipmentSlotType getEquipmentSlot(final ItemStack stack) {
+        return this.getSlot();
     }
-
-
-    public int getModelsFor(VaultGear.Rarity rarity) {
-        return (rarity == VaultGear.Rarity.SCRAPPY) ? ModModels.GearModel.SCRAPPY_REGISTRY
-                .size() : ModModels.GearModel.REGISTRY
-                .size();
+    
+    public int getModelsFor(final Rarity rarity) {
+        return (rarity == Rarity.SCRAPPY) ? ModModels.GearModel.SCRAPPY_REGISTRY.size() : ModModels.GearModel.REGISTRY.size();
     }
-
-
+    
     @Nullable
     public EquipmentSlotType getIntendedSlot() {
         return this.slot;
     }
-
-
-    public Multimap<Attribute, AttributeModifier> getAttributeModifiers(EquipmentSlotType slot, ItemStack stack) {
-        return getAttributeModifiers(this, slot, stack, super.getAttributeModifiers(slot, stack));
+    
+    public Multimap<Attribute, AttributeModifier> getAttributeModifiers(final EquipmentSlotType slot, final ItemStack stack) {
+        return this.getAttributeModifiers(this, slot, stack, (Multimap<Attribute, AttributeModifier>)super.getAttributeModifiers(slot, stack));
     }
-
-
-    public void fillItemCategory(ItemGroup group, NonNullList<ItemStack> items) {
-        if (allowdedIn(group)) {
-            fillItemGroup(items);
+    
+    public void fillItemCategory(final ItemGroup group, final NonNullList<ItemStack> items) {
+        if (this.allowdedIn(group)) {
+            this.fillItemGroup(items);
         }
     }
-
-
-    public boolean isRepairable(ItemStack stack) {
+    
+    public boolean isRepairable(final ItemStack stack) {
         return false;
     }
-
-
-    public boolean isDamageable(ItemStack stack) {
-        return isDamageable(this, stack);
+    
+    public boolean isDamageable(final ItemStack stack) {
+        return this.isDamageable(this, stack);
     }
-
-
-    public int getMaxDamage(ItemStack stack) {
-        return getMaxDamage(this, stack, super.getMaxDamage(stack));
+    
+    public int getMaxDamage(final ItemStack stack) {
+        return this.getMaxDamage(this, stack, super.getMaxDamage(stack));
     }
-
-
-    public ITextComponent getName(ItemStack itemStack) {
-        return getDisplayName(this, itemStack, super.getName(itemStack));
+    
+    public ITextComponent getName(final ItemStack itemStack) {
+        return this.getDisplayName(this, itemStack, super.getName(itemStack));
     }
-
-
-    public ActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand) {
-        ItemStack heldStack = player.getItemInHand(hand);
-        EquipmentSlotType slot = MobEntity.getEquipmentSlotForItem(heldStack);
-        return onItemRightClick(this, world, player, hand,
-                canEquip(heldStack, slot, (Entity) player) ? super.use(world, player, hand) : ActionResult.fail(heldStack));
+    
+    public ActionResult<ItemStack> use(final World world, final PlayerEntity player, final Hand hand) {
+        final ItemStack heldStack = player.getItemInHand(hand);
+        final EquipmentSlotType slot = MobEntity.getEquipmentSlotForItem(heldStack);
+        return this.onItemRightClick(this, world, player, hand, (ActionResult<ItemStack>)(this.canEquip(heldStack, slot, (Entity)player) ? super.use(world, player, hand) : ActionResult.fail(heldStack)));
     }
-
-
-    public void inventoryTick(ItemStack stack, World world, Entity entity, int itemSlot, boolean isSelected) {
+    
+    public void inventoryTick(final ItemStack stack, final World world, final Entity entity, final int itemSlot, final boolean isSelected) {
         super.inventoryTick(stack, world, entity, itemSlot, isSelected);
-        splitStack(this, stack, world, entity);
+        this.splitStack(this, stack, world, entity);
         if (entity instanceof ServerPlayerEntity) {
-            inventoryTick(this, stack, world, (ServerPlayerEntity) entity, itemSlot, isSelected);
+            this.inventoryTick(this, stack, world, (ServerPlayerEntity)entity, itemSlot, isSelected);
         }
     }
-
-
+    
     @OnlyIn(Dist.CLIENT)
-    public void appendHoverText(ItemStack itemStack, World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
-        super.appendHoverText(itemStack, world, tooltip, flag);
-        addInformation(this, itemStack, tooltip, Screen.hasShiftDown());
+    public void appendHoverText(final ItemStack itemStack, final World world, final List<ITextComponent> tooltip, final ITooltipFlag flag) {
+        super.appendHoverText(itemStack, world, (List)tooltip, flag);
+        this.addInformation(this, itemStack, tooltip, Screen.hasShiftDown());
     }
-
-
-    public boolean canElytraFly(ItemStack stack, LivingEntity entity) {
-        return canElytraFly(this, stack, entity);
+    
+    public boolean canElytraFly(final ItemStack stack, final LivingEntity entity) {
+        return this.canElytraFly(this, stack, entity);
     }
-
-
-    public boolean elytraFlightTick(ItemStack stack, LivingEntity entity, int flightTicks) {
-        return elytraFlightTick(this, stack, entity, flightTicks);
+    
+    public boolean elytraFlightTick(final ItemStack stack, final LivingEntity entity, final int flightTicks) {
+        return this.elytraFlightTick(this, stack, entity, flightTicks);
     }
-
-
-    public int getColor(ItemStack stack) {
-        return getColor(this, stack);
+    
+    public int getColor(final ItemStack stack) {
+        return this.getColor(this, stack);
     }
-
-
-    public boolean canEquip(ItemStack stack, EquipmentSlotType armorType, Entity entity) {
-        EnumAttribute<VaultGear.State> stateAttribute = ModAttributes.GEAR_STATE.get(stack).orElse(null);
-        return (stateAttribute != null && stateAttribute.getValue(stack) == VaultGear.State.IDENTIFIED && super
-                .canEquip(stack, armorType, entity));
+    
+    public boolean canEquip(final ItemStack stack, final EquipmentSlotType armorType, final Entity entity) {
+        final EnumAttribute<State> stateAttribute = ModAttributes.GEAR_STATE.get(stack).orElse(null);
+        return stateAttribute != null && stateAttribute.getValue(stack) == State.IDENTIFIED && super.canEquip(stack, armorType, entity);
     }
-
-
+    
     @Nullable
     @OnlyIn(Dist.CLIENT)
-    public <A extends net.minecraft.client.renderer.entity.model.BipedModel<?>> A getArmorModel(LivingEntity entityLiving, ItemStack itemStack, EquipmentSlotType armorSlot, A _default) {
-        return (A) getArmorModel(this, entityLiving, itemStack, armorSlot, _default);
+    public <A extends BipedModel<?>> A getArmorModel(final LivingEntity entityLiving, final ItemStack itemStack, final EquipmentSlotType armorSlot, final A _default) {
+        return this.getArmorModel(this, entityLiving, itemStack, armorSlot, _default);
     }
-
-
+    
     @Nullable
     @OnlyIn(Dist.CLIENT)
-    public String getArmorTexture(ItemStack itemStack, Entity entity, EquipmentSlotType slot, String type) {
-        return getArmorTexture(this, itemStack, entity, slot, type);
+    public String getArmorTexture(final ItemStack itemStack, final Entity entity, final EquipmentSlotType slot, final String type) {
+        return this.getArmorTexture(this, itemStack, entity, slot, type);
     }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\item\gear\VaultArmorItem.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

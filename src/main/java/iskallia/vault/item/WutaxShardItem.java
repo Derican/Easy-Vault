@@ -1,3 +1,7 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.item;
 
 import net.minecraft.client.util.ITooltipFlag;
@@ -15,32 +19,23 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class WutaxShardItem
-        extends Item {
-    public WutaxShardItem(ResourceLocation id, Item.Properties properties) {
+public class WutaxShardItem extends Item
+{
+    public WutaxShardItem(final ResourceLocation id, final Item.Properties properties) {
         super(properties);
-
-        setRegistryName(id);
+        this.setRegistryName(id);
     }
-
-
-    public Rarity getRarity(ItemStack stack) {
+    
+    public Rarity getRarity(final ItemStack stack) {
         return Rarity.RARE;
     }
-
-
+    
     @OnlyIn(Dist.CLIENT)
-    public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+    public void appendHoverText(final ItemStack stack, @Nullable final World worldIn, final List<ITextComponent> tooltip, final ITooltipFlag flagIn) {
         tooltip.add(StringTextComponent.EMPTY);
-        tooltip.add((new StringTextComponent("Reduces the level requirement of")).withStyle(TextFormatting.GRAY));
-        tooltip.add((new StringTextComponent("any vault gear by 1 when combined")).withStyle(TextFormatting.GRAY));
-        tooltip.add((new StringTextComponent("in an anvil with a vault gear item.")).withStyle(TextFormatting.GRAY));
-        super.appendHoverText(stack, worldIn, tooltip, flagIn);
+        tooltip.add((ITextComponent)new StringTextComponent("Reduces the level requirement of").withStyle(TextFormatting.GRAY));
+        tooltip.add((ITextComponent)new StringTextComponent("any vault gear by 1 when combined").withStyle(TextFormatting.GRAY));
+        tooltip.add((ITextComponent)new StringTextComponent("in an anvil with a vault gear item.").withStyle(TextFormatting.GRAY));
+        super.appendHoverText(stack, worldIn, (List)tooltip, flagIn);
     }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\item\WutaxShardItem.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

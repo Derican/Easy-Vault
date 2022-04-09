@@ -1,3 +1,7 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.network.message;
 
 import iskallia.vault.client.ClientAbilityData;
@@ -7,39 +11,33 @@ import net.minecraftforge.fml.network.NetworkEvent;
 
 import java.util.function.Supplier;
 
-
-public class AbilityFocusMessage {
+public class AbilityFocusMessage
+{
     private final String selectedAbility;
-
-    public AbilityFocusMessage(AbilityGroup<?, ?> ability) {
+    
+    public AbilityFocusMessage(final AbilityGroup<?, ?> ability) {
         this(ability.getParentName());
     }
-
-    public AbilityFocusMessage(String selectedAbility) {
+    
+    public AbilityFocusMessage(final String selectedAbility) {
         this.selectedAbility = selectedAbility;
     }
-
+    
     public String getSelectedAbility() {
         return this.selectedAbility;
     }
-
-    public static void encode(AbilityFocusMessage message, PacketBuffer buffer) {
+    
+    public static void encode(final AbilityFocusMessage message, final PacketBuffer buffer) {
         buffer.writeUtf(message.selectedAbility);
     }
-
-    public static AbilityFocusMessage decode(PacketBuffer buffer) {
+    
+    public static AbilityFocusMessage decode(final PacketBuffer buffer) {
         return new AbilityFocusMessage(buffer.readUtf(32767));
     }
-
-    public static void handle(AbilityFocusMessage message, Supplier<NetworkEvent.Context> contextSupplier) {
-        NetworkEvent.Context context = contextSupplier.get();
+    
+    public static void handle(final AbilityFocusMessage message, final Supplier<NetworkEvent.Context> contextSupplier) {
+        final NetworkEvent.Context context = contextSupplier.get();
         context.enqueueWork(() -> ClientAbilityData.updateSelectedAbility(message));
         context.setPacketHandled(true);
     }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\network\message\AbilityFocusMessage.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

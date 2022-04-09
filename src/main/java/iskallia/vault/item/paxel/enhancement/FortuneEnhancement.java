@@ -1,81 +1,79 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.item.paxel.enhancement;
 
 import iskallia.vault.event.ActiveFlags;
 import iskallia.vault.util.BlockDropCaptureHelper;
 import iskallia.vault.util.BlockHelper;
 import iskallia.vault.util.OverlevelEnchantHelper;
+import net.minecraft.block.Block;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.Color;
+import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
+import net.minecraftforge.fml.common.Mod;
 
-@EventBusSubscriber
-public class FortuneEnhancement
-        extends PaxelEnhancement {
+@Mod.EventBusSubscriber
+public class FortuneEnhancement extends PaxelEnhancement
+{
     protected int extraFortune;
-
-    public FortuneEnhancement(int extraFortune) {
+    
+    public FortuneEnhancement(final int extraFortune) {
         this.extraFortune = extraFortune;
     }
-
+    
     public int getExtraFortune() {
         return this.extraFortune;
     }
-
-
+    
+    @Override
     public Color getColor() {
         return Color.fromRgb(-22784);
     }
-
-
+    
+    @Override
     public CompoundNBT serializeNBT() {
-        CompoundNBT nbt = super.serializeNBT();
+        final CompoundNBT nbt = super.serializeNBT();
         nbt.putInt("ExtraFortune", this.extraFortune);
         return nbt;
     }
-
-
-    public void deserializeNBT(CompoundNBT nbt) {
+    
+    @Override
+    public void deserializeNBT(final CompoundNBT nbt) {
         super.deserializeNBT(nbt);
         this.extraFortune = nbt.getInt("ExtraFortune");
     }
-
+    
     @SubscribeEvent(priority = EventPriority.LOW)
-    public static void onBlockMined(BlockEvent.BreakEvent event) {
-        ServerPlayerEntity player = (ServerPlayerEntity) event.getPlayer();
-        ItemStack heldStack = player.getMainHandItem();
-
-        PaxelEnhancement enhancement = PaxelEnhancements.getEnhancement(heldStack);
+    public static void onBlockMined(final BlockEvent.BreakEvent event) {
+        final ServerPlayerEntity player = (ServerPlayerEntity)event.getPlayer();
+        final ItemStack heldStack = player.getMainHandItem();
+        final PaxelEnhancement enhancement = PaxelEnhancements.getEnhancement(heldStack);
         if (!(enhancement instanceof FortuneEnhancement)) {
             return;
         }
-
-        FortuneEnhancement fortuneEnhancement = (FortuneEnhancement) enhancement;
-
+        final FortuneEnhancement fortuneEnhancement = (FortuneEnhancement)enhancement;
         ActiveFlags.IS_FORTUNE_MINING.runIfNotSet(() -> {
-            ServerWorld world = (ServerWorld) event.getWorld();
-            ItemStack miningStack = OverlevelEnchantHelper.increaseFortuneBy(heldStack.copy(), fortuneEnhancement.getExtraFortune());
-            BlockPos pos = event.getPos();
+            final ServerWorld world = (ServerWorld)event.getWorld();
+            final ItemStack miningStack = OverlevelEnchantHelper.increaseFortuneBy(heldStack.copy(), fortuneEnhancement.getExtraFortune());
+            final BlockPos pos = event.getPos();
             BlockDropCaptureHelper.startCapturing();
             try {
                 BlockHelper.breakBlock(world, player, pos, world.getBlockState(pos), miningStack, true, true);
                 BlockHelper.damageMiningItem(heldStack, player, 1);
-            } finally {
-                BlockDropCaptureHelper.getCapturedStacksAndStop().forEach(());
+            }
+            finally {
+                BlockDropCaptureHelper.getCapturedStacksAndStop().forEach(entity -> Block.popResource((World)world, entity.blockPosition(), entity.getItem()));
             }
             event.setCanceled(true);
         });
     }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\item\paxel\enhancement\FortuneEnhancement.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

@@ -1,3 +1,7 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.world.vault.modifier;
 
 import iskallia.vault.config.VaultModifiersConfig;
@@ -12,179 +16,189 @@ import net.minecraft.nbt.INBT;
 import net.minecraft.nbt.ListNBT;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.IFormattableTextComponent;
+import net.minecraft.util.Util;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.server.ServerWorld;
+import net.minecraftforge.common.util.INBTSerializable;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 import java.util.function.BiConsumer;
+import java.util.function.Function;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class VaultModifiers implements INBTSerializable<CompoundNBT>, Iterable<VaultModifier> {
-    private final List<ActiveModifier> modifiers = new ArrayList<>();
-
+public class VaultModifiers implements INBTSerializable<CompoundNBT>, Iterable<VaultModifier>
+{
+    private final List<ActiveModifier> modifiers;
     protected boolean initialized;
-
-
+    
+    public VaultModifiers() {
+        this.modifiers = new ArrayList<ActiveModifier>();
+    }
+    
     public boolean isInitialized() {
         return this.initialized;
     }
-
+    
     public void setInitialized() {
         this.initialized = true;
     }
-
-    public void generateGlobal(VaultRaid vault, ServerWorld world, Random random) {
-        int level = ((Integer) vault.getProperties().getValue(VaultRaid.LEVEL)).intValue();
+    
+    public void generateGlobal(final VaultRaid vault, final ServerWorld world, final Random random) {
+        final int level = vault.getProperties().getValue(VaultRaid.LEVEL);
         VaultModifiersConfig.ModifierPoolType type = VaultModifiersConfig.ModifierPoolType.DEFAULT;
-        if (((Boolean) vault.getProperties().getBase(VaultRaid.IS_RAFFLE).orElse(Boolean.valueOf(false))).booleanValue()) {
+        if (vault.getProperties().getBase(VaultRaid.IS_RAFFLE).orElse(false)) {
             type = VaultModifiersConfig.ModifierPoolType.RAFFLE;
-        } else if (vault.getActiveObjective(RaidChallengeObjective.class).isPresent()) {
+        }
+        else if (vault.getActiveObjective(RaidChallengeObjective.class).isPresent()) {
             type = VaultModifiersConfig.ModifierPoolType.RAID;
         }
-        ResourceLocation objectiveKey = vault.getAllObjectives().stream().findFirst().map(VaultObjective::getId).orElse(null);
+        final ResourceLocation objectiveKey = vault.getAllObjectives().stream().findFirst().map(VaultObjective::getId).orElse(null);
         ModConfigs.VAULT_MODIFIERS.getRandom(random, level, type, objectiveKey).forEach(this::addPermanentModifier);
     }
-
-
+    
     @Deprecated
-    public void generatePlayer(VaultRaid vault, VaultPlayer player, ServerWorld world, Random random) {
-        int level = ((Integer) player.getProperties().getValue(VaultRaid.LEVEL)).intValue();
+    public void generatePlayer(final VaultRaid vault, final VaultPlayer player, final ServerWorld world, final Random random) {
+        final int level = player.getProperties().getValue(VaultRaid.LEVEL);
         VaultModifiersConfig.ModifierPoolType type = VaultModifiersConfig.ModifierPoolType.DEFAULT;
-        if (((Boolean) vault.getProperties().getBase(VaultRaid.IS_RAFFLE).orElse(Boolean.valueOf(false))).booleanValue()) {
+        if (vault.getProperties().getBase(VaultRaid.IS_RAFFLE).orElse(false)) {
             type = VaultModifiersConfig.ModifierPoolType.RAFFLE;
-        } else if (vault.getActiveObjective(RaidChallengeObjective.class).isPresent()) {
+        }
+        else if (vault.getActiveObjective(RaidChallengeObjective.class).isPresent()) {
             type = VaultModifiersConfig.ModifierPoolType.RAID;
         }
-        ResourceLocation objectiveKey = vault.getAllObjectives().stream().findFirst().map(VaultObjective::getId).orElse(null);
+        final ResourceLocation objectiveKey = vault.getAllObjectives().stream().findFirst().map(VaultObjective::getId).orElse(null);
         ModConfigs.VAULT_MODIFIERS.getRandom(random, level, type, objectiveKey).forEach(this::addPermanentModifier);
-        setInitialized();
+        this.setInitialized();
     }
-
-    public void apply(VaultRaid vault, VaultPlayer player, ServerWorld world, Random random) {
+    
+    public void apply(final VaultRaid vault, final VaultPlayer player, final ServerWorld world, final Random random) {
         this.modifiers.forEach(modifier -> modifier.getModifier().apply(vault, player, world, random));
     }
-
-    public void tick(VaultRaid vault, ServerWorld world, PlayerFilter applyFilter) {
+    
+    public void tick(final VaultRaid vault, final ServerWorld world, final PlayerFilter applyFilter) {
         this.modifiers.removeIf(activeModifier -> {
-            VaultModifier modifier = activeModifier.getModifier();
-            vault.getPlayers().forEach(());
+            final VaultModifier modifier = activeModifier.getModifier();
+            vault.getPlayers().forEach(vPlayer -> {
+                if (applyFilter.test(vPlayer.getPlayerId())) {
+                    modifier.tick(vault, null, world);
+                }
+                return;
+            });
             if (activeModifier.tick()) {
-                IFormattableTextComponent iFormattableTextComponent = (new StringTextComponent("Modifier ")).withStyle(TextFormatting.GRAY).append(modifier.getNameComponent()).append((ITextComponent) (new StringTextComponent(" expired.")).withStyle(TextFormatting.GRAY));
-                vault.getPlayers().forEach(());
+                final ITextComponent removalMsg = (ITextComponent)new StringTextComponent("Modifier ").withStyle(TextFormatting.GRAY).append(modifier.getNameComponent()).append((ITextComponent)new StringTextComponent(" expired.").withStyle(TextFormatting.GRAY));
+                vault.getPlayers().forEach(vPlayer -> {
+                    if (applyFilter.test(vPlayer.getPlayerId())) {
+                        modifier.remove(vault, vPlayer, world, world.getRandom());
+                        vPlayer.runIfPresent(world.getServer(), sPlayer -> sPlayer.sendMessage(removalMsg, Util.NIL_UUID));
+                    }
+                    return;
+                });
                 return true;
             }
-            return false;
+            else {
+                return false;
+            }
         });
     }
-
-
+    
     public CompoundNBT serializeNBT() {
-        CompoundNBT nbt = new CompoundNBT();
-        ListNBT modifiersList = new ListNBT();
+        final CompoundNBT nbt = new CompoundNBT();
+        final ListNBT modifiersList = new ListNBT();
         this.modifiers.forEach(modifier -> modifiersList.add(modifier.serialize()));
-        nbt.put("modifiers", (INBT) modifiersList);
-        nbt.putBoolean("Initialized", isInitialized());
+        nbt.put("modifiers", (INBT)modifiersList);
+        nbt.putBoolean("Initialized", this.isInitialized());
         return nbt;
     }
-
-
-    public void deserializeNBT(CompoundNBT nbt) {
+    
+    public void deserializeNBT(final CompoundNBT nbt) {
         this.modifiers.clear();
-
-        ListNBT modifierList = nbt.getList("modifiers", 10);
-        for (int i = 0; i < modifierList.size(); i++) {
-            CompoundNBT tag = modifierList.getCompound(i);
-            ActiveModifier mod = ActiveModifier.deserialize(tag);
+        final ListNBT modifierList = nbt.getList("modifiers", 10);
+        for (int i = 0; i < modifierList.size(); ++i) {
+            final CompoundNBT tag = modifierList.getCompound(i);
+            final ActiveModifier mod = ActiveModifier.deserialize(tag);
             if (mod != null) {
                 this.modifiers.add(mod);
             }
         }
-
-
-        ListNBT legacyModifierList = nbt.getList("List", 8);
-        for (int j = 0; j < legacyModifierList.size(); j++) {
-            VaultModifier modifier = ModConfigs.VAULT_MODIFIERS.getByName(legacyModifierList.getString(j));
+        final ListNBT legacyModifierList = nbt.getList("List", 8);
+        for (int j = 0; j < legacyModifierList.size(); ++j) {
+            final VaultModifier modifier = ModConfigs.VAULT_MODIFIERS.getByName(legacyModifierList.getString(j));
             if (modifier != null) {
                 this.modifiers.add(new ActiveModifier(modifier, -1));
             }
         }
-
         this.initialized = nbt.getBoolean("Initialized");
     }
-
-    public void encode(PacketBuffer buffer) {
+    
+    public void encode(final PacketBuffer buffer) {
         buffer.writeInt(this.modifiers.size());
         this.modifiers.forEach(modifier -> modifier.encode(buffer));
     }
-
-    public static VaultModifiers decode(PacketBuffer buffer) {
-        VaultModifiers result = new VaultModifiers();
-
-        int size = buffer.readInt();
-        for (int i = 0; i < size; i++) {
-            ActiveModifier modifier = ActiveModifier.decode(buffer);
+    
+    public static VaultModifiers decode(final PacketBuffer buffer) {
+        final VaultModifiers result = new VaultModifiers();
+        for (int size = buffer.readInt(), i = 0; i < size; ++i) {
+            final ActiveModifier modifier = ActiveModifier.decode(buffer);
             if (modifier != null) {
                 result.modifiers.add(modifier);
             }
         }
-
         return result;
     }
-
+    
     public Stream<VaultModifier> stream() {
-        return this.modifiers.stream().map(rec$ -> ((ActiveModifier) rec$).getModifier());
+        return this.modifiers.stream().map(rec$ -> ((ActiveModifier)rec$).getModifier());
     }
-
-
+    
     @Nonnull
     public Iterator<VaultModifier> iterator() {
-        List<VaultModifier> modifiers = stream().collect((Collector) Collectors.toList());
+        final List<VaultModifier> modifiers = this.stream().collect(Collectors.toList());
         return modifiers.iterator();
     }
-
-    public void forEach(BiConsumer<Integer, VaultModifier> consumer) {
+    
+    public void forEach(final BiConsumer<Integer, VaultModifier> consumer) {
         int index = 0;
-        for (ActiveModifier modifier : this.modifiers) {
-            consumer.accept(Integer.valueOf(index), modifier.getModifier());
-            index++;
+        for (final ActiveModifier modifier : this.modifiers) {
+            consumer.accept(index, modifier.getModifier());
+            ++index;
         }
     }
-
+    
     public int size() {
         return this.modifiers.size();
     }
-
+    
     public boolean isEmpty() {
-        return (size() <= 0);
+        return this.size() <= 0;
     }
-
-    public void addPermanentModifier(String name) {
-        addPermanentModifier(ModConfigs.VAULT_MODIFIERS.getByName(name));
+    
+    public void addPermanentModifier(final String name) {
+        this.addPermanentModifier(ModConfigs.VAULT_MODIFIERS.getByName(name));
     }
-
-    public void addPermanentModifier(VaultModifier modifier) {
-        putModifier(modifier, -1);
+    
+    public void addPermanentModifier(final VaultModifier modifier) {
+        this.putModifier(modifier, -1);
     }
-
-    public void addTemporaryModifier(VaultModifier modifier, int timeout) {
-        putModifier(modifier, Math.max(0, timeout));
+    
+    public void addTemporaryModifier(final VaultModifier modifier, final int timeout) {
+        this.putModifier(modifier, Math.max(0, timeout));
     }
-
-    private void putModifier(VaultModifier modifier, int timeout) {
+    
+    private void putModifier(final VaultModifier modifier, final int timeout) {
         this.modifiers.add(new ActiveModifier(modifier, timeout));
     }
-
-    public boolean removePermanentModifier(String name) {
-        for (ActiveModifier activeModifier : this.modifiers) {
+    
+    public boolean removePermanentModifier(final String name) {
+        for (final ActiveModifier activeModifier : this.modifiers) {
             if (activeModifier.getModifier().getName().equals(name) && activeModifier.tick == -1) {
                 this.modifiers.remove(activeModifier);
                 return true;
@@ -192,65 +206,60 @@ public class VaultModifiers implements INBTSerializable<CompoundNBT>, Iterable<V
         }
         return false;
     }
-
-    private static class ActiveModifier {
+    
+    private static class ActiveModifier
+    {
         private final VaultModifier modifier;
         private int tick;
-
-        private ActiveModifier(VaultModifier modifier, int tick) {
+        
+        private ActiveModifier(final VaultModifier modifier, final int tick) {
             this.modifier = modifier;
             this.tick = tick;
         }
-
+        
         @Nullable
-        private static ActiveModifier deserialize(CompoundNBT tag) {
-            VaultModifier modifier = ModConfigs.VAULT_MODIFIERS.getByName(tag.getString("key"));
-            int timeout = tag.getInt("timeout");
+        private static ActiveModifier deserialize(final CompoundNBT tag) {
+            final VaultModifier modifier = ModConfigs.VAULT_MODIFIERS.getByName(tag.getString("key"));
+            final int timeout = tag.getInt("timeout");
             if (modifier == null) {
                 return null;
             }
             return new ActiveModifier(modifier, timeout);
         }
-
+        
         @Nullable
-        private static ActiveModifier decode(PacketBuffer buffer) {
-            String modifierName = buffer.readUtf(32767);
-            int timeout = buffer.readInt();
-            VaultModifier modifier = ModConfigs.VAULT_MODIFIERS.getByName(modifierName);
+        private static ActiveModifier decode(final PacketBuffer buffer) {
+            final String modifierName = buffer.readUtf(32767);
+            final int timeout = buffer.readInt();
+            final VaultModifier modifier = ModConfigs.VAULT_MODIFIERS.getByName(modifierName);
             if (modifier == null) {
                 return null;
             }
             return new ActiveModifier(modifier, timeout);
         }
-
+        
         private VaultModifier getModifier() {
             return this.modifier;
         }
-
+        
         private boolean tick() {
             if (this.tick == -1) {
                 return false;
             }
-            this.tick--;
-            return (this.tick == 0);
+            --this.tick;
+            return this.tick == 0;
         }
-
-        private void encode(PacketBuffer buffer) {
+        
+        private void encode(final PacketBuffer buffer) {
             buffer.writeUtf(this.modifier.getName());
             buffer.writeInt(this.tick);
         }
-
+        
         private CompoundNBT serialize() {
-            CompoundNBT tag = new CompoundNBT();
+            final CompoundNBT tag = new CompoundNBT();
             tag.putString("key", this.modifier.getName());
             tag.putInt("timeout", this.tick);
             return tag;
         }
     }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\world\vault\modifier\VaultModifiers.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

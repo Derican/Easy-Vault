@@ -1,3 +1,7 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.backup;
 
 import com.mojang.brigadier.StringReader;
@@ -10,35 +14,32 @@ import net.minecraft.command.arguments.UUIDArgument;
 
 import java.util.UUID;
 
-
-public abstract class BackupListArgument
-        implements ArgumentType<String> {
-    public String parse(StringReader reader) throws CommandSyntaxException {
+public abstract class BackupListArgument implements ArgumentType<String>
+{
+    protected abstract UUID getPlayerRef(final CommandContext<CommandSource> p0);
+    
+    public String parse(final StringReader reader) throws CommandSyntaxException {
         return reader.readUnquotedString();
     }
-
-    protected abstract UUID getPlayerRef(CommandContext<CommandSource> paramCommandContext);
-
-    public static class Player extends BackupListArgument {
-        protected UUID getPlayerRef(CommandContext<CommandSource> ctx) {
+    
+    public static class Player extends BackupListArgument
+    {
+        @Override
+        protected UUID getPlayerRef(final CommandContext<CommandSource> ctx) {
             try {
-                return EntityArgument.getPlayer(ctx, "player").getUUID();
-            } catch (CommandSyntaxException e) {
-                throw new RuntimeException(e);
+                return EntityArgument.getPlayer((CommandContext)ctx, "player").getUUID();
+            }
+            catch (final CommandSyntaxException e) {
+                throw new RuntimeException((Throwable)e);
             }
         }
     }
-
-    public static class UUIDRef
-            extends BackupListArgument {
-        protected UUID getPlayerRef(CommandContext<CommandSource> ctx) {
-            return UUIDArgument.getUuid(ctx, "player");
+    
+    public static class UUIDRef extends BackupListArgument
+    {
+        @Override
+        protected UUID getPlayerRef(final CommandContext<CommandSource> ctx) {
+            return UUIDArgument.getUuid((CommandContext)ctx, "player");
         }
     }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\backup\BackupListArgument.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

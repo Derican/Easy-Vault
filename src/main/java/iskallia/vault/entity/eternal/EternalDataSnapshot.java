@@ -1,3 +1,7 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.entity.eternal;
 
 import iskallia.vault.util.calc.ParryHelper;
@@ -14,13 +18,14 @@ import net.minecraftforge.registries.ForgeRegistries;
 
 import javax.annotation.Nullable;
 import java.util.*;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
-public class EternalDataSnapshot implements EternalDataAccess {
-    public static final String ATTR_HEALTH = Attributes.MAX_HEALTH.getRegistryName().toString();
-    public static final String ATTR_DAMAGE = Attributes.ATTACK_DAMAGE.getRegistryName().toString();
-    public static final String ATTR_SPEED = Attributes.MOVEMENT_SPEED.getRegistryName().toString();
-
+public class EternalDataSnapshot implements EternalDataAccess
+{
+    public static final String ATTR_HEALTH;
+    public static final String ATTR_DAMAGE;
+    public static final String ATTR_SPEED;
     private final UUID eternalUUID;
     private final long seed;
     private final String eternalName;
@@ -35,8 +40,8 @@ public class EternalDataSnapshot implements EternalDataAccess {
     private final boolean alive;
     private final boolean ancient;
     private final String abilityName;
-
-    public EternalDataSnapshot(UUID eternalUUID, long seed, String eternalName, Map<EquipmentSlotType, ItemStack> equipment, Map<String, Float> attributes, float parry, float resistance, int level, int usedLevels, int maxLevel, float levelPercent, boolean alive, boolean ancient, String abilityName) {
+    
+    public EternalDataSnapshot(final UUID eternalUUID, final long seed, final String eternalName, final Map<EquipmentSlotType, ItemStack> equipment, final Map<String, Float> attributes, final float parry, final float resistance, final int level, final int usedLevels, final int maxLevel, final float levelPercent, final boolean alive, final boolean ancient, final String abilityName) {
         this.eternalUUID = eternalUUID;
         this.seed = seed;
         this.eternalName = eternalName;
@@ -52,128 +57,125 @@ public class EternalDataSnapshot implements EternalDataAccess {
         this.ancient = ancient;
         this.abilityName = abilityName;
     }
-
-    public static EternalDataSnapshot getFromEternal(EternalsData.EternalGroup playerGroup, EternalData eternal) {
-        UUID eternalUUID = eternal.getId();
-        long seed = eternal.getSeed();
-        String eternalName = eternal.getName();
-        Map<EquipmentSlotType, ItemStack> equipment = new HashMap<>();
-        for (EquipmentSlotType slotType : EquipmentSlotType.values()) {
-            ItemStack stack = eternal.getStack(slotType);
+    
+    public static EternalDataSnapshot getFromEternal(final EternalsData.EternalGroup playerGroup, final EternalData eternal) {
+        final UUID eternalUUID = eternal.getId();
+        final long seed = eternal.getSeed();
+        final String eternalName = eternal.getName();
+        final Map<EquipmentSlotType, ItemStack> equipment = new HashMap<EquipmentSlotType, ItemStack>();
+        for (final EquipmentSlotType slotType : EquipmentSlotType.values()) {
+            final ItemStack stack = eternal.getStack(slotType);
             if (!stack.isEmpty()) {
                 equipment.put(slotType, stack.copy());
             }
         }
-        EternalAttributes eternalAttributes = eternal.getAttributes();
-        Map<String, Float> attributes = new HashMap<>();
-        float value = ((Float) eternalAttributes.getAttributeValue(Attributes.MAX_HEALTH).orElse(Float.valueOf(0.0F))).floatValue();
+        final EternalAttributes eternalAttributes = eternal.getAttributes();
+        final Map<String, Float> attributes = new HashMap<String, Float>();
+        float value = eternalAttributes.getAttributeValue(Attributes.MAX_HEALTH).orElse(0.0f);
         value = EternalHelper.getEternalGearModifierAdjustments(eternal, Attributes.MAX_HEALTH, value);
-        attributes.put(ATTR_HEALTH, Float.valueOf(value));
-
-        value = ((Float) eternalAttributes.getAttributeValue(Attributes.ATTACK_DAMAGE).orElse(Float.valueOf(0.0F))).floatValue();
+        attributes.put(EternalDataSnapshot.ATTR_HEALTH, value);
+        value = eternalAttributes.getAttributeValue(Attributes.ATTACK_DAMAGE).orElse(0.0f);
         value = EternalHelper.getEternalGearModifierAdjustments(eternal, Attributes.ATTACK_DAMAGE, value);
-        attributes.put(ATTR_DAMAGE, Float.valueOf(value));
-
-        value = ((Float) eternalAttributes.getAttributeValue(Attributes.MOVEMENT_SPEED).orElse(Float.valueOf(0.0F))).floatValue();
+        attributes.put(EternalDataSnapshot.ATTR_DAMAGE, value);
+        value = eternalAttributes.getAttributeValue(Attributes.MOVEMENT_SPEED).orElse(0.0f);
         value = EternalHelper.getEternalGearModifierAdjustments(eternal, Attributes.MOVEMENT_SPEED, value);
-        attributes.put(ATTR_SPEED, Float.valueOf(value));
-
-        float parry = ParryHelper.getGearParryChance(eternal::getStack);
-        float resistance = ResistanceHelper.getGearResistanceChance(eternal::getStack);
-        int level = eternal.getLevel();
-        int usedLevels = eternal.getUsedLevels();
-        int maxLevel = eternal.getMaxLevel();
-        float levelPercent = eternal.getLevelPercent();
-        boolean alive = eternal.isAlive();
-        boolean ancient = eternal.isAncient();
-        String abilityName = (eternal.getAura() != null) ? eternal.getAura().getAuraName() : null;
-
+        attributes.put(EternalDataSnapshot.ATTR_SPEED, value);
+        final float parry = ParryHelper.getGearParryChance(eternal::getStack);
+        final float resistance = ResistanceHelper.getGearResistanceChance(eternal::getStack);
+        final int level = eternal.getLevel();
+        final int usedLevels = eternal.getUsedLevels();
+        final int maxLevel = eternal.getMaxLevel();
+        final float levelPercent = eternal.getLevelPercent();
+        final boolean alive = eternal.isAlive();
+        final boolean ancient = eternal.isAncient();
+        final String abilityName = (eternal.getAura() != null) ? eternal.getAura().getAuraName() : null;
         return new EternalDataSnapshot(eternalUUID, seed, eternalName, equipment, attributes, parry, resistance, level, usedLevels, maxLevel, levelPercent, alive, ancient, abilityName);
     }
-
-
+    
+    @Override
     public UUID getId() {
         return this.eternalUUID;
     }
-
-
+    
+    @Override
     public long getSeed() {
         return this.seed;
     }
-
-
+    
+    @Override
     public String getName() {
         return this.eternalName;
     }
-
-
+    
+    @Override
     public Map<EquipmentSlotType, ItemStack> getEquipment() {
-        return Collections.unmodifiableMap(this.equipment);
+        return Collections.unmodifiableMap((Map<? extends EquipmentSlotType, ? extends ItemStack>)this.equipment);
     }
-
-    public ItemStack getEquipment(EquipmentSlotType slotType) {
-        return ((ItemStack) this.equipment.getOrDefault(slotType, ItemStack.EMPTY)).copy();
+    
+    public ItemStack getEquipment(final EquipmentSlotType slotType) {
+        return this.equipment.getOrDefault(slotType, ItemStack.EMPTY).copy();
     }
-
+    
     public Map<String, Float> getAttributes() {
-        return Collections.unmodifiableMap(this.attributes);
+        return Collections.unmodifiableMap((Map<? extends String, ? extends Float>)this.attributes);
     }
-
-
+    
+    @Override
     public Map<Attribute, Float> getEntityAttributes() {
-        return (Map<Attribute, Float>) getAttributes().entrySet().stream()
-                .map(e -> {
-                    Attribute attr = (Attribute) ForgeRegistries.ATTRIBUTES.getValue(new ResourceLocation((String) e.getKey()));
-
-
-                    return (attr != null) ? new Tuple(attr, e.getValue()) : null;
-                }).filter(Objects::nonNull)
-                .collect(Collectors.<Tuple<Attribute,Float>,Attribute,Float>toMap(Tuple::getA, Tuple::getB));
+        return this.getAttributes().entrySet().stream().map(e -> {
+            final Attribute attr = (Attribute)ForgeRegistries.ATTRIBUTES.getValue(new ResourceLocation((String)e.getKey()));
+            if (attr != null) {
+                return new Tuple<>(attr, e.getValue());
+            }
+            else {
+                return null;
+            }
+        }).filter(Objects::nonNull).collect(Collectors.toMap(Tuple::getA, Tuple::getB));
     }
-
+    
     public float getParry() {
         return this.parry;
     }
-
+    
     public float getResistance() {
         return this.resistance;
     }
-
-
+    
+    @Override
     public int getLevel() {
         return this.level;
     }
-
+    
     public int getUsedLevels() {
         return this.usedLevels;
     }
-
-
+    
+    @Override
     public int getMaxLevel() {
         return this.maxLevel;
     }
-
+    
     public float getLevelPercent() {
         return this.levelPercent;
     }
-
-
+    
+    @Override
     public boolean isAlive() {
         return this.alive;
     }
-
-
+    
+    @Override
     public boolean isAncient() {
         return this.ancient;
     }
-
-
+    
     @Nullable
+    @Override
     public String getAbilityName() {
         return this.abilityName;
     }
-
-    public boolean areStatisticsEqual(EternalDataSnapshot other) {
+    
+    public boolean areStatisticsEqual(final EternalDataSnapshot other) {
         if (this.alive != other.alive || !Objects.equals(this.abilityName, other.abilityName)) {
             return false;
         }
@@ -183,40 +185,36 @@ public class EternalDataSnapshot implements EternalDataAccess {
         if (this.parry != other.parry || this.resistance != other.resistance || this.levelPercent != other.levelPercent) {
             return false;
         }
-        float thisVal = ((Float) this.attributes.get(ATTR_HEALTH)).floatValue();
-        float thatVal = ((Float) other.attributes.get(ATTR_HEALTH)).floatValue();
+        float thisVal = this.attributes.get(EternalDataSnapshot.ATTR_HEALTH);
+        float thatVal = other.attributes.get(EternalDataSnapshot.ATTR_HEALTH);
         if (thisVal != thatVal) {
             return false;
         }
-        thisVal = ((Float) this.attributes.get(ATTR_DAMAGE)).floatValue();
-        thatVal = ((Float) other.attributes.get(ATTR_DAMAGE)).floatValue();
+        thisVal = this.attributes.get(EternalDataSnapshot.ATTR_DAMAGE);
+        thatVal = other.attributes.get(EternalDataSnapshot.ATTR_DAMAGE);
         if (thisVal != thatVal) {
             return false;
         }
-        thisVal = ((Float) this.attributes.get(ATTR_SPEED)).floatValue();
-        thatVal = ((Float) other.attributes.get(ATTR_SPEED)).floatValue();
-        if (thisVal != thatVal) {
-            return false;
-        }
-        return true;
+        thisVal = this.attributes.get(EternalDataSnapshot.ATTR_SPEED);
+        thatVal = other.attributes.get(EternalDataSnapshot.ATTR_SPEED);
+        return thisVal == thatVal;
     }
-
-    public void serialize(PacketBuffer buffer) {
+    
+    public void serialize(final PacketBuffer buffer) {
         buffer.writeUUID(this.eternalUUID);
         buffer.writeLong(this.seed);
         buffer.writeUtf(this.eternalName);
-
         buffer.writeInt(this.equipment.size());
         this.equipment.forEach((slot, stack) -> {
-            buffer.writeEnum((Enum) slot);
-
+            buffer.writeEnum((Enum)slot);
             buffer.writeItem(stack);
+            return;
         });
         buffer.writeInt(this.attributes.size());
         this.attributes.forEach((attr, value) -> {
             buffer.writeUtf(attr);
-
-            buffer.writeFloat(value.floatValue());
+            buffer.writeFloat((float)value);
+            return;
         });
         buffer.writeFloat(this.parry);
         buffer.writeFloat(this.resistance);
@@ -226,47 +224,43 @@ public class EternalDataSnapshot implements EternalDataAccess {
         buffer.writeFloat(this.levelPercent);
         buffer.writeBoolean(this.alive);
         buffer.writeBoolean(this.ancient);
-
-        buffer.writeBoolean((this.abilityName != null));
+        buffer.writeBoolean(this.abilityName != null);
         if (this.abilityName != null) {
             buffer.writeUtf(this.abilityName);
         }
     }
-
-    public static EternalDataSnapshot deserialize(PacketBuffer buffer) {
-        UUID eternalUUID = buffer.readUUID();
-        long seed = buffer.readLong();
-        String eternalName = buffer.readUtf(32767);
-        Map<EquipmentSlotType, ItemStack> equipment = new HashMap<>();
-        int equipmentSize = buffer.readInt();
-        for (int i = 0; i < equipmentSize; i++) {
-            EquipmentSlotType type = (EquipmentSlotType) buffer.readEnum(EquipmentSlotType.class);
-            ItemStack stack = buffer.readItem();
+    
+    public static EternalDataSnapshot deserialize(final PacketBuffer buffer) {
+        final UUID eternalUUID = buffer.readUUID();
+        final long seed = buffer.readLong();
+        final String eternalName = buffer.readUtf(32767);
+        final Map<EquipmentSlotType, ItemStack> equipment = new HashMap<EquipmentSlotType, ItemStack>();
+        for (int equipmentSize = buffer.readInt(), i = 0; i < equipmentSize; ++i) {
+            final EquipmentSlotType type = (EquipmentSlotType)buffer.readEnum((Class)EquipmentSlotType.class);
+            final ItemStack stack = buffer.readItem();
             equipment.put(type, stack);
         }
-        Map<String, Float> attributes = new HashMap<>();
-        int attrSize = buffer.readInt();
-        for (int j = 0; j < attrSize; j++) {
-            String attribute = buffer.readUtf(32767);
-            float val = buffer.readFloat();
-            attributes.put(attribute, Float.valueOf(val));
+        final Map<String, Float> attributes = new HashMap<String, Float>();
+        for (int attrSize = buffer.readInt(), j = 0; j < attrSize; ++j) {
+            final String attribute = buffer.readUtf(32767);
+            final float val = buffer.readFloat();
+            attributes.put(attribute, val);
         }
-        float parry = buffer.readFloat();
-        float resistance = buffer.readFloat();
-        int level = buffer.readInt();
-        int usedLevels = buffer.readInt();
-        int maxLevel = buffer.readInt();
-        float levelPercent = buffer.readFloat();
-        boolean alive = buffer.readBoolean();
-        boolean ancient = buffer.readBoolean();
-        String abilityName = buffer.readBoolean() ? buffer.readUtf(32767) : null;
-
+        final float parry = buffer.readFloat();
+        final float resistance = buffer.readFloat();
+        final int level = buffer.readInt();
+        final int usedLevels = buffer.readInt();
+        final int maxLevel = buffer.readInt();
+        final float levelPercent = buffer.readFloat();
+        final boolean alive = buffer.readBoolean();
+        final boolean ancient = buffer.readBoolean();
+        final String abilityName = buffer.readBoolean() ? buffer.readUtf(32767) : null;
         return new EternalDataSnapshot(eternalUUID, seed, eternalName, equipment, attributes, parry, resistance, level, usedLevels, maxLevel, levelPercent, alive, ancient, abilityName);
     }
+    
+    static {
+        ATTR_HEALTH = Attributes.MAX_HEALTH.getRegistryName().toString();
+        ATTR_DAMAGE = Attributes.ATTACK_DAMAGE.getRegistryName().toString();
+        ATTR_SPEED = Attributes.MOVEMENT_SPEED.getRegistryName().toString();
+    }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\entity\eternal\EternalDataSnapshot.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

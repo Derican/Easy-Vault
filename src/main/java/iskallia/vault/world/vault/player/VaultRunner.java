@@ -1,3 +1,7 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.world.vault.player;
 
 import iskallia.vault.Vault;
@@ -11,48 +15,46 @@ import net.minecraft.world.server.ServerWorld;
 
 import java.util.UUID;
 
-public class VaultRunner
-        extends VaultPlayer {
-    public static final ResourceLocation ID = Vault.id("runner");
-
+public class VaultRunner extends VaultPlayer
+{
+    public static final ResourceLocation ID;
+    
     public VaultRunner() {
     }
-
-    public VaultRunner(UUID playerId) {
-        this(ID, playerId);
+    
+    public VaultRunner(final UUID playerId) {
+        this(VaultRunner.ID, playerId);
     }
-
-    public VaultRunner(ResourceLocation id, UUID playerId) {
+    
+    public VaultRunner(final ResourceLocation id, final UUID playerId) {
         super(id, playerId);
     }
-
-
-    public void tickTimer(VaultRaid vault, ServerWorld world, VaultTimer timer) {
+    
+    @Override
+    public void tickTimer(final VaultRaid vault, final ServerWorld world, final VaultTimer timer) {
         timer.tick();
-        runIfPresent(world.getServer(), player -> {
+        this.runIfPresent(world.getServer(), player -> {
             this.addedExtensions.clear();
             this.appliedExtensions.clear();
         });
     }
-
-
-    public void tickObjectiveUpdates(VaultRaid vault, ServerWorld world) {
-        runIfPresent(world.getServer(), player -> {
+    
+    @Override
+    public void tickObjectiveUpdates(final VaultRaid vault, final ServerWorld world) {
+        this.runIfPresent(world.getServer(), player -> {
             boolean earlyKill = false;
             if (vault.hasActiveObjective(this, SummonAndKillBossObjective.class)) {
-                boolean isRaffle = ((Boolean) vault.getProperties().getBase(VaultRaid.IS_RAFFLE).orElse(Boolean.valueOf(false))).booleanValue();
+                final boolean isRaffle = vault.getProperties().getBase(VaultRaid.IS_RAFFLE).orElse(false);
                 if (isRaffle) {
-                    PlayerVaultStatsData.PlayerRecordEntry fastestVault = PlayerVaultStatsData.get(world).getFastestVaultTime();
+                    final PlayerVaultStatsData.PlayerRecordEntry fastestVault = PlayerVaultStatsData.get(world).getFastestVaultTime();
                     earlyKill = (this.timer.getRunTime() < fastestVault.getTickCount());
                 }
             }
-            sendIfPresent(world.getServer(), VaultOverlayMessage.forVault(this.timer.getTimeLeft(), earlyKill));
+            this.sendIfPresent(world.getServer(), VaultOverlayMessage.forVault(this.timer.getTimeLeft(), earlyKill));
         });
     }
+    
+    static {
+        ID = Vault.id("runner");
+    }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\world\vault\player\VaultRunner.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

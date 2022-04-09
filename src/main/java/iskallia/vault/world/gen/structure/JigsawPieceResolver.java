@@ -1,3 +1,7 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.world.gen.structure;
 
 import iskallia.vault.Vault;
@@ -27,192 +31,172 @@ import org.apache.commons.lang3.mutable.MutableObject;
 import java.util.*;
 import java.util.function.Predicate;
 
-public class JigsawPieceResolver {
-    private static final Object templateLoadLock = new Object();
-    private static final Random rand = new Random();
-
+public class JigsawPieceResolver
+{
+    private static final Object templateLoadLock;
+    private static final Random rand;
     private final JigsawPiece piece;
-
     private final BlockPos pos;
-    private Rotation pieceRotation = Rotation.NONE;
-    private Predicate<ResourceLocation> filter = key -> true;
-    private final List<AxisAlignedBB> additionalStructureBoxes = new ArrayList<>();
-
-    private JigsawPieceResolver(JigsawPiece piece, BlockPos pos) {
+    private Rotation pieceRotation;
+    private Predicate<ResourceLocation> filter;
+    private final List<AxisAlignedBB> additionalStructureBoxes;
+    
+    private JigsawPieceResolver(final JigsawPiece piece, final BlockPos pos) {
+        this.pieceRotation = Rotation.NONE;
+        this.filter = (key -> true);
+        this.additionalStructureBoxes = new ArrayList<AxisAlignedBB>();
         this.piece = piece;
         this.pos = pos;
     }
-
-    public static JigsawPieceResolver newResolver(JigsawPiece piece, BlockPos pos) {
+    
+    public static JigsawPieceResolver newResolver(final JigsawPiece piece, final BlockPos pos) {
         return new JigsawPieceResolver(piece, pos);
     }
-
-    public JigsawPieceResolver withRotation(Rotation rotation) {
+    
+    public JigsawPieceResolver withRotation(final Rotation rotation) {
         this.pieceRotation = rotation;
         return this;
     }
-
-    public JigsawPieceResolver andJigsawFilter(Predicate<ResourceLocation> filter) {
+    
+    public JigsawPieceResolver andJigsawFilter(final Predicate<ResourceLocation> filter) {
         this.filter = filter.and(filter);
         return this;
     }
-
-    public JigsawPieceResolver addStructureBox(AxisAlignedBB boundingBox) {
+    
+    public JigsawPieceResolver addStructureBox(final AxisAlignedBB boundingBox) {
         this.additionalStructureBoxes.add(boundingBox);
         return this;
     }
-
-
-    public List<AbstractVillagePiece> resolveJigsawPieces(TemplateManager templateManager, Registry<JigsawPattern> jigsawPatternRegistry) {
-        AbstractVillagePiece beginningPiece = new AbstractVillagePiece(templateManager, this.piece, this.pos, this.piece.getGroundLevelDelta(), this.pieceRotation, this.piece.getBoundingBox(templateManager, this.pos, this.pieceRotation));
-        MutableBoundingBox pieceBox = beginningPiece.getBoundingBox();
-        int centerY = this.pos.getY();
-        int offset = pieceBox.y0 + this.piece.getGroundLevelDelta();
+    
+    public List<AbstractVillagePiece> resolveJigsawPieces(final TemplateManager templateManager, final Registry<JigsawPattern> jigsawPatternRegistry) {
+        final AbstractVillagePiece beginningPiece = new AbstractVillagePiece(templateManager, this.piece, this.pos, this.piece.getGroundLevelDelta(), this.pieceRotation, this.piece.getBoundingBox(templateManager, this.pos, this.pieceRotation));
+        final MutableBoundingBox pieceBox = beginningPiece.getBoundingBox();
+        final int centerY = this.pos.getY();
+        final int offset = pieceBox.y0 + this.piece.getGroundLevelDelta();
         beginningPiece.move(0, centerY - offset, 0);
-
-        VoxelShape generationShape = VoxelShapes.create(AxisAlignedBB.of(pieceBox).inflate(15.0D));
-        for (AxisAlignedBB additionalBoxes : this.additionalStructureBoxes) {
+        VoxelShape generationShape = VoxelShapes.create(AxisAlignedBB.of(pieceBox).inflate(15.0));
+        for (final AxisAlignedBB additionalBoxes : this.additionalStructureBoxes) {
             generationShape = VoxelShapes.join(generationShape, VoxelShapes.create(additionalBoxes), IBooleanFunction.ONLY_FIRST);
         }
-        MutableObject<VoxelShape> generationBoxRef = new MutableObject(generationShape);
-
-        List<AbstractVillagePiece> resolvedPieces = new ArrayList<>();
+        final MutableObject<VoxelShape> generationBoxRef = (MutableObject<VoxelShape>)new MutableObject(generationShape);
+        final List<AbstractVillagePiece> resolvedPieces = new ArrayList<AbstractVillagePiece>();
         resolvedPieces.add(beginningPiece);
-
-        List<Entry> generationEntries = new ArrayList<>();
-        generationEntries.add(new Entry(beginningPiece, generationBoxRef));
+        final List<Entry> generationEntries = new ArrayList<Entry>();
+        generationEntries.add(new Entry(beginningPiece, (MutableObject)generationBoxRef));
         while (!generationEntries.isEmpty()) {
-            Entry generationEntry = generationEntries.remove(0);
-            calculatePieces(resolvedPieces, generationEntries, generationEntry.villagePiece, generationEntry.generationBox, templateManager, jigsawPatternRegistry);
+            final Entry generationEntry = generationEntries.remove(0);
+            this.calculatePieces(resolvedPieces, generationEntries, generationEntry.villagePiece, generationEntry.generationBox, templateManager, jigsawPatternRegistry);
         }
-
         return resolvedPieces;
     }
-
-
-    private void calculatePieces(List<AbstractVillagePiece> resolvedPieces, List<Entry> generationEntries, AbstractVillagePiece piece, MutableObject<VoxelShape> generationBox, TemplateManager templateMgr, Registry<JigsawPattern> jigsawPatternRegistry) {
-        List<Template.BlockInfo> thisPieceBlocks;
-        JigsawPiece jigsawpiece = piece.getElement();
-        BlockPos pos = piece.getPosition();
-        Rotation rotation = piece.getRotation();
-        MutableBoundingBox pieceBox = piece.getBoundingBox();
-        MutableObject<VoxelShape> thisPieceGenerationBox = new MutableObject();
-        int minY = pieceBox.y0;
-
-
-        synchronized (templateLoadLock) {
-            thisPieceBlocks = jigsawpiece.getShuffledJigsawBlocks(templateMgr, pos, rotation, rand);
+    
+    private void calculatePieces(final List<AbstractVillagePiece> resolvedPieces, final List<Entry> generationEntries, final AbstractVillagePiece piece, final MutableObject<VoxelShape> generationBox, final TemplateManager templateMgr, final Registry<JigsawPattern> jigsawPatternRegistry) {
+        final JigsawPiece jigsawpiece = piece.getElement();
+        final BlockPos pos = piece.getPosition();
+        final Rotation rotation = piece.getRotation();
+        final MutableBoundingBox pieceBox = piece.getBoundingBox();
+        final MutableObject<VoxelShape> thisPieceGenerationBox = (MutableObject<VoxelShape>)new MutableObject();
+        final int minY = pieceBox.y0;
+        final List<Template.BlockInfo> thisPieceBlocks;
+        synchronized (JigsawPieceResolver.templateLoadLock) {
+            thisPieceBlocks = jigsawpiece.getShuffledJigsawBlocks(templateMgr, pos, rotation, JigsawPieceResolver.rand);
         }
-
-
-        label71:
-        for (Template.BlockInfo blockInfo : thisPieceBlocks) {
-            MutableObject<VoxelShape> nextGenerationBox;
-            Direction connectingDirection = JigsawBlock.getFrontFacing(blockInfo.state);
-            BlockPos jigsawConnectorPos = blockInfo.pos;
-            BlockPos expectedConnectionPos = jigsawConnectorPos.relative(connectingDirection);
-
-            int jigsawYPos = jigsawConnectorPos.getY() - minY;
-
-            ResourceLocation connectorPool = new ResourceLocation(blockInfo.nbt.getString("pool"));
-            Optional<JigsawPattern> mainJigsawPattern = jigsawPatternRegistry.getOptional(connectorPool);
-
-
-            if (!mainJigsawPattern.isPresent() || (((JigsawPattern) mainJigsawPattern.get()).size() == 0 && !Objects.equals(connectorPool, JigsawPatternRegistry.EMPTY.location()))) {
-                Vault.LOGGER.warn("Empty or none existent pool: {}", connectorPool);
-
-                continue;
-            }
-            ResourceLocation fallbackConnectorPool = ((JigsawPattern) mainJigsawPattern.get()).getFallback();
-            Optional<JigsawPattern> fallbackJigsawPattern = jigsawPatternRegistry.getOptional(fallbackConnectorPool);
-            if (!fallbackJigsawPattern.isPresent() || (((JigsawPattern) fallbackJigsawPattern.get()).size() == 0 && !Objects.equals(fallbackConnectorPool, JigsawPatternRegistry.EMPTY.location()))) {
-                Vault.LOGGER.warn("Empty or none existent fallback pool: {}", fallbackConnectorPool);
-
-                continue;
-            }
-
-            if (pieceBox.isInside((Vector3i) expectedConnectionPos)) {
-                nextGenerationBox = thisPieceGenerationBox;
-                if (thisPieceGenerationBox.getValue() == null) {
-                    thisPieceGenerationBox.setValue(VoxelShapes.create(AxisAlignedBB.of(pieceBox)));
+    Label_0086:
+        while (true) {
+            for (final Template.BlockInfo blockInfo : thisPieceBlocks) {
+                final Direction connectingDirection = JigsawBlock.getFrontFacing(blockInfo.state);
+                final BlockPos jigsawConnectorPos = blockInfo.pos;
+                final BlockPos expectedConnectionPos = jigsawConnectorPos.relative(connectingDirection);
+                final int jigsawYPos = jigsawConnectorPos.getY() - minY;
+                final ResourceLocation connectorPool = new ResourceLocation(blockInfo.nbt.getString("pool"));
+                final Optional<JigsawPattern> mainJigsawPattern = jigsawPatternRegistry.getOptional(connectorPool);
+                if (!mainJigsawPattern.isPresent() || (mainJigsawPattern.get().size() == 0 && !Objects.equals(connectorPool, JigsawPatternRegistry.EMPTY.location()))) {
+                    Vault.LOGGER.warn("Empty or none existent pool: {}", connectorPool);
                 }
-            } else {
-                nextGenerationBox = generationBox;
-            }
-
-            WeightedList<JigsawPiece> weightedPieces = new WeightedList();
-            if (this.filter.test(connectorPool)) {
-                ((JigsawPattern) mainJigsawPattern.get()).rawTemplates.forEach(weightedPiece -> weightedPieces.add(weightedPiece.getFirst(), ((Integer) weightedPiece.getSecond()).intValue()));
-            }
-
-
-            if (this.filter.test(fallbackConnectorPool)) {
-                ((JigsawPattern) fallbackJigsawPattern.get()).rawTemplates.forEach(weightedPiece -> weightedPieces.add(weightedPiece.getFirst(), ((Integer) weightedPiece.getSecond()).intValue()));
-            }
-
-
-            while (!weightedPieces.isEmpty()) {
-                JigsawPiece nextPiece = (JigsawPiece) weightedPieces.removeRandom(rand);
-                if (nextPiece == null || nextPiece == EmptyJigsawPiece.INSTANCE) {
-                    break;
-                }
-
-                for (Rotation nextPieceRotation : Rotation.getShuffled(rand)) {
-                    List<Template.BlockInfo> nextPieceBlocks;
-                    synchronized (templateLoadLock) {
-                        nextPieceBlocks = nextPiece.getShuffledJigsawBlocks(templateMgr, BlockPos.ZERO, nextPieceRotation, rand);
+                else {
+                    final ResourceLocation fallbackConnectorPool = mainJigsawPattern.get().getFallback();
+                    final Optional<JigsawPattern> fallbackJigsawPattern = jigsawPatternRegistry.getOptional(fallbackConnectorPool);
+                    if (!fallbackJigsawPattern.isPresent() || (fallbackJigsawPattern.get().size() == 0 && !Objects.equals(fallbackConnectorPool, JigsawPatternRegistry.EMPTY.location()))) {
+                        Vault.LOGGER.warn("Empty or none existent fallback pool: {}", fallbackConnectorPool);
                     }
-
-                    for (Template.BlockInfo nextPieceBlockInfo : nextPieceBlocks) {
-                        if (!JigsawBlock.canAttach(blockInfo, nextPieceBlockInfo)) {
-                            continue;
-                        }
-
-                        BlockPos nextPiecePos = nextPieceBlockInfo.pos;
-
-
-                        BlockPos pieceDiff = new BlockPos(expectedConnectionPos.getX() - nextPiecePos.getX(), expectedConnectionPos.getY() - nextPiecePos.getY(), expectedConnectionPos.getZ() - nextPiecePos.getZ());
-                        MutableBoundingBox nextPieceBox = nextPiece.getBoundingBox(templateMgr, pieceDiff, nextPieceRotation);
-                        boolean isNextPieceRigid = (nextPiece.getProjection() == JigsawPattern.PlacementBehaviour.RIGID);
-
-                        int nextY = nextPiecePos.getY();
-                        int l1 = jigsawYPos - nextY + JigsawBlock.getFrontFacing(nextPieceBlockInfo.state).getStepY();
-
-                        if (VaultPiece.shouldIgnoreCollision(nextPiece) || !VoxelShapes.joinIsNotEmpty((VoxelShape) nextGenerationBox.getValue(), VoxelShapes.create(AxisAlignedBB.of(nextPieceBox).deflate(0.25D)), IBooleanFunction.ONLY_SECOND)) {
-                            nextGenerationBox.setValue(VoxelShapes.joinUnoptimized((VoxelShape) nextGenerationBox.getValue(), VoxelShapes.create(AxisAlignedBB.of(nextPieceBox)), IBooleanFunction.ONLY_FIRST));
-
-
-                            if (isNextPieceRigid) {
-                                int i = piece.getGroundLevelDelta() - l1;
-                                continue label71;
+                    else {
+                        MutableObject<VoxelShape> nextGenerationBox;
+                        if (pieceBox.isInside((Vector3i)expectedConnectionPos)) {
+                            nextGenerationBox = thisPieceGenerationBox;
+                            if (thisPieceGenerationBox.getValue() == null) {
+                                thisPieceGenerationBox.setValue(VoxelShapes.create(AxisAlignedBB.of(pieceBox)));
                             }
-                            int l2 = nextPiece.getGroundLevelDelta();
-
-
-                            AbstractVillagePiece nextPieceVillagePiece = new AbstractVillagePiece(templateMgr, nextPiece, pieceDiff, l2, nextPieceRotation, nextPieceBox);
-                            resolvedPieces.add(nextPieceVillagePiece);
-                            generationEntries.add(new Entry(nextPieceVillagePiece, nextGenerationBox));
+                        }
+                        else {
+                            nextGenerationBox = generationBox;
+                        }
+                        final WeightedList<JigsawPiece> weightedPieces = new WeightedList<JigsawPiece>();
+                        if (this.filter.test(connectorPool)) {
+                            mainJigsawPattern.get().rawTemplates.forEach(weightedPiece -> weightedPieces.add(weightedPiece.getFirst(), (int)weightedPiece.getSecond()));
+                        }
+                        if (this.filter.test(fallbackConnectorPool)) {
+                            fallbackJigsawPattern.get().rawTemplates.forEach(weightedPiece -> weightedPieces.add(weightedPiece.getFirst(), (int)weightedPiece.getSecond()));
+                        }
+                        while (!weightedPieces.isEmpty()) {
+                            final JigsawPiece nextPiece = weightedPieces.removeRandom(JigsawPieceResolver.rand);
+                            if (nextPiece == null) {
+                                break;
+                            }
+                            if (nextPiece == EmptyJigsawPiece.INSTANCE) {
+                                break;
+                            }
+                            for (final Rotation nextPieceRotation : Rotation.getShuffled(JigsawPieceResolver.rand)) {
+                                final List<Template.BlockInfo> nextPieceBlocks;
+                                synchronized (JigsawPieceResolver.templateLoadLock) {
+                                    nextPieceBlocks = nextPiece.getShuffledJigsawBlocks(templateMgr, BlockPos.ZERO, nextPieceRotation, JigsawPieceResolver.rand);
+                                }
+                                for (final Template.BlockInfo nextPieceBlockInfo : nextPieceBlocks) {
+                                    if (!JigsawBlock.canAttach(blockInfo, nextPieceBlockInfo)) {
+                                        continue;
+                                    }
+                                    final BlockPos nextPiecePos = nextPieceBlockInfo.pos;
+                                    final BlockPos pieceDiff = new BlockPos(expectedConnectionPos.getX() - nextPiecePos.getX(), expectedConnectionPos.getY() - nextPiecePos.getY(), expectedConnectionPos.getZ() - nextPiecePos.getZ());
+                                    final MutableBoundingBox nextPieceBox = nextPiece.getBoundingBox(templateMgr, pieceDiff, nextPieceRotation);
+                                    final boolean isNextPieceRigid = nextPiece.getProjection() == JigsawPattern.PlacementBehaviour.RIGID;
+                                    final int nextY = nextPiecePos.getY();
+                                    final int l1 = jigsawYPos - nextY + JigsawBlock.getFrontFacing(nextPieceBlockInfo.state).getStepY();
+                                    if (VaultPiece.shouldIgnoreCollision(nextPiece) || !VoxelShapes.joinIsNotEmpty((VoxelShape)nextGenerationBox.getValue(), VoxelShapes.create(AxisAlignedBB.of(nextPieceBox).deflate(0.25)), IBooleanFunction.ONLY_SECOND)) {
+                                        nextGenerationBox.setValue(VoxelShapes.joinUnoptimized((VoxelShape)nextGenerationBox.getValue(), VoxelShapes.create(AxisAlignedBB.of(nextPieceBox)), IBooleanFunction.ONLY_FIRST));
+                                        int l2;
+                                        if (isNextPieceRigid) {
+                                            l2 = piece.getGroundLevelDelta() - l1;
+                                        }
+                                        else {
+                                            l2 = nextPiece.getGroundLevelDelta();
+                                        }
+                                        final AbstractVillagePiece nextPieceVillagePiece = new AbstractVillagePiece(templateMgr, nextPiece, pieceDiff, l2, nextPieceRotation, nextPieceBox);
+                                        resolvedPieces.add(nextPieceVillagePiece);
+                                        generationEntries.add(new Entry(nextPieceVillagePiece, (MutableObject)nextGenerationBox));
+                                        continue Label_0086;
+                                    }
+                                }
+                            }
                         }
                     }
                 }
             }
+            break;
         }
     }
-
-
-    static final class Entry {
+    
+    static {
+        templateLoadLock = new Object();
+        rand = new Random();
+    }
+    
+    static final class Entry
+    {
         private final AbstractVillagePiece villagePiece;
         private final MutableObject<VoxelShape> generationBox;
-
-        private Entry(AbstractVillagePiece piece, MutableObject<VoxelShape> generationBox) {
+        
+        private Entry(final AbstractVillagePiece piece, final MutableObject<VoxelShape> generationBox) {
             this.villagePiece = piece;
             this.generationBox = generationBox;
         }
     }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\world\gen\structure\JigsawPieceResolver.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

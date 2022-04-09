@@ -1,3 +1,7 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.entity;
 
 import iskallia.vault.Vault;
@@ -29,118 +33,101 @@ import net.minecraftforge.fml.network.NetworkHooks;
 
 import javax.annotation.Nullable;
 
-public class EtchingVendorEntity extends MobEntity {
-    private static final DataParameter<BlockPos> VENDOR_POS = EntityDataManager.defineId(EtchingVendorEntity.class, DataSerializers.BLOCK_POS);
-
-    public EtchingVendorEntity(EntityType<? extends MobEntity> type, World world) {
-        super(type, world);
-        setInvulnerable(true);
-        setNoGravity(true);
+public class EtchingVendorEntity extends MobEntity
+{
+    private static final DataParameter<BlockPos> VENDOR_POS;
+    
+    public EtchingVendorEntity(final EntityType<? extends MobEntity> type, final World world) {
+        super((EntityType)type, world);
+        this.setInvulnerable(true);
+        this.setNoGravity(true);
     }
-
-
+    
     protected void defineSynchedData() {
         super.defineSynchedData();
-        this.entityData.define(VENDOR_POS, BlockPos.ZERO);
+        this.entityData.define((DataParameter)EtchingVendorEntity.VENDOR_POS, BlockPos.ZERO);
     }
-
-
+    
     protected void registerGoals() {
         super.registerGoals();
-
 //        this.goalSelector = new GoalSelector(this.level.getProfilerSupplier());
 //        this.targetSelector = new GoalSelector(this.level.getProfilerSupplier());
-
-        this.goalSelector.addGoal(1, (Goal) new LookAtGoal(this, PlayerEntity.class, 8.0F));
-        this.goalSelector.addGoal(10, (Goal) new LookRandomlyGoal(this));
+        this.goalSelector.addGoal(1, (Goal)new LookAtGoal((MobEntity)this, (Class)PlayerEntity.class, 8.0f));
+        this.goalSelector.addGoal(10, (Goal)new LookRandomlyGoal((MobEntity)this));
     }
-
-    public void setVendorPos(BlockPos pos) {
-        this.entityData.set(VENDOR_POS, pos);
+    
+    public void setVendorPos(final BlockPos pos) {
+        this.entityData.set((DataParameter)EtchingVendorEntity.VENDOR_POS, pos);
     }
-
+    
     public BlockPos getVendorPos() {
-        return (BlockPos) this.entityData.get(VENDOR_POS);
+        return (BlockPos)this.entityData.get((DataParameter)EtchingVendorEntity.VENDOR_POS);
     }
-
-
+    
     public void tick() {
         super.tick();
-
-        dropLeash(true, false);
+        this.dropLeash(true, false);
         if (this.level.isClientSide()) {
             return;
         }
-        if (!isValid()) {
-            remove();
+        if (!this.isValid()) {
+            this.remove();
         }
     }
-
+    
     public boolean isValid() {
         if (this.level.dimension() != Vault.VAULT_KEY) {
             return false;
         }
-
-        if (!this.level.isAreaLoaded(getVendorPos(), 1)) {
+        if (!this.level.isAreaLoaded(this.getVendorPos(), 1)) {
             return false;
         }
-        if (distanceToSqr(Vector3d.atCenterOf((Vector3i) getVendorPos())) > 4.0D) {
+        if (this.distanceToSqr(Vector3d.atCenterOf((Vector3i)this.getVendorPos())) > 4.0) {
             return false;
         }
-
-        TileEntity te = this.level.getBlockEntity(getVendorPos());
-        if (!(te instanceof EtchingVendorControllerTileEntity)) {
-            return false;
-        }
-        if (((EtchingVendorControllerTileEntity) te).getMonitoredEntityId() != getId()) {
-            return false;
-        }
-        return true;
+        final TileEntity te = this.level.getBlockEntity(this.getVendorPos());
+        return te instanceof EtchingVendorControllerTileEntity && ((EtchingVendorControllerTileEntity)te).getMonitoredEntityId() == this.getId();
     }
-
+    
     @Nullable
     public EtchingVendorControllerTileEntity getControllerTile() {
-        return (EtchingVendorControllerTileEntity) this.level.getBlockEntity(getVendorPos());
+        return (EtchingVendorControllerTileEntity)this.level.getBlockEntity(this.getVendorPos());
     }
-
-
-    protected ActionResultType mobInteract(PlayerEntity player, Hand hand) {
+    
+    protected ActionResultType mobInteract(final PlayerEntity player, final Hand hand) {
         if (player instanceof ServerPlayerEntity) {
-            NetworkHooks.openGui((ServerPlayerEntity) player, new INamedContainerProvider() {
+            NetworkHooks.openGui((ServerPlayerEntity)player, (INamedContainerProvider)new INamedContainerProvider() {
                 public ITextComponent getDisplayName() {
-                    return (ITextComponent) new StringTextComponent("Etching Trader");
+                    return (ITextComponent)new StringTextComponent("Etching Trader");
                 }
-
-
+                
                 @Nullable
-                public Container createMenu(int windowId, PlayerInventory playerInventory, PlayerEntity player) {
-                    return (Container) new EtchingTradeContainer(windowId, playerInventory, EtchingVendorEntity.this.getId());
+                public Container createMenu(final int windowId, final PlayerInventory playerInventory, final PlayerEntity player) {
+                    return new EtchingTradeContainer(windowId, playerInventory, EtchingVendorEntity.this.getId());
                 }
-            },buf -> buf.writeInt(getId()));
+            }, buf -> buf.writeInt(this.getId()));
         }
         return ActionResultType.sidedSuccess(this.level.isClientSide);
     }
-
-    public boolean removeWhenFarAway(double distanceToClosestPlayer) {
+    
+    public boolean removeWhenFarAway(final double distanceToClosestPlayer) {
         return false;
     }
-
+    
     @Nullable
     protected SoundEvent getAmbientSound() {
         return SoundEvents.VILLAGER_AMBIENT;
     }
-
-    protected SoundEvent getHurtSound(DamageSource damageSourceIn) {
+    
+    protected SoundEvent getHurtSound(final DamageSource damageSourceIn) {
         return SoundEvents.VILLAGER_HURT;
     }
-
+    
     protected SoundEvent getDeathSound() {
         return SoundEvents.VILLAGER_DEATH;
     }
+    
+    static {
+        VENDOR_POS = EntityDataManager.defineId((Class)EtchingVendorEntity.class, DataSerializers.BLOCK_POS);
+    }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\entity\EtchingVendorEntity.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

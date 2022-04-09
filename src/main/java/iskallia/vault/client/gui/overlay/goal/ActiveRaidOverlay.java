@@ -1,3 +1,7 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.client.gui.overlay.goal;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
@@ -18,7 +22,10 @@ import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.inventory.container.PlayerContainer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.text.*;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.ITextProperties;
+import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -26,110 +33,95 @@ import net.minecraftforge.fml.common.Mod;
 
 import java.util.List;
 
-@Mod.EventBusSubscriber({Dist.CLIENT})
-public class ActiveRaidOverlay extends BossBarOverlay {
-    public static final ResourceLocation VAULT_HUD_RESOURCE = Vault.id("textures/gui/vault-hud.png");
-
+@Mod.EventBusSubscriber({ Dist.CLIENT })
+public class ActiveRaidOverlay extends BossBarOverlay
+{
+    public static final ResourceLocation VAULT_HUD_RESOURCE;
     private final ActiveRaidGoalData data;
-
-    public ActiveRaidOverlay(ActiveRaidGoalData data) {
+    
+    public ActiveRaidOverlay(final ActiveRaidGoalData data) {
         this.data = data;
     }
-
+    
     @SubscribeEvent
-    public static void onDrawPlayerlist(RenderGameOverlayEvent.Pre event) {
+    public static void onDrawPlayerlist(final RenderGameOverlayEvent.Pre event) {
         if (event.getType() != RenderGameOverlayEvent.ElementType.PLAYER_LIST) {
             return;
         }
-        VaultGoalData data = VaultGoalData.CURRENT_DATA;
+        final VaultGoalData data = VaultGoalData.CURRENT_DATA;
         if (!(data instanceof ActiveRaidGoalData)) {
             return;
         }
         event.setCanceled(true);
     }
-
-
+    
+    @Override
     public boolean shouldDisplay() {
         return true;
     }
-
-
-    public int drawOverlay(MatrixStack renderStack, float pTicks) {
+    
+    @Override
+    public int drawOverlay(final MatrixStack renderStack, final float pTicks) {
         int offsetY = 5;
-        offsetY = drawWaveDisplay(renderStack, pTicks, offsetY);
-        offsetY = drawMobBar(renderStack, pTicks, offsetY);
-        offsetY = drawModifierDisplay(renderStack, pTicks, offsetY);
+        offsetY = this.drawWaveDisplay(renderStack, pTicks, offsetY);
+        offsetY = this.drawMobBar(renderStack, pTicks, offsetY);
+        offsetY = this.drawModifierDisplay(renderStack, pTicks, offsetY);
         return offsetY;
     }
-
-    private int drawWaveDisplay(MatrixStack renderStack, float pTicks, int offsetY) {
+    
+    private int drawWaveDisplay(final MatrixStack renderStack, final float pTicks, final int offsetY) {
         if (this.data.getTotalWaves() <= 0) {
             return offsetY;
         }
-        String waveDisplay = String.format("%s / %s", new Object[]{Integer.valueOf(this.data.getWave() + 1), Integer.valueOf(this.data.getTotalWaves())});
-        String fullDisplay = waveDisplay;
+        String fullDisplay;
+        final String waveDisplay = fullDisplay = String.format("%s / %s", this.data.getWave() + 1, this.data.getTotalWaves());
         if (this.data.getTickWaveDelay() > 0) {
             fullDisplay = fullDisplay + " - " + UIHelper.formatTimeString(this.data.getTickWaveDelay());
         }
-
-        IRenderTypeBuffer.Impl buffer = IRenderTypeBuffer.immediate(Tessellator.getInstance().getBuilder());
-        Minecraft mc = Minecraft.getInstance();
-        FontRenderer fr = mc.font;
-        int width = fr.width(waveDisplay);
-        float midX = mc.getWindow().getGuiScaledWidth() / 2.0F;
-
+        final IRenderTypeBuffer.Impl buffer = IRenderTypeBuffer.immediate(Tessellator.getInstance().getBuilder());
+        final Minecraft mc = Minecraft.getInstance();
+        final FontRenderer fr = mc.font;
+        final int width = fr.width(waveDisplay);
+        final float midX = mc.getWindow().getGuiScaledWidth() / 2.0f;
         renderStack.pushPose();
-        renderStack.translate((midX - width / 2.0F), offsetY, 0.0D);
-        renderStack.scale(1.25F, 1.25F, 1.0F);
-        FontHelper.drawStringWithBorder(renderStack, fullDisplay, 0.0F, 0.0F, 16777215, 0);
+        renderStack.translate((double)(midX - width / 2.0f), (double)offsetY, 0.0);
+        renderStack.scale(1.25f, 1.25f, 1.0f);
+        FontHelper.drawStringWithBorder(renderStack, fullDisplay, 0.0f, 0.0f, 16777215, 0);
         buffer.endBatch();
         renderStack.popPose();
-
         return offsetY + 13;
     }
-
-    private int drawMobBar(MatrixStack renderStack, float pTicks, int offsetY) {
+    
+    private int drawMobBar(final MatrixStack renderStack, final float pTicks, final int offsetY) {
         if (this.data.getTotalWaves() <= 0) {
             return offsetY;
         }
-        Minecraft mc = Minecraft.getInstance();
-        mc.getTextureManager().bind(VAULT_HUD_RESOURCE);
-
-        float killedPerc = this.data.getAliveMobs() / this.data.getTotalMobs();
-
-        float midX = mc.getWindow().getGuiScaledWidth() / 2.0F;
-        int width = 182;
-        int mobWidth = (int) (width * killedPerc);
-        int totalWidth = width - mobWidth;
-
+        final Minecraft mc = Minecraft.getInstance();
+        mc.getTextureManager().bind(ActiveRaidOverlay.VAULT_HUD_RESOURCE);
+        final float killedPerc = this.data.getAliveMobs() / (float)this.data.getTotalMobs();
+        final float midX = mc.getWindow().getGuiScaledWidth() / 2.0f;
+        final int width = 182;
+        final int mobWidth = (int)(width * killedPerc);
+        final int totalWidth = width - mobWidth;
         RenderSystem.enableBlend();
         RenderSystem.defaultBlendFunc();
         ScreenDrawHelper.drawQuad(buf -> {
-            ScreenDrawHelper.rect((IVertexBuilder) buf, renderStack).at(midX - width / 2.0F, offsetY).dim(mobWidth, 5.0F).texVanilla(0.0F, 168.0F, mobWidth, 5.0F).draw();
-
-
-            ScreenDrawHelper.rect((IVertexBuilder) buf, renderStack).at(midX - width / 2.0F, offsetY).dim(mobWidth, 5.0F).texVanilla(0.0F, 178.0F, mobWidth, 5.0F).draw();
-
-
-            ScreenDrawHelper.rect((IVertexBuilder) buf, renderStack).at(midX - width / 2.0F + mobWidth, offsetY).dim(totalWidth, 5.0F).texVanilla(mobWidth, 163.0F, totalWidth, 5.0F).draw();
-
-
-            ScreenDrawHelper.rect((IVertexBuilder) buf, renderStack).at(midX - width / 2.0F + mobWidth, offsetY).dim(totalWidth, 5.0F).texVanilla(mobWidth, 173.0F, totalWidth, 5.0F).draw();
+            ScreenDrawHelper.rect((IVertexBuilder)buf, renderStack).at(midX - width / 2.0f, (float)offsetY).dim((float)mobWidth, 5.0f).texVanilla(0.0f, 168.0f, (float)mobWidth, 5.0f).draw();
+            ScreenDrawHelper.rect((IVertexBuilder)buf, renderStack).at(midX - width / 2.0f, (float)offsetY).dim((float)mobWidth, 5.0f).texVanilla(0.0f, 178.0f, (float)mobWidth, 5.0f).draw();
+            ScreenDrawHelper.rect((IVertexBuilder)buf, renderStack).at(midX - width / 2.0f + mobWidth, (float)offsetY).dim((float)totalWidth, 5.0f).texVanilla((float)mobWidth, 163.0f, (float)totalWidth, 5.0f).draw();
+            ScreenDrawHelper.rect((IVertexBuilder)buf, renderStack).at(midX - width / 2.0f + mobWidth, (float)offsetY).dim((float)totalWidth, 5.0f).texVanilla((float)mobWidth, 173.0f, (float)totalWidth, 5.0f).draw();
+            return;
         });
-
-
         RenderSystem.disableBlend();
-
         mc.getTextureManager().bind(PlayerContainer.BLOCK_ATLAS);
         return offsetY + 8;
     }
-
-    private int drawModifierDisplay(MatrixStack renderStack, float pTicks, int offsetY) {
-        IRenderTypeBuffer.Impl buffer = IRenderTypeBuffer.immediate(Tessellator.getInstance().getBuilder());
-        Minecraft mc = Minecraft.getInstance();
-        FontRenderer fr = mc.font;
-        int guiScale = mc.options.guiScale;
-
+    
+    private int drawModifierDisplay(final MatrixStack renderStack, final float pTicks, int offsetY) {
+        final IRenderTypeBuffer.Impl buffer = IRenderTypeBuffer.immediate(Tessellator.getInstance().getBuilder());
+        final Minecraft mc = Minecraft.getInstance();
+        final FontRenderer fr = mc.font;
+        final int guiScale = mc.options.guiScale;
         boolean drawAdditionalInfo = false;
         List<ITextComponent> positives = this.data.getPositives();
         List<ITextComponent> negatives = this.data.getNegatives();
@@ -138,73 +130,54 @@ public class ActiveRaidOverlay extends BossBarOverlay {
             positives = positives.subList(0, Math.min(positives.size(), 2));
             negatives = negatives.subList(0, Math.min(negatives.size(), 2));
         }
-
-        float midX = mc.getWindow().getGuiScaledWidth() / 2.0F;
-        float scale = (guiScale >= 4 || guiScale == 0) ? 0.7F : 1.0F;
-        float height = 10.0F * scale;
+        final float midX = mc.getWindow().getGuiScaledWidth() / 2.0f;
+        final float scale = (guiScale >= 4 || guiScale == 0) ? 0.7f : 1.0f;
+        final float height = 10.0f * scale;
         float maxHeight = Math.max(positives.size(), negatives.size()) * height;
-
         if (this.data.getRaidsCompleted() > 0) {
             renderStack.pushPose();
-            renderStack.translate(midX, offsetY, 0.0D);
-            renderStack.scale(scale, scale, 1.0F);
-
-            String raid = (this.data.getRaidsCompleted() > 1) ? " Raids" : " Raid";
-
-            IFormattableTextComponent iFormattableTextComponent = (new StringTextComponent(this.data.getRaidsCompleted() + raid + " Completed")).withStyle(TextFormatting.GOLD);
-            int width = fr.width((ITextProperties) iFormattableTextComponent);
-            fr.drawInBatch((ITextComponent) iFormattableTextComponent, (-width / 2), 0.0F, -1, false, renderStack
-                    .last().pose(), (IRenderTypeBuffer) buffer, true, 0, LightmapHelper.getPackedFullbrightCoords());
+            renderStack.translate((double)midX, (double)offsetY, 0.0);
+            renderStack.scale(scale, scale, 1.0f);
+            final String raid = (this.data.getRaidsCompleted() > 1) ? " Raids" : " Raid";
+            final ITextComponent info = (ITextComponent)new StringTextComponent(this.data.getRaidsCompleted() + raid + " Completed").withStyle(TextFormatting.GOLD);
+            final int width = fr.width((ITextProperties)info);
+            fr.drawInBatch(info, (float)(-width / 2), 0.0f, -1, false, renderStack.last().pose(), (IRenderTypeBuffer)buffer, true, 0, LightmapHelper.getPackedFullbrightCoords());
             renderStack.popPose();
-
-            offsetY = (int) (offsetY + height + 1.0F);
+            offsetY += (int)(height + 1.0f);
         }
-
         renderStack.pushPose();
-        renderStack.translate((midX - 5.0F), offsetY, 0.0D);
-        renderStack.scale(scale, scale, 1.0F);
-        for (ITextComponent positive : positives) {
-            int width = fr.width((ITextProperties) positive);
-            fr.drawInBatch(positive, -width, 0.0F, -1, false, renderStack
-                    .last().pose(), (IRenderTypeBuffer) buffer, true, 0, LightmapHelper.getPackedFullbrightCoords());
-            renderStack.translate(0.0D, 10.0D, 0.0D);
+        renderStack.translate((double)(midX - 5.0f), (double)offsetY, 0.0);
+        renderStack.scale(scale, scale, 1.0f);
+        for (final ITextComponent positive : positives) {
+            final int width = fr.width((ITextProperties)positive);
+            fr.drawInBatch(positive, (float)(-width), 0.0f, -1, false, renderStack.last().pose(), (IRenderTypeBuffer)buffer, true, 0, LightmapHelper.getPackedFullbrightCoords());
+            renderStack.translate(0.0, 10.0, 0.0);
         }
         renderStack.popPose();
-
         renderStack.pushPose();
-        renderStack.translate((midX + 5.0F), offsetY, 0.0D);
-        renderStack.scale(scale, scale, 1.0F);
-        for (ITextComponent negative : negatives) {
-            fr.drawInBatch(negative, 0.0F, 0.0F, -1, false, renderStack
-                    .last().pose(), (IRenderTypeBuffer) buffer, true, 0, LightmapHelper.getPackedFullbrightCoords());
-            renderStack.translate(0.0D, 10.0D, 0.0D);
+        renderStack.translate((double)(midX + 5.0f), (double)offsetY, 0.0);
+        renderStack.scale(scale, scale, 1.0f);
+        for (final ITextComponent negative : negatives) {
+            fr.drawInBatch(negative, 0.0f, 0.0f, -1, false, renderStack.last().pose(), (IRenderTypeBuffer)buffer, true, 0, LightmapHelper.getPackedFullbrightCoords());
+            renderStack.translate(0.0, 10.0, 0.0);
         }
         renderStack.popPose();
-
         if (drawAdditionalInfo) {
             renderStack.pushPose();
-            renderStack.translate(midX, (offsetY + maxHeight), 0.0D);
-            renderStack.scale(scale, scale, 1.0F);
-
-            KeyBinding listSetting = mc.options.keyPlayerList;
-
-            IFormattableTextComponent iFormattableTextComponent = (new StringTextComponent("Hold ")).withStyle(TextFormatting.DARK_GRAY).append(listSetting.getTranslatedKeyMessage());
-            int width = fr.width((ITextProperties) iFormattableTextComponent);
-            fr.drawInBatch((ITextComponent) iFormattableTextComponent, (-width / 2), 0.0F, -1, false, renderStack
-                    .last().pose(), (IRenderTypeBuffer) buffer, true, 0, LightmapHelper.getPackedFullbrightCoords());
+            renderStack.translate((double)midX, (double)(offsetY + maxHeight), 0.0);
+            renderStack.scale(scale, scale, 1.0f);
+            final KeyBinding listSetting = mc.options.keyPlayerList;
+            final ITextComponent info = (ITextComponent)new StringTextComponent("Hold ").withStyle(TextFormatting.DARK_GRAY).append(listSetting.getTranslatedKeyMessage());
+            final int width = fr.width((ITextProperties)info);
+            fr.drawInBatch(info, (float)(-width / 2), 0.0f, -1, false, renderStack.last().pose(), (IRenderTypeBuffer)buffer, true, 0, LightmapHelper.getPackedFullbrightCoords());
             renderStack.popPose();
-
             maxHeight += height;
         }
-
         buffer.endBatch();
-
         return MathHelper.ceil(offsetY + maxHeight);
     }
+    
+    static {
+        VAULT_HUD_RESOURCE = Vault.id("textures/gui/vault-hud.png");
+    }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\client\gui\overlay\goal\ActiveRaidOverlay.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

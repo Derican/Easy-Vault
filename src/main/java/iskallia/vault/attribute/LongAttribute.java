@@ -1,85 +1,73 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.attribute;
 
 import net.minecraft.nbt.CompoundNBT;
 
 import java.util.Random;
 
-
-public class LongAttribute
-        extends NumberAttribute<Long> {
+public class LongAttribute extends NumberAttribute<Long>
+{
     public LongAttribute() {
     }
-
-    public LongAttribute(VAttribute.Modifier<Long> modifier) {
+    
+    public LongAttribute(final VAttribute.Modifier<Long> modifier) {
         super(modifier);
     }
-
-
-    public void write(CompoundNBT nbt) {
-        nbt.putLong("BaseValue", getBaseValue().longValue());
+    
+    @Override
+    public void write(final CompoundNBT nbt) {
+        nbt.putLong("BaseValue", (long)this.getBaseValue());
     }
-
-
-    public void read(CompoundNBT nbt) {
-        setBaseValue(Long.valueOf(nbt.getLong("BaseValue")));
+    
+    @Override
+    public void read(final CompoundNBT nbt) {
+        this.setBaseValue(nbt.getLong("BaseValue"));
     }
-
+    
     public static Generator generator() {
         return new Generator();
     }
-
-    public static Generator.Operator of(NumberAttribute.Type type) {
+    
+    public static Generator.Operator of(final Type type) {
         return new Generator.Operator(type);
     }
-
-    public static class Generator
-            extends NumberAttribute.Generator<Long, Generator.Operator> {
-        public Long getDefaultValue(Random random) {
-            return Long.valueOf(0L);
+    
+    public static class Generator extends NumberAttribute.Generator<Long, Generator.Operator>
+    {
+        @Override
+        public Long getDefaultValue(final Random random) {
+            return 0L;
         }
-
-        public static Operator of(NumberAttribute.Type type) {
+        
+        public static Operator of(final Type type) {
             return new Operator(type);
         }
-
-        public static class Operator extends NumberAttribute.Generator.Operator<Long> {
-            public Operator(NumberAttribute.Type type) {
+        
+        public static class Operator extends NumberAttribute.Generator.Operator<Long>
+        {
+            public Operator(final Type type) {
                 super(type);
             }
-
-            public Long apply(Long value, Long modifier) {
-                if (getType() == NumberAttribute.Type.SET)
+            
+            @Override
+            public Long apply(final Long value, final Long modifier) {
+                try{
+                if (this.getType() == Type.SET) {
                     return modifier;
-                if (getType() == NumberAttribute.Type.ADD)
-                    return Long.valueOf(value.longValue() + modifier.longValue());
-                if (getType() == NumberAttribute.Type.MULTIPLY) {
-                    return Long.valueOf(value.longValue() * modifier.longValue());
                 }
+                if (this.getType() == Type.ADD) {
+                    return value + modifier;
+                }
+                if (this.getType() == Type.MULTIPLY) {
+                    return value * modifier;
+                }}catch (Throwable e){
 
+                }
                 return value;
             }
         }
     }
-
-    public static class Operator extends NumberAttribute.Generator.Operator<Long> {
-        public Long apply(Long value, Long modifier) {
-            if (getType() == NumberAttribute.Type.SET) return modifier;
-            if (getType() == NumberAttribute.Type.ADD) return Long.valueOf(value.longValue() + modifier.longValue());
-            if (getType() == NumberAttribute.Type.MULTIPLY)
-                return Long.valueOf(value.longValue() * modifier.longValue());
-            return value;
-        }
-
-
-        public Operator(NumberAttribute.Type type) {
-            super(type);
-        }
-    }
-
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\attribute\LongAttribute.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

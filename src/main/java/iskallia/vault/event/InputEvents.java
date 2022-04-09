@@ -1,3 +1,7 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.event;
 
 import iskallia.vault.client.gui.screen.AbilitySelectionScreen;
@@ -18,84 +22,92 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import java.util.Map;
 
 @OnlyIn(Dist.CLIENT)
-public class InputEvents {
-    public static boolean isShiftDown() {
-        return isShiftDown;
-    }
-
+public class InputEvents
+{
     private static boolean isShiftDown;
-
+    
+    public static boolean isShiftDown() {
+        return InputEvents.isShiftDown;
+    }
+    
     @SubscribeEvent
-    public static void onShiftKey(InputEvent.KeyInputEvent event) {
+    public static void onShiftKey(final InputEvent.KeyInputEvent event) {
         if (event.getKey() == 340) {
             if (event.getAction() == 1) {
-                isShiftDown = true;
-            } else if (event.getAction() == 0) {
-                isShiftDown = false;
+                InputEvents.isShiftDown = true;
+            }
+            else if (event.getAction() == 0) {
+                InputEvents.isShiftDown = false;
             }
         }
     }
-
+    
     @SubscribeEvent
-    public static void onKey(InputEvent.KeyInputEvent event) {
-        Minecraft minecraft = Minecraft.getInstance();
-        if (minecraft.level == null)
+    public static void onKey(final InputEvent.KeyInputEvent event) {
+        final Minecraft minecraft = Minecraft.getInstance();
+        if (minecraft.level == null) {
             return;
+        }
         onInput(minecraft, event.getKey(), event.getAction());
     }
-
+    
     @SubscribeEvent
-    public static void onMouse(InputEvent.MouseInputEvent event) {
-        Minecraft minecraft = Minecraft.getInstance();
-        if (minecraft.level == null)
+    public static void onMouse(final InputEvent.MouseInputEvent event) {
+        final Minecraft minecraft = Minecraft.getInstance();
+        if (minecraft.level == null) {
             return;
+        }
         onInput(minecraft, event.getButton(), event.getAction());
     }
-
-    private static void onInput(Minecraft minecraft, int key, int action) {
+    
+    private static void onInput(final Minecraft minecraft, final int key, final int action) {
         if (minecraft.screen != null || key == -1) {
             return;
         }
-
-        for (Map.Entry<String, KeyBinding> quickSelectKeybind : (Iterable<Map.Entry<String, KeyBinding>>) ModKeybinds.abilityQuickfireKey.entrySet()) {
-            if (((KeyBinding) quickSelectKeybind.getValue()).getKey().getValue() == key) {
-                if (action != 1)
+        for (final Map.Entry<String, KeyBinding> quickSelectKeybind : ModKeybinds.abilityQuickfireKey.entrySet()) {
+            if (quickSelectKeybind.getValue().getKey().getValue() == key) {
+                if (action != 1) {
                     return;
+                }
                 ModNetwork.CHANNEL.sendToServer(new AbilityQuickselectMessage(quickSelectKeybind.getKey()));
             }
         }
         if (ModKeybinds.abilityWheelKey.getKey().getValue() == key) {
-            if (action != 1)
+            if (action != 1) {
                 return;
-            minecraft.setScreen((Screen) new AbilitySelectionScreen());
+            }
+            minecraft.setScreen((Screen)new AbilitySelectionScreen());
             ModNetwork.CHANNEL.sendToServer(new AbilityKeyMessage(true));
-        } else if (ModKeybinds.openShardTraderScreen.consumeClick()) {
+        }
+        else if (ModKeybinds.openShardTraderScreen.consumeClick()) {
             ModNetwork.CHANNEL.sendToServer(new ShardTraderScreenMessage());
-        } else if (ModKeybinds.openAbilityTree.consumeClick()) {
+        }
+        else if (ModKeybinds.openAbilityTree.consumeClick()) {
             ModNetwork.CHANNEL.sendToServer(new OpenSkillTreeMessage());
-        } else if (ModKeybinds.abilityKey.getKey().getValue() == key) {
+        }
+        else if (ModKeybinds.abilityKey.getKey().getValue() == key) {
             if (action == 0) {
                 ModNetwork.CHANNEL.sendToServer(new AbilityKeyMessage(true, false, false, false));
-            } else if (action == 1) {
+            }
+            else if (action == 1) {
                 ModNetwork.CHANNEL.sendToServer(new AbilityKeyMessage(false, true, false, false));
             }
         }
     }
-
+    
     @SubscribeEvent
-    public static void onMouseScroll(InputEvent.MouseScrollEvent event) {
-        Minecraft minecraft = Minecraft.getInstance();
+    public static void onMouseScroll(final InputEvent.MouseScrollEvent event) {
+        final Minecraft minecraft = Minecraft.getInstance();
         if (minecraft.level == null) {
             return;
         }
-
-        double scrollDelta = event.getScrollDelta();
-
+        final double scrollDelta = event.getScrollDelta();
         if (ModKeybinds.abilityKey.isDown()) {
             if (minecraft.screen == null) {
-                if (scrollDelta < 0.0D) {
+                if (scrollDelta < 0.0) {
                     ModNetwork.CHANNEL.sendToServer(new AbilityKeyMessage(false, false, false, true));
-                } else {
+                }
+                else {
                     ModNetwork.CHANNEL.sendToServer(new AbilityKeyMessage(false, false, true, false));
                 }
             }
@@ -103,9 +115,3 @@ public class InputEvents {
         }
     }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\event\InputEvents.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

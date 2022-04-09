@@ -1,3 +1,7 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.block;
 
 import iskallia.vault.init.ModBlocks;
@@ -23,66 +27,49 @@ import net.minecraft.world.World;
 import java.util.ArrayList;
 import java.util.List;
 
-public class VaultDoorBlock extends DoorBlock {
-    public static final List<VaultDoorBlock> VAULT_DOORS = new ArrayList<>();
-
+public class VaultDoorBlock extends DoorBlock
+{
+    public static final List<VaultDoorBlock> VAULT_DOORS;
     protected Item keyItem;
-
-    public VaultDoorBlock(Item keyItem) {
-        super(AbstractBlock.Properties.of(Material.METAL, MaterialColor.DIAMOND)
-                .strength(-1.0F, 3600000.0F)
-                .sound(SoundType.METAL)
-                .noOcclusion());
-        registerDefaultState((BlockState) ((BlockState) ((BlockState) ((BlockState) ((BlockState) ((BlockState) getStateDefinition().any())
-                .setValue((Property) FACING, (Comparable) Direction.NORTH))
-                .setValue((Property) OPEN, Boolean.FALSE))
-                .setValue((Property) HINGE, (Comparable) DoorHingeSide.LEFT))
-                .setValue((Property) POWERED, Boolean.FALSE))
-                .setValue((Property) HALF, (Comparable) DoubleBlockHalf.LOWER));
+    
+    public VaultDoorBlock(final Item keyItem) {
+        super(AbstractBlock.Properties.of(Material.METAL, MaterialColor.DIAMOND).strength(-1.0f, 3600000.0f).sound(SoundType.METAL).noOcclusion());
+        this.registerDefaultState((((((this.getStateDefinition().any()).setValue(VaultDoorBlock.FACING, Direction.NORTH)).setValue(VaultDoorBlock.OPEN, Boolean.FALSE)).setValue(VaultDoorBlock.HINGE, DoorHingeSide.LEFT)).setValue(VaultDoorBlock.POWERED, Boolean.FALSE)).setValue(VaultDoorBlock.HALF, DoubleBlockHalf.LOWER));
         this.keyItem = keyItem;
-        VAULT_DOORS.add(this);
+        VaultDoorBlock.VAULT_DOORS.add(this);
     }
-
+    
     public Item getKeyItem() {
         return this.keyItem;
     }
-
-
-    public PushReaction getPistonPushReaction(BlockState state) {
+    
+    public PushReaction getPistonPushReaction(final BlockState state) {
         return PushReaction.BLOCK;
     }
-
-
-    public void neighborChanged(BlockState state, World worldIn, BlockPos pos, Block blockIn, BlockPos fromPos, boolean isMoving) {
+    
+    public void neighborChanged(final BlockState state, final World worldIn, final BlockPos pos, final Block blockIn, final BlockPos fromPos, final boolean isMoving) {
     }
-
-
-    public boolean hasTileEntity(BlockState state) {
+    
+    public boolean hasTileEntity(final BlockState state) {
         return true;
     }
-
-
-    public TileEntity createTileEntity(BlockState state, IBlockReader world) {
+    
+    public TileEntity createTileEntity(final BlockState state, final IBlockReader world) {
         return ModBlocks.VAULT_DOOR_TILE_ENTITY.create();
     }
-
-
-    public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
-        ItemStack heldStack = player.getItemInHand(hand);
-        Boolean isOpen = (Boolean) state.getValue((Property) OPEN);
-
-        if (!isOpen.booleanValue() && heldStack.getItem() == getKeyItem()) {
+    
+    public ActionResultType use(final BlockState state, final World world, final BlockPos pos, final PlayerEntity player, final Hand hand, final BlockRayTraceResult hit) {
+        final ItemStack heldStack = player.getItemInHand(hand);
+        final Boolean isOpen = (Boolean)state.getValue(VaultDoorBlock.OPEN);
+        if (!isOpen && heldStack.getItem() == this.getKeyItem()) {
             heldStack.shrink(1);
-            setOpen(world, state, pos, true);
+            this.setOpen(world, state, pos, true);
             return ActionResultType.SUCCESS;
         }
-
         return ActionResultType.SUCCESS;
     }
+    
+    static {
+        VAULT_DOORS = new ArrayList<VaultDoorBlock>();
+    }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\block\VaultDoorBlock.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

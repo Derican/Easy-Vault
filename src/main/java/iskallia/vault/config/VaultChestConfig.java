@@ -1,3 +1,7 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.config;
 
 import com.google.gson.annotations.Expose;
@@ -18,12 +22,15 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
+import java.util.function.Function;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class VaultChestConfig extends Config {
+public class VaultChestConfig extends Config
+{
     @Expose
-    public WeightedList<String> RARITY_POOL = new WeightedList();
+    public WeightedList<String> RARITY_POOL;
     @Expose
     public List<MobTrapEffect> MOB_TRAP_EFFECTS;
     @Expose
@@ -33,101 +40,95 @@ public class VaultChestConfig extends Config {
     @Expose
     public List<Level> LEVELS;
     private final String name;
-
-    public VaultChestConfig(String name) {
+    
+    public VaultChestConfig(final String name) {
+        this.RARITY_POOL = new WeightedList<String>();
         this.name = name;
     }
-
-
+    
+    @Override
     public String getName() {
         return this.name;
     }
-
+    
     public List<VaultChestEffect> getAll() {
-        return (List<VaultChestEffect>) Stream.<List>of(new List[]{this.MOB_TRAP_EFFECTS, this.EXPLOSION_EFFECTS, this.POTION_CLOUD_EFFECTS}).flatMap(Collection::stream).collect(Collectors.toList());
+        return (List<VaultChestEffect>) Stream.of((List[])new List[] { this.MOB_TRAP_EFFECTS, this.EXPLOSION_EFFECTS, this.POTION_CLOUD_EFFECTS }).flatMap(Collection::stream).collect(Collectors.toList());
     }
-
-    public VaultChestEffect getByName(String name) {
-        return getAll().stream().filter(group -> group.getName().equals(name)).findFirst().orElse(null);
+    
+    public VaultChestEffect getByName(final String name) {
+        return this.getAll().stream().filter(group -> group.getName().equals(name)).findFirst().orElse(null);
     }
-
-
+    
+    @Override
     protected void reset() {
         this.RARITY_POOL.add(VaultRarity.COMMON.name(), 16);
         this.RARITY_POOL.add(VaultRarity.RARE.name(), 4);
         this.RARITY_POOL.add(VaultRarity.EPIC.name(), 2);
         this.RARITY_POOL.add(VaultRarity.OMEGA.name(), 1);
-
-        this.LEVELS = new ArrayList<>();
-
-        this.MOB_TRAP_EFFECTS = Arrays.asList(new MobTrapEffect[]{new MobTrapEffect("Mob Trap", 5, (new VaultSpawner.Config())
-
-                .withExtraMaxMobs(15).withMinDistance(1.0D).withMaxDistance(12.0D).withDespawnDistance(32.0D))});
-
-        this.EXPLOSION_EFFECTS = Arrays.asList(new ExplosionEffect[]{new ExplosionEffect("Explosion", 4.0F, 0.0D, 3.0D, 0.0D, true, 10.0F, Explosion.Mode.BREAK)});
-
-
-        this.POTION_CLOUD_EFFECTS = Arrays.asList(new PotionCloudEffect[]{new PotionCloudEffect("Poison", new Potion[]{Potions.STRONG_POISON})});
-
-
-        Level level = new Level(5);
-
+        this.LEVELS = new ArrayList<Level>();
+        this.MOB_TRAP_EFFECTS = Arrays.asList(new MobTrapEffect("Mob Trap", 5, new VaultSpawner.Config().withExtraMaxMobs(15).withMinDistance(1.0).withMaxDistance(12.0).withDespawnDistance(32.0)));
+        this.EXPLOSION_EFFECTS = Arrays.asList(new ExplosionEffect("Explosion", 4.0f, 0.0, 3.0, 0.0, true, 10.0f, Explosion.Mode.BREAK));
+        this.POTION_CLOUD_EFFECTS = Arrays.asList(new PotionCloudEffect("Poison", new Potion[] { Potions.STRONG_POISON }));
+        final Level level = new Level(5);
         level.DEFAULT_POOL.add("Dummy", 20);
         level.DEFAULT_POOL.add("Explosion", 4);
         level.DEFAULT_POOL.add("Mob Trap", 4);
         level.DEFAULT_POOL.add("Poison", 4);
-
         level.RAFFLE_POOL.add("Dummy", 20);
         level.RAFFLE_POOL.add("Explosion", 4);
         level.RAFFLE_POOL.add("Mob Trap", 4);
         level.RAFFLE_POOL.add("Poison", 4);
-
         this.LEVELS.add(level);
     }
-
+    
     @Nullable
-    public WeightedList<String> getEffectPool(int level, boolean raffle) {
-        Level override = getForLevel(level);
+    public WeightedList<String> getEffectPool(final int level, final boolean raffle) {
+        final Level override = this.getForLevel(level);
         return raffle ? override.RAFFLE_POOL : override.DEFAULT_POOL;
     }
-
+    
     @Nullable
-    public VaultChestEffect getEffectByName(String effect) {
+    public VaultChestEffect getEffectByName(final String effect) {
         return ModConfigs.VAULT_CHEST.getByName(effect);
     }
-
-    public Level getForLevel(int level) {
-        for (int i = 0; i < this.LEVELS.size(); i++) {
-            if (level < ((Level) this.LEVELS.get(i)).MIN_LEVEL) {
-                if (i == 0)
+    
+    public Level getForLevel(final int level) {
+        int i = 0;
+        while (i < this.LEVELS.size()) {
+            if (level < this.LEVELS.get(i).MIN_LEVEL) {
+                if (i == 0) {
                     break;
+                }
                 return this.LEVELS.get(i - 1);
             }
-            if (i == this.LEVELS.size() - 1) {
-                return this.LEVELS.get(i);
+            else {
+                if (i == this.LEVELS.size() - 1) {
+                    return this.LEVELS.get(i);
+                }
+                ++i;
             }
         }
-
         return Level.EMPTY;
     }
-
-    public static class Level {
-        public static Level EMPTY = new Level(0);
+    
+    public static class Level
+    {
+        public static Level EMPTY;
         @Expose
         public int MIN_LEVEL;
         @Expose
-        public WeightedList<String> DEFAULT_POOL = new WeightedList();
+        public WeightedList<String> DEFAULT_POOL;
         @Expose
-        public WeightedList<String> RAFFLE_POOL = new WeightedList();
-
-        public Level(int minLevel) {
+        public WeightedList<String> RAFFLE_POOL;
+        
+        public Level(final int minLevel) {
+            this.DEFAULT_POOL = new WeightedList<String>();
+            this.RAFFLE_POOL = new WeightedList<String>();
             this.MIN_LEVEL = minLevel;
+        }
+        
+        static {
+            Level.EMPTY = new Level(0);
         }
     }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\config\VaultChestConfig.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

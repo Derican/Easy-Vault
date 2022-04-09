@@ -1,3 +1,7 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.client.gui.overlay.goal;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
@@ -22,112 +26,92 @@ import net.minecraft.util.text.TextFormatting;
 
 import java.util.List;
 
-public class ScavengerBarOverlay
-        extends BossBarOverlay {
-    public ScavengerBarOverlay(VaultScavengerData data) {
+public class ScavengerBarOverlay extends BossBarOverlay
+{
+    private final VaultScavengerData data;
+    
+    public ScavengerBarOverlay(final VaultScavengerData data) {
         this.data = data;
     }
-
-    private final VaultScavengerData data;
-
+    
+    @Override
     public boolean shouldDisplay() {
-        List<ScavengerHuntObjective.ItemSubmission> items = this.data.getRequiredItemSubmissions();
+        final List<ScavengerHuntObjective.ItemSubmission> items = this.data.getRequiredItemSubmissions();
         return !items.isEmpty();
     }
-
-
-    public int drawOverlay(MatrixStack renderStack, float pTicks) {
-        List<ScavengerHuntObjective.ItemSubmission> items = this.data.getRequiredItemSubmissions();
-        Minecraft mc = Minecraft.getInstance();
-
-        int midX = mc.getWindow().getGuiScaledWidth() / 2;
-
-        int gapWidth = 7;
-        int itemBoxWidth = 32;
-
-        int totalWidth = items.size() * itemBoxWidth + (items.size() - 1) * gapWidth;
-        int shiftX = -totalWidth / 2 + itemBoxWidth / 2;
-
+    
+    @Override
+    public int drawOverlay(final MatrixStack renderStack, final float pTicks) {
+        final List<ScavengerHuntObjective.ItemSubmission> items = this.data.getRequiredItemSubmissions();
+        final Minecraft mc = Minecraft.getInstance();
+        final int midX = mc.getWindow().getGuiScaledWidth() / 2;
+        final int gapWidth = 7;
+        final int itemBoxWidth = 32;
+        final int totalWidth = items.size() * itemBoxWidth + (items.size() - 1) * gapWidth;
+        final int shiftX = -totalWidth / 2 + itemBoxWidth / 2;
         mc.getTextureManager().bind(PlayerContainer.BLOCK_ATLAS);
         renderStack.pushPose();
-
         int yOffset = 0;
         renderStack.pushPose();
-        renderStack.translate((midX + shiftX), (itemBoxWidth * 0.75F), 0.0D);
-        for (ScavengerHuntObjective.ItemSubmission itemRequirement : items) {
-            int reqYOffset = renderItemRequirement(renderStack, itemRequirement, itemBoxWidth);
+        renderStack.translate((double)(midX + shiftX), (double)(itemBoxWidth * 0.75f), 0.0);
+        for (final ScavengerHuntObjective.ItemSubmission itemRequirement : items) {
+            final int reqYOffset = renderItemRequirement(renderStack, itemRequirement, itemBoxWidth);
             if (reqYOffset > yOffset) {
                 yOffset = reqYOffset;
             }
-            renderStack.translate((itemBoxWidth + gapWidth), 0.0D, 0.0D);
+            renderStack.translate((double)(itemBoxWidth + gapWidth), 0.0, 0.0);
         }
         renderStack.popPose();
         return yOffset;
     }
-
-    private static int renderItemRequirement(MatrixStack renderStack, ScavengerHuntObjective.ItemSubmission itemRequirement, int itemBoxWidth) {
-        Minecraft mc = Minecraft.getInstance();
-        FontRenderer fr = mc.font;
-        ItemStack requiredStack = new ItemStack((IItemProvider) itemRequirement.getRequiredItem());
-        ScavengerHuntConfig.SourceType source = ModConfigs.SCAVENGER_HUNT.getRequirementSource(requiredStack);
-
+    
+    private static int renderItemRequirement(final MatrixStack renderStack, final ScavengerHuntObjective.ItemSubmission itemRequirement, final int itemBoxWidth) {
+        final Minecraft mc = Minecraft.getInstance();
+        final FontRenderer fr = mc.font;
+        final ItemStack requiredStack = new ItemStack((IItemProvider)itemRequirement.getRequiredItem());
+        final ScavengerHuntConfig.SourceType source = ModConfigs.SCAVENGER_HUNT.getRequirementSource(requiredStack);
         renderStack.pushPose();
-        renderStack.translate(0.0D, (-itemBoxWidth / 2.0F), 0.0D);
+        renderStack.translate(0.0, (double)(-itemBoxWidth / 2.0f), 0.0);
         renderItemStack(renderStack, requiredStack);
-
         RenderSystem.enableBlend();
         RenderSystem.defaultBlendFunc();
         mc.getTextureManager().bind(source.getIconPath());
         renderStack.pushPose();
-        renderStack.translate(-16.0D, -2.4D, 0.0D);
-        renderStack.scale(0.4F, 0.4F, 1.0F);
-        ScreenDrawHelper.drawQuad(buf -> ScreenDrawHelper.rect((IVertexBuilder) buf, renderStack).dim(16.0F, 16.0F).draw());
-
-
+        renderStack.translate(-16.0, -2.4, 0.0);
+        renderStack.scale(0.4f, 0.4f, 1.0f);
+        ScreenDrawHelper.drawQuad(buf -> ScreenDrawHelper.rect((IVertexBuilder)buf, renderStack).dim(16.0f, 16.0f).draw());
         renderStack.popPose();
         RenderSystem.disableBlend();
-
-        renderStack.translate(0.0D, 10.0D, 0.0D);
-        String requiredText = itemRequirement.getCurrentAmount() + "/" + itemRequirement.getRequiredAmount();
-        IFormattableTextComponent cmp = (new StringTextComponent(requiredText)).withStyle(TextFormatting.GREEN);
-
-        UIHelper.renderCenteredWrappedText(renderStack, (ITextComponent) cmp, 30, 0);
-
-        renderStack.translate(0.0D, 10.0D, 0.0D);
-
+        renderStack.translate(0.0, 10.0, 0.0);
+        final String requiredText = itemRequirement.getCurrentAmount() + "/" + itemRequirement.getRequiredAmount();
+        final IFormattableTextComponent cmp = new StringTextComponent(requiredText).withStyle(TextFormatting.GREEN);
+        UIHelper.renderCenteredWrappedText(renderStack, (ITextComponent)cmp, 30, 0);
+        renderStack.translate(0.0, 10.0, 0.0);
         renderStack.pushPose();
-        renderStack.scale(0.5F, 0.5F, 1.0F);
-        ITextComponent name = requiredStack.getHoverName();
-        IFormattableTextComponent display = name.copy().withStyle(source.getRequirementColor());
-        int lines = UIHelper.renderCenteredWrappedText(renderStack, (ITextComponent) display, 60, 0);
+        renderStack.scale(0.5f, 0.5f, 1.0f);
+        final ITextComponent name = requiredStack.getHoverName();
+        final IFormattableTextComponent display = name.copy().withStyle(source.getRequirementColor());
+        final int lines = UIHelper.renderCenteredWrappedText(renderStack, (ITextComponent)display, 60, 0);
         renderStack.popPose();
-
         renderStack.popPose();
         return 25 + lines * 5;
     }
-
-    private static void renderItemStack(MatrixStack renderStack, ItemStack item) {
-        Minecraft mc = Minecraft.getInstance();
-        ItemRenderer ir = mc.getItemRenderer();
+    
+    private static void renderItemStack(final MatrixStack renderStack, final ItemStack item) {
+        final Minecraft mc = Minecraft.getInstance();
+        final ItemRenderer ir = mc.getItemRenderer();
         FontRenderer fr = item.getItem().getFontRenderer(item);
         if (fr == null) {
             fr = mc.font;
         }
-
-        renderStack.translate(-8.0D, -8.0D, 0.0D);
+        renderStack.translate(-8.0, -8.0, 0.0);
         RenderSystem.pushMatrix();
         RenderSystem.multMatrix(renderStack.last().pose());
-        ir.blitOffset = 200.0F;
+        ir.blitOffset = 200.0f;
         ir.renderAndDecorateItem(item, 0, 0);
-        ir.renderGuiItemDecorations(fr, item, 0, 0, null);
-        ir.blitOffset = 0.0F;
+        ir.renderGuiItemDecorations(fr, item, 0, 0, (String)null);
+        ir.blitOffset = 0.0f;
         RenderSystem.popMatrix();
-        renderStack.translate(8.0D, 8.0D, 0.0D);
+        renderStack.translate(8.0, 8.0, 0.0);
     }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\client\gui\overlay\goal\ScavengerBarOverlay.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

@@ -1,27 +1,26 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.attribute;
 
 import net.minecraft.nbt.CompoundNBT;
 
 import java.util.UUID;
 
-
-public class UUIDAttribute
-        extends VAttribute.Instance<UUID> {
-    public void write(CompoundNBT nbt) {
-        if (getBaseValue() != null) {
-            nbt.putString("BaseValue", getBaseValue().toString());
+public class UUIDAttribute extends VAttribute.Instance<UUID>
+{
+    @Override
+    public void write(final CompoundNBT nbt) {
+        if (this.getBaseValue() != null) {
+            nbt.putString("BaseValue", this.getBaseValue().toString());
         }
     }
-
-
-    public void read(CompoundNBT nbt) {
-        if (nbt.contains("BaseValue", 8))
-            setBaseValue(UUID.fromString(nbt.getString("BaseValue")));
+    
+    @Override
+    public void read(final CompoundNBT nbt) {
+        if (nbt.contains("BaseValue", 8)) {
+            this.setBaseValue(UUID.fromString(nbt.getString("BaseValue")));
+        }
     }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\attribute\UUIDAttribute.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

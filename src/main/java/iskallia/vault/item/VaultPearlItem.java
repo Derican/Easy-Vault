@@ -1,3 +1,7 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.item;
 
 import iskallia.vault.init.ModConfigs;
@@ -14,84 +18,67 @@ import net.minecraft.stats.Stats;
 import net.minecraft.util.*;
 import net.minecraft.world.World;
 
-public class VaultPearlItem extends EnderPearlItem {
-    public VaultPearlItem(ResourceLocation id) {
-        super((new Item.Properties()).stacksTo(1).tab(ModItems.VAULT_MOD_GROUP).durability(0));
-
-        setRegistryName(id);
+public class VaultPearlItem extends EnderPearlItem
+{
+    public VaultPearlItem(final ResourceLocation id) {
+        super(new Item.Properties().stacksTo(1).tab(ModItems.VAULT_MOD_GROUP).durability(0));
+        this.setRegistryName(id);
     }
-
-
-    public boolean showDurabilityBar(ItemStack stack) {
-        return (stack.getDamageValue() > 0);
+    
+    public boolean showDurabilityBar(final ItemStack stack) {
+        return stack.getDamageValue() > 0;
     }
-
-
-    public void setDamage(ItemStack stack, int damage) {
-        int currentDamage = getDamage(stack);
-        if (damage <= currentDamage)
+    
+    public void setDamage(final ItemStack stack, final int damage) {
+        final int currentDamage = this.getDamage(stack);
+        if (damage <= currentDamage) {
             return;
+        }
         super.setDamage(stack, damage);
     }
-
-
-    public double getDurabilityForDisplay(ItemStack stack) {
-        return stack.getDamageValue() / getMaxDamage(stack);
+    
+    public double getDurabilityForDisplay(final ItemStack stack) {
+        return stack.getDamageValue() / (double)this.getMaxDamage(stack);
     }
-
-
-    public int getMaxDamage(ItemStack stack) {
+    
+    public int getMaxDamage(final ItemStack stack) {
         if (ModConfigs.VAULT_UTILITIES != null) {
             return ModConfigs.VAULT_UTILITIES.getVaultPearlMaxUses();
         }
         return 0;
     }
-
-
+    
     public boolean canBeDepleted() {
         return true;
     }
-
-
-    public ActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand) {
-        if (hand != Hand.MAIN_HAND) return ActionResult.pass(player.getItemInHand(hand));
-
-        ItemStack stack = player.getItemInHand(hand);
-
-        world.playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.ENDER_PEARL_THROW, SoundCategory.NEUTRAL, 0.5F, 0.4F / (random.nextFloat() * 0.4F + 0.8F));
-        player.getCooldowns().addCooldown((Item) this, 20);
-        if (!world.isClientSide) {
-            VaultPearlEntity pearl = new VaultPearlEntity(world, (LivingEntity) player);
-            pearl.setItem(stack);
-            pearl.shootFromRotation((Entity) player, player.xRot, player.yRot, 0.0F, 1.5F, 1.0F);
-            world.addFreshEntity((Entity) pearl);
-
-            stack.hurtAndBreak(1, (LivingEntity) player, e -> e.broadcastBreakEvent(hand));
+    
+    public ActionResult<ItemStack> use(final World world, final PlayerEntity player, final Hand hand) {
+        if (hand != Hand.MAIN_HAND) {
+            return (ActionResult<ItemStack>)ActionResult.pass(player.getItemInHand(hand));
         }
-
+        final ItemStack stack = player.getItemInHand(hand);
+        world.playSound((PlayerEntity)null, player.getX(), player.getY(), player.getZ(), SoundEvents.ENDER_PEARL_THROW, SoundCategory.NEUTRAL, 0.5f, 0.4f / (VaultPearlItem.random.nextFloat() * 0.4f + 0.8f));
+        player.getCooldowns().addCooldown((Item)this, 20);
+        if (!world.isClientSide) {
+            final VaultPearlEntity pearl = new VaultPearlEntity(world, (LivingEntity)player);
+            pearl.setItem(stack);
+            pearl.shootFromRotation((Entity)player, player.xRot, player.yRot, 0.0f, 1.5f, 1.0f);
+            world.addFreshEntity((Entity)pearl);
+            stack.hurtAndBreak(1, (LivingEntity)player, e -> e.broadcastBreakEvent(hand));
+        }
         player.awardStat(Stats.ITEM_USED.get(this));
-
-        return ActionResult.sidedSuccess(stack, world.isClientSide());
+        return (ActionResult<ItemStack>)ActionResult.sidedSuccess(stack, world.isClientSide());
     }
-
-
-    public boolean isEnchantable(ItemStack stack) {
+    
+    public boolean isEnchantable(final ItemStack stack) {
         return false;
     }
-
-
-    public boolean canApplyAtEnchantingTable(ItemStack stack, Enchantment enchantment) {
+    
+    public boolean canApplyAtEnchantingTable(final ItemStack stack, final Enchantment enchantment) {
         return false;
     }
-
-
-    public boolean isBookEnchantable(ItemStack stack, ItemStack book) {
+    
+    public boolean isBookEnchantable(final ItemStack stack, final ItemStack book) {
         return false;
     }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\item\VaultPearlItem.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

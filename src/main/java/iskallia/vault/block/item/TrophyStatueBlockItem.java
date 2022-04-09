@@ -1,3 +1,7 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.block.item;
 
 import iskallia.vault.client.gui.helper.UIHelper;
@@ -13,7 +17,6 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.INBT;
 import net.minecraft.util.IItemProvider;
 import net.minecraft.util.StringUtils;
-import net.minecraft.util.text.IFormattableTextComponent;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
@@ -23,75 +26,57 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 
 import java.util.List;
 
-public class TrophyStatueBlockItem extends LootStatueBlockItem {
-    public TrophyStatueBlockItem(Block block) {
+public class TrophyStatueBlockItem extends LootStatueBlockItem
+{
+    public TrophyStatueBlockItem(final Block block) {
         super(block, StatueType.TROPHY);
     }
-
-
+    
     @OnlyIn(Dist.CLIENT)
-    protected void addStatueInformation(CompoundNBT dataTag, List<ITextComponent> toolTip) {
+    @Override
+    protected void addStatueInformation(final CompoundNBT dataTag, final List<ITextComponent> toolTip) {
         super.addStatueInformation(dataTag, toolTip);
-
         if (!dataTag.contains("recordEntry", 10) || !dataTag.contains("trophyWeek", 10)) {
             return;
         }
-        WeekKey week = WeekKey.deserialize(dataTag.getCompound("trophyWeek"));
-        PlayerVaultStatsData.PlayerRecordEntry recordEntry = PlayerVaultStatsData.PlayerRecordEntry.deserialize(dataTag.getCompound("recordEntry"));
-
-        StringTextComponent stringTextComponent = new StringTextComponent(week.getWeek() + " / " + week.getYear());
-        IFormattableTextComponent iFormattableTextComponent = (new StringTextComponent(UIHelper.formatTimeString(recordEntry.getTickCount()))).withStyle(TextFormatting.GOLD);
-
+        final WeekKey week = WeekKey.deserialize(dataTag.getCompound("trophyWeek"));
+        final PlayerVaultStatsData.PlayerRecordEntry recordEntry = PlayerVaultStatsData.PlayerRecordEntry.deserialize(dataTag.getCompound("recordEntry"));
+        final ITextComponent weekCmp = (ITextComponent)new StringTextComponent(week.getWeek() + " / " + week.getYear());
+        final ITextComponent recordCmp = (ITextComponent)new StringTextComponent(UIHelper.formatTimeString(recordEntry.getTickCount())).withStyle(TextFormatting.GOLD);
         toolTip.add(StringTextComponent.EMPTY);
-        toolTip.add((new StringTextComponent("Week: ")).append((ITextComponent) stringTextComponent));
-        toolTip.add((new StringTextComponent("Record: ")).append((ITextComponent) iFormattableTextComponent));
+        toolTip.add((ITextComponent)new StringTextComponent("Week: ").append(weekCmp));
+        toolTip.add((ITextComponent)new StringTextComponent("Record: ").append(recordCmp));
     }
-
-    public static ItemStack getTrophy(ServerWorld serverWorld, WeekKey week) {
-        PlayerVaultStatsData statsData = PlayerVaultStatsData.get(serverWorld);
-        PlayerVaultStatsData.PlayerRecordEntry record = statsData.getFastestVaultTime(week);
+    
+    public static ItemStack getTrophy(final ServerWorld serverWorld, final WeekKey week) {
+        final PlayerVaultStatsData statsData = PlayerVaultStatsData.get(serverWorld);
+        final PlayerVaultStatsData.PlayerRecordEntry record = statsData.getFastestVaultTime(week);
         if (StringUtils.isNullOrEmpty(record.getPlayerName())) {
             return ItemStack.EMPTY;
         }
-
-        ItemStack stack = new ItemStack((IItemProvider) ModBlocks.TROPHY_STATUE);
-
-        CompoundNBT nbt = new CompoundNBT();
+        final ItemStack stack = new ItemStack((IItemProvider)ModBlocks.TROPHY_STATUE);
+        final CompoundNBT nbt = new CompoundNBT();
         nbt.putString("PlayerNickname", record.getPlayerName());
         nbt.putInt("StatueType", StatueType.TROPHY.ordinal());
-
         nbt.putInt("Interval", -1);
-        nbt.put("LootItem", (INBT) ItemStack.EMPTY.serializeNBT());
+        nbt.put("LootItem", (INBT)ItemStack.EMPTY.serializeNBT());
         nbt.putInt("ItemsRemaining", -1);
         nbt.putInt("TotalItems", -1);
-
-        nbt.put("trophyWeek", (INBT) week.serialize());
-        nbt.put("recordEntry", (INBT) record.serialize());
-
-        CompoundNBT stackNBT = new CompoundNBT();
-        stackNBT.put("BlockEntityTag", (INBT) nbt);
+        nbt.put("trophyWeek", (INBT)week.serialize());
+        nbt.put("recordEntry", (INBT)record.serialize());
+        final CompoundNBT stackNBT = new CompoundNBT();
+        stackNBT.put("BlockEntityTag", (INBT)nbt);
         stack.setTag(stackNBT);
-
         return stack;
     }
-
-
-    protected boolean canPlace(BlockItemUseContext ctx, BlockState state) {
+    
+    @Override
+    protected boolean canPlace(final BlockItemUseContext ctx, final BlockState state) {
         if (!ctx.getItemInHand().hasTag()) {
             return false;
         }
-        CompoundNBT tag = ctx.getItemInHand().getOrCreateTag();
-        CompoundNBT blockTag = tag.getCompound("BlockEntityTag");
-        if (!blockTag.contains("PlayerNickname", 8) ||
-                !blockTag.contains("StatueType", 3)) {
-            return false;
-        }
-        return super.canPlace(ctx, state);
+        final CompoundNBT tag = ctx.getItemInHand().getOrCreateTag();
+        final CompoundNBT blockTag = tag.getCompound("BlockEntityTag");
+        return blockTag.contains("PlayerNickname", 8) && blockTag.contains("StatueType", 3) && super.canPlace(ctx, state);
     }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\block\item\TrophyStatueBlockItem.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

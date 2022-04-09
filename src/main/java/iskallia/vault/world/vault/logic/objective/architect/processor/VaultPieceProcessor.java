@@ -1,3 +1,7 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.world.vault.logic.objective.architect.processor;
 
 import iskallia.vault.world.vault.VaultRaid;
@@ -7,15 +11,13 @@ import net.minecraft.world.server.ServerWorld;
 
 import java.util.Random;
 
-
-public abstract class VaultPieceProcessor {
-    protected static final Random rand = new Random();
-
-    public abstract void postProcess(VaultRaid paramVaultRaid, ServerWorld paramServerWorld, VaultPiece paramVaultPiece, Direction paramDirection);
+public abstract class VaultPieceProcessor
+{
+    protected static final Random rand;
+    
+    public abstract void postProcess(final VaultRaid p0, final ServerWorld p1, final VaultPiece p2, final Direction p3);
+    
+    static {
+        rand = new Random();
+    }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\world\vault\logic\objective\architect\processor\VaultPieceProcessor.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

@@ -1,3 +1,7 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.block;
 
 import iskallia.vault.block.entity.RelicStatueTileEntity;
@@ -29,75 +33,58 @@ import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
 
-public class RelicStatueBlock extends Block {
-    public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
-
-    public static final VoxelShape SHAPE = Block.box(2.0D, 0.0D, 2.0D, 14.0D, 16.0D, 14.0D);
-
+public class RelicStatueBlock extends Block
+{
+    public static final DirectionProperty FACING;
+    public static final VoxelShape SHAPE;
+    
     public RelicStatueBlock() {
-        super(AbstractBlock.Properties.of(Material.STONE, MaterialColor.STONE)
-                .strength(1.0F, 3600000.0F)
-                .noOcclusion());
-
-        registerDefaultState((BlockState) ((BlockState) this.stateDefinition.any())
-                .setValue((Property) FACING, (Comparable) Direction.SOUTH));
+        super(AbstractBlock.Properties.of(Material.STONE, MaterialColor.STONE).strength(1.0f, 3600000.0f).noOcclusion());
+        this.registerDefaultState((this.stateDefinition.any()).setValue(RelicStatueBlock.FACING, Direction.SOUTH));
     }
-
-
+    
     @Nullable
-    public BlockState getStateForPlacement(BlockItemUseContext context) {
-        return (BlockState) defaultBlockState()
-                .setValue((Property) FACING, (Comparable) context.getHorizontalDirection());
+    public BlockState getStateForPlacement(final BlockItemUseContext context) {
+        return this.defaultBlockState().setValue(RelicStatueBlock.FACING, context.getHorizontalDirection());
     }
-
-
-    protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) {
-        builder.add(new Property[]{(Property) FACING});
+    
+    protected void createBlockStateDefinition(final StateContainer.Builder<Block, BlockState> builder) {
+        builder.add(new Property[] { RelicStatueBlock.FACING });
     }
-
-
-    public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
-        return SHAPE;
+    
+    public VoxelShape getShape(final BlockState state, final IBlockReader worldIn, final BlockPos pos, final ISelectionContext context) {
+        return RelicStatueBlock.SHAPE;
     }
-
-
-    public void playerWillDestroy(World world, BlockPos pos, BlockState state, PlayerEntity player) {
+    
+    public void playerWillDestroy(final World world, final BlockPos pos, final BlockState state, final PlayerEntity player) {
         if (!world.isClientSide) {
-            TileEntity tileEntity = world.getBlockEntity(pos);
-            ItemStack itemStack = new ItemStack((IItemProvider) getBlock());
-
+            final TileEntity tileEntity = world.getBlockEntity(pos);
+            final ItemStack itemStack = new ItemStack((IItemProvider)this.getBlock());
             if (tileEntity instanceof RelicStatueTileEntity) {
-                RelicStatueTileEntity statueTileEntity = (RelicStatueTileEntity) tileEntity;
-
-                CompoundNBT statueNBT = statueTileEntity.serializeNBT();
-                CompoundNBT stackNBT = new CompoundNBT();
-                stackNBT.put("BlockEntityTag", (INBT) statueNBT);
-
+                final RelicStatueTileEntity statueTileEntity = (RelicStatueTileEntity)tileEntity;
+                final CompoundNBT statueNBT = statueTileEntity.serializeNBT();
+                final CompoundNBT stackNBT = new CompoundNBT();
+                stackNBT.put("BlockEntityTag", (INBT)statueNBT);
                 itemStack.setTag(stackNBT);
             }
-
-            ItemEntity itemEntity = new ItemEntity(world, pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5D, itemStack);
+            final ItemEntity itemEntity = new ItemEntity(world, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, itemStack);
             itemEntity.setDefaultPickUpDelay();
-            world.addFreshEntity((Entity) itemEntity);
+            world.addFreshEntity((Entity)itemEntity);
         }
-
         super.playerWillDestroy(world, pos, state, player);
     }
-
-
-    public boolean hasTileEntity(BlockState state) {
+    
+    public boolean hasTileEntity(final BlockState state) {
         return true;
     }
-
-
+    
     @Nullable
-    public TileEntity createTileEntity(BlockState state, IBlockReader world) {
+    public TileEntity createTileEntity(final BlockState state, final IBlockReader world) {
         return ModBlocks.RELIC_STATUE_TILE_ENTITY.create();
     }
+    
+    static {
+        FACING = BlockStateProperties.HORIZONTAL_FACING;
+        SHAPE = Block.box(2.0, 0.0, 2.0, 14.0, 16.0, 14.0);
+    }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\block\RelicStatueBlock.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

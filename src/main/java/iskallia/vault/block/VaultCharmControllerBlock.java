@@ -1,5 +1,10 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.block;
 
+import iskallia.vault.block.entity.VaultCharmControllerTileEntity;
 import iskallia.vault.init.ModBlocks;
 import iskallia.vault.item.VaultCharmUpgrade;
 import iskallia.vault.world.data.VaultCharmData;
@@ -27,82 +32,56 @@ import net.minecraftforge.fml.network.NetworkHooks;
 
 import javax.annotation.Nullable;
 
-public class VaultCharmControllerBlock extends Block {
+public class VaultCharmControllerBlock extends Block
+{
     public VaultCharmControllerBlock() {
-        super(AbstractBlock.Properties.of(Material.METAL)
-                .strength(2.0F, 3600000.0F)
-                .noOcclusion());
+        super(AbstractBlock.Properties.of(Material.METAL).strength(2.0f, 3600000.0f).noOcclusion());
     }
-
-
-    public boolean hasTileEntity(BlockState state) {
+    
+    public boolean hasTileEntity(final BlockState state) {
         return true;
     }
-
-
+    
     @Nullable
-    public TileEntity createTileEntity(BlockState state, IBlockReader world) {
+    public TileEntity createTileEntity(final BlockState state, final IBlockReader world) {
         return ModBlocks.VAULT_CHARM_CONTROLLER_TILE_ENTITY.create();
     }
-
-
-    public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult rayTraceResult) {
+    
+    public ActionResultType use(final BlockState state, final World world, final BlockPos pos, final PlayerEntity player, final Hand hand, final BlockRayTraceResult rayTraceResult) {
         if (world.isClientSide()) {
             return ActionResultType.SUCCESS;
         }
         if (hand != Hand.MAIN_HAND) {
             return ActionResultType.SUCCESS;
         }
-        TileEntity te = world.getBlockEntity(pos);
-        if (!(te instanceof iskallia.vault.block.entity.VaultCharmControllerTileEntity)) {
+        final TileEntity te = world.getBlockEntity(pos);
+        if (!(te instanceof VaultCharmControllerTileEntity)) {
             return ActionResultType.SUCCESS;
         }
         if (!(player instanceof ServerPlayerEntity)) {
             return ActionResultType.SUCCESS;
         }
-
-
-        ServerPlayerEntity sPlayer = (ServerPlayerEntity) player;
-        VaultCharmData data = VaultCharmData.get(sPlayer.getLevel());
-        VaultCharmData.VaultCharmInventory inventory = data.getInventory(sPlayer);
-
-        ItemStack heldItem = player.getMainHandItem();
-        if (heldItem.getItem() instanceof VaultCharmUpgrade) {
-            VaultCharmUpgrade item = (VaultCharmUpgrade) heldItem.getItem();
-            int newSize = item.getTier().getSlotAmount();
-            if (inventory.canUpgrade(newSize)) {
-                player.level.playSound(null, pos, SoundEvents.EXPERIENCE_ORB_PICKUP, SoundCategory.BLOCKS, 1.0F, 1.0F);
-                data.upgradeInventorySize(sPlayer, item.getTier().getSlotAmount());
-                heldItem.shrink(1);
-
-                return ActionResultType.SUCCESS;
-            }
-            player.level.playSound(null, pos, SoundEvents.FIRE_EXTINGUISH, SoundCategory.BLOCKS, 1.0F, 1.0F);
+        final ServerPlayerEntity sPlayer = (ServerPlayerEntity)player;
+        final VaultCharmData data = VaultCharmData.get(sPlayer.getLevel());
+        final VaultCharmData.VaultCharmInventory inventory = data.getInventory(sPlayer);
+        final ItemStack heldItem = player.getMainHandItem();
+        if (!(heldItem.getItem() instanceof VaultCharmUpgrade)) {
+            NetworkHooks.openGui((ServerPlayerEntity)player, (INamedContainerProvider)te, buffer -> buffer.writeNbt(data.getInventory(sPlayer).serializeNBT()));
             return ActionResultType.SUCCESS;
         }
-
-
-        NetworkHooks.openGui((ServerPlayerEntity) player, (INamedContainerProvider) te, buffer -> buffer.writeNbt(data.getInventory(sPlayer).serializeNBT()));
-
+        final VaultCharmUpgrade item = (VaultCharmUpgrade)heldItem.getItem();
+        final int newSize = item.getTier().getSlotAmount();
+        if (inventory.canUpgrade(newSize)) {
+            player.level.playSound((PlayerEntity)null, pos, SoundEvents.EXPERIENCE_ORB_PICKUP, SoundCategory.BLOCKS, 1.0f, 1.0f);
+            data.upgradeInventorySize(sPlayer, item.getTier().getSlotAmount());
+            heldItem.shrink(1);
+            return ActionResultType.SUCCESS;
+        }
+        player.level.playSound((PlayerEntity)null, pos, SoundEvents.FIRE_EXTINGUISH, SoundCategory.BLOCKS, 1.0f, 1.0f);
         return ActionResultType.SUCCESS;
     }
-
-
-    public VoxelShape getShape(BlockState p_220053_1_, IBlockReader p_220053_2_, BlockPos p_220053_3_, ISelectionContext p_220053_4_) {
-        return VoxelShapes.or(
-                Block.box(5.0D, 0.0D, 5.0D, 11.0D, 1.0D, 11.0D), new VoxelShape[]{
-                        Block.box(5.0D, 0.0D, 5.0D, 11.0D, 1.0D, 11.0D),
-                        Block.box(6.0D, 1.0D, 6.0D, 10.0D, 4.0D, 10.0D),
-                        Block.box(5.0D, 4.0D, 5.0D, 11.0D, 7.0D, 11.0D),
-                        Block.box(4.0D, 7.0D, 4.0D, 12.0D, 9.0D, 12.0D),
-                        Block.box(1.0D, 9.0D, 1.0D, 15.0D, 11.0D, 15.0D),
-                        Block.box(5.0D, 11.0D, 5.0D, 11.0D, 15.0D, 11.0D)
-                });
+    
+    public VoxelShape getShape(final BlockState p_220053_1_, final IBlockReader p_220053_2_, final BlockPos p_220053_3_, final ISelectionContext p_220053_4_) {
+        return VoxelShapes.or(Block.box(5.0, 0.0, 5.0, 11.0, 1.0, 11.0), new VoxelShape[] { Block.box(5.0, 0.0, 5.0, 11.0, 1.0, 11.0), Block.box(6.0, 1.0, 6.0, 10.0, 4.0, 10.0), Block.box(5.0, 4.0, 5.0, 11.0, 7.0, 11.0), Block.box(4.0, 7.0, 4.0, 12.0, 9.0, 12.0), Block.box(1.0, 9.0, 1.0, 15.0, 11.0, 15.0), Block.box(5.0, 11.0, 5.0, 11.0, 15.0, 11.0) });
     }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\block\VaultCharmControllerBlock.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

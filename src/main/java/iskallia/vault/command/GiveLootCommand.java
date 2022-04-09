@@ -1,3 +1,7 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.command;
 
 import com.mojang.brigadier.arguments.ArgumentType;
@@ -36,122 +40,96 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.server.ServerWorld;
 
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
-
-public class GiveLootCommand
-        extends Command {
+public class GiveLootCommand extends Command
+{
+    @Override
     public String getName() {
         return "give_loot";
     }
-
-
+    
+    @Override
     public int getRequiredPermissionLevel() {
         return 2;
     }
-
-
+    
+    @Override
     public boolean isDedicatedServerOnly() {
         return false;
     }
-
-
-    public void build(LiteralArgumentBuilder<CommandSource> builder) {
-        builder.then(Commands.literal("raffle_boss_crate")
-                .then(Commands.argument("boss_name", (ArgumentType) StringArgumentType.word())
-                        .executes(ctx -> giveRaffleBossCrate(ctx, ((CommandSource) ctx.getSource()).getPlayerOrException(), StringArgumentType.getString(ctx, "boss_name")))));
-
-        builder.then(Commands.literal("normal_boss_crate")
-                .executes(ctx -> giveNormalBossCrate(ctx, ((CommandSource) ctx.getSource()).getPlayerOrException())));
-
-        builder.then(Commands.literal("raid_reward_crate")
-                .executes(ctx -> giveRaidRewardCrate(ctx, ((CommandSource) ctx.getSource()).getPlayerOrException())));
-
-        builder.then(Commands.literal("record_trophy")
-                .then(Commands.argument("year", (ArgumentType) IntegerArgumentType.integer())
-                        .then(Commands.argument("week", (ArgumentType) IntegerArgumentType.integer())
-                                .executes(this::giveTrophy))));
-
+    
+    @Override
+    public void build(final LiteralArgumentBuilder<CommandSource> builder) {
+        builder.then(Commands.literal("raffle_boss_crate").then(Commands.argument("boss_name", (ArgumentType)StringArgumentType.word()).executes(ctx -> this.giveRaffleBossCrate((CommandContext<CommandSource>)ctx, ((CommandSource)ctx.getSource()).getPlayerOrException(), StringArgumentType.getString(ctx, "boss_name")))));
+        builder.then(Commands.literal("normal_boss_crate").executes(ctx -> this.giveNormalBossCrate((CommandContext<CommandSource>)ctx, ((CommandSource)ctx.getSource()).getPlayerOrException())));
+        builder.then(Commands.literal("raid_reward_crate").executes(ctx -> this.giveRaidRewardCrate((CommandContext<CommandSource>)ctx, ((CommandSource)ctx.getSource()).getPlayerOrException())));
+        builder.then(Commands.literal("record_trophy").then(Commands.argument("year", (ArgumentType)IntegerArgumentType.integer()).then(Commands.argument("week", (ArgumentType)IntegerArgumentType.integer()).executes(this::giveTrophy))));
         builder.then(Commands.literal("record_box").executes(this::giveTrophyBox));
     }
-
-    public int giveTrophyBox(CommandContext<CommandSource> context) throws CommandSyntaxException {
-        ServerPlayerEntity sPlayer = ((CommandSource) context.getSource()).getPlayerOrException();
-        ServerWorld sWorld = sPlayer.getLevel();
-        LootContext.Builder builder = (new LootContext.Builder(sWorld)).withRandom(sWorld.random).withLuck(sPlayer.getLuck());
-        int playerLevel = PlayerVaultStatsData.get(sWorld).getVaultStats(sPlayer.getUUID()).getVaultLevel();
-        LootTablesConfig.Level config = ModConfigs.LOOT_TABLES.getForLevel(playerLevel);
-
-        LootTable bossBonusTbl = sPlayer.getServer().getLootTables().get(config.getScavengerCrate());
-        NonNullList<ItemStack> quickBossLoot = NonNullList.create();
-        quickBossLoot.addAll(bossBonusTbl.getRandomItems(builder.create(LootParameterSets.EMPTY)));
-        Collections.shuffle((List<?>) quickBossLoot);
-
-        ItemStack box = new ItemStack((IItemProvider) Items.WHITE_SHULKER_BOX);
-        box.getOrCreateTag().put("BlockEntityTag", (INBT) new CompoundNBT());
-        ItemStackHelper.saveAllItems(box.getOrCreateTag().getCompound("BlockEntityTag"), quickBossLoot);
-
+    
+    public int giveTrophyBox(final CommandContext<CommandSource> context) throws CommandSyntaxException {
+        final ServerPlayerEntity sPlayer = ((CommandSource)context.getSource()).getPlayerOrException();
+        final ServerWorld sWorld = sPlayer.getLevel();
+        final LootContext.Builder builder = new LootContext.Builder(sWorld).withRandom(sWorld.random).withLuck(sPlayer.getLuck());
+        final int playerLevel = PlayerVaultStatsData.get(sWorld).getVaultStats(sPlayer.getUUID()).getVaultLevel();
+        final LootTablesConfig.Level config = ModConfigs.LOOT_TABLES.getForLevel(playerLevel);
+        final LootTable bossBonusTbl = sPlayer.getServer().getLootTables().get(config.getScavengerCrate());
+        final NonNullList<ItemStack> quickBossLoot = NonNullList.create();
+        quickBossLoot.addAll((Collection)bossBonusTbl.getRandomItems(builder.create(LootParameterSets.EMPTY)));
+        Collections.shuffle((List<?>)quickBossLoot);
+        final ItemStack box = new ItemStack((IItemProvider)Items.WHITE_SHULKER_BOX);
+        box.getOrCreateTag().put("BlockEntityTag", (INBT)new CompoundNBT());
+        ItemStackHelper.saveAllItems(box.getOrCreateTag().getCompound("BlockEntityTag"), (NonNullList)quickBossLoot);
         sPlayer.addItem(box);
-        sPlayer.sendMessage((ITextComponent) new StringTextComponent("Generated Recordbox for Vault level " + playerLevel), Util.NIL_UUID);
+        sPlayer.sendMessage((ITextComponent)new StringTextComponent("Generated Recordbox for Vault level " + playerLevel), Util.NIL_UUID);
         return 0;
     }
-
-    public int giveTrophy(CommandContext<CommandSource> context) throws CommandSyntaxException {
-        ServerPlayerEntity sPlayer = ((CommandSource) context.getSource()).getPlayerOrException();
-        int year = IntegerArgumentType.getInteger(context, "year");
-        int week = IntegerArgumentType.getInteger(context, "week");
-
-        ItemStack statue = TrophyStatueBlockItem.getTrophy(sPlayer.getLevel(), WeekKey.of(year, week));
+    
+    public int giveTrophy(final CommandContext<CommandSource> context) throws CommandSyntaxException {
+        final ServerPlayerEntity sPlayer = ((CommandSource)context.getSource()).getPlayerOrException();
+        final int year = IntegerArgumentType.getInteger((CommandContext)context, "year");
+        final int week = IntegerArgumentType.getInteger((CommandContext)context, "week");
+        final ItemStack statue = TrophyStatueBlockItem.getTrophy(sPlayer.getLevel(), WeekKey.of(year, week));
         if (!statue.isEmpty()) {
             sPlayer.addItem(statue);
-        } else {
-            sPlayer.sendMessage((ITextComponent) new StringTextComponent("No record set!"), Util.NIL_UUID);
+        }
+        else {
+            sPlayer.sendMessage((ITextComponent)new StringTextComponent("No record set!"), Util.NIL_UUID);
         }
         return 0;
     }
-
-    private int giveRaidRewardCrate(CommandContext<CommandSource> ctx, ServerPlayerEntity player) {
-        EntityHelper.giveItem((PlayerEntity) player, VaultRaidData.generateRaidRewardCrate());
+    
+    private int giveRaidRewardCrate(final CommandContext<CommandSource> ctx, final ServerPlayerEntity player) {
+        EntityHelper.giveItem((PlayerEntity)player, VaultRaidData.generateRaidRewardCrate());
         return 0;
     }
-
-    public int giveNormalBossCrate(CommandContext<CommandSource> context, ServerPlayerEntity player) {
-        ServerWorld world = player.getLevel();
-        LootContext.Builder builder = (new LootContext.Builder(world)).withRandom(world.random).withLuck(player.getLuck());
-        LootContext ctx = builder.create(LootParameterSets.EMPTY);
-
-        int level = PlayerVaultStatsData.get(world).getVaultStats((PlayerEntity) player).getVaultLevel();
-        NonNullList<ItemStack> stacks = NonNullList.create();
-        stacks.addAll(world.getServer().getLootTables().get(ModConfigs.LOOT_TABLES.getForLevel(level).getBossCrate()).getRandomItems(ctx));
-
-        ItemStack crate = VaultCrateBlock.getCrateWithLoot(ModBlocks.VAULT_CRATE, stacks);
-        EntityHelper.giveItem((PlayerEntity) player, crate);
+    
+    public int giveNormalBossCrate(final CommandContext<CommandSource> context, final ServerPlayerEntity player) {
+        final ServerWorld world = player.getLevel();
+        final LootContext.Builder builder = new LootContext.Builder(world).withRandom(world.random).withLuck(player.getLuck());
+        final LootContext ctx = builder.create(LootParameterSets.EMPTY);
+        final int level = PlayerVaultStatsData.get(world).getVaultStats((PlayerEntity)player).getVaultLevel();
+        final NonNullList<ItemStack> stacks = NonNullList.create();
+        stacks.addAll((Collection)world.getServer().getLootTables().get(ModConfigs.LOOT_TABLES.getForLevel(level).getBossCrate()).getRandomItems(ctx));
+        final ItemStack crate = VaultCrateBlock.getCrateWithLoot(ModBlocks.VAULT_CRATE, stacks);
+        EntityHelper.giveItem((PlayerEntity)player, crate);
         return 0;
     }
-
-    public int giveRaffleBossCrate(CommandContext<CommandSource> context, ServerPlayerEntity player, String bossName) {
-        ServerWorld world = player.getLevel();
-        LootContext.Builder builder = (new LootContext.Builder(world)).withRandom(world.random).withLuck(player.getLuck());
-        LootContext ctx = builder.create(LootParameterSets.EMPTY);
-
-        NonNullList<ItemStack> stacks = NonNullList.create();
-
+    
+    public int giveRaffleBossCrate(final CommandContext<CommandSource> context, final ServerPlayerEntity player, final String bossName) {
+        final ServerWorld world = player.getLevel();
+        final LootContext.Builder builder = new LootContext.Builder(world).withRandom(world.random).withLuck(player.getLuck());
+        final LootContext ctx = builder.create(LootParameterSets.EMPTY);
+        final NonNullList<ItemStack> stacks = NonNullList.create();
         stacks.add(LootStatueBlockItem.getStatueBlockItem(bossName, StatueType.VAULT_BOSS));
-
-        int level = PlayerVaultStatsData.get(world).getVaultStats((PlayerEntity) player).getVaultLevel();
-        List<ItemStack> items = world.getServer().getLootTables().get(ModConfigs.LOOT_TABLES.getForLevel(level).getBossCrate()).getRandomItems(ctx);
-        stacks.addAll(items);
-
-        ItemStack crate = VaultCrateBlock.getCrateWithLoot(ModBlocks.VAULT_CRATE, stacks);
-        EntityHelper.giveItem((PlayerEntity) player, crate);
-
+        final int level = PlayerVaultStatsData.get(world).getVaultStats((PlayerEntity)player).getVaultLevel();
+        final List<ItemStack> items = world.getServer().getLootTables().get(ModConfigs.LOOT_TABLES.getForLevel(level).getBossCrate()).getRandomItems(ctx);
+        stacks.addAll((Collection)items);
+        final ItemStack crate = VaultCrateBlock.getCrateWithLoot(ModBlocks.VAULT_CRATE, stacks);
+        EntityHelper.giveItem((PlayerEntity)player, crate);
         return 0;
     }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\command\GiveLootCommand.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

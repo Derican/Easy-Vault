@@ -1,3 +1,7 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.item;
 
 import iskallia.vault.init.ModConfigs;
@@ -17,46 +21,35 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class VaultRuneItem
-        extends Item {
+public class VaultRuneItem extends Item
+{
     private final String roomName;
-
-    public VaultRuneItem(ItemGroup group, ResourceLocation id, String roomName) {
-        super((new Item.Properties())
-                .tab(group)
-                .stacksTo(8));
+    
+    public VaultRuneItem(final ItemGroup group, final ResourceLocation id, final String roomName) {
+        super(new Item.Properties().tab(group).stacksTo(8));
         this.roomName = roomName;
-        setRegistryName(id);
+        this.setRegistryName(id);
     }
-
+    
     public String getRoomName() {
         return this.roomName;
     }
-
-
+    
     @OnlyIn(Dist.CLIENT)
-    public void appendHoverText(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
-        ITextComponent displayName = VaultRoomNames.getName(getRoomName());
+    public void appendHoverText(final ItemStack stack, @Nullable final World world, final List<ITextComponent> tooltip, final ITooltipFlag flag) {
+        final ITextComponent displayName = VaultRoomNames.getName(this.getRoomName());
         if (displayName == null) {
             return;
         }
         tooltip.add(StringTextComponent.EMPTY);
-        tooltip.add((new StringTextComponent("Combine with a vault crystal to add")).withStyle(TextFormatting.GRAY));
-        tooltip.add((new StringTextComponent("a room to the vault: ")).withStyle(TextFormatting.GRAY)
-                .append(displayName));
-
+        tooltip.add((ITextComponent)new StringTextComponent("Combine with a vault crystal to add").withStyle(TextFormatting.GRAY));
+        tooltip.add((ITextComponent)new StringTextComponent("a room to the vault: ").withStyle(TextFormatting.GRAY).append(displayName));
         if (ModConfigs.VAULT_RUNE == null) {
             return;
         }
         ModConfigs.VAULT_RUNE.getMinimumLevel(this).ifPresent(minLevel -> {
             tooltip.add(StringTextComponent.EMPTY);
-            tooltip.add((new StringTextComponent("Only usable after level ")).withStyle(TextFormatting.GRAY).append((ITextComponent) (new StringTextComponent(String.valueOf(minLevel))).withStyle(TextFormatting.AQUA)));
+            tooltip.add(new StringTextComponent("Only usable after level ").withStyle(TextFormatting.GRAY).append((ITextComponent)new StringTextComponent(String.valueOf(minLevel)).withStyle(TextFormatting.AQUA)));
         });
     }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\item\VaultRuneItem.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

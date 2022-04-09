@@ -1,3 +1,7 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.entity.eternal;
 
 import iskallia.vault.entity.EternalEntity;
@@ -14,66 +18,55 @@ import net.minecraft.world.World;
 
 import java.util.*;
 
-public class EternalHelper {
-    private static final UUID ETERNAL_SIZE_INCREASE = UUID.fromString("de6b75be-deb2-4711-8fac-08465031b2c3");
-
-    public static EternalEntity spawnEternal(World world, EternalDataAccess dataAccess) {
+public class EternalHelper
+{
+    private static final UUID ETERNAL_SIZE_INCREASE;
+    
+    public static EternalEntity spawnEternal(final World world, final EternalDataAccess dataAccess) {
         return spawnEternal(world, dataAccess.getLevel(), dataAccess.isAncient(), dataAccess.getName(), dataAccess.getEquipment(), dataAccess.getEntityAttributes());
     }
-
-
-    private static EternalEntity spawnEternal(World world, int level, boolean isAncient, String name, Map<EquipmentSlotType, ItemStack> equipment, Map<Attribute, Float> attributes) {
-        EternalEntity eternal = (EternalEntity) ModEntities.ETERNAL.create(world);
-        eternal.setCustomName((ITextComponent) (new StringTextComponent("[")).withStyle(TextFormatting.GREEN)
-                .append((ITextComponent) (new StringTextComponent(String.valueOf(level))).withStyle(TextFormatting.RED))
-                .append((ITextComponent) (new StringTextComponent("] " + name)).withStyle(TextFormatting.GREEN)));
+    
+    private static EternalEntity spawnEternal(final World world, final int level, final boolean isAncient, final String name, final Map<EquipmentSlotType, ItemStack> equipment, final Map<Attribute, Float> attributes) {
+        final EternalEntity eternal = (EternalEntity)ModEntities.ETERNAL.create(world);
+        eternal.setCustomName((ITextComponent)new StringTextComponent("[").withStyle(TextFormatting.GREEN).append((ITextComponent)new StringTextComponent(String.valueOf(level)).withStyle(TextFormatting.RED)).append((ITextComponent)new StringTextComponent("] " + name).withStyle(TextFormatting.GREEN)));
         eternal.setSkinName(name);
-
         equipment.forEach((slot, stack) -> {
             eternal.setItemSlot(slot, stack.copy());
-
-            eternal.setDropChance(slot, 0.0F);
+            eternal.setDropChance(slot, 0.0f);
+            return;
         });
-        attributes.forEach((attribute, value) -> eternal.getAttribute(attribute).setBaseValue(value.floatValue()));
-
-
-        eternal.heal(2.14748365E9F);
-
+        attributes.forEach((attribute, value) -> eternal.getAttribute(attribute).setBaseValue((double)value));
+        eternal.heal(2.14748365E9f);
         if (isAncient) {
-            eternal.getAttribute(ModAttributes.SIZE_SCALE).setBaseValue(1.2000000476837158D);
+            eternal.getAttribute(ModAttributes.SIZE_SCALE).setBaseValue(1.2000000476837158);
         }
         return eternal;
     }
-
-    public static float getEternalGearModifierAdjustments(EternalDataAccess dataAccess, Attribute attribute, float value) {
-        Map<AttributeModifier.Operation, List<AttributeModifier>> modifiers = new HashMap<>();
-        for (EquipmentSlotType slotType : EquipmentSlotType.values()) {
-            ItemStack stack = dataAccess.getEquipment().getOrDefault(slotType, ItemStack.EMPTY);
+    
+    public static float getEternalGearModifierAdjustments(final EternalDataAccess dataAccess, final Attribute attribute, float value) {
+        final Map<AttributeModifier.Operation, List<AttributeModifier>> modifiers = new HashMap<AttributeModifier.Operation, List<AttributeModifier>>();
+        for (final EquipmentSlotType slotType : EquipmentSlotType.values()) {
+            final ItemStack stack = dataAccess.getEquipment().getOrDefault(slotType, ItemStack.EMPTY);
             if (!stack.isEmpty()) {
-
-                stack.getAttributeModifiers(slotType).get(attribute).forEach(modifier -> ((List<AttributeModifier>) modifiers.computeIfAbsent(modifier.getOperation(), (AttributeModifier.Operation operation) -> {
-                    return null;
-                })).add(modifier));
+                stack.getAttributeModifiers(slotType).get(attribute).forEach(modifier -> modifiers.computeIfAbsent(modifier.getOperation(), op -> new ArrayList()).add(modifier));
             }
         }
-
-
-        for (AttributeModifier modifier : modifiers.getOrDefault(AttributeModifier.Operation.ADDITION, Collections.emptyList())) {
-            value = (float) (value + modifier.getAmount());
+        final Iterator<AttributeModifier> iterator = modifiers.getOrDefault(AttributeModifier.Operation.ADDITION, Collections.emptyList()).iterator();
+        while (iterator.hasNext()) {
+            final AttributeModifier modifier = iterator.next();
+            value += (float)modifier.getAmount();
         }
         float val = value;
-        for (AttributeModifier modifier : modifiers.getOrDefault(AttributeModifier.Operation.MULTIPLY_BASE, Collections.emptyList())) {
-            val = (float) (val + value * modifier.getAmount());
+        for (final AttributeModifier modifier2 : modifiers.getOrDefault(AttributeModifier.Operation.MULTIPLY_BASE, Collections.emptyList())) {
+            val += (float)(value * modifier2.getAmount());
         }
-        for (AttributeModifier modifier : modifiers.getOrDefault(AttributeModifier.Operation.MULTIPLY_TOTAL, Collections.emptyList())) {
-            val = (float) (val * modifier.getAmount());
+        for (final AttributeModifier modifier2 : modifiers.getOrDefault(AttributeModifier.Operation.MULTIPLY_TOTAL, Collections.emptyList())) {
+            val *= (float)modifier2.getAmount();
         }
         return val;
     }
+    
+    static {
+        ETERNAL_SIZE_INCREASE = UUID.fromString("de6b75be-deb2-4711-8fac-08465031b2c3");
+    }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\entity\eternal\EternalHelper.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

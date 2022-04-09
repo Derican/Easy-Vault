@@ -1,3 +1,7 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.item;
 
 import iskallia.vault.client.gui.overlay.VaultBarOverlay;
@@ -26,118 +30,111 @@ import javax.annotation.Nullable;
 import java.util.List;
 import java.util.function.Supplier;
 
-public abstract class VaultXPFoodItem extends Item {
-    public static Food FOOD = (new Food.Builder()).saturationMod(0.0F).nutrition(0).fast().alwaysEat().build();
-
+public abstract class VaultXPFoodItem extends Item
+{
+    public static Food FOOD;
     private final int levelLimit;
-
-    public VaultXPFoodItem(ResourceLocation id, Item.Properties properties) {
+    
+    public VaultXPFoodItem(final ResourceLocation id, final Item.Properties properties) {
         this(id, properties, -1);
     }
-
-    public VaultXPFoodItem(ResourceLocation id, Item.Properties properties, int levelLimit) {
-        super(properties.food(FOOD));
-        setRegistryName(id);
+    
+    public VaultXPFoodItem(final ResourceLocation id, final Item.Properties properties, final int levelLimit) {
+        super(properties.food(VaultXPFoodItem.FOOD));
+        this.setRegistryName(id);
         this.levelLimit = levelLimit;
     }
-
-
-    public UseAction getUseAnimation(ItemStack stack) {
+    
+    public UseAction getUseAnimation(final ItemStack stack) {
         return super.getUseAnimation(stack);
     }
-
-
-    public ActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand) {
+    
+    public ActionResult<ItemStack> use(final World world, final PlayerEntity player, final Hand hand) {
         if (this.levelLimit > 0) {
             int vaultLevel;
             if (player instanceof ServerPlayerEntity) {
-                vaultLevel = PlayerVaultStatsData.get(((ServerPlayerEntity) player).getLevel()).getVaultStats(player).getVaultLevel();
-            } else {
-                vaultLevel = getVaultLevel();
+                vaultLevel = PlayerVaultStatsData.get(((ServerPlayerEntity)player).getLevel()).getVaultStats(player).getVaultLevel();
+            }
+            else {
+                vaultLevel = this.getVaultLevel();
             }
             if (vaultLevel >= this.levelLimit) {
-                return ActionResult.pass(player.getItemInHand(hand));
+                return (ActionResult<ItemStack>)ActionResult.pass(player.getItemInHand(hand));
             }
         }
-
-        return super.use(world, player, hand);
+        return (ActionResult<ItemStack>)super.use(world, player, hand);
     }
-
+    
     @OnlyIn(Dist.CLIENT)
     private int getVaultLevel() {
         return VaultBarOverlay.vaultLevel;
     }
-
-
-    public ItemStack finishUsingItem(ItemStack stack, World world, LivingEntity entityLiving) {
+    
+    public ItemStack finishUsingItem(final ItemStack stack, final World world, final LivingEntity entityLiving) {
         if (!world.isClientSide && entityLiving instanceof ServerPlayerEntity) {
-            ServerPlayerEntity player = (ServerPlayerEntity) entityLiving;
-            grantExp(player);
+            final ServerPlayerEntity player = (ServerPlayerEntity)entityLiving;
+            this.grantExp(player);
         }
         return super.finishUsingItem(stack, world, entityLiving);
     }
-
-
+    
     @OnlyIn(Dist.CLIENT)
-    public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+    public void appendHoverText(final ItemStack stack, @Nullable final World worldIn, final List<ITextComponent> tooltip, final ITooltipFlag flagIn) {
         if (this.levelLimit > 0) {
             tooltip.add(StringTextComponent.EMPTY);
-            tooltip.add((new StringTextComponent("Can't be consumed after Level: ")).withStyle(TextFormatting.GRAY)
-                    .append((ITextComponent) (new StringTextComponent(String.valueOf(this.levelLimit))).withStyle(TextFormatting.AQUA)));
+            tooltip.add((ITextComponent)new StringTextComponent("Can't be consumed after Level: ").withStyle(TextFormatting.GRAY).append((ITextComponent)new StringTextComponent(String.valueOf(this.levelLimit)).withStyle(TextFormatting.AQUA)));
         }
     }
-
-    public abstract void grantExp(ServerPlayerEntity paramServerPlayerEntity);
-
-    public static class Percent
-            extends VaultXPFoodItem {
+    
+    public abstract void grantExp(final ServerPlayerEntity p0);
+    
+    static {
+        VaultXPFoodItem.FOOD = new Food.Builder().saturationMod(0.0f).nutrition(0).fast().alwaysEat().build();
+    }
+    
+    public static class Percent extends VaultXPFoodItem
+    {
         private final Supplier<Float> min;
         private final Supplier<Float> max;
-
-        public Percent(ResourceLocation id, Supplier<Float> min, Supplier<Float> max, Item.Properties properties) {
+        
+        public Percent(final ResourceLocation id, final Supplier<Float> min, final Supplier<Float> max, final Item.Properties properties) {
             this(id, min, max, properties, -1);
         }
-
-        public Percent(ResourceLocation id, Supplier<Float> min, Supplier<Float> max, Item.Properties properties, int levelRequirement) {
+        
+        public Percent(final ResourceLocation id, final Supplier<Float> min, final Supplier<Float> max, final Item.Properties properties, final int levelRequirement) {
             super(id, properties, levelRequirement);
             this.min = min;
             this.max = max;
         }
-
-
-        public void grantExp(ServerPlayerEntity sPlayer) {
-            PlayerVaultStatsData statsData = PlayerVaultStatsData.get(sPlayer.getLevel());
-            PlayerVaultStats stats = statsData.getVaultStats((PlayerEntity) sPlayer);
-            float randomPercentage = MathUtilities.randomFloat(((Float) this.min.get()).floatValue(), ((Float) this.max.get()).floatValue());
-            statsData.addVaultExp(sPlayer, (int) (stats.getTnl() * randomPercentage));
+        
+        @Override
+        public void grantExp(final ServerPlayerEntity sPlayer) {
+            final PlayerVaultStatsData statsData = PlayerVaultStatsData.get(sPlayer.getLevel());
+            final PlayerVaultStats stats = statsData.getVaultStats((PlayerEntity)sPlayer);
+            final float randomPercentage = MathUtilities.randomFloat(this.min.get(), this.max.get());
+            statsData.addVaultExp(sPlayer, (int)(stats.getTnl() * randomPercentage));
         }
     }
-
-    public static class Flat
-            extends VaultXPFoodItem {
+    
+    public static class Flat extends VaultXPFoodItem
+    {
         private final Supplier<Integer> min;
         private final Supplier<Integer> max;
-
-        public Flat(ResourceLocation id, Supplier<Integer> min, Supplier<Integer> max, Item.Properties properties) {
+        
+        public Flat(final ResourceLocation id, final Supplier<Integer> min, final Supplier<Integer> max, final Item.Properties properties) {
             this(id, min, max, properties, -1);
         }
-
-        public Flat(ResourceLocation id, Supplier<Integer> min, Supplier<Integer> max, Item.Properties properties, int levelRequirement) {
+        
+        public Flat(final ResourceLocation id, final Supplier<Integer> min, final Supplier<Integer> max, final Item.Properties properties, final int levelRequirement) {
             super(id, properties, levelRequirement);
             this.min = min;
             this.max = max;
         }
-
-
-        public void grantExp(ServerPlayerEntity sPlayer) {
-            PlayerVaultStatsData statsData = PlayerVaultStatsData.get(sPlayer.getLevel());
-            statsData.addVaultExp(sPlayer, MathUtilities.getRandomInt(((Integer) this.min.get()).intValue(), ((Integer) this.max.get()).intValue()));
+        
+        @Override
+        public void grantExp(final ServerPlayerEntity sPlayer) {
+            final PlayerVaultStatsData statsData = PlayerVaultStatsData.get(sPlayer.getLevel());
+            statsData.addVaultExp(sPlayer, MathUtilities.getRandomInt(this.min.get(), this.max.get()));
         }
     }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\item\VaultXPFoodItem.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

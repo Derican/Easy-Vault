@@ -1,3 +1,7 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.world.gen.structure.pool;
 
 import com.mojang.datafixers.kinds.App;
@@ -25,117 +29,102 @@ import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.function.Consumer;
+import java.util.function.Function;
 import java.util.function.Supplier;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
-public class PalettedListPoolElement extends JigsawPiece {
-    static {
-        CODEC = RecordCodecBuilder.create(instance -> instance.group((App) JigsawPiece.CODEC.listOf().fieldOf("elements").forGetter(()), (App) projection(), (App) processors()).apply((Applicative) instance, PalettedListPoolElement::new));
-    }
-
-
+public class PalettedListPoolElement extends JigsawPiece
+{
     public static final Codec<PalettedListPoolElement> CODEC;
-
     private final List<JigsawPiece> elements;
     protected final List<Supplier<StructureProcessorList>> processors;
-
-    public PalettedListPoolElement(List<JigsawPiece> elements, JigsawPattern.PlacementBehaviour behaviour, List<Supplier<StructureProcessorList>> processors) {
+    
+    public PalettedListPoolElement(final List<JigsawPiece> elements, final JigsawPattern.PlacementBehaviour behaviour, final List<Supplier<StructureProcessorList>> processors) {
         super(behaviour);
-
-        if (elements.isEmpty() &&
-                FMLEnvironment.production) {
+        if (elements.isEmpty() && FMLEnvironment.production) {
             throw new IllegalArgumentException("Elements are empty");
         }
-
-
         this.elements = elements;
         this.processors = processors;
-        setProjectionOnEachElement(behaviour);
+        this.setProjectionOnEachElement(behaviour);
     }
-
+    
     public List<JigsawPiece> getElements() {
         return this.elements;
     }
-
+    
     protected static <E extends JigsawPiece> RecordCodecBuilder<E, JigsawPattern.PlacementBehaviour> projection() {
-        return JigsawPattern.PlacementBehaviour.CODEC.fieldOf("projection").forGetter(JigsawPiece::getProjection);
+        return (RecordCodecBuilder<E, JigsawPattern.PlacementBehaviour>)JigsawPattern.PlacementBehaviour.CODEC.fieldOf("projection").forGetter(JigsawPiece::getProjection);
     }
-
+    
     protected static <E extends PalettedListPoolElement> RecordCodecBuilder<E, List<Supplier<StructureProcessorList>>> processors() {
         return IStructureProcessorType.LIST_CODEC.listOf().fieldOf("processors").forGetter(piece -> piece.processors);
     }
-
-
-    public List<Template.BlockInfo> getShuffledJigsawBlocks(TemplateManager templateManager, BlockPos pos, Rotation rotation, Random random) {
-        return this.elements.isEmpty() ? new ArrayList<>() : ((JigsawPiece) this.elements.get(0)).getShuffledJigsawBlocks(templateManager, pos, rotation, random);
+    
+    public List<Template.BlockInfo> getShuffledJigsawBlocks(final TemplateManager templateManager, final BlockPos pos, final Rotation rotation, final Random random) {
+        return this.elements.isEmpty() ? new ArrayList<Template.BlockInfo>() : this.elements.get(0).getShuffledJigsawBlocks(templateManager, pos, rotation, random);
     }
-
-
-    public MutableBoundingBox getBoundingBox(TemplateManager templateManager, BlockPos pos, Rotation rotation) {
-        MutableBoundingBox mutableboundingbox = MutableBoundingBox.getUnknownBox();
+    
+    public MutableBoundingBox getBoundingBox(final TemplateManager templateManager, final BlockPos pos, final Rotation rotation) {
+        final MutableBoundingBox mutableboundingbox = MutableBoundingBox.getUnknownBox();
         this.elements.stream().map(piece -> piece.getBoundingBox(templateManager, pos, rotation)).forEach(mutableboundingbox::expand);
         return mutableboundingbox;
     }
-
-
-    public boolean place(TemplateManager templateManager, ISeedReader world, StructureManager structureManager, ChunkGenerator chunkGen, BlockPos pos1, BlockPos pos2, Rotation rotation, MutableBoundingBox box, Random random, boolean keepJigsaws) {
-        return generate(templateManager, world, structureManager, chunkGen, pos1, pos2, rotation, box, random, keepJigsaws, 18);
+    
+    public boolean place(final TemplateManager templateManager, final ISeedReader world, final StructureManager structureManager, final ChunkGenerator chunkGen, final BlockPos pos1, final BlockPos pos2, final Rotation rotation, final MutableBoundingBox box, final Random random, final boolean keepJigsaws) {
+        return this.generate(templateManager, world, structureManager, chunkGen, pos1, pos2, rotation, box, random, keepJigsaws, 18);
     }
-
-
-    public boolean generate(TemplateManager templateManager, ISeedReader world, StructureManager structureManager, ChunkGenerator chunkGen, BlockPos pos1, BlockPos pos2, Rotation rotation, MutableBoundingBox box, Random random, boolean keepJigsaws, int updateFlags) {
-        Supplier<StructureProcessorList> extra = getRandomProcessor(world, pos1);
-
-        for (JigsawPiece piece : this.elements) {
+    
+    public boolean generate(final TemplateManager templateManager, final ISeedReader world, final StructureManager structureManager, final ChunkGenerator chunkGen, final BlockPos pos1, final BlockPos pos2, final Rotation rotation, final MutableBoundingBox box, final Random random, final boolean keepJigsaws, final int updateFlags) {
+        final Supplier<StructureProcessorList> extra = this.getRandomProcessor(world, pos1);
+        for (final JigsawPiece piece : this.elements) {
             if (piece instanceof PalettedSinglePoolElement) {
-                if (!((PalettedSinglePoolElement) piece).generate(extra, templateManager, world, structureManager, chunkGen, pos1, pos2, rotation, box, random, keepJigsaws, updateFlags)) {
+                if (!((PalettedSinglePoolElement)piece).generate(extra, templateManager, world, structureManager, chunkGen, pos1, pos2, rotation, box, random, keepJigsaws, updateFlags)) {
                     return false;
                 }
                 continue;
             }
-            if (!piece.place(templateManager, world, structureManager, chunkGen, pos1, pos2, rotation, box, random, keepJigsaws)) {
-                return false;
+            else {
+                if (!piece.place(templateManager, world, structureManager, chunkGen, pos1, pos2, rotation, box, random, keepJigsaws)) {
+                    return false;
+                }
+                continue;
             }
         }
-
-
         return true;
     }
-
+    
     @Nullable
-    public Supplier<StructureProcessorList> getRandomProcessor(ISeedReader world, BlockPos pos) {
+    public Supplier<StructureProcessorList> getRandomProcessor(final ISeedReader world, final BlockPos pos) {
         if (this.processors.isEmpty()) {
             return null;
         }
-        SharedSeedRandom seedRand = new SharedSeedRandom();
+        final SharedSeedRandom seedRand = new SharedSeedRandom();
         seedRand.setLargeFeatureSeed(world.getSeed(), pos.getX(), pos.getZ());
         return this.processors.get(seedRand.nextInt(this.processors.size()));
     }
-
-
+    
     public IJigsawDeserializer<?> getType() {
         return ModStructures.PoolElements.PALETTED_LIST_POOL_ELEMENT;
     }
-
-
-    public JigsawPiece setProjection(JigsawPattern.PlacementBehaviour placementBehaviour) {
+    
+    public JigsawPiece setProjection(final JigsawPattern.PlacementBehaviour placementBehaviour) {
         super.setProjection(placementBehaviour);
-        setProjectionOnEachElement(placementBehaviour);
+        this.setProjectionOnEachElement(placementBehaviour);
         return this;
     }
-
-
+    
     public String toString() {
-        return "PalettedList[" + (String) this.elements.stream().map(Object::toString).collect(Collectors.joining(", ")) + "]";
+        return "PalettedList[" + this.elements.stream().map(Object::toString).collect(Collectors.joining(", ")) + "]";
     }
-
-    private void setProjectionOnEachElement(JigsawPattern.PlacementBehaviour p_214864_1_) {
+    
+    private void setProjectionOnEachElement(final JigsawPattern.PlacementBehaviour p_214864_1_) {
         this.elements.forEach(p_214863_1_ -> p_214863_1_.setProjection(p_214864_1_));
     }
+    
+    static {
+        CODEC = RecordCodecBuilder.create(instance -> instance.group(JigsawPiece.CODEC.listOf().fieldOf("elements").forGetter(piece -> piece.elements), projection(), processors()).apply(instance, PalettedListPoolElement::new));
+    }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\world\gen\structure\pool\PalettedListPoolElement.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

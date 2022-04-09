@@ -1,3 +1,7 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.block;
 
 import iskallia.vault.init.ModSounds;
@@ -10,23 +14,13 @@ import net.minecraft.util.math.MathHelper;
 
 import java.util.Random;
 
-public class VaultRockBlock extends OreBlock {
+public class VaultRockBlock extends OreBlock
+{
     public VaultRockBlock() {
-        super(AbstractBlock.Properties.of(Material.STONE, MaterialColor.DIAMOND)
-                .requiresCorrectToolForDrops()
-                .lightLevel(state -> 9)
-                .strength(3.0F, 3.0F)
-                .sound((SoundType) ModSounds.VAULT_GEM));
+        super(AbstractBlock.Properties.of(Material.STONE, MaterialColor.DIAMOND).requiresCorrectToolForDrops().lightLevel(state -> 9).strength(3.0f, 3.0f).sound((SoundType)ModSounds.VAULT_GEM));
     }
-
-
-    protected int xpOnDrop(Random rand) {
+    
+    protected int xpOnDrop(final Random rand) {
         return MathHelper.nextInt(rand, 3, 7);
     }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\block\VaultRockBlock.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

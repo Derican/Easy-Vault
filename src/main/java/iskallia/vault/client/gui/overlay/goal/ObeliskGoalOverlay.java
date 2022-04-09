@@ -1,3 +1,7 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.client.gui.overlay.goal;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
@@ -18,100 +22,79 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
-
 @OnlyIn(Dist.CLIENT)
-public class ObeliskGoalOverlay {
-    public static final ResourceLocation VAULT_HUD_RESOURCE = new ResourceLocation("the_vault", "textures/gui/vault-hud.png");
-
+public class ObeliskGoalOverlay
+{
+    public static final ResourceLocation VAULT_HUD_RESOURCE;
+    
     @SubscribeEvent
-    public static void onObeliskRender(RenderGameOverlayEvent.Post event) {
-        VaultOverlayMessage.OverlayType type = ClientVaultRaidData.getOverlayType();
+    public static void onObeliskRender(final RenderGameOverlayEvent.Post event) {
+        final VaultOverlayMessage.OverlayType type = ClientVaultRaidData.getOverlayType();
         if (event.getType() != RenderGameOverlayEvent.ElementType.HOTBAR || type != VaultOverlayMessage.OverlayType.VAULT) {
             return;
         }
-
-
-        VaultGoalData data = VaultGoalData.CURRENT_DATA;
+        final VaultGoalData data = VaultGoalData.CURRENT_DATA;
         if (data == null) {
             return;
         }
-
         if (data instanceof VaultObeliskData) {
-            MatrixStack renderStack = event.getMatrixStack();
-            VaultObeliskData displayData = (VaultObeliskData) data;
-
+            final MatrixStack renderStack = event.getMatrixStack();
+            final VaultObeliskData displayData = (VaultObeliskData)data;
             renderObeliskMessage(renderStack, displayData);
             renderObeliskIndicator(renderStack, displayData);
         }
-
         Minecraft.getInstance().getTextureManager().bind(AbstractGui.GUI_ICONS_LOCATION);
     }
-
-    private static void renderObeliskMessage(MatrixStack matrixStack, VaultObeliskData data) {
-        Minecraft mc = Minecraft.getInstance();
-        FontRenderer fr = mc.font;
-        IRenderTypeBuffer.Impl buffer = IRenderTypeBuffer.immediate(Tessellator.getInstance().getBuilder());
-
-        int bottom = mc.getWindow().getGuiScaledHeight();
-        IReorderingProcessor bidiText = data.getMessage().getVisualOrderText();
-
+    
+    private static void renderObeliskMessage(final MatrixStack matrixStack, final VaultObeliskData data) {
+        final Minecraft mc = Minecraft.getInstance();
+        final FontRenderer fr = mc.font;
+        final IRenderTypeBuffer.Impl buffer = IRenderTypeBuffer.immediate(Tessellator.getInstance().getBuilder());
+        final int bottom = mc.getWindow().getGuiScaledHeight();
+        final IReorderingProcessor bidiText = data.getMessage().getVisualOrderText();
         matrixStack.pushPose();
-        matrixStack.translate(15.0D, (bottom - 34), 0.0D);
-
-        fr.drawInBatch(bidiText, 0.0F, 0.0F, -1, true, matrixStack.last().pose(), (IRenderTypeBuffer) buffer, false, 0,
-                LightmapHelper.getPackedFullbrightCoords());
+        matrixStack.translate(15.0, (double)(bottom - 34), 0.0);
+        fr.drawInBatch(bidiText, 0.0f, 0.0f, -1, true, matrixStack.last().pose(), (IRenderTypeBuffer)buffer, false, 0, LightmapHelper.getPackedFullbrightCoords());
         buffer.endBatch();
         matrixStack.popPose();
     }
-
-    private static void renderObeliskIndicator(MatrixStack matrixStack, VaultObeliskData data) {
-        int maxObelisks = data.getMaxObelisks();
-        int touchedObelisks = data.getCurrentObelisks();
+    
+    private static void renderObeliskIndicator(final MatrixStack matrixStack, final VaultObeliskData data) {
+        final int maxObelisks = data.getMaxObelisks();
+        final int touchedObelisks = data.getCurrentObelisks();
         if (maxObelisks <= 0) {
             return;
         }
-
-        Minecraft mc = Minecraft.getInstance();
-        int untouchedObelisks = maxObelisks - touchedObelisks;
-        int bottom = mc.getWindow().getGuiScaledHeight();
-
-        float scale = 0.6F;
-        int gap = 2;
-        int margin = 2;
-
-        mc.getTextureManager().bind(VAULT_HUD_RESOURCE);
-
-        int iconWidth = 12;
-        int iconHeight = 22;
-
+        final Minecraft mc = Minecraft.getInstance();
+        final int untouchedObelisks = maxObelisks - touchedObelisks;
+        final int bottom = mc.getWindow().getGuiScaledHeight();
+        final float scale = 0.6f;
+        final int gap = 2;
+        final int margin = 2;
+        mc.getTextureManager().bind(ObeliskGoalOverlay.VAULT_HUD_RESOURCE);
+        final int iconWidth = 12;
+        final int iconHeight = 22;
         matrixStack.pushPose();
-        matrixStack.translate(15.0D, (bottom - 34), 0.0D);
-        matrixStack.translate(0.0D, -margin, 0.0D);
-        matrixStack.translate(0.0D, (-scale * iconHeight), 0.0D);
+        matrixStack.translate(15.0, (double)(bottom - 34), 0.0);
+        matrixStack.translate(0.0, (double)(-margin), 0.0);
+        matrixStack.translate(0.0, (double)(-scale * iconHeight), 0.0);
         matrixStack.scale(scale, scale, scale);
-        int i;
-        for (i = 0; i < touchedObelisks; i++) {
-            int u = 77, v = 84;
-            AbstractGui.blit(matrixStack, 0, 0, u, v, iconWidth, iconHeight, 256, 256);
-
-
-            matrixStack.translate((scale * gap + iconWidth), 0.0D, 0.0D);
+        for (int i = 0; i < touchedObelisks; ++i) {
+            final int u = 77;
+            final int v = 84;
+            AbstractGui.blit(matrixStack, 0, 0, (float)u, (float)v, iconWidth, iconHeight, 256, 256);
+            matrixStack.translate((double)(scale * gap + iconWidth), 0.0, 0.0);
         }
-
-        for (i = 0; i < untouchedObelisks; i++) {
-            int u = 64, v = 84;
-            AbstractGui.blit(matrixStack, 0, 0, u, v, iconWidth, iconHeight, 256, 256);
-
-
-            matrixStack.translate((scale * gap + iconWidth), 0.0D, 0.0D);
+        for (int i = 0; i < untouchedObelisks; ++i) {
+            final int u = 64;
+            final int v = 84;
+            AbstractGui.blit(matrixStack, 0, 0, (float)u, (float)v, iconWidth, iconHeight, 256, 256);
+            matrixStack.translate((double)(scale * gap + iconWidth), 0.0, 0.0);
         }
-
         matrixStack.popPose();
     }
+    
+    static {
+        VAULT_HUD_RESOURCE = new ResourceLocation("the_vault", "textures/gui/vault-hud.png");
+    }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\client\gui\overlay\goal\ObeliskGoalOverlay.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

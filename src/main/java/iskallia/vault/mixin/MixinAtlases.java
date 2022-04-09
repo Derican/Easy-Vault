@@ -1,3 +1,7 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.mixin;
 
 import iskallia.vault.block.render.ScavengerChestRenderer;
@@ -11,11 +15,11 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.function.Consumer;
 
-
-@Mixin({Atlases.class})
-public class MixinAtlases {
-    @Inject(method = {"collectAllMaterials"}, at = {@At("RETURN")})
-    private static void collectAllMaterials(Consumer<RenderMaterial> materialConsumer, CallbackInfo ci) {
+@Mixin({ Atlases.class })
+public class MixinAtlases
+{
+    @Inject(method = { "getAllMaterials" }, at = { @At("RETURN") })
+    private static void getAllMaterials(final Consumer<RenderMaterial> materialConsumer, final CallbackInfo ci) {
         materialConsumer.accept(VaultChestRenderer.NORMAL);
         materialConsumer.accept(VaultChestRenderer.TREASURE);
         materialConsumer.accept(VaultChestRenderer.ALTAR);
@@ -24,9 +28,3 @@ public class MixinAtlases {
         materialConsumer.accept(ScavengerChestRenderer.MATERIAL);
     }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\mixin\MixinAtlases.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

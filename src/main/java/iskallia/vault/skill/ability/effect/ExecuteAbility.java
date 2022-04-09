@@ -1,3 +1,7 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.skill.ability.effect;
 
 import iskallia.vault.init.ModEffects;
@@ -16,82 +20,67 @@ import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
-public class ExecuteAbility<C extends ExecuteConfig>
-        extends AbilityEffect<C> {
+public class ExecuteAbility<C extends ExecuteConfig> extends AbilityEffect<C>
+{
+    @Override
     public String getAbilityGroupName() {
         return "Execute";
     }
-
-
-    public boolean onAction(C config, ServerPlayerEntity player, boolean active) {
+    
+    @Override
+    public boolean onAction(final C config, final ServerPlayerEntity player, final boolean active) {
         if (player.hasEffect(ModEffects.EXECUTE)) {
             return false;
         }
-
-
-        EffectInstance newEffect = new EffectInstance(config.getEffect(), config.getEffectDuration(), config.getAmplifier(), false, (config.getType()).showParticles, (config.getType()).showIcon);
-
-        player.level.playSound((PlayerEntity) player, player.getX(), player.getY(), player.getZ(), ModSounds.EXECUTION_SFX, SoundCategory.PLAYERS, 0.4F, 1.0F);
-
-        player.playNotifySound(ModSounds.EXECUTION_SFX, SoundCategory.PLAYERS, 0.4F, 1.0F);
-
+        final EffectInstance newEffect = new EffectInstance(config.getEffect(), config.getEffectDuration(), config.getAmplifier(), false, config.getType().showParticles, config.getType().showIcon);
+        player.level.playSound((PlayerEntity)player, player.getX(), player.getY(), player.getZ(), ModSounds.EXECUTION_SFX, SoundCategory.PLAYERS, 0.4f, 1.0f);
+        player.playNotifySound(ModSounds.EXECUTION_SFX, SoundCategory.PLAYERS, 0.4f, 1.0f);
         player.addEffect(newEffect);
         return false;
     }
-
+    
     @SubscribeEvent
-    public void onDamage(LivingDamageEvent event) {
-        if (!doCulling() || event.getEntity().getCommandSenderWorld().isClientSide()) {
+    public void onDamage(final LivingDamageEvent event) {
+        if (!this.doCulling() || event.getEntity().getCommandSenderWorld().isClientSide()) {
             return;
         }
         if (!(event.getSource().getEntity() instanceof PlayerEntity)) {
             return;
         }
-
-        PlayerEntity player = (PlayerEntity) event.getSource().getEntity();
+        final PlayerEntity player = (PlayerEntity)event.getSource().getEntity();
         if (!(player.getCommandSenderWorld() instanceof ServerWorld)) {
             return;
         }
-
-        ServerWorld world = (ServerWorld) player.getCommandSenderWorld();
-        EffectInstance execute = player.getEffect(ModEffects.EXECUTE);
+        final ServerWorld world = (ServerWorld)player.getCommandSenderWorld();
+        final EffectInstance execute = player.getEffect(ModEffects.EXECUTE);
         if (execute == null) {
             return;
         }
-        PlayerAbilitiesData data = PlayerAbilitiesData.get(world);
-        AbilityTree abilities = data.getAbilities(player);
-        AbilityNode<?, ?> node = abilities.getNodeByName("Execute");
+        final PlayerAbilitiesData data = PlayerAbilitiesData.get(world);
+        final AbilityTree abilities = data.getAbilities(player);
+        final AbilityNode<?, ?> node = abilities.getNodeByName("Execute");
         if (node.getAbility() == this && !node.isLearned()) {
             return;
         }
-        ExecuteConfig executeConfig = (ExecuteConfig) node.getAbilityConfig();
-
-        LivingEntity entity = event.getEntityLiving();
-        float dmgDealt = entity.getMaxHealth() * executeConfig.getHealthPercentage();
+        final C cfg = (C)node.getAbilityConfig();
+        final LivingEntity entity = event.getEntityLiving();
+        final float dmgDealt = entity.getMaxHealth() * cfg.getHealthPercentage();
         event.setAmount(event.getAmount() + dmgDealt);
-        player.getMainHandItem().hurtAndBreak(1, (LivingEntity) player, playerEntity -> {
-
-        });
-        player.level.playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.EVOKER_CAST_SPELL, SoundCategory.MASTER, 1.0F, 1.0F);
-
-        if (removeEffect((C) executeConfig)) {
+        player.getMainHandItem().hurtAndBreak(1, (LivingEntity)player, playerEntity -> {});
+        player.level.playSound((PlayerEntity)null, player.getX(), player.getY(), player.getZ(), SoundEvents.EVOKER_CAST_SPELL, SoundCategory.MASTER, 1.0f, 1.0f);
+        if (this.removeEffect(cfg)) {
             player.removeEffect(ModEffects.EXECUTE);
-        } else {
-            execute.duration = executeConfig.getEffectDuration();
+        }
+        else {
+            execute.duration = cfg.getEffectDuration();
         }
     }
-
-    protected boolean removeEffect(C cfg) {
+    
+    protected boolean removeEffect(final C cfg) {
         return true;
     }
-
+    
     protected boolean doCulling() {
         return true;
     }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\skill\ability\effect\ExecuteAbility.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

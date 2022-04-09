@@ -1,3 +1,7 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.network.message;
 
 import iskallia.vault.block.entity.LootStatueTileEntity;
@@ -8,60 +12,55 @@ import net.minecraft.nbt.NBTUtil;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkEvent;
 
 import java.util.function.Supplier;
 
-public class OmegaStatueUIMessage {
+public class OmegaStatueUIMessage
+{
     public Opcode opcode;
     public CompoundNBT payload;
-
-    public enum Opcode {
-        SELECT_ITEM;
-    }
-
-
-    public static void encode(OmegaStatueUIMessage message, PacketBuffer buffer) {
+    
+    public static void encode(final OmegaStatueUIMessage message, final PacketBuffer buffer) {
         buffer.writeInt(message.opcode.ordinal());
         buffer.writeNbt(message.payload);
     }
-
-    public static OmegaStatueUIMessage decode(PacketBuffer buffer) {
-        OmegaStatueUIMessage message = new OmegaStatueUIMessage();
+    
+    public static OmegaStatueUIMessage decode(final PacketBuffer buffer) {
+        final OmegaStatueUIMessage message = new OmegaStatueUIMessage();
         message.opcode = Opcode.values()[buffer.readInt()];
         message.payload = buffer.readNbt();
         return message;
     }
-
-    public static void handle(OmegaStatueUIMessage message, Supplier<NetworkEvent.Context> contextSupplier) {
-        NetworkEvent.Context context = contextSupplier.get();
+    
+    public static void handle(final OmegaStatueUIMessage message, final Supplier<NetworkEvent.Context> contextSupplier) {
+        final NetworkEvent.Context context = contextSupplier.get();
         context.enqueueWork(() -> {
             if (message.opcode == Opcode.SELECT_ITEM) {
-                ItemStack stack = ItemStack.of(message.payload.getCompound("Item"));
-                BlockPos statuePos = NBTUtil.readBlockPos(message.payload.getCompound("Position"));
-                ServerWorld serverWorld = context.getSender().getLevel();
-                TileEntity te = serverWorld.getBlockEntity(statuePos);
+                final ItemStack stack = ItemStack.of(message.payload.getCompound("Item"));
+                final BlockPos statuePos = NBTUtil.readBlockPos(message.payload.getCompound("Position"));
+                final World world = (World)context.getSender().getLevel();
+                final TileEntity te = world.getBlockEntity(statuePos);
                 if (te instanceof LootStatueTileEntity) {
-                    ((LootStatueTileEntity) te).setLootItem(stack);
+                    ((LootStatueTileEntity)te).setLootItem(stack);
                 }
             }
+            return;
         });
         context.setPacketHandled(true);
     }
-
-    public static OmegaStatueUIMessage selectItem(ItemStack stack, BlockPos statuePos) {
-        OmegaStatueUIMessage message = new OmegaStatueUIMessage();
+    
+    public static OmegaStatueUIMessage selectItem(final ItemStack stack, final BlockPos statuePos) {
+        final OmegaStatueUIMessage message = new OmegaStatueUIMessage();
         message.opcode = Opcode.SELECT_ITEM;
-        message.payload = new CompoundNBT();
-        message.payload.put("Item", (INBT) stack.serializeNBT());
-        message.payload.put("Position", (INBT) NBTUtil.writeBlockPos(statuePos));
+        (message.payload = new CompoundNBT()).put("Item", (INBT)stack.serializeNBT());
+        message.payload.put("Position", (INBT)NBTUtil.writeBlockPos(statuePos));
         return message;
     }
+    
+    public enum Opcode
+    {
+        SELECT_ITEM;
+    }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\network\message\OmegaStatueUIMessage.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

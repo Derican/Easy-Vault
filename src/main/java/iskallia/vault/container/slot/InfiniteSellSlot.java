@@ -1,22 +1,19 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.container.slot;
 
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 
-public class InfiniteSellSlot
-        extends SellSlot {
-    public InfiniteSellSlot(IInventory inventoryIn, int index, int xPosition, int yPosition) {
+public class InfiniteSellSlot extends SellSlot
+{
+    public InfiniteSellSlot(final IInventory inventoryIn, final int index, final int xPosition, final int yPosition) {
         super(inventoryIn, index, xPosition, yPosition);
     }
-
-
-    public ItemStack remove(int amount) {
-        return getItem().copy();
+    
+    public ItemStack remove(final int amount) {
+        return this.getItem().copy();
     }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\container\slot\InfiniteSellSlot.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

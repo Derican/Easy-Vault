@@ -1,3 +1,7 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.block;
 
 import iskallia.vault.block.base.FacedBlock;
@@ -41,104 +45,99 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class VaultArtifactBlock extends FacedBlock {
+public class VaultArtifactBlock extends FacedBlock
+{
     public static final int ARTIFACT_COUNT = 25;
-    public static final IntegerProperty ORDER_PROPERTY = HiddenIntegerProperty.create("order", 1, 25);
-
-    public static final VoxelShape EAST_SHAPE = Block.box(15.75D, 0.0D, 0.0D, 16.0D, 16.0D, 16.0D);
-    public static final VoxelShape NORTH_SHAPE = Block.box(0.0D, 0.0D, 0.0D, 16.0D, 16.0D, 0.25D);
-    public static final VoxelShape WEST_SHAPE = Block.box(0.0D, 0.0D, 0.0D, 0.25D, 16.0D, 16.0D);
-    public static final VoxelShape SOUTH_SHAPE = Block.box(0.0D, 0.0D, 15.75D, 16.0D, 16.0D, 16.0D);
-
+    public static final IntegerProperty ORDER_PROPERTY;
+    public static final VoxelShape EAST_SHAPE;
+    public static final VoxelShape NORTH_SHAPE;
+    public static final VoxelShape WEST_SHAPE;
+    public static final VoxelShape SOUTH_SHAPE;
+    
     public VaultArtifactBlock() {
-        super(AbstractBlock.Properties.of(Material.CLAY, MaterialColor.WOOD)
-                .sound(SoundType.WOOL)
-                .noOcclusion());
-
-        registerDefaultState((BlockState) ((BlockState) this.stateDefinition.any()).setValue((Property) FACING, (Comparable) Direction.SOUTH));
+        super(AbstractBlock.Properties.of(Material.CLAY, MaterialColor.WOOD).sound(SoundType.WOOL).noOcclusion());
+        this.registerDefaultState((this.stateDefinition.any()).setValue(VaultArtifactBlock.FACING, Direction.SOUTH));
     }
-
-
-    public void fillItemCategory(ItemGroup group, NonNullList<ItemStack> items) {
+    
+    public void fillItemCategory(final ItemGroup group, final NonNullList<ItemStack> items) {
     }
-
-    public int getOrder(ItemStack stack) {
-        CompoundNBT nbt = stack.getOrCreateTag();
+    
+    public int getOrder(final ItemStack stack) {
+        final CompoundNBT nbt = stack.getOrCreateTag();
         return nbt.contains("CustomModelData") ? nbt.getInt("CustomModelData") : 1;
     }
-
-
-    public VoxelShape getShape(BlockState state, IBlockReader world, BlockPos pos, ISelectionContext context) {
-        switch ((Direction) state.getValue((Property) FACING)) {
-            case EAST:
-                return EAST_SHAPE;
-            case NORTH:
-                return NORTH_SHAPE;
-            case WEST:
-                return WEST_SHAPE;
-        }
-        return SOUTH_SHAPE;
-    }
-
-
-    @Nonnull
-    public BlockState getStateForPlacement(BlockItemUseContext context) {
-        ItemStack artifactBlockItem = context.getItemInHand();
-        return (BlockState) super.getStateForPlacement(context)
-                .setValue((Property) ORDER_PROPERTY, Integer.valueOf(getOrder(artifactBlockItem)));
-    }
-
-
-    protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) {
-        super.createBlockStateDefinition(builder);
-        builder.add(new Property[]{(Property) ORDER_PROPERTY});
-    }
-
-
-    public void onBlockExploded(BlockState state, World world, BlockPos pos, Explosion explosion) {
-        if (world instanceof ServerWorld) {
-            ServerWorld sWorld = (ServerWorld) world;
-            List<BlockPos> validPositions = isValidArtifactSetup(sWorld, pos, state);
-            if (!validPositions.isEmpty()) {
-                validPositions.forEach(at -> world.removeBlock(at, false));
-                ServerScheduler.INSTANCE.schedule(5, () -> Block.popResource((World) sWorld, pos, new ItemStack((IItemProvider) ModItems.VAULT_RUNE)));
+    
+    public VoxelShape getShape(final BlockState state, final IBlockReader world, final BlockPos pos, final ISelectionContext context) {
+        switch (state.getValue(VaultArtifactBlock.FACING)) {
+            case EAST: {
+                return VaultArtifactBlock.EAST_SHAPE;
+            }
+            case NORTH: {
+                return VaultArtifactBlock.NORTH_SHAPE;
+            }
+            case WEST: {
+                return VaultArtifactBlock.WEST_SHAPE;
+            }
+            default: {
+                return VaultArtifactBlock.SOUTH_SHAPE;
             }
         }
     }
-
-
-    public boolean canDropFromExplosion(BlockState state, IBlockReader world, BlockPos pos, Explosion explosion) {
+    
+    @Nonnull
+    @Override
+    public BlockState getStateForPlacement(final BlockItemUseContext context) {
+        final ItemStack artifactBlockItem = context.getItemInHand();
+        return super.getStateForPlacement(context).setValue(VaultArtifactBlock.ORDER_PROPERTY, this.getOrder(artifactBlockItem));
+    }
+    
+    @Override
+    protected void createBlockStateDefinition(final StateContainer.Builder<Block, BlockState> builder) {
+        super.createBlockStateDefinition(builder);
+        builder.add(new Property[] { VaultArtifactBlock.ORDER_PROPERTY });
+    }
+    
+    public void onBlockExploded(final BlockState state, final World world, final BlockPos pos, final Explosion explosion) {
+        if (world instanceof ServerWorld) {
+            final ServerWorld sWorld = (ServerWorld)world;
+            final List<BlockPos> validPositions = isValidArtifactSetup(sWorld, pos, state);
+            if (!validPositions.isEmpty()) {
+                validPositions.forEach(at -> world.removeBlock(at, false));
+                ServerScheduler.INSTANCE.schedule(5, () -> Block.popResource((World)sWorld, pos, new ItemStack((IItemProvider)ModItems.VAULT_RUNE)));
+            }
+        }
+    }
+    
+    public boolean canDropFromExplosion(final BlockState state, final IBlockReader world, final BlockPos pos, final Explosion explosion) {
         return false;
     }
-
-    public static List<BlockPos> isValidArtifactSetup(ServerWorld world, BlockPos at, BlockState state) {
-        int order = (25 - ((Integer) state.getValue((Property) ORDER_PROPERTY)).intValue() + 24) % 25;
-        int shiftVertical = order / 5;
-        int shiftHorizontal = order % 5;
-
-        BlockPos yPos = at.above(shiftVertical);
-        for (Direction dir : Direction.values()) {
+    
+    public static List<BlockPos> isValidArtifactSetup(final ServerWorld world, final BlockPos at, final BlockState state) {
+        final int order = (25 - (int)state.getValue(VaultArtifactBlock.ORDER_PROPERTY) + 24) % 25;
+        final int shiftVertical = order / 5;
+        final int shiftHorizontal = order % 5;
+        final BlockPos yPos = at.above(shiftVertical);
+        for (final Direction dir : Direction.values()) {
             if (!dir.getAxis().isVertical()) {
-
-
-                BlockPos startPos = yPos.relative(dir, -shiftHorizontal);
-                List<BlockPos> artifactPositions = hasFullArtifactSet(world, startPos, dir);
-                if (!artifactPositions.isEmpty())
+                final BlockPos startPos = yPos.relative(dir, -shiftHorizontal);
+                final List<BlockPos> artifactPositions = hasFullArtifactSet(world, startPos, dir);
+                if (!artifactPositions.isEmpty()) {
                     return artifactPositions;
+                }
             }
         }
         return Collections.emptyList();
     }
-
-    private static List<BlockPos> hasFullArtifactSet(ServerWorld world, BlockPos start, Direction facing) {
-        List<BlockPos> positions = new ArrayList<>();
-        for (int order = 0; order < 25; order++) {
-            BlockPos at = start.below(order / 5).relative(facing, order % 5);
-            BlockState offsetState = world.getBlockState(at);
+    
+    private static List<BlockPos> hasFullArtifactSet(final ServerWorld world, final BlockPos start, final Direction facing) {
+        final List<BlockPos> positions = new ArrayList<BlockPos>();
+        for (int order = 0; order < 25; ++order) {
+            final BlockPos at = start.below(order / 5).relative(facing, order % 5);
+            final BlockState offsetState = world.getBlockState(at);
             if (!(offsetState.getBlock() instanceof VaultArtifactBlock)) {
                 return Collections.emptyList();
             }
-            int orderAt = (25 - ((Integer) offsetState.getValue((Property) ORDER_PROPERTY)).intValue() + 24) % 25;
+            final int orderAt = (25 - (int)offsetState.getValue(VaultArtifactBlock.ORDER_PROPERTY) + 24) % 25;
             if (order != orderAt) {
                 return Collections.emptyList();
             }
@@ -146,37 +145,36 @@ public class VaultArtifactBlock extends FacedBlock {
         }
         return positions;
     }
-
-
-    public List<ItemStack> getDrops(BlockState state, LootContext.Builder builder) {
-        Integer order = (Integer) state.getValue((Property) ORDER_PROPERTY);
-        ItemStack artifactStack = createArtifact(order.intValue());
-        return new ArrayList<>(Collections.singletonList(artifactStack));
+    
+    public List<ItemStack> getDrops(final BlockState state, final LootContext.Builder builder) {
+        final Integer order = (Integer)state.getValue(VaultArtifactBlock.ORDER_PROPERTY);
+        final ItemStack artifactStack = createArtifact(order);
+        return new ArrayList<ItemStack>(Collections.singletonList(artifactStack));
     }
-
-
-    public ItemStack getPickBlock(BlockState state, RayTraceResult target, IBlockReader world, BlockPos pos, PlayerEntity player) {
-        Integer order = (Integer) state.getValue((Property) ORDER_PROPERTY);
-        return createArtifact(order.intValue());
+    
+    public ItemStack getPickBlock(final BlockState state, final RayTraceResult target, final IBlockReader world, final BlockPos pos, final PlayerEntity player) {
+        final Integer order = (Integer)state.getValue(VaultArtifactBlock.ORDER_PROPERTY);
+        return createArtifact(order);
     }
-
-
+    
     public static ItemStack createRandomArtifact() {
         return createArtifact(MathUtilities.getRandomInt(0, 25) + 1);
     }
-
-    public static ItemStack createArtifact(int order) {
-        Item artifactItem = (Item) ForgeRegistries.ITEMS.getValue(ModBlocks.VAULT_ARTIFACT.getRegistryName());
-        ItemStack itemStack = new ItemStack((IItemProvider) artifactItem, 1);
-        CompoundNBT nbt = new CompoundNBT();
+    
+    public static ItemStack createArtifact(final int order) {
+        final Item artifactItem = (Item)ForgeRegistries.ITEMS.getValue(ModBlocks.VAULT_ARTIFACT.getRegistryName());
+        final ItemStack itemStack = new ItemStack((IItemProvider)artifactItem, 1);
+        final CompoundNBT nbt = new CompoundNBT();
         nbt.putInt("CustomModelData", MathHelper.clamp(order, 0, 25));
         itemStack.setTag(nbt);
         return itemStack;
     }
+    
+    static {
+        ORDER_PROPERTY = HiddenIntegerProperty.create("order", 1, 25);
+        EAST_SHAPE = Block.box(15.75, 0.0, 0.0, 16.0, 16.0, 16.0);
+        NORTH_SHAPE = Block.box(0.0, 0.0, 0.0, 16.0, 16.0, 0.25);
+        WEST_SHAPE = Block.box(0.0, 0.0, 0.0, 0.25, 16.0, 16.0);
+        SOUTH_SHAPE = Block.box(0.0, 0.0, 15.75, 16.0, 16.0, 16.0);
+    }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\block\VaultArtifactBlock.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

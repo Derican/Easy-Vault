@@ -1,34 +1,36 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.attribute;
 
 import net.minecraft.nbt.CompoundNBT;
 
 import java.util.Random;
 
-
-public class DoubleAttribute
-        extends NumberAttribute<Double> {
+public class DoubleAttribute extends NumberAttribute<Double> {
     public DoubleAttribute() {
     }
 
-    public DoubleAttribute(VAttribute.Modifier<Double> modifier) {
+    public DoubleAttribute(final VAttribute.Modifier<Double> modifier) {
         super(modifier);
     }
 
-
-    public void write(CompoundNBT nbt) {
-        nbt.putDouble("BaseValue", getBaseValue().doubleValue());
+    @Override
+    public void write(final CompoundNBT nbt) {
+        nbt.putDouble("BaseValue", (double) this.getBaseValue());
     }
 
-
-    public void read(CompoundNBT nbt) {
-        setBaseValue(Double.valueOf(nbt.getDouble("BaseValue")));
+    @Override
+    public void read(final CompoundNBT nbt) {
+        this.setBaseValue(nbt.getDouble("BaseValue"));
     }
 
     public static Generator generator() {
         return new Generator();
     }
 
-    public static Generator.Operator of(NumberAttribute.Type type) {
+    public static Generator.Operator of(final Type type) {
         return new Generator.Operator(type);
     }
 
@@ -44,12 +46,16 @@ public class DoubleAttribute
             }
 
             public Double apply(Double value, Double modifier) {
-                if (getType() == NumberAttribute.Type.SET)
-                    return modifier;
-                if (getType() == NumberAttribute.Type.ADD)
-                    return Double.valueOf(value.doubleValue() + modifier.doubleValue());
-                if (getType() == NumberAttribute.Type.MULTIPLY) {
-                    return Double.valueOf(value.doubleValue() * modifier.doubleValue());
+                try {
+                    if (getType() == NumberAttribute.Type.SET)
+                        return modifier;
+                    if (getType() == NumberAttribute.Type.ADD)
+                        return Double.valueOf(value.doubleValue() + modifier.doubleValue());
+                    if (getType() == NumberAttribute.Type.MULTIPLY) {
+                        return Double.valueOf(value.doubleValue() * modifier.doubleValue());
+                    }
+                } catch (Throwable e) {
+
                 }
 
                 return value;
@@ -59,11 +65,15 @@ public class DoubleAttribute
 
     public static class Operator extends NumberAttribute.Generator.Operator<Double> {
         public Double apply(Double value, Double modifier) {
-            if (getType() == NumberAttribute.Type.SET) return modifier;
-            if (getType() == NumberAttribute.Type.ADD)
-                return Double.valueOf(value.doubleValue() + modifier.doubleValue());
-            if (getType() == NumberAttribute.Type.MULTIPLY)
-                return Double.valueOf(value.doubleValue() * modifier.doubleValue());
+            try {
+                if (getType() == NumberAttribute.Type.SET) return modifier;
+                if (getType() == NumberAttribute.Type.ADD)
+                    return Double.valueOf(value.doubleValue() + modifier.doubleValue());
+                if (getType() == NumberAttribute.Type.MULTIPLY)
+                    return Double.valueOf(value.doubleValue() * modifier.doubleValue());
+            } catch (Throwable e) {
+
+            }
             return value;
         }
 
@@ -72,11 +82,4 @@ public class DoubleAttribute
             super(type);
         }
     }
-
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\attribute\DoubleAttribute.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

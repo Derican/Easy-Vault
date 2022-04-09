@@ -1,3 +1,7 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.block.model;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
@@ -6,9 +10,10 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.model.Model;
 import net.minecraft.client.renderer.model.ModelRenderer;
 
+import java.util.function.Function;
 
-public class ScavengerChestModel
-        extends Model {
+public class ScavengerChestModel extends Model
+{
     private final ModelRenderer chest;
     private final ModelRenderer horn_R3_r1;
     private final ModelRenderer horn_R2_r1;
@@ -23,115 +28,80 @@ public class ScavengerChestModel
     private final ModelRenderer eyesmall_r1;
     private final ModelRenderer lid;
     private final ModelRenderer bottom;
-
+    
     public ScavengerChestModel() {
         super(RenderType::entityCutout);
         this.texWidth = 128;
         this.texHeight = 128;
-
-        this.chest = new ModelRenderer(this);
-        this.chest.setPos(0.0F, 16.0F, 0.0F);
-        setRotationAngle(this.chest, 0.0F, 0.0F, -3.1416F);
-
-        this.lid = new ModelRenderer(this);
-        this.lid.setPos(0.0F, 1.0F, -7.0F);
+        (this.chest = new ModelRenderer((Model)this)).setPos(0.0f, 16.0f, 0.0f);
+        this.setRotationAngle(this.chest, 0.0f, 0.0f, -3.1416f);
+        (this.lid = new ModelRenderer((Model)this)).setPos(0.0f, 1.0f, -7.0f);
         this.chest.addChild(this.lid);
-        this.lid.texOffs(0, 43).addBox(-4.0F, 0.25F, -1.0F, 8.0F, 5.0F, 16.0F, 0.0F, false);
-        this.lid.texOffs(0, 24).addBox(-7.0F, 0.0F, 0.0F, 14.0F, 5.0F, 14.0F, 0.0F, false);
-
-        this.horn_R3_r1 = new ModelRenderer(this);
-        this.horn_R3_r1.setPos(3.8366F, 3.3584F, 15.0F);
+        this.lid.texOffs(0, 43).addBox(-4.0f, 0.25f, -1.0f, 8.0f, 5.0f, 16.0f, 0.0f, false);
+        this.lid.texOffs(0, 24).addBox(-7.0f, 0.0f, 0.0f, 14.0f, 5.0f, 14.0f, 0.0f, false);
+        (this.horn_R3_r1 = new ModelRenderer((Model)this)).setPos(3.8366f, 3.3584f, 15.0f);
         this.lid.addChild(this.horn_R3_r1);
-        setRotationAngle(this.horn_R3_r1, 0.0F, 0.0F, -0.3491F);
-        this.horn_R3_r1.texOffs(42, 0).addBox(-0.4013F, -0.3725F, -1.6F, 1.0F, 2.0F, 2.0F, 0.0F, false);
-
-        this.horn_R2_r1 = new ModelRenderer(this);
-        this.horn_R2_r1.setPos(3.8366F, 3.3584F, 15.0F);
+        this.setRotationAngle(this.horn_R3_r1, 0.0f, 0.0f, -0.3491f);
+        this.horn_R3_r1.texOffs(42, 0).addBox(-0.4013f, -0.3725f, -1.6f, 1.0f, 2.0f, 2.0f, 0.0f, false);
+        (this.horn_R2_r1 = new ModelRenderer((Model)this)).setPos(3.8366f, 3.3584f, 15.0f);
         this.lid.addChild(this.horn_R2_r1);
-        setRotationAngle(this.horn_R2_r1, 0.0F, 0.0F, -0.7418F);
-        this.horn_R2_r1.texOffs(42, 0).addBox(-0.8131F, -1.6893F, -1.3F, 2.0F, 2.0F, 2.0F, 0.0F, false);
-
-        this.horn_R1_r1 = new ModelRenderer(this);
-        this.horn_R1_r1.setPos(3.8366F, 3.3584F, 15.0F);
+        this.setRotationAngle(this.horn_R2_r1, 0.0f, 0.0f, -0.7418f);
+        this.horn_R2_r1.texOffs(42, 0).addBox(-0.8131f, -1.6893f, -1.3f, 2.0f, 2.0f, 2.0f, 0.0f, false);
+        (this.horn_R1_r1 = new ModelRenderer((Model)this)).setPos(3.8366f, 3.3584f, 15.0f);
         this.lid.addChild(this.horn_R1_r1);
-        setRotationAngle(this.horn_R1_r1, 0.0F, 0.0F, -1.4399F);
-        this.horn_R1_r1.texOffs(42, 0).addBox(0.0469F, -2.5778F, -1.0F, 2.0F, 2.0F, 2.0F, 0.0F, false);
-
-        this.horn_L3_r1 = new ModelRenderer(this);
-        this.horn_L3_r1.setPos(-3.6253F, 3.3311F, 15.0F);
+        this.setRotationAngle(this.horn_R1_r1, 0.0f, 0.0f, -1.4399f);
+        this.horn_R1_r1.texOffs(42, 0).addBox(0.0469f, -2.5778f, -1.0f, 2.0f, 2.0f, 2.0f, 0.0f, false);
+        (this.horn_L3_r1 = new ModelRenderer((Model)this)).setPos(-3.6253f, 3.3311f, 15.0f);
         this.lid.addChild(this.horn_L3_r1);
-        setRotationAngle(this.horn_L3_r1, 0.0F, 0.0F, 0.3491F);
-        this.horn_L3_r1.texOffs(42, 0).addBox(-0.5983F, -0.4446F, -1.35F, 1.0F, 2.0F, 2.0F, 0.0F, false);
-
-        this.horn_L2_r1 = new ModelRenderer(this);
-        this.horn_L2_r1.setPos(-3.6253F, 3.3311F, 15.0F);
+        this.setRotationAngle(this.horn_L3_r1, 0.0f, 0.0f, 0.3491f);
+        this.horn_L3_r1.texOffs(42, 0).addBox(-0.5983f, -0.4446f, -1.35f, 1.0f, 2.0f, 2.0f, 0.0f, false);
+        (this.horn_L2_r1 = new ModelRenderer((Model)this)).setPos(-3.6253f, 3.3311f, 15.0f);
         this.lid.addChild(this.horn_L2_r1);
-        setRotationAngle(this.horn_L2_r1, 0.0F, 0.0F, 0.7418F);
-        this.horn_L2_r1.texOffs(42, 0).addBox(-1.0105F, -1.9365F, -1.3F, 2.0F, 2.0F, 2.0F, 0.0F, false);
-
-        this.horn_L1_r1 = new ModelRenderer(this);
-        this.horn_L1_r1.setPos(-3.6253F, 3.3311F, 15.0F);
+        this.setRotationAngle(this.horn_L2_r1, 0.0f, 0.0f, 0.7418f);
+        this.horn_L2_r1.texOffs(42, 0).addBox(-1.0105f, -1.9365f, -1.3f, 2.0f, 2.0f, 2.0f, 0.0f, false);
+        (this.horn_L1_r1 = new ModelRenderer((Model)this)).setPos(-3.6253f, 3.3311f, 15.0f);
         this.lid.addChild(this.horn_L1_r1);
-        setRotationAngle(this.horn_L1_r1, 0.0F, 0.0F, 1.4399F);
-        this.horn_L1_r1.texOffs(42, 0).addBox(-2.0469F, -2.5483F, -1.0F, 2.0F, 2.0F, 2.0F, 0.0F, false);
-
-        this.angle_R_r1 = new ModelRenderer(this);
-        this.angle_R_r1.setPos(-0.0127F, -0.2087F, 15.4708F);
+        this.setRotationAngle(this.horn_L1_r1, 0.0f, 0.0f, 1.4399f);
+        this.horn_L1_r1.texOffs(42, 0).addBox(-2.0469f, -2.5483f, -1.0f, 2.0f, 2.0f, 2.0f, 0.0f, false);
+        (this.angle_R_r1 = new ModelRenderer((Model)this)).setPos(-0.0127f, -0.2087f, 15.4708f);
         this.lid.addChild(this.angle_R_r1);
-        setRotationAngle(this.angle_R_r1, -0.0295F, -0.0322F, -0.8286F);
-        this.angle_R_r1.texOffs(2, 1).addBox(0.813F, -1.0545F, -0.7208F, 1.0F, 2.0F, 1.0F, 0.0F, false);
-
-        this.angle_L_r1 = new ModelRenderer(this);
-        this.angle_L_r1.setPos(-0.0127F, -0.2087F, 15.4708F);
+        this.setRotationAngle(this.angle_R_r1, -0.0295f, -0.0322f, -0.8286f);
+        this.angle_R_r1.texOffs(2, 1).addBox(0.813f, -1.0545f, -0.7208f, 1.0f, 2.0f, 1.0f, 0.0f, false);
+        (this.angle_L_r1 = new ModelRenderer((Model)this)).setPos(-0.0127f, -0.2087f, 15.4708f);
         this.lid.addChild(this.angle_L_r1);
-        setRotationAngle(this.angle_L_r1, -0.0295F, 0.0322F, 0.8286F);
-        this.angle_L_r1.texOffs(2, 0).addBox(-1.8568F, -1.0258F, -0.7208F, 1.0F, 2.0F, 1.0F, 0.0F, false);
-
-        this.nose_r1 = new ModelRenderer(this);
-        this.nose_r1.setPos(-0.0127F, -0.2087F, 15.4708F);
+        this.setRotationAngle(this.angle_L_r1, -0.0295f, 0.0322f, 0.8286f);
+        this.angle_L_r1.texOffs(2, 0).addBox(-1.8568f, -1.0258f, -0.7208f, 1.0f, 2.0f, 1.0f, 0.0f, false);
+        (this.nose_r1 = new ModelRenderer((Model)this)).setPos(-0.0127f, -0.2087f, 15.4708f);
         this.lid.addChild(this.nose_r1);
-        setRotationAngle(this.nose_r1, -0.0436F, 0.0F, 0.0F);
-        this.nose_r1.texOffs(0, 10).addBox(-0.9873F, -2.7913F, -0.4708F, 2.0F, 2.0F, 1.0F, 0.0F, false);
-
-        this.eyelarge_r1 = new ModelRenderer(this);
-        this.eyelarge_r1.setPos(-0.0127F, -0.2087F, 15.7208F);
+        this.setRotationAngle(this.nose_r1, -0.0436f, 0.0f, 0.0f);
+        this.nose_r1.texOffs(0, 10).addBox(-0.9873f, -2.7913f, -0.4708f, 2.0f, 2.0f, 1.0f, 0.0f, false);
+        (this.eyelarge_r1 = new ModelRenderer((Model)this)).setPos(-0.0127f, -0.2087f, 15.7208f);
         this.lid.addChild(this.eyelarge_r1);
-        setRotationAngle(this.eyelarge_r1, -0.0436F, 0.0F, 0.0F);
-        this.eyelarge_r1.texOffs(0, 29).addBox(0.5127F, 0.4587F, -0.4708F, 1.0F, 1.0F, 1.0F, 0.0F, false);
-        this.eyelarge_r1.texOffs(0, 0).addBox(-1.9873F, -0.7913F, -1.7208F, 4.0F, 4.0F, 2.0F, 0.0F, false);
-
-        this.eyesmall_r1 = new ModelRenderer(this);
-        this.eyesmall_r1.setPos(-1.0F, 0.8221F, 16.2055F);
+        this.setRotationAngle(this.eyelarge_r1, -0.0436f, 0.0f, 0.0f);
+        this.eyelarge_r1.texOffs(0, 29).addBox(0.5127f, 0.4587f, -0.4708f, 1.0f, 1.0f, 1.0f, 0.0f, false);
+        this.eyelarge_r1.texOffs(0, 0).addBox(-1.9873f, -0.7913f, -1.7208f, 4.0f, 4.0f, 2.0f, 0.0f, false);
+        (this.eyesmall_r1 = new ModelRenderer((Model)this)).setPos(-1.0f, 0.8221f, 16.2055f);
         this.lid.addChild(this.eyesmall_r1);
-        setRotationAngle(this.eyesmall_r1, -0.0436F, 0.0F, 0.0F);
-        this.eyesmall_r1.texOffs(0, 29).addBox(-0.5F, -0.5721F, -0.9555F, 1.0F, 1.0F, 1.0F, 0.0F, false);
-
-        this.bottom = new ModelRenderer(this);
-        this.bottom.setPos(0.0F, 8.0F, 0.0F);
+        this.setRotationAngle(this.eyesmall_r1, -0.0436f, 0.0f, 0.0f);
+        this.eyesmall_r1.texOffs(0, 29).addBox(-0.5f, -0.5721f, -0.9555f, 1.0f, 1.0f, 1.0f, 0.0f, false);
+        (this.bottom = new ModelRenderer((Model)this)).setPos(0.0f, 8.0f, 0.0f);
         this.chest.addChild(this.bottom);
-        this.bottom.texOffs(40, 27).addBox(-4.0F, -16.0F, -8.0F, 8.0F, 9.0F, 16.0F, 0.0F, false);
-        this.bottom.texOffs(0, 0).addBox(-7.0F, -16.0F, -7.0F, 14.0F, 10.0F, 14.0F, 0.0F, false);
+        this.bottom.texOffs(40, 27).addBox(-4.0f, -16.0f, -8.0f, 8.0f, 9.0f, 16.0f, 0.0f, false);
+        this.bottom.texOffs(0, 0).addBox(-7.0f, -16.0f, -7.0f, 14.0f, 10.0f, 14.0f, 0.0f, false);
     }
-
-    private void setRotationAngle(ModelRenderer model, float x, float y, float z) {
+    
+    private void setRotationAngle(final ModelRenderer model, final float x, final float y, final float z) {
         model.xRot = x;
         model.yRot = y;
         model.zRot = z;
     }
-
-
-    public void renderToBuffer(MatrixStack matrixStack, IVertexBuilder buffer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
+    
+    public void renderToBuffer(final MatrixStack matrixStack, final IVertexBuilder buffer, final int packedLight, final int packedOverlay, final float red, final float green, final float blue, final float alpha) {
         this.lid.render(matrixStack, buffer, packedLight, packedOverlay);
         this.bottom.render(matrixStack, buffer, packedLight, packedOverlay);
     }
-
-    public void setLidAngle(float lidAngle) {
-        this.lid.xRot = -(lidAngle * 1.5707964F);
+    
+    public void setLidAngle(final float lidAngle) {
+        this.lid.xRot = -(lidAngle * 1.5707964f);
     }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\block\model\ScavengerChestModel.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

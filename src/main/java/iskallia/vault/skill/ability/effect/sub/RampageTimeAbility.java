@@ -1,3 +1,7 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.skill.ability.effect.sub;
 
 import iskallia.vault.init.ModEffects;
@@ -19,49 +23,44 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-public class RampageTimeAbility
-        extends RampageAbility<RampageTimeConfig> {
-    private static final Map<UUID, Integer> tickMap = new HashMap<>();
-
+public class RampageTimeAbility extends RampageAbility<RampageTimeConfig>
+{
+    private static final Map<UUID, Integer> tickMap;
+    
     @SubscribeEvent
-    public void onLivingDamage(LivingDamageEvent event) {
+    public void onLivingDamage(final LivingDamageEvent event) {
         if (event.getEntity().getCommandSenderWorld().isClientSide()) {
             return;
         }
         if (!(event.getSource().getEntity() instanceof PlayerEntity)) {
             return;
         }
-
-        PlayerEntity player = (PlayerEntity) event.getSource().getEntity();
+        final PlayerEntity player = (PlayerEntity)event.getSource().getEntity();
         if (!(player instanceof ServerPlayerEntity)) {
             return;
         }
-        ServerPlayerEntity sPlayer = (ServerPlayerEntity) player;
-        ServerWorld world = sPlayer.getLevel();
-
-        int tick = ((Integer) tickMap.getOrDefault(sPlayer.getUUID(), Integer.valueOf(0))).intValue();
+        final ServerPlayerEntity sPlayer = (ServerPlayerEntity)player;
+        final ServerWorld world = sPlayer.getLevel();
+        final int tick = RampageTimeAbility.tickMap.getOrDefault(sPlayer.getUUID(), 0);
         if (sPlayer.tickCount == tick) {
             return;
         }
-        tickMap.put(sPlayer.getUUID(), Integer.valueOf(sPlayer.tickCount));
-
-        EffectInstance rampage = sPlayer.getEffect(ModEffects.RAMPAGE);
+        RampageTimeAbility.tickMap.put(sPlayer.getUUID(), sPlayer.tickCount);
+        final EffectInstance rampage = sPlayer.getEffect(ModEffects.RAMPAGE);
         if (rampage == null) {
             return;
         }
-        AbilityTree abilities = PlayerAbilitiesData.get(world).getAbilities((PlayerEntity) sPlayer);
-        AbilityNode<?, ?> node = abilities.getNodeByName("Rampage");
+        final AbilityTree abilities = PlayerAbilitiesData.get(world).getAbilities((PlayerEntity)sPlayer);
+        final AbilityNode<?, ?> node = abilities.getNodeByName("Rampage");
         if (node.getAbility() == this && node.isLearned()) {
-            RampageTimeConfig cfg = (RampageTimeConfig) node.getAbilityConfig();
-
-            rampage.duration += cfg.getTickTimeIncreasePerHit();
-            sPlayer.connection.send((IPacket) new SPlayEntityEffectPacket(sPlayer.getId(), rampage));
+            final RampageTimeConfig cfg = (RampageTimeConfig)node.getAbilityConfig();
+            final EffectInstance effectInstance = rampage;
+            effectInstance.duration += cfg.getTickTimeIncreasePerHit();
+            sPlayer.connection.send((IPacket)new SPlayEntityEffectPacket(sPlayer.getId(), rampage));
         }
     }
+    
+    static {
+        tickMap = new HashMap<UUID, Integer>();
+    }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\skill\ability\effect\sub\RampageTimeAbility.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

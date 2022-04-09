@@ -1,3 +1,7 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.dump;
 
 import com.google.gson.Gson;
@@ -9,29 +13,27 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
-public abstract class JsonDump {
-    private static final Gson GSON = (new GsonBuilder()).setPrettyPrinting().create();
-
+public abstract class JsonDump
+{
+    private static final Gson GSON;
+    
     public abstract String fileName();
-
+    
     public abstract JsonObject dumpToJSON();
-
-    public void dumpToFile(String parentDir) throws IOException {
-        File configFile = new File(parentDir + File.separator + fileName());
+    
+    public void dumpToFile(final String parentDir) throws IOException {
+        final File configFile = new File(parentDir + File.separator + this.fileName());
         if (!configFile.exists()) {
             configFile.getParentFile().mkdirs();
             configFile.createNewFile();
         }
-
-        JsonObject jsonObject = dumpToJSON();
-        FileWriter writer = new FileWriter(configFile);
-        GSON.toJson((JsonElement) jsonObject, writer);
+        final JsonObject jsonObject = this.dumpToJSON();
+        final FileWriter writer = new FileWriter(configFile);
+        JsonDump.GSON.toJson((JsonElement)jsonObject, (Appendable)writer);
         writer.close();
     }
+    
+    static {
+        GSON = new GsonBuilder().setPrettyPrinting().create();
+    }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\dump\JsonDump.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

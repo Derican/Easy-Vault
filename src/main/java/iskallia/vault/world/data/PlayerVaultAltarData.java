@@ -1,3 +1,7 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.world.data;
 
 import iskallia.vault.altar.AltarInfusionRecipe;
@@ -9,139 +13,126 @@ import net.minecraft.world.server.ServerWorld;
 import net.minecraft.world.storage.WorldSavedData;
 
 import java.util.*;
+import java.util.function.Supplier;
 
-public class PlayerVaultAltarData extends WorldSavedData {
-    private Map<UUID, AltarInfusionRecipe> playerMap = new HashMap<>();
+public class PlayerVaultAltarData extends WorldSavedData
+{
     protected static final String DATA_NAME = "the_vault_PlayerAltarRecipes";
-    private HashMap<UUID, List<BlockPos>> playerAltars = new HashMap<>();
-
+    private Map<UUID, AltarInfusionRecipe> playerMap;
+    private HashMap<UUID, List<BlockPos>> playerAltars;
+    
     public PlayerVaultAltarData() {
         super("the_vault_PlayerAltarRecipes");
+        this.playerMap = new HashMap<UUID, AltarInfusionRecipe>();
+        this.playerAltars = new HashMap<UUID, List<BlockPos>>();
     }
-
-    public PlayerVaultAltarData(String name) {
+    
+    public PlayerVaultAltarData(final String name) {
         super(name);
+        this.playerMap = new HashMap<UUID, AltarInfusionRecipe>();
+        this.playerAltars = new HashMap<UUID, List<BlockPos>>();
     }
-
-
-    public AltarInfusionRecipe getRecipe(PlayerEntity player) {
-        return getRecipe(player.getUUID());
+    
+    public AltarInfusionRecipe getRecipe(final PlayerEntity player) {
+        return this.getRecipe(player.getUUID());
     }
-
-    public AltarInfusionRecipe getRecipe(UUID uuid) {
+    
+    public AltarInfusionRecipe getRecipe(final UUID uuid) {
         return this.playerMap.get(uuid);
     }
-
-    public AltarInfusionRecipe getRecipe(ServerWorld world, BlockPos pos, ServerPlayerEntity player) {
-        AltarInfusionRecipe recipe = this.playerMap.computeIfAbsent(player.getUUID(), k -> new AltarInfusionRecipe(world, pos, player));
-        setDirty();
+    
+    public AltarInfusionRecipe getRecipe(final ServerWorld world, final BlockPos pos, final ServerPlayerEntity player) {
+        final AltarInfusionRecipe recipe = this.playerMap.computeIfAbsent(player.getUUID(), k -> new AltarInfusionRecipe(world, pos, player));
+        this.setDirty();
         return recipe;
     }
-
-    public boolean hasRecipe(UUID uuid) {
+    
+    public boolean hasRecipe(final UUID uuid) {
         return this.playerMap.containsKey(uuid);
     }
-
-    public PlayerVaultAltarData addRecipe(UUID uuid, AltarInfusionRecipe recipe) {
+    
+    public PlayerVaultAltarData addRecipe(final UUID uuid, final AltarInfusionRecipe recipe) {
         this.playerMap.put(uuid, recipe);
-
-        setDirty();
+        this.setDirty();
         return this;
     }
-
-    public PlayerVaultAltarData removeRecipe(UUID uuid) {
+    
+    public PlayerVaultAltarData removeRecipe(final UUID uuid) {
         this.playerMap.remove(uuid);
-
-        setDirty();
+        this.setDirty();
         return this;
     }
-
-    public List<BlockPos> getAltars(UUID uuid) {
+    
+    public List<BlockPos> getAltars(final UUID uuid) {
         if (uuid == null) {
-            return new ArrayList<>();
+            return new ArrayList<BlockPos>();
         }
         this.playerAltars.computeIfAbsent(uuid, k -> new ArrayList());
-        setDirty();
+        this.setDirty();
         return this.playerAltars.get(uuid);
     }
-
-
-    public PlayerVaultAltarData addAltar(UUID uuid, BlockPos altarPos) {
-        getAltars(uuid).add(altarPos);
-        setDirty();
+    
+    public PlayerVaultAltarData addAltar(final UUID uuid, final BlockPos altarPos) {
+        this.getAltars(uuid).add(altarPos);
+        this.setDirty();
         return this;
     }
-
-    public PlayerVaultAltarData removeAltar(UUID uuid, BlockPos altarPos) {
-        getAltars(uuid).remove(altarPos);
-        setDirty();
+    
+    public PlayerVaultAltarData removeAltar(final UUID uuid, final BlockPos altarPos) {
+        this.getAltars(uuid).remove(altarPos);
+        this.setDirty();
         return this;
     }
-
-
-    public void load(CompoundNBT nbt) {
-        ListNBT playerList = nbt.getList("PlayerEntries", 8);
-        ListNBT recipeList = nbt.getList("AltarRecipeEntries", 10);
-        ListNBT playerBlockPosList = nbt.getList("PlayerBlockPosEntries", 8);
-        ListNBT blockPosList = nbt.getList("BlockPosEntries", 9);
-
+    
+    public void load(final CompoundNBT nbt) {
+        final ListNBT playerList = nbt.getList("PlayerEntries", 8);
+        final ListNBT recipeList = nbt.getList("AltarRecipeEntries", 10);
+        final ListNBT playerBlockPosList = nbt.getList("PlayerBlockPosEntries", 8);
+        final ListNBT blockPosList = nbt.getList("BlockPosEntries", 9);
         if (playerList.size() != recipeList.size() || playerBlockPosList.size() != blockPosList.size()) {
             throw new IllegalStateException("Map doesn't have the same amount of keys as values");
         }
-        int i;
-        for (i = 0; i < playerList.size(); i++) {
-            UUID playerUUID = UUID.fromString(playerList.getString(i));
+        for (int i = 0; i < playerList.size(); ++i) {
+            final UUID playerUUID = UUID.fromString(playerList.getString(i));
             this.playerMap.put(playerUUID, AltarInfusionRecipe.deserialize(recipeList.getCompound(i)));
         }
-
-        for (i = 0; i < playerBlockPosList.size(); i++) {
-            UUID playerUUID = UUID.fromString(playerBlockPosList.getString(i));
-            List<BlockPos> positions = new ArrayList<>();
-            for (INBT compound : blockPosList.getList(i)) {
-                CompoundNBT posTag = (CompoundNBT) compound;
-                BlockPos pos = NBTUtil.readBlockPos(posTag);
+        for (int i = 0; i < playerBlockPosList.size(); ++i) {
+            final UUID playerUUID = UUID.fromString(playerBlockPosList.getString(i));
+            final List<BlockPos> positions = new ArrayList<BlockPos>();
+            for (final INBT compound : blockPosList.getList(i)) {
+                final CompoundNBT posTag = (CompoundNBT)compound;
+                final BlockPos pos = NBTUtil.readBlockPos(posTag);
                 positions.add(pos);
             }
             this.playerAltars.put(playerUUID, positions);
         }
     }
-
-
-    public CompoundNBT save(CompoundNBT nbt) {
-        ListNBT playerList = new ListNBT();
-        ListNBT recipeList = new ListNBT();
-
-        ListNBT playerBlockPosList = new ListNBT();
-        ListNBT blockPosList = new ListNBT();
-
+    
+    public CompoundNBT save(final CompoundNBT nbt) {
+        final ListNBT playerList = new ListNBT();
+        final ListNBT recipeList = new ListNBT();
+        final ListNBT playerBlockPosList = new ListNBT();
+        final ListNBT blockPosList = new ListNBT();
         this.playerMap.forEach((uuid, recipe) -> {
             playerList.add(StringNBT.valueOf(uuid.toString()));
-
             recipeList.add(AltarInfusionRecipe.serialize(recipe));
+            return;
         });
         this.playerAltars.forEach((uuid, altarPositions) -> {
             playerBlockPosList.add(StringNBT.valueOf(uuid.toString()));
-
-            ListNBT positions = new ListNBT();
-            altarPositions.forEach(());
+            final ListNBT positions = new ListNBT();
+            altarPositions.forEach(pos -> positions.add(NBTUtil.writeBlockPos(pos)));
             blockPosList.add(positions);
+            return;
         });
-        nbt.put("PlayerEntries", (INBT) playerList);
-        nbt.put("AltarRecipeEntries", (INBT) recipeList);
-        nbt.put("PlayerBlockPosEntries", (INBT) playerBlockPosList);
-        nbt.put("BlockPosEntries", (INBT) blockPosList);
-
+        nbt.put("PlayerEntries", (INBT)playerList);
+        nbt.put("AltarRecipeEntries", (INBT)recipeList);
+        nbt.put("PlayerBlockPosEntries", (INBT)playerBlockPosList);
+        nbt.put("BlockPosEntries", (INBT)blockPosList);
         return nbt;
     }
-
-    public static PlayerVaultAltarData get(ServerWorld world) {
-        return (PlayerVaultAltarData) world.getServer().overworld()
-                .getDataStorage().computeIfAbsent(PlayerVaultAltarData::new, "the_vault_PlayerAltarRecipes");
+    
+    public static PlayerVaultAltarData get(final ServerWorld world) {
+        return (PlayerVaultAltarData)world.getServer().overworld().getDataStorage().computeIfAbsent((Supplier)PlayerVaultAltarData::new, "the_vault_PlayerAltarRecipes");
     }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\world\data\PlayerVaultAltarData.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

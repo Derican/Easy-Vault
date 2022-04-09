@@ -1,3 +1,7 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.config;
 
 import com.google.gson.annotations.Expose;
@@ -5,70 +9,65 @@ import com.google.gson.annotations.Expose;
 import java.util.HashMap;
 import java.util.Map;
 
-public class DurabilityConfig
-        extends Config {
+public class DurabilityConfig extends Config
+{
     @Expose
-    private final Map<Integer, Float> durabilityOverride = new HashMap<>();
+    private final Map<Integer, Float> durabilityOverride;
     @Expose
-    private final Map<Integer, Float> armorDurabilityOverride = new HashMap<>();
-
-
+    private final Map<Integer, Float> armorDurabilityOverride;
+    
+    public DurabilityConfig() {
+        this.durabilityOverride = new HashMap<Integer, Float>();
+        this.armorDurabilityOverride = new HashMap<Integer, Float>();
+    }
+    
+    @Override
     public String getName() {
         return "durability";
     }
-
-    public float getDurabilityIgnoreChance(int unbreakingLevel) {
-        return getIgnoreChance(this.durabilityOverride, unbreakingLevel);
+    
+    public float getDurabilityIgnoreChance(final int unbreakingLevel) {
+        return this.getIgnoreChance(this.durabilityOverride, unbreakingLevel);
     }
-
-    public float getArmorDurabilityIgnoreChance(int unbreakingLevel) {
-        return getIgnoreChance(this.armorDurabilityOverride, unbreakingLevel);
+    
+    public float getArmorDurabilityIgnoreChance(final int unbreakingLevel) {
+        return this.getIgnoreChance(this.armorDurabilityOverride, unbreakingLevel);
     }
-
-    private float getIgnoreChance(Map<Integer, Float> chanceMap, int unbreakingLevel) {
+    
+    private float getIgnoreChance(final Map<Integer, Float> chanceMap, final int unbreakingLevel) {
         if (unbreakingLevel < 1) {
-            return 0.0F;
+            return 0.0f;
         }
-
-
-        int overrideLevel = chanceMap.keySet().stream().filter(level -> (level.intValue() <= unbreakingLevel)).mapToInt(level -> level.intValue()).max().orElse(0);
+        final int overrideLevel = chanceMap.keySet().stream().filter(level -> level <= unbreakingLevel).mapToInt(level -> level).max().orElse(0);
         if (overrideLevel <= 0) {
-            return 0.0F;
+            return 0.0f;
         }
-        return ((Float) chanceMap.get(Integer.valueOf(overrideLevel))).floatValue();
+        return chanceMap.get(overrideLevel);
     }
-
-
+    
+    @Override
     protected void reset() {
         this.durabilityOverride.clear();
         this.armorDurabilityOverride.clear();
-
-        this.durabilityOverride.put(Integer.valueOf(1), Float.valueOf(0.5F));
-        this.durabilityOverride.put(Integer.valueOf(2), Float.valueOf(0.66667F));
-        this.durabilityOverride.put(Integer.valueOf(3), Float.valueOf(0.75F));
-        this.durabilityOverride.put(Integer.valueOf(4), Float.valueOf(0.78F));
-        this.durabilityOverride.put(Integer.valueOf(5), Float.valueOf(0.8F));
-        this.durabilityOverride.put(Integer.valueOf(6), Float.valueOf(0.82F));
-        this.durabilityOverride.put(Integer.valueOf(7), Float.valueOf(0.84F));
-        this.durabilityOverride.put(Integer.valueOf(8), Float.valueOf(0.86F));
-        this.durabilityOverride.put(Integer.valueOf(9), Float.valueOf(0.88F));
-        this.durabilityOverride.put(Integer.valueOf(10), Float.valueOf(0.9F));
-
-        this.armorDurabilityOverride.put(Integer.valueOf(1), Float.valueOf(0.2F));
-        this.armorDurabilityOverride.put(Integer.valueOf(2), Float.valueOf(0.27F));
-        this.armorDurabilityOverride.put(Integer.valueOf(3), Float.valueOf(0.3F));
-        this.armorDurabilityOverride.put(Integer.valueOf(4), Float.valueOf(0.33F));
-        this.armorDurabilityOverride.put(Integer.valueOf(5), Float.valueOf(0.36F));
-        this.armorDurabilityOverride.put(Integer.valueOf(6), Float.valueOf(0.39F));
-        this.armorDurabilityOverride.put(Integer.valueOf(7), Float.valueOf(0.42F));
-        this.armorDurabilityOverride.put(Integer.valueOf(8), Float.valueOf(0.45F));
-        this.armorDurabilityOverride.put(Integer.valueOf(9), Float.valueOf(0.48F));
-        this.armorDurabilityOverride.put(Integer.valueOf(10), Float.valueOf(0.51F));
+        this.durabilityOverride.put(1, 0.5f);
+        this.durabilityOverride.put(2, 0.66667f);
+        this.durabilityOverride.put(3, 0.75f);
+        this.durabilityOverride.put(4, 0.78f);
+        this.durabilityOverride.put(5, 0.8f);
+        this.durabilityOverride.put(6, 0.82f);
+        this.durabilityOverride.put(7, 0.84f);
+        this.durabilityOverride.put(8, 0.86f);
+        this.durabilityOverride.put(9, 0.88f);
+        this.durabilityOverride.put(10, 0.9f);
+        this.armorDurabilityOverride.put(1, 0.2f);
+        this.armorDurabilityOverride.put(2, 0.27f);
+        this.armorDurabilityOverride.put(3, 0.3f);
+        this.armorDurabilityOverride.put(4, 0.33f);
+        this.armorDurabilityOverride.put(5, 0.36f);
+        this.armorDurabilityOverride.put(6, 0.39f);
+        this.armorDurabilityOverride.put(7, 0.42f);
+        this.armorDurabilityOverride.put(8, 0.45f);
+        this.armorDurabilityOverride.put(9, 0.48f);
+        this.armorDurabilityOverride.put(10, 0.51f);
     }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\config\DurabilityConfig.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

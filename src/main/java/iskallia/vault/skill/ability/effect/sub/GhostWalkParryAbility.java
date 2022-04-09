@@ -1,22 +1,21 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.skill.ability.effect.sub;
 
 import iskallia.vault.skill.ability.config.sub.GhostWalkParryConfig;
 import iskallia.vault.skill.ability.effect.GhostWalkAbility;
 
-public class GhostWalkParryAbility
-        extends GhostWalkAbility<GhostWalkParryConfig> {
+public class GhostWalkParryAbility extends GhostWalkAbility<GhostWalkParryConfig>
+{
+    @Override
     protected boolean preventsDamage() {
         return false;
     }
-
-
+    
+    @Override
     protected boolean doRemoveWhenDealingDamage() {
         return false;
     }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\skill\ability\effect\sub\GhostWalkParryAbility.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

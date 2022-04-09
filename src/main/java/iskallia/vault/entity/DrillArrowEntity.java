@@ -1,3 +1,7 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.entity;
 
 import iskallia.vault.init.ModEntities;
@@ -19,131 +23,117 @@ import net.minecraft.particles.IParticleData;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.util.IItemProvider;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkHooks;
 
-public class DrillArrowEntity extends ArrowEntity {
-    private int maxBreakCount = 0;
-    private int breakCount = 0;
-    private boolean doBreak = true;
-
-    public DrillArrowEntity(EntityType<? extends DrillArrowEntity> type, World worldIn) {
-        super(type, worldIn);
+public class DrillArrowEntity extends ArrowEntity
+{
+    private int maxBreakCount;
+    private int breakCount;
+    private boolean doBreak;
+    
+    public DrillArrowEntity(final EntityType<? extends DrillArrowEntity> type, final World worldIn) {
+        super((EntityType)type, worldIn);
+        this.maxBreakCount = 0;
+        this.breakCount = 0;
+        this.doBreak = true;
     }
-
-    public DrillArrowEntity(World worldIn, double x, double y, double z) {
+    
+    public DrillArrowEntity(final World worldIn, final double x, final double y, final double z) {
         this(ModEntities.DRILL_ARROW, worldIn);
-        setPos(x, y, z);
+        this.setPos(x, y, z);
     }
-
-    public DrillArrowEntity(World worldIn, LivingEntity shooter) {
-        this(worldIn, shooter.getX(), shooter.getEyeY() - 0.10000000149011612D, shooter.getZ());
-        setOwner((Entity) shooter);
+    
+    public DrillArrowEntity(final World worldIn, final LivingEntity shooter) {
+        this(worldIn, shooter.getX(), shooter.getEyeY() - 0.10000000149011612, shooter.getZ());
+        this.setOwner((Entity)shooter);
         if (shooter instanceof PlayerEntity) {
             this.pickup = AbstractArrowEntity.PickupStatus.ALLOWED;
         }
     }
-
-    public DrillArrowEntity setMaxBreakCount(int maxBreakCount) {
+    
+    public DrillArrowEntity setMaxBreakCount(final int maxBreakCount) {
         this.maxBreakCount = maxBreakCount;
         return this;
     }
-
-
+    
     public void tick() {
-        if (this.doBreak && !getCommandSenderWorld().isClientSide()) {
-            aoeBreak();
+        if (this.doBreak && !this.getCommandSenderWorld().isClientSide()) {
+            this.aoeBreak();
         }
-        if (getCommandSenderWorld().isClientSide()) {
-            playEffects();
+        if (this.getCommandSenderWorld().isClientSide()) {
+            this.playEffects();
         }
-
         super.tick();
     }
-
+    
     private void playEffects() {
-        Vector3d vec = position();
-        for (int i = 0; i < 5; i++) {
-            Vector3d v = vec.add((this.random
-                    .nextFloat() * 0.4F * (this.random.nextBoolean() ? 1 : -1)), (this.random
-                    .nextFloat() * 0.4F * (this.random.nextBoolean() ? 1 : -1)), (this.random
-                    .nextFloat() * 0.4F * (this.random.nextBoolean() ? 1 : -1)));
-            this.level.addParticle((IParticleData) ParticleTypes.CAMPFIRE_COSY_SMOKE, v.x, v.y, v.z, 0.0D, 0.0D, 0.0D);
+        final Vector3d vec = this.position();
+        for (int i = 0; i < 5; ++i) {
+            final Vector3d v = vec.add((double)(this.random.nextFloat() * 0.4f * (this.random.nextBoolean() ? 1 : -1)), (double)(this.random.nextFloat() * 0.4f * (this.random.nextBoolean() ? 1 : -1)), (double)(this.random.nextFloat() * 0.4f * (this.random.nextBoolean() ? 1 : -1)));
+            this.level.addParticle((IParticleData)ParticleTypes.CAMPFIRE_COSY_SMOKE, v.x, v.y, v.z, 0.0, 0.0, 0.0);
         }
     }
-
+    
     private void aoeBreak() {
-        Entity shooter = getOwner();
+        final Entity shooter = this.getOwner();
         if (!(shooter instanceof ServerPlayerEntity)) {
             return;
         }
-        ServerPlayerEntity player = (ServerPlayerEntity) shooter;
-        World world = getCommandSenderWorld();
-        float vel = (float) getDeltaMovement().length();
-        for (BlockPos offset : BlockHelper.getSphericalPositions(blockPosition(), Math.max(4.5F, 4.5F * vel))) {
+        final ServerPlayerEntity player = (ServerPlayerEntity)shooter;
+        final World world = this.getCommandSenderWorld();
+        final float vel = (float)this.getDeltaMovement().length();
+        for (final BlockPos offset : BlockHelper.getSphericalPositions(this.blockPosition(), Math.max(4.5f, 4.5f * vel))) {
             if (this.breakCount >= this.maxBreakCount) {
                 break;
             }
-            BlockState state = world.getBlockState(offset);
-            if (!state.isAir((IBlockReader) world, offset) && (!state.requiresCorrectToolForDrops() || state.getHarvestLevel() <= 2)) {
-                float hardness = state.getDestroySpeed((IBlockReader) world, offset);
-                if (hardness >= 0.0F && hardness <= 25.0F &&
-                        destroyBlock(world, offset, state, player)) {
-                    this.breakCount++;
-                }
+            final BlockState state = world.getBlockState(offset);
+            if (state.isAir((IBlockReader)world, offset) || (state.requiresCorrectToolForDrops() && state.getHarvestLevel() > 2)) {
+                continue;
             }
+            final float hardness = state.getDestroySpeed((IBlockReader)world, offset);
+            if (hardness < 0.0f || hardness > 25.0f || !this.destroyBlock(world, offset, state, player)) {
+                continue;
+            }
+            ++this.breakCount;
         }
     }
-
-
-    private boolean destroyBlock(World world, BlockPos pos, BlockState state, ServerPlayerEntity player) {
-        ItemStack miningItem = new ItemStack((IItemProvider) Items.DIAMOND_PICKAXE);
-        Block.dropResources(world.getBlockState(pos), world, pos, world.getBlockEntity(pos), null, miningItem);
-        return state.removedByPlayer(world, pos, (PlayerEntity) player, true, state.getFluidState());
+    
+    private boolean destroyBlock(final World world, final BlockPos pos, final BlockState state, final ServerPlayerEntity player) {
+        final ItemStack miningItem = new ItemStack((IItemProvider)Items.DIAMOND_PICKAXE);
+        Block.dropResources(world.getBlockState(pos), world, pos, world.getBlockEntity(pos), (Entity)null, miningItem);
+        return state.removedByPlayer(world, pos, (PlayerEntity)player, true, state.getFluidState());
     }
-
-
-    protected void onHit(RayTraceResult result) {
-        if (result instanceof net.minecraft.util.math.BlockRayTraceResult && this.breakCount < this.maxBreakCount &&
-                !getCommandSenderWorld().isClientSide()) {
-            aoeBreak();
+    
+    protected void onHit(final RayTraceResult result) {
+        if (result instanceof BlockRayTraceResult && this.breakCount < this.maxBreakCount && !this.getCommandSenderWorld().isClientSide()) {
+            this.aoeBreak();
         }
-
         if (this.breakCount >= this.maxBreakCount) {
             this.doBreak = false;
             super.onHit(result);
         }
     }
-
-
-    public void readAdditionalSaveData(CompoundNBT compound) {
+    
+    public void readAdditionalSaveData(final CompoundNBT compound) {
         super.readAdditionalSaveData(compound);
-
         this.doBreak = compound.getBoolean("break");
         this.breakCount = compound.getInt("breakCount");
         this.maxBreakCount = compound.getInt("maxBreakCount");
     }
-
-
-    public void addAdditionalSaveData(CompoundNBT compound) {
+    
+    public void addAdditionalSaveData(final CompoundNBT compound) {
         super.addAdditionalSaveData(compound);
-
         compound.putBoolean("break", this.doBreak);
         compound.putInt("breakCount", this.breakCount);
         compound.putInt("maxBreakCount", this.maxBreakCount);
     }
-
-
+    
     public IPacket<?> getAddEntityPacket() {
-        return NetworkHooks.getEntitySpawningPacket((Entity) this);
+        return (IPacket<?>)NetworkHooks.getEntitySpawningPacket((Entity)this);
     }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\entity\DrillArrowEntity.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

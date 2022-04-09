@@ -1,3 +1,7 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.world.gen;
 
 import net.minecraft.util.math.BlockPos;
@@ -12,20 +16,15 @@ import net.minecraft.world.gen.feature.template.TemplateManager;
 import java.util.List;
 import java.util.Random;
 
-public interface VaultJigsawGenerator {
+public interface VaultJigsawGenerator
+{
     BlockPos getStartPos();
-
+    
     MutableBoundingBox getStructureBox();
-
+    
     int getSize();
-
+    
     List<StructurePiece> getGeneratedPieces();
-
-    void generate(DynamicRegistries paramDynamicRegistries, VillageConfig paramVillageConfig, JigsawManager.IPieceFactory paramIPieceFactory, ChunkGenerator paramChunkGenerator, TemplateManager paramTemplateManager, List<StructurePiece> paramList, Random paramRandom, boolean paramBoolean1, boolean paramBoolean2);
+    
+    void generate(final DynamicRegistries p0, final VillageConfig p1, final JigsawManager.IPieceFactory p2, final ChunkGenerator p3, final TemplateManager p4, final List<StructurePiece> p5, final Random p6, final boolean p7, final boolean p8);
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\world\gen\VaultJigsawGenerator.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

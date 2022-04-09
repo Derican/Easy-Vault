@@ -1,5 +1,10 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.block;
 
+import iskallia.vault.block.entity.CatalystDecryptionTableTileEntity;
 import iskallia.vault.init.ModBlocks;
 import net.minecraft.block.*;
 import net.minecraft.block.material.Material;
@@ -25,116 +30,105 @@ import net.minecraftforge.items.CapabilityItemHandler;
 
 import javax.annotation.Nullable;
 
-public class CatalystDecryptionTableBlock extends Block {
-    public static final DirectionProperty FACING = HorizontalBlock.FACING;
-
+public class CatalystDecryptionTableBlock extends Block
+{
+    public static final DirectionProperty FACING;
+    
     public CatalystDecryptionTableBlock() {
-        super(AbstractBlock.Properties.of(Material.STONE)
-                .strength(1.5F, 6.0F)
-                .noOcclusion());
+        super(AbstractBlock.Properties.of(Material.STONE).strength(1.5f, 6.0f).noOcclusion());
     }
-
-
-    public BlockState getStateForPlacement(BlockItemUseContext context) {
-        return (BlockState) defaultBlockState().setValue((Property) FACING, (Comparable) context.getHorizontalDirection().getOpposite());
+    
+    public BlockState getStateForPlacement(final BlockItemUseContext context) {
+        return this.defaultBlockState().setValue(CatalystDecryptionTableBlock.FACING, context.getHorizontalDirection().getOpposite());
     }
-
-
-    public VoxelShape getOcclusionShape(BlockState state, IBlockReader worldIn, BlockPos pos) {
+    
+    public VoxelShape getOcclusionShape(final BlockState state, final IBlockReader worldIn, final BlockPos pos) {
         return LecternBlock.SHAPE_COMMON;
     }
-
-
-    public VoxelShape getCollisionShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
+    
+    public VoxelShape getCollisionShape(final BlockState state, final IBlockReader worldIn, final BlockPos pos, final ISelectionContext context) {
         return LecternBlock.SHAPE_COLLISION;
     }
-
-
-    public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
-        switch ((Direction) state.getValue((Property) FACING)) {
-            case NORTH:
+    
+    public VoxelShape getShape(final BlockState state, final IBlockReader worldIn, final BlockPos pos, final ISelectionContext context) {
+        switch (state.getValue(CatalystDecryptionTableBlock.FACING)) {
+            case NORTH: {
                 return LecternBlock.SHAPE_NORTH;
-            case SOUTH:
+            }
+            case SOUTH: {
                 return LecternBlock.SHAPE_SOUTH;
-            case EAST:
+            }
+            case EAST: {
                 return LecternBlock.SHAPE_EAST;
-            case WEST:
+            }
+            case WEST: {
                 return LecternBlock.SHAPE_WEST;
+            }
+            default: {
+                return LecternBlock.SHAPE_COMMON;
+            }
         }
-        return LecternBlock.SHAPE_COMMON;
     }
-
-
-    public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
+    
+    public ActionResultType use(final BlockState state, final World world, final BlockPos pos, final PlayerEntity player, final Hand hand, final BlockRayTraceResult hit) {
         if (world.isClientSide()) {
             return ActionResultType.SUCCESS;
         }
-        TileEntity te = world.getBlockEntity(pos);
-        if (!(te instanceof iskallia.vault.block.entity.CatalystDecryptionTableTileEntity)) {
+        final TileEntity te = world.getBlockEntity(pos);
+        if (!(te instanceof CatalystDecryptionTableTileEntity)) {
             return ActionResultType.SUCCESS;
         }
         if (!(player instanceof ServerPlayerEntity)) {
             return ActionResultType.SUCCESS;
         }
-
-        NetworkHooks.openGui((ServerPlayerEntity) player, (INamedContainerProvider) te, buffer -> buffer.writeBlockPos(pos));
+        NetworkHooks.openGui((ServerPlayerEntity)player, (INamedContainerProvider)te, buffer -> buffer.writeBlockPos(pos));
         return ActionResultType.SUCCESS;
     }
-
-
-    public void onRemove(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
+    
+    public void onRemove(final BlockState state, final World worldIn, final BlockPos pos, final BlockState newState, final boolean isMoving) {
         if (!state.is(newState.getBlock())) {
-            TileEntity tileentity = worldIn.getBlockEntity(pos);
-            if (tileentity instanceof iskallia.vault.block.entity.CatalystDecryptionTableTileEntity) {
+            final TileEntity tileentity = worldIn.getBlockEntity(pos);
+            if (tileentity instanceof CatalystDecryptionTableTileEntity) {
                 tileentity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(handler -> {
-                    for (int i = 0; i < handler.getSlots(); i++) {
-                        InventoryHelper.dropItemStack(worldIn, pos.getX(), pos.getY(), pos.getZ(), handler.getStackInSlot(i));
+                    for (int i = 0; i < handler.getSlots(); ++i) {
+                        InventoryHelper.dropItemStack(worldIn, (double)pos.getX(), (double)pos.getY(), (double)pos.getZ(), handler.getStackInSlot(i));
                     }
                 });
             }
         }
         super.onRemove(state, worldIn, pos, newState, isMoving);
     }
-
-
-    public boolean useShapeForLightOcclusion(BlockState state) {
+    
+    public boolean useShapeForLightOcclusion(final BlockState state) {
         return true;
     }
-
-
-    public boolean isPathfindable(BlockState state, IBlockReader worldIn, BlockPos pos, PathType type) {
+    
+    public boolean isPathfindable(final BlockState state, final IBlockReader worldIn, final BlockPos pos, final PathType type) {
         return false;
     }
-
-
-    public BlockState rotate(BlockState state, Rotation rot) {
-        return (BlockState) state.setValue((Property) FACING, (Comparable) rot.rotate((Direction) state.getValue((Property) FACING)));
+    
+    public BlockState rotate(final BlockState state, final Rotation rot) {
+        return state.setValue(CatalystDecryptionTableBlock.FACING, rot.rotate(state.getValue(CatalystDecryptionTableBlock.FACING)));
     }
-
-
-    public BlockState mirror(BlockState state, Mirror mirrorIn) {
-        return state.rotate(mirrorIn.getRotation((Direction) state.getValue((Property) FACING)));
+    
+    public BlockState mirror(final BlockState state, final Mirror mirrorIn) {
+        return state.rotate(mirrorIn.getRotation(state.getValue(CatalystDecryptionTableBlock.FACING)));
     }
-
-
-    protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) {
-        builder.add(new Property[]{(Property) FACING});
+    
+    protected void createBlockStateDefinition(final StateContainer.Builder<Block, BlockState> builder) {
+        builder.add(new Property[] { CatalystDecryptionTableBlock.FACING });
     }
-
-
-    public boolean hasTileEntity(BlockState state) {
+    
+    public boolean hasTileEntity(final BlockState state) {
         return true;
     }
-
-
+    
     @Nullable
-    public TileEntity createTileEntity(BlockState state, IBlockReader world) {
+    public TileEntity createTileEntity(final BlockState state, final IBlockReader world) {
         return ModBlocks.CATALYST_DECRYPTION_TABLE_TILE_ENTITY.create();
     }
+    
+    static {
+        FACING = HorizontalBlock.FACING;
+    }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\block\CatalystDecryptionTableBlock.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

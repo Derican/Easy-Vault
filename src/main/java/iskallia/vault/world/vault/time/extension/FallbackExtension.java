@@ -1,41 +1,43 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.world.vault.time.extension;
 
 import iskallia.vault.Vault;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ResourceLocation;
 
-public class FallbackExtension extends TimeExtension {
-    public static final ResourceLocation ID = Vault.id("fallback");
-
+public class FallbackExtension extends TimeExtension
+{
+    public static final ResourceLocation ID;
     protected CompoundNBT fallback;
-
+    
     public FallbackExtension() {
     }
-
-    public FallbackExtension(CompoundNBT fallback) {
-        super(ID, 0L);
-        deserializeNBT(fallback);
+    
+    public FallbackExtension(final CompoundNBT fallback) {
+        super(FallbackExtension.ID, 0L);
+        this.deserializeNBT(fallback);
     }
-
+    
     public CompoundNBT getFallback() {
         return this.fallback;
     }
-
-
+    
+    @Override
     public CompoundNBT serializeNBT() {
         return this.fallback;
     }
-
-
-    public void deserializeNBT(CompoundNBT nbt) {
+    
+    @Override
+    public void deserializeNBT(final CompoundNBT nbt) {
         this.fallback = nbt;
-        this.extraTime = getFallback().getLong("ExtraTime");
-        this.executionTime = getFallback().getLong("ExecutionTime");
+        this.extraTime = this.getFallback().getLong("ExtraTime");
+        this.executionTime = this.getFallback().getLong("ExecutionTime");
+    }
+    
+    static {
+        ID = Vault.id("fallback");
     }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\world\vault\time\extension\FallbackExtension.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

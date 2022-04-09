@@ -1,3 +1,7 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.entity.ai;
 
 import net.minecraft.entity.LivingEntity;
@@ -7,78 +11,63 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
-public class TeleportGoal<T extends LivingEntity>
-        extends GoalTask<T> {
+public class TeleportGoal<T extends LivingEntity> extends GoalTask<T> {
     private final Predicate<T> startCondition;
     private final Function<T, Vector3d> targetSupplier;
     private final Consumer<T> postTeleport;
 
-    protected TeleportGoal(T entity, Predicate<T> startCondition, Function<T, Vector3d> targetSupplier, Consumer<T> postTeleport) {
+    protected TeleportGoal(final T entity, final Predicate<T> startCondition, final Function<T, Vector3d> targetSupplier, final Consumer<T> postTeleport) {
         super(entity);
         this.startCondition = startCondition;
         this.targetSupplier = targetSupplier;
         this.postTeleport = postTeleport;
     }
 
-    public static <T extends LivingEntity> Builder<T> builder(T entity) {
-        return new Builder<T>( entity);
+    public static <T extends LivingEntity> Builder<T> builder(final T entity) {
+        return new Builder<T>(entity);
     }
-
 
     public boolean canUse() {
-        return this.startCondition.test(getEntity());
+        return this.startCondition.test(this.getEntity());
     }
 
-
     public void start() {
-        Vector3d target = this.targetSupplier.apply(getEntity());
-
+        final Vector3d target = this.targetSupplier.apply(this.getEntity());
         if (target != null) {
-            boolean teleported = getEntity().randomTeleport(target.x(), target.y(), target.z(), true);
-
+            final boolean teleported = this.getEntity().randomTeleport(target.x(), target.y(), target.z(), true);
             if (teleported) {
-                this.postTeleport.accept(getEntity());
+                this.postTeleport.accept(this.getEntity());
             }
         }
     }
 
-
     public static class Builder<T extends LivingEntity> {
         private final T entity;
-        private Predicate<T> startCondition = entity -> false;
+        private Predicate<T> startCondition;
+        private Function<T, Vector3d> targetSupplier;
+        private Consumer<T> postTeleport;
 
-        private Builder(T entity) {
+        private Builder(final T entity) {
             this.entity = entity;
         }
 
-        private Function<T, Vector3d> targetSupplier = entity -> null;
-        private Consumer<T> postTeleport = entity -> {
-
-        };
-
-        public Builder<T> start(Predicate<T> startCondition) {
+        public Builder<T> start(final Predicate<T> startCondition) {
             this.startCondition = startCondition;
             return this;
         }
 
-        public Builder<T> to(Function<T, Vector3d> targetSupplier) {
+        public Builder<T> to(final Function<T, Vector3d> targetSupplier) {
             this.targetSupplier = targetSupplier;
             return this;
         }
 
-        public Builder<T> then(Consumer<T> postTeleport) {
+        public Builder<T> then(final Consumer<T> postTeleport) {
             this.postTeleport = postTeleport;
             return this;
         }
 
         public TeleportGoal<T> build() {
-            return new TeleportGoal<>(this.entity, this.startCondition, this.targetSupplier, this.postTeleport);
+            return new TeleportGoal<T>(this.entity, this.startCondition, this.targetSupplier, this.postTeleport);
         }
     }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\entity\ai\TeleportGoal.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

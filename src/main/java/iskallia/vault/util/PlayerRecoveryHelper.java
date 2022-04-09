@@ -1,3 +1,7 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.util;
 
 import iskallia.vault.world.data.VaultRaidData;
@@ -9,34 +13,32 @@ import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraftforge.event.entity.living.LivingHealEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.LogicalSide;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
+import net.minecraftforge.fml.common.Mod;
 
-@EventBusSubscriber
-public class PlayerRecoveryHelper {
+@Mod.EventBusSubscriber
+public class PlayerRecoveryHelper
+{
     @SubscribeEvent
-    public static void onHeal(LivingHealEvent event) {
-        LivingEntity healed = event.getEntityLiving();
+    public static void onHeal(final LivingHealEvent event) {
+        final LivingEntity healed = event.getEntityLiving();
         if (healed.getCommandSenderWorld().isClientSide()) {
             return;
         }
         if (!(healed instanceof ServerPlayerEntity)) {
             return;
         }
-        ServerPlayerEntity sPlayer = (ServerPlayerEntity) healed;
-
-        int rage = PlayerRageHelper.getCurrentRage((PlayerEntity) sPlayer, LogicalSide.SERVER);
-        float multiplier = 1.0F;
-
-        multiplier *= 1.0F - rage / 100.0F / 2.0F;
-
-        VaultRaid vault = VaultRaidData.get(sPlayer.getLevel()).getActiveFor(sPlayer);
+        final ServerPlayerEntity sPlayer = (ServerPlayerEntity)healed;
+        final int rage = PlayerRageHelper.getCurrentRage((PlayerEntity)sPlayer, LogicalSide.SERVER);
+        float multiplier = 1.0f;
+        multiplier *= 1.0f - rage / 100.0f / 2.0f;
+        final VaultRaid vault = VaultRaidData.get(sPlayer.getLevel()).getActiveFor(sPlayer);
         if (vault != null) {
-            for (VaultAttributeInfluence influence : vault.getInfluences().getInfluences(VaultAttributeInfluence.class)) {
+            for (final VaultAttributeInfluence influence : vault.getInfluences().getInfluences(VaultAttributeInfluence.class)) {
                 if (influence.getType() == VaultAttributeInfluence.Type.HEALING_EFFECTIVENESS && !influence.isMultiplicative()) {
                     multiplier += influence.getValue();
                 }
             }
-            for (VaultAttributeInfluence influence : vault.getInfluences().getInfluences(VaultAttributeInfluence.class)) {
+            for (final VaultAttributeInfluence influence : vault.getInfluences().getInfluences(VaultAttributeInfluence.class)) {
                 if (influence.getType() == VaultAttributeInfluence.Type.HEALING_EFFECTIVENESS && influence.isMultiplicative()) {
                     multiplier *= influence.getValue();
                 }
@@ -45,9 +47,3 @@ public class PlayerRecoveryHelper {
         event.setAmount(event.getAmount() * multiplier);
     }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vaul\\util\PlayerRecoveryHelper.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

@@ -1,3 +1,7 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.block.entity;
 
 import iskallia.vault.block.base.FillableAltarTileEntity;
@@ -9,46 +13,41 @@ import net.minecraft.util.text.StringTextComponent;
 
 import java.awt.*;
 import java.util.Optional;
+import java.util.UUID;
+import java.util.function.Function;
 
-public class TimeAltarTileEntity
-        extends FillableAltarTileEntity {
+public class TimeAltarTileEntity extends FillableAltarTileEntity
+{
     public TimeAltarTileEntity() {
         super(ModBlocks.TIME_ALTAR_TILE_ENTITY);
     }
-
-
+    
+    @Override
     public ITextComponent getRequirementName() {
-        return (ITextComponent) new StringTextComponent("Vault Time");
+        return (ITextComponent)new StringTextComponent("Vault Time");
     }
-
-
+    
+    @Override
     public PlayerFavourData.VaultGodType getAssociatedVaultGod() {
         return PlayerFavourData.VaultGodType.TIMEKEEPER;
     }
-
-
+    
+    @Override
     public ITextComponent getRequirementUnit() {
-        return (ITextComponent) new StringTextComponent("minutes");
+        return (ITextComponent)new StringTextComponent("minutes");
     }
-
-
-    public net.minecraft.util.text.Color getFillColor() {
-        Color color = new Color(14590);
-        return net.minecraft.util.text.Color.fromRgb(color.getRGB());
+    
+    @Override
+    public Color getFillColor() {
+        return new Color(-14590);
     }
-
-
-    protected Optional<Integer> calcMaxProgress(VaultRaid vault) {
+    
+    @Override
+    protected Optional<Integer> calcMaxProgress(final VaultRaid vault) {
         return vault.getProperties().getBase(VaultRaid.LEVEL).map(vaultLevel -> {
-            float multiplier = ((Float) vault.getProperties().getBase(VaultRaid.HOST).map(this::getMaxProgressMultiplier).orElse(Float.valueOf(1.0F))).floatValue();
-            int progress = Math.min(1 + vaultLevel.intValue() / 20, 3);
+            final float multiplier = vault.getProperties().getBase(VaultRaid.HOST).map(this::getMaxProgressMultiplier).orElse(1.0f);
+            final int progress = Math.min(1 + vaultLevel / 20, 3);
             return Integer.valueOf(Math.round(progress * multiplier));
         });
     }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\block\entity\TimeAltarTileEntity.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

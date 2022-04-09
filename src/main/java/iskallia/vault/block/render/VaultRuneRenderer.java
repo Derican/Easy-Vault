@@ -1,3 +1,7 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.block.render;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
@@ -18,54 +22,41 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.ITextProperties;
 import net.minecraft.util.text.StringTextComponent;
 
-public class VaultRuneRenderer extends TileEntityRenderer<VaultRuneTileEntity> {
-    private Minecraft mc = Minecraft.getInstance();
-
-    public VaultRuneRenderer(TileEntityRendererDispatcher rendererDispatcherIn) {
+public class VaultRuneRenderer extends TileEntityRenderer<VaultRuneTileEntity>
+{
+    private Minecraft mc;
+    
+    public VaultRuneRenderer(final TileEntityRendererDispatcher rendererDispatcherIn) {
         super(rendererDispatcherIn);
+        this.mc = Minecraft.getInstance();
     }
-
-
-    public void render(VaultRuneTileEntity tileEntity, float partialTicks, MatrixStack matrixStack, IRenderTypeBuffer buffer, int combinedLight, int combinedOverlay) {
-        ClientPlayerEntity player = this.mc.player;
-        Vector3d eyePosition = player.getEyePosition(1.0F);
-        Vector3d look = player.getViewVector(1.0F);
-        Vector3d endPos = eyePosition.add(look.x * 5.0D, look.y * 5.0D, look.z * 5.0D);
-        RayTraceContext context = new RayTraceContext(eyePosition, endPos, RayTraceContext.BlockMode.OUTLINE, RayTraceContext.FluidMode.NONE, (Entity) player);
-
-
-        BlockRayTraceResult result = player.level.clip(context);
-
+    
+    public void render(final VaultRuneTileEntity tileEntity, final float partialTicks, final MatrixStack matrixStack, final IRenderTypeBuffer buffer, final int combinedLight, final int combinedOverlay) {
+        final ClientPlayerEntity player = this.mc.player;
+        final Vector3d eyePosition = player.getEyePosition(1.0f);
+        final Vector3d look = player.getViewVector(1.0f);
+        final Vector3d endPos = eyePosition.add(look.x * 5.0, look.y * 5.0, look.z * 5.0);
+        final RayTraceContext context = new RayTraceContext(eyePosition, endPos, RayTraceContext.BlockMode.OUTLINE, RayTraceContext.FluidMode.NONE, (Entity)player);
+        final BlockRayTraceResult result = player.level.clip(context);
         if (result.getBlockPos().equals(tileEntity.getBlockPos())) {
-            StringTextComponent text = new StringTextComponent(tileEntity.getBelongsTo());
-            renderLabel(matrixStack, buffer, combinedLight, text, -1);
+            final StringTextComponent text = new StringTextComponent(tileEntity.getBelongsTo());
+            this.renderLabel(matrixStack, buffer, combinedLight, text, -1);
         }
     }
-
-
-    private void renderLabel(MatrixStack matrixStack, IRenderTypeBuffer buffer, int lightLevel, StringTextComponent text, int color) {
-        FontRenderer fontRenderer = this.mc.font;
-
-
+    
+    private void renderLabel(final MatrixStack matrixStack, final IRenderTypeBuffer buffer, final int lightLevel, final StringTextComponent text, final int color) {
+        final FontRenderer fontRenderer = this.mc.font;
         matrixStack.pushPose();
-        float scale = 0.02F;
-        int opacity = 1711276032;
-        float offset = (-fontRenderer.width((ITextProperties) text) / 2);
-        Matrix4f matrix4f = matrixStack.last().pose();
-
-        matrixStack.translate(0.5D, 1.399999976158142D, 0.5D);
+        final float scale = 0.02f;
+        final int opacity = 1711276032;
+        final float offset = (float)(-fontRenderer.width((ITextProperties)text) / 2);
+        final Matrix4f matrix4f = matrixStack.last().pose();
+        matrixStack.translate(0.5, 1.399999976158142, 0.5);
         matrixStack.scale(scale, scale, scale);
         matrixStack.mulPose(this.mc.getEntityRenderDispatcher().cameraOrientation());
-        matrixStack.mulPose(Vector3f.ZP.rotationDegrees(180.0F));
-
-        fontRenderer.drawInBatch((ITextComponent) text, offset, 0.0F, color, false, matrix4f, buffer, true, opacity, lightLevel);
-        fontRenderer.drawInBatch((ITextComponent) text, offset, 0.0F, -1, false, matrix4f, buffer, false, 0, lightLevel);
+        matrixStack.mulPose(Vector3f.ZP.rotationDegrees(180.0f));
+        fontRenderer.drawInBatch((ITextComponent)text, offset, 0.0f, color, false, matrix4f, buffer, true, opacity, lightLevel);
+        fontRenderer.drawInBatch((ITextComponent)text, offset, 0.0f, -1, false, matrix4f, buffer, false, 0, lightLevel);
         matrixStack.popPose();
     }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\block\render\VaultRuneRenderer.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

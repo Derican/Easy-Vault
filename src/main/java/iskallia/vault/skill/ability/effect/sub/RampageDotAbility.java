@@ -1,3 +1,7 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.skill.ability.effect.sub;
 
 import iskallia.vault.event.ActiveFlags;
@@ -19,11 +23,10 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 import javax.annotation.Nullable;
 
-
-public class RampageDotAbility
-        extends RampageAbility<RampageDotConfig> {
+public class RampageDotAbility extends RampageAbility<RampageDotConfig>
+{
     @SubscribeEvent
-    public void onLivingDamage(LivingDamageEvent event) {
+    public void onLivingDamage(final LivingDamageEvent event) {
         if (event.getSource() instanceof PlayerDamageOverTimeSource) {
             return;
         }
@@ -36,42 +39,32 @@ public class RampageDotAbility
         if (ActiveFlags.IS_REFLECT_ATTACKING.isSet()) {
             return;
         }
-
-        PlayerEntity player = (PlayerEntity) event.getSource().getEntity();
+        final PlayerEntity player = (PlayerEntity)event.getSource().getEntity();
         if (!(player.getCommandSenderWorld() instanceof ServerWorld)) {
             return;
         }
-
-        ServerWorld world = (ServerWorld) player.getCommandSenderWorld();
-        EffectInstance rampage = player.getEffect(ModEffects.RAMPAGE);
+        final ServerWorld world = (ServerWorld)player.getCommandSenderWorld();
+        final EffectInstance rampage = player.getEffect(ModEffects.RAMPAGE);
         if (rampage == null) {
             return;
         }
-        AbilityTree abilities = PlayerAbilitiesData.get(world).getAbilities(player);
-        AbilityNode<?, ?> node = abilities.getNodeByName("Rampage");
+        final AbilityTree abilities = PlayerAbilitiesData.get(world).getAbilities(player);
+        final AbilityNode<?, ?> node = abilities.getNodeByName("Rampage");
         if (node.getAbility() instanceof RampageDotAbility && node.isLearned()) {
-            RampageDotConfig cfg = (RampageDotConfig) node.getAbilityConfig();
-            DamageOverTimeHelper.applyDamageOverTime(event.getEntityLiving(), (DamageSource) PlayerDamageOverTimeSource.causeDoTDamage(player), event
-                    .getAmount(), cfg.getDotSecondDuration());
-
-            event.setAmount(0.0F);
+            final RampageDotConfig cfg = (RampageDotConfig)node.getAbilityConfig();
+            DamageOverTimeHelper.applyDamageOverTime(event.getEntityLiving(), (DamageSource)PlayerDamageOverTimeSource.causeDoTDamage(player), event.getAmount(), cfg.getDotSecondDuration());
+            event.setAmount(0.0f);
         }
     }
-
-    public static class PlayerDamageOverTimeSource
-            extends EntityDamageSource {
-        private PlayerDamageOverTimeSource(@Nullable Entity damageSource) {
+    
+    public static class PlayerDamageOverTimeSource extends EntityDamageSource
+    {
+        private PlayerDamageOverTimeSource(@Nullable final Entity damageSource) {
             super("player", damageSource);
         }
-
-        public static PlayerDamageOverTimeSource causeDoTDamage(PlayerEntity player) {
-            return new PlayerDamageOverTimeSource((Entity) player);
+        
+        public static PlayerDamageOverTimeSource causeDoTDamage(final PlayerEntity player) {
+            return new PlayerDamageOverTimeSource((Entity)player);
         }
     }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\skill\ability\effect\sub\RampageDotAbility.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

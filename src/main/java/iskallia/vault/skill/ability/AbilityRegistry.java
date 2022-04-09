@@ -1,3 +1,7 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.skill.ability;
 
 import com.google.common.collect.BiMap;
@@ -7,29 +11,27 @@ import net.minecraftforge.common.MinecraftForge;
 
 import javax.annotation.Nullable;
 
-
-public class AbilityRegistry {
-    private static final BiMap<String, AbilityEffect<?>> abilityRegistry = (BiMap<String, AbilityEffect<?>>) HashBiMap.create();
-
-    public static <E extends AbilityEffect<?>> E register(String key, E ability) {
-        abilityRegistry.put(key, ability);
+public class AbilityRegistry
+{
+    private static final BiMap<String, AbilityEffect<?>> abilityRegistry;
+    
+    public static <E extends AbilityEffect<?>> E register(final String key, final E ability) {
+        AbilityRegistry.abilityRegistry.put(key, ability);
         MinecraftForge.EVENT_BUS.register(ability);
         return ability;
     }
-
+    
     @Nullable
-    public static AbilityEffect<?> getAbility(String key) {
-        return (AbilityEffect) abilityRegistry.get(key);
+    public static AbilityEffect<?> getAbility(final String key) {
+        return (AbilityEffect)AbilityRegistry.abilityRegistry.get(key);
     }
-
+    
     @Nullable
-    public static String getKey(AbilityEffect<?> ability) {
-        return (String) abilityRegistry.inverse().get(ability);
+    public static String getKey(final AbilityEffect<?> ability) {
+        return (String)AbilityRegistry.abilityRegistry.inverse().get(ability);
+    }
+    
+    static {
+        abilityRegistry = (BiMap)HashBiMap.create();
     }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\skill\ability\AbilityRegistry.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

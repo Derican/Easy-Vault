@@ -1,3 +1,7 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.network.message;
 
 import iskallia.vault.client.ClientVaultRaidData;
@@ -9,48 +13,42 @@ import net.minecraftforge.fml.network.NetworkEvent;
 
 import java.util.function.Supplier;
 
-
-public class VaultModifierMessage {
+public class VaultModifierMessage
+{
     private VaultModifiers playerModifiers;
     private VaultModifiers globalModifiers;
-
+    
     public VaultModifierMessage() {
     }
-
-    public VaultModifierMessage(VaultRaid vault, VaultPlayer player) {
+    
+    public VaultModifierMessage(final VaultRaid vault, final VaultPlayer player) {
         this.playerModifiers = player.getModifiers();
         this.globalModifiers = vault.getModifiers();
     }
-
+    
     public VaultModifiers getPlayerModifiers() {
         return this.playerModifiers;
     }
-
+    
     public VaultModifiers getGlobalModifiers() {
         return this.globalModifiers;
     }
-
-    public static void encode(VaultModifierMessage message, PacketBuffer buffer) {
+    
+    public static void encode(final VaultModifierMessage message, final PacketBuffer buffer) {
         message.getPlayerModifiers().encode(buffer);
         message.getGlobalModifiers().encode(buffer);
     }
-
-    public static VaultModifierMessage decode(PacketBuffer buffer) {
-        VaultModifierMessage message = new VaultModifierMessage();
+    
+    public static VaultModifierMessage decode(final PacketBuffer buffer) {
+        final VaultModifierMessage message = new VaultModifierMessage();
         message.playerModifiers = VaultModifiers.decode(buffer);
         message.globalModifiers = VaultModifiers.decode(buffer);
         return message;
     }
-
-    public static void handle(VaultModifierMessage message, Supplier<NetworkEvent.Context> contextSupplier) {
-        NetworkEvent.Context context = contextSupplier.get();
+    
+    public static void handle(final VaultModifierMessage message, final Supplier<NetworkEvent.Context> contextSupplier) {
+        final NetworkEvent.Context context = contextSupplier.get();
         context.enqueueWork(() -> ClientVaultRaidData.receiveModifierUpdate(message));
         context.setPacketHandled(true);
     }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\network\message\VaultModifierMessage.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

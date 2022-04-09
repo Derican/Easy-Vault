@@ -1,29 +1,31 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.client;
 
 import iskallia.vault.entity.eternal.ActiveEternalData;
 import iskallia.vault.network.message.ActiveEternalMessage;
 
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.LinkedHashSet;
-import java.util.Set;
+import java.util.*;
 
-
-public class ClientActiveEternalData {
-    private static final Set<ActiveEternalData.ActiveEternal> activeEternals = new LinkedHashSet<>();
-
+public class ClientActiveEternalData
+{
+    private static final Set<ActiveEternalData.ActiveEternal> activeEternals;
+    
     public static Set<ActiveEternalData.ActiveEternal> getActiveEternals() {
-        return Collections.unmodifiableSet(activeEternals);
+        return Collections.unmodifiableSet((Set<? extends ActiveEternalData.ActiveEternal>)ClientActiveEternalData.activeEternals);
     }
-
-    public static void receive(ActiveEternalMessage message) {
-        Set<ActiveEternalData.ActiveEternal> updatedEternals = message.getActiveEternals();
-
-        Set<ActiveEternalData.ActiveEternal> processed = new HashSet<>();
-        activeEternals.removeIf(activeEternal -> {
+    
+    public static void receive(final ActiveEternalMessage message) {
+        final Set<ActiveEternalData.ActiveEternal> updatedEternals = message.getActiveEternals();
+        final Set<ActiveEternalData.ActiveEternal> processed = new HashSet<ActiveEternalData.ActiveEternal>();
+        ClientActiveEternalData.activeEternals.removeIf(activeEternal -> {
             ActiveEternalData.ActiveEternal updated = null;
 
-            for (ActiveEternalData.ActiveEternal eternal : updatedEternals) {
+            final Iterator iterator=updatedEternals.iterator();
+            while (iterator.hasNext()) {
+                final ActiveEternalData.ActiveEternal eternal = (ActiveEternalData.ActiveEternal) iterator.next();
                 if (eternal.equals(activeEternal)) {
                     updated = eternal;
                     break;
@@ -32,21 +34,21 @@ public class ClientActiveEternalData {
             if (updated == null) {
                 return true;
             }
-            activeEternal.updateFrom(updated);
-            processed.add(updated);
-            return false;
+            else {
+                activeEternal.updateFrom(updated);
+                processed.add(updated);
+                return false;
+            }
         });
         updatedEternals.removeIf(processed::contains);
-        activeEternals.addAll(updatedEternals);
+        ClientActiveEternalData.activeEternals.addAll(updatedEternals);
     }
-
+    
     public static void clearClientCache() {
-        activeEternals.clear();
+        ClientActiveEternalData.activeEternals.clear();
+    }
+    
+    static {
+        activeEternals = new LinkedHashSet<ActiveEternalData.ActiveEternal>();
     }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\client\ClientActiveEternalData.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

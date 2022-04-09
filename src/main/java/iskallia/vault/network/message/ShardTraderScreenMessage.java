@@ -1,3 +1,7 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.network.message;
 
 import iskallia.vault.Vault;
@@ -10,31 +14,28 @@ import net.minecraftforge.fml.network.NetworkEvent;
 
 import java.util.function.Supplier;
 
-
-public class ShardTraderScreenMessage {
-    public static void encode(ShardTraderScreenMessage message, PacketBuffer buffer) {
+public class ShardTraderScreenMessage
+{
+    public static void encode(final ShardTraderScreenMessage message, final PacketBuffer buffer) {
     }
-
-    public static ShardTraderScreenMessage decode(PacketBuffer buffer) {
+    
+    public static ShardTraderScreenMessage decode(final PacketBuffer buffer) {
         return new ShardTraderScreenMessage();
     }
-
-    public static void handle(ShardTraderScreenMessage message, Supplier<NetworkEvent.Context> contextSupplier) {
-        NetworkEvent.Context context = contextSupplier.get();
+    
+    public static void handle(final ShardTraderScreenMessage message, final Supplier<NetworkEvent.Context> contextSupplier) {
+        final NetworkEvent.Context context = contextSupplier.get();
         context.enqueueWork(() -> {
-            ServerWorld sWorld = context.getSender().getLevel();
-            RegistryKey<World> dimKey = sWorld.dimension();
+            final ServerWorld sWorld = context.getSender().getLevel();
+            final RegistryKey<World> dimKey = (RegistryKey<World>)sWorld.dimension();
             if (dimKey == Vault.VAULT_KEY) {
                 return;
             }
-            SoulShardTraderData.get(sWorld).openTradeContainer(context.getSender());
+            else {
+                SoulShardTraderData.get(sWorld).openTradeContainer(context.getSender());
+                return;
+            }
         });
         context.setPacketHandled(true);
     }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\network\message\ShardTraderScreenMessage.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

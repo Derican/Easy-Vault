@@ -1,3 +1,7 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.easteregg;
 
 import iskallia.vault.Vault;
@@ -12,6 +16,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.monster.WitchEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -26,124 +31,106 @@ import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
+import net.minecraftforge.fml.common.Mod;
 
 import java.util.Random;
 
-@EventBusSubscriber
-public class Witchskall {
-    public static final float WITCHSKALL_CHANCE = 0.001F;
+@Mod.EventBusSubscriber
+public class Witchskall
+{
+    public static final float WITCHSKALL_CHANCE = 0.001f;
     public static final int WITCHSKALLIFICATION_TICKS = 100;
     public static DataParameter<Integer> WITCHSKALL_TICKS;
     public static DataParameter<Boolean> IS_WITCHSKALL;
-
-    public static int getWitchskallificationTicks(WitchEntity witchEntity) {
-        return ((Integer) witchEntity.getEntityData().get(WITCHSKALL_TICKS)).intValue();
+    
+    public static int getWitchskallificationTicks(final WitchEntity witchEntity) {
+        return (int)witchEntity.getEntityData().get((DataParameter)Witchskall.WITCHSKALL_TICKS);
     }
-
-    public static boolean isWitchskall(WitchEntity witchEntity) {
-        return ((Boolean) witchEntity.getEntityData().get(IS_WITCHSKALL)).booleanValue();
+    
+    public static boolean isWitchskall(final WitchEntity witchEntity) {
+        return (boolean)witchEntity.getEntityData().get((DataParameter)Witchskall.IS_WITCHSKALL);
     }
-
-    public static int setWitchskallificationTicks(WitchEntity witchEntity, int ticks) {
-        witchEntity.getEntityData().set(WITCHSKALL_TICKS, Integer.valueOf(ticks));
+    
+    public static int setWitchskallificationTicks(final WitchEntity witchEntity, final int ticks) {
+        witchEntity.getEntityData().set((DataParameter)Witchskall.WITCHSKALL_TICKS, ticks);
         return ticks;
     }
-
-    public static void witchskallificate(WitchEntity witchEntity) {
+    
+    public static void witchskallificate(final WitchEntity witchEntity) {
         setWitchskallificationTicks(witchEntity, 0);
-        witchEntity.getEntityData().set(IS_WITCHSKALL, Boolean.valueOf(true));
-        witchEntity.setCustomName((ITextComponent) new StringTextComponent("Witchskall"));
+        witchEntity.getEntityData().set((DataParameter)Witchskall.IS_WITCHSKALL, true);
+        witchEntity.setCustomName((ITextComponent)new StringTextComponent("Witchskall"));
     }
-
+    
     @SubscribeEvent
-    public static void onWitchTick(LivingEvent.LivingUpdateEvent event) {
-        LivingEntity entity = event.getEntityLiving();
-        World world = entity.level;
-
+    public static void onWitchTick(final LivingEvent.LivingUpdateEvent event) {
+        final LivingEntity entity = event.getEntityLiving();
+        final World world = entity.level;
         if (world.isClientSide) {
             return;
         }
         if (!(entity instanceof WitchEntity)) {
             return;
         }
-        WitchEntity witchEntity = (WitchEntity) entity;
-
+        final WitchEntity witchEntity = (WitchEntity)entity;
         if (isWitchskall(witchEntity)) {
             return;
         }
-        int witchskallTicks = getWitchskallificationTicks(witchEntity);
-
+        final int witchskallTicks = getWitchskallificationTicks(witchEntity);
         if (witchskallTicks == 0) {
             return;
         }
         if (witchskallTicks <= -1) {
-            if ((new Random()).nextFloat() <= 0.001F) {
+            if (new Random().nextFloat() <= 0.001f) {
                 setWitchskallificationTicks(witchEntity, 100);
-            } else {
+            }
+            else {
                 setWitchskallificationTicks(witchEntity, 0);
             }
-
             return;
         }
-        int setWitchskallTicks = setWitchskallificationTicks(witchEntity, witchskallTicks - 1);
+        final int setWitchskallTicks = setWitchskallificationTicks(witchEntity, witchskallTicks - 1);
         if (setWitchskallTicks == 0) {
-            ServerWorld serverWorld = (ServerWorld) world;
-            serverWorld.sendParticles((IParticleData) ModParticles.GREEN_FLAME.get(), entity
-                    .getX(), entity.getY(), entity.getZ(), 100, 0.5D, 1.0D, 0.5D, 0.1D);
-
-            serverWorld.playSound(null, entity.getX(), entity.getY(), entity.getZ(), ModSounds.WITCHSKALL_IDLE, SoundCategory.MASTER, 1.1F, 1.0F);
-
+            final ServerWorld serverWorld = (ServerWorld)world;
+            serverWorld.sendParticles((IParticleData)ModParticles.GREEN_FLAME.get(), entity.getX(), entity.getY(), entity.getZ(), 100, 0.5, 1.0, 0.5, 0.1);
+            serverWorld.playSound((PlayerEntity)null, entity.getX(), entity.getY(), entity.getZ(), ModSounds.WITCHSKALL_IDLE, SoundCategory.MASTER, 1.1f, 1.0f);
             witchskallificate(witchEntity);
         }
     }
-
+    
     @SubscribeEvent
-    public static void onWitchskallDeath(LivingDeathEvent event) {
-        Entity entity = event.getEntity();
-
+    public static void onWitchskallDeath(final LivingDeathEvent event) {
+        final Entity entity = event.getEntity();
         if (entity.level.isClientSide()) {
             return;
         }
-        if (!(entity instanceof WitchEntity) || !isWitchskall((WitchEntity) entity)) {
+        if (!(entity instanceof WitchEntity) || !isWitchskall((WitchEntity)entity)) {
             return;
         }
-        Entity trueSource = event.getSource().getEntity();
-
+        final Entity trueSource = event.getSource().getEntity();
         if (!(trueSource instanceof ServerPlayerEntity)) {
             return;
         }
-
-        ServerPlayerEntity player = (ServerPlayerEntity) trueSource;
+        final ServerPlayerEntity player = (ServerPlayerEntity)trueSource;
         AdvancementHelper.grantCriterion(player, Vault.id("main/witchskall"), "witchskall_killed");
     }
-
+    
     @SubscribeEvent
-    public static void onWitchskallDrops(LivingDropsEvent event) {
-        Entity entity = event.getEntity();
-
+    public static void onWitchskallDrops(final LivingDropsEvent event) {
+        final Entity entity = event.getEntity();
         if (entity.level.isClientSide()) {
             return;
         }
         if (!(entity instanceof WitchEntity)) {
             return;
         }
-        if (!isWitchskall((WitchEntity) entity)) {
+        if (!isWitchskall((WitchEntity)entity)) {
             return;
         }
-        ServerWorld world = (ServerWorld) entity.level;
-
-
-        ItemStack itemStack = (new GearItemStackBuilder((Item) ModItems.HELMET)).setGearRarity(VaultGear.Rarity.UNIQUE).setColor(-5384139).setSpecialModelId(ModModels.SpecialGearModel.ISKALL_HOLOLENS.getId()).build();
-
-        ItemEntity itemEntity = new ItemEntity((World) world, entity.getX(), entity.getY(), entity.getZ(), itemStack);
+        final ServerWorld world = (ServerWorld)entity.level;
+        final ItemStack itemStack = new GearItemStackBuilder((Item)ModItems.HELMET).setGearRarity(VaultGear.Rarity.UNIQUE).setColor(-5384139).setSpecialModelId(ModModels.SpecialGearModel.ISKALL_HOLOLENS.getId()).build();
+        final ItemEntity itemEntity = new ItemEntity((World)world, entity.getX(), entity.getY(), entity.getZ(), itemStack);
         itemEntity.setDefaultPickUpDelay();
         event.getDrops().add(itemEntity);
     }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\easteregg\Witchskall.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

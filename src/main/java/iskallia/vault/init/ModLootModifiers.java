@@ -1,3 +1,7 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.init;
 
 import iskallia.vault.Vault;
@@ -8,17 +12,11 @@ import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.registries.IForgeRegistry;
 import net.minecraftforge.registries.IForgeRegistryEntry;
 
-public class ModLootModifiers {
-    public static void registerGlobalModifiers(RegistryEvent.Register<GlobalLootModifierSerializer<?>> event) {
-        IForgeRegistry<GlobalLootModifierSerializer<?>> registry = event.getRegistry();
-
-        registry.register( (new LootModifierAutoSmelt.Serializer()).setRegistryName(Vault.id("paxel_auto_smelt")));
-        registry.register( (new LootModifierDestructive.Serializer()).setRegistryName(Vault.id("paxel_destructive")));
+public class ModLootModifiers
+{
+    public static void registerGlobalModifiers(final RegistryEvent.Register<GlobalLootModifierSerializer<?>> event) {
+        final IForgeRegistry<GlobalLootModifierSerializer<?>> registry = (IForgeRegistry<GlobalLootModifierSerializer<?>>)event.getRegistry();
+        registry.register(new LootModifierAutoSmelt.Serializer().setRegistryName(Vault.id("paxel_auto_smelt")));
+        registry.register(new LootModifierDestructive.Serializer().setRegistryName(Vault.id("paxel_destructive")));
     }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\init\ModLootModifiers.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

@@ -1,3 +1,7 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.world.vault.modifier;
 
 import com.google.gson.annotations.Expose;
@@ -9,39 +13,33 @@ import net.minecraft.util.ResourceLocation;
 
 import javax.annotation.Nonnull;
 
-
-public class ChestTrapModifier
-        extends TexturedVaultModifier {
+public class ChestTrapModifier extends TexturedVaultModifier
+{
     @Expose
     private final double chanceOfTrappedChests;
-
-    public ChestTrapModifier(String name, ResourceLocation icon, double chanceOfTrappedChests) {
+    
+    public ChestTrapModifier(final String name, final ResourceLocation icon, final double chanceOfTrappedChests) {
         super(name, icon);
         this.chanceOfTrappedChests = chanceOfTrappedChests;
     }
-
+    
     public double getChanceOfTrappedChests() {
         return this.chanceOfTrappedChests;
     }
-
+    
     @Nonnull
-    public RandomListAccess<String> modifyWeightedList(VaultChestConfig config, RandomListAccess<String> chestOutcomes) {
-        WeightedDoubleList<String> reWeightedList = new WeightedDoubleList();
+    public RandomListAccess<String> modifyWeightedList(final VaultChestConfig config, final RandomListAccess<String> chestOutcomes) {
+        final WeightedDoubleList<String> reWeightedList = new WeightedDoubleList<String>();
         chestOutcomes.forEach((entry, weight) -> {
-            VaultChestEffect effect = config.getEffectByName(entry);
-
+            final VaultChestEffect effect = config.getEffectByName(entry);
             if (effect == null || !effect.isTrapEffect()) {
                 reWeightedList.add(entry, weight.doubleValue());
-            } else {
-                reWeightedList.add(entry, weight.doubleValue() * getChanceOfTrappedChests());
             }
+            else {
+                reWeightedList.add(entry, weight.doubleValue() * this.getChanceOfTrappedChests());
+            }
+            return;
         });
-        return (RandomListAccess<String>) reWeightedList;
+        return reWeightedList;
     }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\world\vault\modifier\ChestTrapModifier.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

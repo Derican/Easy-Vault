@@ -1,3 +1,7 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.world.data;
 
 import net.minecraft.entity.player.PlayerEntity;
@@ -12,50 +16,49 @@ import net.minecraft.world.storage.WorldSavedData;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.LogicalSide;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
+import net.minecraftforge.fml.common.Mod;
 
 import java.util.*;
+import java.util.function.Supplier;
 
-@EventBusSubscriber
-public class ScheduledItemDropData
-        extends WorldSavedData {
+@Mod.EventBusSubscriber
+public class ScheduledItemDropData extends WorldSavedData
+{
     protected static final String DATA_NAME = "the_vault_ScheduledItemDrops";
-    private final Map<UUID, List<ItemStack>> scheduledItems = new HashMap<>();
-
+    private final Map<UUID, List<ItemStack>> scheduledItems;
+    
     public ScheduledItemDropData() {
         super("the_vault_ScheduledItemDrops");
+        this.scheduledItems = new HashMap<UUID, List<ItemStack>>();
     }
-
-    public void addDrop(PlayerEntity player, ItemStack toDrop) {
-        addDrop(player.getUUID(), toDrop);
+    
+    public void addDrop(final PlayerEntity player, final ItemStack toDrop) {
+        this.addDrop(player.getUUID(), toDrop);
     }
-
-    public void addDrop(UUID playerUUID, ItemStack toDrop) {
-        ((List<ItemStack>) this.scheduledItems.computeIfAbsent(playerUUID, key -> new ArrayList()))
-                .add(toDrop.copy());
-        setDirty();
+    
+    public void addDrop(final UUID playerUUID, final ItemStack toDrop) {
+        this.scheduledItems.computeIfAbsent(playerUUID, key -> new ArrayList()).add(toDrop.copy());
+        this.setDirty();
     }
-
+    
     @SubscribeEvent
-    public static void onPlayerTick(TickEvent.PlayerTickEvent event) {
+    public static void onPlayerTick(final TickEvent.PlayerTickEvent event) {
         if (event.side == LogicalSide.SERVER && event.phase == TickEvent.Phase.END) {
-            ServerPlayerEntity player = (ServerPlayerEntity) event.player;
-            ScheduledItemDropData data = get(player.getLevel());
+            final ServerPlayerEntity player = (ServerPlayerEntity)event.player;
+            final ScheduledItemDropData data = get(player.getLevel());
             if (data.scheduledItems.isEmpty()) {
                 return;
             }
-
             if (data.scheduledItems.containsKey(player.getUUID())) {
-                List<ItemStack> drops = data.scheduledItems.get(player.getUUID());
+                final List<ItemStack> drops = data.scheduledItems.get(player.getUUID());
                 while (!drops.isEmpty() && player.inventory.getFreeSlot() != -1) {
-                    ItemStack drop = drops.get(0);
-                    if (player.inventory.add(drop)) {
-                        drops.remove(0);
-                        data.setDirty();
+                    final ItemStack drop = drops.get(0);
+                    if (!player.inventory.add(drop)) {
+                        break;
                     }
+                    drops.remove(0);
+                    data.setDirty();
                 }
-
-
                 if (drops.isEmpty()) {
                     data.scheduledItems.remove(player.getUUID());
                     data.setDirty();
@@ -63,50 +66,44 @@ public class ScheduledItemDropData
             }
         }
     }
-
-
-    public void load(CompoundNBT tag) {
+    
+    public void load(final CompoundNBT tag) {
         this.scheduledItems.clear();
-        CompoundNBT savTag = tag.getCompound("drops");
-        for (String key : savTag.getAllKeys()) {
+        final CompoundNBT savTag = tag.getCompound("drops");
+        for (final String key : savTag.getAllKeys()) {
             UUID playerUUID;
             try {
                 playerUUID = UUID.fromString(key);
-            } catch (IllegalArgumentException exc) {
+            }
+            catch (final IllegalArgumentException exc) {
                 continue;
             }
-            List<ItemStack> drops = new ArrayList<>();
-            ListNBT dropsList = savTag.getList(key, 10);
-            for (int i = 0; i < dropsList.size(); i++) {
+            final List<ItemStack> drops = new ArrayList<ItemStack>();
+            final ListNBT dropsList = savTag.getList(key, 10);
+            for (int i = 0; i < dropsList.size(); ++i) {
                 drops.add(ItemStack.of(dropsList.getCompound(i)));
             }
             this.scheduledItems.put(playerUUID, drops);
         }
     }
-
-
-    public CompoundNBT save(CompoundNBT tag) {
-        CompoundNBT savTag = new CompoundNBT();
+    
+    public CompoundNBT save(final CompoundNBT tag) {
+        final CompoundNBT savTag = new CompoundNBT();
         this.scheduledItems.forEach((uuid, drops) -> {
-            ListNBT dropsList = new ListNBT();
-            drops.forEach(());
-            savTag.put(uuid.toString(), (INBT) dropsList);
+            final ListNBT dropsList = new ListNBT();
+            drops.forEach(stack -> dropsList.add(stack.serializeNBT()));
+            savTag.put(uuid.toString(), (INBT)dropsList);
+            return;
         });
-        tag.put("drops", (INBT) savTag);
+        tag.put("drops", (INBT)savTag);
         return tag;
     }
-
-    public static ScheduledItemDropData get(ServerWorld world) {
+    
+    public static ScheduledItemDropData get(final ServerWorld world) {
         return get(world.getServer());
     }
-
-    public static ScheduledItemDropData get(MinecraftServer srv) {
-        return (ScheduledItemDropData) srv.overworld().getDataStorage().computeIfAbsent(ScheduledItemDropData::new, "the_vault_ScheduledItemDrops");
+    
+    public static ScheduledItemDropData get(final MinecraftServer srv) {
+        return (ScheduledItemDropData)srv.overworld().getDataStorage().computeIfAbsent((Supplier)ScheduledItemDropData::new, "the_vault_ScheduledItemDrops");
     }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\world\data\ScheduledItemDropData.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

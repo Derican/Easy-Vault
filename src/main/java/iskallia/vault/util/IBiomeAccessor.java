@@ -1,21 +1,20 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.util;
 
-public interface IBiomeAccessor {
-    void setSeed(long paramLong);
-
-    void setLegacyBiomes(boolean paramBoolean);
-
-    void setLargeBiomes(boolean paramBoolean);
-
+public interface IBiomeAccessor
+{
+    void setSeed(final long p0);
+    
+    void setLegacyBiomes(final boolean p0);
+    
+    void setLargeBiomes(final boolean p0);
+    
     long getSeed();
-
+    
     boolean getLegacyBiomes();
-
+    
     boolean getLargeBiomes();
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vaul\\util\IBiomeAccessor.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

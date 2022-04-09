@@ -1,3 +1,7 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.mixin;
 
 import iskallia.vault.Vault;
@@ -12,18 +16,13 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.Random;
 
-
-@Mixin({FireBlock.class})
-public class MixinFireBlock {
-    @Inject(method = {"tick"}, at = {@At("HEAD")}, cancellable = true)
-    public void onFireTick(BlockState state, ServerWorld world, BlockPos pos, Random rand, CallbackInfo ci) {
-        if (world.dimension() == Vault.VAULT_KEY)
+@Mixin({ FireBlock.class })
+public class MixinFireBlock
+{
+    @Inject(method = { "tick" }, at = { @At("HEAD") }, cancellable = true)
+    public void onFireTick(final BlockState state, final ServerWorld world, final BlockPos pos, final Random rand, final CallbackInfo ci) {
+        if (world.dimension() == Vault.VAULT_KEY) {
             ci.cancel();
+        }
     }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\mixin\MixinFireBlock.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

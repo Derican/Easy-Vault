@@ -1,3 +1,7 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.world.gen.ruletest;
 
 import com.mojang.serialization.Codec;
@@ -10,29 +14,27 @@ import net.minecraft.world.gen.feature.template.RuleTest;
 
 import java.util.Random;
 
-public class VaultRuleTest
-        extends RuleTest {
-    public static final VaultRuleTest INSTANCE = new VaultRuleTest();
-    public static final Codec<VaultRuleTest> CODEC = Codec.unit(() -> INSTANCE);
-    public static final IRuleTestType<VaultRuleTest> TYPE = register("vault_stone_match", CODEC);
-
-
-    public boolean test(BlockState state, Random random) {
-        return (state.canOcclude() && state.getMaterial() == Material.STONE);
+public class VaultRuleTest extends RuleTest
+{
+    public static final VaultRuleTest INSTANCE;
+    public static final Codec<VaultRuleTest> CODEC;
+    public static final IRuleTestType<VaultRuleTest> TYPE;
+    
+    public boolean test(final BlockState state, final Random random) {
+        return state.canOcclude() && state.getMaterial() == Material.STONE;
     }
-
-
+    
     protected IRuleTestType<?> getType() {
-        return TYPE;
+        return VaultRuleTest.TYPE;
     }
-
-    static <P extends RuleTest> IRuleTestType<P> register(String name, Codec<P> codec) {
-        return (IRuleTestType<P>) Registry.register(Registry.RULE_TEST, Vault.id(name), () -> codec);
+    
+    static <P extends RuleTest> IRuleTestType<P> register(final String name, final Codec<P> codec) {
+        return Registry.register(Registry.RULE_TEST, Vault.id(name), (() -> codec));
+    }
+    
+    static {
+        INSTANCE = new VaultRuleTest();
+        CODEC = Codec.unit(() -> VaultRuleTest.INSTANCE);
+        TYPE = register("vault_stone_match", VaultRuleTest.CODEC);
     }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\world\gen\ruletest\VaultRuleTest.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

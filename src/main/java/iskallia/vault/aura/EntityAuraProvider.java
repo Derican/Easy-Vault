@@ -1,47 +1,46 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.aura;
 
 import iskallia.vault.config.EternalAuraConfig;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.util.RegistryKey;
 import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.world.World;
 
-
-public class EntityAuraProvider
-        extends AuraProvider {
+public class EntityAuraProvider extends AuraProvider
+{
     private final EternalAuraConfig.AuraConfig aura;
     private final LivingEntity entity;
-
-    protected EntityAuraProvider(LivingEntity entity, EternalAuraConfig.AuraConfig aura) {
-        super(entity.getUUID(), entity.getCommandSenderWorld().dimension());
+    
+    protected EntityAuraProvider(final LivingEntity entity, final EternalAuraConfig.AuraConfig aura) {
+        super(entity.getUUID(), (RegistryKey<World>)entity.getCommandSenderWorld().dimension());
         this.aura = aura;
         this.entity = entity;
     }
-
-    public static EntityAuraProvider ofEntity(LivingEntity entity, EternalAuraConfig.AuraConfig aura) {
+    
+    public static EntityAuraProvider ofEntity(final LivingEntity entity, final EternalAuraConfig.AuraConfig aura) {
         return new EntityAuraProvider(entity, aura);
     }
-
+    
     public LivingEntity getSource() {
         return this.entity;
     }
-
-
+    
+    @Override
     public boolean isValid() {
         return this.entity.isAlive();
     }
-
-
+    
+    @Override
     public Vector3d getLocation() {
         return new Vector3d(this.entity.getX(), this.entity.getY(), this.entity.getZ());
     }
-
-
+    
+    @Override
     public EternalAuraConfig.AuraConfig getAura() {
         return this.aura;
     }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\aura\EntityAuraProvider.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

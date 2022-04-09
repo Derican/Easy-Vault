@@ -1,3 +1,7 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.block;
 
 import iskallia.vault.block.entity.VaultTreasureChestTileEntity;
@@ -18,44 +22,37 @@ import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
 
-public class VaultTreasureChestBlock extends VaultChestBlock {
-    public VaultTreasureChestBlock(AbstractBlock.Properties builder) {
+public class VaultTreasureChestBlock extends VaultChestBlock
+{
+    public VaultTreasureChestBlock(final AbstractBlock.Properties builder) {
         super(builder, () -> ModBlocks.VAULT_TREASURE_CHEST_TILE_ENTITY);
     }
-
-
+    
     @Nullable
-    public INamedContainerProvider getMenuProvider(BlockState state, World world, BlockPos pos) {
+    public INamedContainerProvider getMenuProvider(final BlockState state, final World world, final BlockPos pos) {
         final TileEntity te = world.getBlockEntity(pos);
         if (!(te instanceof VaultTreasureChestTileEntity)) {
             return null;
         }
-        final VaultTreasureChestTileEntity chest = (VaultTreasureChestTileEntity) te;
-        return new INamedContainerProvider() {
+        final VaultTreasureChestTileEntity chest = (VaultTreasureChestTileEntity)te;
+        return (INamedContainerProvider)new INamedContainerProvider() {
             public ITextComponent getDisplayName() {
-                return ((VaultTreasureChestTileEntity) te).getDisplayName();
+                return ((VaultTreasureChestTileEntity)te).getDisplayName();
             }
-
-
+            
             @Nullable
-            public Container createMenu(int containerId, PlayerInventory playerInventory, PlayerEntity player) {
+            public Container createMenu(final int containerId, final PlayerInventory playerInventory, final PlayerEntity player) {
                 if (chest.canOpen(player)) {
                     chest.unpackLootTable(player);
-                    return (Container) ChestContainer.sixRows(containerId, playerInventory, (IInventory) chest);
+                    return ChestContainer.sixRows(containerId, playerInventory, (IInventory)chest);
                 }
                 return null;
             }
         };
     }
-
-
-    public TileEntity newBlockEntity(IBlockReader world) {
-        return (TileEntity) new VaultTreasureChestTileEntity();
+    
+    @Override
+    public TileEntity newBlockEntity(final IBlockReader world) {
+        return (TileEntity)new VaultTreasureChestTileEntity();
     }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\block\VaultTreasureChestBlock.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

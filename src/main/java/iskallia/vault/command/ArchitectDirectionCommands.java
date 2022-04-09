@@ -1,3 +1,7 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.command;
 
 import com.mojang.brigadier.CommandDispatcher;
@@ -15,31 +19,26 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
 
-public class ArchitectDirectionCommands {
-    public static void register(CommandDispatcher<CommandSource> dispatcher) {
-        dispatcher.register((LiteralArgumentBuilder) Commands.literal("north").executes(cmd -> voteFor((CommandSource) cmd.getSource(), Direction.NORTH)));
-        dispatcher.register((LiteralArgumentBuilder) Commands.literal("east").executes(cmd -> voteFor((CommandSource) cmd.getSource(), Direction.EAST)));
-        dispatcher.register((LiteralArgumentBuilder) Commands.literal("south").executes(cmd -> voteFor((CommandSource) cmd.getSource(), Direction.SOUTH)));
-        dispatcher.register((LiteralArgumentBuilder) Commands.literal("west").executes(cmd -> voteFor((CommandSource) cmd.getSource(), Direction.WEST)));
+public class ArchitectDirectionCommands
+{
+    public static void register(final CommandDispatcher<CommandSource> dispatcher) {
+        dispatcher.register((LiteralArgumentBuilder)Commands.literal("north").executes(cmd -> voteFor((CommandSource)cmd.getSource(), Direction.NORTH)));
+        dispatcher.register((LiteralArgumentBuilder)Commands.literal("east").executes(cmd -> voteFor((CommandSource)cmd.getSource(), Direction.EAST)));
+        dispatcher.register((LiteralArgumentBuilder)Commands.literal("south").executes(cmd -> voteFor((CommandSource)cmd.getSource(), Direction.SOUTH)));
+        dispatcher.register((LiteralArgumentBuilder)Commands.literal("west").executes(cmd -> voteFor((CommandSource)cmd.getSource(), Direction.WEST)));
     }
-
-    private static int voteFor(CommandSource src, Direction direction) throws CommandSyntaxException {
-        ServerPlayerEntity sPlayer = src.getPlayerOrException();
-        VaultRaid vault = VaultRaidData.get(sPlayer.getLevel()).getActiveFor(sPlayer);
+    
+    private static int voteFor(final CommandSource src, final Direction direction) throws CommandSyntaxException {
+        final ServerPlayerEntity sPlayer = src.getPlayerOrException();
+        final VaultRaid vault = VaultRaidData.get(sPlayer.getLevel()).getActiveFor(sPlayer);
         if (vault == null) {
-            sPlayer.sendMessage((ITextComponent) (new StringTextComponent("Not in an Architect Vault!")).withStyle(TextFormatting.RED), Util.NIL_UUID);
+            sPlayer.sendMessage((ITextComponent)new StringTextComponent("Not in an Architect Vault!").withStyle(TextFormatting.RED), Util.NIL_UUID);
             return 0;
         }
-        if (!((Boolean) vault.getActiveObjective(ArchitectObjective.class).map(objective -> Boolean.valueOf(objective.handleVote(sPlayer.getName().getString(), direction))).orElse(Boolean.valueOf(false))).booleanValue()) {
-            sPlayer.sendMessage((ITextComponent) (new StringTextComponent("No vote active or already voted!")).withStyle(TextFormatting.RED), Util.NIL_UUID);
+        if (!vault.getActiveObjective(ArchitectObjective.class).map(objective -> objective.handleVote(sPlayer.getName().getString(), direction)).orElse(false)) {
+            sPlayer.sendMessage((ITextComponent)new StringTextComponent("No vote active or already voted!").withStyle(TextFormatting.RED), Util.NIL_UUID);
             return 0;
         }
         return 1;
     }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\command\ArchitectDirectionCommands.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

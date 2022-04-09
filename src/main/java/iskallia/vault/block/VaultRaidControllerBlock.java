@@ -1,3 +1,7 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.block;
 
 import com.google.common.collect.Lists;
@@ -31,119 +35,107 @@ import net.minecraft.world.server.ServerWorld;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class VaultRaidControllerBlock extends Block {
-    public static final EnumProperty<DoubleBlockHalf> HALF = BlockStateProperties.DOUBLE_BLOCK_HALF;
-
-    private static final VoxelShape SHAPE_TOP = makeShape().move(0.0D, -1.0D, 0.0D);
-    private static final VoxelShape SHAPE_BOTTOM = makeShape();
-
+public class VaultRaidControllerBlock extends Block
+{
+    public static final EnumProperty<DoubleBlockHalf> HALF;
+    private static final VoxelShape SHAPE_TOP;
+    private static final VoxelShape SHAPE_BOTTOM;
+    
     public VaultRaidControllerBlock() {
-        super(AbstractBlock.Properties.of(Material.GLASS)
-                .sound(SoundType.GLASS)
-                .strength(-1.0F, 3600000.0F)
-                .noCollission()
-                .noOcclusion()
-                .noDrops());
-
-        registerDefaultState((BlockState) ((BlockState) this.stateDefinition.any())
-                .setValue((Property) HALF, (Comparable) DoubleBlockHalf.LOWER));
+        super(AbstractBlock.Properties.of(Material.GLASS).sound(SoundType.GLASS).strength(-1.0f, 3600000.0f).noCollission().noOcclusion().noDrops());
+        this.registerDefaultState((this.stateDefinition.any()).setValue(VaultRaidControllerBlock.HALF, DoubleBlockHalf.LOWER));
     }
-
+    
     private static VoxelShape makeShape() {
-        VoxelShape m1 = Block.box(0.0D, 0.0D, 0.0D, 16.0D, 2.0D, 16.0D);
-        VoxelShape m2 = Block.box(2.0D, 2.0D, 2.0D, 14.0D, 29.0D, 14.0D);
-        return VoxelUtils.combineAll(IBooleanFunction.OR, new VoxelShape[]{m1, m2});
+        final VoxelShape m1 = Block.box(0.0, 0.0, 0.0, 16.0, 2.0, 16.0);
+        final VoxelShape m2 = Block.box(2.0, 2.0, 2.0, 14.0, 29.0, 14.0);
+        return VoxelUtils.combineAll(IBooleanFunction.OR, m1, m2);
     }
-
-
-    public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
-        if (state.getValue((Property) HALF) == DoubleBlockHalf.UPPER) {
-            return SHAPE_TOP;
+    
+    public VoxelShape getShape(final BlockState state, final IBlockReader worldIn, final BlockPos pos, final ISelectionContext context) {
+        if (state.getValue(VaultRaidControllerBlock.HALF) == DoubleBlockHalf.UPPER) {
+            return VaultRaidControllerBlock.SHAPE_TOP;
         }
-        return SHAPE_BOTTOM;
+        return VaultRaidControllerBlock.SHAPE_BOTTOM;
     }
-
-
-    public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
-        if (state.getValue((Property) HALF) == DoubleBlockHalf.UPPER) {
-            BlockState downState = world.getBlockState(pos.below());
+    
+    public ActionResultType use(final BlockState state, final World world, final BlockPos pos, final PlayerEntity player, final Hand hand, final BlockRayTraceResult hit) {
+        if (state.getValue(VaultRaidControllerBlock.HALF) == DoubleBlockHalf.UPPER) {
+            final BlockState downState = world.getBlockState(pos.below());
             if (!(downState.getBlock() instanceof VaultRaidControllerBlock)) {
                 return ActionResultType.SUCCESS;
             }
-            return use(downState, world, pos.below(), player, hand, hit);
+            return this.use(downState, world, pos.below(), player, hand, hit);
         }
-        if (!world.isClientSide() && world instanceof ServerWorld && hand == Hand.MAIN_HAND) {
-            startRaid((ServerWorld) world, pos);
+        else {
+            if (!world.isClientSide() && world instanceof ServerWorld && hand == Hand.MAIN_HAND) {
+                this.startRaid((ServerWorld)world, pos);
+                return ActionResultType.SUCCESS;
+            }
             return ActionResultType.SUCCESS;
         }
-        return ActionResultType.SUCCESS;
     }
-
-    private void startRaid(ServerWorld world, BlockPos pos) {
-        VaultRaid vault = VaultRaidData.get(world).getAt(world, pos);
+    
+    private void startRaid(final ServerWorld world, final BlockPos pos) {
+        final VaultRaid vault = VaultRaidData.get(world).getAt(world, pos);
         if (vault == null || vault.getActiveRaid() != null) {
             return;
         }
-        TileEntity tile = world.getBlockEntity(pos);
+        final TileEntity tile = world.getBlockEntity(pos);
         if (!(tile instanceof VaultRaidControllerTileEntity)) {
             return;
         }
-        VaultRaidControllerTileEntity ctrl = (VaultRaidControllerTileEntity) tile;
+        final VaultRaidControllerTileEntity ctrl = (VaultRaidControllerTileEntity)tile;
         if (!ctrl.didTriggerRaid() && vault.triggerRaid(world, pos)) {
             ctrl.setTriggeredRaid(true);
         }
     }
-
-
-    public void onRemove(BlockState state, World world, BlockPos pos, BlockState newState, boolean isMoving) {
+    
+    public void onRemove(final BlockState state, final World world, final BlockPos pos, final BlockState newState, final boolean isMoving) {
         super.onRemove(state, world, pos, newState, isMoving);
         if (!state.is(newState.getBlock())) {
-            if (state.getValue((Property) HALF) == DoubleBlockHalf.UPPER) {
-                BlockState otherState = world.getBlockState(pos.below());
+            if (state.getValue(VaultRaidControllerBlock.HALF) == DoubleBlockHalf.UPPER) {
+                final BlockState otherState = world.getBlockState(pos.below());
                 if (otherState.is(state.getBlock())) {
                     world.removeBlock(pos.below(), isMoving);
                 }
-            } else {
-                BlockState otherState = world.getBlockState(pos.above());
+            }
+            else {
+                final BlockState otherState = world.getBlockState(pos.above());
                 if (otherState.is(state.getBlock())) {
                     world.removeBlock(pos.above(), isMoving);
                 }
             }
         }
     }
-
-
-    public List<ItemStack> getDrops(BlockState state, LootContext.Builder builder) {
+    
+    public List<ItemStack> getDrops(final BlockState state, final LootContext.Builder builder) {
         return Lists.newArrayList();
     }
-
-
-    public boolean hasTileEntity(BlockState state) {
-        return (state.getValue((Property) HALF) == DoubleBlockHalf.LOWER);
+    
+    public boolean hasTileEntity(final BlockState state) {
+        return state.getValue(VaultRaidControllerBlock.HALF) == DoubleBlockHalf.LOWER;
     }
-
-
+    
     @Nullable
-    public TileEntity createTileEntity(BlockState state, IBlockReader world) {
-        if (hasTileEntity(state)) {
+    public TileEntity createTileEntity(final BlockState state, final IBlockReader world) {
+        if (this.hasTileEntity(state)) {
             return ModBlocks.RAID_CONTROLLER_TILE_ENTITY.create();
         }
         return null;
     }
-
-
-    public BlockRenderType getRenderShape(BlockState state) {
+    
+    public BlockRenderType getRenderShape(final BlockState state) {
         return BlockRenderType.MODEL;
     }
-
-
-    protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) {
-        builder.add(new Property[]{(Property) HALF});
+    
+    protected void createBlockStateDefinition(final StateContainer.Builder<Block, BlockState> builder) {
+        builder.add(new Property[] { VaultRaidControllerBlock.HALF });
+    }
+    
+    static {
+        HALF = BlockStateProperties.DOUBLE_BLOCK_HALF;
+        SHAPE_TOP = makeShape().move(0.0, -1.0, 0.0);
+        SHAPE_BOTTOM = makeShape();
     }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\block\VaultRaidControllerBlock.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

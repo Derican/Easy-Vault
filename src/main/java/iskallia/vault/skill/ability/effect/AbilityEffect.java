@@ -1,3 +1,7 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.skill.ability.effect;
 
 import iskallia.vault.skill.ability.config.AbilityConfig;
@@ -6,41 +10,32 @@ import net.minecraft.entity.player.ServerPlayerEntity;
 
 import java.util.Random;
 
-
-public abstract class AbilityEffect<C extends AbilityConfig> {
-    protected static final Random rand = new Random();
-
-
+public abstract class AbilityEffect<C extends AbilityConfig>
+{
+    protected static final Random rand;
+    
     public abstract String getAbilityGroupName();
-
-
-    public void onAdded(C config, PlayerEntity player) {
+    
+    public void onAdded(final C config, final PlayerEntity player) {
     }
-
-
-    public void onRemoved(C config, PlayerEntity player) {
+    
+    public void onRemoved(final C config, final PlayerEntity player) {
     }
-
-
-    public void onFocus(C config, PlayerEntity player) {
+    
+    public void onFocus(final C config, final PlayerEntity player) {
     }
-
-
-    public void onBlur(C config, PlayerEntity player) {
+    
+    public void onBlur(final C config, final PlayerEntity player) {
     }
-
-
-    public void onTick(C config, PlayerEntity player, boolean active) {
+    
+    public void onTick(final C config, final PlayerEntity player, final boolean active) {
     }
-
-
-    public boolean onAction(C config, ServerPlayerEntity player, boolean active) {
+    
+    public boolean onAction(final C config, final ServerPlayerEntity player, final boolean active) {
         return false;
     }
+    
+    static {
+        rand = new Random();
+    }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\skill\ability\effect\AbilityEffect.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

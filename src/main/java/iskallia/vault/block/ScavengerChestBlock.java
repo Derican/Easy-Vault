@@ -1,3 +1,7 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.block;
 
 import iskallia.vault.block.entity.ScavengerChestTileEntity;
@@ -15,30 +19,22 @@ import net.minecraft.world.IBlockReader;
 
 import java.util.function.Supplier;
 
-public class ScavengerChestBlock
-        extends ChestBlock {
-    protected ScavengerChestBlock(AbstractBlock.Properties builder, Supplier<TileEntityType<? extends ChestTileEntity>> tileEntityTypeIn) {
-        super(builder, tileEntityTypeIn);
+public class ScavengerChestBlock extends ChestBlock
+{
+    protected ScavengerChestBlock(final AbstractBlock.Properties builder, final Supplier<TileEntityType<? extends ChestTileEntity>> tileEntityTypeIn) {
+        super(builder, (Supplier)tileEntityTypeIn);
     }
-
-    public ScavengerChestBlock(AbstractBlock.Properties builder) {
+    
+    public ScavengerChestBlock(final AbstractBlock.Properties builder) {
         this(builder, () -> ModBlocks.SCAVENGER_CHEST_TILE_ENTITY);
     }
-
-
-    public TileEntity newBlockEntity(IBlockReader worldIn) {
-        return (TileEntity) new ScavengerChestTileEntity();
+    
+    public TileEntity newBlockEntity(final IBlockReader worldIn) {
+        return (TileEntity)new ScavengerChestTileEntity();
     }
-
-
-    public BlockState getStateForPlacement(BlockItemUseContext context) {
-        BlockState state = super.getStateForPlacement(context);
-        return (state == null) ? null : (BlockState) state.setValue((Property) TYPE, (Comparable) ChestType.SINGLE);
+    
+    public BlockState getStateForPlacement(final BlockItemUseContext context) {
+        final BlockState state = super.getStateForPlacement(context);
+        return (state == null) ? null : (state.setValue(ScavengerChestBlock.TYPE, ChestType.SINGLE));
     }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\block\ScavengerChestBlock.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

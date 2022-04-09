@@ -1,8 +1,13 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.client;
 
 import iskallia.vault.network.message.KnownTalentsMessage;
 import iskallia.vault.skill.talent.TalentGroup;
 import iskallia.vault.skill.talent.TalentNode;
+import iskallia.vault.skill.talent.type.PlayerTalent;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -10,37 +15,35 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-
-public class ClientTalentData {
-    private static List<TalentNode<?>> learnedTalents = new ArrayList<>();
-
+public class ClientTalentData
+{
+    private static List<TalentNode<?>> learnedTalents;
+    
     @Nonnull
     public static List<TalentNode<?>> getLearnedTalentNodes() {
-        return Collections.unmodifiableList(learnedTalents);
+        return Collections.unmodifiableList((List<? extends TalentNode<?>>)ClientTalentData.learnedTalents);
     }
-
+    
     @Nullable
-    public static <T extends iskallia.vault.skill.talent.type.PlayerTalent> TalentNode<T> getLearnedTalentNode(TalentGroup<T> talent) {
+    public static <T extends PlayerTalent> TalentNode<T> getLearnedTalentNode(final TalentGroup<T> talent) {
         return getLearnedTalentNode(talent.getParentName());
     }
-
+    
     @Nullable
-    public static <T extends iskallia.vault.skill.talent.type.PlayerTalent> TalentNode<T> getLearnedTalentNode(String talentName) {
-        for (TalentNode<?> node : getLearnedTalentNodes()) {
+    public static <T extends PlayerTalent> TalentNode<T> getLearnedTalentNode(final String talentName) {
+        for (final TalentNode<?> node : getLearnedTalentNodes()) {
             if (node.getGroup().getParentName().equals(talentName)) {
-                return (TalentNode) node;
+                return (TalentNode<T>)node;
             }
         }
         return null;
     }
-
-    public static void updateTalents(KnownTalentsMessage pkt) {
-        learnedTalents = pkt.getLearnedTalents();
+    
+    public static void updateTalents(final KnownTalentsMessage pkt) {
+        ClientTalentData.learnedTalents = pkt.getLearnedTalents();
+    }
+    
+    static {
+        ClientTalentData.learnedTalents = new ArrayList<TalentNode<?>>();
     }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\client\ClientTalentData.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

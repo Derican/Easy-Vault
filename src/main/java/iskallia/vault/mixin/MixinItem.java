@@ -1,3 +1,7 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.mixin;
 
 import iskallia.vault.init.ModConfigs;
@@ -12,14 +16,15 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-@Mixin({Item.class})
-public class MixinItem {
-    @Inject(method = {"getDisplayName"}, cancellable = true, at = {@At("RETURN")})
-    public void appendOverlevelPrefix(ItemStack stack, CallbackInfoReturnable<ITextComponent> info) {
+@Mixin({ Item.class })
+public class MixinItem
+{
+    @Inject(method = { "getDescription" }, cancellable = true, at = { @At("RETURN") })
+    public void appendOverlevelPrefix(final ItemStack stack, final CallbackInfoReturnable<ITextComponent> info) {
         if (stack.getItem() == Items.ENCHANTED_BOOK) {
-            int overLevels = OverlevelEnchantHelper.getOverlevels(stack);
+            final int overLevels = OverlevelEnchantHelper.getOverlevels(stack);
             if (overLevels != -1) {
-                IFormattableTextComponent formatted = ModConfigs.OVERLEVEL_ENCHANT.format((ITextComponent) info.getReturnValue(), overLevels);
+                final IFormattableTextComponent formatted = ModConfigs.OVERLEVEL_ENCHANT.format((ITextComponent)info.getReturnValue(), overLevels);
                 if (formatted != null) {
                     info.setReturnValue(formatted);
                     info.cancel();
@@ -28,9 +33,3 @@ public class MixinItem {
         }
     }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\mixin\MixinItem.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

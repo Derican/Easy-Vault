@@ -1,3 +1,7 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.world.vault.chest;
 
 import com.google.gson.annotations.Expose;
@@ -5,18 +9,28 @@ import iskallia.vault.util.DamageUtil;
 import iskallia.vault.world.vault.VaultRaid;
 import iskallia.vault.world.vault.player.VaultPlayer;
 import net.minecraft.entity.Entity;
+import net.minecraft.util.DamageSource;
 import net.minecraft.world.Explosion;
 import net.minecraft.world.server.ServerWorld;
 
-public class ExplosionEffect extends VaultChestEffect {
+public class ExplosionEffect extends VaultChestEffect
+{
     @Expose
     private final float radius;
     @Expose
     private final double xOffset;
     @Expose
     private final double yOffset;
-
-    public ExplosionEffect(String name, float radius, double xOffset, double yOffset, double zOffset, boolean causesFire, float damage, Explosion.Mode mode) {
+    @Expose
+    private final double zOffset;
+    @Expose
+    private final boolean causesFire;
+    @Expose
+    private final float damage;
+    @Expose
+    private final String mode;
+    
+    public ExplosionEffect(final String name, final float radius, final double xOffset, final double yOffset, final double zOffset, final boolean causesFire, final float damage, final Explosion.Mode mode) {
         super(name);
         this.radius = radius;
         this.xOffset = xOffset;
@@ -26,56 +40,40 @@ public class ExplosionEffect extends VaultChestEffect {
         this.damage = damage;
         this.mode = mode.name();
     }
-
-    @Expose
-    private final double zOffset;
-    @Expose
-    private final boolean causesFire;
-    @Expose
-    private final float damage;
-    @Expose
-    private final String mode;
-
+    
     public float getRadius() {
         return this.radius;
     }
-
-
+    
     public double getXOffset() {
         return this.xOffset;
     }
-
+    
     public double getYOffset() {
         return this.yOffset;
     }
-
+    
     public double getZOffset() {
         return this.zOffset;
     }
-
+    
     public boolean causesFire() {
         return this.causesFire;
     }
-
+    
     public float getDamage() {
         return this.damage;
     }
-
+    
     public Explosion.Mode getMode() {
-        return Enum.<Explosion.Mode>valueOf(Explosion.Mode.class, this.mode);
+        return Enum.valueOf(Explosion.Mode.class, this.mode);
     }
-
-
-    public void apply(VaultRaid vault, VaultPlayer player, ServerWorld world) {
+    
+    @Override
+    public void apply(final VaultRaid vault, final VaultPlayer player, final ServerWorld world) {
         player.runIfPresent(world.getServer(), playerEntity -> {
-            world.explode((Entity) playerEntity, playerEntity.getX() + getXOffset(), playerEntity.getY() + getYOffset(), playerEntity.getZ() + getZOffset(), getRadius(), causesFire(), getMode());
-            DamageUtil.shotgunAttack((Entity) playerEntity, ());
+            world.explode((Entity)playerEntity, playerEntity.getX() + this.getXOffset(), playerEntity.getY() + this.getYOffset(), playerEntity.getZ() + this.getZOffset(), this.getRadius(), this.causesFire(), this.getMode());
+            DamageUtil.shotgunAttack(playerEntity, entity -> entity.hurt(new DamageSource("explosion").setExplosion(), this.getDamage()));
         });
     }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\world\vault\chest\ExplosionEffect.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

@@ -1,11 +1,15 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.init;
 
 import iskallia.vault.skill.ability.AbilityRegistry;
 import iskallia.vault.skill.ability.effect.*;
 import iskallia.vault.skill.ability.effect.sub.*;
 
-
-public class ModAbilities {
+public class ModAbilities
+{
     public static final String CLEANSE = "Cleanse";
     public static final String CLEANSE_APPLY = "Cleanse_Applynearby";
     public static final String CLEANSE_HEAL = "Cleanse_Heal";
@@ -16,60 +20,6 @@ public class ModAbilities {
     public static final String DASH_DAMAGE = "Dash_Damage";
     public static final String DASH_HEAL = "Dash_Heal";
     public static final String EXECUTE = "Execute";
-
-    public static void init() {
-        AbilityRegistry.register("Cleanse", (AbilityEffect) new CleanseAbility());
-        AbilityRegistry.register("Cleanse_Applynearby", (AbilityEffect) new CleanseApplyAbility());
-        AbilityRegistry.register("Cleanse_Heal", (AbilityEffect) new CleanseHealAbility());
-        AbilityRegistry.register("Cleanse_Effect", (AbilityEffect) new CleanseEffectAbility());
-        AbilityRegistry.register("Cleanse_Immune", (AbilityEffect) new CleanseImmuneAbility());
-
-        AbilityRegistry.register("Dash", (AbilityEffect) new DashAbility());
-        AbilityRegistry.register("Dash_Buff", (AbilityEffect) new DashBuffAbility());
-        AbilityRegistry.register("Dash_Damage", (AbilityEffect) new DashDamageAbility());
-        AbilityRegistry.register("Dash_Heal", (AbilityEffect) new DashHealAbility());
-
-        AbilityRegistry.register("Execute", (AbilityEffect) new ExecuteAbility());
-        AbilityRegistry.register("Execute_Buff", (AbilityEffect) new ExecuteBuffAbility());
-        AbilityRegistry.register("Execute_Damage", (AbilityEffect) new ExecuteDamageAbility());
-
-        AbilityRegistry.register("Ghost Walk", (AbilityEffect) new GhostWalkAbility());
-        AbilityRegistry.register("Ghost Walk_Damage", (AbilityEffect) new GhostWalkDamageAbility());
-        AbilityRegistry.register("Ghost Walk_Parry", (AbilityEffect) new GhostWalkParryAbility());
-        AbilityRegistry.register("Ghost Walk_Regen", (AbilityEffect) new GhostWalkRegenerationAbility());
-
-        AbilityRegistry.register("Mega Jump", (AbilityEffect) new MegaJumpAbility());
-        AbilityRegistry.register("Mega Jump_Break", (AbilityEffect) new MegaJumpBreakAbility());
-        AbilityRegistry.register("Mega Jump_Damage", (AbilityEffect) new MegaJumpDamageAbility());
-        AbilityRegistry.register("Mega Jump_Knockback", (AbilityEffect) new MegaJumpKnockbackAbility());
-
-        AbilityRegistry.register("Rampage", (AbilityEffect) new RampageAbility());
-        AbilityRegistry.register("Rampage_Time", (AbilityEffect) new RampageTimeAbility());
-        AbilityRegistry.register("Rampage_Dot", (AbilityEffect) new RampageDotAbility());
-        AbilityRegistry.register("Rampage_Leech", (AbilityEffect) new RampageAbility());
-
-        AbilityRegistry.register("Summon Eternal", (AbilityEffect) new SummonEternalAbility());
-        AbilityRegistry.register("Summon Eternal_Additional", (AbilityEffect) new SummonEternalCountAbility());
-        AbilityRegistry.register("Summon Eternal_Damage", (AbilityEffect) new SummonEternalDamageAbility());
-        AbilityRegistry.register("Summon Eternal_Debuffs", (AbilityEffect) new SummonEternalAbility());
-
-        AbilityRegistry.register("Tank", (AbilityEffect) new TankAbility());
-        AbilityRegistry.register("Tank_Reflect", (AbilityEffect) new TankReflectAbility());
-        AbilityRegistry.register("Tank_Slow", (AbilityEffect) new TankSlowAbility());
-        AbilityRegistry.register("Tank_Parry", (AbilityEffect) new TankAbility());
-
-        AbilityRegistry.register("Vein Miner", (AbilityEffect) new VeinMinerAbility());
-        AbilityRegistry.register("Vein Miner_Fortune", (AbilityEffect) new VeinMinerFortuneAbility());
-        AbilityRegistry.register("Vein Miner_Durability", (AbilityEffect) new VeinMinerDurabilityAbility());
-        AbilityRegistry.register("Vein Miner_Size", (AbilityEffect) new VeinMinerSizeDurabilityAbility());
-        AbilityRegistry.register("Vein Miner_Void", (AbilityEffect) new VeinMinerVoidAbility());
-
-        AbilityRegistry.register("Hunter", (AbilityEffect) new HunterAbility());
-        AbilityRegistry.register("Hunter_Spawners", (AbilityEffect) new HunterSpawnerAbility());
-        AbilityRegistry.register("Hunter_Chests", (AbilityEffect) new HunterChestAbility());
-        AbilityRegistry.register("Hunter_Blocks", (AbilityEffect) new HunterObjectiveAbility());
-    }
-
     public static final String EXECUTE_BUFF = "Execute_Buff";
     public static final String EXECUTE_DAMAGE = "Execute_Damage";
     public static final String GHOST_WALK = "Ghost Walk";
@@ -101,10 +51,48 @@ public class ModAbilities {
     public static final String HUNTER_SPAWNERS = "Hunter_Spawners";
     public static final String HUNTER_CHESTS = "Hunter_Chests";
     public static final String HUNTER_BLOCKS = "Hunter_Blocks";
+    
+    public static void init() {
+        AbilityRegistry.register("Cleanse", new CleanseAbility());
+        AbilityRegistry.register("Cleanse_Applynearby", new CleanseApplyAbility());
+        AbilityRegistry.register("Cleanse_Heal", new CleanseHealAbility());
+        AbilityRegistry.register("Cleanse_Effect", new CleanseEffectAbility());
+        AbilityRegistry.register("Cleanse_Immune", new CleanseImmuneAbility());
+        AbilityRegistry.register("Dash", new DashAbility());
+        AbilityRegistry.register("Dash_Buff", new DashBuffAbility());
+        AbilityRegistry.register("Dash_Damage", new DashDamageAbility());
+        AbilityRegistry.register("Dash_Heal", new DashHealAbility());
+        AbilityRegistry.register("Execute", new ExecuteAbility());
+        AbilityRegistry.register("Execute_Buff", new ExecuteBuffAbility());
+        AbilityRegistry.register("Execute_Damage", new ExecuteDamageAbility());
+        AbilityRegistry.register("Ghost Walk", new GhostWalkAbility());
+        AbilityRegistry.register("Ghost Walk_Damage", new GhostWalkDamageAbility());
+        AbilityRegistry.register("Ghost Walk_Parry", new GhostWalkParryAbility());
+        AbilityRegistry.register("Ghost Walk_Regen", new GhostWalkRegenerationAbility());
+        AbilityRegistry.register("Mega Jump", new MegaJumpAbility());
+        AbilityRegistry.register("Mega Jump_Break", new MegaJumpBreakAbility());
+        AbilityRegistry.register("Mega Jump_Damage", new MegaJumpDamageAbility());
+        AbilityRegistry.register("Mega Jump_Knockback", new MegaJumpKnockbackAbility());
+        AbilityRegistry.register("Rampage", new RampageAbility());
+        AbilityRegistry.register("Rampage_Time", new RampageTimeAbility());
+        AbilityRegistry.register("Rampage_Dot", new RampageDotAbility());
+        AbilityRegistry.register("Rampage_Leech", new RampageAbility());
+        AbilityRegistry.register("Summon Eternal", new SummonEternalAbility());
+        AbilityRegistry.register("Summon Eternal_Additional", new SummonEternalCountAbility());
+        AbilityRegistry.register("Summon Eternal_Damage", new SummonEternalDamageAbility());
+        AbilityRegistry.register("Summon Eternal_Debuffs", new SummonEternalAbility());
+        AbilityRegistry.register("Tank", new TankAbility());
+        AbilityRegistry.register("Tank_Reflect", new TankReflectAbility());
+        AbilityRegistry.register("Tank_Slow", new TankSlowAbility());
+        AbilityRegistry.register("Tank_Parry", new TankAbility());
+        AbilityRegistry.register("Vein Miner", new VeinMinerAbility());
+        AbilityRegistry.register("Vein Miner_Fortune", new VeinMinerFortuneAbility());
+        AbilityRegistry.register("Vein Miner_Durability", new VeinMinerDurabilityAbility());
+        AbilityRegistry.register("Vein Miner_Size", new VeinMinerSizeDurabilityAbility());
+        AbilityRegistry.register("Vein Miner_Void", new VeinMinerVoidAbility());
+        AbilityRegistry.register("Hunter", new HunterAbility());
+        AbilityRegistry.register("Hunter_Spawners", new HunterSpawnerAbility());
+        AbilityRegistry.register("Hunter_Chests", new HunterChestAbility());
+        AbilityRegistry.register("Hunter_Blocks", new HunterObjectiveAbility());
+    }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\init\ModAbilities.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

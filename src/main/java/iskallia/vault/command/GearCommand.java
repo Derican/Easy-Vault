@@ -1,3 +1,7 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.command;
 
 import com.mojang.brigadier.arguments.ArgumentType;
@@ -20,105 +24,88 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraftforge.server.command.EnumArgument;
 
-public class GearCommand
-        extends Command {
+public class GearCommand extends Command
+{
+    @Override
     public String getName() {
         return "gear";
     }
-
-
+    
+    @Override
     public int getRequiredPermissionLevel() {
         return 2;
     }
-
-
-    public void build(LiteralArgumentBuilder<CommandSource> builder) {
-        builder.then(Commands.literal("add")
-                .then(Commands.argument("modifier", (ArgumentType) StringArgumentType.string())
-                        .executes(this::addModifier)));
-        builder.then(Commands.literal("remove")
-                .then(Commands.argument("modifier", (ArgumentType) StringArgumentType.string())
-                        .executes(this::removeModifier)));
-        builder.then(Commands.literal("rarity")
-                .then(Commands.argument("rarity", (ArgumentType) EnumArgument.enumArgument(VaultGear.Rarity.class))
-                        .executes(this::setRarity)));
-        builder.then(Commands.literal("tier")
-                .then(Commands.argument("tier", (ArgumentType) IntegerArgumentType.integer(0, 2))
-                        .executes(this::setTier)));
+    
+    @Override
+    public void build(final LiteralArgumentBuilder<CommandSource> builder) {
+        builder.then(Commands.literal("add").then(Commands.argument("modifier", (ArgumentType)StringArgumentType.string()).executes(this::addModifier)));
+        builder.then(Commands.literal("remove").then(Commands.argument("modifier", (ArgumentType)StringArgumentType.string()).executes(this::removeModifier)));
+        builder.then(Commands.literal("rarity").then(Commands.argument("rarity", (ArgumentType)EnumArgument.enumArgument((Class)VaultGear.Rarity.class)).executes(this::setRarity)));
+        builder.then(Commands.literal("tier").then(Commands.argument("tier", (ArgumentType)IntegerArgumentType.integer(0, 2)).executes(this::setTier)));
     }
-
-    private int addModifier(CommandContext<CommandSource> context) throws CommandSyntaxException {
-        ServerPlayerEntity player = ((CommandSource) context.getSource()).getPlayerOrException();
-        String modifierName = StringArgumentType.getString(context, "modifier");
-        VAttribute<?, ?> attribute = (VAttribute<?, ?>) ModAttributes.REGISTRY.get(new ResourceLocation(modifierName));
+    
+    private int addModifier(final CommandContext<CommandSource> context) throws CommandSyntaxException {
+        final ServerPlayerEntity player = ((CommandSource)context.getSource()).getPlayerOrException();
+        final String modifierName = StringArgumentType.getString((CommandContext)context, "modifier");
+        final VAttribute<?, ?> attribute = ModAttributes.REGISTRY.get(new ResourceLocation(modifierName));
         if (attribute == null) {
-            player.sendMessage((ITextComponent) new StringTextComponent("No modifier with name " + modifierName), Util.NIL_UUID);
+            player.sendMessage((ITextComponent)new StringTextComponent("No modifier with name " + modifierName), Util.NIL_UUID);
             return 0;
         }
-        ItemStack held = player.getMainHandItem();
+        final ItemStack held = player.getMainHandItem();
         if (held.isEmpty() || !(held.getItem() instanceof VaultGear)) {
-            player.sendMessage((ITextComponent) new StringTextComponent("No vault gear in hand!"), Util.NIL_UUID);
+            player.sendMessage((ITextComponent)new StringTextComponent("No vault gear in hand!"), Util.NIL_UUID);
             return 0;
         }
-        VaultGear.Rarity gearRarity = ModAttributes.GEAR_RARITY.getBase(held).orElse(VaultGear.Rarity.COMMON);
-        int tier = ((Integer) ModAttributes.GEAR_TIER.getBase(held).orElse(Integer.valueOf(0))).intValue();
-
+        final VaultGear.Rarity gearRarity = ModAttributes.GEAR_RARITY.getBase(held).orElse(VaultGear.Rarity.COMMON);
+        final int tier = ModAttributes.GEAR_TIER.getBase(held).orElse(0);
         VaultGearHelper.applyGearModifier(held, gearRarity, tier, attribute);
         return 0;
     }
-
-    private int removeModifier(CommandContext<CommandSource> context) throws CommandSyntaxException {
-        ServerPlayerEntity player = ((CommandSource) context.getSource()).getPlayerOrException();
-        String modifierName = StringArgumentType.getString(context, "modifier");
-        VAttribute<?, ?> attribute = (VAttribute<?, ?>) ModAttributes.REGISTRY.get(new ResourceLocation(modifierName));
+    
+    private int removeModifier(final CommandContext<CommandSource> context) throws CommandSyntaxException {
+        final ServerPlayerEntity player = ((CommandSource)context.getSource()).getPlayerOrException();
+        final String modifierName = StringArgumentType.getString((CommandContext)context, "modifier");
+        final VAttribute<?, ?> attribute = ModAttributes.REGISTRY.get(new ResourceLocation(modifierName));
         if (attribute == null) {
-            player.sendMessage((ITextComponent) new StringTextComponent("No modifier with name " + modifierName), Util.NIL_UUID);
+            player.sendMessage((ITextComponent)new StringTextComponent("No modifier with name " + modifierName), Util.NIL_UUID);
             return 0;
         }
-        ItemStack held = player.getMainHandItem();
+        final ItemStack held = player.getMainHandItem();
         if (held.isEmpty() || !(held.getItem() instanceof VaultGear)) {
-            player.sendMessage((ITextComponent) new StringTextComponent("No vault gear in hand!"), Util.NIL_UUID);
+            player.sendMessage((ITextComponent)new StringTextComponent("No vault gear in hand!"), Util.NIL_UUID);
             return 0;
         }
-
         VaultGearHelper.removeAttribute(held, attribute);
         return 0;
     }
-
-    private int setRarity(CommandContext<CommandSource> context) throws CommandSyntaxException {
-        ServerPlayerEntity player = ((CommandSource) context.getSource()).getPlayerOrException();
-        VaultGear.Rarity rarity = (VaultGear.Rarity) context.getArgument("rarity", VaultGear.Rarity.class);
-        ItemStack held = player.getMainHandItem();
+    
+    private int setRarity(final CommandContext<CommandSource> context) throws CommandSyntaxException {
+        final ServerPlayerEntity player = ((CommandSource)context.getSource()).getPlayerOrException();
+        final VaultGear.Rarity rarity = (VaultGear.Rarity)context.getArgument("rarity", (Class)VaultGear.Rarity.class);
+        final ItemStack held = player.getMainHandItem();
         if (held.isEmpty() || !(held.getItem() instanceof VaultGear)) {
-            player.sendMessage((ITextComponent) new StringTextComponent("No vault gear in hand!"), Util.NIL_UUID);
+            player.sendMessage((ITextComponent)new StringTextComponent("No vault gear in hand!"), Util.NIL_UUID);
             return 0;
         }
-
         ModAttributes.GEAR_RARITY.create(held, rarity);
         return 0;
     }
-
-    private int setTier(CommandContext<CommandSource> context) throws CommandSyntaxException {
-        ServerPlayerEntity player = ((CommandSource) context.getSource()).getPlayerOrException();
-        int tier = IntegerArgumentType.getInteger(context, "tier");
-        ItemStack held = player.getMainHandItem();
+    
+    private int setTier(final CommandContext<CommandSource> context) throws CommandSyntaxException {
+        final ServerPlayerEntity player = ((CommandSource)context.getSource()).getPlayerOrException();
+        final int tier = IntegerArgumentType.getInteger((CommandContext)context, "tier");
+        final ItemStack held = player.getMainHandItem();
         if (held.isEmpty() || !(held.getItem() instanceof VaultGear)) {
-            player.sendMessage((ITextComponent) new StringTextComponent("No vault gear in hand!"), Util.NIL_UUID);
+            player.sendMessage((ITextComponent)new StringTextComponent("No vault gear in hand!"), Util.NIL_UUID);
             return 0;
         }
-
-        ModAttributes.GEAR_TIER.create(held, Integer.valueOf(tier));
+        ModAttributes.GEAR_TIER.create(held, tier);
         return 0;
     }
-
-
+    
+    @Override
     public boolean isDedicatedServerOnly() {
         return false;
     }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\command\GearCommand.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

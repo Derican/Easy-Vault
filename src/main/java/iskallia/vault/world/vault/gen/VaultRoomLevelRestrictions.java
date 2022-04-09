@@ -1,3 +1,7 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.world.vault.gen;
 
 import iskallia.vault.Vault;
@@ -9,39 +13,29 @@ import net.minecraft.world.gen.feature.jigsaw.JigsawPiece;
 
 import java.util.List;
 
-
-public class VaultRoomLevelRestrictions {
-    public static void addGenerationPreventions(VaultRoomLayoutGenerator.Layout layout, int vaultLevel) {
+public class VaultRoomLevelRestrictions
+{
+    public static void addGenerationPreventions(final VaultRoomLayoutGenerator.Layout layout, final int vaultLevel) {
         if (vaultLevel < 250) {
-            layout.getRooms().forEach(room -> room.andFilter(()));
+            layout.getRooms().forEach(room -> room.andFilter(key -> !key.toString().startsWith(getVaultRoomPrefix("vendor"))));
         }
-
-
         if (vaultLevel < 100) {
-            layout.getRooms().forEach(room -> room.andFilter(()));
+            layout.getRooms().forEach(room -> room.andFilter(key -> !key.toString().startsWith(getVaultRoomPrefix("contest_pixel"))));
         }
     }
-
-
-    public static boolean canGenerate(JigsawPiece vaultPiece, int vaultLevel) {
-        if (vaultLevel < 250 && isJigsawPieceOfName(vaultPiece, getVaultRoomPrefix("vendor"))) {
-            return false;
-        }
-
-        if (vaultLevel < 100 && isJigsawPieceOfName(vaultPiece, getVaultRoomPrefix("contest_pixel"))) {
-            return false;
-        }
-        return true;
+    
+    public static boolean canGenerate(final JigsawPiece vaultPiece, final int vaultLevel) {
+        return (vaultLevel >= 250 || !isJigsawPieceOfName(vaultPiece, getVaultRoomPrefix("vendor"))) && (vaultLevel >= 100 || !isJigsawPieceOfName(vaultPiece, getVaultRoomPrefix("contest_pixel")));
     }
-
-    private static String getVaultRoomPrefix(String roomName) {
+    
+    private static String getVaultRoomPrefix(final String roomName) {
         return Vault.sId("vault/enigma/rooms/" + roomName);
     }
-
-    private static boolean isJigsawPieceOfName(JigsawPiece piece, String name) {
+    
+    private static boolean isJigsawPieceOfName(final JigsawPiece piece, final String name) {
         if (piece instanceof PalettedListPoolElement) {
-            List<JigsawPiece> elements = ((PalettedListPoolElement) piece).getElements();
-            for (JigsawPiece elementPiece : elements) {
+            final List<JigsawPiece> elements = ((PalettedListPoolElement)piece).getElements();
+            for (final JigsawPiece elementPiece : elements) {
                 if (!isJigsawPieceOfName(elementPiece, name)) {
                     return false;
                 }
@@ -49,7 +43,7 @@ public class VaultRoomLevelRestrictions {
             return !elements.isEmpty();
         }
         if (piece instanceof PalettedSinglePoolElement) {
-            ResourceLocation key = ((PalettedSinglePoolElement) piece).getTemplate().left().orElse(null);
+            final ResourceLocation key = ((PalettedSinglePoolElement)piece).getTemplate().left().orElse(null);
             if (key != null) {
                 return key.toString().startsWith(name);
             }
@@ -57,9 +51,3 @@ public class VaultRoomLevelRestrictions {
         return false;
     }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\world\vault\gen\VaultRoomLevelRestrictions.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

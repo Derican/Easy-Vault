@@ -1,3 +1,7 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.client.vault.goal;
 
 import iskallia.vault.client.gui.overlay.goal.ArchitectGoalVoteOverlay;
@@ -8,17 +12,23 @@ import net.minecraft.nbt.CompoundNBT;
 
 import javax.annotation.Nullable;
 
-
-public class ArchitectGoalData
-        extends VaultGoalData {
-    private float completedPercent = 0.0F;
-    private int ticksUntilNextVote = 0;
-    private int totalTicksUntilNextVote = 0;
-    private VotingSession activeSession = null;
-
-
-    public void receive(VaultGoalMessage pkt) {
-        CompoundNBT tag = pkt.payload;
+public class ArchitectGoalData extends VaultGoalData
+{
+    private float completedPercent;
+    private int ticksUntilNextVote;
+    private int totalTicksUntilNextVote;
+    private VotingSession activeSession;
+    
+    public ArchitectGoalData() {
+        this.completedPercent = 0.0f;
+        this.ticksUntilNextVote = 0;
+        this.totalTicksUntilNextVote = 0;
+        this.activeSession = null;
+    }
+    
+    @Override
+    public void receive(final VaultGoalMessage pkt) {
+        final CompoundNBT tag = pkt.payload;
         this.completedPercent = tag.getFloat("completedPercent");
         this.ticksUntilNextVote = tag.getInt("ticksUntilNextVote");
         this.totalTicksUntilNextVote = tag.getInt("totalTicksUntilNextVote");
@@ -26,33 +36,27 @@ public class ArchitectGoalData
             this.activeSession = VotingSession.deserialize(tag.getCompound("votingSession"));
         }
     }
-
-
+    
     @Nullable
+    @Override
     public BossBarOverlay getBossBarOverlay() {
-        return (BossBarOverlay) new ArchitectGoalVoteOverlay(this);
+        return new ArchitectGoalVoteOverlay(this);
     }
-
+    
     @Nullable
     public VotingSession getActiveSession() {
         return this.activeSession;
     }
-
+    
     public float getCompletedPercent() {
         return this.completedPercent;
     }
-
+    
     public int getTicksUntilNextVote() {
         return this.ticksUntilNextVote;
     }
-
+    
     public int getTotalTicksUntilNextVote() {
         return this.totalTicksUntilNextVote;
     }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\client\vault\goal\ArchitectGoalData.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

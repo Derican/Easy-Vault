@@ -1,3 +1,7 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.item.gear.applicable;
 
 import iskallia.vault.config.VaultGearConfig;
@@ -17,52 +21,44 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class TieredVaultItem
-        extends BasicTooltipItem {
+public class TieredVaultItem extends BasicTooltipItem
+{
     private final int vaultGearTier;
-
-    public TieredVaultItem(ResourceLocation id, Item.Properties properties, int vaultGearTier, ITextComponent... components) {
+    
+    public TieredVaultItem(final ResourceLocation id, final Item.Properties properties, final int vaultGearTier, final ITextComponent... components) {
         super(id, properties, components);
         this.vaultGearTier = vaultGearTier;
     }
-
-    public TieredVaultItem(ResourceLocation id, Item.Properties properties, int vaultGearTier, List<ITextComponent> components) {
+    
+    public TieredVaultItem(final ResourceLocation id, final Item.Properties properties, final int vaultGearTier, final List<ITextComponent> components) {
         super(id, properties, components);
         this.vaultGearTier = vaultGearTier;
     }
-
+    
     public int getVaultGearTier() {
         return this.vaultGearTier;
     }
-
-
+    
     @OnlyIn(Dist.CLIENT)
-    public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+    @Override
+    public void appendHoverText(final ItemStack stack, @Nullable final World worldIn, final List<ITextComponent> tooltip, final ITooltipFlag flagIn) {
         super.appendHoverText(stack, worldIn, tooltip, flagIn);
-
-        ITextComponent display = getTierDisplayLock();
+        final ITextComponent display = this.getTierDisplayLock();
         if (display != null) {
             tooltip.add(StringTextComponent.EMPTY);
-            tooltip.add((new StringTextComponent("Only usable on Vault Gear ")).withStyle(TextFormatting.GRAY).append(display));
+            tooltip.add((ITextComponent)new StringTextComponent("Only usable on Vault Gear ").withStyle(TextFormatting.GRAY).append(display));
         }
     }
-
+    
     @Nullable
     public ITextComponent getTierDisplayLock() {
         if (ModConfigs.VAULT_GEAR == null) {
             return null;
         }
-
-        VaultGearConfig.General.TierConfig cfg = ModConfigs.VAULT_GEAR.getTierConfig(getVaultGearTier());
+        final VaultGearConfig.General.TierConfig cfg = ModConfigs.VAULT_GEAR.getTierConfig(this.getVaultGearTier());
         if (cfg != null && !cfg.getDisplay().getString().isEmpty()) {
-            return (ITextComponent) (new StringTextComponent("Tier: ")).withStyle(TextFormatting.GRAY).append(cfg.getDisplay());
+            return (ITextComponent)new StringTextComponent("Tier: ").withStyle(TextFormatting.GRAY).append(cfg.getDisplay());
         }
         return null;
     }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\item\gear\applicable\TieredVaultItem.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

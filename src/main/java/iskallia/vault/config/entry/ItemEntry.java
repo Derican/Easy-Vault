@@ -1,3 +1,7 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.config.entry;
 
 import com.google.gson.annotations.Expose;
@@ -6,37 +10,32 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.IItemProvider;
 import net.minecraft.util.ResourceLocation;
 
-public class ItemEntry extends SingleItemEntry {
+public class ItemEntry extends SingleItemEntry
+{
     @Expose
     public int AMOUNT;
-
-    public ItemEntry(String item, int amount, String nbt) {
+    
+    public ItemEntry(final String item, final int amount, final String nbt) {
         super(item, nbt);
         this.AMOUNT = amount;
     }
-
-    public ItemEntry(ResourceLocation key, int amount, CompoundNBT nbt) {
+    
+    public ItemEntry(final ResourceLocation key, final int amount, final CompoundNBT nbt) {
         this(key.toString(), amount, nbt.toString());
     }
-
-    public ItemEntry(IItemProvider item, int amount) {
+    
+    public ItemEntry(final IItemProvider item, final int amount) {
         this(item.asItem().getRegistryName(), amount, new CompoundNBT());
     }
-
-    public ItemEntry(ItemStack itemStack) {
+    
+    public ItemEntry(final ItemStack itemStack) {
         this(itemStack.getItem().getRegistryName(), itemStack.getCount(), itemStack.getOrCreateTag());
     }
-
-
+    
+    @Override
     public ItemStack createItemStack() {
-        ItemStack stack = super.createItemStack();
+        final ItemStack stack = super.createItemStack();
         stack.setCount(this.AMOUNT);
         return stack;
     }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\config\entry\ItemEntry.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

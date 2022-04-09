@@ -1,3 +1,7 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.util;
 
 import net.minecraft.block.BlockState;
@@ -16,37 +20,29 @@ import org.apache.commons.lang3.ObjectUtils;
 import javax.annotation.Nonnull;
 import java.util.Optional;
 
-public class RecipeUtil {
+public class RecipeUtil
+{
     @Nonnull
-    public static Optional<Tuple<ItemStack, Float>> findSmeltingResult(World world, BlockState input) {
-        ItemStack stack = new ItemStack((IItemProvider) input.getBlock());
+    public static Optional<Tuple<ItemStack, Float>> findSmeltingResult(final World world, final BlockState input) {
+        final ItemStack stack = new ItemStack((IItemProvider)input.getBlock());
         if (stack.isEmpty()) {
             return Optional.empty();
         }
         return findSmeltingResult(world, stack);
     }
-
+    
     @Nonnull
-    public static Optional<Tuple<ItemStack, Float>> findSmeltingResult(World world, ItemStack input) {
-        RecipeManager mgr = world.getRecipeManager();
-        Inventory inventory = new Inventory(new ItemStack[]{input});
-        Optional<IRecipe<IInventory>> optRecipe = (Optional<IRecipe<IInventory>>) ObjectUtils.firstNonNull((Object[]) new Optional[]{mgr
-                .getRecipeFor(IRecipeType.SMELTING, (IInventory) inventory, world), mgr
-                .getRecipeFor(IRecipeType.CAMPFIRE_COOKING, (IInventory) inventory, world), mgr
-                .getRecipeFor(IRecipeType.SMOKING, (IInventory) inventory, world),
-                Optional.empty()});
+    public static Optional<Tuple<ItemStack, Float>> findSmeltingResult(final World world, final ItemStack input) {
+        final RecipeManager mgr = world.getRecipeManager();
+        final IInventory inv = (IInventory)new Inventory(new ItemStack[] { input });
+        final Optional<IRecipe<IInventory>> optRecipe = (Optional<IRecipe<IInventory>>)ObjectUtils.firstNonNull((Object[])new Optional[] { mgr.getRecipeFor(IRecipeType.SMELTING, inv, world), mgr.getRecipeFor(IRecipeType.CAMPFIRE_COOKING, inv, world), mgr.getRecipeFor(IRecipeType.SMOKING, inv, world), Optional.empty() });
         return optRecipe.map(recipe -> {
-            ItemStack smeltResult = recipe.assemble(inv).copy();
-            float exp = 0.0F;
-            if (recipe instanceof AbstractCookingRecipe)
-                exp = ((AbstractCookingRecipe) recipe).getExperience();
-            return new Tuple(smeltResult, Float.valueOf(exp));
+            final ItemStack smeltResult = recipe.assemble(inv).copy();
+            float exp = 0.0f;
+            if (recipe instanceof AbstractCookingRecipe) {
+                exp = ((AbstractCookingRecipe)recipe).getExperience();
+            }
+            return new Tuple(smeltResult, exp);
         });
     }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vaul\\util\RecipeUtil.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

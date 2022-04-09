@@ -1,8 +1,16 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.world.vault.gen.piece;
 
+import iskallia.vault.Vault;
 import iskallia.vault.block.VaultDoorBlock;
 import iskallia.vault.world.vault.VaultRaid;
+import net.minecraft.potion.EffectInstance;
+import net.minecraft.potion.Effects;
 import net.minecraft.state.Property;
+import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.Rotation;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -11,35 +19,38 @@ import net.minecraft.util.math.MutableBoundingBox;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 
-public class VaultTreasure extends VaultPiece {
-    public static final ResourceLocation ID = Vault.id("treasure");
-
+public class VaultTreasure extends VaultPiece
+{
+    public static final ResourceLocation ID;
+    
     public VaultTreasure() {
-        super(ID);
+        super(VaultTreasure.ID);
     }
-
-    public VaultTreasure(ResourceLocation template, MutableBoundingBox boundingBox, Rotation rotation) {
-        super(ID, template, boundingBox, rotation);
+    
+    public VaultTreasure(final ResourceLocation template, final MutableBoundingBox boundingBox, final Rotation rotation) {
+        super(VaultTreasure.ID, template, boundingBox, rotation);
     }
-
-    public boolean isDoorOpen(World world) {
-        return BlockPos.betweenClosedStream(getBoundingBox())
-                .map(world::getBlockState)
-                .filter(state -> state.getBlock() instanceof VaultDoorBlock)
-                .anyMatch(state -> ((Boolean) state.getValue((Property) VaultDoorBlock.OPEN)).booleanValue());
+    
+    public boolean isDoorOpen(final World world) {
+        return BlockPos.betweenClosedStream(this.getBoundingBox()).map(world::getBlockState).filter(state -> state.getBlock() instanceof VaultDoorBlock).anyMatch(state -> (boolean)state.getValue(VaultDoorBlock.OPEN));
     }
-
-
-    public void tick(ServerWorld world, VaultRaid vault) {
-        AxisAlignedBB blind = AxisAlignedBB.of(this.boundingBox).inflate(-2.0D, -2.0D, -2.0D);
-        AxisAlignedBB inner = blind.inflate(-0.5D, -0.5D, -0.5D);
-
-        vault.getPlayers().forEach(vaultPlayer -> vaultPlayer.runIfPresent(world.getServer(), ()));
+    
+    @Override
+    public void tick(final ServerWorld world, final VaultRaid vault) {
+        final AxisAlignedBB blind = AxisAlignedBB.of(this.boundingBox).inflate(-2.0, -2.0, -2.0);
+        final AxisAlignedBB inner = blind.inflate(-0.5, -0.5, -0.5);
+        vault.getPlayers().forEach(vaultPlayer -> vaultPlayer.runIfPresent(world.getServer(), playerEntity -> {
+            if (blind.intersects(playerEntity.getBoundingBox()) && !this.isDoorOpen((World)world)) {
+                playerEntity.addEffect(new EffectInstance(Effects.BLINDNESS, 40));
+                if (!playerEntity.isSpectator() && inner.intersects(playerEntity.getBoundingBox())) {
+                    playerEntity.hurt(DamageSource.MAGIC, 1000000.0f);
+                    playerEntity.setHealth(0.0f);
+                }
+            }
+        }));
+    }
+    
+    static {
+        ID = Vault.id("treasure");
     }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\world\vault\gen\piece\VaultTreasure.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

@@ -1,3 +1,7 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.entity.renderer;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
@@ -7,27 +11,24 @@ import net.minecraft.client.renderer.entity.SlimeRenderer;
 import net.minecraft.entity.monster.SlimeEntity;
 import net.minecraft.util.ResourceLocation;
 
-public class MonsterEyeRenderer extends SlimeRenderer {
-    public static final ResourceLocation TEXTURE = Vault.id("textures/entity/monster_eye.png");
-
-    public MonsterEyeRenderer(EntityRendererManager renderManagerIn) {
+public class MonsterEyeRenderer extends SlimeRenderer
+{
+    public static final ResourceLocation TEXTURE;
+    
+    public MonsterEyeRenderer(final EntityRendererManager renderManagerIn) {
         super(renderManagerIn);
     }
-
-
-    protected void scale(SlimeEntity entitylivingbase, MatrixStack matrixStack, float partialTickTime) {
+    
+    protected void scale(final SlimeEntity entitylivingbase, final MatrixStack matrixStack, final float partialTickTime) {
         super.scale(entitylivingbase, matrixStack, partialTickTime);
-        matrixStack.scale(2.0F, 2.0F, 2.0F);
+        matrixStack.scale(2.0f, 2.0f, 2.0f);
     }
-
-
-    public ResourceLocation getTextureLocation(SlimeEntity entity) {
-        return TEXTURE;
+    
+    public ResourceLocation getTextureLocation(final SlimeEntity entity) {
+        return MonsterEyeRenderer.TEXTURE;
+    }
+    
+    static {
+        TEXTURE = Vault.id("textures/entity/monster_eye.png");
     }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\entity\renderer\MonsterEyeRenderer.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

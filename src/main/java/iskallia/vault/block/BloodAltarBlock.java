@@ -1,3 +1,7 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.block;
 
 import iskallia.vault.block.base.FillableAltarBlock;
@@ -22,58 +26,51 @@ import net.minecraft.world.server.ServerWorld;
 
 import javax.annotation.Nonnull;
 
-public class BloodAltarBlock extends FillableAltarBlock<BloodAltarTileEntity> {
-    public BloodAltarTileEntity createTileEntity(BlockState state, IBlockReader world) {
-        return (BloodAltarTileEntity) ModBlocks.BLOOD_ALTAR_TILE_ENTITY.create();
+public class BloodAltarBlock extends FillableAltarBlock<BloodAltarTileEntity>
+{
+    @Override
+    public BloodAltarTileEntity createTileEntity(final BlockState state, final IBlockReader world) {
+        return (BloodAltarTileEntity)ModBlocks.BLOOD_ALTAR_TILE_ENTITY.create();
     }
-
-
+    
+    @Override
     public IParticleData getFlameParticle() {
-        return (IParticleData) ModParticles.GREEN_FLAME.get();
+        return (IParticleData)ModParticles.GREEN_FLAME.get();
     }
-
-
+    
+    @Override
     public PlayerFavourData.VaultGodType getAssociatedVaultGod() {
         return PlayerFavourData.VaultGodType.BENEVOLENT;
     }
-
-
+    
     @Nonnull
-    public BlockState getStateForPlacement(BlockItemUseContext context) {
-        BlockState state = super.getStateForPlacement(context);
-        return (BlockState) state
-                .setValue((Property) FACING, (Comparable) ((Direction) state.getValue((Property) FACING)).getOpposite());
+    @Override
+    public BlockState getStateForPlacement(final BlockItemUseContext context) {
+        final BlockState state = super.getStateForPlacement(context);
+        return state.setValue(BloodAltarBlock.FACING, (state.getValue(BloodAltarBlock.FACING)).getOpposite());
     }
-
-
-    public ActionResultType rightClicked(BlockState state, ServerWorld world, BlockPos pos, BloodAltarTileEntity tileEntity, ServerPlayerEntity player, ItemStack heldStack) {
+    
+    @Override
+    public ActionResultType rightClicked(final BlockState state, final ServerWorld world, final BlockPos pos, final BloodAltarTileEntity tileEntity, final ServerPlayerEntity player, final ItemStack heldStack) {
         if (!tileEntity.initialized()) {
             return ActionResultType.SUCCESS;
         }
         if (player.isCreative()) {
-            tileEntity.makeProgress(player, 1, sPlayer -> {
-            });
+            tileEntity.makeProgress(player, 1, sPlayer -> {});
             return ActionResultType.SUCCESS;
         }
-
-        EntityHelper.changeHealth((LivingEntity) player, -2);
-
+        EntityHelper.changeHealth((LivingEntity)player, -2);
         tileEntity.makeProgress(player, 1, sPlayer -> {
-            PlayerFavourData data = PlayerFavourData.get(sPlayer.getLevel());
-            if (rand.nextFloat() < getFavourChance((PlayerEntity) sPlayer, PlayerFavourData.VaultGodType.BENEVOLENT)) {
-                PlayerFavourData.VaultGodType vg = getAssociatedVaultGod();
-                if (data.addFavour((PlayerEntity) sPlayer, vg, 1)) {
-                    data.addFavour((PlayerEntity) sPlayer, vg.getOther(rand), -1);
+            final PlayerFavourData data = PlayerFavourData.get(sPlayer.getLevel());
+            if (BloodAltarBlock.rand.nextFloat() < FillableAltarBlock.getFavourChance((PlayerEntity)sPlayer, PlayerFavourData.VaultGodType.BENEVOLENT)) {
+                final PlayerFavourData.VaultGodType vg = this.getAssociatedVaultGod();
+                if (data.addFavour((PlayerEntity)sPlayer, vg, 1)) {
+                    data.addFavour((PlayerEntity)sPlayer, vg.getOther(BloodAltarBlock.rand), -1);
                     FillableAltarBlock.playFavourInfo(sPlayer);
                 }
             }
+            return;
         });
         return ActionResultType.SUCCESS;
     }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\block\BloodAltarBlock.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

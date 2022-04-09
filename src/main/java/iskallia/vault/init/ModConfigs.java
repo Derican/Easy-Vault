@@ -1,10 +1,14 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.init;
 
 import iskallia.vault.Vault;
 import iskallia.vault.config.*;
 
-
-public class ModConfigs {
+public class ModConfigs
+{
     public static AbilitiesConfig ABILITIES;
     public static AbilitiesGUIConfig ABILITIES_GUI;
     public static TalentsConfig TALENTS;
@@ -15,94 +19,6 @@ public class ModConfigs {
     public static ResearchGroupStyleConfig RESEARCH_GROUP_STYLES;
     public static SkillDescriptionsConfig SKILL_DESCRIPTIONS;
     public static SkillGatesConfig SKILL_GATES;
-
-    public static void register() {
-        ABILITIES = (AbilitiesConfig) (new AbilitiesConfig()).readConfig();
-        ABILITIES_GUI = (AbilitiesGUIConfig) (new AbilitiesGUIConfig()).readConfig();
-        TALENTS = (TalentsConfig) (new TalentsConfig()).readConfig();
-        TALENTS_GUI = (TalentsGUIConfig) (new TalentsGUIConfig()).readConfig();
-        RESEARCHES = (ResearchConfig) (new ResearchConfig()).readConfig();
-        RESEARCHES_GUI = (ResearchesGUIConfig) (new ResearchesGUIConfig()).readConfig();
-        RESEARCH_GROUPS = (ResearchGroupConfig) (new ResearchGroupConfig()).readConfig();
-        RESEARCH_GROUP_STYLES = (ResearchGroupStyleConfig) (new ResearchGroupStyleConfig()).readConfig();
-        SKILL_DESCRIPTIONS = (SkillDescriptionsConfig) (new SkillDescriptionsConfig()).readConfig();
-        SKILL_GATES = (SkillGatesConfig) (new SkillGatesConfig()).readConfig();
-        LEVELS_META = (VaultLevelsConfig) (new VaultLevelsConfig()).readConfig();
-        VAULT_RELICS = (VaultRelicsConfig) (new VaultRelicsConfig()).readConfig();
-        VAULT_MOBS = (VaultMobsConfig) (new VaultMobsConfig()).readConfig();
-        VAULT_ITEMS = (VaultItemsConfig) (new VaultItemsConfig()).readConfig();
-        VAULT_ALTAR = (VaultAltarConfig) (new VaultAltarConfig()).readConfig();
-        VAULT_GENERAL = (VaultGeneralConfig) (new VaultGeneralConfig()).readConfig();
-        VAULT_CRYSTAL = (VaultCrystalConfig) (new VaultCrystalConfig()).readConfig();
-        VAULT_PORTAL = (VaultPortalConfig) (new VaultPortalConfig()).readConfig();
-        LEGENDARY_TREASURE_NORMAL = (LegendaryTreasureNormalConfig) (new LegendaryTreasureNormalConfig()).readConfig();
-        LEGENDARY_TREASURE_RARE = (LegendaryTreasureRareConfig) (new LegendaryTreasureRareConfig()).readConfig();
-        LEGENDARY_TREASURE_EPIC = (LegendaryTreasureEpicConfig) (new LegendaryTreasureEpicConfig()).readConfig();
-        LEGENDARY_TREASURE_OMEGA = (LegendaryTreasureOmegaConfig) (new LegendaryTreasureOmegaConfig()).readConfig();
-        STATUE_LOOT = (StatueLootConfig) (new StatueLootConfig()).readConfig();
-        CRYO_CHAMBER = (CryoChamberConfig) (new CryoChamberConfig()).readConfig();
-        KEY_PRESS = (KeyPressRecipesConfig) (new KeyPressRecipesConfig()).readConfig();
-        OVERLEVEL_ENCHANT = (OverLevelEnchantConfig) (new OverLevelEnchantConfig()).readConfig();
-        VAULT_STEW = (VaultStewConfig) (new VaultStewConfig()).readConfig();
-        MYSTERY_BOX = (MysteryBoxConfig) (new MysteryBoxConfig()).readConfig();
-        VAULT_MODIFIERS = (VaultModifiersConfig) (new VaultModifiersConfig()).readConfig();
-        TRADER_CORE_COMMON = (TraderCoreConfig.TraderCoreCommonConfig) (new TraderCoreConfig.TraderCoreCommonConfig()).readConfig();
-        PANDORAS_BOX = (PandorasBoxConfig) (new PandorasBoxConfig()).readConfig();
-        ETERNAL = (EternalConfig) (new EternalConfig()).readConfig();
-        VAULT_GEAR_SCRAPPY = (VaultGearConfig) (new VaultGearConfig.Scrappy()).readConfig();
-        VAULT_GEAR_COMMON = (VaultGearConfig) (new VaultGearConfig.Common()).readConfig();
-        VAULT_GEAR_RARE = (VaultGearConfig) (new VaultGearConfig.Rare()).readConfig();
-        VAULT_GEAR_EPIC = (VaultGearConfig) (new VaultGearConfig.Epic()).readConfig();
-        VAULT_GEAR_OMEGA = (VaultGearConfig) (new VaultGearConfig.Omega()).readConfig();
-        VAULT_GEAR = (VaultGearConfig.General) (new VaultGearConfig.General()).readConfig();
-        SETS = (SetsConfig) (new SetsConfig()).readConfig();
-        GLOBAL_TRADER = (GlobalTraderConfig) (new GlobalTraderConfig()).readConfig();
-        VAULT_LOOTABLES = (VaultLootablesConfig) (new VaultLootablesConfig()).readConfig();
-        VAULT_CHEST = (VaultChestConfig) (new VaultChestConfig("vault_chest")).readConfig();
-        VAULT_TREASURE_CHEST = (VaultChestConfig) (new VaultChestConfig("vault_treasure_chest")).readConfig();
-        VAULT_ALTAR_CHEST = (VaultChestConfig) (new VaultChestConfig("vault_altar_chest")).readConfig();
-        VAULT_COOP_CHEST = (VaultChestConfig) (new VaultChestConfig("vault_coop_chest")).readConfig();
-        VAULT_BONUS_CHEST = (VaultChestConfig) (new VaultChestConfig("vault_bonus_chest")).readConfig();
-        VAULT_CHEST_META = (VaultMetaChestConfig) (new VaultMetaChestConfig()).readConfig();
-        STATUE_RECYCLING = (StatueRecyclingConfig) (new StatueRecyclingConfig()).readConfig();
-        UNKNOWN_EGG = (UnknownEggConfig) (new UnknownEggConfig()).readConfig();
-        CONSUMABLES = (ConsumablesConfig) (new ConsumablesConfig()).readConfig();
-        LOOT_TABLES = (LootTablesConfig) (new LootTablesConfig()).readConfig();
-        VAULT_UTILITIES = (VaultUtilitiesConfig) (new VaultUtilitiesConfig()).readConfig();
-        VAULT_CRYSTAL_CATALYST = (VaultCrystalCatalystConfig) (new VaultCrystalCatalystConfig()).readConfig();
-        PLAYER_SCALING = (PlayerScalingConfig) (new PlayerScalingConfig()).readConfig();
-        PAXEL_ENHANCEMENTS = (PaxelEnhancementConfig) (new PaxelEnhancementConfig()).readConfig();
-        SCAVENGER_HUNT = (ScavengerHuntConfig) (new ScavengerHuntConfig()).readConfig();
-        DURBILITY = (DurabilityConfig) (new DurabilityConfig()).readConfig();
-        MOD_BOX = (ModBoxConfig) (new ModBoxConfig()).readConfig();
-        ARCHITECT_EVENT = (ArchitectEventConfig) (new ArchitectEventConfig()).readConfig();
-        UNIDENTIFIED_TREASURE_KEY = (UnidentifiedTreasureKeyConfig) (new UnidentifiedTreasureKeyConfig()).readConfig();
-        VAULT_GEAR_UPGRADE = (VaultGearUpgradeConfig) (new VaultGearUpgradeConfig()).readConfig();
-        VAULT_GEAR_SCALING = (VaultGearScalingConfig) (new VaultGearScalingConfig()).readConfig();
-        VAULT_SIZE = (VaultSizeConfig) (new VaultSizeConfig()).readConfig();
-        SOUL_SHARD = (SoulShardConfig) (new SoulShardConfig()).readConfig();
-        ETERNAL_ATTRIBUTES = (EternalAttributeConfig) (new EternalAttributeConfig()).readConfig();
-        ETERNAL_AURAS = (EternalAuraConfig) (new EternalAuraConfig()).readConfig();
-        VAULT_GEAR_UTILITIES = (VaultGearUtilitiesConfig) (new VaultGearUtilitiesConfig()).readConfig();
-        VAULT_GEAR_CRAFTING_SCALING = (VaultGearCraftingScalingConfig) (new VaultGearCraftingScalingConfig()).readConfig();
-        DIFFICULTY_DESCRIPTION = (DifficultyDescriptionConfig) (new DifficultyDescriptionConfig()).readConfig();
-        SCALING_CHEST_REWARDS = (VaultScalingChestConfig) (new VaultScalingChestConfig()).readConfig();
-        VAULT_INHIBITOR = (VaultInhibitorConfig) (new VaultInhibitorConfig()).readConfig();
-        FLAWED_RUBY = (FlawedRubyConfig) (new FlawedRubyConfig()).readConfig();
-        ETCHING = (EtchingConfig) (new EtchingConfig()).readConfig();
-        RAID_CONFIG = (RaidConfig) (new RaidConfig()).readConfig();
-        RAID_MODIFIER_CONFIG = (RaidModifierConfig) (new RaidModifierConfig()).readConfig();
-        RAID_EVENT_CONFIG = (RaidEventConfig) (new RaidEventConfig()).readConfig();
-        VAULT_CHARM = (VaultCharmConfig) (new VaultCharmConfig()).readConfig();
-        MYSTERY_EGG = (MysteryEggConfig) (new MysteryEggConfig()).readConfig();
-        MYSTERY_HOSTILE_EGG = (MysteryHostileEggConfig) (new MysteryHostileEggConfig()).readConfig();
-        VAULT_RUNE = (VaultRuneConfig) (new VaultRuneConfig()).readConfig();
-        OTHER_SIDE = (OtherSideConfig) (new OtherSideConfig()).readConfig();
-        TOOLTIP = (TooltipConfig) (new TooltipConfig()).readConfig();
-
-        Vault.LOGGER.info("Vault Configs are loaded successfully!");
-    }
-
     public static VaultLevelsConfig LEVELS_META;
     public static VaultRelicsConfig VAULT_RELICS;
     public static VaultMobsConfig VAULT_MOBS;
@@ -175,13 +91,93 @@ public class ModConfigs {
     public static VaultRuneConfig VAULT_RUNE;
     public static OtherSideConfig OTHER_SIDE;
     public static TooltipConfig TOOLTIP;
-
+    
     public static void registerCompressionConfigs() {
     }
+    
+    public static void register() {
+        ModConfigs.ABILITIES = new AbilitiesConfig().readConfig();
+        ModConfigs.ABILITIES_GUI = new AbilitiesGUIConfig().readConfig();
+        ModConfigs.TALENTS = new TalentsConfig().readConfig();
+        ModConfigs.TALENTS_GUI = new TalentsGUIConfig().readConfig();
+        ModConfigs.RESEARCHES = new ResearchConfig().readConfig();
+        ModConfigs.RESEARCHES_GUI = new ResearchesGUIConfig().readConfig();
+        ModConfigs.RESEARCH_GROUPS = new ResearchGroupConfig().readConfig();
+        ModConfigs.RESEARCH_GROUP_STYLES = new ResearchGroupStyleConfig().readConfig();
+        ModConfigs.SKILL_DESCRIPTIONS = new SkillDescriptionsConfig().readConfig();
+        ModConfigs.SKILL_GATES = new SkillGatesConfig().readConfig();
+        ModConfigs.LEVELS_META = new VaultLevelsConfig().readConfig();
+        ModConfigs.VAULT_RELICS = new VaultRelicsConfig().readConfig();
+        ModConfigs.VAULT_MOBS = new VaultMobsConfig().readConfig();
+        ModConfigs.VAULT_ITEMS = new VaultItemsConfig().readConfig();
+        ModConfigs.VAULT_ALTAR = new VaultAltarConfig().readConfig();
+        ModConfigs.VAULT_GENERAL = new VaultGeneralConfig().readConfig();
+        ModConfigs.VAULT_CRYSTAL = new VaultCrystalConfig().readConfig();
+        ModConfigs.VAULT_PORTAL = new VaultPortalConfig().readConfig();
+        ModConfigs.LEGENDARY_TREASURE_NORMAL = new LegendaryTreasureNormalConfig().readConfig();
+        ModConfigs.LEGENDARY_TREASURE_RARE = new LegendaryTreasureRareConfig().readConfig();
+        ModConfigs.LEGENDARY_TREASURE_EPIC = new LegendaryTreasureEpicConfig().readConfig();
+        ModConfigs.LEGENDARY_TREASURE_OMEGA = new LegendaryTreasureOmegaConfig().readConfig();
+        ModConfigs.STATUE_LOOT = new StatueLootConfig().readConfig();
+        ModConfigs.CRYO_CHAMBER = new CryoChamberConfig().readConfig();
+        ModConfigs.KEY_PRESS = new KeyPressRecipesConfig().readConfig();
+        ModConfigs.OVERLEVEL_ENCHANT = new OverLevelEnchantConfig().readConfig();
+        ModConfigs.VAULT_STEW = new VaultStewConfig().readConfig();
+        ModConfigs.MYSTERY_BOX = new MysteryBoxConfig().readConfig();
+        ModConfigs.VAULT_MODIFIERS = new VaultModifiersConfig().readConfig();
+        ModConfigs.TRADER_CORE_COMMON = new TraderCoreConfig.TraderCoreCommonConfig().readConfig();
+        ModConfigs.PANDORAS_BOX = new PandorasBoxConfig().readConfig();
+        ModConfigs.ETERNAL = new EternalConfig().readConfig();
+        ModConfigs.VAULT_GEAR_SCRAPPY = new VaultGearConfig.Scrappy().readConfig();
+        ModConfigs.VAULT_GEAR_COMMON = new VaultGearConfig.Common().readConfig();
+        ModConfigs.VAULT_GEAR_RARE = new VaultGearConfig.Rare().readConfig();
+        ModConfigs.VAULT_GEAR_EPIC = new VaultGearConfig.Epic().readConfig();
+        ModConfigs.VAULT_GEAR_OMEGA = new VaultGearConfig.Omega().readConfig();
+        ModConfigs.VAULT_GEAR = new VaultGearConfig.General().readConfig();
+        ModConfigs.SETS = new SetsConfig().readConfig();
+        ModConfigs.GLOBAL_TRADER = new GlobalTraderConfig().readConfig();
+        ModConfigs.VAULT_LOOTABLES = new VaultLootablesConfig().readConfig();
+        ModConfigs.VAULT_CHEST = new VaultChestConfig("vault_chest").readConfig();
+        ModConfigs.VAULT_TREASURE_CHEST = new VaultChestConfig("vault_treasure_chest").readConfig();
+        ModConfigs.VAULT_ALTAR_CHEST = new VaultChestConfig("vault_altar_chest").readConfig();
+        ModConfigs.VAULT_COOP_CHEST = new VaultChestConfig("vault_coop_chest").readConfig();
+        ModConfigs.VAULT_BONUS_CHEST = new VaultChestConfig("vault_bonus_chest").readConfig();
+        ModConfigs.VAULT_CHEST_META = new VaultMetaChestConfig().readConfig();
+        ModConfigs.STATUE_RECYCLING = new StatueRecyclingConfig().readConfig();
+        ModConfigs.UNKNOWN_EGG = new UnknownEggConfig().readConfig();
+        ModConfigs.CONSUMABLES = new ConsumablesConfig().readConfig();
+        ModConfigs.LOOT_TABLES = new LootTablesConfig().readConfig();
+        ModConfigs.VAULT_UTILITIES = new VaultUtilitiesConfig().readConfig();
+        ModConfigs.VAULT_CRYSTAL_CATALYST = new VaultCrystalCatalystConfig().readConfig();
+        ModConfigs.PLAYER_SCALING = new PlayerScalingConfig().readConfig();
+        ModConfigs.PAXEL_ENHANCEMENTS = new PaxelEnhancementConfig().readConfig();
+        ModConfigs.SCAVENGER_HUNT = new ScavengerHuntConfig().readConfig();
+        ModConfigs.DURBILITY = new DurabilityConfig().readConfig();
+        ModConfigs.MOD_BOX = new ModBoxConfig().readConfig();
+        ModConfigs.ARCHITECT_EVENT = new ArchitectEventConfig().readConfig();
+        ModConfigs.UNIDENTIFIED_TREASURE_KEY = new UnidentifiedTreasureKeyConfig().readConfig();
+        ModConfigs.VAULT_GEAR_UPGRADE = new VaultGearUpgradeConfig().readConfig();
+        ModConfigs.VAULT_GEAR_SCALING = new VaultGearScalingConfig().readConfig();
+        ModConfigs.VAULT_SIZE = new VaultSizeConfig().readConfig();
+        ModConfigs.SOUL_SHARD = new SoulShardConfig().readConfig();
+        ModConfigs.ETERNAL_ATTRIBUTES = new EternalAttributeConfig().readConfig();
+        ModConfigs.ETERNAL_AURAS = new EternalAuraConfig().readConfig();
+        ModConfigs.VAULT_GEAR_UTILITIES = new VaultGearUtilitiesConfig().readConfig();
+        ModConfigs.VAULT_GEAR_CRAFTING_SCALING = new VaultGearCraftingScalingConfig().readConfig();
+        ModConfigs.DIFFICULTY_DESCRIPTION = new DifficultyDescriptionConfig().readConfig();
+        ModConfigs.SCALING_CHEST_REWARDS = new VaultScalingChestConfig().readConfig();
+        ModConfigs.VAULT_INHIBITOR = new VaultInhibitorConfig().readConfig();
+        ModConfigs.FLAWED_RUBY = new FlawedRubyConfig().readConfig();
+        ModConfigs.ETCHING = new EtchingConfig().readConfig();
+        ModConfigs.RAID_CONFIG = new RaidConfig().readConfig();
+        ModConfigs.RAID_MODIFIER_CONFIG = new RaidModifierConfig().readConfig();
+        ModConfigs.RAID_EVENT_CONFIG = new RaidEventConfig().readConfig();
+        ModConfigs.VAULT_CHARM = new VaultCharmConfig().readConfig();
+        ModConfigs.MYSTERY_EGG = new MysteryEggConfig().readConfig();
+        ModConfigs.MYSTERY_HOSTILE_EGG = new MysteryHostileEggConfig().readConfig();
+        ModConfigs.VAULT_RUNE = new VaultRuneConfig().readConfig();
+        ModConfigs.OTHER_SIDE = new OtherSideConfig().readConfig();
+        ModConfigs.TOOLTIP = new TooltipConfig().readConfig();
+        Vault.LOGGER.info("Vault Configs are loaded successfully!");
+    }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\init\ModConfigs.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

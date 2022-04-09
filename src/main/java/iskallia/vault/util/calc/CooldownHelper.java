@@ -1,3 +1,7 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.util.calc;
 
 import iskallia.vault.init.ModAttributes;
@@ -20,54 +24,42 @@ import net.minecraft.util.math.MathHelper;
 
 import javax.annotation.Nullable;
 
-public class CooldownHelper {
-    public static float getCooldownMultiplier(ServerPlayerEntity player, @Nullable AbilityGroup<?, ?> abilityGroup) {
-        return MathHelper.clamp(getCooldownMultiplierUnlimited(player, abilityGroup), 0.0F, AttributeLimitHelper.getCooldownReductionLimit((PlayerEntity) player));
+public class CooldownHelper
+{
+    public static float getCooldownMultiplier(final ServerPlayerEntity player, @Nullable final AbilityGroup<?, ?> abilityGroup) {
+        return MathHelper.clamp(getCooldownMultiplierUnlimited(player, abilityGroup), 0.0f, AttributeLimitHelper.getCooldownReductionLimit((PlayerEntity)player));
     }
-
-    public static float getCooldownMultiplierUnlimited(ServerPlayerEntity player, @Nullable AbilityGroup<?, ?> abilityGroup) {
-        float multiplier = 0.0F;
-
-        for (EquipmentSlotType slot : EquipmentSlotType.values()) {
-            ItemStack stack = player.getItemBySlot(slot);
-            if (!(stack.getItem() instanceof VaultGear) || ((VaultGear) stack.getItem()).isIntendedForSlot(slot)) {
-
-                multiplier += ((Float) ModAttributes.COOLDOWN_REDUCTION.get(stack)
-                        .map(attribute -> (Float) attribute.getValue(stack)).orElse(Float.valueOf(0.0F))).floatValue();
+    
+    public static float getCooldownMultiplierUnlimited(final ServerPlayerEntity player, @Nullable final AbilityGroup<?, ?> abilityGroup) {
+        float multiplier = 0.0f;
+        for (final EquipmentSlotType slot : EquipmentSlotType.values()) {
+            final ItemStack stack = player.getItemBySlot(slot);
+            if (!(stack.getItem() instanceof VaultGear) || ((VaultGear)stack.getItem()).isIntendedForSlot(slot)) {
+                multiplier += ModAttributes.COOLDOWN_REDUCTION.get(stack).map(attribute -> attribute.getValue(stack)).orElse(0.0f);
             }
         }
         if (abilityGroup == ModConfigs.ABILITIES.SUMMON_ETERNAL) {
-            TalentTree talents = PlayerTalentsData.get(player.getLevel()).getTalents((PlayerEntity) player);
-
-
-            multiplier = (float) (multiplier + talents.getLearnedNodes(CommanderTalent.class).stream().mapToDouble(node -> ((CommanderTalent) node.getTalent()).getSummonEternalAdditionalCooldownReduction()).sum());
+            final TalentTree talents = PlayerTalentsData.get(player.getLevel()).getTalents((PlayerEntity)player);
+            multiplier += (float)talents.getLearnedNodes(CommanderTalent.class).stream().mapToDouble(node -> ((CommanderTalent) node.getTalent()).getSummonEternalAdditionalCooldownReduction()).sum();
         }
-
-        VaultRaid vault = VaultRaidData.get(player.getLevel()).getActiveFor(player);
+        final VaultRaid vault = VaultRaidData.get(player.getLevel()).getActiveFor(player);
         if (vault != null) {
-            for (VaultAttributeInfluence influence : vault.getInfluences().getInfluences(VaultAttributeInfluence.class)) {
+            for (final VaultAttributeInfluence influence : vault.getInfluences().getInfluences(VaultAttributeInfluence.class)) {
                 if (influence.getType() == VaultAttributeInfluence.Type.COOLDOWN_REDUCTION && !influence.isMultiplicative()) {
                     multiplier += influence.getValue();
                 }
             }
-            for (StatModifier modifier : vault.getActiveModifiersFor(PlayerFilter.of(new PlayerEntity[]{(PlayerEntity) player}, ), StatModifier.class)) {
+            for (final StatModifier modifier : vault.getActiveModifiersFor(PlayerFilter.of((PlayerEntity)player), StatModifier.class)) {
                 if (modifier.getStat() == StatModifier.Statistic.COOLDOWN_REDUCTION) {
                     multiplier *= modifier.getMultiplier();
                 }
             }
-            for (VaultAttributeInfluence influence : vault.getInfluences().getInfluences(VaultAttributeInfluence.class)) {
+            for (final VaultAttributeInfluence influence : vault.getInfluences().getInfluences(VaultAttributeInfluence.class)) {
                 if (influence.getType() == VaultAttributeInfluence.Type.COOLDOWN_REDUCTION && influence.isMultiplicative()) {
                     multiplier *= influence.getValue();
                 }
             }
         }
-
         return multiplier;
     }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vaul\\util\calc\CooldownHelper.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

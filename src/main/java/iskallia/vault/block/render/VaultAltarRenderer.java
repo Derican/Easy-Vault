@@ -1,3 +1,7 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.block.render;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
@@ -14,6 +18,7 @@ import net.minecraft.client.renderer.model.IBakedModel;
 import net.minecraft.client.renderer.model.ItemCameraTransforms;
 import net.minecraft.client.renderer.tileentity.TileEntityRenderer;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IItemProvider;
 import net.minecraft.util.math.BlockPos;
@@ -28,116 +33,108 @@ import net.minecraft.world.World;
 
 import java.util.List;
 
-public class VaultAltarRenderer extends TileEntityRenderer<VaultAltarTileEntity> {
-    private Minecraft mc = Minecraft.getInstance();
-    private float currentTick = 0.0F;
-
-    public VaultAltarRenderer(TileEntityRendererDispatcher rendererDispatcherIn) {
+public class VaultAltarRenderer extends TileEntityRenderer<VaultAltarTileEntity>
+{
+    private Minecraft mc;
+    private float currentTick;
+    
+    public VaultAltarRenderer(final TileEntityRendererDispatcher rendererDispatcherIn) {
         super(rendererDispatcherIn);
+        this.mc = Minecraft.getInstance();
+        this.currentTick = 0.0f;
     }
-
-
-    public void render(VaultAltarTileEntity altar, float partialTicks, MatrixStack matrixStack, IRenderTypeBuffer buffer, int combinedLight, int combinedOverlay) {
+    
+    public void render(final VaultAltarTileEntity altar, final float partialTicks, final MatrixStack matrixStack, final IRenderTypeBuffer buffer, final int combinedLight, final int combinedOverlay) {
         if (altar.getAltarState() == VaultAltarTileEntity.AltarState.IDLE) {
             return;
         }
-        ClientPlayerEntity player = this.mc.player;
-        int lightLevel = getLightAtPos(altar.getLevel(), altar.getBlockPos().above());
-
-
-        renderItem(new ItemStack((IItemProvider) ModItems.VAULT_ROCK), new double[]{0.5D, 1.35D, 0.5D}, Vector3f.YP
-
-                .rotationDegrees(180.0F - player.yRot), matrixStack, buffer, partialTicks, combinedOverlay, lightLevel);
-
-
-        if (altar.getRecipe() == null || altar.getRecipe().getRequiredItems().isEmpty())
+        final ClientPlayerEntity player = this.mc.player;
+        final int lightLevel = this.getLightAtPos(altar.getLevel(), altar.getBlockPos().above());
+        this.renderItem(new ItemStack((IItemProvider)ModItems.VAULT_ROCK), new double[] { 0.5, 1.35, 0.5 }, Vector3f.YP.rotationDegrees(180.0f - player.yRot), matrixStack, buffer, partialTicks, combinedOverlay, lightLevel);
+        if (altar.getRecipe() == null || altar.getRecipe().getRequiredItems().isEmpty()) {
             return;
-        AltarInfusionRecipe recipe = altar.getRecipe();
-        List<RequiredItem> items = recipe.getRequiredItems();
-        for (int i = 0; i < items.size(); i++) {
-            double[] translation = getTranslation(i);
-            RequiredItem requiredItem = items.get(i);
-            ItemStack stack = requiredItem.getItem();
+        }
+        final AltarInfusionRecipe recipe = altar.getRecipe();
+        final List<RequiredItem> items = recipe.getRequiredItems();
+        for (int i = 0; i < items.size(); ++i) {
+            final double[] translation = this.getTranslation(i);
+            final RequiredItem requiredItem = items.get(i);
+            final ItemStack stack = requiredItem.getItem();
             StringTextComponent text = new StringTextComponent(String.valueOf(requiredItem.getAmountRequired() - requiredItem.getCurrentAmount()));
             int textColor = 16777215;
             if (requiredItem.reachedAmountRequired()) {
                 text = new StringTextComponent("Complete");
                 textColor = 65280;
             }
-
-            renderItem(stack, translation, Vector3f.YP
-                    .rotationDegrees(getAngle(player, partialTicks) * 5.0F), matrixStack, buffer, partialTicks, combinedOverlay, lightLevel);
-
-            renderLabel(requiredItem, matrixStack, buffer, lightLevel, translation, text, textColor);
+            this.renderItem(stack, translation, Vector3f.YP.rotationDegrees(this.getAngle(player, partialTicks) * 5.0f), matrixStack, buffer, partialTicks, combinedOverlay, lightLevel);
+            this.renderLabel(requiredItem, matrixStack, buffer, lightLevel, translation, text, textColor);
         }
     }
-
-    private void renderItem(ItemStack stack, double[] translation, Quaternion rotation, MatrixStack matrixStack, IRenderTypeBuffer buffer, float partialTicks, int combinedOverlay, int lightLevel) {
+    
+    private void renderItem(final ItemStack stack, final double[] translation, final Quaternion rotation, final MatrixStack matrixStack, final IRenderTypeBuffer buffer, final float partialTicks, final int combinedOverlay, final int lightLevel) {
         matrixStack.pushPose();
         matrixStack.translate(translation[0], translation[1], translation[2]);
         matrixStack.mulPose(rotation);
-        if (stack.getItem().getItem() != ModItems.VAULT_ROCK) matrixStack.scale(0.5F, 0.5F, 0.5F);
-        IBakedModel ibakedmodel = this.mc.getItemRenderer().getModel(stack, null, null);
+        if (stack.getItem().getItem() != ModItems.VAULT_ROCK) {
+            matrixStack.scale(0.5f, 0.5f, 0.5f);
+        }
+        final IBakedModel ibakedmodel = this.mc.getItemRenderer().getModel(stack, (World)null, (LivingEntity)null);
         this.mc.getItemRenderer().render(stack, ItemCameraTransforms.TransformType.GROUND, true, matrixStack, buffer, lightLevel, combinedOverlay, ibakedmodel);
         matrixStack.popPose();
     }
-
-    private void renderLabel(RequiredItem item, MatrixStack matrixStack, IRenderTypeBuffer buffer, int lightLevel, double[] corner, StringTextComponent text, int color) {
-        FontRenderer fontRenderer = this.mc.font;
-        ClientPlayerEntity player = (Minecraft.getInstance()).player;
+    
+    private void renderLabel(final RequiredItem item, final MatrixStack matrixStack, final IRenderTypeBuffer buffer, final int lightLevel, final double[] corner, final StringTextComponent text, final int color) {
+        final FontRenderer fontRenderer = this.mc.font;
+        final ClientPlayerEntity player = Minecraft.getInstance().player;
         if (player == null) {
             return;
         }
         matrixStack.pushPose();
-        float scale = 0.01F;
-        int opacity = 1711276032;
-        float offset = (-fontRenderer.width((ITextProperties) text) / 2);
-        Matrix4f matrix4f = matrixStack.last().pose();
-
-        matrixStack.translate(corner[0], corner[1] + 0.25D, corner[2]);
+        final float scale = 0.01f;
+        final int opacity = 1711276032;
+        float offset = (float)(-fontRenderer.width((ITextProperties)text) / 2);
+        final Matrix4f matrix4f = matrixStack.last().pose();
+        matrixStack.translate(corner[0], corner[1] + 0.25, corner[2]);
         matrixStack.scale(scale, scale, scale);
         matrixStack.mulPose(this.mc.getEntityRenderDispatcher().cameraOrientation());
-        matrixStack.mulPose(Vector3f.ZP.rotationDegrees(180.0F));
-        fontRenderer.drawInBatch((ITextComponent) text, offset, 0.0F, color, false, matrix4f, buffer, false, opacity, lightLevel);
-
+        matrixStack.mulPose(Vector3f.ZP.rotationDegrees(180.0f));
+        fontRenderer.drawInBatch((ITextComponent)text, offset, 0.0f, color, false, matrix4f, buffer, false, opacity, lightLevel);
         if (player.isShiftKeyDown()) {
-            ITextComponent itemName = item.getItem().getHoverName();
-            offset = (-fontRenderer.width((ITextProperties) itemName) / 2);
-            matrixStack.translate(0.0D, 1.399999976158142D, 0.0D);
-            matrix4f.translate(new Vector3f(0.0F, 0.15F, 0.0F));
-            fontRenderer.drawInBatch(item.getItem().getHoverName(), offset, 0.0F, color, false, matrix4f, buffer, false, opacity, lightLevel);
+            final ITextComponent itemName = item.getItem().getHoverName();
+            offset = (float)(-fontRenderer.width((ITextProperties)itemName) / 2);
+            matrixStack.translate(0.0, 1.399999976158142, 0.0);
+            matrix4f.translate(new Vector3f(0.0f, 0.15f, 0.0f));
+            fontRenderer.drawInBatch(item.getItem().getHoverName(), offset, 0.0f, color, false, matrix4f, buffer, false, opacity, lightLevel);
         }
-
         matrixStack.popPose();
     }
-
-    private float getAngle(ClientPlayerEntity player, float partialTicks) {
-        this.currentTick = player.tickCount;
-        float angle = (this.currentTick + partialTicks) % 360.0F;
+    
+    private float getAngle(final ClientPlayerEntity player, final float partialTicks) {
+        this.currentTick = (float)player.tickCount;
+        final float angle = (this.currentTick + partialTicks) % 360.0f;
         return angle;
     }
-
-    private int getLightAtPos(World world, BlockPos pos) {
-        int blockLight = world.getBrightness(LightType.BLOCK, pos);
-        int skyLight = world.getBrightness(LightType.SKY, pos);
+    
+    private int getLightAtPos(final World world, final BlockPos pos) {
+        final int blockLight = world.getBrightness(LightType.BLOCK, pos);
+        final int skyLight = world.getBrightness(LightType.SKY, pos);
         return LightTexture.pack(blockLight, skyLight);
     }
-
-    private double[] getTranslation(int index) {
+    
+    private double[] getTranslation(final int index) {
         switch (index) {
-            case 0:
-                return new double[]{0.95D, 1.35D, 0.05D};
-            case 1:
-                return new double[]{0.95D, 1.35D, 0.95D};
-            case 2:
-                return new double[]{0.05D, 1.35D, 0.95D};
+            case 0: {
+                return new double[] { 0.95, 1.35, 0.05 };
+            }
+            case 1: {
+                return new double[] { 0.95, 1.35, 0.95 };
+            }
+            case 2: {
+                return new double[] { 0.05, 1.35, 0.95 };
+            }
+            default: {
+                return new double[] { 0.05, 1.35, 0.05 };
+            }
         }
-        return new double[]{0.05D, 1.35D, 0.05D};
     }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\block\render\VaultAltarRenderer.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

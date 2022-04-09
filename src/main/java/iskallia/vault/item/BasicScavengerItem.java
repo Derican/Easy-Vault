@@ -1,3 +1,7 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.item;
 
 import iskallia.vault.Vault;
@@ -16,41 +20,38 @@ import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
-public class BasicScavengerItem
-        extends BasicTooltipItem {
-    private static final ITextComponent SCAVENGER_ITEM_HINT = (ITextComponent) (new TranslationTextComponent("tooltip.the_vault.scavenger_item"))
-            .withStyle(TextFormatting.GOLD);
-
-    public BasicScavengerItem(String id) {
-        super(Vault.id("scavenger_" + id), (new Item.Properties()).tab(ModItems.SCAVENGER_GROUP), Collections.singletonList(SCAVENGER_ITEM_HINT));
+public class BasicScavengerItem extends BasicTooltipItem
+{
+    private static final ITextComponent SCAVENGER_ITEM_HINT;
+    
+    public BasicScavengerItem(final String id) {
+        super(Vault.id("scavenger_" + id), new Item.Properties().tab(ModItems.SCAVENGER_GROUP), Collections.singletonList(BasicScavengerItem.SCAVENGER_ITEM_HINT));
     }
-
-    public BasicScavengerItem(ResourceLocation id, Item.Properties properties, List<ITextComponent> components) {
-        super(id, properties, MiscUtils.concat(components, (Object[]) new ITextComponent[]{SCAVENGER_ITEM_HINT}));
+    
+    public BasicScavengerItem(final ResourceLocation id, final Item.Properties properties, final List<ITextComponent> components) {
+        super(id, properties, MiscUtils.concat(components, BasicScavengerItem.SCAVENGER_ITEM_HINT));
     }
-
-    public static void setVaultIdentifier(ItemStack stack, UUID identifier) {
+    
+    public static void setVaultIdentifier(final ItemStack stack, final UUID identifier) {
         if (!(stack.getItem() instanceof BasicScavengerItem)) {
             return;
         }
         stack.getOrCreateTag().putUUID("vault_id", identifier);
     }
-
+    
     @Nullable
-    public static UUID getVaultIdentifier(ItemStack stack) {
+    public static UUID getVaultIdentifier(final ItemStack stack) {
         if (!(stack.getItem() instanceof BasicScavengerItem)) {
             return null;
         }
-        CompoundNBT tag = stack.getOrCreateTag();
+        final CompoundNBT tag = stack.getOrCreateTag();
         if (!tag.hasUUID("vault_id")) {
             return null;
         }
         return stack.getOrCreateTag().getUUID("vault_id");
     }
+    
+    static {
+        SCAVENGER_ITEM_HINT = (ITextComponent)new TranslationTextComponent("tooltip.the_vault.scavenger_item").withStyle(TextFormatting.GOLD);
+    }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\item\BasicScavengerItem.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

@@ -1,3 +1,7 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.item;
 
 import iskallia.vault.container.inventory.ShardPouchContainer;
@@ -35,60 +39,58 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
 
-
-public class ItemShardPouch
-        extends Item {
-    public ItemShardPouch(ResourceLocation id) {
-        super((new Item.Properties())
-                .stacksTo(1)
-                .tab(ModItems.VAULT_MOD_GROUP));
-
-        setRegistryName(id);
+public class ItemShardPouch extends Item
+{
+    public ItemShardPouch(final ResourceLocation id) {
+        super(new Item.Properties().stacksTo(1).tab(ModItems.VAULT_MOD_GROUP));
+        this.setRegistryName(id);
     }
-
-
+    
     @OnlyIn(Dist.CLIENT)
-    public void appendHoverText(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
-        ItemStack contained = getContainedStack(stack);
+    public void appendHoverText(final ItemStack stack, @Nullable final World world, final List<ITextComponent> tooltip, final ITooltipFlag flag) {
+        final ItemStack contained = getContainedStack(stack);
         if (!contained.isEmpty()) {
-            int count = contained.getCount();
-            tooltip.add((new StringTextComponent(count + " Shard" + ((count > 1) ? "s" : ""))).withStyle(TextFormatting.GOLD));
-        } else {
-            tooltip.add((new StringTextComponent("Empty")).withStyle(TextFormatting.GOLD));
+            final int count = contained.getCount();
+            tooltip.add((ITextComponent)new StringTextComponent(count + " Shard" + ((count > 1) ? "s" : "")).withStyle(TextFormatting.GOLD));
+        }
+        else {
+            tooltip.add((ITextComponent)new StringTextComponent("Empty").withStyle(TextFormatting.GOLD));
         }
     }
-
-    public static int getShardCount(PlayerInventory playerInventory) {
+    
+    public static int getShardCount(final PlayerInventory playerInventory) {
         int shards = 0;
-        for (int slot = 0; slot < playerInventory.getContainerSize(); slot++) {
-            ItemStack stack = playerInventory.getItem(slot);
+        for (int slot = 0; slot < playerInventory.getContainerSize(); ++slot) {
+            final ItemStack stack = playerInventory.getItem(slot);
             if (stack.getItem() instanceof ItemShardPouch) {
                 shards += getContainedStack(stack).getCount();
-            } else if (stack.getItem() == ModItems.SOUL_SHARD) {
+            }
+            else if (stack.getItem() == ModItems.SOUL_SHARD) {
                 shards += stack.getCount();
             }
         }
         return shards;
     }
-
-    public static boolean reduceShardAmount(PlayerInventory playerInventory, int count, boolean simulate) {
-        for (int slot = 0; slot < playerInventory.getContainerSize(); slot++) {
-            ItemStack stack = playerInventory.getItem(slot);
+    
+    public static boolean reduceShardAmount(final PlayerInventory playerInventory, int count, final boolean simulate) {
+        for (int slot = 0; slot < playerInventory.getContainerSize(); ++slot) {
+            final ItemStack stack = playerInventory.getItem(slot);
             if (stack.getItem() instanceof ItemShardPouch) {
-                ItemStack shardStack = getContainedStack(stack);
-                int toReduce = Math.min(count, shardStack.getCount());
+                final ItemStack shardStack = getContainedStack(stack);
+                final int toReduce = Math.min(count, shardStack.getCount());
                 if (!simulate) {
                     shardStack.setCount(shardStack.getCount() - toReduce);
                     setContainedStack(stack, shardStack);
                 }
                 count -= toReduce;
-            } else if (stack.getItem() == ModItems.SOUL_SHARD) {
-                int toReduce = Math.min(count, stack.getCount());
+            }
+            else if (stack.getItem() == ModItems.SOUL_SHARD) {
+                final int toReduce2 = Math.min(count, stack.getCount());
                 if (!simulate) {
-                    stack.shrink(toReduce);
+                    stack.shrink(toReduce2);
                     playerInventory.setItem(slot, stack);
                 }
-                count -= toReduce;
+                count -= toReduce2;
             }
             if (count <= 0) {
                 return true;
@@ -96,106 +98,92 @@ public class ItemShardPouch
         }
         return false;
     }
-
-    public static ItemStack getContainedStack(ItemStack pouch) {
-        CompoundNBT invTag = pouch.getOrCreateTagElement("Inventory");
-        ItemStack stack = ItemStack.of(invTag.getCompound("Stack"));
+    
+    public static ItemStack getContainedStack(final ItemStack pouch) {
+        final CompoundNBT invTag = pouch.getOrCreateTagElement("Inventory");
+        final ItemStack stack = ItemStack.of(invTag.getCompound("Stack"));
         stack.setCount(invTag.getInt("StackSize"));
         return stack;
     }
-
-    public static void setContainedStack(ItemStack pouch, ItemStack contained) {
-        CompoundNBT invTag = pouch.getOrCreateTagElement("Inventory");
-        invTag.put("Stack", (INBT) contained.serializeNBT());
+    
+    public static void setContainedStack(final ItemStack pouch, final ItemStack contained) {
+        final CompoundNBT invTag = pouch.getOrCreateTagElement("Inventory");
+        invTag.put("Stack", (INBT)contained.serializeNBT());
         invTag.putInt("StackSize", contained.getCount());
     }
-
-
-    public ActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand) {
-        ItemStack stack = player.getItemInHand(hand);
+    
+    public ActionResult<ItemStack> use(final World world, final PlayerEntity player, final Hand hand) {
+        final ItemStack stack = player.getItemInHand(hand);
         if (!world.isClientSide() && player instanceof ServerPlayerEntity) {
-            final int pouchSlot;
+            int pouchSlot;
             if (hand == Hand.OFF_HAND) {
                 pouchSlot = 40;
-            } else {
+            }
+            else {
                 pouchSlot = player.inventory.selected;
             }
-
-            NetworkHooks.openGui((ServerPlayerEntity) player, new INamedContainerProvider() {
+            NetworkHooks.openGui((ServerPlayerEntity)player, (INamedContainerProvider)new INamedContainerProvider() {
                 public ITextComponent getDisplayName() {
-                    return (ITextComponent) new StringTextComponent("Shard Pouch");
+                    return (ITextComponent)new StringTextComponent("Shard Pouch");
                 }
-
-
+                
                 @Nullable
-                public Container createMenu(int windowId, PlayerInventory inventory, PlayerEntity player) {
-                    return (Container) new ShardPouchContainer(windowId, inventory, pouchSlot);
+                public Container createMenu(final int windowId, final PlayerInventory inventory, final PlayerEntity player) {
+                    return new ShardPouchContainer(windowId, inventory, pouchSlot);
                 }
-            }buf -> buf.writeInt(pouchSlot));
+            }, buf -> buf.writeInt(pouchSlot));
         }
-        return ActionResult.pass(stack);
+        return (ActionResult<ItemStack>)ActionResult.pass(stack);
     }
-
-
-    public boolean shouldCauseReequipAnimation(ItemStack oldStack, ItemStack newStack, boolean slotChanged) {
-        return (oldStack.getItem() != newStack.getItem());
+    
+    public boolean shouldCauseReequipAnimation(final ItemStack oldStack, final ItemStack newStack, final boolean slotChanged) {
+        return oldStack.getItem() != newStack.getItem();
     }
-
+    
     public static NonNullSupplier<IItemHandler> getInventorySupplier(final ItemStack stack) {
-        return new NonNullSupplier<IItemHandler>() {
+        return (NonNullSupplier<IItemHandler>)new NonNullSupplier<IItemHandler>() {
             @Nonnull
             public IItemHandler get() {
-                return (IItemHandler) new ItemShardPouch.Handler(stack);
+                return (IItemHandler)new Handler(stack);
             }
         };
     }
-
-
+    
     @Nullable
-    public ICapabilityProvider initCapabilities(final ItemStack stack, @Nullable CompoundNBT nbt) {
-        return new ICapabilityProvider() {
+    public ICapabilityProvider initCapabilities(final ItemStack stack, @Nullable final CompoundNBT nbt) {
+        return (ICapabilityProvider)new ICapabilityProvider() {
             @Nonnull
-            public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, @Nullable Direction side) {
-                return (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) ? LazyOptional.of(ItemShardPouch.getInventorySupplier(stack)).cast() : LazyOptional.empty();
+            public <T> LazyOptional<T> getCapability(@Nonnull final Capability<T> cap, @Nullable final Direction side) {
+                return (LazyOptional<T>)((cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) ? LazyOptional.of((NonNullSupplier)ItemShardPouch.getInventorySupplier(stack)).cast() : LazyOptional.empty());
             }
         };
     }
-
-    public static class Handler
-            extends ItemStackHandler {
+    
+    public static class Handler extends ItemStackHandler
+    {
         private final ItemStack delegate;
-
-        public Handler(ItemStack delegate) {
+        
+        public Handler(final ItemStack delegate) {
             super(1);
             this.delegate = delegate;
             this.stacks.set(0, ItemShardPouch.getContainedStack(this.delegate));
         }
-
-
-        protected void onContentsChanged(int slot) {
+        
+        protected void onContentsChanged(final int slot) {
             super.onContentsChanged(slot);
-            ItemShardPouch.setContainedStack(this.delegate, getStackInSlot(0));
+            ItemShardPouch.setContainedStack(this.delegate, this.getStackInSlot(0));
         }
-
-
-        public int getSlotLimit(int slot) {
+        
+        public int getSlotLimit(final int slot) {
             return 2147483582;
         }
-
-
-        protected int getStackLimit(int slot, @Nonnull ItemStack stack) {
-            return getSlotLimit(slot);
+        
+        protected int getStackLimit(final int slot, @Nonnull final ItemStack stack) {
+            return this.getSlotLimit(slot);
         }
-
-
-        public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
-            return (stack.getItem() == ModItems.SOUL_SHARD);
+        
+        public boolean isItemValid(final int slot, @Nonnull final ItemStack stack) {
+            return stack.getItem() == ModItems.SOUL_SHARD;
         }
     }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\item\ItemShardPouch.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

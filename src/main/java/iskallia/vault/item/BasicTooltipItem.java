@@ -1,3 +1,7 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.item;
 
 import net.minecraft.client.util.ITooltipFlag;
@@ -14,29 +18,23 @@ import javax.annotation.Nullable;
 import java.util.Arrays;
 import java.util.List;
 
-public class BasicTooltipItem
-        extends BasicItem {
+public class BasicTooltipItem extends BasicItem
+{
     private final List<ITextComponent> components;
-
-    public BasicTooltipItem(ResourceLocation id, Item.Properties properties, ITextComponent... components) {
+    
+    public BasicTooltipItem(final ResourceLocation id, final Item.Properties properties, final ITextComponent... components) {
         this(id, properties, Arrays.asList(components));
     }
-
-    public BasicTooltipItem(ResourceLocation id, Item.Properties properties, List<ITextComponent> components) {
+    
+    public BasicTooltipItem(final ResourceLocation id, final Item.Properties properties, final List<ITextComponent> components) {
         super(id, properties);
         this.components = components;
     }
-
-
+    
     @OnlyIn(Dist.CLIENT)
-    public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+    @Override
+    public void appendHoverText(final ItemStack stack, @Nullable final World worldIn, final List<ITextComponent> tooltip, final ITooltipFlag flagIn) {
         tooltip.add(StringTextComponent.EMPTY);
         tooltip.addAll(this.components);
     }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\item\BasicTooltipItem.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

@@ -1,3 +1,7 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.item;
 
 import iskallia.vault.config.entry.MagnetEntry;
@@ -30,7 +34,6 @@ import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 
@@ -40,248 +43,219 @@ import java.util.List;
 import java.util.UUID;
 import java.util.function.Consumer;
 
-@EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.FORGE)
-public class VaultMagnetItem extends Item {
-    private static final HashMap<UUID, UUID> pulledItems = new HashMap<>();
+@Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.FORGE)
+public class VaultMagnetItem extends Item
+{
     private MagnetType type;
-
-    public VaultMagnetItem(ResourceLocation id, MagnetType type) {
-        super((new Item.Properties()).tab(ModItems.VAULT_MOD_GROUP)
-                .stacksTo(1));
-
-        setRegistryName(id);
+    private static final HashMap<UUID, UUID> pulledItems;
+    
+    public VaultMagnetItem(final ResourceLocation id, final MagnetType type) {
+        super(new Item.Properties().tab(ModItems.VAULT_MOD_GROUP).stacksTo(1));
+        this.setRegistryName(id);
         this.type = type;
     }
-
-
+    
     @OnlyIn(Dist.CLIENT)
-    public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-        if (worldIn == null)
+    public void appendHoverText(final ItemStack stack, @Nullable final World worldIn, final List<ITextComponent> tooltip, final ITooltipFlag flagIn) {
+        if (worldIn == null) {
             return;
-        int totalRepairs = stack.getOrCreateTag().getInt("TotalRepairs");
-        tooltip.add(new StringTextComponent(" "));
-        tooltip.add(new StringTextComponent("Enabled: " + (isEnabled(stack) ? (TextFormatting.GREEN + "true") : (TextFormatting.RED + "false"))));
-        tooltip.add(new StringTextComponent("Repairs Remaining: " + getColor(30 - totalRepairs) + Math.max(0, 30 - totalRepairs)));
-        tooltip.add(new StringTextComponent(" "));
-        super.appendHoverText(stack, worldIn, tooltip, flagIn);
+        }
+        final int totalRepairs = stack.getOrCreateTag().getInt("TotalRepairs");
+        tooltip.add((ITextComponent)new StringTextComponent(" "));
+        tooltip.add((ITextComponent)new StringTextComponent("Enabled: " + (this.isEnabled(stack) ? (TextFormatting.GREEN + "true") : (TextFormatting.RED + "false"))));
+        tooltip.add((ITextComponent)new StringTextComponent("Repairs Remaining: " + this.getColor(30 - totalRepairs) + Math.max(0, 30 - totalRepairs)));
+        tooltip.add((ITextComponent)new StringTextComponent(" "));
+        super.appendHoverText(stack, worldIn, (List)tooltip, flagIn);
     }
-
-    private TextFormatting getColor(int amount) {
-        if (amount < 10) return TextFormatting.RED;
-        if (amount < 20) return TextFormatting.YELLOW;
+    
+    private TextFormatting getColor(final int amount) {
+        if (amount < 10) {
+            return TextFormatting.RED;
+        }
+        if (amount < 20) {
+            return TextFormatting.YELLOW;
+        }
         return TextFormatting.GREEN;
     }
-
-
-    public boolean isFoil(ItemStack stack) {
-        return isEnabled(stack);
+    
+    public boolean isFoil(final ItemStack stack) {
+        return this.isEnabled(stack);
     }
-
-
-    public ActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand) {
-        ItemStack stack = player.getItemInHand(hand);
-
-        setEnabled(stack, !isEnabled(stack), false);
-
-        return new ActionResult(ActionResultType.SUCCESS, stack);
+    
+    public ActionResult<ItemStack> use(final World world, final PlayerEntity player, final Hand hand) {
+        final ItemStack stack = player.getItemInHand(hand);
+        this.setEnabled(stack, !this.isEnabled(stack), false);
+        return (ActionResult<ItemStack>)new ActionResult(ActionResultType.SUCCESS, stack);
     }
-
-
-    public void inventoryTick(ItemStack stack, World world, Entity entity, int itemSlot, boolean isSelected) {
-        if (world.isClientSide)
+    
+    public void inventoryTick(final ItemStack stack, final World world, final Entity entity, final int itemSlot, final boolean isSelected) {
+        if (world.isClientSide) {
             return;
-        CompoundNBT nbt = stack.getOrCreateTag();
+        }
+        final CompoundNBT nbt = stack.getOrCreateTag();
         if (!nbt.contains("Enabled")) {
             nbt.putBoolean("Enabled", false);
             stack.setTag(nbt);
         }
-
-
-        if (entity instanceof PlayerEntity && isEnabled(stack)) {
-            PlayerEntity player = (PlayerEntity) entity;
-            MagnetType magnetType = ((VaultMagnetItem) stack.getItem()).getType();
-
-            MagnetEntry settings = ModConfigs.VAULT_UTILITIES.getMagnetSetting(magnetType);
-            boolean instant = settings.shouldPullInstantly();
-            boolean moveItems = settings.shouldPullItems();
-            boolean moveXp = settings.shouldPullExperience();
-            float speed = settings.getSpeed() / 20.0F;
-            float radius = settings.getRadius();
-
+        if (entity instanceof PlayerEntity && this.isEnabled(stack)) {
+            final PlayerEntity player = (PlayerEntity)entity;
+            final MagnetType magnetType = ((VaultMagnetItem)stack.getItem()).getType();
+            final MagnetEntry settings = ModConfigs.VAULT_UTILITIES.getMagnetSetting(magnetType);
+            final boolean instant = settings.shouldPullInstantly();
+            final boolean moveItems = settings.shouldPullItems();
+            final boolean moveXp = settings.shouldPullExperience();
+            final float speed = settings.getSpeed() / 20.0f;
+            final float radius = settings.getRadius();
             if (moveItems) {
-                List<ItemEntity> items = world.getEntitiesOfClass(ItemEntity.class, player.getBoundingBox().inflate(radius));
-                for (ItemEntity item : items) {
-                    if (!item.isAlive() || stack.getOrCreateTag().getBoolean("PreventRemoteMovement") ||
-                            item.getTags().contains("PreventMagnetMovement")) {
-                        continue;
+                final List<ItemEntity> items = world.getEntitiesOfClass((Class)ItemEntity.class, player.getBoundingBox().inflate((double)radius));
+                for (final ItemEntity item : items) {
+                    if (item.isAlive()) {
+                        if (stack.getOrCreateTag().getBoolean("PreventRemoteMovement")) {
+                            continue;
+                        }
+                        if (item.getTags().contains("PreventMagnetMovement")) {
+                            continue;
+                        }
+                        if (!VaultMagnetItem.pulledItems.containsKey(item.getUUID())) {
+                            final PlayerEntity closest = this.getClosestPlayerWithMagnet(item, radius);
+                            VaultMagnetItem.pulledItems.put(item.getUUID(), (closest == null) ? player.getUUID() : closest.getUUID());
+                        }
+                        if (!VaultMagnetItem.pulledItems.get(item.getUUID()).equals(player.getUUID())) {
+                            continue;
+                        }
+                        item.setNoPickUpDelay();
+                        this.moveItemToPlayer(item, player, speed, instant);
                     }
-                    if (!pulledItems.containsKey(item.getUUID())) {
-                        PlayerEntity closest = getClosestPlayerWithMagnet(item, radius);
-                        pulledItems.put(item.getUUID(), (closest == null) ? player.getUUID() : closest.getUUID());
-                    }
-
-
-                    if (!((UUID) pulledItems.get(item.getUUID())).equals(player.getUUID()))
-                        continue;
-                    item.setNoPickUpDelay();
-                    moveItemToPlayer(item, player, speed, instant);
                 }
             }
-
             if (moveXp) {
-                List<ExperienceOrbEntity> orbs = world.getEntitiesOfClass(ExperienceOrbEntity.class, player.getBoundingBox().inflate(radius));
-                for (ExperienceOrbEntity orb : orbs) {
-                    moveXpToPlayer(orb, player, speed, instant);
+                final List<ExperienceOrbEntity> orbs = world.getEntitiesOfClass((Class)ExperienceOrbEntity.class, player.getBoundingBox().inflate((double)radius));
+                for (final ExperienceOrbEntity orb : orbs) {
+                    this.moveXpToPlayer(orb, player, speed, instant);
                 }
             }
         }
     }
-
-    private void moveItemToPlayer(ItemEntity item, PlayerEntity player, float speed, boolean instant) {
+    
+    private void moveItemToPlayer(final ItemEntity item, final PlayerEntity player, final float speed, final boolean instant) {
         if (instant) {
             item.setPos(player.getX(), player.getY(), player.getZ());
-        } else {
-            Vector3d target = VectorHelper.getVectorFromPos(player.blockPosition());
-            Vector3d current = VectorHelper.getVectorFromPos(item.blockPosition());
-
-            Vector3d velocity = VectorHelper.getMovementVelocity(current, target, speed);
-
+        }
+        else {
+            final Vector3d target = VectorHelper.getVectorFromPos(player.blockPosition());
+            final Vector3d current = VectorHelper.getVectorFromPos(item.blockPosition());
+            final Vector3d velocity = VectorHelper.getMovementVelocity(current, target, speed);
             item.push(velocity.x, velocity.y, velocity.z);
             item.hurtMarked = true;
         }
     }
-
-    private void moveXpToPlayer(ExperienceOrbEntity orb, PlayerEntity player, float speed, boolean instant) {
+    
+    private void moveXpToPlayer(final ExperienceOrbEntity orb, final PlayerEntity player, final float speed, final boolean instant) {
         if (instant) {
             orb.setPos(player.getX(), player.getY(), player.getZ());
-        } else {
-            Vector3d target = VectorHelper.getVectorFromPos(player.blockPosition());
-            Vector3d current = VectorHelper.getVectorFromPos(orb.blockPosition());
-
-            Vector3d velocity = VectorHelper.getMovementVelocity(current, target, speed);
-
+        }
+        else {
+            final Vector3d target = VectorHelper.getVectorFromPos(player.blockPosition());
+            final Vector3d current = VectorHelper.getVectorFromPos(orb.blockPosition());
+            final Vector3d velocity = VectorHelper.getMovementVelocity(current, target, speed);
             orb.push(velocity.x, velocity.y, velocity.z);
             orb.hurtMarked = true;
         }
     }
-
-
-    public <T extends LivingEntity> int damageItem(ItemStack stack, int amount, T entity, Consumer<T> onBroken) {
+    
+    public <T extends LivingEntity> int damageItem(final ItemStack stack, final int amount, final T entity, final Consumer<T> onBroken) {
         if (stack.getDamageValue() + amount >= stack.getMaxDamage()) {
-            setEnabled(stack, false, true);
+            this.setEnabled(stack, false, true);
             return 0;
         }
         return amount;
     }
-
-    private void setEnabled(ItemStack stack, boolean enabled, boolean force) {
+    
+    private void setEnabled(final ItemStack stack, final boolean enabled, final boolean force) {
         if (force) {
-            setEnabled(stack, enabled);
-        } else if (stack.getDamageValue() < stack.getMaxDamage() - 1) {
-            setEnabled(stack, enabled);
+            this.setEnabled(stack, enabled);
         }
-
+        else if (stack.getDamageValue() < stack.getMaxDamage() - 1) {
+            this.setEnabled(stack, enabled);
+        }
     }
-
-
-    private void setEnabled(ItemStack stack, boolean enabled) {
-        CompoundNBT tag = stack.getOrCreateTag();
+    
+    private void setEnabled(final ItemStack stack, final boolean enabled) {
+        final CompoundNBT tag = stack.getOrCreateTag();
         tag.putBoolean("Enabled", enabled);
         stack.setTag(tag);
     }
-
-    private boolean isEnabled(ItemStack stack) {
+    
+    private boolean isEnabled(final ItemStack stack) {
         return stack.getOrCreateTag().getBoolean("Enabled");
     }
-
+    
     public MagnetType getType() {
         return this.type;
     }
-
-    public static boolean isMagnet(ItemStack stack) {
+    
+    public static boolean isMagnet(final ItemStack stack) {
         return stack.getItem() instanceof VaultMagnetItem;
     }
-
-
-    public boolean showDurabilityBar(ItemStack stack) {
-        return (stack.getDamageValue() > 0);
+    
+    public boolean showDurabilityBar(final ItemStack stack) {
+        return stack.getDamageValue() > 0;
     }
-
-
-    public double getDurabilityForDisplay(ItemStack stack) {
-        return stack.getDamageValue() / getMaxDamage(stack);
+    
+    public double getDurabilityForDisplay(final ItemStack stack) {
+        return stack.getDamageValue() / (double)this.getMaxDamage(stack);
     }
-
-
-    public int getMaxDamage(ItemStack stack) {
+    
+    public int getMaxDamage(final ItemStack stack) {
         if (ModConfigs.VAULT_UTILITIES != null) {
-            MagnetEntry setting = ModConfigs.VAULT_UTILITIES.getMagnetSetting(this.type);
+            final MagnetEntry setting = ModConfigs.VAULT_UTILITIES.getMagnetSetting(this.type);
             return setting.getMaxDurability();
         }
         return 0;
     }
-
-
+    
     public boolean canBeDepleted() {
         return true;
     }
-
-
-    public boolean isValidRepairItem(ItemStack toRepair, ItemStack repair) {
-        return (toRepair.getItem() instanceof VaultMagnetItem && repair.getItem() == ModItems.MAGNETITE);
+    
+    public boolean isValidRepairItem(final ItemStack toRepair, final ItemStack repair) {
+        return toRepair.getItem() instanceof VaultMagnetItem && repair.getItem() == ModItems.MAGNETITE;
     }
-
-
-    public boolean isRepairable(ItemStack stack) {
+    
+    public boolean isRepairable(final ItemStack stack) {
         return false;
     }
-
-
-    public boolean isEnchantable(ItemStack stack) {
+    
+    public boolean isEnchantable(final ItemStack stack) {
         return false;
     }
-
-
-    public boolean canApplyAtEnchantingTable(ItemStack stack, Enchantment enchantment) {
+    
+    public boolean canApplyAtEnchantingTable(final ItemStack stack, final Enchantment enchantment) {
         return false;
     }
-
-
-    public boolean isBookEnchantable(ItemStack stack, ItemStack book) {
+    
+    public boolean isBookEnchantable(final ItemStack stack, final ItemStack book) {
         return false;
     }
-
-    public enum MagnetType {
-        WEAK,
-        STRONG,
-        OMEGA;
-    }
-
+    
     @SubscribeEvent
-    public static void onItemPickup(PlayerEvent.ItemPickupEvent event) {
-        PlayerEntity player = event.getPlayer();
-        PlayerInventory inventory = player.inventory;
-
-
-        pulledItems.remove(event.getOriginalEntity().getUUID());
-
-        for (int i = 0; i < inventory.getContainerSize(); i++) {
-            ItemStack stack = inventory.getItem(i);
+    public static void onItemPickup(final PlayerEvent.ItemPickupEvent event) {
+        final PlayerEntity player = event.getPlayer();
+        final PlayerInventory inventory = player.inventory;
+        VaultMagnetItem.pulledItems.remove(event.getOriginalEntity().getUUID());
+        for (int i = 0; i < inventory.getContainerSize(); ++i) {
+            final ItemStack stack = inventory.getItem(i);
             if (!stack.isEmpty()) {
-
-                if (isMagnet(stack) && (
-                        (VaultMagnetItem) stack.getItem()).isEnabled(stack)) {
-                    stack.hurtAndBreak(1, (LivingEntity) player, onBroken -> {
-
-
-                    });
-                } else {
-                    LazyOptional<IItemHandler> itemHandler = stack.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY);
+                if (isMagnet(stack) && ((VaultMagnetItem)stack.getItem()).isEnabled(stack)) {
+                    stack.hurtAndBreak(1, (LivingEntity)player, onBroken -> {});
+                }
+                else {
+                    final LazyOptional<IItemHandler> itemHandler = (LazyOptional<IItemHandler>)stack.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY);
                     itemHandler.ifPresent(h -> {
-                        for (int j = 0; j < h.getSlots(); j++) {
-                            ItemStack stackInHandler = h.getStackInSlot(j);
-                            if (isMagnet(stackInHandler) && ((VaultMagnetItem) stackInHandler.getItem()).isEnabled(stackInHandler)) {
-                                stackInHandler.hurtAndBreak(1, (LivingEntity) player, ());
+                        for (int j = 0; j < h.getSlots(); ++j) {
+                            final ItemStack stackInHandler = h.getStackInSlot(j);
+                            if (isMagnet(stackInHandler) && ((VaultMagnetItem)stackInHandler.getItem()).isEnabled(stackInHandler)) {
+                                stackInHandler.hurtAndBreak(1, (LivingEntity)player, onBroken -> {});
                             }
                         }
                     });
@@ -289,47 +263,52 @@ public class VaultMagnetItem extends Item {
             }
         }
     }
-
-
+    
     @Nullable
-    private PlayerEntity getClosestPlayerWithMagnet(ItemEntity item, double radius) {
-        List<PlayerEntity> players = item.getCommandSenderWorld().getEntitiesOfClass(PlayerEntity.class, item.getBoundingBox().inflate(radius));
-        if (players.isEmpty()) return null;
+    private PlayerEntity getClosestPlayerWithMagnet(final ItemEntity item, final double radius) {
+        final List<PlayerEntity> players = item.getCommandSenderWorld().getEntitiesOfClass((Class)PlayerEntity.class, item.getBoundingBox().inflate(radius));
+        if (players.isEmpty()) {
+            return null;
+        }
         PlayerEntity closest = players.get(0);
         double distance = radius;
-        for (PlayerEntity player : players) {
-            double temp = player.distanceTo((Entity) item);
-            if (temp < distance &&
-                    hasEnabledMagnetInRange(player, radius)) {
+        for (final PlayerEntity player : players) {
+            final double temp = player.distanceTo((Entity)item);
+            if (temp < distance && this.hasEnabledMagnetInRange(player, radius)) {
                 closest = player;
                 distance = temp;
             }
         }
-
         return closest;
     }
-
-    private boolean hasEnabledMagnetInRange(PlayerEntity player, double radius) {
-        PlayerInventory inventory = player.inventory;
-        for (int i = 0; i < inventory.getContainerSize(); i++) {
-            ItemStack stack = inventory.getItem(i);
+    
+    private boolean hasEnabledMagnetInRange(final PlayerEntity player, final double radius) {
+        final PlayerInventory inventory = player.inventory;
+        for (int i = 0; i < inventory.getContainerSize(); ++i) {
+            final ItemStack stack = inventory.getItem(i);
             if (!stack.isEmpty()) {
-
                 if (isMagnet(stack)) {
-                    VaultMagnetItem magnet = (VaultMagnetItem) stack.getItem();
+                    final VaultMagnetItem magnet = (VaultMagnetItem)stack.getItem();
                     if (magnet.isEnabled(stack)) {
-                        MagnetEntry setting = ModConfigs.VAULT_UTILITIES.getMagnetSetting(magnet.getType());
-                        if (setting.getRadius() >= radius) return true;
+                        final MagnetEntry setting = ModConfigs.VAULT_UTILITIES.getMagnetSetting(magnet.getType());
+                        if (setting.getRadius() >= radius) {
+                            return true;
+                        }
                     }
                 }
             }
         }
         return false;
     }
+    
+    static {
+        pulledItems = new HashMap<UUID, UUID>();
+    }
+    
+    public enum MagnetType
+    {
+        WEAK, 
+        STRONG, 
+        OMEGA;
+    }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\item\VaultMagnetItem.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

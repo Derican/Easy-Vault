@@ -1,3 +1,7 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.dump;
 
 import com.google.gson.Gson;
@@ -13,51 +17,45 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.function.Function;
 
-
-public class VaultDataDump {
-    private static final Gson GSON = (new GsonBuilder())
-            .excludeFieldsWithoutExposeAnnotation()
-            .setPrettyPrinting()
-            .create();
-
-    public static void onStart(FMLServerStartedEvent event) {
+public class VaultDataDump
+{
+    private static final Gson GSON;
+    
+    public static void onStart(final FMLServerStartedEvent event) {
         dumpModData();
     }
-
+    
     public static void dumpModData() {
-        File dir = new File("data/the_vault/");
+        final File dir = new File("data/the_vault/");
         if (!dir.exists()) {
             dir.mkdirs();
         }
-        File dataFile = new File(dir, "data.json");
+        final File dataFile = new File(dir, "data.json");
         if (dataFile.exists()) {
             dataFile.delete();
         }
         try {
             dataFile.createNewFile();
-
-            FileWriter writer = new FileWriter(dataFile);
-            GSON.toJson(getData(), writer);
+            final FileWriter writer = new FileWriter(dataFile);
+            VaultDataDump.GSON.toJson(getData(), (Appendable)writer);
             writer.flush();
             writer.close();
-        } catch (IOException e) {
+        }
+        catch (final IOException e) {
             e.printStackTrace();
         }
     }
-
+    
     public static Map<String, String> getData() {
-        Map<String, String> data = new HashMap<>();
-
-
-        String version = ModList.get().getModContainerById("the_vault").map(ModContainer::getModInfo).map(IModInfo::getVersion).map(Objects::toString).orElse("");
+        final Map<String, String> data = new HashMap<String, String>();
+        final String version = ModList.get().getModContainerById("the_vault").map(ModContainer::getModInfo).map(IModInfo::getVersion).map(Objects::toString).orElse("");
         data.put("version", version);
         return data;
     }
+    
+    static {
+        GSON = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().setPrettyPrinting().create();
+    }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\dump\VaultDataDump.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

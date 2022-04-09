@@ -1,3 +1,7 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.skill.set;
 
 import iskallia.vault.item.gear.VaultGear;
@@ -6,38 +10,32 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.potion.Effect;
 import net.minecraft.util.registry.Registry;
 
-public class EffectSet
-        extends TalentSet<EffectTalent> {
-    public EffectSet(VaultGear.Set set, Effect effect, int amplifier, EffectTalent.Type type, EffectTalent.Operator operator) {
+public class EffectSet extends TalentSet<EffectTalent>
+{
+    public EffectSet(final VaultGear.Set set, final Effect effect, final int amplifier, final EffectTalent.Type type, final EffectTalent.Operator operator) {
         this(set, Registry.MOB_EFFECT.getKey(effect).toString(), amplifier, type.toString(), operator.toString());
     }
-
-    public EffectSet(VaultGear.Set set, String effect, int amplifier, String type, String operator) {
+    
+    public EffectSet(final VaultGear.Set set, final String effect, final int amplifier, final String type, final String operator) {
         super(set, new EffectTalent(-1, effect, amplifier, type, operator));
     }
-
-    public EffectSet(VaultGear.Set set, EffectTalent child) {
+    
+    public EffectSet(final VaultGear.Set set, final EffectTalent child) {
         super(set, child);
     }
-
-
-    public void onAdded(PlayerEntity player) {
-        getChild().onAdded(player);
+    
+    @Override
+    public void onAdded(final PlayerEntity player) {
+        this.getChild().onAdded(player);
     }
-
-
-    public void onTick(PlayerEntity player) {
-        getChild().tick(player);
+    
+    @Override
+    public void onTick(final PlayerEntity player) {
+        this.getChild().tick(player);
     }
-
-
-    public void onRemoved(PlayerEntity player) {
-        getChild().onRemoved(player);
+    
+    @Override
+    public void onRemoved(final PlayerEntity player) {
+        this.getChild().onRemoved(player);
     }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\skill\set\EffectSet.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

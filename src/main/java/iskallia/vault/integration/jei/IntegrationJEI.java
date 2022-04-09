@@ -1,3 +1,7 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.integration.jei;
 
 import iskallia.vault.Vault;
@@ -11,29 +15,22 @@ import mezz.jei.api.registration.ISubtypeRegistration;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
 
+import java.util.Collection;
+
 @JeiPlugin
-public class IntegrationJEI
-        implements IModPlugin {
-    public void registerItemSubtypes(ISubtypeRegistration registration) {
-        registration.useNbtForSubtypes(new Item[]{(Item) ModItems.RESPEC_FLASK, (Item) ModItems.RESET_FLASK});
+public class IntegrationJEI implements IModPlugin
+{
+    public void registerItemSubtypes(final ISubtypeRegistration registration) {
+        registration.useNbtForSubtypes(new Item[] { ModItems.RESPEC_FLASK, ModItems.RESET_FLASK });
     }
-
-
-    public void registerRecipes(IRecipeRegistration registration) {
-        IVanillaRecipeFactory recipeFactory = registration.getVanillaRecipeFactory();
-
-        registration.addRecipes(DummyRecipeProvider.getAnvilRecipes(recipeFactory), VanillaRecipeCategoryUid.ANVIL);
-        registration.addRecipes(DummyRecipeProvider.getCustomCraftingRecipes(recipeFactory), VanillaRecipeCategoryUid.CRAFTING);
+    
+    public void registerRecipes(final IRecipeRegistration registration) {
+        final IVanillaRecipeFactory recipeFactory = registration.getVanillaRecipeFactory();
+        registration.addRecipes((Collection)DummyRecipeProvider.getAnvilRecipes(recipeFactory), VanillaRecipeCategoryUid.ANVIL);
+        registration.addRecipes((Collection)DummyRecipeProvider.getCustomCraftingRecipes(recipeFactory), VanillaRecipeCategoryUid.CRAFTING);
     }
-
-
+    
     public ResourceLocation getPluginUid() {
         return Vault.id("jei_integration");
     }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\integration\jei\IntegrationJEI.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

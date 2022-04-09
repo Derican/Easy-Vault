@@ -1,3 +1,7 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.client.gui.widget;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
@@ -8,28 +12,28 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 
-public class TooltipImageButton
-        extends Button {
+public class TooltipImageButton extends Button
+{
     private final ResourceLocation resourceLocation;
     private final int xTexStart;
     private final int yTexStart;
     private final int yDiffText;
     private final int textureWidth;
     private final int textureHeight;
-
-    public TooltipImageButton(int xIn, int yIn, int widthIn, int heightIn, int xTexStartIn, int yTexStartIn, int yDiffTextIn, ResourceLocation texture, Button.IPressable onPressIn) {
+    
+    public TooltipImageButton(final int xIn, final int yIn, final int widthIn, final int heightIn, final int xTexStartIn, final int yTexStartIn, final int yDiffTextIn, final ResourceLocation texture, final Button.IPressable onPressIn) {
         this(xIn, yIn, widthIn, heightIn, xTexStartIn, yTexStartIn, yDiffTextIn, texture, 256, 256, onPressIn);
     }
-
-    public TooltipImageButton(int xIn, int yIn, int widthIn, int heightIn, int xTexStartIn, int yTexStartIn, int yDiffTextIn, ResourceLocation texture, int textureWidth, int textureHeight, Button.IPressable onPressIn) {
+    
+    public TooltipImageButton(final int xIn, final int yIn, final int widthIn, final int heightIn, final int xTexStartIn, final int yTexStartIn, final int yDiffTextIn, final ResourceLocation texture, final int textureWidth, final int textureHeight, final Button.IPressable onPressIn) {
         this(xIn, yIn, widthIn, heightIn, xTexStartIn, yTexStartIn, yDiffTextIn, texture, textureWidth, textureHeight, onPressIn, StringTextComponent.EMPTY);
     }
-
-    public TooltipImageButton(int x, int y, int width, int height, int xTexStart, int yTexStart, int yDiffText, ResourceLocation texture, int textureWidth, int textureHeight, Button.IPressable onPress, ITextComponent title) {
-        this(x, y, width, height, xTexStart, yTexStart, yDiffText, texture, textureWidth, textureHeight, onPress, NO_TOOLTIP, title);
+    
+    public TooltipImageButton(final int x, final int y, final int width, final int height, final int xTexStart, final int yTexStart, final int yDiffText, final ResourceLocation texture, final int textureWidth, final int textureHeight, final Button.IPressable onPress, final ITextComponent title) {
+        this(x, y, width, height, xTexStart, yTexStart, yDiffText, texture, textureWidth, textureHeight, onPress, TooltipImageButton.NO_TOOLTIP, title);
     }
-
-    public TooltipImageButton(int x, int y, int width, int height, int xTexStart, int yTexStart, int yDiffText, ResourceLocation texture, int textureWidth, int textureHeight, Button.IPressable onPress, Button.ITooltip onTooltip, ITextComponent title) {
+    
+    public TooltipImageButton(final int x, final int y, final int width, final int height, final int xTexStart, final int yTexStart, final int yDiffText, final ResourceLocation texture, final int textureWidth, final int textureHeight, final Button.IPressable onPress, final Button.ITooltip onTooltip, final ITextComponent title) {
         super(x, y, width, height, title, onPress, onTooltip);
         this.textureWidth = textureWidth;
         this.textureHeight = textureHeight;
@@ -38,31 +42,23 @@ public class TooltipImageButton
         this.yDiffText = yDiffText;
         this.resourceLocation = texture;
     }
-
-    public void setPosition(int xIn, int yIn) {
+    
+    public void setPosition(final int xIn, final int yIn) {
         this.x = xIn;
         this.y = yIn;
     }
-
-    public void renderButton(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks) {
-        if (isHovered()) {
-            renderToolTip(matrixStack, mouseX, mouseY);
+    
+    public void renderButton(final MatrixStack matrixStack, final int mouseX, final int mouseY, final float partialTicks) {
+        if (this.isHovered()) {
+            this.renderToolTip(matrixStack, mouseX, mouseY);
         }
-
-        Minecraft minecraft = Minecraft.getInstance();
+        final Minecraft minecraft = Minecraft.getInstance();
         minecraft.getTextureManager().bind(this.resourceLocation);
         int v = this.yTexStart;
-        if (isHovered()) {
+        if (this.isHovered()) {
             v += this.yDiffText;
         }
-
         RenderSystem.enableDepthTest();
-        blit(matrixStack, this.x, this.y, this.xTexStart, v, this.width, this.height, this.textureWidth, this.textureHeight);
+        blit(matrixStack, this.x, this.y, (float)this.xTexStart, (float)v, this.width, this.height, this.textureWidth, this.textureHeight);
     }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\client\gui\widget\TooltipImageButton.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

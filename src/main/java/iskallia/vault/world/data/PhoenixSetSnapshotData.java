@@ -1,6 +1,9 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.world.data;
 
-import iskallia.vault.attribute.BooleanAttribute;
 import iskallia.vault.init.ModAttributes;
 import iskallia.vault.item.gear.VaultGear;
 import iskallia.vault.skill.set.PlayerSet;
@@ -15,73 +18,66 @@ import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 
-@EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.FORGE)
-public class PhoenixSetSnapshotData
-        extends InventorySnapshotData {
+import java.util.function.Supplier;
+
+@Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.FORGE)
+public class PhoenixSetSnapshotData extends InventorySnapshotData
+{
     private static final String RESTORE_FLAG = "the_vault_restore_phoenixset";
     protected static final String DATA_NAME = "the_vault_PhoenixSet";
-
+    
     public PhoenixSetSnapshotData() {
         super("the_vault_PhoenixSet");
     }
-
-
-    protected boolean shouldSnapshotItem(PlayerEntity player, ItemStack stack) {
-        return (!stack.isEmpty() && !((Boolean) ((BooleanAttribute) ModAttributes.SOULBOUND.getOrDefault(stack, Boolean.valueOf(false))).getValue(stack)).booleanValue());
+    
+    @Override
+    protected boolean shouldSnapshotItem(final PlayerEntity player, final ItemStack stack) {
+        return !stack.isEmpty() && !ModAttributes.SOULBOUND.getOrDefault(stack, false).getValue(stack);
     }
-
-
-    protected InventorySnapshotData.Builder makeSnapshotBuilder(PlayerEntity player) {
-        return (new InventorySnapshotData.Builder(player)).setStackFilter(this::shouldSnapshotItem);
+    
+    @Override
+    protected Builder makeSnapshotBuilder(final PlayerEntity player) {
+        return new Builder(player).setStackFilter(this::shouldSnapshotItem);
     }
-
+    
     @SubscribeEvent
-    public static void onTick(TickEvent.PlayerTickEvent event) {
-        PlayerEntity player = event.player;
+    public static void onTick(final TickEvent.PlayerTickEvent event) {
+        final PlayerEntity player = event.player;
         if (!player.isAlive() || !(player.level instanceof ServerWorld)) {
             return;
         }
         if (!player.getTags().contains("the_vault_restore_phoenixset")) {
             return;
         }
-        ServerWorld world = (ServerWorld) event.player.level;
-        PhoenixSetSnapshotData data = get(world);
+        final ServerWorld world = (ServerWorld)event.player.level;
+        final PhoenixSetSnapshotData data = get(world);
         if (data.hasSnapshot(player)) {
             data.restoreSnapshot(player);
         }
         player.removeTag("the_vault_restore_phoenixset");
     }
-
+    
     @SubscribeEvent(priority = EventPriority.HIGHEST)
-    public static void onDeath(LivingDeathEvent event) {
-        if (!(event.getEntity() instanceof ServerPlayerEntity) ||
-                !((event.getEntity()).level instanceof ServerWorld)) {
+    public static void onDeath(final LivingDeathEvent event) {
+        if (!(event.getEntity() instanceof ServerPlayerEntity) || !(event.getEntity().level instanceof ServerWorld)) {
             return;
         }
-        ServerPlayerEntity player = (ServerPlayerEntity) event.getEntity();
-        ServerWorld world = (ServerWorld) player.level;
-
-        if (PlayerSet.isActive(VaultGear.Set.PHOENIX, (LivingEntity) player)) {
-            PhoenixSetSnapshotData data = get(world);
-            if (data.hasSnapshot((PlayerEntity) player)) {
+        final ServerPlayerEntity player = (ServerPlayerEntity)event.getEntity();
+        final ServerWorld world = (ServerWorld)player.level;
+        if (PlayerSet.isActive(VaultGear.Set.PHOENIX, (LivingEntity)player)) {
+            final PhoenixSetSnapshotData data = get(world);
+            if (data.hasSnapshot((PlayerEntity)player)) {
                 player.addTag("the_vault_restore_phoenixset");
             }
         }
     }
-
-    public static PhoenixSetSnapshotData get(ServerWorld world) {
+    
+    public static PhoenixSetSnapshotData get(final ServerWorld world) {
         return get(world.getServer());
     }
-
-    public static PhoenixSetSnapshotData get(MinecraftServer srv) {
-        return (PhoenixSetSnapshotData) srv.overworld().getDataStorage().computeIfAbsent(PhoenixSetSnapshotData::new, "the_vault_PhoenixSet");
+    
+    public static PhoenixSetSnapshotData get(final MinecraftServer srv) {
+        return (PhoenixSetSnapshotData)srv.overworld().getDataStorage().computeIfAbsent((Supplier)PhoenixSetSnapshotData::new, "the_vault_PhoenixSet");
     }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\world\data\PhoenixSetSnapshotData.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

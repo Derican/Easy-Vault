@@ -1,7 +1,12 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.entity.ai;
 
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.MobEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.particles.IParticleData;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.util.DamageSource;
@@ -14,91 +19,77 @@ import net.minecraft.world.server.ServerWorld;
 
 import java.util.function.Predicate;
 
-public class AOEGoal<T extends MobEntity> extends GoalTask<T> {
-    protected boolean completed = false;
-    protected boolean started = false;
-    protected int tick = 0;
-    protected int delay = 0;
-
+public class AOEGoal<T extends MobEntity> extends GoalTask<T>
+{
+    protected boolean completed;
+    protected boolean started;
+    protected int tick;
+    protected int delay;
     protected BlockPos shockwave;
     private final Predicate<LivingEntity> filter;
-
-    public AOEGoal(T entity, Predicate<LivingEntity> filter) {
+    
+    public AOEGoal(final T entity, final Predicate<LivingEntity> filter) {
         super(entity);
+        this.completed = false;
+        this.started = false;
+        this.tick = 0;
+        this.delay = 0;
         this.filter = filter;
     }
-
-
+    
     public boolean canUse() {
-        return (getRandom().nextInt(120) == 0 && ((MobEntity) getEntity()).getTarget() != null);
+        return this.getRandom().nextInt(120) == 0 && this.getEntity().getTarget() != null;
     }
-
-
+    
     public boolean canContinueToUse() {
         return !this.completed;
     }
-
-
+    
     public void start() {
-        ((MobEntity) getEntity()).setDeltaMovement(((MobEntity) getEntity()).getDeltaMovement().add(0.0D, 1.1D, 0.0D));
+        this.getEntity().setDeltaMovement(this.getEntity().getDeltaMovement().add(0.0, 1.1, 0.0));
         this.delay = 5;
     }
-
-
+    
     public void tick() {
         if (this.completed) {
             return;
         }
-
-        if (!this.started && this.delay < 0 && ((MobEntity) getEntity()).isOnGround()) {
-            getWorld().playSound(null, ((MobEntity) getEntity()).getX(), ((MobEntity) getEntity()).getY(), ((MobEntity) getEntity()).getZ(), SoundEvents.DRAGON_FIREBALL_EXPLODE, ((MobEntity)
-                    getEntity()).getSoundSource(), 1.0F, 1.0F);
-
-            ((ServerWorld) getWorld()).sendParticles((IParticleData) ParticleTypes.EXPLOSION, ((MobEntity)
-                            getEntity()).getX() + 0.5D, ((MobEntity)
-                            getEntity()).getY() + 0.1D, ((MobEntity)
-                            getEntity()).getZ() + 0.5D, 10,
-                    getRandom().nextGaussian() * 0.02D,
-                    getRandom().nextGaussian() * 0.02D,
-                    getRandom().nextGaussian() * 0.02D, 1.0D);
-
-            this.shockwave = ((MobEntity) getEntity()).blockPosition();
+        if (!this.started && this.delay < 0 && this.getEntity().isOnGround()) {
+            this.getWorld().playSound((PlayerEntity)null, this.getEntity().getX(), this.getEntity().getY(), this.getEntity().getZ(), SoundEvents.DRAGON_FIREBALL_EXPLODE, this.getEntity().getSoundSource(), 1.0f, 1.0f);
+            ((ServerWorld)this.getWorld()).sendParticles((IParticleData)ParticleTypes.EXPLOSION, this.getEntity().getX() + 0.5, this.getEntity().getY() + 0.1, this.getEntity().getZ() + 0.5, 10, this.getRandom().nextGaussian() * 0.02, this.getRandom().nextGaussian() * 0.02, this.getRandom().nextGaussian() * 0.02, 1.0);
+            this.shockwave = this.getEntity().blockPosition();
             this.started = true;
         }
-
-
         if (this.started) {
-            double max = 50.0D;
-            double distance = (this.tick * 2);
-            double nextDistance = (this.tick * 2 + 2);
-
+            final double max = 50.0;
+            final double distance = this.tick * 2;
+            final double nextDistance = this.tick * 2 + 2;
             if (distance >= max) {
                 this.completed = true;
-
                 return;
             }
-            getWorld().getEntitiesOfClass(LivingEntity.class, (new AxisAlignedBB(this.shockwave)).inflate(max, max, max), e -> {
-                if (e == getEntity() || e.isSpectator() || !this.filter.test(e))
+            this.getWorld().getEntitiesOfClass(LivingEntity.class, new AxisAlignedBB(this.shockwave).inflate(max, max, max), e -> {
+                if (e == this.getEntity() || e.isSpectator() || !this.filter.test(e)) {
                     return false;
-                double d = Math.sqrt(e.blockPosition().distSqr((Vector3i) this.shockwave));
-                return (d >= distance && d < nextDistance);
+                }
+                else {
+                    final double d = Math.sqrt(e.blockPosition().distSqr((Vector3i)this.shockwave));
+                    return d >= distance && d < nextDistance;
+                }
             }).forEach(e -> {
-                Vector3d direction = (new Vector3d(e.getX() - this.shockwave.getX(), e.getY() - this.shockwave.getY(), e.getZ() - this.shockwave.getZ())).scale(0.5D);
-
-                direction = direction.normalize().add(0.0D, 1.0D - 0.02D * (this.tick + 1), 0.0D);
-
-                e.setDeltaMovement(e.getDeltaMovement().add(direction));
-
-                e.hurt(DamageSource.GENERIC, 8.0F / (this.tick + 1));
+                final Vector3d direction = new Vector3d(e.getX() - this.shockwave.getX(), e.getY() - this.shockwave.getY(), e.getZ() - this.shockwave.getZ()).scale(0.5);
+                final Vector3d direction2 = direction.normalize().add(0.0, 1.0 - 0.02 * (this.tick + 1), 0.0);
+                e.setDeltaMovement(e.getDeltaMovement().add(direction2));
+                e.hurt(DamageSource.GENERIC, 8.0f / (this.tick + 1));
+                return;
             });
-
-            this.tick++;
-        } else {
-            this.delay--;
+            ++this.tick;
+        }
+        else {
+            --this.delay;
         }
     }
-
-
+    
     public void stop() {
         this.completed = false;
         this.started = false;
@@ -107,9 +98,3 @@ public class AOEGoal<T extends MobEntity> extends GoalTask<T> {
         this.shockwave = null;
     }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\entity\ai\AOEGoal.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

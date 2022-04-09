@@ -1,3 +1,7 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.config;
 
 import com.google.gson.annotations.Expose;
@@ -5,27 +9,26 @@ import com.google.gson.annotations.Expose;
 import java.util.HashMap;
 import java.util.Map;
 
-public class VaultGearUpgradeConfig
-        extends Config {
+public class VaultGearUpgradeConfig extends Config
+{
     @Expose
     private String defaultUpgradeRarity;
     @Expose
     private Map<String, String> upgradeMapping;
-
+    
+    @Override
     public String getName() {
         return "vault_gear_upgrade";
     }
-
-    public String getUpgradedRarity(String rarity) {
+    
+    public String getUpgradedRarity(final String rarity) {
         return this.upgradeMapping.getOrDefault(rarity, this.defaultUpgradeRarity);
     }
-
-
+    
+    @Override
     protected void reset() {
         this.defaultUpgradeRarity = "Scrappy";
-
-        this.upgradeMapping = new HashMap<>();
-        this.upgradeMapping.put("Scrappy", "Scrappy");
+        (this.upgradeMapping = new HashMap<String, String>()).put("Scrappy", "Scrappy");
         this.upgradeMapping.put("Scrappy+", "Scrappy");
         this.upgradeMapping.put("Common", "Scrappy");
         this.upgradeMapping.put("Common+", "Scrappy+");
@@ -42,9 +45,3 @@ public class VaultGearUpgradeConfig
         this.upgradeMapping.put("Perfected", "Masterful");
     }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\config\VaultGearUpgradeConfig.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

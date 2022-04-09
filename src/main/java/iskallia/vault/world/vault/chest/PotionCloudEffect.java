@@ -1,3 +1,7 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.world.vault.chest;
 
 import com.google.gson.annotations.Expose;
@@ -9,6 +13,7 @@ import net.minecraft.entity.projectile.PotionEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.potion.Potion;
+import net.minecraft.potion.PotionUtils;
 import net.minecraft.util.IItemProvider;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.registry.Registry;
@@ -19,42 +24,33 @@ import net.minecraftforge.registries.ForgeRegistryEntry;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
+import java.util.function.Function;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
-public class PotionCloudEffect extends VaultChestEffect {
-    public PotionCloudEffect(String name, Potion... potions) {
-        super(name);
-
-        this
-
-
-                .potions = (List<String>) Arrays.<Potion>stream(potions).map(ForgeRegistryEntry::getRegistryName).filter(Objects::nonNull).map(ResourceLocation::toString).collect(Collectors.toList());
-    }
-
+public class PotionCloudEffect extends VaultChestEffect
+{
     @Expose
     public List<String> potions;
-
-    public List<Potion> getPotions() {
-        return (List<Potion>) this.potions.stream()
-                .map(s -> (Potion) Registry.POTION.getOptional(new ResourceLocation(s)).orElse(null))
-                .filter(Objects::nonNull).collect(Collectors.toList());
+    
+    public PotionCloudEffect(final String name, final Potion... potions) {
+        super(name);
+        this.potions = Arrays.stream(potions).map(ForgeRegistryEntry::getRegistryName).filter(Objects::nonNull).map(ResourceLocation::toString).collect(Collectors.toList());
     }
-
-
-    public void apply(VaultRaid vault, VaultPlayer player, ServerWorld world) {
+    
+    public List<Potion> getPotions() {
+        return this.potions.stream().map(s -> Registry.POTION.getOptional(new ResourceLocation(s)).orElse(null)).filter(Objects::nonNull).collect(Collectors.toList());
+    }
+    
+    @Override
+    public void apply(final VaultRaid vault, final VaultPlayer player, final ServerWorld world) {
         player.runIfPresent(world.getServer(), playerEntity -> {
-            PotionEntity entity = new PotionEntity((World) world, (LivingEntity) playerEntity);
-            ItemStack stack = new ItemStack((IItemProvider) Items.LINGERING_POTION);
-            getPotions().forEach(());
+            final PotionEntity entity = new PotionEntity((World)world, (LivingEntity)playerEntity);
+            final ItemStack stack = new ItemStack((IItemProvider)Items.LINGERING_POTION);
+            this.getPotions().forEach(potion -> PotionUtils.setPotion(stack, potion));
             entity.setItem(stack);
-            entity.shootFromRotation((Entity) playerEntity, playerEntity.xRot, playerEntity.yRot, -20.0F, 0.5F, 1.0F);
-            world.addFreshEntity((Entity) entity);
+            entity.shootFromRotation((Entity)playerEntity, playerEntity.xRot, playerEntity.yRot, -20.0f, 0.5f, 1.0f);
+            world.addFreshEntity((Entity)entity);
         });
     }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\world\vault\chest\PotionCloudEffect.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

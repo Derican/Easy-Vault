@@ -1,3 +1,7 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.entity.eternal;
 
 import iskallia.vault.init.ModConfigs;
@@ -12,69 +16,60 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
-
-public class EternalAttributes
-        implements INBTSerializable<CompoundNBT> {
+public class EternalAttributes implements INBTSerializable<CompoundNBT>
+{
     public static final String HEALTH = "health";
     public static final String DAMAGE = "damage";
     public static final String MOVEMENT_SPEED = "movespeed";
-    private final Map<Attribute, Float> attributes = new HashMap<>();
-
-
-    private EternalAttributes(CompoundNBT tag) {
-        deserializeNBT(tag);
+    private final Map<Attribute, Float> attributes;
+    
+    public EternalAttributes() {
+        this.attributes = new HashMap<Attribute, Float>();
     }
-
-    public static EternalAttributes fromNBT(CompoundNBT tag) {
+    
+    private EternalAttributes(final CompoundNBT tag) {
+        this.attributes = new HashMap<Attribute, Float>();
+        this.deserializeNBT(tag);
+    }
+    
+    public static EternalAttributes fromNBT(final CompoundNBT tag) {
         return new EternalAttributes(tag);
     }
-
+    
     void initializeAttributes() {
         ModConfigs.ETERNAL_ATTRIBUTES.createAttributes().forEach(this.attributes::put);
     }
-
-    public Optional<Float> getAttributeValue(Attribute attribute) {
+    
+    public Optional<Float> getAttributeValue(final Attribute attribute) {
         return Optional.ofNullable(this.attributes.get(attribute));
     }
-
+    
     public Map<Attribute, Float> getAttributes() {
-        return Collections.unmodifiableMap(this.attributes);
+        return Collections.unmodifiableMap((Map<? extends Attribute, ? extends Float>)this.attributes);
     }
-
-    private void setAttributeValue(Attribute attribute, float value) {
-        this.attributes.put(attribute, Float.valueOf(value));
+    
+    private void setAttributeValue(final Attribute attribute, final float value) {
+        this.attributes.put(attribute, value);
     }
-
-    void addAttributeValue(Attribute attribute, float value) {
-        float existing = ((Float) getAttributeValue(attribute).orElse(Float.valueOf(0.0F))).floatValue();
-        setAttributeValue(attribute, existing + value);
+    
+    void addAttributeValue(final Attribute attribute, final float value) {
+        final float existing = this.getAttributeValue(attribute).orElse(0.0f);
+        this.setAttributeValue(attribute, existing + value);
     }
-
-
+    
     public CompoundNBT serializeNBT() {
-        CompoundNBT tag = new CompoundNBT();
-        this.attributes.forEach((attribute, value) -> tag.putFloat(attribute.getRegistryName().toString(), value.floatValue()));
-
-
+        final CompoundNBT tag = new CompoundNBT();
+        this.attributes.forEach((attribute, value) -> tag.putFloat(attribute.getRegistryName().toString(), (float)value));
         return tag;
     }
-
-
-    public void deserializeNBT(CompoundNBT tag) {
+    
+    public void deserializeNBT(final CompoundNBT tag) {
         this.attributes.clear();
         tag.getAllKeys().forEach(attributeKey -> {
-            Attribute attr = (Attribute) ForgeRegistries.ATTRIBUTES.getValue(new ResourceLocation(attributeKey));
-            if (attr != null)
-                this.attributes.put(attr, Float.valueOf(tag.getFloat(attributeKey)));
+            final Attribute attr = (Attribute)ForgeRegistries.ATTRIBUTES.getValue(new ResourceLocation(attributeKey));
+            if (attr != null) {
+                this.attributes.put(attr, tag.getFloat(attributeKey));
+            }
         });
     }
-
-    public EternalAttributes() {
-    }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\entity\eternal\EternalAttributes.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

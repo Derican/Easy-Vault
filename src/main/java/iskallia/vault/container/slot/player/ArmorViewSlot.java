@@ -1,3 +1,7 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.container.slot.player;
 
 import com.mojang.datafixers.util.Pair;
@@ -10,27 +14,22 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
-public class ArmorViewSlot
-        extends ReadOnlySlot {
-    private static final ResourceLocation[] ARMOR_SLOT_TEXTURES = new ResourceLocation[]{PlayerContainer.EMPTY_ARMOR_SLOT_HELMET, PlayerContainer.EMPTY_ARMOR_SLOT_CHESTPLATE, PlayerContainer.EMPTY_ARMOR_SLOT_LEGGINGS, PlayerContainer.EMPTY_ARMOR_SLOT_BOOTS};
-
-
+public class ArmorViewSlot extends ReadOnlySlot
+{
+    private static final ResourceLocation[] ARMOR_SLOT_TEXTURES;
     private final EquipmentSlotType equipmentSlotType;
-
-
-    public ArmorViewSlot(PlayerEntity player, EquipmentSlotType equipmentSlotType, int xPosition, int yPosition) {
-        super((IInventory) player.inventory, 39 - equipmentSlotType.getIndex(), xPosition, yPosition);
+    
+    public ArmorViewSlot(final PlayerEntity player, final EquipmentSlotType equipmentSlotType, final int xPosition, final int yPosition) {
+        super((IInventory)player.inventory, 39 - equipmentSlotType.getIndex(), xPosition, yPosition);
         this.equipmentSlotType = equipmentSlotType;
     }
-
+    
     @OnlyIn(Dist.CLIENT)
     public Pair<ResourceLocation, ResourceLocation> getNoItemIcon() {
-        return Pair.of(PlayerContainer.BLOCK_ATLAS, ARMOR_SLOT_TEXTURES[this.equipmentSlotType.getIndex()]);
+        return (Pair<ResourceLocation, ResourceLocation>)Pair.of(PlayerContainer.BLOCK_ATLAS, ArmorViewSlot.ARMOR_SLOT_TEXTURES[this.equipmentSlotType.getIndex()]);
+    }
+    
+    static {
+        ARMOR_SLOT_TEXTURES = new ResourceLocation[] { PlayerContainer.EMPTY_ARMOR_SLOT_HELMET, PlayerContainer.EMPTY_ARMOR_SLOT_CHESTPLATE, PlayerContainer.EMPTY_ARMOR_SLOT_LEGGINGS, PlayerContainer.EMPTY_ARMOR_SLOT_BOOTS };
     }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\container\slot\player\ArmorViewSlot.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

@@ -1,3 +1,7 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.world.vault.builder;
 
 import iskallia.vault.item.crystal.CrystalData;
@@ -12,53 +16,50 @@ import net.minecraft.world.server.ServerWorld;
 import java.util.Optional;
 import java.util.UUID;
 
-
-public class CoopVaultBuilder
-        extends VaultRaidBuilder {
-    private static final CoopVaultBuilder INSTANCE = new CoopVaultBuilder();
-
-
-    public static CoopVaultBuilder getInstance() {
-        return INSTANCE;
+public class CoopVaultBuilder extends VaultRaidBuilder
+{
+    private static final CoopVaultBuilder INSTANCE;
+    
+    private CoopVaultBuilder() {
     }
-
-
-    public VaultRaid.Builder initializeBuilder(ServerWorld world, ServerPlayerEntity player, CrystalData crystal) {
-        VaultRaid.Builder builder = getDefaultBuilder(crystal, world, player);
-
-        Optional<VaultPartyData.Party> partyOpt = VaultPartyData.get(world).getParty(player.getUUID());
-
-        if (partyOpt.isPresent() && ((VaultPartyData.Party) partyOpt.get()).getMembers().size() > 1) {
-            VaultPartyData.Party party = partyOpt.get();
-
-            UUID leader = (party.getLeader() != null) ? party.getLeader() : (UUID) MiscUtils.getRandomEntry(party.getMembers(), world.getRandom());
+    
+    public static CoopVaultBuilder getInstance() {
+        return CoopVaultBuilder.INSTANCE;
+    }
+    
+    @Override
+    public VaultRaid.Builder initializeBuilder(final ServerWorld world, final ServerPlayerEntity player, final CrystalData crystal) {
+        final VaultRaid.Builder builder = this.getDefaultBuilder(crystal, world, player);
+        final Optional<VaultPartyData.Party> partyOpt = VaultPartyData.get(world).getParty(player.getUUID());
+        if (partyOpt.isPresent() && partyOpt.get().getMembers().size() > 1) {
+            final VaultPartyData.Party party = partyOpt.get();
+            final UUID leader = (party.getLeader() != null) ? party.getLeader() : MiscUtils.getRandomEntry(party.getMembers(), world.getRandom());
             builder.set(VaultRaid.HOST, leader);
-
             party.getMembers().forEach(uuid -> {
-                ServerPlayerEntity partyPlayer = world.getServer().getPlayerList().getPlayer(uuid);
+                final ServerPlayerEntity partyPlayer = world.getServer().getPlayerList().getPlayer(uuid);
                 if (partyPlayer != null) {
                     builder.addPlayer(VaultPlayerType.RUNNER, partyPlayer);
                 }
+                return;
             });
-        } else {
+        }
+        else {
             builder.addPlayer(VaultPlayerType.RUNNER, player);
             builder.set(VaultRaid.HOST, player.getUUID());
         }
         builder.setLevelInitializer(VaultRaid.INIT_LEVEL_COOP);
         return builder;
     }
-
-
-    protected int getVaultLevelForObjective(ServerWorld world, ServerPlayerEntity player) {
-        return ((Integer) VaultPartyData.get(world).getParty(player.getUUID()).map(party -> {
-            UUID leader = (party.getLeader() != null) ? party.getLeader() : (UUID) MiscUtils.getRandomEntry(party.getMembers(), world.getRandom());
-            return Integer.valueOf(PlayerVaultStatsData.get(world).getVaultStats(leader).getVaultLevel());
-        }).orElse(Integer.valueOf(super.getVaultLevelForObjective(world, player)))).intValue();
+    
+    @Override
+    protected int getVaultLevelForObjective(final ServerWorld world, final ServerPlayerEntity player) {
+        return VaultPartyData.get(world).getParty(player.getUUID()).map(party -> {
+            final UUID leader = (party.getLeader() != null) ? party.getLeader() : MiscUtils.getRandomEntry(party.getMembers(), world.getRandom());
+            return PlayerVaultStatsData.get(world).getVaultStats(leader).getVaultLevel();
+        }).orElse(super.getVaultLevelForObjective(world, player));
+    }
+    
+    static {
+        INSTANCE = new CoopVaultBuilder();
     }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\world\vault\builder\CoopVaultBuilder.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

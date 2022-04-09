@@ -1,3 +1,7 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.world.vault.gen.piece;
 
 import iskallia.vault.Vault;
@@ -11,30 +15,27 @@ import net.minecraft.util.math.MutableBoundingBox;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 
-public class VaultObelisk extends VaultPiece {
-    public static final ResourceLocation ID = Vault.id("obelisk");
-
+public class VaultObelisk extends VaultPiece
+{
+    public static final ResourceLocation ID;
+    
     public VaultObelisk() {
-        super(ID);
+        super(VaultObelisk.ID);
     }
-
-    public VaultObelisk(ResourceLocation template, MutableBoundingBox boundingBox, Rotation rotation) {
-        super(ID, template, boundingBox, rotation);
+    
+    public VaultObelisk(final ResourceLocation template, final MutableBoundingBox boundingBox, final Rotation rotation) {
+        super(VaultObelisk.ID, template, boundingBox, rotation);
     }
-
-    public boolean isCompleted(World world) {
-        return BlockPos.betweenClosedStream(getBoundingBox())
-                .map(world::getBlockState)
-                .filter(state -> state.getBlock() instanceof ObeliskBlock)
-                .anyMatch(blockState -> (((Integer) blockState.getValue((Property) ObeliskBlock.COMPLETION)).intValue() == 4));
+    
+    public boolean isCompleted(final World world) {
+        return BlockPos.betweenClosedStream(this.getBoundingBox()).map(world::getBlockState).filter(state -> state.getBlock() instanceof ObeliskBlock).anyMatch(blockState -> (int)blockState.getValue(ObeliskBlock.COMPLETION) == 4);
     }
-
-    public void tick(ServerWorld world, VaultRaid vault) {
+    
+    @Override
+    public void tick(final ServerWorld world, final VaultRaid vault) {
+    }
+    
+    static {
+        ID = Vault.id("obelisk");
     }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\world\vault\gen\piece\VaultObelisk.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

@@ -1,3 +1,7 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.block;
 
 import net.minecraft.block.AbstractBlock;
@@ -24,77 +28,66 @@ import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
 
-public class MazeBlock extends Block {
-    public static final EnumProperty<MazeColor> COLOR = EnumProperty.create("color", MazeColor.class);
-
+public class MazeBlock extends Block
+{
+    public static final EnumProperty<MazeColor> COLOR;
+    
     public MazeBlock() {
-        super(AbstractBlock.Properties.of(Material.METAL, MaterialColor.METAL)
-                .strength(-1.0F, 3600000.0F)
-                .sound(SoundType.METAL));
-
-        registerDefaultState((BlockState) ((BlockState) this.stateDefinition.any())
-                .setValue((Property) COLOR, MazeColor.RED));
+        super(AbstractBlock.Properties.of(Material.METAL, MaterialColor.METAL).strength(-1.0f, 3600000.0f).sound(SoundType.METAL));
+        this.registerDefaultState((this.stateDefinition.any()).setValue(MazeBlock.COLOR, MazeColor.RED));
     }
-
-
-    protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) {
-        builder.add(new Property[]{(Property) COLOR});
+    
+    protected void createBlockStateDefinition(final StateContainer.Builder<Block, BlockState> builder) {
+        builder.add(new Property[] { MazeBlock.COLOR });
     }
-
-
+    
     @Nullable
-    public BlockState getStateForPlacement(BlockItemUseContext context) {
+    public BlockState getStateForPlacement(final BlockItemUseContext context) {
         return super.getStateForPlacement(context);
     }
-
-
-    public void stepOn(World worldIn, BlockPos pos, Entity entityIn) {
-        if (worldIn.isClientSide)
+    
+    public void stepOn(final World worldIn, final BlockPos pos, final Entity entityIn) {
+        if (worldIn.isClientSide) {
             return;
-        if (!(entityIn instanceof PlayerEntity))
+        }
+        if (!(entityIn instanceof PlayerEntity)) {
             return;
-        PlayerEntity player = (PlayerEntity) entityIn;
-        Scoreboard scoreboard = worldIn.getScoreboard();
-
+        }
+        final PlayerEntity player = (PlayerEntity)entityIn;
+        final Scoreboard scoreboard = worldIn.getScoreboard();
         if (scoreboard.getObjective("Color") == null) {
-            scoreboard.addObjective("Color", ScoreCriteria.DUMMY, (ITextComponent) new StringTextComponent("Color"), ScoreCriteria.RenderType.INTEGER);
+            scoreboard.addObjective("Color", ScoreCriteria.DUMMY, (ITextComponent)new StringTextComponent("Color"), ScoreCriteria.RenderType.INTEGER);
         }
-        ScoreObjective colorObjective = scoreboard.getObjective("Color");
+        final ScoreObjective colorObjective = scoreboard.getObjective("Color");
         assert colorObjective != null;
-
-
-        Score colorScore = worldIn.getScoreboard().getOrCreatePlayerScore(player.getDisplayName().getString(), colorObjective);
-        MazeColor playerColor = MazeColor.values()[colorScore.getScore()];
-        MazeColor blockColor = (MazeColor) worldIn.getBlockState(pos).getValue((Property) COLOR);
-
+        final Score colorScore = worldIn.getScoreboard().getOrCreatePlayerScore(player.getDisplayName().getString(), colorObjective);
+        final MazeColor playerColor = MazeColor.values()[colorScore.getScore()];
+        final MazeColor blockColor = (MazeColor)worldIn.getBlockState(pos).getValue(MazeBlock.COLOR);
         if (playerColor != blockColor) {
-            BlockPos nextPosition = player.blockPosition().relative(player.getDirection(), 1);
+            final BlockPos nextPosition = player.blockPosition().relative(player.getDirection(), 1);
             colorScore.setScore((playerColor == MazeColor.RED) ? MazeColor.BLUE.ordinal() : MazeColor.RED.ordinal());
-            player.teleportTo(nextPosition.getX() + 0.5D, nextPosition.getY(), nextPosition.getZ() + 0.5D);
+            player.teleportTo(nextPosition.getX() + 0.5, (double)nextPosition.getY(), nextPosition.getZ() + 0.5);
         }
-
         super.stepOn(worldIn, pos, entityIn);
     }
-
-    public enum MazeColor implements IStringSerializable {
-        RED("red"),
+    
+    static {
+        COLOR = EnumProperty.create("color", (Class)MazeColor.class);
+    }
+    
+    public enum MazeColor implements IStringSerializable
+    {
+        RED("red"), 
         BLUE("blue");
-
+        
         private String name;
-
-        MazeColor(String name) {
+        
+        private MazeColor(final String name) {
             this.name = name;
         }
-
-
+        
         public String getSerializedName() {
             return this.name;
         }
     }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\block\MazeBlock.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

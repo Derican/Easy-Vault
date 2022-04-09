@@ -1,3 +1,7 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.world.gen;
 
 import net.minecraft.block.BlockState;
@@ -8,30 +12,29 @@ import net.minecraft.world.IWorld;
 import java.util.ArrayList;
 import java.util.List;
 
-
-public class PortalPlacer {
+public class PortalPlacer
+{
     private final BlockPlacer portalPlacer;
     private final BlockPlacer framePlacer;
-
-    public PortalPlacer(BlockPlacer portal, BlockPlacer frame) {
+    
+    public PortalPlacer(final BlockPlacer portal, final BlockPlacer frame) {
         this.portalPlacer = portal;
         this.framePlacer = frame;
     }
-
-    public List<BlockPos> place(IWorld world, BlockPos pos, Direction facing, int width, int height) {
+    
+    public List<BlockPos> place(final IWorld world, BlockPos pos, final Direction facing, final int width, final int height) {
         pos = pos.relative(Direction.DOWN).relative(facing.getOpposite());
-
-        List<BlockPos> portalPlacements = new ArrayList<>();
-        for (int y = 0; y < height + 2; y++) {
-            place(world, pos.above(y), facing, this.framePlacer);
-            place(world, pos.relative(facing, width + 1).above(y), facing, this.framePlacer);
-
-            for (int x = 1; x < width + 1; x++) {
+        final List<BlockPos> portalPlacements = new ArrayList<BlockPos>();
+        for (int y = 0; y < height + 2; ++y) {
+            this.place(world, pos.above(y), facing, this.framePlacer);
+            this.place(world, pos.relative(facing, width + 1).above(y), facing, this.framePlacer);
+            for (int x = 1; x < width + 1; ++x) {
                 if (y == 0 || y == height + 1) {
-                    place(world, pos.relative(facing, x).above(y), facing, this.framePlacer);
-                } else {
-                    BlockPos placePos = pos.relative(facing, x).above(y);
-                    if (place(world, placePos, facing, this.portalPlacer)) {
+                    this.place(world, pos.relative(facing, x).above(y), facing, this.framePlacer);
+                }
+                else {
+                    final BlockPos placePos = pos.relative(facing, x).above(y);
+                    if (this.place(world, placePos, facing, this.portalPlacer)) {
                         portalPlacements.add(placePos);
                     }
                 }
@@ -39,21 +42,12 @@ public class PortalPlacer {
         }
         return portalPlacements;
     }
-
-    protected boolean place(IWorld world, BlockPos pos, Direction direction, BlockPlacer provider) {
-        return place(world, pos, provider.getState(pos, world.getRandom(), direction));
+    
+    protected boolean place(final IWorld world, final BlockPos pos, final Direction direction, final BlockPlacer provider) {
+        return this.place(world, pos, provider.getState(pos, world.getRandom(), direction));
     }
-
-    protected boolean place(IWorld world, BlockPos pos, BlockState state) {
-        if (state != null) {
-            return world.setBlock(pos, state, 3);
-        }
-        return false;
+    
+    protected boolean place(final IWorld world, final BlockPos pos, final BlockState state) {
+        return state != null && world.setBlock(pos, state, 3);
     }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\world\gen\PortalPlacer.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

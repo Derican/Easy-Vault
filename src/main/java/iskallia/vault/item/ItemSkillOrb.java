@@ -1,3 +1,7 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.item;
 
 import iskallia.vault.Vault;
@@ -15,40 +19,24 @@ import net.minecraft.util.SoundEvents;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 
-public class ItemSkillOrb
-        extends Item {
-    public ItemSkillOrb(ItemGroup group) {
-        super((new Item.Properties())
-                .tab(group)
-                .stacksTo(64));
-
-        setRegistryName(Vault.id("skill_orb"));
+public class ItemSkillOrb extends Item
+{
+    public ItemSkillOrb(final ItemGroup group) {
+        super(new Item.Properties().tab(group).stacksTo(64));
+        this.setRegistryName(Vault.id("skill_orb"));
     }
-
-
-    public ActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand) {
-        ItemStack heldItemStack = player.getItemInHand(hand);
-
-        world.playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.PLAYER_LEVELUP, SoundCategory.NEUTRAL, 0.5F, 0.4F / (random
-
-                .nextFloat() * 0.4F + 0.8F));
-
+    
+    public ActionResult<ItemStack> use(final World world, final PlayerEntity player, final Hand hand) {
+        final ItemStack heldItemStack = player.getItemInHand(hand);
+        world.playSound((PlayerEntity)null, player.getX(), player.getY(), player.getZ(), SoundEvents.PLAYER_LEVELUP, SoundCategory.NEUTRAL, 0.5f, 0.4f / (ItemSkillOrb.random.nextFloat() * 0.4f + 0.8f));
         if (!world.isClientSide) {
-            PlayerVaultStatsData statsData = PlayerVaultStatsData.get((ServerWorld) world);
-            statsData.addSkillPoint((ServerPlayerEntity) player, 1);
+            final PlayerVaultStatsData statsData = PlayerVaultStatsData.get((ServerWorld)world);
+            statsData.addSkillPoint((ServerPlayerEntity)player, 1);
         }
-
         player.awardStat(Stats.ITEM_USED.get(this));
         if (!player.abilities.instabuild) {
             heldItemStack.shrink(1);
         }
-
-        return ActionResult.sidedSuccess(heldItemStack, world.isClientSide());
+        return (ActionResult<ItemStack>)ActionResult.sidedSuccess(heldItemStack, world.isClientSide());
     }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\item\ItemSkillOrb.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

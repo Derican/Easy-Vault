@@ -1,3 +1,7 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.client.gui.widget;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
@@ -15,88 +19,58 @@ import net.minecraft.util.text.StringTextComponent;
 
 import java.awt.*;
 
-public class TradeWidget
-        extends Widget {
+public class TradeWidget extends Widget
+{
     public static final int BUTTON_WIDTH = 88;
     public static final int BUTTON_HEIGHT = 27;
     protected VendingMachineScreen parentScreen;
     protected TraderCore traderCode;
-
-    public TradeWidget(int x, int y, TraderCore traderCode, VendingMachineScreen parentScreen) {
-        super(x, y, 0, 0, (ITextComponent) new StringTextComponent(""));
+    
+    public TradeWidget(final int x, final int y, final TraderCore traderCode, final VendingMachineScreen parentScreen) {
+        super(x, y, 0, 0, (ITextComponent)new StringTextComponent(""));
         this.parentScreen = parentScreen;
         this.traderCode = traderCode;
     }
-
+    
     public TraderCore getTraderCode() {
         return this.traderCode;
     }
-
-
-    public void mouseMoved(double mouseX, double mouseY) {
+    
+    public void mouseMoved(final double mouseX, final double mouseY) {
     }
-
-
-    public boolean mouseClicked(double mouseX, double mouseY, int button) {
+    
+    public boolean mouseClicked(final double mouseX, final double mouseY, final int button) {
         return super.mouseClicked(mouseX, mouseY, button);
     }
-
-    public boolean isHovered(int mouseX, int mouseY) {
-        return (this.x <= mouseX && mouseX <= this.x + 88 && this.y <= mouseY && mouseY <= this.y + 27);
+    
+    public boolean isHovered(final int mouseX, final int mouseY) {
+        return this.x <= mouseX && mouseX <= this.x + 88 && this.y <= mouseY && mouseY <= this.y + 27;
     }
-
-
-    public void render(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks) {
-        Minecraft minecraft = Minecraft.getInstance();
-
+    
+    public void render(final MatrixStack matrixStack, final int mouseX, final int mouseY, final float partialTicks) {
+        final Minecraft minecraft = Minecraft.getInstance();
         minecraft.getTextureManager().bind(VendingMachineScreen.HUD_RESOURCE);
-
-        Trade trade = this.traderCode.getTrade();
-        ItemStack buy = trade.getBuy().toStack();
-        ItemStack sell = trade.getSell().toStack();
-
-        ItemRenderer itemRenderer = minecraft.getItemRenderer();
-
-        Rectangle tradeBoundaries = this.parentScreen.getTradeBoundaries();
-        int yOFfset = this.parentScreen.tradesContainer.getyOffset();
-
+        final Trade trade = this.traderCode.getTrade();
+        final ItemStack buy = trade.getBuy().toStack();
+        final ItemStack sell = trade.getSell().toStack();
+        final ItemRenderer itemRenderer = minecraft.getItemRenderer();
+        final Rectangle tradeBoundaries = this.parentScreen.getTradeBoundaries();
+        final int yOFfset = this.parentScreen.tradesContainer.getyOffset();
         if (trade.getTradesLeft() == 0) {
-            blit(matrixStack, this.x, this.y, 277.0F, 96.0F, 88, 27, 512, 256);
-
+            blit(matrixStack, this.x, this.y, 277.0f, 96.0f, 88, 27, 512, 256);
             RenderSystem.disableDepthTest();
             itemRenderer.renderGuiItem(buy, 5 + this.x + tradeBoundaries.x, 6 + this.y + tradeBoundaries.y - yOFfset);
-
-
             itemRenderer.renderGuiItem(sell, 55 + this.x + tradeBoundaries.x, 6 + this.y + tradeBoundaries.y - yOFfset);
-
-
             return;
         }
-
-        boolean isHovered = isHovered(mouseX, mouseY);
-
-        boolean isSelected = (((VendingMachineContainer) this.parentScreen.getMenu()).getSelectedTrade() == this.traderCode);
-
-        blit(matrixStack, this.x, this.y, 277.0F, (isHovered || isSelected) ? 68.0F : 40.0F, 88, 27, 512, 256);
-
-
+        final boolean isHovered = this.isHovered(mouseX, mouseY);
+        final boolean isSelected = ((VendingMachineContainer)this.parentScreen.getMenu()).getSelectedTrade() == this.traderCode;
+        blit(matrixStack, this.x, this.y, 277.0f, (isHovered || isSelected) ? 68.0f : 40.0f, 88, 27, 512, 256);
         RenderSystem.disableDepthTest();
         itemRenderer.renderGuiItem(buy, 5 + this.x + tradeBoundaries.x, 6 + this.y + tradeBoundaries.y - yOFfset);
-
-
         itemRenderer.renderGuiItem(sell, 55 + this.x + tradeBoundaries.x, 6 + this.y + tradeBoundaries.y - yOFfset);
-
-
-        minecraft.font.draw(matrixStack, buy
-                .getCount() + "", (this.x + 23), (this.y + 10), -1);
-        minecraft.font.draw(matrixStack, sell
-                .getCount() + "", (this.x + 73), (this.y + 10), -1);
+        minecraft.font.draw(matrixStack, buy.getCount() + "", (float)(this.x + 23), (float)(this.y + 10), -1);
+        minecraft.font.draw(matrixStack, sell.getCount() + "", (float)(this.x + 73), (float)(this.y + 10), -1);
         RenderSystem.enableDepthTest();
     }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\client\gui\widget\TradeWidget.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

@@ -1,3 +1,7 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.block;
 
 import iskallia.vault.block.entity.VaultChestTileEntity;
@@ -23,46 +27,43 @@ import net.minecraft.world.World;
 import javax.annotation.Nullable;
 import java.util.function.Supplier;
 
-
-public class VaultChestBlock
-        extends ChestBlock {
-    protected VaultChestBlock(AbstractBlock.Properties builder, Supplier<TileEntityType<? extends ChestTileEntity>> tileSupplier) {
-        super(builder, tileSupplier);
+public class VaultChestBlock extends ChestBlock
+{
+    protected VaultChestBlock(final AbstractBlock.Properties builder, final Supplier<TileEntityType<? extends ChestTileEntity>> tileSupplier) {
+        super(builder, (Supplier)tileSupplier);
     }
-
-    public VaultChestBlock(AbstractBlock.Properties builder) {
+    
+    public VaultChestBlock(final AbstractBlock.Properties builder) {
         this(builder, () -> ModBlocks.VAULT_CHEST_TILE_ENTITY);
     }
-
-
-    public boolean removedByPlayer(BlockState state, World world, BlockPos pos, PlayerEntity player, boolean willHarvest, FluidState fluid) {
-        TileEntity te = world.getBlockEntity(pos);
+    
+    public boolean removedByPlayer(final BlockState state, final World world, final BlockPos pos, final PlayerEntity player, final boolean willHarvest, final FluidState fluid) {
+        final TileEntity te = world.getBlockEntity(pos);
         if (!(te instanceof VaultChestTileEntity) || player.isCreative()) {
             return super.removedByPlayer(state, world, pos, player, willHarvest, fluid);
         }
         if (this != ModBlocks.VAULT_BONUS_CHEST && this != ModBlocks.VAULT_COOP_CHEST) {
             return super.removedByPlayer(state, world, pos, player, willHarvest, fluid);
         }
-        VaultChestTileEntity chest = (VaultChestTileEntity) te;
+        final VaultChestTileEntity chest = (VaultChestTileEntity)te;
         if (chest.isEmpty()) {
             return super.removedByPlayer(state, world, pos, player, willHarvest, fluid);
         }
-        getBlock().playerWillDestroy(world, pos, state, player);
+        this.getBlock().playerWillDestroy(world, pos, state, player);
         return true;
     }
-
-
-    public void playerDestroy(World world, PlayerEntity player, BlockPos pos, BlockState state, @Nullable TileEntity te, ItemStack stack) {
+    
+    public void playerDestroy(final World world, final PlayerEntity player, final BlockPos pos, final BlockState state, @Nullable final TileEntity te, final ItemStack stack) {
         if (this != ModBlocks.VAULT_BONUS_CHEST && this != ModBlocks.VAULT_COOP_CHEST) {
             super.playerDestroy(world, player, pos, state, te, stack);
             return;
         }
         player.awardStat(Stats.BLOCK_MINED.get(this));
-        player.causeFoodExhaustion(0.005F);
+        player.causeFoodExhaustion(0.005f);
         if (te instanceof VaultChestTileEntity) {
-            VaultChestTileEntity chest = (VaultChestTileEntity) te;
-            for (int slot = 0; slot < chest.getContainerSize(); slot++) {
-                ItemStack invStack = chest.getItem(slot);
+            final VaultChestTileEntity chest = (VaultChestTileEntity)te;
+            for (int slot = 0; slot < chest.getContainerSize(); ++slot) {
+                final ItemStack invStack = chest.getItem(slot);
                 if (!invStack.isEmpty()) {
                     Block.popResource(world, pos, invStack);
                     chest.setItem(slot, ItemStack.EMPTY);
@@ -71,21 +72,13 @@ public class VaultChestBlock
             }
         }
     }
-
-
-    public TileEntity newBlockEntity(IBlockReader world) {
-        return (TileEntity) new VaultChestTileEntity();
+    
+    public TileEntity newBlockEntity(final IBlockReader world) {
+        return (TileEntity)new VaultChestTileEntity();
     }
-
-
-    public BlockState getStateForPlacement(BlockItemUseContext context) {
-        BlockState state = super.getStateForPlacement(context);
-        return (state == null) ? null : (BlockState) state.setValue((Property) TYPE, (Comparable) ChestType.SINGLE);
+    
+    public BlockState getStateForPlacement(final BlockItemUseContext context) {
+        final BlockState state = super.getStateForPlacement(context);
+        return (state == null) ? null : (state.setValue(VaultChestBlock.TYPE, ChestType.SINGLE));
     }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\block\VaultChestBlock.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

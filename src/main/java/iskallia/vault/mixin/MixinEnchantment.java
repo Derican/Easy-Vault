@@ -1,3 +1,7 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.mixin;
 
 import iskallia.vault.item.gear.VaultGear;
@@ -8,17 +12,13 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-@Mixin({Enchantment.class})
-public abstract class MixinEnchantment {
-    @Inject(method = {"canApply"}, at = {@At("HEAD")}, cancellable = true)
-    private void canApply(ItemStack stack, CallbackInfoReturnable<Boolean> ci) {
-        if (stack.getItem() instanceof VaultGear && !((VaultGear) stack.getItem()).canApply(stack, (Enchantment) this))
-            ci.setReturnValue(Boolean.valueOf(false));
+@Mixin({ Enchantment.class })
+public abstract class MixinEnchantment
+{
+    @Inject(method = { "canEnchant" }, at = { @At("HEAD") }, cancellable = true)
+    private void canEnchant(final ItemStack stack, final CallbackInfoReturnable<Boolean> ci) {
+        if (stack.getItem() instanceof VaultGear && !((VaultGear)stack.getItem()).canApply(stack, (Enchantment)this)) {
+            ci.setReturnValue(false);
+        }
     }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\mixin\MixinEnchantment.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

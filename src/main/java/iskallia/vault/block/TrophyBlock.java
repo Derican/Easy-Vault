@@ -1,3 +1,7 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.block;
 
 import iskallia.vault.block.entity.LootStatueTileEntity;
@@ -20,47 +24,38 @@ import net.minecraft.world.IBlockReader;
 
 import javax.annotation.Nullable;
 
-
-public class TrophyBlock
-        extends LootStatueBlock {
-    public static final VoxelShape SHAPE = Block.box(2.0D, 0.0D, 2.0D, 14.0D, 16.0D, 14.0D);
-
+public class TrophyBlock extends LootStatueBlock
+{
+    public static final VoxelShape SHAPE;
+    
     public TrophyBlock() {
-        super(StatueType.TROPHY, AbstractBlock.Properties.of(Material.METAL, MaterialColor.GOLD)
-                .strength(5.0F, 3600000.0F)
-                .noOcclusion()
-                .noCollission());
+        super(StatueType.TROPHY, AbstractBlock.Properties.of(Material.METAL, MaterialColor.GOLD).strength(5.0f, 3600000.0f).noOcclusion().noCollission());
     }
-
-
-    public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
-        return SHAPE;
+    
+    @Override
+    public VoxelShape getShape(final BlockState state, final IBlockReader worldIn, final BlockPos pos, final ISelectionContext context) {
+        return TrophyBlock.SHAPE;
     }
-
-
-    protected void setStatueTileData(LootStatueTileEntity lootStatue, CompoundNBT blockEntityTag) {
+    
+    @Override
+    protected void setStatueTileData(final LootStatueTileEntity lootStatue, final CompoundNBT blockEntityTag) {
         super.setStatueTileData(lootStatue, blockEntityTag);
-
         if (lootStatue instanceof TrophyStatueTileEntity) {
-            TrophyStatueTileEntity trophyStatue = (TrophyStatueTileEntity) lootStatue;
-
-            WeekKey week = WeekKey.deserialize(blockEntityTag.getCompound("trophyWeek"));
-            PlayerVaultStatsData.PlayerRecordEntry recordEntry = PlayerVaultStatsData.PlayerRecordEntry.deserialize(blockEntityTag.getCompound("recordEntry"));
-
+            final TrophyStatueTileEntity trophyStatue = (TrophyStatueTileEntity)lootStatue;
+            final WeekKey week = WeekKey.deserialize(blockEntityTag.getCompound("trophyWeek"));
+            final PlayerVaultStatsData.PlayerRecordEntry recordEntry = PlayerVaultStatsData.PlayerRecordEntry.deserialize(blockEntityTag.getCompound("recordEntry"));
             trophyStatue.setWeek(week);
             trophyStatue.setRecordEntry(recordEntry);
         }
     }
-
-
+    
     @Nullable
-    public TileEntity createTileEntity(BlockState state, IBlockReader world) {
+    @Override
+    public TileEntity createTileEntity(final BlockState state, final IBlockReader world) {
         return ModBlocks.TROPHY_STATUE_TILE_ENTITY.create();
     }
+    
+    static {
+        SHAPE = Block.box(2.0, 0.0, 2.0, 14.0, 16.0, 14.0);
+    }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\block\TrophyBlock.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

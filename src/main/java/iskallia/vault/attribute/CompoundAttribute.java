@@ -1,3 +1,7 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.attribute;
 
 import net.minecraft.nbt.CompoundNBT;
@@ -7,38 +11,33 @@ import net.minecraftforge.common.util.INBTSerializable;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
-public class CompoundAttribute<T extends INBTSerializable<CompoundNBT>>
-        extends VAttribute.Instance<T> {
+public class CompoundAttribute<T extends INBTSerializable<CompoundNBT>> extends VAttribute.Instance<T>
+{
     protected Function<CompoundNBT, T> read;
-
-    public CompoundAttribute(Function<CompoundNBT, T> read) {
+    
+    public CompoundAttribute(final Function<CompoundNBT, T> read) {
         this.read = read;
     }
-
-    public static <T extends INBTSerializable<CompoundNBT>> CompoundAttribute<T> of(Supplier<T> supplier) {
+    
+    public static <T extends INBTSerializable<CompoundNBT>> CompoundAttribute<T> of(final Supplier<T> supplier) {
         return new CompoundAttribute<T>(nbt -> {
-            T iNBTSerializable = supplier.get();
-            iNBTSerializable.deserializeNBT(nbt);
-            return iNBTSerializable;
+            final T value = supplier.get();
+            value.deserializeNBT(nbt);
+            return value;
         });
     }
-
-
-    public void write(CompoundNBT nbt) {
-        if (getBaseValue() != null) {
-            nbt.put("BaseValue", ((INBTSerializable) getBaseValue()).serializeNBT());
+    
+    @Override
+    public void write(final CompoundNBT nbt) {
+        if (this.getBaseValue() != null) {
+            nbt.put("BaseValue", this.getBaseValue().serializeNBT());
         }
     }
-
-
-    public void read(CompoundNBT nbt) {
-        if (nbt.contains("BaseValue", 10))
-            setBaseValue(this.read.apply(nbt.getCompound("BaseValue")));
+    
+    @Override
+    public void read(final CompoundNBT nbt) {
+        if (nbt.contains("BaseValue", 10)) {
+            this.setBaseValue(this.read.apply(nbt.getCompound("BaseValue")));
+        }
     }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\attribute\CompoundAttribute.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

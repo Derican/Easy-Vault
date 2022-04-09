@@ -1,3 +1,7 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.client.gui.component;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
@@ -14,7 +18,6 @@ import iskallia.vault.container.slot.player.OffHandSlot;
 import iskallia.vault.util.calc.PlayerStatisticsCollector;
 import iskallia.vault.world.data.PlayerFavourData;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.entity.player.ClientPlayerEntity;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.renderer.ItemRenderer;
@@ -36,373 +39,301 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PlayerStatisticsDialog extends ComponentDialog {
-    private final List<Slot> slots = new ArrayList<>();
-
-    public PlayerStatisticsDialog(SkillTreeScreen skillTreeScreen) {
+public class PlayerStatisticsDialog extends ComponentDialog
+{
+    private final List<Slot> slots;
+    
+    public PlayerStatisticsDialog(final SkillTreeScreen skillTreeScreen) {
         super(skillTreeScreen);
+        this.slots = new ArrayList<Slot>();
         this.descriptionComponent = new ScrollableContainer(this::renderPlayerAttributes);
     }
-
+    
     private void createGearSlots() {
-        ClientPlayerEntity clientPlayerEntity = (Minecraft.getInstance()).player;
-        if (clientPlayerEntity == null) {
+        final PlayerEntity player = (PlayerEntity)Minecraft.getInstance().player;
+        if (player == null) {
             return;
         }
-        int startX = this.bounds.width - 24;
-        int startY = 6;
-
-        this.slots.add(new ReadOnlySlot((IInventory) ((PlayerEntity) clientPlayerEntity).inventory, ((PlayerEntity) clientPlayerEntity).inventory.selected, startX, startY));
-        this.slots.add(new OffHandSlot((PlayerEntity) clientPlayerEntity, startX, startY + 18));
-        for (EquipmentSlotType slotType : EquipmentSlotType.values()) {
+        final int startX = this.bounds.width - 24;
+        final int startY = 6;
+        this.slots.add(new ReadOnlySlot((IInventory)player.inventory, player.inventory.selected, startX, startY));
+        this.slots.add(new OffHandSlot(player, startX, startY + 18));
+        for (final EquipmentSlotType slotType : EquipmentSlotType.values()) {
             if (slotType.getType() == EquipmentSlotType.Group.ARMOR) {
-
-                this.slots.add(new ArmorViewSlot((PlayerEntity) clientPlayerEntity, slotType, startX, startY + 36 + slotType.getIndex() * 18));
+                this.slots.add(new ArmorViewSlot(player, slotType, startX, startY + 36 + slotType.getIndex() * 18));
             }
         }
     }
-
+    
+    @Override
     public void refreshWidgets() {
         this.slots.clear();
     }
-
-
+    
+    @Override
     public int getHeaderHeight() {
         return 0;
     }
-
-
-    public void setBounds(Rectangle bounds) {
+    
+    @Override
+    public void setBounds(final Rectangle bounds) {
         super.setBounds(bounds);
         this.slots.clear();
-        createGearSlots();
+        this.createGearSlots();
     }
-
-
+    
+    @Override
     public SkillTab createTab() {
-        return (SkillTab) new PlayerStatisticsTab(getSkillTreeScreen());
+        return new PlayerStatisticsTab(this.getSkillTreeScreen());
     }
-
-
+    
+    @Override
     public Point getIconUV() {
         return new Point(48, 60);
     }
-
+    
     public Rectangle getFavourBoxBounds() {
-        int playerBoxWidth = 80;
+        final int playerBoxWidth = 80;
         return new Rectangle(5, 5, this.bounds.width - playerBoxWidth - 30, 108);
     }
-
+    
     public Rectangle getPlayerBoxBounds() {
-        int playerBoxWidth = 80;
-        Rectangle ctBounds = getFavourBoxBounds();
+        final int playerBoxWidth = 80;
+        final Rectangle ctBounds = this.getFavourBoxBounds();
         return new Rectangle(ctBounds.x + ctBounds.width, ctBounds.y, playerBoxWidth, 108);
     }
-
+    
     public Rectangle getStatBoxBounds() {
-        Rectangle ctBounds = getFavourBoxBounds();
+        final Rectangle ctBounds = this.getFavourBoxBounds();
         return new Rectangle(5, ctBounds.y + ctBounds.height + 5, this.bounds.width - 12, this.bounds.height - ctBounds.height - 16);
     }
-
-
-    public void render(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks) {
-        renderBackground(matrixStack, mouseX, mouseY, partialTicks);
-
+    
+    @Override
+    public void render(final MatrixStack matrixStack, final int mouseX, final int mouseY, final float partialTicks) {
+        this.renderBackground(matrixStack, mouseX, mouseY, partialTicks);
         matrixStack.pushPose();
-        matrixStack.translate(this.bounds.x, this.bounds.y, 0.0D);
-        renderContainers(matrixStack);
-        renderPlayer(matrixStack, mouseX, mouseY, partialTicks);
-
-        this.descriptionComponent.setBounds(getStatBoxBounds());
+        matrixStack.translate((double)this.bounds.x, (double)this.bounds.y, 0.0);
+        this.renderContainers(matrixStack);
+        this.renderPlayer(matrixStack, mouseX, mouseY, partialTicks);
+        this.descriptionComponent.setBounds(this.getStatBoxBounds());
         this.descriptionComponent.render(matrixStack, mouseX, mouseY, partialTicks);
-
-        renderPlayerFavour(matrixStack);
-        renderPlayerItems(matrixStack, mouseX, mouseY, partialTicks);
-
+        this.renderPlayerFavour(matrixStack);
+        this.renderPlayerItems(matrixStack, mouseX, mouseY, partialTicks);
         matrixStack.popPose();
     }
-
-    private void renderContainers(MatrixStack matrixStack) {
+    
+    private void renderContainers(final MatrixStack matrixStack) {
         Minecraft.getInstance().getTextureManager().bind(SkillTreeScreen.UI_RESOURCE);
-
-        UIHelper.renderContainerBorder(this, matrixStack,
-                getFavourBoxBounds(), 14, 44, 2, 2, 2, 2, -7631989);
-
-
-        UIHelper.renderContainerBorder(this, matrixStack,
-                getPlayerBoxBounds(), 14, 44, 2, 2, 2, 2, -16777216);
-
-
-        UIHelper.renderContainerBorder(this, matrixStack,
-                getStatBoxBounds(), 14, 44, 2, 2, 2, 2, -7631989);
+        UIHelper.renderContainerBorder(this, matrixStack, this.getFavourBoxBounds(), 14, 44, 2, 2, 2, 2, -7631989);
+        UIHelper.renderContainerBorder(this, matrixStack, this.getPlayerBoxBounds(), 14, 44, 2, 2, 2, 2, -16777216);
+        UIHelper.renderContainerBorder(this, matrixStack, this.getStatBoxBounds(), 14, 44, 2, 2, 2, 2, -7631989);
     }
-
-
-    private void renderPlayerFavour(MatrixStack matrixStack) {
-        Rectangle favBounds = getFavourBoxBounds();
-        FontRenderer fr = (Minecraft.getInstance()).font;
-
+    
+    private void renderPlayerFavour(final MatrixStack matrixStack) {
+        final Rectangle favBounds = this.getFavourBoxBounds();
+        final FontRenderer fr = Minecraft.getInstance().font;
         int titleLengthRequired = 0;
-        for (PlayerFavourData.VaultGodType vgType : PlayerFavourData.VaultGodType.values()) {
-            int titleLength = fr.width((ITextProperties) new StringTextComponent(vgType.getTitle()));
+        for (final PlayerFavourData.VaultGodType vgType : PlayerFavourData.VaultGodType.values()) {
+            final int titleLength = fr.width((ITextProperties)new StringTextComponent(vgType.getTitle()));
             if (titleLength > titleLengthRequired) {
                 titleLengthRequired = titleLength;
             }
         }
-
-
-        boolean drawTitles = (titleLengthRequired + 10 + 10 < favBounds.width);
-
+        final boolean drawTitles = titleLengthRequired + 10 + 10 < favBounds.width;
         matrixStack.pushPose();
-        matrixStack.translate(favBounds.x, favBounds.y, 0.0D);
-
-        fr.draw(matrixStack, (ITextComponent) new StringTextComponent("Favour:"), 5.0F, 5.0F, -15130590);
-
+        matrixStack.translate((double)favBounds.x, (double)favBounds.y, 0.0);
+        fr.draw(matrixStack, (ITextComponent)new StringTextComponent("Favour:"), 5.0f, 5.0f, -15130590);
         matrixStack.pushPose();
-        matrixStack.translate(5.0D, 20.0D, 0.0D);
-
+        matrixStack.translate(5.0, 20.0, 0.0);
         int maxLength = 0;
-        for (PlayerFavourData.VaultGodType vgType : PlayerFavourData.VaultGodType.values()) {
-            IFormattableTextComponent name = (new StringTextComponent(vgType.getName())).withStyle(vgType.getChatColor());
-            fr.drawShadow(matrixStack, (ITextComponent) name, 0.0F, 0.0F, -1);
-
-            int length = fr.width((ITextProperties) name);
+        for (final PlayerFavourData.VaultGodType vgType2 : PlayerFavourData.VaultGodType.values()) {
+            final IFormattableTextComponent name = new StringTextComponent(vgType2.getName()).withStyle(vgType2.getChatColor());
+            fr.drawShadow(matrixStack, (ITextComponent)name, 0.0f, 0.0f, -1);
+            final int length = fr.width((ITextProperties)name);
             if (length > maxLength) {
                 maxLength = length;
             }
-
-            matrixStack.translate(0.0D, 10.0D, 0.0D);
-
+            matrixStack.translate(0.0, 10.0, 0.0);
             if (drawTitles) {
-                IFormattableTextComponent title = (new StringTextComponent(vgType.getTitle())).withStyle(vgType.getChatColor());
-                fr.drawShadow(matrixStack, (ITextComponent) title, 5.0F, 0.0F, -1);
-                matrixStack.translate(0.0D, 10.0D, 0.0D);
+                final IFormattableTextComponent title = new StringTextComponent(vgType2.getTitle()).withStyle(vgType2.getChatColor());
+                fr.drawShadow(matrixStack, (ITextComponent)title, 5.0f, 0.0f, -1);
+                matrixStack.translate(0.0, 10.0, 0.0);
             }
-
-
-            matrixStack.translate(0.0D, 2.0D, 0.0D);
+            matrixStack.translate(0.0, 2.0, 0.0);
         }
         matrixStack.popPose();
-
         maxLength += 5;
-
         matrixStack.pushPose();
-        matrixStack.translate(5.0D, 20.0D, 0.0D);
-
-
-        matrixStack.translate(maxLength, 0.0D, 0.0D);
-        for (PlayerFavourData.VaultGodType vgType : PlayerFavourData.VaultGodType.values()) {
-            int favour = ClientStatisticsData.getFavour(vgType);
-            fr.drawShadow(matrixStack, (ITextComponent) new StringTextComponent(String.valueOf(favour)), 0.0F, 0.0F, -1052689);
-
-            matrixStack.translate(0.0D, drawTitles ? 22.0D : 12.0D, 0.0D);
+        matrixStack.translate(5.0, 20.0, 0.0);
+        matrixStack.translate((double)maxLength, 0.0, 0.0);
+        for (final PlayerFavourData.VaultGodType vgType2 : PlayerFavourData.VaultGodType.values()) {
+            final int favour = ClientStatisticsData.getFavour(vgType2);
+            fr.drawShadow(matrixStack, (ITextComponent)new StringTextComponent(String.valueOf(favour)), 0.0f, 0.0f, -1052689);
+            matrixStack.translate(0.0, drawTitles ? 22.0 : 12.0, 0.0);
         }
         matrixStack.popPose();
         matrixStack.popPose();
-
         RenderSystem.enableDepthTest();
     }
-
-    private void renderPlayerAttributes(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks) {
-        Rectangle plBounds = getStatBoxBounds();
-        FontRenderer fr = (Minecraft.getInstance()).font;
-
+    
+    private void renderPlayerAttributes(final MatrixStack matrixStack, final int mouseX, final int mouseY, final float partialTicks) {
+        final Rectangle plBounds = this.getStatBoxBounds();
+        final FontRenderer fr = Minecraft.getInstance().font;
         int maxLength = 0;
-        List<PlayerStatisticsCollector.AttributeSnapshot> snapshots = ClientStatisticsData.getPlayerAttributeSnapshots();
-        Point offset = plBounds.getLocation();
-
-        for (int i = 0; i < snapshots.size(); i++) {
-            PlayerStatisticsCollector.AttributeSnapshot snapshot = snapshots.get(i);
-            TranslationTextComponent translationTextComponent = new TranslationTextComponent(snapshot.getAttributeName());
-            fr.draw(matrixStack, translationTextComponent.getVisualOrderText(), 10.0F, (10 * i + 10), -15130590);
-
-            int length = fr.width((ITextProperties) translationTextComponent);
+        final List<PlayerStatisticsCollector.AttributeSnapshot> snapshots = ClientStatisticsData.getPlayerAttributeSnapshots();
+        final Point offset = plBounds.getLocation();
+        for (int i = 0; i < snapshots.size(); ++i) {
+            final PlayerStatisticsCollector.AttributeSnapshot snapshot = snapshots.get(i);
+            final ITextComponent cmp = (ITextComponent)new TranslationTextComponent(snapshot.getAttributeName());
+            fr.draw(matrixStack, cmp.getVisualOrderText(), 10.0f, (float)(10 * i + 10), -15130590);
+            final int length = fr.width((ITextProperties)cmp);
             if (length > maxLength) {
                 maxLength = length;
             }
         }
         this.descriptionComponent.setInnerHeight(snapshots.size() * 10 + 20);
-
         maxLength += 5;
-
         int intLength = 0;
-        for (PlayerStatisticsCollector.AttributeSnapshot snapshot : snapshots) {
-            int intStrLength = fr.width(String.valueOf((int) snapshot.getValue()));
+        for (final PlayerStatisticsCollector.AttributeSnapshot snapshot2 : snapshots) {
+            final int intStrLength = fr.width(String.valueOf((int)snapshot2.getValue()));
             if (intStrLength > intLength) {
                 intLength = intStrLength;
             }
         }
-
-        DecimalFormat format = new DecimalFormat("0.##");
-        for (int j = 0; j < snapshots.size(); j++) {
+        final DecimalFormat format = new DecimalFormat("0.##");
+        for (int j = 0; j < snapshots.size(); ++j) {
+            matrixStack.pushPose();
+            matrixStack.translate((double)(maxLength + intLength + 4), (double)(j * 10 + 10), 0.0);
+            final PlayerStatisticsCollector.AttributeSnapshot snapshot3 = snapshots.get(j);
+            final int intStrLength2 = fr.width(String.valueOf((int)snapshot3.getValue()));
+            String numberStr = format.format(snapshot3.getValue());
+            if (snapshot3.isPercentage()) {
+                numberStr += "%";
+            }
             IFormattableTextComponent txt;
-            matrixStack.pushPose();
-            matrixStack.translate((maxLength + intLength + 4), (j * 10 + 10), 0.0D);
-
-            PlayerStatisticsCollector.AttributeSnapshot snapshot = snapshots.get(j);
-            int intStrLength = fr.width(String.valueOf((int) snapshot.getValue()));
-
-            String numberStr = format.format(snapshot.getValue());
-            if (snapshot.isPercentage()) {
-                numberStr = numberStr + "%";
-            }
-
-            if (snapshot.hasHitLimit()) {
-                String limitStr = format.format(snapshot.getLimit());
-                if (snapshot.isPercentage()) {
-                    limitStr = limitStr + "%";
+            if (snapshot3.hasHitLimit()) {
+                String limitStr = format.format(snapshot3.getLimit());
+                if (snapshot3.isPercentage()) {
+                    limitStr += "%";
                 }
-                txt = (new StringTextComponent(limitStr)).withStyle(style -> style.withColor(Color.fromRgb(-8519680)));
-            } else {
-                txt = (new StringTextComponent(numberStr)).withStyle(style -> style.withColor(Color.fromRgb(-15130590)));
+                txt = new StringTextComponent(limitStr).withStyle(style -> style.withColor(Color.fromRgb(-8519680)));
             }
-            int displayLength = fr.width(txt.getVisualOrderText());
-
+            else {
+                txt = new StringTextComponent(numberStr).withStyle(style -> style.withColor(Color.fromRgb(-15130590)));
+            }
+            final int displayLength = fr.width(txt.getVisualOrderText());
             matrixStack.pushPose();
-            matrixStack.translate(-intStrLength, 0.0D, 0.0D);
-
-            fr.draw(matrixStack, txt.getVisualOrderText(), 0.0F, 0.0F, -1);
-
+            matrixStack.translate((double)(-intStrLength2), 0.0, 0.0);
+            fr.draw(matrixStack, txt.getVisualOrderText(), 0.0f, 0.0f, -1);
             matrixStack.popPose();
             matrixStack.popPose();
-
-
-            Rectangle bounds = new Rectangle(this.bounds.x + offset.x + 10, this.bounds.y + offset.y + 10 * j + 10 - this.descriptionComponent.getyOffset(), maxLength + displayLength, 8);
-
+            final Rectangle bounds = new Rectangle(this.bounds.x + offset.x + 10, this.bounds.y + offset.y + 10 * j + 10 - this.descriptionComponent.getyOffset(), maxLength + displayLength, 8);
             if (bounds.contains(mouseX, mouseY)) {
-                if (snapshot.hasHitLimit()) {
-                    List<ITextComponent> list = new ArrayList<>();
-                    list.add((new StringTextComponent("Uncapped: ")).append(numberStr));
-
-                    int offsetX = mouseX - this.bounds.x + offset.x;
-                    int offsetY = mouseY - this.bounds.y + offset.y + this.descriptionComponent.getyOffset();
-                    GuiUtils.drawHoveringText(matrixStack, list, offsetX, offsetY, offset.x + plBounds.width - 14, offset.y + plBounds.height, -1, fr);
-                } else if (snapshot.hasLimit()) {
-                    String limitStr = format.format(snapshot.getLimit());
-                    if (snapshot.isPercentage()) {
-                        limitStr = limitStr + "%";
+                if (snapshot3.hasHitLimit()) {
+                    final List<ITextComponent> list = new ArrayList<ITextComponent>();
+                    list.add((ITextComponent)new StringTextComponent("Uncapped: ").append(numberStr));
+                    final int offsetX = mouseX - (this.bounds.x + offset.x);
+                    final int offsetY = mouseY - (this.bounds.y + offset.y) + this.descriptionComponent.getyOffset();
+                    GuiUtils.drawHoveringText(matrixStack, (List)list, offsetX, offsetY, offset.x + plBounds.width - 14, offset.y + plBounds.height, -1, fr);
+                }
+                else if (snapshot3.hasLimit()) {
+                    String limitStr2 = format.format(snapshot3.getLimit());
+                    if (snapshot3.isPercentage()) {
+                        limitStr2 += "%";
                     }
-
-                    List<ITextComponent> list = new ArrayList<>();
-                    list.add((new StringTextComponent("Limit: ")).append(limitStr));
-
-                    int offsetX = mouseX - this.bounds.x + offset.x;
-                    int offsetY = mouseY - this.bounds.y + offset.y + this.descriptionComponent.getyOffset();
-                    GuiUtils.drawHoveringText(matrixStack, list, offsetX, offsetY, offset.x + plBounds.width - 14, offset.y + plBounds.height, -1, fr);
+                    final List<ITextComponent> list2 = new ArrayList<ITextComponent>();
+                    list2.add((ITextComponent)new StringTextComponent("Limit: ").append(limitStr2));
+                    final int offsetX2 = mouseX - (this.bounds.x + offset.x);
+                    final int offsetY2 = mouseY - (this.bounds.y + offset.y) + this.descriptionComponent.getyOffset();
+                    GuiUtils.drawHoveringText(matrixStack, (List)list2, offsetX2, offsetY2, offset.x + plBounds.width - 14, offset.y + plBounds.height, -1, fr);
                 }
             }
         }
-
-
         RenderSystem.enableDepthTest();
     }
-
-    private void renderPlayer(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks) {
-        Rectangle plBounds = getPlayerBoxBounds();
-
-        int offsetX = plBounds.x + plBounds.width / 2;
-        int offsetY = plBounds.y + 108 - 10;
-
+    
+    private void renderPlayer(final MatrixStack matrixStack, final int mouseX, final int mouseY, final float partialTicks) {
+        final Rectangle plBounds = this.getPlayerBoxBounds();
+        final int offsetX = plBounds.x + plBounds.width / 2;
+        final int offsetY = plBounds.y + 108 - 10;
         matrixStack.pushPose();
-        matrixStack.translate(offsetX, offsetY, 0.0D);
-        matrixStack.scale(1.6F, 1.6F, 1.6F);
+        matrixStack.translate((double)offsetX, (double)offsetY, 0.0);
+        matrixStack.scale(1.6f, 1.6f, 1.6f);
         UIHelper.drawFacingPlayer(matrixStack, mouseX - this.bounds.x - offsetX, mouseY - this.bounds.y - offsetY);
         matrixStack.popPose();
     }
-
-    private void renderPlayerItems(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks) {
+    
+    private void renderPlayerItems(final MatrixStack matrixStack, final int mouseX, final int mouseY, final float partialTicks) {
         Slot hoveredSlot = null;
-        int slotHover = -2130706433;
-
-        for (Slot slot : this.slots) {
-            drawSlot(matrixStack, slot);
-
-            Rectangle box = getSlotBox(slot);
+        final int slotHover = -2130706433;
+        for (final Slot slot : this.slots) {
+            this.drawSlot(matrixStack, slot);
+            final Rectangle box = this.getSlotBox(slot);
             if (box.contains(mouseX - this.bounds.x, mouseY - this.bounds.y)) {
-                int slotX = slot.x;
-                int slotY = slot.y;
-
+                final int slotX = slot.x;
+                final int slotY = slot.y;
                 matrixStack.pushPose();
-                matrixStack.translate(slotX, slotY, 0.0D);
-
+                matrixStack.translate((double)slotX, (double)slotY, 0.0);
                 RenderSystem.disableDepthTest();
                 RenderSystem.colorMask(true, true, true, false);
-                fillGradient(matrixStack, 0, 0, 16, 16, slotHover, slotHover);
+                this.fillGradient(matrixStack, 0, 0, 16, 16, slotHover, slotHover);
                 RenderSystem.colorMask(true, true, true, true);
                 RenderSystem.enableDepthTest();
-
                 matrixStack.popPose();
-
-                if (slot.hasItem()) {
-                    hoveredSlot = slot;
+                if (!slot.hasItem()) {
+                    continue;
                 }
+                hoveredSlot = slot;
             }
         }
-
         if (hoveredSlot != null) {
-            ItemStack toHover = hoveredSlot.getItem();
-            FontRenderer fr = toHover.getItem().getFontRenderer(toHover);
-            List<ITextComponent> tooltip = toHover.getTooltipLines((PlayerEntity) (Minecraft.getInstance()).player, (Minecraft.getInstance()).options.advancedItemTooltips ? (ITooltipFlag) ITooltipFlag.TooltipFlags.ADVANCED : (ITooltipFlag) ITooltipFlag.TooltipFlags.NORMAL);
-            SkillTreeScreen skillTreeScreen = getSkillTreeScreen();
-
+            final ItemStack toHover = hoveredSlot.getItem();
+            final FontRenderer fr = toHover.getItem().getFontRenderer(toHover);
+            final List<ITextComponent> tooltip = toHover.getTooltipLines((PlayerEntity)Minecraft.getInstance().player, (ITooltipFlag)(Minecraft.getInstance().options.advancedItemTooltips ? ITooltipFlag.TooltipFlags.ADVANCED : ITooltipFlag.TooltipFlags.NORMAL));
+            final Screen mainScreen = (Screen)this.getSkillTreeScreen();
             matrixStack.pushPose();
-            matrixStack.translate(0.0D, 0.0D, 550.0D);
+            matrixStack.translate(0.0, 0.0, 550.0);
             GuiUtils.preItemToolTip(toHover);
-            GuiUtils.drawHoveringText(matrixStack, tooltip, mouseX - this.bounds.x, mouseY - this.bounds.y, ((Screen) skillTreeScreen).width - this.bounds.x, ((Screen) skillTreeScreen).height - this.bounds.y, -1, (fr == null) ?
-
-
-                    (Minecraft.getInstance()).font : fr);
+            GuiUtils.drawHoveringText(matrixStack, (List)tooltip, mouseX - this.bounds.x, mouseY - this.bounds.y, mainScreen.width - this.bounds.x, mainScreen.height - this.bounds.y, -1, (fr == null) ? Minecraft.getInstance().font : fr);
             GuiUtils.postItemToolTip();
             matrixStack.popPose();
             RenderSystem.enableDepthTest();
         }
     }
-
-    private void drawSlot(MatrixStack matrixStack, Slot slot) {
-        ItemRenderer itemRenderer = Minecraft.getInstance().getItemRenderer();
-        ItemStack slotStack = slot.getItem();
-        int slotX = slot.x;
-        int slotY = slot.y;
-
+    
+    private void drawSlot(final MatrixStack matrixStack, final Slot slot) {
+        final ItemRenderer itemRenderer = Minecraft.getInstance().getItemRenderer();
+        final ItemStack slotStack = slot.getItem();
+        final int slotX = slot.x;
+        final int slotY = slot.y;
         matrixStack.pushPose();
-        matrixStack.translate(slotX, slotY, 0.0D);
-
+        matrixStack.translate((double)slotX, (double)slotY, 0.0);
         Minecraft.getInstance().getTextureManager().bind(SkillTreeScreen.UI_RESOURCE);
-        blit(matrixStack, -1, -1, 173, 0, 18, 18);
-
-        setBlitOffset(100);
-        itemRenderer.blitOffset = 100.0F;
-
+        this.blit(matrixStack, -1, -1, 173, 0, 18, 18);
+        this.setBlitOffset(100);
+        itemRenderer.blitOffset = 100.0f;
         if (slotStack.isEmpty()) {
-            Pair<ResourceLocation, ResourceLocation> pair = slot.getNoItemIcon();
+            final Pair<ResourceLocation, ResourceLocation> pair = (Pair<ResourceLocation, ResourceLocation>)slot.getNoItemIcon();
             if (pair != null) {
-                TextureAtlasSprite textureatlassprite = Minecraft.getInstance().getTextureAtlas((ResourceLocation) pair.getFirst()).apply(pair.getSecond());
+                final TextureAtlasSprite textureatlassprite = Minecraft.getInstance().getTextureAtlas((ResourceLocation)pair.getFirst()).apply(pair.getSecond());
                 Minecraft.getInstance().getTextureManager().bind(textureatlassprite.atlas().location());
-                blit(matrixStack, 0, 0, getBlitOffset(), 16, 16, textureatlassprite);
+                blit(matrixStack, 0, 0, this.getBlitOffset(), 16, 16, textureatlassprite);
             }
-        } else {
+        }
+        else {
             RenderSystem.pushMatrix();
             RenderSystem.multMatrix(matrixStack.last().pose());
-
             RenderSystem.enableDepthTest();
-            itemRenderer.renderAndDecorateItem((LivingEntity) (Minecraft.getInstance()).player, slotStack, 0, 0);
-            itemRenderer.renderGuiItemDecorations((Minecraft.getInstance()).font, slotStack, 0, 0, null);
+            itemRenderer.renderAndDecorateItem((LivingEntity)Minecraft.getInstance().player, slotStack, 0, 0);
+            itemRenderer.renderGuiItemDecorations(Minecraft.getInstance().font, slotStack, 0, 0, (String)null);
             RenderSystem.popMatrix();
         }
-
-        itemRenderer.blitOffset = 0.0F;
-        setBlitOffset(0);
-
+        itemRenderer.blitOffset = 0.0f;
+        this.setBlitOffset(0);
         matrixStack.popPose();
     }
-
-    private Rectangle getSlotBox(Slot slot) {
+    
+    private Rectangle getSlotBox(final Slot slot) {
         return new Rectangle(slot.x - 1, slot.y - 1, 18, 18);
     }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\client\gui\component\PlayerStatisticsDialog.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

@@ -1,3 +1,7 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.block;
 
 import iskallia.vault.block.entity.VaultDoorTileEntity;
@@ -16,38 +20,22 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 
-public class UnknownVaultDoorBlock extends DoorBlock {
+public class UnknownVaultDoorBlock extends DoorBlock
+{
     public UnknownVaultDoorBlock() {
-        super(AbstractBlock.Properties.of(Material.METAL, MaterialColor.DIAMOND)
-                .strength(-1.0F, 3600000.0F)
-                .sound(SoundType.METAL)
-                .noOcclusion());
-        registerDefaultState((BlockState) ((BlockState) ((BlockState) ((BlockState) ((BlockState) ((BlockState) getStateDefinition().any())
-                .setValue((Property) FACING, (Comparable) Direction.NORTH))
-                .setValue((Property) OPEN, Boolean.FALSE))
-                .setValue((Property) HINGE, (Comparable) DoorHingeSide.LEFT))
-                .setValue((Property) POWERED, Boolean.FALSE))
-                .setValue((Property) HALF, (Comparable) DoubleBlockHalf.LOWER));
+        super(AbstractBlock.Properties.of(Material.METAL, MaterialColor.DIAMOND).strength(-1.0f, 3600000.0f).sound(SoundType.METAL).noOcclusion());
+        this.registerDefaultState((((((this.getStateDefinition().any()).setValue(UnknownVaultDoorBlock.FACING, Direction.NORTH)).setValue(UnknownVaultDoorBlock.OPEN, Boolean.FALSE)).setValue(UnknownVaultDoorBlock.HINGE, DoorHingeSide.LEFT)).setValue(UnknownVaultDoorBlock.POWERED, Boolean.FALSE)).setValue(UnknownVaultDoorBlock.HALF, DoubleBlockHalf.LOWER));
     }
-
-
-    public boolean hasTileEntity(BlockState state) {
+    
+    public boolean hasTileEntity(final BlockState state) {
         return true;
     }
-
-
-    public TileEntity createTileEntity(BlockState state, IBlockReader world) {
-        return (TileEntity) new VaultDoorTileEntity();
+    
+    public TileEntity createTileEntity(final BlockState state, final IBlockReader world) {
+        return new VaultDoorTileEntity();
     }
-
-
-    public void onPlace(BlockState state, World world, BlockPos pos, BlockState oldState, boolean isMoving) {
+    
+    public void onPlace(final BlockState state, final World world, final BlockPos pos, final BlockState oldState, final boolean isMoving) {
         super.onPlace(state, world, pos, oldState, isMoving);
     }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\block\UnknownVaultDoorBlock.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

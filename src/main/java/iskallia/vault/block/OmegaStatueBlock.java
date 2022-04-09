@@ -1,3 +1,7 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.block;
 
 import iskallia.vault.block.entity.LootStatueTileEntity;
@@ -37,125 +41,116 @@ import net.minecraftforge.fml.network.NetworkHooks;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class OmegaStatueBlock extends LootStatueBlock {
-    public static final BooleanProperty MASTER = BooleanProperty.create("master");
-
+public class OmegaStatueBlock extends LootStatueBlock
+{
+    public static final BooleanProperty MASTER;
+    
     public OmegaStatueBlock() {
         super(StatueType.OMEGA);
-        registerDefaultState((BlockState) ((BlockState) ((BlockState) getStateDefinition().any()).setValue((Property) FACING, (Comparable) Direction.SOUTH)).setValue((Property) MASTER, Boolean.TRUE));
+        this.registerDefaultState(((this.getStateDefinition().any()).setValue(OmegaStatueBlock.FACING, Direction.SOUTH)).setValue(OmegaStatueBlock.MASTER, Boolean.TRUE));
     }
-
-
+    
     @Nullable
-    public BlockState getStateForPlacement(BlockItemUseContext context) {
-        BlockPos pos = context.getClickedPos();
-        if (pos.getY() > 255) return null;
-
-        World world = context.getLevel();
-        for (int x = -1; x <= 1; x++) {
-            for (int z = -1; z <= 1; z++) {
+    @Override
+    public BlockState getStateForPlacement(final BlockItemUseContext context) {
+        final BlockPos pos = context.getClickedPos();
+        if (pos.getY() > 255) {
+            return null;
+        }
+        final World world = context.getLevel();
+        for (int x = -1; x <= 1; ++x) {
+            for (int z = -1; z <= 1; ++z) {
                 if (!world.getBlockState(pos.offset(x, 0, z)).canBeReplaced(context)) {
                     return null;
                 }
             }
         }
-        return (BlockState) ((BlockState) defaultBlockState().setValue((Property) FACING, (Comparable) context.getHorizontalDirection())).setValue((Property) MASTER, Boolean.TRUE);
+        return (this.defaultBlockState().setValue(OmegaStatueBlock.FACING, context.getHorizontalDirection())).setValue(OmegaStatueBlock.MASTER, Boolean.TRUE);
     }
-
-
-    public void setPlacedBy(World worldIn, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack) {
-        if (worldIn.isClientSide || !(placer instanceof PlayerEntity))
+    
+    @Override
+    public void setPlacedBy(final World worldIn, final BlockPos pos, final BlockState state, @Nullable final LivingEntity placer, final ItemStack stack) {
+        if (worldIn.isClientSide || !(placer instanceof PlayerEntity)) {
             return;
-        PlayerEntity player = (PlayerEntity) placer;
-        for (int x = -1; x <= 1; x++) {
-            for (int z = -1; z <= 1; z++) {
+        }
+        final PlayerEntity player = (PlayerEntity)placer;
+        for (int x = -1; x <= 1; ++x) {
+            for (int z = -1; z <= 1; ++z) {
                 if (x != 0 || z != 0) {
-                    BlockPos newBlockPos = pos.offset(x, 0, z);
-                    worldIn.setBlockAndUpdate(newBlockPos, (BlockState) state.setValue((Property) MASTER, Boolean.FALSE));
-                    TileEntity te = worldIn.getBlockEntity(newBlockPos);
+                    final BlockPos newBlockPos = pos.offset(x, 0, z);
+                    worldIn.setBlockAndUpdate(newBlockPos, state.setValue(OmegaStatueBlock.MASTER, Boolean.FALSE));
+                    final TileEntity te = worldIn.getBlockEntity(newBlockPos);
                     if (te instanceof LootStatueTileEntity) {
-                        ((LootStatueTileEntity) te).setStatueType(StatueType.OMEGA);
-                        ((LootStatueTileEntity) te).setMaster(false);
-                        ((LootStatueTileEntity) te).setMasterPos(pos);
+                        ((LootStatueTileEntity)te).setStatueType(StatueType.OMEGA);
+                        ((LootStatueTileEntity)te).setMaster(false);
+                        ((LootStatueTileEntity)te).setMasterPos(pos);
                         te.setChanged();
-                        ((LootStatueTileEntity) te).sendUpdates();
+                        ((LootStatueTileEntity)te).sendUpdates();
                     }
                 }
             }
         }
-        if (((Boolean) state.getValue((Property) MASTER)).booleanValue()) {
-            TileEntity tileEntity = worldIn.getBlockEntity(pos);
-
+        if (state.getValue(OmegaStatueBlock.MASTER)) {
+            final TileEntity tileEntity = worldIn.getBlockEntity(pos);
             if (tileEntity instanceof LootStatueTileEntity) {
-
-                LootStatueTileEntity lootStatue = (LootStatueTileEntity) tileEntity;
+                final LootStatueTileEntity lootStatue = (LootStatueTileEntity)tileEntity;
                 if (stack.hasTag()) {
-                    CompoundNBT nbt = stack.getTag();
-                    CompoundNBT blockEntityTag = nbt.getCompound("BlockEntityTag");
-
-                    String playerNickname = blockEntityTag.getString("PlayerNickname");
+                    final CompoundNBT nbt = stack.getTag();
+                    final CompoundNBT blockEntityTag = nbt.getCompound("BlockEntityTag");
+                    final String playerNickname = blockEntityTag.getString("PlayerNickname");
                     lootStatue.setStatueType(StatueType.OMEGA);
                     lootStatue.setCurrentTick(blockEntityTag.getInt("CurrentTick"));
                     lootStatue.setMaster(true);
                     lootStatue.setMasterPos(pos);
                     lootStatue.setItemsRemaining(-1);
                     lootStatue.setTotalItems(0);
-                    lootStatue.setPlayerScale(MathUtilities.randomFloat(2.0F, 4.0F));
+                    lootStatue.setPlayerScale(MathUtilities.randomFloat(2.0f, 4.0f));
                     lootStatue.getSkin().updateSkin(playerNickname);
-
-
                     if (nbt.contains("LootItem")) {
                         lootStatue.setLootItem(ItemStack.of(blockEntityTag.getCompound("LootItem")));
                     }
-
                     lootStatue.setChanged();
                     lootStatue.sendUpdates();
-
                     if (lootStatue.getLootItem() == null || lootStatue.getLootItem().isEmpty()) {
                         final CompoundNBT data = new CompoundNBT();
-                        ListNBT itemList = new ListNBT();
-                        List<ItemStack> options = ModConfigs.STATUE_LOOT.getOmegaOptions();
-                        for (ItemStack option : options) {
+                        final ListNBT itemList = new ListNBT();
+                        final List<ItemStack> options = ModConfigs.STATUE_LOOT.getOmegaOptions();
+                        for (final ItemStack option : options) {
                             itemList.add(option.serializeNBT());
                         }
-                        data.put("Items", (INBT) itemList);
-                        data.put("Position", (INBT) NBTUtil.writeBlockPos(pos));
-
-
-                        NetworkHooks.openGui((ServerPlayerEntity) player, new INamedContainerProvider() {
-
+                        data.put("Items", (INBT)itemList);
+                        data.put("Position", (INBT)NBTUtil.writeBlockPos(pos));
+                        NetworkHooks.openGui((ServerPlayerEntity)player, (INamedContainerProvider)new INamedContainerProvider() {
                             public ITextComponent getDisplayName() {
-                                return (ITextComponent) new StringTextComponent("Omega Statue Options");
+                                return (ITextComponent)new StringTextComponent("Omega Statue Options");
                             }
-
-
+                            
                             @Nullable
-                            public Container createMenu(int windowId, PlayerInventory playerInventory, PlayerEntity playerEntity) {
-                                return (Container) new OmegaStatueContainer(windowId, data);
+                            public Container createMenu(final int windowId, final PlayerInventory playerInventory, final PlayerEntity playerEntity) {
+                                return new OmegaStatueContainer(windowId, data);
                             }
-                        },buffer -> buffer.writeNbt(data));
+                        }, buffer -> buffer.writeNbt(data));
                     }
                 }
             }
         }
     }
-
-
-    protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) {
-        builder.add(new Property[]{(Property) FACING});
-        builder.add(new Property[]{(Property) MASTER});
+    
+    @Override
+    protected void createBlockStateDefinition(final StateContainer.Builder<Block, BlockState> builder) {
+        builder.add(new Property[] { OmegaStatueBlock.FACING });
+        builder.add(new Property[] { OmegaStatueBlock.MASTER });
     }
-
-
-    public void onRemove(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
-        TileEntity te = worldIn.getBlockEntity(pos);
-        if (te instanceof LootStatueTileEntity && ((LootStatueTileEntity) te).getMasterPos() != null) {
-            BlockPos masterPos = ((LootStatueTileEntity) te).getMasterPos();
-            TileEntity master = worldIn.getBlockEntity(masterPos);
+    
+    public void onRemove(final BlockState state, final World worldIn, final BlockPos pos, final BlockState newState, final boolean isMoving) {
+        final TileEntity te = worldIn.getBlockEntity(pos);
+        if (te instanceof LootStatueTileEntity && ((LootStatueTileEntity)te).getMasterPos() != null) {
+            final BlockPos masterPos = ((LootStatueTileEntity)te).getMasterPos();
+            final TileEntity master = worldIn.getBlockEntity(masterPos);
             if (master instanceof LootStatueTileEntity) {
-                for (int x = -1; x <= 1; x++) {
-                    for (int z = -1; z <= 1; z++) {
-                        BlockPos newBlockPos = masterPos.offset(x, 0, z);
+                for (int x = -1; x <= 1; ++x) {
+                    for (int z = -1; z <= 1; ++z) {
+                        final BlockPos newBlockPos = masterPos.offset(x, 0, z);
                         worldIn.removeBlockEntity(newBlockPos);
                         worldIn.setBlock(newBlockPos, Blocks.AIR.defaultBlockState(), 3);
                     }
@@ -164,44 +159,44 @@ public class OmegaStatueBlock extends LootStatueBlock {
         }
         super.onRemove(state, worldIn, pos, newState, isMoving);
     }
-
-
-    public ActionResultType use(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
-        LootStatueTileEntity statue = getStatueTileEntity(worldIn, pos);
+    
+    @Override
+    public ActionResultType use(final BlockState state, final World worldIn, final BlockPos pos, final PlayerEntity player, final Hand handIn, final BlockRayTraceResult hit) {
+        final LootStatueTileEntity statue = this.getStatueTileEntity(worldIn, pos);
         if (statue != null) {
-            LootStatueTileEntity master = getMaster(statue);
+            final LootStatueTileEntity master = this.getMaster(statue);
             if (master != null) {
-                BlockPos masterPos = master.getBlockPos();
+                final BlockPos masterPos = master.getBlockPos();
                 return super.use(worldIn.getBlockState(masterPos), worldIn, masterPos, player, handIn, hit);
             }
         }
         return ActionResultType.FAIL;
     }
-
-    private LootStatueTileEntity getMaster(LootStatueTileEntity statue) {
-        World world = statue.getLevel();
+    
+    private LootStatueTileEntity getMaster(final LootStatueTileEntity statue) {
+        final World world = statue.getLevel();
         if (world != null && statue.getMasterPos() != null) {
-            TileEntity master = statue.getLevel().getBlockEntity(statue.getMasterPos());
-            if (master instanceof LootStatueTileEntity) return (LootStatueTileEntity) master;
+            final TileEntity master = statue.getLevel().getBlockEntity(statue.getMasterPos());
+            if (master instanceof LootStatueTileEntity) {
+                return (LootStatueTileEntity)master;
+            }
         }
         return null;
     }
-
-
-    public void playerWillDestroy(World world, BlockPos pos, BlockState state, PlayerEntity player) {
-        LootStatueTileEntity statue = getStatueTileEntity(world, pos);
+    
+    @Override
+    public void playerWillDestroy(final World world, final BlockPos pos, final BlockState state, final PlayerEntity player) {
+        final LootStatueTileEntity statue = this.getStatueTileEntity(world, pos);
         if (statue != null) {
-            LootStatueTileEntity master = getMaster(statue);
+            final LootStatueTileEntity master = this.getMaster(statue);
             if (master != null) {
-                BlockPos masterPos = master.getBlockPos();
+                final BlockPos masterPos = master.getBlockPos();
                 super.playerWillDestroy(world, masterPos, world.getBlockState(masterPos), player);
             }
         }
     }
+    
+    static {
+        MASTER = BooleanProperty.create("master");
+    }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\block\OmegaStatueBlock.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

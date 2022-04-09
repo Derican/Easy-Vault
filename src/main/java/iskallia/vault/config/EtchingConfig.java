@@ -1,3 +1,7 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.config;
 
 import com.google.gson.annotations.Expose;
@@ -8,68 +12,62 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Random;
 
-public class EtchingConfig
-        extends Config {
+public class EtchingConfig extends Config
+{
     @Expose
     public Map<VaultGear.Set, Etching> ETCHINGS;
-
+    
+    @Override
     public String getName() {
         return "etching";
     }
-
+    
     public VaultGear.Set getRandomSet() {
-        return getRandomSet(new Random());
+        return this.getRandomSet(new Random());
     }
-
-    public VaultGear.Set getRandomSet(Random random) {
-        WeightedList<VaultGear.Set> list = new WeightedList();
+    
+    public VaultGear.Set getRandomSet(final Random random) {
+        final WeightedList<VaultGear.Set> list = new WeightedList<VaultGear.Set>();
         this.ETCHINGS.forEach((set, etching) -> {
             if (set != VaultGear.Set.NONE) {
                 list.add(set, etching.weight);
             }
+            return;
         });
-        return (VaultGear.Set) list.getRandom(random);
+        return list.getRandom(random);
     }
-
-    public Etching getFor(VaultGear.Set set) {
+    
+    public Etching getFor(final VaultGear.Set set) {
         return this.ETCHINGS.get(set);
     }
-
-
+    
+    @Override
     protected void reset() {
-        this.ETCHINGS = new LinkedHashMap<>();
-
-        for (VaultGear.Set set : VaultGear.Set.values()) {
+        this.ETCHINGS = new LinkedHashMap<VaultGear.Set, Etching>();
+        for (final VaultGear.Set set : VaultGear.Set.values()) {
             this.ETCHINGS.put(set, new Etching(1, 1, 2, "yes", 5636095));
         }
     }
-
-
-    public static class Etching {
+    
+    public static class Etching
+    {
         @Expose
         public int weight;
         @Expose
         public int minValue;
-
-        public Etching(int weight, int minValue, int maxValue, String effectText, int color) {
-            this.weight = weight;
-            this.minValue = minValue;
-            this.maxValue = maxValue;
-            this.effectText = effectText;
-            this.color = color;
-        }
-
         @Expose
         public int maxValue;
         @Expose
         public String effectText;
         @Expose
         public int color;
+        
+        public Etching(final int weight, final int minValue, final int maxValue, final String effectText, final int color) {
+            this.weight = weight;
+            this.minValue = minValue;
+            this.maxValue = maxValue;
+            this.effectText = effectText;
+            this.color = color;
+        }
     }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\config\EtchingConfig.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

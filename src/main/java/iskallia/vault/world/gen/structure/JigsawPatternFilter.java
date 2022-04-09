@@ -1,3 +1,7 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.world.gen.structure;
 
 import iskallia.vault.util.data.WeightedList;
@@ -11,41 +15,47 @@ import java.util.List;
 import java.util.Random;
 import java.util.function.Predicate;
 
-
-public class JigsawPatternFilter {
-    private Predicate<ResourceLocation> roomPieceFilter = key -> true;
-    private WeightedList<JigsawPiece> filteredPieceCache = null;
-
-    public JigsawPatternFilter andMatches(Predicate<ResourceLocation> filter) {
+public class JigsawPatternFilter
+{
+    private Predicate<ResourceLocation> roomPieceFilter;
+    private WeightedList<JigsawPiece> filteredPieceCache;
+    
+    public JigsawPatternFilter() {
+        this.roomPieceFilter = (key -> true);
+        this.filteredPieceCache = null;
+    }
+    
+    public JigsawPatternFilter andMatches(final Predicate<ResourceLocation> filter) {
         this.roomPieceFilter = this.roomPieceFilter.and(filter);
         return this;
     }
-
-    public JigsawPiece getRandomPiece(JigsawPattern pattern, Random random) {
+    
+    public JigsawPiece getRandomPiece(final JigsawPattern pattern, final Random random) {
         if (this.filteredPieceCache != null) {
-            return (JigsawPiece) this.filteredPieceCache.getRandom(random);
+            return this.filteredPieceCache.getRandom(random);
         }
-        this.filteredPieceCache = new WeightedList();
+        this.filteredPieceCache = new WeightedList<JigsawPiece>();
         pattern.rawTemplates.forEach(weightedPiece -> {
-            if (isApplicable((JigsawPiece) weightedPiece.getFirst())) {
-                this.filteredPieceCache.add(weightedPiece.getFirst(), ((Integer) weightedPiece.getSecond()).intValue());
+            if (this.isApplicable((JigsawPiece)weightedPiece.getFirst())) {
+                this.filteredPieceCache.add((JigsawPiece)weightedPiece.getFirst(), (int)weightedPiece.getSecond());
             }
+            return;
         });
-        return getRandomPiece(pattern, random);
+        return this.getRandomPiece(pattern, random);
     }
-
-    private boolean isApplicable(JigsawPiece piece) {
+    
+    private boolean isApplicable(final JigsawPiece piece) {
         if (piece instanceof PalettedListPoolElement) {
-            List<JigsawPiece> elements = ((PalettedListPoolElement) piece).getElements();
-            for (JigsawPiece elementPiece : elements) {
-                if (!isApplicable(elementPiece)) {
+            final List<JigsawPiece> elements = ((PalettedListPoolElement)piece).getElements();
+            for (final JigsawPiece elementPiece : elements) {
+                if (!this.isApplicable(elementPiece)) {
                     return false;
                 }
             }
             return !elements.isEmpty();
         }
         if (piece instanceof PalettedSinglePoolElement) {
-            ResourceLocation key = ((PalettedSinglePoolElement) piece).getTemplate().left().orElse(null);
+            final ResourceLocation key = ((PalettedSinglePoolElement)piece).getTemplate().left().orElse(null);
             if (key != null) {
                 return this.roomPieceFilter.test(key);
             }
@@ -53,9 +63,3 @@ public class JigsawPatternFilter {
         return false;
     }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\world\gen\structure\JigsawPatternFilter.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

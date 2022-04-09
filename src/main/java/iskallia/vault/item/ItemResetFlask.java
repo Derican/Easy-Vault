@@ -1,3 +1,7 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.item;
 
 import iskallia.vault.client.ClientAbilityData;
@@ -6,9 +10,11 @@ import iskallia.vault.init.ModConfigs;
 import iskallia.vault.skill.ability.AbilityGroup;
 import iskallia.vault.skill.ability.AbilityNode;
 import iskallia.vault.skill.ability.AbilityTree;
+import iskallia.vault.skill.ability.config.AbilityConfig;
 import iskallia.vault.skill.talent.TalentGroup;
 import iskallia.vault.skill.talent.TalentNode;
 import iskallia.vault.skill.talent.TalentTree;
+import iskallia.vault.skill.talent.type.PlayerTalent;
 import iskallia.vault.util.MiscUtils;
 import iskallia.vault.world.data.PlayerAbilitiesData;
 import iskallia.vault.world.data.PlayerTalentsData;
@@ -21,7 +27,6 @@ import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.*;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.*;
-import net.minecraft.util.text.IFormattableTextComponent;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
@@ -32,154 +37,147 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 
-public class ItemResetFlask extends Item {
-    public ItemResetFlask(ItemGroup group, ResourceLocation id) {
-        super((new Item.Properties())
-                .tab(group)
-                .stacksTo(3));
-
-        setRegistryName(id);
+public class ItemResetFlask extends Item
+{
+    public ItemResetFlask(final ItemGroup group, final ResourceLocation id) {
+        super(new Item.Properties().tab(group).stacksTo(3));
+        this.setRegistryName(id);
     }
-
-
-    public void fillItemCategory(ItemGroup group, NonNullList<ItemStack> items) {
+    
+    public void fillItemCategory(final ItemGroup group, final NonNullList<ItemStack> items) {
         if (ModConfigs.ABILITIES == null || ModConfigs.TALENTS == null) {
             return;
         }
-        if (allowdedIn(group)) {
-            for (AbilityGroup<?, ?> abilityGroup : (Iterable<AbilityGroup<?, ?>>) ModConfigs.ABILITIES.getAll()) {
-                ItemStack stack = new ItemStack((IItemProvider) this);
+        if (this.allowdedIn(group)) {
+            for (final AbilityGroup<?, ?> abilityGroup : ModConfigs.ABILITIES.getAll()) {
+                final ItemStack stack = new ItemStack((IItemProvider)this);
                 setSkillable(stack, abilityGroup.getParentName());
                 items.add(stack);
             }
-            for (TalentGroup<?> talentGroup : (Iterable<TalentGroup<?>>) ModConfigs.TALENTS.getAll()) {
-                String talentName = talentGroup.getParentName();
-                if (talentName.equals("Trader") || talentName.equals("Looter") || talentName
-                        .equals("Artisan") || talentName.equals("Treasure Hunter") || talentName
-                        .equals("Lucky Altar")) {
-                    continue;
+            for (final TalentGroup<?> talentGroup : ModConfigs.TALENTS.getAll()) {
+                final String talentName = talentGroup.getParentName();
+                if (!talentName.equals("Trader") && !talentName.equals("Looter") && !talentName.equals("Artisan") && !talentName.equals("Treasure Hunter")) {
+                    if (talentName.equals("Lucky Altar")) {
+                        continue;
+                    }
+                    final ItemStack stack2 = new ItemStack((IItemProvider)this);
+                    setSkillable(stack2, talentGroup.getParentName());
+                    items.add(stack2);
                 }
-                ItemStack stack = new ItemStack((IItemProvider) this);
-                setSkillable(stack, talentGroup.getParentName());
-                items.add(stack);
             }
         }
     }
-
-
+    
     @OnlyIn(Dist.CLIENT)
-    public void appendHoverText(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
-        String skillableStr = getSkillable(stack);
+    public void appendHoverText(final ItemStack stack, @Nullable final World world, final List<ITextComponent> tooltip, final ITooltipFlag flag) {
+        final String skillableStr = getSkillable(stack);
         if (skillableStr != null) {
-
             ModConfigs.ABILITIES.getAbility(skillableStr).ifPresent(abilityGrp -> {
-                IFormattableTextComponent iFormattableTextComponent = (new StringTextComponent(abilityGrp.getParentName())).withStyle(TextFormatting.GOLD);
+                final ITextComponent ability = (ITextComponent)new StringTextComponent(abilityGrp.getParentName()).withStyle(TextFormatting.GOLD);
                 tooltip.add(StringTextComponent.EMPTY);
-                tooltip.add((new StringTextComponent("Remove one level of Ability ")).append((ITextComponent) iFormattableTextComponent));
+                tooltip.add(new StringTextComponent("Remove one level of Ability ").append(ability));
                 tooltip.add(new StringTextComponent("and regain the Skillpoints spent."));
+                return;
             });
             ModConfigs.TALENTS.getTalent(skillableStr).ifPresent(talentGrp -> {
-                IFormattableTextComponent iFormattableTextComponent = (new StringTextComponent(talentGrp.getParentName())).withStyle(TextFormatting.AQUA);
+                final ITextComponent talent = (ITextComponent)new StringTextComponent(talentGrp.getParentName()).withStyle(TextFormatting.AQUA);
                 tooltip.add(StringTextComponent.EMPTY);
-                tooltip.add((new StringTextComponent("Remove one level of Talent ")).append((ITextComponent) iFormattableTextComponent));
+                tooltip.add(new StringTextComponent("Remove one level of Talent ").append(talent));
                 tooltip.add(new StringTextComponent("and regain the Skillpoints spent."));
             });
         }
     }
-
-
-    public void inventoryTick(ItemStack stack, World world, Entity entity, int itemSlot, boolean isSelected) {
+    
+    public void inventoryTick(final ItemStack stack, final World world, final Entity entity, final int itemSlot, final boolean isSelected) {
         if (getSkillable(stack) != null) {
             return;
         }
         if (world instanceof ServerWorld && entity instanceof ServerPlayerEntity) {
-            ServerPlayerEntity player = (ServerPlayerEntity) entity;
+            final ServerPlayerEntity player = (ServerPlayerEntity)entity;
             if (stack.getCount() > 1) {
                 while (stack.getCount() > 1) {
                     stack.shrink(1);
-
-                    ItemStack flask = new ItemStack((IItemProvider) this);
+                    final ItemStack flask = new ItemStack((IItemProvider)this);
                     MiscUtils.giveItem(player, flask);
                 }
             }
-
-            List<String> skillables = new ArrayList<>();
+            final List<String> skillables = new ArrayList<String>();
             ModConfigs.ABILITIES.getAll().forEach(ability -> skillables.add(ability.getParentName()));
             ModConfigs.TALENTS.getAll().forEach(talent -> skillables.add(talent.getParentName()));
-
             skillables.remove("Trader");
             skillables.remove("Looter");
             skillables.remove("Artisan");
             skillables.remove("Treasure Hunter");
             skillables.remove("Lucky Altar");
-
-            setSkillable(stack, (String) MiscUtils.getRandomEntry(skillables, random));
+            setSkillable(stack, MiscUtils.getRandomEntry(skillables, ItemResetFlask.random));
         }
     }
-
-
-    public ActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand) {
-        ItemStack held = player.getItemInHand(hand);
-        String skillableStr = getSkillable(held);
+    
+    public ActionResult<ItemStack> use(final World world, final PlayerEntity player, final Hand hand) {
+        final ItemStack held = player.getItemInHand(hand);
+        final String skillableStr = getSkillable(held);
         if (skillableStr == null) {
-            return ActionResult.pass(held);
+            return (ActionResult<ItemStack>)ActionResult.pass(held);
         }
         if (world.isClientSide()) {
-            if (!canRevertSkillableClient(skillableStr)) {
-                return ActionResult.pass(held);
+            if (!this.canRevertSkillableClient(skillableStr)) {
+                return (ActionResult<ItemStack>)ActionResult.pass(held);
             }
-        } else if (player instanceof ServerPlayerEntity) {
-            Optional<AbilityGroup<?, ?>> abilityOpt = ModConfigs.ABILITIES.getAbility(skillableStr);
+        }
+        else {
+            if (!(player instanceof ServerPlayerEntity)) {
+                return (ActionResult<ItemStack>)ActionResult.pass(held);
+            }
+            final Optional<AbilityGroup<?, ?>> abilityOpt = ModConfigs.ABILITIES.getAbility(skillableStr);
             if (abilityOpt.isPresent()) {
-                AbilityTree abilityTree = PlayerAbilitiesData.get(((ServerPlayerEntity) player).getLevel()).getAbilities(player);
-                AbilityNode<?, ?> node = abilityTree.getNodeOf(abilityOpt.get());
+                final AbilityTree abilityTree = PlayerAbilitiesData.get(((ServerPlayerEntity)player).getLevel()).getAbilities(player);
+                final AbilityNode<?, ?> node = abilityTree.getNodeOf(abilityOpt.get());
                 if (!node.isLearned()) {
-                    return ActionResult.pass(held);
+                    return (ActionResult<ItemStack>)ActionResult.pass(held);
                 }
                 if (node.getLevel() == 1) {
-                    List<AbilityGroup<?, ?>> dependentNodes = ModConfigs.SKILL_GATES.getGates().getAbilitiesDependingOn(node.getGroup().getParentName());
-                    for (AbilityGroup<?, ?> dependent : dependentNodes) {
+                    final List<AbilityGroup<?, ?>> dependentNodes = ModConfigs.SKILL_GATES.getGates().getAbilitiesDependingOn(node.getGroup().getParentName());
+                    for (final AbilityGroup<?, ?> dependent : dependentNodes) {
                         if (abilityTree.getNodeOf(dependent).isLearned()) {
-                            return ActionResult.pass(held);
+                            return (ActionResult<ItemStack>)ActionResult.pass(held);
                         }
                     }
                 }
             }
-            Optional<TalentGroup<?>> talentOpt = ModConfigs.TALENTS.getTalent(skillableStr);
+            final Optional<TalentGroup<?>> talentOpt = ModConfigs.TALENTS.getTalent(skillableStr);
             if (talentOpt.isPresent()) {
-                TalentTree talentTree = PlayerTalentsData.get(((ServerPlayerEntity) player).getLevel()).getTalents(player);
-                TalentNode<?> node = talentTree.getNodeOf(talentOpt.get());
-                if (!node.isLearned()) {
-                    return ActionResult.pass(held);
+                final TalentTree talentTree = PlayerTalentsData.get(((ServerPlayerEntity)player).getLevel()).getTalents(player);
+                final TalentNode<?> node2 = talentTree.getNodeOf(talentOpt.get());
+                if (!node2.isLearned()) {
+                    return (ActionResult<ItemStack>)ActionResult.pass(held);
                 }
-                if (node.getLevel() == 1) {
-                    List<TalentGroup<?>> dependentNodes = ModConfigs.SKILL_GATES.getGates().getTalentsDependingOn(node.getGroup().getParentName());
-                    for (TalentGroup<?> dependent : dependentNodes) {
-                        if (talentTree.getNodeOf(dependent).isLearned()) {
-                            return ActionResult.pass(held);
+                if (node2.getLevel() == 1) {
+                    final List<TalentGroup<?>> dependentNodes2 = ModConfigs.SKILL_GATES.getGates().getTalentsDependingOn(node2.getGroup().getParentName());
+                    for (final TalentGroup<?> dependent2 : dependentNodes2) {
+                        if (talentTree.getNodeOf(dependent2).isLearned()) {
+                            return (ActionResult<ItemStack>)ActionResult.pass(held);
                         }
                     }
                 }
             }
-        } else {
-            return ActionResult.pass(held);
         }
         player.startUsingItem(hand);
-        return ActionResult.consume(held);
+        return (ActionResult<ItemStack>)ActionResult.consume(held);
     }
-
+    
     @OnlyIn(Dist.CLIENT)
-    private boolean canRevertSkillableClient(String skillableStr) {
-        Optional<AbilityGroup<?, ?>> abilityOpt = ModConfigs.ABILITIES.getAbility(skillableStr);
+    private boolean canRevertSkillableClient(final String skillableStr) {
+        final Optional<AbilityGroup<?, ?>> abilityOpt = ModConfigs.ABILITIES.getAbility(skillableStr);
         if (abilityOpt.isPresent()) {
-            AbilityNode<?, ?> node = ClientAbilityData.getLearnedAbilityNode(abilityOpt.get());
+            final AbilityNode<?, ?> node = ClientAbilityData.getLearnedAbilityNode(abilityOpt.get());
             if (node != null && node.isLearned()) {
                 if (node.getLevel() == 1) {
-                    List<AbilityGroup<?, ?>> dependentNodes = ModConfigs.SKILL_GATES.getGates().getAbilitiesDependingOn(node.getGroup().getParentName());
-                    for (AbilityGroup<?, ?> dependent : dependentNodes) {
+                    final List<AbilityGroup<?, ?>> dependentNodes = ModConfigs.SKILL_GATES.getGates().getAbilitiesDependingOn(node.getGroup().getParentName());
+                    for (final AbilityGroup<?, ?> dependent : dependentNodes) {
                         if (ClientAbilityData.getLearnedAbilityNode(dependent) != null) {
                             return false;
                         }
@@ -188,14 +186,14 @@ public class ItemResetFlask extends Item {
                 return true;
             }
         }
-        Optional<TalentGroup<?>> talentOpt = ModConfigs.TALENTS.getTalent(skillableStr);
+        final Optional<TalentGroup<?>> talentOpt = ModConfigs.TALENTS.getTalent(skillableStr);
         if (talentOpt.isPresent()) {
-            TalentNode<?> node = ClientTalentData.getLearnedTalentNode(talentOpt.get());
-            if (node != null && node.isLearned()) {
-                if (node.getLevel() == 1) {
-                    List<TalentGroup<?>> dependentNodes = ModConfigs.SKILL_GATES.getGates().getTalentsDependingOn(node.getGroup().getParentName());
-                    for (TalentGroup<?> dependent : dependentNodes) {
-                        if (ClientTalentData.getLearnedTalentNode(dependent) != null) {
+            final TalentNode<?> node2 = ClientTalentData.getLearnedTalentNode(talentOpt.get());
+            if (node2 != null && node2.isLearned()) {
+                if (node2.getLevel() == 1) {
+                    final List<TalentGroup<?>> dependentNodes2 = ModConfigs.SKILL_GATES.getGates().getTalentsDependingOn(node2.getGroup().getParentName());
+                    for (final TalentGroup<?> dependent2 : dependentNodes2) {
+                        if (ClientTalentData.getLearnedTalentNode(dependent2) != null) {
                             return false;
                         }
                     }
@@ -205,96 +203,92 @@ public class ItemResetFlask extends Item {
         }
         return false;
     }
-
-
-    public UseAction getUseAnimation(ItemStack stack) {
+    
+    public UseAction getUseAnimation(final ItemStack stack) {
         return UseAction.DRINK;
     }
-
-
-    public int getUseDuration(ItemStack stack) {
+    
+    public int getUseDuration(final ItemStack stack) {
         return 24;
     }
-
-
-    public Rarity getRarity(ItemStack stack) {
+    
+    public Rarity getRarity(final ItemStack stack) {
         return Rarity.RARE;
     }
-
-    public static void setSkillable(ItemStack stack, @Nullable String ability) {
+    
+    public static void setSkillable(final ItemStack stack, @Nullable final String ability) {
         if (!(stack.getItem() instanceof ItemResetFlask)) {
             return;
         }
         stack.getOrCreateTag().putString("Skillable", ability);
     }
-
+    
     @Nullable
-    public static String getSkillable(ItemStack stack) {
+    public static String getSkillable(final ItemStack stack) {
         if (!(stack.getItem() instanceof ItemResetFlask)) {
             return null;
         }
-        CompoundNBT tag = stack.getOrCreateTag();
+        final CompoundNBT tag = stack.getOrCreateTag();
         return tag.contains("Skillable", 8) ? tag.getString("Skillable") : null;
     }
-
-
-    public ItemStack finishUsingItem(ItemStack stack, World world, LivingEntity entityLiving) {
+    
+    public ItemStack finishUsingItem(final ItemStack stack, final World world, final LivingEntity entityLiving) {
         if (world instanceof ServerWorld && entityLiving instanceof ServerPlayerEntity) {
-            String skillableStr = getSkillable(stack);
+            final String skillableStr = getSkillable(stack);
             if (skillableStr == null) {
                 return stack;
             }
-
-            ServerPlayerEntity player = (ServerPlayerEntity) entityLiving;
-            ServerWorld sWorld = (ServerWorld) world;
-
+            final ServerPlayerEntity player = (ServerPlayerEntity)entityLiving;
+            final ServerWorld sWorld = (ServerWorld)world;
             ModConfigs.ABILITIES.getAbility(skillableStr).ifPresent(ability -> {
-                PlayerAbilitiesData abilitiesData = PlayerAbilitiesData.get(sWorld);
-                AbilityTree abilityTree = abilitiesData.getAbilities((PlayerEntity) player);
-                AbilityNode<?, ?> node = abilityTree.getNodeOf(ability);
+                final PlayerAbilitiesData abilitiesData = PlayerAbilitiesData.get(sWorld);
+                final AbilityTree abilityTree = abilitiesData.getAbilities((PlayerEntity)player);
+                final AbilityNode<?, ?> node = abilityTree.getNodeOf(ability);
                 if (node.isLearned()) {
                     if (node.getLevel() == 1) {
-                        List<AbilityGroup<?, ?>> dependentNodes = ModConfigs.SKILL_GATES.getGates().getAbilitiesDependingOn(node.getGroup().getParentName());
-                        for (AbilityGroup<?, ?> dependent : dependentNodes) {
+                        final List<AbilityGroup<?, ?>> dependentNodes = ModConfigs.SKILL_GATES.getGates().getAbilitiesDependingOn(node.getGroup().getParentName());
+
+                        final Iterator<AbilityGroup<?, ?>> iterator=dependentNodes.iterator();
+                        while (iterator.hasNext()) {
+                            final AbilityGroup<?, ?> dependent = iterator.next();
                             if (abilityTree.getNodeOf(dependent).isLearned()) {
                                 return;
                             }
                         }
                     }
-                    PlayerVaultStatsData.get(sWorld).spendSkillPts(player, -node.getAbilityConfig().getLearningCost());
+                    PlayerVaultStatsData.get(sWorld).spendSkillPts(player, -((AbilityConfig)node.getAbilityConfig()).getLearningCost());
                     abilitiesData.downgradeAbility(player, node);
                     if (!player.isCreative()) {
                         stack.shrink(1);
                     }
                 }
+                return;
             });
             ModConfigs.TALENTS.getTalent(skillableStr).ifPresent(talent -> {
-                PlayerTalentsData talentsData = PlayerTalentsData.get(sWorld);
-                TalentTree talentTree = talentsData.getTalents((PlayerEntity) player);
-                TalentNode<?> node = talentTree.getNodeOf(talent);
-                if (node.isLearned()) {
-                    if (node.getLevel() == 1) {
-                        List<TalentGroup<?>> dependentNodes = ModConfigs.SKILL_GATES.getGates().getTalentsDependingOn(node.getGroup().getParentName());
-                        for (TalentGroup<?> dependent : dependentNodes) {
-                            if (talentTree.getNodeOf(dependent).isLearned()) {
+                final PlayerTalentsData talentsData = PlayerTalentsData.get(sWorld);
+                final TalentTree talentTree = talentsData.getTalents((PlayerEntity)player);
+                final TalentNode<?> node2 = talentTree.getNodeOf((TalentGroup<?>)talent);
+                if (node2.isLearned()) {
+                    if (node2.getLevel() == 1) {
+                        final List<TalentGroup<?>> dependentNodes2 = ModConfigs.SKILL_GATES.getGates().getTalentsDependingOn(node2.getGroup().getParentName());
+
+                        final Iterator<TalentGroup<?>> iterator2=dependentNodes2.iterator();
+                        while (iterator2.hasNext()) {
+                            final TalentGroup<?> dependent2 = iterator2.next();
+                            if (talentTree.getNodeOf(dependent2).isLearned()) {
                                 return;
                             }
                         }
                     }
-                    PlayerVaultStatsData.get(sWorld).spendSkillPts(player, -node.getTalent().getCost());
-                    talentsData.downgradeTalent(player, node);
+                    PlayerVaultStatsData.get(sWorld).spendSkillPts(player, -((PlayerTalent)node2.getTalent()).getCost());
+                    talentsData.downgradeTalent(player, node2);
                     if (!player.isCreative()) {
                         stack.shrink(1);
                     }
                 }
+                return;
             });
         }
         return stack;
     }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\item\ItemResetFlask.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

@@ -1,7 +1,11 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.block.entity;
 
 import iskallia.vault.block.StabilizerBlock;
-import iskallia.vault.config.RaidModifierConfig;
+import iskallia.vault.block.VaultRaidControllerBlock;
 import iskallia.vault.init.ModBlocks;
 import iskallia.vault.init.ModConfigs;
 import iskallia.vault.init.ModParticles;
@@ -9,6 +13,7 @@ import iskallia.vault.util.PlayerFilter;
 import iskallia.vault.world.data.VaultRaidData;
 import iskallia.vault.world.vault.VaultRaid;
 import iskallia.vault.world.vault.logic.objective.raid.RaidChallengeObjective;
+import iskallia.vault.world.vault.logic.objective.raid.modifier.ModifierDoublingModifier;
 import iskallia.vault.world.vault.logic.objective.raid.modifier.RaidModifier;
 import iskallia.vault.world.vault.modifier.InventoryRestoreModifier;
 import net.minecraft.block.BlockState;
@@ -27,6 +32,7 @@ import net.minecraft.state.Property;
 import net.minecraft.state.properties.DoubleBlockHalf;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.Tuple;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.vector.Vector3d;
@@ -39,224 +45,200 @@ import javax.annotation.Nullable;
 import java.awt.*;
 import java.util.List;
 import java.util.*;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
-public class VaultRaidControllerTileEntity extends TileEntity implements ITickableTileEntity {
-    private static final Random rand = new Random();
-    private static final AxisAlignedBB RENDER_BOX = new AxisAlignedBB(-1.0D, -1.0D, -1.0D, 1.0D, 2.0D, 1.0D);
-
-    private boolean triggeredRaid = false;
-    private int activeTimeout = 0;
-
-    private final LinkedHashMap<String, Float> raidModifiers = new LinkedHashMap<>();
-
-    private final List<Object> particleReferences = new ArrayList();
-
+public class VaultRaidControllerTileEntity extends TileEntity implements ITickableTileEntity
+{
+    private static final Random rand;
+    private static final AxisAlignedBB RENDER_BOX;
+    private boolean triggeredRaid;
+    private int activeTimeout;
+    private final LinkedHashMap<String, Float> raidModifiers;
+    private final List<Object> particleReferences;
+    
     public VaultRaidControllerTileEntity() {
-        super(ModBlocks.RAID_CONTROLLER_TILE_ENTITY);
+        super((TileEntityType)ModBlocks.RAID_CONTROLLER_TILE_ENTITY);
+        this.triggeredRaid = false;
+        this.activeTimeout = 0;
+        this.raidModifiers = new LinkedHashMap<String, Float>();
+        this.particleReferences = new ArrayList<Object>();
     }
-
+    
     public boolean isActive() {
-        return (this.activeTimeout > 0);
+        return this.activeTimeout > 0;
     }
-
-
+    
     public void tick() {
-        if (!getLevel().isClientSide()) {
-            BlockState up = getLevel().getBlockState(getBlockPos().above());
-            if (!(up.getBlock() instanceof iskallia.vault.block.VaultRaidControllerBlock)) {
-                getLevel().setBlockAndUpdate(getBlockPos().above(), (BlockState) ModBlocks.RAID_CONTROLLER_BLOCK.defaultBlockState().setValue((Property) StabilizerBlock.HALF, (Comparable) DoubleBlockHalf.UPPER));
+        if (!this.getLevel().isClientSide()) {
+            final BlockState up = this.getLevel().getBlockState(this.getBlockPos().above());
+            if (!(up.getBlock() instanceof VaultRaidControllerBlock)) {
+                this.getLevel().setBlockAndUpdate(this.getBlockPos().above(), ModBlocks.RAID_CONTROLLER_BLOCK.defaultBlockState().setValue(StabilizerBlock.HALF, DoubleBlockHalf.UPPER));
             }
-
             if (this.activeTimeout > 0) {
-                this.activeTimeout--;
+                --this.activeTimeout;
                 if (this.activeTimeout <= 0) {
-                    markForUpdate();
+                    this.markForUpdate();
                 }
             }
-
-            if (getLevel() instanceof ServerWorld) {
-                ServerWorld sWorld = (ServerWorld) getLevel();
-                VaultRaid vault = VaultRaidData.get(sWorld).getAt(sWorld, getBlockPos());
+            if (this.getLevel() instanceof ServerWorld) {
+                final ServerWorld sWorld = (ServerWorld)this.getLevel();
+                final VaultRaid vault = VaultRaidData.get(sWorld).getAt(sWorld, this.getBlockPos());
                 if (vault != null) {
-                    if (vault.getActiveRaid() != null && vault.getActiveRaid().getController().equals(getBlockPos())) {
-                        boolean needsUpdate = (this.activeTimeout <= 0);
+                    if (vault.getActiveRaid() != null && vault.getActiveRaid().getController().equals(this.getBlockPos())) {
+                        final boolean needsUpdate = this.activeTimeout <= 0;
                         this.activeTimeout = 20;
                         if (needsUpdate) {
-                            markForUpdate();
+                            this.markForUpdate();
                         }
                     }
-
                     vault.getActiveObjective(RaidChallengeObjective.class).ifPresent(raidObjective -> {
                         if (this.raidModifiers.isEmpty()) {
-                            boolean cannotGetArtifact = vault.getActiveModifiersFor(PlayerFilter.any(), InventoryRestoreModifier.class).stream().anyMatch(InventoryRestoreModifier::preventsArtifact);
-
-
-                            int level = ((Integer) vault.getProperties().getBase(VaultRaid.LEVEL).orElse(Integer.valueOf(0))).intValue();
-
-
-                            RaidModifier addedModifier = ModConfigs.RAID_MODIFIER_CONFIG.getRandomModifier(level, true, cannotGetArtifact).map((RaidModifierConfig.RollableModifier modifier) -> {
-                                return modifier.getModifier();
+                            final boolean cannotGetArtifact = vault.getActiveModifiersFor(PlayerFilter.any(), InventoryRestoreModifier.class).stream().anyMatch(InventoryRestoreModifier::preventsArtifact);
+                            final int level = vault.getProperties().getBase(VaultRaid.LEVEL).orElse(0);
+                            final RaidModifier addedModifier = ModConfigs.RAID_MODIFIER_CONFIG.getRandomModifier(level, true, cannotGetArtifact).map(modifier -> {
+                                final RaidModifier mod = modifier.getModifier();
+                                if (mod != null) {
+                                    this.raidModifiers.put(mod.getName(), modifier.getRandomValue());
+                                }
+                                return (RaidModifier)(RaidModifier)mod;
                             }).orElse(null);
-
-
-                            if (addedModifier != null && !(addedModifier instanceof iskallia.vault.world.vault.logic.objective.raid.modifier.ModifierDoublingModifier)) {
-                                ModConfigs.RAID_MODIFIER_CONFIG.getRandomModifier(level, false, cannotGetArtifact).ifPresent((RaidModifierConfig.RollableModifier modifier) -> {
+                            if (addedModifier != null && !(addedModifier instanceof ModifierDoublingModifier)) {
+                                ModConfigs.RAID_MODIFIER_CONFIG.getRandomModifier(level, false, cannotGetArtifact).ifPresent(modifier -> {
+                                    final RaidModifier mod2 = modifier.getModifier();
+                                    if (mod2 != null) {
+                                        this.raidModifiers.put(mod2.getName(), modifier.getRandomValue());
+                                    }
+                                    return;
                                 });
                             }
-
-
-                            markForUpdate();
+                            this.markForUpdate();
                         }
                     });
                 }
             }
-        } else {
-            setupParticles();
+        }
+        else {
+            this.setupParticles();
         }
     }
-
+    
     @OnlyIn(Dist.CLIENT)
     private void setupParticles() {
         if (this.particleReferences.size() < 3) {
-            int toAdd = 3 - this.particleReferences.size();
-            for (int i = 0; i < toAdd; i++) {
-                ParticleManager particleManager = (Minecraft.getInstance()).particleEngine;
-                Particle p = particleManager.createParticle((IParticleData) ModParticles.RAID_EFFECT_CUBE.get(), this.worldPosition
-                        .getX() + 0.5D, this.worldPosition.getY() + 0.5D, this.worldPosition.getZ() + 0.5D, 0.0D, 0.0D, 0.0D);
-
+            for (int toAdd = 3 - this.particleReferences.size(), i = 0; i < toAdd; ++i) {
+                final ParticleManager mgr = Minecraft.getInstance().particleEngine;
+                final Particle p = mgr.createParticle((IParticleData)ModParticles.RAID_EFFECT_CUBE.get(), this.worldPosition.getX() + 0.5, this.worldPosition.getY() + 0.5, this.worldPosition.getZ() + 0.5, 0.0, 0.0, 0.0);
                 this.particleReferences.add(p);
             }
         }
-        this.particleReferences.removeIf(ref -> !((Particle) ref).isAlive());
-
-
-        if (!isActive()) {
+        this.particleReferences.removeIf(ref -> !((Particle)ref).isAlive());
+        if (!this.isActive()) {
             return;
         }
-
-        ParticleManager mgr = (Minecraft.getInstance()).particleEngine;
-        Color c = new Color(11932948);
-
-        if (rand.nextInt(3) == 0) {
-
-
-            Vector3d pPos = new Vector3d(this.worldPosition.getX() + 0.5D + rand.nextFloat() * 3.5D * (rand.nextBoolean() ? 1 : -1), this.worldPosition.getY() + 2.1D + rand.nextFloat() * 3.5D * (rand.nextBoolean() ? 1 : -1), this.worldPosition.getZ() + 0.5D + rand.nextFloat() * 3.5D * (rand.nextBoolean() ? 1 : -1));
-
-            SimpleAnimatedParticle fwParticle = (SimpleAnimatedParticle) mgr.createParticle((IParticleData) ParticleTypes.FIREWORK, pPos
-                    .x(), pPos.y(), pPos.z(), 0.0D, 0.0D, 0.0D);
-
-            fwParticle.setColor(c.getRed() / 255.0F, c.getGreen() / 255.0F, c.getBlue() / 255.0F);
-//            fwParticle.baseGravity = -0.001F;
+        final ParticleManager mgr2 = Minecraft.getInstance().particleEngine;
+        final Color c = new Color(11932948);
+        if (VaultRaidControllerTileEntity.rand.nextInt(3) == 0) {
+            Vector3d pPos = new Vector3d(this.worldPosition.getX() + 0.5 + VaultRaidControllerTileEntity.rand.nextFloat() * 3.5 * (VaultRaidControllerTileEntity.rand.nextBoolean() ? 1 : -1), this.worldPosition.getY() + 2.1 + VaultRaidControllerTileEntity.rand.nextFloat() * 3.5 * (VaultRaidControllerTileEntity.rand.nextBoolean() ? 1 : -1), this.worldPosition.getZ() + 0.5 + VaultRaidControllerTileEntity.rand.nextFloat() * 3.5 * (VaultRaidControllerTileEntity.rand.nextBoolean() ? 1 : -1));
+            SimpleAnimatedParticle fwParticle = (SimpleAnimatedParticle)mgr2.createParticle((IParticleData)ParticleTypes.FIREWORK, pPos.x(), pPos.y(), pPos.z(), 0.0, 0.0, 0.0);
+            fwParticle.setColor(c.getRed() / 255.0f, c.getGreen() / 255.0f, c.getBlue() / 255.0f);
+            fwParticle.baseGravity = -0.001f;
             fwParticle.setLifetime(fwParticle.getLifetime() / 2);
-
-
-            pPos = new Vector3d(this.worldPosition.getX() + 0.5D + rand.nextFloat() * 0.3D * (rand.nextBoolean() ? 1 : -1), this.worldPosition.getY() + 2.25D + rand.nextFloat() * 0.3D * (rand.nextBoolean() ? 1 : -1), this.worldPosition.getZ() + 0.5D + rand.nextFloat() * 0.3D * (rand.nextBoolean() ? 1 : -1));
-            fwParticle = (SimpleAnimatedParticle) mgr.createParticle((IParticleData) ParticleTypes.FIREWORK, pPos
-                    .x(), pPos.y(), pPos.z(), 0.0D, 0.0D, 0.0D);
-
-            fwParticle.setColor(c.getRed() / 255.0F, c.getGreen() / 255.0F, c.getBlue() / 255.0F);
-//            fwParticle.baseGravity = 0.0F;
+            pPos = new Vector3d(this.worldPosition.getX() + 0.5 + VaultRaidControllerTileEntity.rand.nextFloat() * 0.3 * (VaultRaidControllerTileEntity.rand.nextBoolean() ? 1 : -1), this.worldPosition.getY() + 2.25 + VaultRaidControllerTileEntity.rand.nextFloat() * 0.3 * (VaultRaidControllerTileEntity.rand.nextBoolean() ? 1 : -1), this.worldPosition.getZ() + 0.5 + VaultRaidControllerTileEntity.rand.nextFloat() * 0.3 * (VaultRaidControllerTileEntity.rand.nextBoolean() ? 1 : -1));
+            fwParticle = (SimpleAnimatedParticle)mgr2.createParticle((IParticleData)ParticleTypes.FIREWORK, pPos.x(), pPos.y(), pPos.z(), 0.0, 0.0, 0.0);
+            fwParticle.setColor(c.getRed() / 255.0f, c.getGreen() / 255.0f, c.getBlue() / 255.0f);
+            fwParticle.baseGravity = 0.0f;
         }
     }
-
+    
     private void markForUpdate() {
         if (this.level != null) {
-            this.level.sendBlockUpdated(this.worldPosition, getBlockState(), getBlockState(), 3);
-            this.level.updateNeighborsAt(this.worldPosition, getBlockState().getBlock());
-            setChanged();
+            this.level.sendBlockUpdated(this.worldPosition, this.getBlockState(), this.getBlockState(), 3);
+            this.level.updateNeighborsAt(this.worldPosition, this.getBlockState().getBlock());
+            this.setChanged();
         }
     }
-
+    
     public boolean didTriggerRaid() {
         return this.triggeredRaid;
     }
-
-    public void setTriggeredRaid(boolean triggeredRaid) {
+    
+    public void setTriggeredRaid(final boolean triggeredRaid) {
         this.triggeredRaid = triggeredRaid;
-        markForUpdate();
+        this.markForUpdate();
     }
-
+    
     public LinkedHashMap<String, Float> getRaidModifiers() {
         return this.raidModifiers;
     }
-
+    
     public List<ITextComponent> getModifierDisplay() {
-        return (List<ITextComponent>) this.raidModifiers.entrySet().stream()
-                .map(modifierEntry -> {
-                    RaidModifier modifier = ModConfigs.RAID_MODIFIER_CONFIG.getByName((String) modifierEntry.getKey());
-
-
-                    return (modifier == null) ? null : new Tuple(modifier, modifierEntry.getValue());
-                }).filter(Objects::nonNull)
-                .map(tpl -> ((RaidModifier) tpl.getA()).getDisplay(((Float) tpl.getB()).floatValue()))
-                .collect(Collectors.toList());
+        return this.raidModifiers.entrySet().stream().map(modifierEntry -> {
+            final RaidModifier modifier = ModConfigs.RAID_MODIFIER_CONFIG.getByName(modifierEntry.getKey());
+            if (modifier == null) {
+                return null;
+            }
+            else {
+                return new Tuple(modifier, modifierEntry.getValue());
+            }
+        }).filter(Objects::nonNull).map(tpl -> ((RaidModifier)tpl.getA()).getDisplay((float)tpl.getB())).collect(Collectors.toList());
     }
-
-
-    public void load(BlockState state, CompoundNBT tag) {
+    
+    public void load(final BlockState state, final CompoundNBT tag) {
         super.load(state, tag);
         this.activeTimeout = tag.getInt("timeout");
         this.triggeredRaid = tag.getBoolean("triggeredRaid");
-
         this.raidModifiers.clear();
-        ListNBT modifiers = tag.getList("raidModifiers", 10);
-        for (int i = 0; i < modifiers.size(); i++) {
-            CompoundNBT modifierTag = modifiers.getCompound(i);
-            String modifier = modifierTag.getString("name");
-            float value = modifierTag.getFloat("value");
-            this.raidModifiers.put(modifier, Float.valueOf(value));
+        final ListNBT modifiers = tag.getList("raidModifiers", 10);
+        for (int i = 0; i < modifiers.size(); ++i) {
+            final CompoundNBT modifierTag = modifiers.getCompound(i);
+            final String modifier = modifierTag.getString("name");
+            final float value = modifierTag.getFloat("value");
+            this.raidModifiers.put(modifier, value);
         }
     }
-
-
-    public CompoundNBT save(CompoundNBT tag) {
+    
+    public CompoundNBT save(final CompoundNBT tag) {
         tag.putInt("timeout", this.activeTimeout);
         tag.putBoolean("triggeredRaid", this.triggeredRaid);
-
-        ListNBT modifiers = new ListNBT();
+        final ListNBT modifiers = new ListNBT();
         this.raidModifiers.forEach((modifier, value) -> {
-            CompoundNBT nbt = new CompoundNBT();
+            final CompoundNBT nbt = new CompoundNBT();
             nbt.putString("name", modifier);
-            nbt.putFloat("value", value.floatValue());
+            nbt.putFloat("value", (float)value);
             modifiers.add(nbt);
+            return;
         });
-        tag.put("raidModifiers", (INBT) modifiers);
+        tag.put("raidModifiers", (INBT)modifiers);
         return super.save(tag);
     }
-
-
+    
     public CompoundNBT getUpdateTag() {
-        CompoundNBT nbt = super.getUpdateTag();
-        save(nbt);
+        final CompoundNBT nbt = super.getUpdateTag();
+        this.save(nbt);
         return nbt;
     }
-
-
-    public void handleUpdateTag(BlockState state, CompoundNBT nbt) {
-        load(state, nbt);
+    
+    public void handleUpdateTag(final BlockState state, final CompoundNBT nbt) {
+        this.load(state, nbt);
     }
-
-
+    
     @Nullable
     public SUpdateTileEntityPacket getUpdatePacket() {
-        return new SUpdateTileEntityPacket(this.worldPosition, 1, getUpdateTag());
+        return new SUpdateTileEntityPacket(this.worldPosition, 1, this.getUpdateTag());
     }
-
-
-    public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt) {
-        CompoundNBT nbt = pkt.getTag();
-        handleUpdateTag(getBlockState(), nbt);
+    
+    public void onDataPacket(final NetworkManager net, final SUpdateTileEntityPacket pkt) {
+        final CompoundNBT nbt = pkt.getTag();
+        this.handleUpdateTag(this.getBlockState(), nbt);
     }
-
-
+    
     public AxisAlignedBB getRenderBoundingBox() {
-        return RENDER_BOX.move(getBlockPos());
+        return VaultRaidControllerTileEntity.RENDER_BOX.move(this.getBlockPos());
+    }
+    
+    static {
+        rand = new Random();
+        RENDER_BOX = new AxisAlignedBB(-1.0, -1.0, -1.0, 1.0, 2.0, 1.0);
     }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\block\entity\VaultRaidControllerTileEntity.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

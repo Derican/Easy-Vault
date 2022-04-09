@@ -1,3 +1,7 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.recipe;
 
 import com.google.gson.JsonArray;
@@ -15,85 +19,73 @@ import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.registries.ForgeRegistryEntry;
 
-public class ShapelessCopyNbtRecipe extends ShapelessRecipe {
-    public ShapelessCopyNbtRecipe(ResourceLocation idIn, String groupIn, ItemStack recipeOutputIn, NonNullList<Ingredient> recipeItemsIn) {
-        super(idIn, groupIn, recipeOutputIn, recipeItemsIn);
+public class ShapelessCopyNbtRecipe extends ShapelessRecipe
+{
+    public ShapelessCopyNbtRecipe(final ResourceLocation idIn, final String groupIn, final ItemStack recipeOutputIn, final NonNullList<Ingredient> recipeItemsIn) {
+        super(idIn, groupIn, recipeOutputIn, (NonNullList)recipeItemsIn);
     }
-
-
-    public ItemStack assemble(CraftingInventory inv) {
+    
+    public ItemStack assemble(final CraftingInventory inv) {
         ItemStack input = ItemStack.EMPTY;
-        for (int i = 0; i < inv.getContainerSize(); i++) {
-            ItemStack stack = inv.getItem(i);
+        for (int i = 0; i < inv.getContainerSize(); ++i) {
+            final ItemStack stack = inv.getItem(i);
             if (!stack.isEmpty()) {
                 input = stack;
                 break;
             }
         }
         if (input.isEmpty()) {
-            return getResultItem();
+            return this.getResultItem();
         }
-        ItemStack out = getResultItem();
+        final ItemStack out = this.getResultItem();
         out.setTag(input.getTag());
         return out;
     }
-
-    public static class Serializer
-            extends ForgeRegistryEntry<IRecipeSerializer<?>> implements IRecipeSerializer<ShapelessCopyNbtRecipe> {
-        public ShapelessCopyNbtRecipe fromJson(ResourceLocation recipeId, JsonObject json) {
-            String s = JSONUtils.getAsString(json, "group", "");
-            NonNullList<Ingredient> nonnulllist = readIngredients(JSONUtils.getAsJsonArray(json, "ingredients"));
-            if (nonnulllist.isEmpty())
+    
+    public static class Serializer extends ForgeRegistryEntry<IRecipeSerializer<?>> implements IRecipeSerializer<ShapelessCopyNbtRecipe>
+    {
+        public ShapelessCopyNbtRecipe fromJson(final ResourceLocation recipeId, final JsonObject json) {
+            final String s = JSONUtils.getAsString(json, "group", "");
+            final NonNullList<Ingredient> nonnulllist = readIngredients(JSONUtils.getAsJsonArray(json, "ingredients"));
+            if (nonnulllist.isEmpty()) {
                 throw new JsonParseException("No ingredients for shapeless recipe");
+            }
             if (nonnulllist.size() > 1) {
                 throw new JsonParseException("Too many ingredients for blank nbt copy recipe. The max is 1");
             }
-            ItemStack itemstack = ShapedRecipe.itemFromJson(JSONUtils.getAsJsonObject(json, "result"));
+            final ItemStack itemstack = ShapedRecipe.itemFromJson(JSONUtils.getAsJsonObject(json, "result"));
             return new ShapelessCopyNbtRecipe(recipeId, s, itemstack, nonnulllist);
         }
-
-
-        private static NonNullList<Ingredient> readIngredients(JsonArray ingredientArray) {
-            NonNullList<Ingredient> nonnulllist = NonNullList.create();
-
-            for (int i = 0; i < ingredientArray.size(); i++) {
-                Ingredient ingredient = Ingredient.fromJson(ingredientArray.get(i));
+        
+        private static NonNullList<Ingredient> readIngredients(final JsonArray ingredientArray) {
+            final NonNullList<Ingredient> nonnulllist = NonNullList.create();
+            for (int i = 0; i < ingredientArray.size(); ++i) {
+                final Ingredient ingredient = Ingredient.fromJson(ingredientArray.get(i));
                 if (!ingredient.isEmpty()) {
                     nonnulllist.add(ingredient);
                 }
             }
-
             return nonnulllist;
         }
-
-        public ShapelessCopyNbtRecipe fromNetwork(ResourceLocation recipeId, PacketBuffer buffer) {
-            String s = buffer.readUtf(32767);
-            int i = buffer.readVarInt();
-            NonNullList<Ingredient> nonnulllist = NonNullList.withSize(i, Ingredient.EMPTY);
-
-            for (int j = 0; j < nonnulllist.size(); j++) {
+        
+        public ShapelessCopyNbtRecipe fromNetwork(final ResourceLocation recipeId, final PacketBuffer buffer) {
+            final String s = buffer.readUtf(32767);
+            final int i = buffer.readVarInt();
+            final NonNullList<Ingredient> nonnulllist = (NonNullList<Ingredient>)NonNullList.withSize(i, Ingredient.EMPTY);
+            for (int j = 0; j < nonnulllist.size(); ++j) {
                 nonnulllist.set(j, Ingredient.fromNetwork(buffer));
             }
-
-            ItemStack itemstack = buffer.readItem();
+            final ItemStack itemstack = buffer.readItem();
             return new ShapelessCopyNbtRecipe(recipeId, s, itemstack, nonnulllist);
         }
-
-        public void toNetwork(PacketBuffer buffer, ShapelessCopyNbtRecipe recipe) {
+        
+        public void toNetwork(final PacketBuffer buffer, final ShapelessCopyNbtRecipe recipe) {
             buffer.writeUtf(recipe.getGroup());
             buffer.writeVarInt(recipe.getIngredients().size());
-
-            for (Ingredient ingredient : recipe.getIngredients()) {
+            for (final Ingredient ingredient : recipe.getIngredients()) {
                 ingredient.toNetwork(buffer);
             }
-
             buffer.writeItem(recipe.getResultItem());
         }
     }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\recipe\ShapelessCopyNbtRecipe.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

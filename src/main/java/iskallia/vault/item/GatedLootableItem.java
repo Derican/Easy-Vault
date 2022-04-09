@@ -1,3 +1,7 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.item;
 
 import iskallia.vault.config.entry.vending.ProductEntry;
@@ -21,75 +25,64 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class GatedLootableItem
-        extends BasicItem {
+public class GatedLootableItem extends BasicItem
+{
     ITextComponent[] tooltip;
-
-    public GatedLootableItem(ResourceLocation id, Item.Properties properties) {
+    
+    public GatedLootableItem(final ResourceLocation id, final Item.Properties properties) {
         super(id, properties);
     }
-
-    public GatedLootableItem(ResourceLocation id, Item.Properties properties, ITextComponent... tooltip) {
+    
+    public GatedLootableItem(final ResourceLocation id, final Item.Properties properties, final ITextComponent... tooltip) {
         super(id, properties);
         this.tooltip = tooltip;
     }
-
-
-    public ActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand) {
+    
+    public ActionResult<ItemStack> use(final World world, final PlayerEntity player, final Hand hand) {
         if (!world.isClientSide) {
-            ProductEntry productEntry;
-            ItemStack heldStack = player.getItemInHand(hand);
-
-            ServerWorld serverWorld = (ServerWorld) world;
-
-            ResearchTree researches = PlayerResearchesData.get(serverWorld).getResearches(player);
-            List<String> unlocked = new ArrayList<>(researches.getResearchesDone());
-
-            WeightedList<ProductEntry> list = null;
-            while (list == null && !unlocked.isEmpty()) {
-                String researchName = unlocked.remove(world.random.nextInt(unlocked.size()));
-                list = (WeightedList<ProductEntry>) ModConfigs.MOD_BOX.POOL.get(researchName);
+            final ItemStack heldStack = player.getItemInHand(hand);
+            final ServerWorld serverWorld = (ServerWorld)world;
+            final ResearchTree researches = PlayerResearchesData.get(serverWorld).getResearches(player);
+            List<String> unlocked;
+            WeightedList<ProductEntry> list;
+            String researchName;
+            for (unlocked = new ArrayList<String>(researches.getResearchesDone()), list = null; list == null && !unlocked.isEmpty(); list = ModConfigs.MOD_BOX.POOL.get(researchName)) {
+                researchName = unlocked.remove(world.random.nextInt(unlocked.size()));
             }
-
             ItemStack stack = ItemStack.EMPTY;
-
+            ProductEntry productEntry;
             if (list == null || list.isEmpty()) {
-                productEntry = (ProductEntry) ((WeightedList) ModConfigs.MOD_BOX.POOL.get("None")).getRandom(world.random);
-            } else {
-                productEntry = (ProductEntry) list.getRandom(world.random);
+                productEntry = ModConfigs.MOD_BOX.POOL.get("None").getRandom(world.random);
+            }
+            else {
+                productEntry = list.getRandom(world.random);
             }
             if (productEntry != null) {
                 stack = productEntry.generateItemStack();
             }
-
             if (!stack.isEmpty()) {
                 while (stack.getCount() > 0) {
-                    int amount = Math.min(stack.getCount(), stack.getMaxStackSize());
-                    ItemStack copy = stack.copy();
+                    final int amount = Math.min(stack.getCount(), stack.getMaxStackSize());
+                    final ItemStack copy = stack.copy();
                     copy.setCount(amount);
                     stack.shrink(amount);
                     player.drop(copy, false, false);
                 }
-
                 heldStack.shrink(1);
                 ItemRelicBoosterPack.successEffects(world, player.position());
-            } else {
+            }
+            else {
                 ItemRelicBoosterPack.failureEffects(world, player.position());
             }
         }
-        return super.use(world, player, hand);
+        return (ActionResult<ItemStack>)super.use(world, player, hand);
     }
-
-
-    public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+    
+    @Override
+    public void appendHoverText(final ItemStack stack, @Nullable final World worldIn, final List<ITextComponent> tooltip, final ITooltipFlag flagIn) {
         super.appendHoverText(stack, worldIn, tooltip, flagIn);
-        if (this.tooltip != null)
+        if (this.tooltip != null) {
             tooltip.addAll(Arrays.asList(this.tooltip));
+        }
     }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\item\GatedLootableItem.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

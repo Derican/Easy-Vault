@@ -1,3 +1,7 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.item.gear.specials;
 
 import iskallia.vault.item.gear.model.VaultGearModel;
@@ -6,76 +10,50 @@ import net.minecraft.client.renderer.model.ModelRenderer;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 
-public class BuildingArmorModel<T extends LivingEntity> extends VaultGearModel<T> {
-    public BuildingArmorModel(float modelSize, EquipmentSlotType slotType) {
+public class BuildingArmorModel<T extends LivingEntity> extends VaultGearModel<T>
+{
+    public BuildingArmorModel(final float modelSize, final EquipmentSlotType slotType) {
         super(modelSize, slotType);
-        this.texWidth = isLayer2() ? 64 : 64;
-        this.texHeight = isLayer2() ? 64 : 64;
-
-        this.Head = new ModelRenderer((Model) this);
-        this.Head.setPos(0.0F, 0.0F, 0.0F);
-        this.Head.texOffs(0, 13).addBox(-4.0F, -8.0F, -4.0F, 8.0F, 8.0F, 8.0F, 1.0F, false);
-        this.Head.texOffs(0, 0).addBox(-6.0F, -6.0F, -6.0F, 12.0F, 1.0F, 12.0F, 0.0F, false);
-        this.Head.texOffs(21, 18).addBox(-2.0F, -10.0F, -5.5F, 4.0F, 4.0F, 11.0F, 0.0F, false);
-
-        this.Body = new ModelRenderer((Model) this);
-        this.Body.setPos(0.0F, 0.0F, 0.0F);
-        this.Body.texOffs(0, 29).addBox(-4.0F, 0.0F, -2.0F, 8.0F, 12.0F, 4.0F, 1.01F, false);
-
-        this.RightArm = new ModelRenderer((Model) this);
-        this.RightArm.setPos(-5.0F, 2.0F, 0.0F);
-        this.RightArm.texOffs(0, 45).addBox(-3.0F, -2.0F, -2.0F, 4.0F, 12.0F, 4.0F, 1.0F, false);
-
-        this.LeftArm = new ModelRenderer((Model) this);
-        this.LeftArm.setPos(5.0F, 2.0F, 0.0F);
-        this.LeftArm.texOffs(40, 33).addBox(-1.0F, -2.0F, -2.0F, 4.0F, 12.0F, 4.0F, 1.0F, false);
-
-        this.RightBoot = new ModelRenderer((Model) this);
-        this.RightBoot.setPos(-1.9F, 12.0F, 0.0F);
-        this.RightBoot.texOffs(40, 13).addBox(-2.0F, 0.0F, -2.0F, 4.0F, 12.0F, 4.0F, 1.0F, false);
-
-        this.LeftBoot = new ModelRenderer((Model) this);
-        this.LeftBoot.setPos(1.9F, 12.0F, 0.0F);
-        this.LeftBoot.texOffs(24, 33).addBox(-2.0F, 0.0F, -2.0F, 4.0F, 12.0F, 4.0F, 1.0F, false);
-
-        this.Belt = new ModelRenderer((Model) this);
-        this.Belt.setPos(0.0F, 0.0F, 0.0F);
-        this.Belt.texOffs(0, 0).addBox(-4.0F, 0.0F, -2.0F, 8.0F, 12.0F, 4.0F, 0.51F, false);
-        this.Belt.texOffs(27, 27).addBox(-6.0F, 12.0F, -3.0F, 4.0F, 5.0F, 5.0F, 0.0F, false);
-        this.Belt.texOffs(24, 0).addBox(2.0F, 12.0F, -3.0F, 4.0F, 5.0F, 5.0F, 0.0F, false);
-        this.Belt.texOffs(28, 15).addBox(-2.0F, 11.0F, -3.0F, 4.0F, 3.0F, 1.0F, 0.0F, false);
-
-        ModelRenderer cube_r1_l2 = new ModelRenderer((Model) this);
-        cube_r1_l2.setPos(5.0F, 11.6F, 0.25F);
+        this.texWidth = (this.isLayer2() ? 64 : 64);
+        this.texHeight = (this.isLayer2() ? 64 : 64);
+        (this.Head = new ModelRenderer((Model)this)).setPos(0.0f, 0.0f, 0.0f);
+        this.Head.texOffs(0, 13).addBox(-4.0f, -8.0f, -4.0f, 8.0f, 8.0f, 8.0f, 1.0f, false);
+        this.Head.texOffs(0, 0).addBox(-6.0f, -6.0f, -6.0f, 12.0f, 1.0f, 12.0f, 0.0f, false);
+        this.Head.texOffs(21, 18).addBox(-2.0f, -10.0f, -5.5f, 4.0f, 4.0f, 11.0f, 0.0f, false);
+        (this.Body = new ModelRenderer((Model)this)).setPos(0.0f, 0.0f, 0.0f);
+        this.Body.texOffs(0, 29).addBox(-4.0f, 0.0f, -2.0f, 8.0f, 12.0f, 4.0f, 1.01f, false);
+        (this.RightArm = new ModelRenderer((Model)this)).setPos(-5.0f, 2.0f, 0.0f);
+        this.RightArm.texOffs(0, 45).addBox(-3.0f, -2.0f, -2.0f, 4.0f, 12.0f, 4.0f, 1.0f, false);
+        (this.LeftArm = new ModelRenderer((Model)this)).setPos(5.0f, 2.0f, 0.0f);
+        this.LeftArm.texOffs(40, 33).addBox(-1.0f, -2.0f, -2.0f, 4.0f, 12.0f, 4.0f, 1.0f, false);
+        (this.RightBoot = new ModelRenderer((Model)this)).setPos(-1.9f, 12.0f, 0.0f);
+        this.RightBoot.texOffs(40, 13).addBox(-2.0f, 0.0f, -2.0f, 4.0f, 12.0f, 4.0f, 1.0f, false);
+        (this.LeftBoot = new ModelRenderer((Model)this)).setPos(1.9f, 12.0f, 0.0f);
+        this.LeftBoot.texOffs(24, 33).addBox(-2.0f, 0.0f, -2.0f, 4.0f, 12.0f, 4.0f, 1.0f, false);
+        (this.Belt = new ModelRenderer((Model)this)).setPos(0.0f, 0.0f, 0.0f);
+        this.Belt.texOffs(0, 0).addBox(-4.0f, 0.0f, -2.0f, 8.0f, 12.0f, 4.0f, 0.51f, false);
+        this.Belt.texOffs(27, 27).addBox(-6.0f, 12.0f, -3.0f, 4.0f, 5.0f, 5.0f, 0.0f, false);
+        this.Belt.texOffs(24, 0).addBox(2.0f, 12.0f, -3.0f, 4.0f, 5.0f, 5.0f, 0.0f, false);
+        this.Belt.texOffs(28, 15).addBox(-2.0f, 11.0f, -3.0f, 4.0f, 3.0f, 1.0f, 0.0f, false);
+        final ModelRenderer cube_r1_l2 = new ModelRenderer((Model)this);
+        cube_r1_l2.setPos(5.0f, 11.6f, 0.25f);
         this.Belt.addChild(cube_r1_l2);
-        setRotationAngle(cube_r1_l2, -0.2618F, 0.0F, 0.0F);
-        cube_r1_l2.texOffs(24, 0).addBox(-0.5F, -2.0F, -0.5F, 1.0F, 4.0F, 1.0F, 0.0F, false);
-
-        ModelRenderer cube_r2_l2 = new ModelRenderer((Model) this);
-        cube_r2_l2.setPos(5.0F, 11.6F, -1.0F);
+        this.setRotationAngle(cube_r1_l2, -0.2618f, 0.0f, 0.0f);
+        cube_r1_l2.texOffs(24, 0).addBox(-0.5f, -2.0f, -0.5f, 1.0f, 4.0f, 1.0f, 0.0f, false);
+        final ModelRenderer cube_r2_l2 = new ModelRenderer((Model)this);
+        cube_r2_l2.setPos(5.0f, 11.6f, -1.0f);
         this.Belt.addChild(cube_r2_l2);
-        setRotationAngle(cube_r2_l2, 0.3054F, 0.0F, 0.0F);
-        cube_r2_l2.texOffs(0, 32).addBox(-0.5F, -2.0F, -0.5F, 1.0F, 4.0F, 1.0F, 0.0F, false);
-
-        ModelRenderer cube_r3_l2 = new ModelRenderer((Model) this);
-        cube_r3_l2.setPos(-5.0F, 10.25F, 0.5F);
+        this.setRotationAngle(cube_r2_l2, 0.3054f, 0.0f, 0.0f);
+        cube_r2_l2.texOffs(0, 32).addBox(-0.5f, -2.0f, -0.5f, 1.0f, 4.0f, 1.0f, 0.0f, false);
+        final ModelRenderer cube_r3_l2 = new ModelRenderer((Model)this);
+        cube_r3_l2.setPos(-5.0f, 10.25f, 0.5f);
         this.Belt.addChild(cube_r3_l2);
-        setRotationAngle(cube_r3_l2, 0.5672F, 0.0F, 0.0F);
-        cube_r3_l2.texOffs(24, 10).addBox(-1.0F, -3.25F, -4.5F, 2.0F, 2.0F, 3.0F, 0.0F, false);
-        cube_r3_l2.texOffs(4, 32).addBox(-0.5F, -1.25F, -3.5F, 1.0F, 4.0F, 1.0F, 0.0F, false);
-
-        this.RightLeg = new ModelRenderer((Model) this);
-        this.RightLeg.setPos(-1.9F, 12.0F, 0.0F);
-        this.RightLeg.texOffs(16, 16).addBox(-2.0F, 0.0F, -2.0F, 4.0F, 12.0F, 4.0F, 0.5F, false);
-
-        this.LeftLeg = new ModelRenderer((Model) this);
-        this.LeftLeg.setPos(1.9F, 12.0F, 0.0F);
-        this.LeftLeg.texOffs(0, 16).addBox(-2.0F, 0.0F, -2.0F, 4.0F, 12.0F, 4.0F, 0.5F, false);
+        this.setRotationAngle(cube_r3_l2, 0.5672f, 0.0f, 0.0f);
+        cube_r3_l2.texOffs(24, 10).addBox(-1.0f, -3.25f, -4.5f, 2.0f, 2.0f, 3.0f, 0.0f, false);
+        cube_r3_l2.texOffs(4, 32).addBox(-0.5f, -1.25f, -3.5f, 1.0f, 4.0f, 1.0f, 0.0f, false);
+        (this.RightLeg = new ModelRenderer((Model)this)).setPos(-1.9f, 12.0f, 0.0f);
+        this.RightLeg.texOffs(16, 16).addBox(-2.0f, 0.0f, -2.0f, 4.0f, 12.0f, 4.0f, 0.5f, false);
+        (this.LeftLeg = new ModelRenderer((Model)this)).setPos(1.9f, 12.0f, 0.0f);
+        this.LeftLeg.texOffs(0, 16).addBox(-2.0f, 0.0f, -2.0f, 4.0f, 12.0f, 4.0f, 0.5f, false);
     }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\item\gear\specials\BuildingArmorModel.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

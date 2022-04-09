@@ -1,3 +1,7 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.world.vault.logic.objective.raid;
 
 import iskallia.vault.config.RaidConfig;
@@ -6,14 +10,19 @@ import iskallia.vault.init.ModConfigs;
 import iskallia.vault.util.MiscUtils;
 import iskallia.vault.util.nbt.NBTHelper;
 import iskallia.vault.world.data.GlobalDifficultyData;
+import iskallia.vault.world.data.PlayerVaultStatsData;
 import iskallia.vault.world.vault.VaultRaid;
 import iskallia.vault.world.vault.gen.piece.VaultRoom;
+import iskallia.vault.world.vault.logic.objective.raid.modifier.MonsterAmountModifier;
 import iskallia.vault.world.vault.logic.objective.raid.modifier.MonsterLevelModifier;
 import net.minecraft.entity.*;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.INBT;
 import net.minecraft.nbt.StringNBT;
+import net.minecraft.network.IPacket;
 import net.minecraft.network.play.server.SPlaySoundEffectPacket;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
@@ -27,269 +36,242 @@ import net.minecraft.world.IWorldReader;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.registries.ForgeRegistries;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-import java.util.UUID;
+import javax.annotation.Nullable;
+import java.util.*;
+import java.util.function.Function;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
-public class ActiveRaid {
-    private static final Random rand = new Random();
-
+public class ActiveRaid
+{
+    private static final Random rand;
     private final BlockPos controller;
     private final AxisAlignedBB raidBox;
     private final RaidPreset preset;
-    private int wave = -1;
-    private int startDelay = 200;
-
-    private final List<UUID> activeEntities = new ArrayList<>();
-    private int totalWaveEntities = 0;
-
-    private final List<UUID> participatingPlayers = new ArrayList<>();
-
-    private ActiveRaid(BlockPos controller, AxisAlignedBB raidBox, RaidPreset preset) {
+    private int wave;
+    private int startDelay;
+    private final List<UUID> activeEntities;
+    private int totalWaveEntities;
+    private final List<UUID> participatingPlayers;
+    
+    private ActiveRaid(final BlockPos controller, final AxisAlignedBB raidBox, final RaidPreset preset) {
+        this.wave = -1;
+        this.startDelay = 200;
+        this.activeEntities = new ArrayList<UUID>();
+        this.totalWaveEntities = 0;
+        this.participatingPlayers = new ArrayList<UUID>();
         this.controller = controller;
         this.raidBox = raidBox;
         this.preset = preset;
     }
-
+    
     @Nullable
-    public static ActiveRaid create(VaultRaid vault, ServerWorld world, BlockPos controller) {
-        RaidPreset preset = RaidPreset.randomFromConfig();
+    public static ActiveRaid create(final VaultRaid vault, final ServerWorld world, final BlockPos controller) {
+        final RaidPreset preset = RaidPreset.randomFromConfig();
         if (preset == null) {
             return null;
         }
-        VaultRoom room = vault.getGenerator().getPiecesAt(controller, VaultRoom.class).stream().findFirst().orElse(null);
+        final VaultRoom room = (VaultRoom) vault.getGenerator().getPiecesAt(controller, VaultRoom.class).stream().findFirst().orElse(null);
         if (room == null) {
             return null;
         }
-        AxisAlignedBB raidBox = AxisAlignedBB.of(room.getBoundingBox());
-        ActiveRaid raid = new ActiveRaid(controller, raidBox, preset);
+        final AxisAlignedBB raidBox = AxisAlignedBB.of(room.getBoundingBox());
+        final ActiveRaid raid = new ActiveRaid(controller, raidBox, preset);
         world.getEntitiesOfClass(PlayerEntity.class, raidBox).forEach(player -> raid.participatingPlayers.add(player.getUUID()));
-
-
         vault.getActiveObjective(RaidChallengeObjective.class).ifPresent(raidObjective -> raidObjective.onRaidStart(vault, world, raid, controller));
-
-
-        raid.playSoundToPlayers((IEntityReader) world, SoundEvents.EVOKER_PREPARE_SUMMON, 1.0F, 0.7F);
+        raid.playSoundToPlayers((IEntityReader)world, SoundEvents.EVOKER_PREPARE_SUMMON, 1.0f, 0.7f);
         return raid;
     }
-
-    public void tick(VaultRaid vault, ServerWorld world) {
+    
+    public void tick(final VaultRaid vault, final ServerWorld world) {
         if (this.activeEntities.isEmpty() && this.startDelay <= 0) {
-            this.wave++;
-            RaidPreset.CompoundWaveSpawn wave = this.preset.getWave(this.wave);
+            ++this.wave;
+            final RaidPreset.CompoundWaveSpawn wave = this.preset.getWave(this.wave);
             if (wave != null) {
-                spawnWave(wave, vault, world);
+                this.spawnWave(wave, vault, world);
             }
         }
-
         if (this.startDelay > 0) {
-            this.startDelay--;
+            --this.startDelay;
         }
-
         this.activeEntities.removeIf(entityUid -> {
-            Entity e = world.getEntity(entityUid);
+            final Entity e = world.getEntity(entityUid);
             if (!(e instanceof MobEntity)) {
                 return true;
             }
-            MobEntity mob = (MobEntity) e;
-            mob.setPersistenceRequired();
-            if (!vault.getActiveObjective(RaidChallengeObjective.class).isPresent()) {
-                mob.setGlowing(true);
-            }
-            if (!(mob.getTarget() instanceof PlayerEntity)) {
-                List<PlayerEntity> players = (List<PlayerEntity>) this.participatingPlayers.stream().map(world::getPlayerByUUID).filter(Objects::nonNull).filter(()).collect(Collectors.toList());
-                if (!players.isEmpty()) {
-                    PlayerEntity player = (PlayerEntity) MiscUtils.getRandomEntry(players, rand);
-                    mob.setTarget((LivingEntity) player);
+            else {
+                final MobEntity mob = (MobEntity)e;
+                mob.setPersistenceRequired();
+                if (!vault.getActiveObjective(RaidChallengeObjective.class).isPresent()) {
+                    mob.setGlowing(true);
                 }
+                if (!(mob.getTarget() instanceof PlayerEntity)) {
+                    final List<PlayerEntity> players = this.participatingPlayers.stream().map(world::getPlayerByUUID).filter(Objects::nonNull).filter(player -> this.raidBox.inflate(10.0).contains(player.position())).collect(Collectors.toList());
+                    PlayerEntity player = null;
+                    if (!players.isEmpty()) {
+                        player = MiscUtils.getRandomEntry(players, ActiveRaid.rand);
+                        mob.setTarget((LivingEntity)player);
+                    }
+                }
+                return false;
             }
-            return false;
         });
     }
-
-
-    public void spawnWave(RaidPreset.CompoundWaveSpawn wave, VaultRaid vault, ServerWorld world) {
+    
+    public void spawnWave(final RaidPreset.CompoundWaveSpawn wave, final VaultRaid vault, final ServerWorld world) {
         int participantLevel = -1;
-        for (PlayerEntity player : world.getEntitiesOfClass(PlayerEntity.class, getRaidBoundingBox())) {
-            int playerLevel = PlayerVaultStatsData.get(world).getVaultStats(player).getVaultLevel();
+        for (final PlayerEntity player : world.getEntitiesOfClass(PlayerEntity.class, this.getRaidBoundingBox())) {
+            final int playerLevel = PlayerVaultStatsData.get(world).getVaultStats(player).getVaultLevel();
             if (participantLevel == -1) {
                 participantLevel = playerLevel;
-                continue;
             }
-            if (participantLevel > playerLevel) {
+            else {
+                if (participantLevel <= playerLevel) {
+                    continue;
+                }
                 participantLevel = playerLevel;
             }
         }
         if (participantLevel == -1) {
-            participantLevel = ((Integer) vault.getProperties().getBase(VaultRaid.LEVEL).orElse(Integer.valueOf(0))).intValue();
+            participantLevel = vault.getProperties().getBase(VaultRaid.LEVEL).orElse(0);
         }
-        int scalingLevel = participantLevel;
-
-        int playerCount = this.participatingPlayers.size();
+        final int scalingLevel = participantLevel;
+        final int playerCount = this.participatingPlayers.size();
         wave.getWaveSpawns().forEach(spawn -> {
-            RaidConfig.MobPool pool = ModConfigs.RAID_CONFIG.getPool(spawn.getMobPool(), scalingLevel);
-
+            final RaidConfig.MobPool pool = ModConfigs.RAID_CONFIG.getPool(spawn.getMobPool(), scalingLevel);
             if (pool == null) {
                 return;
             }
-
-            int spawnCount = spawn.getMobCount();
-
-            spawnCount = (int) (spawnCount * (1.0D + ((Double) vault.getActiveObjective(RaidChallengeObjective.class).map(()).orElse(Double.valueOf(0.0D))).doubleValue()) * playerCount);
-
-            spawnCount = (int) (spawnCount * ModConfigs.RAID_CONFIG.getMobCountMultiplier(scalingLevel));
-
-            for (int i = 0; i < spawnCount; i++) {
-                String mobType = pool.getRandomMob();
-
-                EntityType<?> type = (EntityType) ForgeRegistries.ENTITIES.getValue(new ResourceLocation(mobType));
-
-                if (type != null && type.canSummon()) {
-                    Vector3f center = new Vector3f(this.controller.getX() + 0.5F, this.controller.getY(), this.controller.getZ() + 0.5F);
-
-                    Vector3f randomPos = MiscUtils.getRandomCirclePosition(center, new Vector3f(0.0F, 1.0F, 0.0F), 8.0F + rand.nextFloat() * 6.0F);
-                    BlockPos spawnAt = MiscUtils.getEmptyNearby((IWorldReader) world, new BlockPos(randomPos.x(), randomPos.y(), randomPos.z())).orElse(BlockPos.ZERO);
-                    if (!spawnAt.equals(BlockPos.ZERO)) {
-                        Entity spawned = type.spawn(world, null, null, spawnAt, SpawnReason.EVENT, true, false);
-                        if (spawned instanceof MobEntity) {
-                            GlobalDifficultyData.Difficulty difficulty = GlobalDifficultyData.get(world).getVaultDifficulty();
-                            MobEntity mob = (MobEntity) spawned;
-                            processSpawnedMob(mob, vault, difficulty, scalingLevel);
-                            this.activeEntities.add(mob.getUUID());
+            else {
+                for (int spawnCount = spawn.getMobCount(), spawnCount2 = (int)(spawnCount * ((1.0 + vault.getActiveObjective(RaidChallengeObjective.class).map(raidObjective -> raidObjective.getModifiersOfType(MonsterAmountModifier.class).values().stream().mapToDouble(Float::doubleValue).sum()).orElse(0.0)) * playerCount)), spawnCount3 = (int)(spawnCount2 * ModConfigs.RAID_CONFIG.getMobCountMultiplier(scalingLevel)), i = 0; i < spawnCount3; ++i) {
+                    final String mobType = pool.getRandomMob();
+                    final EntityType type = (EntityType)ForgeRegistries.ENTITIES.getValue(new ResourceLocation(mobType));
+                    if (type != null) {
+                        if (!(!type.canSummon())) {
+                            final Vector3f center = new Vector3f(this.controller.getX() + 0.5f, (float)this.controller.getY(), this.controller.getZ() + 0.5f);
+                            final Vector3f randomPos = MiscUtils.getRandomCirclePosition(center, new Vector3f(0.0f, 1.0f, 0.0f), 8.0f + ActiveRaid.rand.nextFloat() * 6.0f);
+                            final BlockPos spawnAt = MiscUtils.getEmptyNearby((IWorldReader)world, new BlockPos((double)randomPos.x(), (double)randomPos.y(), (double)randomPos.z())).orElse(BlockPos.ZERO);
+                            if (!spawnAt.equals(BlockPos.ZERO)) {
+                                final Entity spawned = type.spawn(world, (ItemStack)null, (PlayerEntity)null, spawnAt, SpawnReason.EVENT, true, false);
+                                if (spawned instanceof MobEntity) {
+                                    final GlobalDifficultyData.Difficulty difficulty = GlobalDifficultyData.get(world).getVaultDifficulty();
+                                    final MobEntity mob = (MobEntity)spawned;
+                                    this.processSpawnedMob(mob, vault, difficulty, scalingLevel);
+                                    this.activeEntities.add(mob.getUUID());
+                                }
+                            }
                         }
                     }
                 }
+                return;
             }
         });
         this.totalWaveEntities = this.activeEntities.size();
-
-        playSoundToPlayers((IEntityReader) world, SoundEvents.RAID_HORN, 64.0F, 1.0F);
+        this.playSoundToPlayers((IEntityReader)world, SoundEvents.RAID_HORN, 64.0f, 1.0f);
     }
-
-    private void processSpawnedMob(MobEntity mob, VaultRaid vault, GlobalDifficultyData.Difficulty difficulty, int level) {
-        level += ((Integer) vault.getActiveObjective(RaidChallengeObjective.class).map(raidObjective -> Integer.valueOf(raidObjective.<MonsterLevelModifier>getModifiersOfType(MonsterLevelModifier.class).entrySet().stream().mapToInt(()).sum()))
-
-
-                .orElse(Integer.valueOf(0))).intValue();
-
+    
+    private void processSpawnedMob(final MobEntity mob, final VaultRaid vault, final GlobalDifficultyData.Difficulty difficulty, int level) {
+        level += vault.getActiveObjective(RaidChallengeObjective.class).map(raidObjective -> raidObjective.getModifiersOfType(MonsterLevelModifier.class).entrySet().stream().mapToInt(entry -> entry.getKey().getLevelAdded(entry.getValue())).sum()).orElse(0);
         mob.setPersistenceRequired();
-        EntityScaler.setScaledEquipment((LivingEntity) mob, vault, difficulty, level, new Random(), EntityScaler.Type.MOB);
-        EntityScaler.setScaled((Entity) mob);
-
-        vault.getActiveObjective(RaidChallengeObjective.class).ifPresent(raidObjective -> raidObjective.getAllModifiers().forEach(()));
+        EntityScaler.setScaledEquipment((LivingEntity)mob, vault, difficulty, level, new Random(), EntityScaler.Type.MOB);
+        EntityScaler.setScaled((Entity)mob);
+        vault.getActiveObjective(RaidChallengeObjective.class).ifPresent(raidObjective -> raidObjective.getAllModifiers().forEach((modifier, value) -> modifier.affectRaidMob(mob, value)));
     }
-
-
+    
     public boolean isFinished() {
-        return (this.wave >= 0 && this.preset.getWave(this.wave) == null);
+        return this.wave >= 0 && this.preset.getWave(this.wave) == null;
     }
-
+    
     List<UUID> getActiveEntities() {
         return this.activeEntities;
     }
-
-    public boolean isPlayerInRaid(PlayerEntity player) {
-        return isPlayerInRaid(player.getUUID());
+    
+    public boolean isPlayerInRaid(final PlayerEntity player) {
+        return this.isPlayerInRaid(player.getUUID());
     }
-
-    public boolean isPlayerInRaid(UUID playerId) {
+    
+    public boolean isPlayerInRaid(final UUID playerId) {
         return this.participatingPlayers.contains(playerId);
     }
-
+    
     public AxisAlignedBB getRaidBoundingBox() {
         return this.raidBox;
     }
-
+    
     public int getWave() {
         return this.wave;
     }
-
+    
     public int getTotalWaves() {
         return this.preset.getWaves();
     }
-
+    
     public int getAliveEntities() {
         return this.activeEntities.size();
     }
-
+    
     public int getTotalWaveEntities() {
         return this.totalWaveEntities;
     }
-
+    
     public int getStartDelay() {
         return this.startDelay;
     }
-
-    void setStartDelay(int startDelay) {
+    
+    void setStartDelay(final int startDelay) {
         this.startDelay = startDelay;
     }
-
+    
     boolean hasNextWave() {
-        return (this.preset.getWave(this.wave + 1) != null);
+        return this.preset.getWave(this.wave + 1) != null;
     }
-
-    public void finish(VaultRaid raid, ServerWorld world) {
+    
+    public void finish(final VaultRaid raid, final ServerWorld world) {
         raid.getActiveObjective(RaidChallengeObjective.class).ifPresent(raidChallenge -> raidChallenge.onRaidFinish(raid, world, this, this.controller));
-
-
-        playSoundToPlayers((IEntityReader) world, SoundEvents.UI_TOAST_CHALLENGE_COMPLETE, 0.7F, 0.5F);
+        this.playSoundToPlayers((IEntityReader)world, SoundEvents.UI_TOAST_CHALLENGE_COMPLETE, 0.7f, 0.5f);
     }
-
-    private void playSoundToPlayers(IEntityReader world, SoundEvent event, float volume, float pitch) {
+    
+    private void playSoundToPlayers(final IEntityReader world, final SoundEvent event, final float volume, final float pitch) {
         this.participatingPlayers.forEach(playerId -> {
-            PlayerEntity player = world.getPlayerByUUID(playerId);
+            final PlayerEntity player = world.getPlayerByUUID(playerId);
             if (player instanceof ServerPlayerEntity) {
-                SPlaySoundEffectPacket pkt = new SPlaySoundEffectPacket(event, SoundCategory.BLOCKS, player.getX(), player.getY(), player.getZ(), volume, pitch);
-                ((ServerPlayerEntity) player).connection.send((IPacket) pkt);
+                final SPlaySoundEffectPacket pkt = new SPlaySoundEffectPacket(event, SoundCategory.BLOCKS, player.getX(), player.getY(), player.getZ(), volume, pitch);
+                ((ServerPlayerEntity)player).connection.send((IPacket)pkt);
             }
         });
     }
-
-
+    
     public BlockPos getController() {
         return this.controller;
     }
-
-    public void serialize(CompoundNBT tag) {
-        tag.put("pos", (INBT) NBTHelper.serializeBlockPos(this.controller));
-        tag.put("boxFrom", (INBT) NBTHelper.serializeBlockPos(new BlockPos(this.raidBox.minX, this.raidBox.minY, this.raidBox.minZ)));
-        tag.put("boxTo", (INBT) NBTHelper.serializeBlockPos(new BlockPos(this.raidBox.maxX, this.raidBox.maxY, this.raidBox.maxZ)));
+    
+    public void serialize(final CompoundNBT tag) {
+        tag.put("pos", (INBT)NBTHelper.serializeBlockPos(this.controller));
+        tag.put("boxFrom", (INBT)NBTHelper.serializeBlockPos(new BlockPos(this.raidBox.minX, this.raidBox.minY, this.raidBox.minZ)));
+        tag.put("boxTo", (INBT)NBTHelper.serializeBlockPos(new BlockPos(this.raidBox.maxX, this.raidBox.maxY, this.raidBox.maxZ)));
         tag.putInt("wave", this.wave);
-        tag.put("waves", (INBT) this.preset.serialize());
+        tag.put("waves", (INBT)this.preset.serialize());
         tag.putInt("startDelay", this.startDelay);
-
         tag.putInt("totalWaveEntities", this.totalWaveEntities);
-        NBTHelper.writeList(tag, "entities", this.activeEntities, StringNBT.class, uuid -> StringNBT.valueOf(uuid.toString()));
-
-
-        NBTHelper.writeList(tag, "players", this.participatingPlayers, StringNBT.class, uuid -> StringNBT.valueOf(uuid.toString()));
+        NBTHelper.writeList(tag, "entities", (Collection<UUID>)this.activeEntities, StringNBT.class, uuid -> StringNBT.valueOf(uuid.toString()));
+        NBTHelper.writeList(tag, "players", (Collection<UUID>)this.participatingPlayers, StringNBT.class, uuid -> StringNBT.valueOf(uuid.toString()));
     }
-
-
-    public static ActiveRaid deserializeNBT(CompoundNBT nbt) {
-        BlockPos controller = NBTHelper.deserializeBlockPos(nbt.getCompound("pos"));
-        BlockPos from = NBTHelper.deserializeBlockPos(nbt.getCompound("boxFrom"));
-        BlockPos to = NBTHelper.deserializeBlockPos(nbt.getCompound("boxTo"));
-        RaidPreset waves = RaidPreset.deserialize(nbt.getCompound("waves"));
-
-        ActiveRaid raid = new ActiveRaid(controller, new AxisAlignedBB(from, to), waves);
+    
+    public static ActiveRaid deserializeNBT(final CompoundNBT nbt) {
+        final BlockPos controller = NBTHelper.deserializeBlockPos(nbt.getCompound("pos"));
+        final BlockPos from = NBTHelper.deserializeBlockPos(nbt.getCompound("boxFrom"));
+        final BlockPos to = NBTHelper.deserializeBlockPos(nbt.getCompound("boxTo"));
+        final RaidPreset waves = RaidPreset.deserialize(nbt.getCompound("waves"));
+        final ActiveRaid raid = new ActiveRaid(controller, new AxisAlignedBB(from, to), waves);
         raid.startDelay = nbt.getInt("startDelay");
         raid.wave = nbt.getInt("wave");
         raid.totalWaveEntities = nbt.getInt("totalWaveEntities");
         raid.activeEntities.addAll(NBTHelper.readList(nbt, "entities", StringNBT.class, idString -> UUID.fromString(idString.getAsString())));
-
-
         raid.participatingPlayers.addAll(NBTHelper.readList(nbt, "players", StringNBT.class, idString -> UUID.fromString(idString.getAsString())));
-
-
         return raid;
     }
+    
+    static {
+        rand = new Random();
+    }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\world\vault\logic\objective\raid\ActiveRaid.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

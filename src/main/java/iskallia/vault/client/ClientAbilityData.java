@@ -1,3 +1,7 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.client;
 
 import iskallia.vault.init.ModConfigs;
@@ -10,119 +14,116 @@ import iskallia.vault.skill.ability.AbilityTree;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
-public class ClientAbilityData {
-    private static final Map<String, CooldownData> cooldowns = new HashMap<>();
-    private static List<AbilityNode<?, ?>> learnedAbilities = new ArrayList<>();
-
+public class ClientAbilityData
+{
+    private static final Map<String, CooldownData> cooldowns;
+    private static List<AbilityNode<?, ?>> learnedAbilities;
     private static AbilityGroup<?, ?> selectedAbility;
     private static boolean active;
-
+    
     public static AbilityGroup<?, ?> getSelectedAbility() {
-        return selectedAbility;
+        return ClientAbilityData.selectedAbility;
     }
-
+    
     public static boolean isActive() {
-        return active;
+        return ClientAbilityData.active;
     }
-
+    
     @Nonnull
     public static List<AbilityNode<?, ?>> getLearnedAbilityNodes() {
-        return Collections.unmodifiableList(learnedAbilities);
+        return Collections.unmodifiableList((List<? extends AbilityNode<?, ?>>)ClientAbilityData.learnedAbilities);
     }
-
-    public static int getIndexOf(AbilityNode<?, ?> node) {
+    
+    public static int getIndexOf(final AbilityNode<?, ?> node) {
         return getLearnedAbilityNodes().indexOf(node);
     }
-
-    public static int getIndexOf(AbilityGroup<?, ?> group) {
-        List<AbilityNode<?, ?>> nodes = getLearnedAbilityNodes();
-        for (int i = 0; i < nodes.size(); i++) {
-            AbilityNode<?, ?> node = nodes.get(i);
+    
+    public static int getIndexOf(final AbilityGroup<?, ?> group) {
+        final List<AbilityNode<?, ?>> nodes = getLearnedAbilityNodes();
+        for (int i = 0; i < nodes.size(); ++i) {
+            final AbilityNode<?, ?> node = nodes.get(i);
             if (node.getGroup().equals(group)) {
                 return i;
             }
         }
         return -1;
     }
-
-    public static int getCooldown(AbilityGroup<?, ?> abilityGroup) {
+    
+    public static int getCooldown(final AbilityGroup<?, ?> abilityGroup) {
         return getCooldown(abilityGroup.getParentName());
     }
-
-    public static int getCooldown(String abilityGroupName) {
-        if (!cooldowns.containsKey(abilityGroupName)) {
+    
+    public static int getCooldown(final String abilityGroupName) {
+        if (!ClientAbilityData.cooldowns.containsKey(abilityGroupName)) {
             return 0;
         }
-        return ((CooldownData) cooldowns.get(abilityGroupName)).getCooldownTicks();
+        return ClientAbilityData.cooldowns.get(abilityGroupName).getCooldownTicks();
     }
-
-    public static int getMaxCooldown(AbilityGroup<?, ?> abilityGroup) {
+    
+    public static int getMaxCooldown(final AbilityGroup<?, ?> abilityGroup) {
         return getMaxCooldown(abilityGroup.getParentName());
     }
-
-    public static int getMaxCooldown(String abilityGroupName) {
-        if (!cooldowns.containsKey(abilityGroupName)) {
+    
+    public static int getMaxCooldown(final String abilityGroupName) {
+        if (!ClientAbilityData.cooldowns.containsKey(abilityGroupName)) {
             return 0;
         }
-        return ((CooldownData) cooldowns.get(abilityGroupName)).getMaxCooldownTicks();
+        return ClientAbilityData.cooldowns.get(abilityGroupName).getMaxCooldownTicks();
     }
-
+    
     @Nullable
-    public static AbilityNode<?, ?> getLearnedAbilityNode(AbilityGroup<?, ?> ability) {
+    public static AbilityNode<?, ?> getLearnedAbilityNode(final AbilityGroup<?, ?> ability) {
         return getLearnedAbilityNode(ability.getParentName());
     }
-
+    
     @Nullable
-    public static AbilityNode<?, ?> getLearnedAbilityNode(String abilityName) {
-        for (AbilityNode<?, ?> node : learnedAbilities) {
+    public static AbilityNode<?, ?> getLearnedAbilityNode(final String abilityName) {
+        for (final AbilityNode<?, ?> node : ClientAbilityData.learnedAbilities) {
             if (node.getGroup().getParentName().equals(abilityName)) {
                 return node;
             }
         }
         return null;
     }
-
-    public static void updateAbilities(AbilityKnownOnesMessage pkt) {
-        learnedAbilities = pkt.getLearnedAbilities();
+    
+    public static void updateAbilities(final AbilityKnownOnesMessage pkt) {
+        ClientAbilityData.learnedAbilities = pkt.getLearnedAbilities();
     }
-
-    public static void updateActivity(AbilityActivityMessage pkt) {
-        cooldowns.put(pkt.getSelectedAbility(), new CooldownData(pkt.getCooldownTicks(), pkt.getMaxCooldownTicks()));
+    
+    public static void updateActivity(final AbilityActivityMessage pkt) {
+        ClientAbilityData.cooldowns.put(pkt.getSelectedAbility(), new CooldownData(pkt.getCooldownTicks(), pkt.getMaxCooldownTicks()));
         if (pkt.getActiveFlag() != AbilityTree.ActivityFlag.NO_OP) {
-            active = (pkt.getActiveFlag() == AbilityTree.ActivityFlag.ACTIVATE_ABILITY);
+            ClientAbilityData.active = (pkt.getActiveFlag() == AbilityTree.ActivityFlag.ACTIVATE_ABILITY);
         }
     }
-
-    public static void updateSelectedAbility(AbilityFocusMessage pkt) {
-        selectedAbility = ModConfigs.ABILITIES.getAbilityGroupByName(pkt.getSelectedAbility());
+    
+    public static void updateSelectedAbility(final AbilityFocusMessage pkt) {
+        ClientAbilityData.selectedAbility = ModConfigs.ABILITIES.getAbilityGroupByName(pkt.getSelectedAbility());
     }
-
-    public static class CooldownData {
+    
+    static {
+        cooldowns = new HashMap<String, CooldownData>();
+        ClientAbilityData.learnedAbilities = new ArrayList<AbilityNode<?, ?>>();
+    }
+    
+    public static class CooldownData
+    {
         private final int cooldownTicks;
         private final int maxCooldownTicks;
-
-        public CooldownData(int cooldownTicks, int maxCooldownTicks) {
+        
+        public CooldownData(final int cooldownTicks, final int maxCooldownTicks) {
             this.cooldownTicks = cooldownTicks;
             this.maxCooldownTicks = maxCooldownTicks;
         }
-
+        
         public int getCooldownTicks() {
             return this.cooldownTicks;
         }
-
+        
         public int getMaxCooldownTicks() {
             return this.maxCooldownTicks;
         }
     }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\client\ClientAbilityData.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

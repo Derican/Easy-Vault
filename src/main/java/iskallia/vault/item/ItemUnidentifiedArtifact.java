@@ -1,3 +1,7 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.item;
 
 import iskallia.vault.block.VaultArtifactBlock;
@@ -26,63 +30,48 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class ItemUnidentifiedArtifact
-        extends Item {
-    public static int artifactOverride = -1;
-
-    public ItemUnidentifiedArtifact(ItemGroup group, ResourceLocation id) {
-        super((new Item.Properties())
-                .tab(group)
-                .stacksTo(64));
-
-        setRegistryName(id);
+public class ItemUnidentifiedArtifact extends Item
+{
+    public static int artifactOverride;
+    
+    public ItemUnidentifiedArtifact(final ItemGroup group, final ResourceLocation id) {
+        super(new Item.Properties().tab(group).stacksTo(64));
+        this.setRegistryName(id);
     }
-
-
-    public ActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand) {
+    
+    public ActionResult<ItemStack> use(final World world, final PlayerEntity player, final Hand hand) {
         if (!world.isClientSide) {
-            ItemStack artifactStack, heldStack = player.getItemInHand(hand);
-
-            Vector3d position = player.position();
-
-            ((ServerWorld) world).playSound(null, position.x, position.y, position.z, ModSounds.BOOSTER_PACK_SUCCESS_SFX, SoundCategory.PLAYERS, 1.0F, 1.0F);
-
-
-            ((ServerWorld) world).sendParticles((IParticleData) ParticleTypes.DRAGON_BREATH, position.x, position.y, position.z, 500, 1.0D, 1.0D, 1.0D, 0.5D);
-
-
-            if (artifactOverride != -1) {
-                artifactStack = VaultArtifactBlock.createArtifact(artifactOverride);
-                artifactOverride = -1;
-            } else {
+            final ItemStack heldStack = player.getItemInHand(hand);
+            final Vector3d position = player.position();
+            ((ServerWorld)world).playSound((PlayerEntity)null, position.x, position.y, position.z, ModSounds.BOOSTER_PACK_SUCCESS_SFX, SoundCategory.PLAYERS, 1.0f, 1.0f);
+            ((ServerWorld)world).sendParticles((IParticleData)ParticleTypes.DRAGON_BREATH, position.x, position.y, position.z, 500, 1.0, 1.0, 1.0, 0.5);
+            ItemStack artifactStack;
+            if (ItemUnidentifiedArtifact.artifactOverride != -1) {
+                artifactStack = VaultArtifactBlock.createArtifact(ItemUnidentifiedArtifact.artifactOverride);
+                ItemUnidentifiedArtifact.artifactOverride = -1;
+            }
+            else {
                 artifactStack = VaultArtifactBlock.createRandomArtifact();
             }
             player.drop(artifactStack, false, false);
-
             heldStack.shrink(1);
         }
-
-        return super.use(world, player, hand);
+        return (ActionResult<ItemStack>)super.use(world, player, hand);
     }
-
-
+    
     @OnlyIn(Dist.CLIENT)
-    public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-        StringTextComponent text = new StringTextComponent("Right click to identify.");
+    public void appendHoverText(final ItemStack stack, @Nullable final World worldIn, final List<ITextComponent> tooltip, final ITooltipFlag flagIn) {
+        final StringTextComponent text = new StringTextComponent("Right click to identify.");
         text.setStyle(Style.EMPTY.withColor(Color.fromRgb(-9472)));
-        tooltip.add(text);
-
-        super.appendHoverText(stack, worldIn, tooltip, flagIn);
+        tooltip.add((ITextComponent)text);
+        super.appendHoverText(stack, worldIn, (List)tooltip, flagIn);
     }
-
-
-    public boolean isFoil(ItemStack stack) {
+    
+    public boolean isFoil(final ItemStack stack) {
         return true;
     }
+    
+    static {
+        ItemUnidentifiedArtifact.artifactOverride = -1;
+    }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\item\ItemUnidentifiedArtifact.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

@@ -1,3 +1,7 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.util;
 
 import iskallia.vault.init.ModConfigs;
@@ -5,60 +9,62 @@ import net.minecraft.util.text.TextFormatting;
 
 import java.util.Random;
 
-public enum VaultRarity {
-    COMMON(TextFormatting.WHITE),
-    RARE(TextFormatting.YELLOW),
-    EPIC(TextFormatting.LIGHT_PURPLE),
+public enum VaultRarity
+{
+    COMMON(TextFormatting.WHITE), 
+    RARE(TextFormatting.YELLOW), 
+    EPIC(TextFormatting.LIGHT_PURPLE), 
     OMEGA(TextFormatting.GREEN);
-
+    
     public final TextFormatting color;
-
-    VaultRarity(TextFormatting color) {
+    
+    private VaultRarity(final TextFormatting color) {
         this.color = color;
     }
-
+    
     public static VaultRarity getWeightedRandom() {
-        Random rand = new Random();
+        final Random rand = new Random();
         return getWeightedRarityAt(rand.nextInt(getTotalWeight()));
     }
-
+    
     private static int getTotalWeight() {
         int totalWeight = 0;
-        for (VaultRarity rarity : values()) {
+        for (final VaultRarity rarity : values()) {
             totalWeight += getWeight(rarity);
         }
         return totalWeight;
     }
-
+    
     private static VaultRarity getWeightedRarityAt(int index) {
         VaultRarity current = null;
-
-        for (VaultRarity rarity : values()) {
-            current = rarity;
+        final VaultRarity[] values = values();
+        for (int length = values.length, i = 0; i < length; ++i) {
+            final VaultRarity rarity = current = values[i];
             index -= getWeight(rarity);
-            if (index < 0)
+            if (index < 0) {
                 break;
+            }
         }
         return current;
     }
-
-    private static int getWeight(VaultRarity rarity) {
+    
+    private static int getWeight(final VaultRarity rarity) {
         switch (rarity) {
-            case COMMON:
+            case COMMON: {
                 return ModConfigs.VAULT_CRYSTAL.NORMAL_WEIGHT;
-            case RARE:
+            }
+            case RARE: {
                 return ModConfigs.VAULT_CRYSTAL.RARE_WEIGHT;
-            case EPIC:
+            }
+            case EPIC: {
                 return ModConfigs.VAULT_CRYSTAL.EPIC_WEIGHT;
-            case OMEGA:
+            }
+            case OMEGA: {
                 return ModConfigs.VAULT_CRYSTAL.OMEGA_WEIGHT;
+            }
+            default: {
+                return ModConfigs.VAULT_CRYSTAL.NORMAL_WEIGHT;
+            }
         }
-        return ModConfigs.VAULT_CRYSTAL.NORMAL_WEIGHT;
     }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vaul\\util\VaultRarity.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

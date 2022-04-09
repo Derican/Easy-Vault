@@ -1,42 +1,40 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.container;
 
 import iskallia.vault.container.slot.FilteredSlotWrapper;
 import iskallia.vault.init.ModContainers;
+import iskallia.vault.item.BasicScavengerItem;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.container.ChestContainer;
+import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.inventory.container.Slot;
+import net.minecraft.tileentity.ChestTileEntity;
 
-
-public class ScavengerChestContainer
-        extends ChestContainer {
+public class ScavengerChestContainer extends ChestContainer
+{
     private final IInventory chestOwner;
-
-    public ScavengerChestContainer(int id, PlayerInventory playerInventory, IInventory chestOwner, IInventory scavengerOwner) {
-        super(ModContainers.SCAVENGER_CHEST_CONTAINER, id, playerInventory, scavengerOwner, 5);
-
+    
+    public ScavengerChestContainer(final int id, final PlayerInventory playerInventory, final IInventory chestOwner, final IInventory scavengerOwner) {
+        super((ContainerType)ModContainers.SCAVENGER_CHEST_CONTAINER, id, playerInventory, scavengerOwner, 5);
         this.chestOwner = chestOwner;
     }
-
+    
     protected Slot addSlot(Slot slot) {
-        FilteredSlotWrapper filteredSlotWrapper = null;
         if (!(slot.container instanceof PlayerInventory)) {
-            filteredSlotWrapper = new FilteredSlotWrapper(slot, stack -> stack.getItem() instanceof iskallia.vault.item.BasicScavengerItem);
+            slot = new FilteredSlotWrapper(slot, stack -> stack.getItem() instanceof BasicScavengerItem);
         }
-        return super.addSlot((Slot) filteredSlotWrapper);
+        return super.addSlot(slot);
     }
-
-
-    public void removed(PlayerEntity playerIn) {
+    
+    public void removed(final PlayerEntity playerIn) {
         super.removed(playerIn);
-        if (!(getContainer() instanceof net.minecraft.tileentity.ChestTileEntity))
+        if (!(this.getContainer() instanceof ChestTileEntity)) {
             this.chestOwner.stopOpen(playerIn);
+        }
     }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\container\ScavengerChestContainer.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

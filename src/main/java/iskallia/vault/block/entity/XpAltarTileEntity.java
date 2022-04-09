@@ -1,3 +1,7 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.block.entity;
 
 import iskallia.vault.block.base.FillableAltarTileEntity;
@@ -9,46 +13,41 @@ import net.minecraft.util.text.StringTextComponent;
 
 import java.awt.*;
 import java.util.Optional;
+import java.util.UUID;
+import java.util.function.Function;
 
-public class XpAltarTileEntity
-        extends FillableAltarTileEntity {
+public class XpAltarTileEntity extends FillableAltarTileEntity
+{
     public XpAltarTileEntity() {
         super(ModBlocks.XP_ALTAR_TILE_ENTITY);
     }
-
-
+    
+    @Override
     public ITextComponent getRequirementName() {
-        return (ITextComponent) new StringTextComponent("EXP Levels");
+        return (ITextComponent)new StringTextComponent("EXP Levels");
     }
-
-
+    
+    @Override
     public PlayerFavourData.VaultGodType getAssociatedVaultGod() {
         return PlayerFavourData.VaultGodType.OMNISCIENT;
     }
-
-
+    
+    @Override
     public ITextComponent getRequirementUnit() {
-        return (ITextComponent) new StringTextComponent("levels");
+        return (ITextComponent)new StringTextComponent("levels");
     }
-
-
-    public net.minecraft.util.text.Color getFillColor() {
-        Color color = new Color(13842220);
-        return net.minecraft.util.text.Color.fromRgb(color.getRGB());
+    
+    @Override
+    public Color getFillColor() {
+        return new Color(-13842220);
     }
-
-
-    protected Optional<Integer> calcMaxProgress(VaultRaid vault) {
+    
+    @Override
+    protected Optional<Integer> calcMaxProgress(final VaultRaid vault) {
         return vault.getProperties().getBase(VaultRaid.LEVEL).map(vaultLevel -> {
-            float multiplier = ((Float) vault.getProperties().getBase(VaultRaid.HOST).map(this::getMaxProgressMultiplier).orElse(Float.valueOf(1.0F))).floatValue();
-            float progress = Math.max(10.0F, vaultLevel.intValue() * 2.0F);
+            final float multiplier = vault.getProperties().getBase(VaultRaid.HOST).map(this::getMaxProgressMultiplier).orElse(1.0f);
+            final float progress = Math.max(10.0f, vaultLevel * 2.0f);
             return Integer.valueOf(Math.round(progress * multiplier));
         });
     }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\block\entity\XpAltarTileEntity.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

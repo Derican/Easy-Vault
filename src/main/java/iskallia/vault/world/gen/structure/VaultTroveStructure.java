@@ -1,3 +1,7 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.world.gen.structure;
 
 import com.google.common.collect.ImmutableList;
@@ -19,97 +23,95 @@ import net.minecraft.world.gen.feature.IFeatureConfig;
 import net.minecraft.world.gen.feature.jigsaw.JigsawPattern;
 import net.minecraft.world.gen.feature.jigsaw.JigsawPatternRegistry;
 import net.minecraft.world.gen.feature.jigsaw.JigsawPiece;
+import net.minecraft.world.gen.feature.structure.AbstractVillagePiece;
 import net.minecraft.world.gen.feature.structure.MarginedStructureStart;
 import net.minecraft.world.gen.feature.structure.Structure;
 import net.minecraft.world.gen.feature.structure.VillageConfig;
 import net.minecraft.world.gen.feature.template.ProcessorLists;
 import net.minecraft.world.gen.feature.template.TemplateManager;
 
+import java.util.List;
 import java.util.Random;
+import java.util.function.BiFunction;
+import java.util.function.Function;
 import java.util.function.Supplier;
 
-public class VaultTroveStructure extends Structure<VaultTroveStructure.Config> {
-    public VaultTroveStructure(Codec<Config> codec) {
-        super(codec);
-    }
-
+public class VaultTroveStructure extends Structure<VaultTroveStructure.Config>
+{
     public static final int START_Y = 19;
-
+    
+    public VaultTroveStructure(final Codec<Config> codec) {
+        super((Codec)codec);
+    }
+    
     public GenerationStage.Decoration step() {
         return GenerationStage.Decoration.UNDERGROUND_STRUCTURES;
     }
-
-
+    
     public Structure.IStartFactory<Config> getStartFactory() {
-        return (structure, x, z, boundingBox, references, seed) -> new Start(this, x, z, boundingBox, references, seed);
+        return (Structure.IStartFactory<Config>)((structure, x, z, boundingBox, references, seed) -> new Start(this, x, z, boundingBox, references, seed));
     }
-
-    public static class Config implements IFeatureConfig {
+    
+    public static class Config implements IFeatureConfig
+    {
         public static final Codec<Config> CODEC;
         private final Supplier<JigsawPattern> startPool;
         private final int size;
-
-        static {
-            CODEC = RecordCodecBuilder.create(builder -> builder.group((App) JigsawPattern.CODEC.fieldOf("start_pool").forGetter(Config::getStartPool), (App) Codec.intRange(0, 2147483647).fieldOf("size").forGetter(Config::getSize)).apply((Applicative) builder, Config::new));
-        }
-
-
-        public Config(Supplier<JigsawPattern> startPool, int size) {
+        
+        public Config(final Supplier<JigsawPattern> startPool, final int size) {
             this.startPool = startPool;
             this.size = size;
         }
-
+        
         public int getSize() {
             return this.size;
         }
-
+        
         public Supplier<JigsawPattern> getStartPool() {
             return this.startPool;
         }
-
+        
         public VillageConfig toVillageConfig() {
-            return new VillageConfig(getStartPool(), getSize());
+            return new VillageConfig((Supplier)this.getStartPool(), this.getSize());
+        }
+        
+        static {
+            CODEC = RecordCodecBuilder.create(builder -> builder.group(JigsawPattern.CODEC.fieldOf("start_pool").forGetter(Config::getStartPool), Codec.intRange(0, Integer.MAX_VALUE).fieldOf("size").forGetter(Config::getSize)).apply((Applicative)builder, Config::new));
         }
     }
-
-
-    public static class Start
-            extends MarginedStructureStart<Config> {
+    
+    public static class Start extends MarginedStructureStart<Config>
+    {
         private final VaultTroveStructure structure;
-
-        public Start(VaultTroveStructure structure, int chunkX, int chunkZ, MutableBoundingBox box, int references, long worldSeed) {
-            super(structure, chunkX, chunkZ, box, references, worldSeed);
+        
+        public Start(final VaultTroveStructure structure, final int chunkX, final int chunkZ, final MutableBoundingBox box, final int references, final long worldSeed) {
+            super((Structure)structure, chunkX, chunkZ, box, references, worldSeed);
             this.structure = structure;
         }
-
-        public void generatePieces(DynamicRegistries registry, ChunkGenerator gen, TemplateManager manager, int chunkX, int chunkZ, Biome biome, VaultTroveStructure.Config config) {
-            BlockPos blockpos = new BlockPos(chunkX * 16, 19, chunkZ * 16);
-            VaultTroveStructure.Pools.init();
-            JigsawGeneratorLegacy.addPieces(registry, config.toVillageConfig(), net.minecraft.world.gen.feature.structure.AbstractVillagePiece::new, gen, manager, blockpos, this.pieces, (Random) this.random, false, false);
-            calculateBoundingBox();
+        
+        public void generatePieces(final DynamicRegistries registry, final ChunkGenerator gen, final TemplateManager manager, final int chunkX, final int chunkZ, final Biome biome, final Config config) {
+            final BlockPos blockpos = new BlockPos(chunkX * 16, 19, chunkZ * 16);
+            Pools.init();
+            JigsawGeneratorLegacy.addPieces(registry, config.toVillageConfig(), AbstractVillagePiece::new, gen, manager, blockpos, this.pieces, (Random)this.random, false, false);
+            this.calculateBoundingBox();
         }
-
-        public void generate(JigsawGenerator jigsaw, DynamicRegistries registry, ChunkGenerator gen, TemplateManager manager) {
+        
+        public void generate(final JigsawGenerator jigsaw, final DynamicRegistries registry, final ChunkGenerator gen, final TemplateManager manager) {
             VaultStructure.Pools.init();
-            jigsaw.generate(registry, (new VaultStructure.Config(() -> (JigsawPattern) registry.registryOrThrow(Registry.TEMPLATE_POOL_REGISTRY).get(Vault.id("trove/starts")), 1))
-                    .toVillageConfig(), net.minecraft.world.gen.feature.structure.AbstractVillagePiece::new, gen, manager, this.pieces, (Random) this.random, false, false);
-
-            calculateBoundingBox();
+            jigsaw.generate(registry, new VaultStructure.Config(() -> registry.registryOrThrow(Registry.TEMPLATE_POOL_REGISTRY).get(Vault.id("trove/starts")), 1).toVillageConfig(), AbstractVillagePiece::new, gen, manager, this.pieces, (Random)this.random, false, false);
+            this.calculateBoundingBox();
         }
     }
-
-    public static class Pools {
-        public static final JigsawPattern START = JigsawPatternRegistry.register(new JigsawPattern(
-                Vault.id("trove/starts"), new ResourceLocation("empty"), (List) ImmutableList.of(
-                Pair.of(JigsawPiece.single(Vault.sId("trove/starts"), ProcessorLists.EMPTY), Integer.valueOf(1))), JigsawPattern.PlacementBehaviour.RIGID));
-
+    
+    public static class Pools
+    {
+        public static final JigsawPattern START;
+        
         public static void init() {
+        }
+        
+        static {
+            START = JigsawPatternRegistry.register(new JigsawPattern(Vault.id("trove/starts"), new ResourceLocation("empty"), (List)ImmutableList.of(Pair.of(JigsawPiece.single(Vault.sId("trove/starts"), ProcessorLists.EMPTY), 1)), JigsawPattern.PlacementBehaviour.RIGID));
         }
     }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\world\gen\structure\VaultTroveStructure.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

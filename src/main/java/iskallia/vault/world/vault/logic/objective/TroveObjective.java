@@ -1,3 +1,7 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.world.vault.logic.objective;
 
 import iskallia.vault.world.vault.VaultRaid;
@@ -17,69 +21,62 @@ import javax.annotation.Nullable;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
-
-public class TroveObjective
-        extends VaultObjective {
-    public TroveObjective(ResourceLocation id) {
+public class TroveObjective extends VaultObjective
+{
+    public TroveObjective(final ResourceLocation id) {
         super(id, VaultTask.EMPTY, VaultTask.EMPTY);
     }
-
-
+    
     @Nonnull
+    @Override
     public BlockState getObjectiveRelevantBlock() {
         return Blocks.AIR.defaultBlockState();
     }
-
-
+    
     @Nullable
-    public LootTable getRewardLootTable(VaultRaid vault, Function<ResourceLocation, LootTable> tblResolver) {
+    @Override
+    public LootTable getRewardLootTable(final VaultRaid vault, final Function<ResourceLocation, LootTable> tblResolver) {
         return null;
     }
-
-
+    
+    @Override
     public ITextComponent getObjectiveDisplayName() {
-        return getVaultName();
+        return this.getVaultName();
     }
-
-
+    
+    @Override
     public ITextComponent getVaultName() {
-        return (ITextComponent) (new StringTextComponent("Vault Trove")).withStyle(TextFormatting.GOLD);
+        return (ITextComponent)new StringTextComponent("Vault Trove").withStyle(TextFormatting.GOLD);
     }
-
-
-    public int getVaultTimerStart(int vaultTime) {
+    
+    @Override
+    public int getVaultTimerStart(final int vaultTime) {
         return 12000;
     }
-
-
-    public boolean preventsEatingExtensionFruit(MinecraftServer srv, VaultRaid vault) {
+    
+    @Override
+    public boolean preventsEatingExtensionFruit(final MinecraftServer srv, final VaultRaid vault) {
         return true;
     }
-
-
+    
+    @Override
     public boolean preventsMobSpawning() {
         return true;
     }
-
-
+    
+    @Override
     public boolean preventsTrappedChests() {
         return true;
     }
-
-
+    
+    @Override
     public boolean preventsInfluences() {
         return true;
     }
-
-
+    
     @Nonnull
+    @Override
     public Supplier<? extends VaultGenerator> getVaultGenerator() {
         return VaultRaid.TROVE_GENERATOR;
     }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\world\vault\logic\objective\TroveObjective.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

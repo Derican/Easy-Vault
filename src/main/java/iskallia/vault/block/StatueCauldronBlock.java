@@ -1,3 +1,7 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.block;
 
 import iskallia.vault.block.entity.StatueCauldronTileEntity;
@@ -41,130 +45,104 @@ import net.minecraftforge.fluids.capability.IFluidHandlerItem;
 
 import javax.annotation.Nullable;
 
-public class StatueCauldronBlock extends CauldronBlock {
+public class StatueCauldronBlock extends CauldronBlock
+{
     public StatueCauldronBlock() {
-        super(AbstractBlock.Properties.of(Material.STONE, MaterialColor.DIAMOND)
-                .requiresCorrectToolForDrops()
-                .strength(3.0F, 3600000.0F)
-                .noOcclusion());
+        super(AbstractBlock.Properties.of(Material.STONE, MaterialColor.DIAMOND).requiresCorrectToolForDrops().strength(3.0f, 3600000.0f).noOcclusion());
     }
-
-
-    public boolean hasTileEntity(BlockState state) {
+    
+    public boolean hasTileEntity(final BlockState state) {
         return true;
     }
-
-
+    
     @Nullable
-    public TileEntity createTileEntity(BlockState state, IBlockReader world) {
+    public TileEntity createTileEntity(final BlockState state, final IBlockReader world) {
         return ModBlocks.STATUE_CAULDRON_TILE_ENTITY.create();
     }
-
-
-    public ActionResultType use(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
-        ItemStack itemstack = player.getItemInHand(handIn);
+    
+    public ActionResultType use(final BlockState state, final World worldIn, final BlockPos pos, final PlayerEntity player, final Hand handIn, final BlockRayTraceResult hit) {
+        final ItemStack itemstack = player.getItemInHand(handIn);
         if (itemstack.isEmpty()) {
-            if (worldIn.isClientSide &&
-                    handIn == Hand.MAIN_HAND) {
-                openStatueScreen(worldIn, pos);
+            if (worldIn.isClientSide && handIn == Hand.MAIN_HAND) {
+                this.openStatueScreen(worldIn, pos);
             }
-
             return ActionResultType.PASS;
         }
-        int i = ((Integer) state.getValue((Property) LEVEL)).intValue();
-        Item item = itemstack.getItem();
-        if (item instanceof BucketItem && (
-                (BucketItem) item).getFluid() != Fluids.EMPTY) {
+        final int i = (int)state.getValue(StatueCauldronBlock.LEVEL);
+        final Item item = itemstack.getItem();
+        if (item instanceof BucketItem && ((BucketItem)item).getFluid() != Fluids.EMPTY) {
             if (i < 3 && !worldIn.isClientSide) {
                 if (!player.isCreative()) {
-                    LazyOptional<IFluidHandlerItem> providerOptional = itemstack.getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY);
+                    final LazyOptional<IFluidHandlerItem> providerOptional = (LazyOptional<IFluidHandlerItem>)itemstack.getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY);
                     providerOptional.ifPresent(provider -> provider.drain(1000, IFluidHandler.FluidAction.EXECUTE));
                 }
-
                 player.awardStat(Stats.FILL_CAULDRON);
-                worldIn.setBlock(pos, (BlockState) state.setValue((Property) LEVEL, Integer.valueOf(3)), 3);
-                worldIn.updateNeighbourForOutputSignal(pos, (Block) this);
-                worldIn.playSound(null, pos, SoundEvents.BUCKET_EMPTY, SoundCategory.BLOCKS, 1.0F, 1.0F);
+                worldIn.setBlock(pos, state.setValue(StatueCauldronBlock.LEVEL, 3), 3);
+                worldIn.updateNeighbourForOutputSignal(pos, (Block)this);
+                worldIn.playSound((PlayerEntity)null, pos, SoundEvents.BUCKET_EMPTY, SoundCategory.BLOCKS, 1.0f, 1.0f);
             }
-
             return ActionResultType.sidedSuccess(worldIn.isClientSide);
         }
-
-
         return super.use(state, worldIn, pos, player, handIn, hit);
     }
-
+    
     @OnlyIn(Dist.CLIENT)
-    private void openStatueScreen(World worldIn, BlockPos pos) {
-        Minecraft mc = Minecraft.getInstance();
-        mc.setScreen((Screen) new StatueCauldronScreen((ClientWorld) worldIn, pos));
+    private void openStatueScreen(final World worldIn, final BlockPos pos) {
+        final Minecraft mc = Minecraft.getInstance();
+        mc.setScreen((Screen)new StatueCauldronScreen((ClientWorld)worldIn, pos));
     }
-
-
+    
     @Nullable
-    public BlockState getStateForPlacement(BlockItemUseContext context) {
-        BlockState toPlace = defaultBlockState();
-        ItemStack stack = context.getItemInHand();
+    public BlockState getStateForPlacement(final BlockItemUseContext context) {
+        final BlockState toPlace = this.defaultBlockState();
+        final ItemStack stack = context.getItemInHand();
         if (stack.hasTag() && stack.getTag().contains("BlockEntityTag", 10)) {
-            int cauldronLevel = stack.getTagElement("BlockEntityTag").getInt("Level");
-            return (BlockState) toPlace.setValue((Property) LEVEL, Integer.valueOf(cauldronLevel));
+            final int cauldronLevel = stack.getTagElement("BlockEntityTag").getInt("Level");
+            return toPlace.setValue(StatueCauldronBlock.LEVEL, cauldronLevel);
         }
         return toPlace;
     }
-
-
-    public void setPlacedBy(World worldIn, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack) {
-        if (worldIn.isClientSide || !(placer instanceof PlayerEntity))
+    
+    public void setPlacedBy(final World worldIn, final BlockPos pos, final BlockState state, @Nullable final LivingEntity placer, final ItemStack stack) {
+        if (worldIn.isClientSide || !(placer instanceof PlayerEntity)) {
             return;
-        PlayerEntity player = (PlayerEntity) placer;
-        TileEntity te = worldIn.getBlockEntity(pos);
-
+        }
+        final PlayerEntity player = (PlayerEntity)placer;
+        final TileEntity te = worldIn.getBlockEntity(pos);
         if (te instanceof StatueCauldronTileEntity) {
-            StatueCauldronTileEntity cauldron = (StatueCauldronTileEntity) te;
-
+            final StatueCauldronTileEntity cauldron = (StatueCauldronTileEntity)te;
             if (stack.getOrCreateTag().contains("BlockEntityTag")) {
-                CompoundNBT cauldronNbt = stack.getTagElement("BlockEntityTag");
+                final CompoundNBT cauldronNbt = stack.getTagElement("BlockEntityTag");
                 cauldron.setOwner(cauldronNbt.getUUID("Owner"));
                 cauldron.setRequiredAmount(cauldronNbt.getInt("RequiredAmount"));
                 cauldron.setStatueCount(cauldronNbt.getInt("StatueCount"));
                 cauldron.setNames(cauldronNbt.getList("NameList", 10));
-            } else {
+            }
+            else {
                 cauldron.setOwner(player.getUUID());
                 cauldron.setRequiredAmount(ModConfigs.STATUE_RECYCLING.getPlayerRequirement(player.getDisplayName().getString()));
             }
-
             cauldron.sendUpdates();
             cauldron.setChanged();
         }
     }
-
-
-    public void playerWillDestroy(World world, BlockPos pos, BlockState state, PlayerEntity player) {
+    
+    public void playerWillDestroy(final World world, final BlockPos pos, final BlockState state, final PlayerEntity player) {
         if (!world.isClientSide) {
-            TileEntity tileEntity = world.getBlockEntity(pos);
-            ItemStack itemStack = new ItemStack((IItemProvider) getBlock());
-
+            final TileEntity tileEntity = world.getBlockEntity(pos);
+            final ItemStack itemStack = new ItemStack((IItemProvider)this.getBlock());
             if (tileEntity instanceof StatueCauldronTileEntity) {
-                StatueCauldronTileEntity cauldron = (StatueCauldronTileEntity) tileEntity;
-
-                CompoundNBT statueNBT = cauldron.serializeNBT();
-                CompoundNBT stackNBT = itemStack.getOrCreateTag();
-                statueNBT.putInt("Level", ((Integer) state.getValue((Property) LEVEL)).intValue());
-                stackNBT.put("BlockEntityTag", (INBT) statueNBT);
-
+                final StatueCauldronTileEntity cauldron = (StatueCauldronTileEntity)tileEntity;
+                final CompoundNBT statueNBT = cauldron.serializeNBT();
+                final CompoundNBT stackNBT = itemStack.getOrCreateTag();
+                statueNBT.putInt("Level", (int)state.getValue(StatueCauldronBlock.LEVEL));
+                stackNBT.put("BlockEntityTag", (INBT)statueNBT);
                 itemStack.setTag(stackNBT);
             }
-
-            ItemEntity itemEntity = new ItemEntity(world, pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5D, itemStack);
+            final ItemEntity itemEntity = new ItemEntity(world, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, itemStack);
             itemEntity.setDefaultPickUpDelay();
-            world.addFreshEntity((Entity) itemEntity);
+            world.addFreshEntity((Entity)itemEntity);
         }
         super.playerWillDestroy(world, pos, state, player);
     }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\block\StatueCauldronBlock.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

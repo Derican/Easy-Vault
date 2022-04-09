@@ -1,3 +1,7 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.attribute;
 
 import com.google.gson.annotations.Expose;
@@ -12,39 +16,34 @@ import java.util.Optional;
 import java.util.Random;
 import java.util.stream.Collectors;
 
-
-public class EffectCloudAttribute
-        extends PooledAttribute<List<EffectCloudEntity.Config>> {
+public class EffectCloudAttribute extends PooledAttribute<List<EffectCloudEntity.Config>> {
     public EffectCloudAttribute() {
     }
 
-    public EffectCloudAttribute(VAttribute.Modifier<List<EffectCloudEntity.Config>> modifier) {
+    public EffectCloudAttribute(final VAttribute.Modifier<List<EffectCloudEntity.Config>> modifier) {
         super(modifier);
     }
 
-
-    public void write(CompoundNBT nbt) {
-        if (getBaseValue() == null)
+    @Override
+    public void write(final CompoundNBT nbt) {
+        if (this.getBaseValue() == null) {
             return;
-        CompoundNBT tag = new CompoundNBT();
-
-        ListNBT effectsList = new ListNBT();
-        getBaseValue().forEach(effect -> effectsList.add(effect.serializeNBT()));
-
+        }
+        final CompoundNBT tag = new CompoundNBT();
+        final ListNBT effectsList = new ListNBT();
+        getBaseValue().forEach(effect -> effectsList.add( effect.serializeNBT()));
         tag.put("EffectClouds", (INBT) effectsList);
         nbt.put("BaseValue", (INBT) tag);
     }
 
-
-    public void read(CompoundNBT nbt) {
+    @Override
+    public void read(final CompoundNBT nbt) {
         if (!nbt.contains("BaseValue", 10)) {
-            setBaseValue(new ArrayList<>());
-
+            setBaseValue(new ArrayList<EffectCloudEntity.Config>());
             return;
         }
-        CompoundNBT tag = nbt.getCompound("BaseValue");
-        ListNBT effectsList = tag.getList("EffectClouds", 10);
-
+        final CompoundNBT tag = nbt.getCompound("BaseValue");
+        final ListNBT effectsList = tag.getList("EffectClouds", 10);
         setBaseValue((List<EffectCloudEntity.Config>) effectsList.stream()
                 .map(inbt -> EffectCloudEntity.Config.fromNBT((CompoundNBT) inbt))
                 .collect(Collectors.toList()));
@@ -54,21 +53,21 @@ public class EffectCloudAttribute
         return new Generator();
     }
 
-    public static Generator.Operator of(Type type) {
+    public static Generator.Operator of(final Type type) {
         return new Generator.Operator(type);
     }
 
-    public static class Generator
-            extends PooledAttribute.Generator<List<EffectCloudEntity.Config>, Generator.Operator> {
-        public List<EffectCloudEntity.Config> getDefaultValue(Random random) {
-            return new ArrayList<>();
+    public static class Generator extends PooledAttribute.Generator<List<EffectCloudEntity.Config>, Generator.Operator> {
+        @Override
+        public List<EffectCloudEntity.Config> getDefaultValue(final Random random) {
+            return new ArrayList<EffectCloudEntity.Config>();
         }
 
         public static class Operator extends PooledAttribute.Generator.Operator<List<EffectCloudEntity.Config>> {
             @Expose
             protected String type;
 
-            public Operator(EffectCloudAttribute.Type type) {
+            public Operator(final Type type) {
                 this.type = type.name();
             }
 
@@ -76,69 +75,36 @@ public class EffectCloudAttribute
                 return EffectCloudAttribute.Type.getByName(this.type).<Throwable>orElseThrow(() -> new IllegalStateException("Unknown type \"" + this.type + "\""));
             }
 
-            public List<EffectCloudEntity.Config> apply(List<EffectCloudEntity.Config> value, List<EffectCloudEntity.Config> modifier) {
+            @Override
+            public List<EffectCloudEntity.Config> apply(final List<EffectCloudEntity.Config> value, final List<EffectCloudEntity.Config> modifier) {
                 try {
-                    if (getType() == EffectCloudAttribute.Type.SET)
+                    if (this.getType() == Type.SET) {
                         return modifier;
-                    if (getType() == EffectCloudAttribute.Type.MERGE) {
-                        List<EffectCloudEntity.Config> res = new ArrayList<>(value);
+                    }
+                    if (this.getType() == Type.MERGE) {
+                        final List<EffectCloudEntity.Config> res = new ArrayList<EffectCloudEntity.Config>(value);
                         res.addAll(modifier);
                         return res;
                     }
                 } catch (Throwable e) {
 
                 }
-
                 return value;
             }
         }
     }
 
-    public static class Operator extends PooledAttribute.Generator.Operator<List<EffectCloudEntity.Config>> {
-        public List<EffectCloudEntity.Config> apply(List<EffectCloudEntity.Config> value, List<EffectCloudEntity.Config> modifier) {
-            try {
-                if (getType() == EffectCloudAttribute.Type.SET) return modifier;
-                if (getType() == EffectCloudAttribute.Type.MERGE) {
-                    List<EffectCloudEntity.Config> res = new ArrayList<>(value);
-                    res.addAll(modifier);
-                    return res;
-                }
-            } catch (Throwable e) {
-
-            }
-            return value;
-        }
-
-        @Expose
-        protected String type;
-
-        public Operator(EffectCloudAttribute.Type type) {
-            this.type = type.name();
-        }
-
-        public EffectCloudAttribute.Type getType() throws Throwable {
-            return EffectCloudAttribute.Type.getByName(this.type).<Throwable>orElseThrow(() -> new IllegalStateException("Unknown type \"" + this.type + "\""));
-        }
-    }
-
     public enum Type {
-        SET, MERGE;
+        SET,
+        MERGE;
 
-        public static Optional<Type> getByName(String name) {
-            for (Type value : values()) {
+        public static Optional<Type> getByName(final String name) {
+            for (final Type value : values()) {
                 if (value.name().equalsIgnoreCase(name)) {
                     return Optional.of(value);
                 }
             }
-
             return Optional.empty();
         }
     }
-
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\attribute\EffectCloudAttribute.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

@@ -1,3 +1,7 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.block.entity;
 
 import iskallia.vault.container.ScavengerChestContainer;
@@ -28,77 +32,63 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 
 import java.util.Random;
 
-
-public class ScavengerChestTileEntity
-        extends ChestTileEntity {
-    private static final Random rand = new Random();
-
-    protected ScavengerChestTileEntity(TileEntityType<?> typeIn) {
-        super(typeIn);
-        setItems(NonNullList.withSize(45, ItemStack.EMPTY));
+public class ScavengerChestTileEntity extends ChestTileEntity
+{
+    private static final Random rand;
+    
+    protected ScavengerChestTileEntity(final TileEntityType<?> typeIn) {
+        super((TileEntityType)typeIn);
+        this.setItems(NonNullList.withSize(45, ItemStack.EMPTY));
     }
-
+    
     public ScavengerChestTileEntity() {
         this(ModBlocks.SCAVENGER_CHEST_TILE_ENTITY);
     }
-
-
+    
     public void tick() {
         super.tick();
-
         if (this.level.isClientSide()) {
-            playEffects();
+            this.playEffects();
         }
     }
-
+    
     @OnlyIn(Dist.CLIENT)
     private void playEffects() {
-        ParticleManager mgr = (Minecraft.getInstance()).particleEngine;
-        BlockPos pos = getBlockPos();
-
-
-        Vector3d rPos = new Vector3d(pos.getX() + 0.5D + ((rand.nextFloat() - rand.nextFloat()) * rand.nextFloat() * 3.0F), pos.getY() + 0.5D + ((rand.nextFloat() - rand.nextFloat()) * rand.nextFloat() * 7.0F), pos.getZ() + 0.5D + ((rand.nextFloat() - rand.nextFloat()) * rand.nextFloat() * 3.0F));
-        SimpleAnimatedParticle p = (SimpleAnimatedParticle) mgr.createParticle((IParticleData) ParticleTypes.FIREWORK, rPos.x, rPos.y, rPos.z, 0.0D, 0.0D, 0.0D);
-
-
+        final ParticleManager mgr = Minecraft.getInstance().particleEngine;
+        final BlockPos pos = this.getBlockPos();
+        final Vector3d rPos = new Vector3d(pos.getX() + 0.5 + (ScavengerChestTileEntity.rand.nextFloat() - ScavengerChestTileEntity.rand.nextFloat()) * (ScavengerChestTileEntity.rand.nextFloat() * 3.0f), pos.getY() + 0.5 + (ScavengerChestTileEntity.rand.nextFloat() - ScavengerChestTileEntity.rand.nextFloat()) * (ScavengerChestTileEntity.rand.nextFloat() * 7.0f), pos.getZ() + 0.5 + (ScavengerChestTileEntity.rand.nextFloat() - ScavengerChestTileEntity.rand.nextFloat()) * (ScavengerChestTileEntity.rand.nextFloat() * 3.0f));
+        final SimpleAnimatedParticle p = (SimpleAnimatedParticle)mgr.createParticle((IParticleData)ParticleTypes.FIREWORK, rPos.x, rPos.y, rPos.z, 0.0, 0.0, 0.0);
         if (p != null) {
-//            p.baseGravity = 0.0F;
+            p.baseGravity = 0.0f;
             p.setColor(2347008);
         }
     }
-
-
+    
     public int getContainerSize() {
         return 45;
     }
-
-    protected Container createMenu(int id, PlayerInventory playerInventory) {
-        Container container = null;
-        ScavengerChestContainer scavengerChestContainer = new ScavengerChestContainer(id, playerInventory, (IInventory) this, (IInventory) this);
+    
+    protected Container createMenu(final int id, final PlayerInventory playerInventory) {
+        Container ct = new ScavengerChestContainer(id, playerInventory, (IInventory)this, (IInventory)this);
         if (this.level instanceof ServerWorld) {
-            ServerWorld sWorld = (ServerWorld) this.level;
-            VaultRaid vault = VaultRaidData.get(sWorld).getAt(sWorld, getBlockPos());
+            final ServerWorld sWorld = (ServerWorld)this.level;
+            final VaultRaid vault = VaultRaidData.get(sWorld).getAt(sWorld, this.getBlockPos());
             if (vault != null) {
-
-
-                container = (Container) vault.getActiveObjective(ScavengerHuntObjective.class).map(objective -> {
-                    ScavengerChestContainer scavengerChestContainer1 = new ScavengerChestContainer(id, playerInventory, (IInventory) this, objective.getScavengerChestInventory());
-                    scavengerChestContainer1.addSlotListener((IContainerListener) objective.getChestWatcher());
-                    return (Container) scavengerChestContainer1;
-                }).orElse(scavengerChestContainer);
+                ct = vault.getActiveObjective(ScavengerHuntObjective.class).map(objective -> {
+                    final Container linkedCt = new ScavengerChestContainer(id, playerInventory, (IInventory)this, objective.getScavengerChestInventory());
+                    linkedCt.addSlotListener((IContainerListener)objective.getChestWatcher());
+                    return linkedCt;
+                }).orElse(ct);
             }
         }
-        return container;
+        return ct;
     }
-
-
+    
     public ITextComponent getDisplayName() {
-        return (ITextComponent) new TranslationTextComponent(ModBlocks.SCAVENGER_CHEST.getDescriptionId());
+        return (ITextComponent)new TranslationTextComponent(ModBlocks.SCAVENGER_CHEST.getDescriptionId());
+    }
+    
+    static {
+        rand = new Random();
     }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\block\entity\ScavengerChestTileEntity.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

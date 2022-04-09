@@ -1,3 +1,7 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.item.gear;
 
 import com.google.common.collect.ImmutableMultimap;
@@ -30,101 +34,89 @@ import javax.annotation.Nullable;
 import java.util.List;
 import java.util.UUID;
 
-public class IdolItem
-        extends BasicItem
-        implements VaultGear<IdolItem> {
-    private static final UUID ATTACK_DAMAGE_MODIFIER = UUID.fromString("CB3F55D3-645C-4F38-A497-2C13A33DB5CF");
-    private static final UUID ATTACK_SPEED_MODIFIER = UUID.fromString("FA233E1C-4180-4865-B01B-4CCE9785ACA3");
-
+public class IdolItem extends BasicItem implements VaultGear<IdolItem>
+{
+    private static final UUID ATTACK_DAMAGE_MODIFIER;
+    private static final UUID ATTACK_SPEED_MODIFIER;
     private final PlayerFavourData.VaultGodType type;
-
-    public IdolItem(ResourceLocation id, PlayerFavourData.VaultGodType type, Item.Properties properties) {
+    
+    public IdolItem(final ResourceLocation id, final PlayerFavourData.VaultGodType type, final Item.Properties properties) {
         super(id, properties);
         this.type = type;
     }
-
+    
     public PlayerFavourData.VaultGodType getType() {
         return this.type;
     }
-
-
-    public int getModelsFor(VaultGear.Rarity rarity) {
+    
+    @Override
+    public int getModelsFor(final Rarity rarity) {
         return 1;
     }
-
-
+    
     @Nullable
+    @Override
     public EquipmentSlotType getIntendedSlot() {
         return EquipmentSlotType.OFFHAND;
     }
-
-
-    public void fillItemCategory(ItemGroup group, NonNullList<ItemStack> items) {
-        if (allowdedIn(group)) {
-            fillItemGroup(items);
+    
+    public void fillItemCategory(final ItemGroup group, final NonNullList<ItemStack> items) {
+        if (this.allowdedIn(group)) {
+            this.fillItemGroup(items);
         }
     }
-
-
-    public Multimap<Attribute, AttributeModifier> getAttributeModifiers(EquipmentSlotType slot, ItemStack stack) {
-        if (isIntendedForSlot(slot)) {
-            ImmutableMultimap.Builder<Attribute, AttributeModifier> builder = ImmutableMultimap.builder();
-            builder.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(ATTACK_DAMAGE_MODIFIER, "Idol modifier", 0.0D, AttributeModifier.Operation.ADDITION));
-            builder.put(Attributes.ATTACK_SPEED, new AttributeModifier(ATTACK_SPEED_MODIFIER, "Idol modifier", 0.0D, AttributeModifier.Operation.ADDITION));
-            return getAttributeModifiers(this, slot, stack, (Multimap<Attribute, AttributeModifier>) builder.build());
+    
+    public Multimap<Attribute, AttributeModifier> getAttributeModifiers(final EquipmentSlotType slot, final ItemStack stack) {
+        if (this.isIntendedForSlot(slot)) {
+            final ImmutableMultimap.Builder<Attribute, AttributeModifier> builder = ImmutableMultimap.builder();
+            builder.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(IdolItem.ATTACK_DAMAGE_MODIFIER, "Idol modifier", 0.0, AttributeModifier.Operation.ADDITION));
+            builder.put(Attributes.ATTACK_SPEED, new AttributeModifier(IdolItem.ATTACK_SPEED_MODIFIER, "Idol modifier", 0.0, AttributeModifier.Operation.ADDITION));
+            return this.getAttributeModifiers(this, slot, stack, (Multimap<Attribute, AttributeModifier>)builder.build());
         }
-        return (Multimap<Attribute, AttributeModifier>) ImmutableMultimap.of();
+        return ImmutableMultimap.of();
     }
-
-
-    public boolean isDamageable(ItemStack stack) {
-        return isDamageable(this, stack);
+    
+    public boolean isDamageable(final ItemStack stack) {
+        return this.isDamageable(this, stack);
     }
-
-
-    public int getMaxDamage(ItemStack stack) {
-        return getMaxDamage(this, stack, super.getMaxDamage(stack));
+    
+    public int getMaxDamage(final ItemStack stack) {
+        return this.getMaxDamage(this, stack, super.getMaxDamage(stack));
     }
-
-
-    public ITextComponent getName(ItemStack stack) {
-        return getDisplayName(this, stack, super.getName(stack));
+    
+    public ITextComponent getName(final ItemStack stack) {
+        return this.getDisplayName(this, stack, super.getName(stack));
     }
-
-
-    public ActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand) {
-        return onItemRightClick(this, world, player, hand, super.use(world, player, hand));
+    
+    public ActionResult<ItemStack> use(final World world, final PlayerEntity player, final Hand hand) {
+        return this.onItemRightClick(this, world, player, hand, (ActionResult<ItemStack>)super.use(world, player, hand));
     }
-
-
-    public void inventoryTick(ItemStack stack, World world, Entity entity, int itemSlot, boolean isSelected) {
+    
+    public void inventoryTick(final ItemStack stack, final World world, final Entity entity, final int itemSlot, final boolean isSelected) {
         super.inventoryTick(stack, world, entity, itemSlot, isSelected);
-        splitStack(this, stack, world, entity);
+        this.splitStack(this, stack, world, entity);
         if (entity instanceof ServerPlayerEntity) {
-            inventoryTick(this, stack, world, (ServerPlayerEntity) entity, itemSlot, isSelected);
+            this.inventoryTick(this, stack, world, (ServerPlayerEntity)entity, itemSlot, isSelected);
         }
     }
-
-
+    
     @OnlyIn(Dist.CLIENT)
-    public void appendHoverText(ItemStack stack, World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
+    @Override
+    public void appendHoverText(final ItemStack stack, final World world, final List<ITextComponent> tooltip, final ITooltipFlag flag) {
         super.appendHoverText(stack, world, tooltip, flag);
-        addInformation(this, stack, tooltip, Screen.hasShiftDown());
+        this.addInformation(this, stack, tooltip, Screen.hasShiftDown());
     }
-
-
-    public boolean canElytraFly(ItemStack stack, LivingEntity entity) {
-        return canElytraFly(this, stack, entity);
+    
+    public boolean canElytraFly(final ItemStack stack, final LivingEntity entity) {
+        return this.canElytraFly(this, stack, entity);
     }
-
-
-    public boolean elytraFlightTick(ItemStack stack, LivingEntity entity, int flightTicks) {
-        return elytraFlightTick(this, stack, entity, flightTicks);
+    
+    public boolean elytraFlightTick(final ItemStack stack, final LivingEntity entity, final int flightTicks) {
+        return this.elytraFlightTick(this, stack, entity, flightTicks);
+    }
+    
+    static {
+        ATTACK_DAMAGE_MODIFIER = UUID.fromString("CB3F55D3-645C-4F38-A497-2C13A33DB5CF");
+        ATTACK_SPEED_MODIFIER = UUID.fromString("FA233E1C-4180-4865-B01B-4CCE9785ACA3");
     }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\item\gear\IdolItem.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

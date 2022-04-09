@@ -1,3 +1,7 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.network.message;
 
 import iskallia.vault.block.entity.CryoChamberTileEntity;
@@ -14,72 +18,72 @@ import net.minecraftforge.fml.network.NetworkEvent;
 
 import java.util.function.Supplier;
 
-
-public class RenameUIMessage {
+public class RenameUIMessage
+{
     public RenameType renameType;
     public CompoundNBT payload;
-
-    public static void encode(RenameUIMessage message, PacketBuffer buffer) {
+    
+    public static void encode(final RenameUIMessage message, final PacketBuffer buffer) {
         buffer.writeInt(message.renameType.ordinal());
         buffer.writeNbt(message.payload);
     }
-
-    public static RenameUIMessage decode(PacketBuffer buffer) {
-        RenameUIMessage message = new RenameUIMessage();
+    
+    public static RenameUIMessage decode(final PacketBuffer buffer) {
+        final RenameUIMessage message = new RenameUIMessage();
         message.renameType = RenameType.values()[buffer.readInt()];
         message.payload = buffer.readNbt();
         return message;
     }
-
-    public static void handle(RenameUIMessage message, Supplier<NetworkEvent.Context> contextSupplier) {
-        NetworkEvent.Context context = contextSupplier.get();
+    
+    public static void handle(final RenameUIMessage message, final Supplier<NetworkEvent.Context> contextSupplier) {
+        final NetworkEvent.Context context = contextSupplier.get();
         context.enqueueWork(() -> {
-            TileEntity te;
-            BlockPos statuePos;
-            BlockPos pos;
-            String name;
-            CompoundNBT data = message.payload.getCompound("Data");
-            ServerPlayerEntity sender = context.getSender();
+            final CompoundNBT data = message.payload.getCompound("Data");
+            final ServerPlayerEntity sender = context.getSender();
             switch (message.renameType) {
-                case PLAYER_STATUE:
-                    statuePos = new BlockPos(data.getInt("x"), data.getInt("y"), data.getInt("z"));
-                    te = sender.getCommandSenderWorld().getBlockEntity(statuePos);
+                case PLAYER_STATUE: {
+                    final BlockPos statuePos = new BlockPos(data.getInt("x"), data.getInt("y"), data.getInt("z"));
+                    final TileEntity te = sender.getCommandSenderWorld().getBlockEntity(statuePos);
                     if (te instanceof LootStatueTileEntity) {
-                        LootStatueTileEntity statue = (LootStatueTileEntity) te;
+                        final LootStatueTileEntity statue = (LootStatueTileEntity)te;
                         statue.getSkin().updateSkin(data.getString("PlayerNickname"));
                         statue.sendUpdates();
+                        break;
                     }
-                    break;
+                    else {
+                        break;
+                    }
+                }
                 case VAULT_CRYSTAL:
-                case TRADER_CORE:
+                case TRADER_CORE: {
                     sender.inventory.items.set(sender.inventory.selected, ItemStack.of(data));
                     break;
-                case CRYO_CHAMBER:
-                    pos = NBTUtil.readBlockPos(data.getCompound("BlockPos"));
-                    name = data.getString("EternalName");
-                    te = sender.getCommandSenderWorld().getBlockEntity(pos);
-                    if (te instanceof CryoChamberTileEntity) {
-                        CryoChamberTileEntity chamber = (CryoChamberTileEntity) te;
+                }
+                case CRYO_CHAMBER: {
+                    final BlockPos pos = NBTUtil.readBlockPos(data.getCompound("BlockPos"));
+                    final String name = data.getString("EternalName");
+                    final TileEntity te2 = sender.getCommandSenderWorld().getBlockEntity(pos);
+                    if (te2 instanceof CryoChamberTileEntity) {
+                        final CryoChamberTileEntity chamber = (CryoChamberTileEntity)te2;
                         chamber.renameEternal(name);
                         chamber.getSkin().updateSkin(name);
                         chamber.sendUpdates();
+                        break;
                     }
-                    break;
+                    else {
+                        break;
+                    }
+                }
             }
+            return;
         });
         context.setPacketHandled(true);
     }
-
-    public static RenameUIMessage updateName(RenameType type, CompoundNBT nbt) {
-        RenameUIMessage message = new RenameUIMessage();
+    
+    public static RenameUIMessage updateName(final RenameType type, final CompoundNBT nbt) {
+        final RenameUIMessage message = new RenameUIMessage();
         message.renameType = type;
         message.payload = nbt;
         return message;
     }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\network\message\RenameUIMessage.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

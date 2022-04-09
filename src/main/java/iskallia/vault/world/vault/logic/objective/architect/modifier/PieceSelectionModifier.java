@@ -1,3 +1,7 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.world.vault.logic.objective.architect.modifier;
 
 import com.google.gson.annotations.Expose;
@@ -13,51 +17,50 @@ import net.minecraft.world.gen.feature.jigsaw.JigsawPiece;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class PieceSelectionModifier
-        extends VoteModifier {
+public class PieceSelectionModifier extends VoteModifier
+{
     @Expose
     private final float filterChance;
     @Expose
     private final List<String> selectedRoomPrefixes;
-    private WeightedList<JigsawPiece> filteredPieces = null;
-
-    public PieceSelectionModifier(String name, String description, int voteLockDurationChangeSeconds, float filterChance, List<String> selectedRoomPrefixes) {
+    private WeightedList<JigsawPiece> filteredPieces;
+    
+    public PieceSelectionModifier(final String name, final String description, final int voteLockDurationChangeSeconds, final float filterChance, final List<String> selectedRoomPrefixes) {
         super(name, description, voteLockDurationChangeSeconds);
+        this.filteredPieces = null;
         this.filterChance = filterChance;
         this.selectedRoomPrefixes = selectedRoomPrefixes;
     }
-
-
+    
     @Nullable
-    public JigsawPiece getSpecialRoom(ArchitectObjective objective, VaultRaid vault) {
-        if (rand.nextFloat() >= this.filterChance) {
+    @Override
+    public JigsawPiece getSpecialRoom(final ArchitectObjective objective, final VaultRaid vault) {
+        if (PieceSelectionModifier.rand.nextFloat() >= this.filterChance) {
             return super.getSpecialRoom(objective, vault);
         }
         if (this.filteredPieces != null) {
-            return (JigsawPiece) this.filteredPieces.getRandom(rand);
+            return this.filteredPieces.getRandom(PieceSelectionModifier.rand);
         }
-
-
-        int vaultLevel = ((Integer) vault.getProperties().getBase(VaultRaid.LEVEL).orElse(Integer.valueOf(0))).intValue();
+        final int vaultLevel = vault.getProperties().getBase(VaultRaid.LEVEL).orElse(0);
         this.filteredPieces = VaultJigsawHelper.getVaultRoomList(vaultLevel).copyFiltered(this::isApplicable);
-        return (JigsawPiece) this.filteredPieces.getRandom(rand);
+        return this.filteredPieces.getRandom(PieceSelectionModifier.rand);
     }
-
-    private boolean isApplicable(JigsawPiece piece) {
+    
+    private boolean isApplicable(final JigsawPiece piece) {
         if (piece instanceof PalettedListPoolElement) {
-            List<JigsawPiece> elements = ((PalettedListPoolElement) piece).getElements();
-            for (JigsawPiece elementPiece : elements) {
-                if (!isApplicable(elementPiece)) {
+            final List<JigsawPiece> elements = ((PalettedListPoolElement)piece).getElements();
+            for (final JigsawPiece elementPiece : elements) {
+                if (!this.isApplicable(elementPiece)) {
                     return false;
                 }
             }
             return !elements.isEmpty();
         }
         if (piece instanceof PalettedSinglePoolElement) {
-            ResourceLocation key = ((PalettedSinglePoolElement) piece).getTemplate().left().orElse(null);
+            final ResourceLocation key = ((PalettedSinglePoolElement)piece).getTemplate().left().orElse(null);
             if (key != null) {
-                String keyStr = key.toString();
-                for (String prefix : this.selectedRoomPrefixes) {
+                final String keyStr = key.toString();
+                for (final String prefix : this.selectedRoomPrefixes) {
                     if (keyStr.startsWith(prefix)) {
                         return true;
                     }
@@ -67,9 +70,3 @@ public class PieceSelectionModifier
         return false;
     }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\world\vault\logic\objective\architect\modifier\PieceSelectionModifier.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

@@ -1,3 +1,7 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.mixin;
 
 import net.minecraft.inventory.EquipmentSlotType;
@@ -7,132 +11,156 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-@Mixin({ArmorMaterial.class})
-public class MixinArmorMaterial {
-    @Inject(method = {"getToughness"}, at = {@At("HEAD")}, cancellable = true)
-    public void getToughness(CallbackInfoReturnable<Float> ci) {
-        ArmorMaterial material = (ArmorMaterial) this;
-
+@Mixin({ ArmorMaterial.class })
+public class MixinArmorMaterial
+{
+    @Inject(method = { "getToughness" }, at = { @At("HEAD") }, cancellable = true)
+    public void getToughness(final CallbackInfoReturnable<Float> ci) {
+        final ArmorMaterial material = (ArmorMaterial)this;
         if (material == ArmorMaterial.LEATHER || material == ArmorMaterial.CHAIN || material == ArmorMaterial.GOLD || material == ArmorMaterial.IRON || material == ArmorMaterial.DIAMOND || material == ArmorMaterial.NETHERITE) {
-            ci.setReturnValue(Float.valueOf(0.0F));
+            ci.setReturnValue(0.0f);
         }
     }
-
-    @Inject(method = {"getKnockbackResistance"}, at = {@At("HEAD")}, cancellable = true)
-    public void getKockbackResistance(CallbackInfoReturnable<Float> ci) {
-        ArmorMaterial material = (ArmorMaterial) this;
-
+    
+    @Inject(method = { "getKnockbackResistance" }, at = { @At("HEAD") }, cancellable = true)
+    public void getKockbackResistance(final CallbackInfoReturnable<Float> ci) {
+        final ArmorMaterial material = (ArmorMaterial)this;
         if (material == ArmorMaterial.LEATHER || material == ArmorMaterial.CHAIN || material == ArmorMaterial.GOLD || material == ArmorMaterial.IRON || material == ArmorMaterial.DIAMOND || material == ArmorMaterial.NETHERITE) {
-            ci.setReturnValue(Float.valueOf(0.0F));
+            ci.setReturnValue(0.0f);
         }
     }
-
-    @Inject(method = {"getDamageReductionAmount"}, at = {@At("HEAD")}, cancellable = true)
-    public void getDamageReductionAmount(EquipmentSlotType slot, CallbackInfoReturnable<Integer> ci) {
-        switch ((ArmorMaterial) this) {
-            case LEATHER:
-                switch (slot) {
-                    case LEATHER:
-                        ci.setReturnValue(Integer.valueOf(1));
-                        break;
-                    case CHAIN:
-                        ci.setReturnValue(Integer.valueOf(1));
-                        break;
-                    case GOLD:
-                        ci.setReturnValue(Integer.valueOf(1));
-                        break;
-                    case IRON:
-                        ci.setReturnValue(Integer.valueOf(1));
-                        break;
+    
+    @Inject(method = { "getDefenseForSlot" }, at = { @At("HEAD") }, cancellable = true)
+    public void getDefenseForSlot(final EquipmentSlotType slot, final CallbackInfoReturnable<Integer> ci) {
+        Label_0549: {
+            switch ((ArmorMaterial)this) {
+                case LEATHER: {
+                    switch (slot) {
+                        case HEAD: {
+                            ci.setReturnValue(1);
+                            break;
+                        }
+                        case CHEST: {
+                            ci.setReturnValue(1);
+                            break;
+                        }
+                        case LEGS: {
+                            ci.setReturnValue(1);
+                            break;
+                        }
+                        case FEET: {
+                            ci.setReturnValue(1);
+                            break;
+                        }
+                    }
+                    break;
                 }
-                break;
-            case CHAIN:
-                switch (slot) {
-                    case LEATHER:
-                        ci.setReturnValue(Integer.valueOf(1));
-                        break;
-                    case CHAIN:
-                        ci.setReturnValue(Integer.valueOf(2));
-                        break;
-                    case GOLD:
-                        ci.setReturnValue(Integer.valueOf(2));
-                        break;
-                    case IRON:
-                        ci.setReturnValue(Integer.valueOf(1));
-                        break;
+                case CHAIN: {
+                    switch (slot) {
+                        case HEAD: {
+                            ci.setReturnValue(1);
+                            break;
+                        }
+                        case CHEST: {
+                            ci.setReturnValue(2);
+                            break;
+                        }
+                        case LEGS: {
+                            ci.setReturnValue(2);
+                            break;
+                        }
+                        case FEET: {
+                            ci.setReturnValue(1);
+                            break;
+                        }
+                    }
+                    break;
                 }
-                break;
-            case GOLD:
-                switch (slot) {
-                    case LEATHER:
-                        ci.setReturnValue(Integer.valueOf(2));
-                        break;
-                    case CHAIN:
-                        ci.setReturnValue(Integer.valueOf(2));
-                        break;
-                    case GOLD:
-                        ci.setReturnValue(Integer.valueOf(2));
-                        break;
-                    case IRON:
-                        ci.setReturnValue(Integer.valueOf(1));
-                        break;
+                case GOLD: {
+                    switch (slot) {
+                        case HEAD: {
+                            ci.setReturnValue(2);
+                            break;
+                        }
+                        case CHEST: {
+                            ci.setReturnValue(2);
+                            break;
+                        }
+                        case LEGS: {
+                            ci.setReturnValue(2);
+                            break;
+                        }
+                        case FEET: {
+                            ci.setReturnValue(1);
+                            break;
+                        }
+                    }
+                    break;
                 }
-                break;
-            case IRON:
-                switch (slot) {
-                    case LEATHER:
-                        ci.setReturnValue(Integer.valueOf(2));
-                        break;
-                    case CHAIN:
-                        ci.setReturnValue(Integer.valueOf(2));
-                        break;
-                    case GOLD:
-                        ci.setReturnValue(Integer.valueOf(2));
-                        break;
-                    case IRON:
-                        ci.setReturnValue(Integer.valueOf(2));
-                        break;
+                case IRON: {
+                    switch (slot) {
+                        case HEAD: {
+                            ci.setReturnValue(2);
+                            break;
+                        }
+                        case CHEST: {
+                            ci.setReturnValue(2);
+                            break;
+                        }
+                        case LEGS: {
+                            ci.setReturnValue(2);
+                            break;
+                        }
+                        case FEET: {
+                            ci.setReturnValue(2);
+                            break;
+                        }
+                    }
+                    break;
                 }
-                break;
-            case DIAMOND:
-                switch (slot) {
-                    case LEATHER:
-                        ci.setReturnValue(Integer.valueOf(2));
-                        break;
-                    case CHAIN:
-                        ci.setReturnValue(Integer.valueOf(3));
-                        break;
-                    case GOLD:
-                        ci.setReturnValue(Integer.valueOf(3));
-                        break;
-                    case IRON:
-                        ci.setReturnValue(Integer.valueOf(2));
-                        break;
+                case DIAMOND: {
+                    switch (slot) {
+                        case HEAD: {
+                            ci.setReturnValue(2);
+                            break;
+                        }
+                        case CHEST: {
+                            ci.setReturnValue(3);
+                            break;
+                        }
+                        case LEGS: {
+                            ci.setReturnValue(3);
+                            break;
+                        }
+                        case FEET: {
+                            ci.setReturnValue(2);
+                            break;
+                        }
+                    }
+                    break;
                 }
-                break;
-            case NETHERITE:
-                switch (slot) {
-                    case LEATHER:
-                        ci.setReturnValue(Integer.valueOf(3));
-                        break;
-                    case CHAIN:
-                        ci.setReturnValue(Integer.valueOf(4));
-                        break;
-                    case GOLD:
-                        ci.setReturnValue(Integer.valueOf(4));
-                        break;
-                    case IRON:
-                        ci.setReturnValue(Integer.valueOf(3));
-                        break;
+                case NETHERITE: {
+                    switch (slot) {
+                        case HEAD: {
+                            ci.setReturnValue(3);
+                            break Label_0549;
+                        }
+                        case CHEST: {
+                            ci.setReturnValue(4);
+                            break Label_0549;
+                        }
+                        case LEGS: {
+                            ci.setReturnValue(4);
+                            break Label_0549;
+                        }
+                        case FEET: {
+                            ci.setReturnValue(3);
+                            break Label_0549;
+                        }
+                    }
+                    break;
                 }
-
-                break;
+            }
         }
     }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\mixin\MixinArmorMaterial.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

@@ -1,3 +1,7 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.entity.renderer;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
@@ -6,20 +10,14 @@ import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.passive.CowEntity;
 
-public class AggressiveCowBossRenderer extends CowRenderer {
-    public AggressiveCowBossRenderer(EntityRendererManager renderManagerIn) {
+public class AggressiveCowBossRenderer extends CowRenderer
+{
+    public AggressiveCowBossRenderer(final EntityRendererManager renderManagerIn) {
         super(renderManagerIn);
     }
-
-
-    protected void preRenderCallback(CowEntity entitylivingbaseIn, MatrixStack matrixStackIn, float partialTickTime) {
+    
+    protected void preRenderCallback(final CowEntity entitylivingbaseIn, final MatrixStack matrixStackIn, final float partialTickTime) {
         super.scale(entitylivingbaseIn, matrixStackIn, partialTickTime);
-        matrixStackIn.scale(3.0F, 3.0F, 3.0F);
+        matrixStackIn.scale(3.0f, 3.0f, 3.0f);
     }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\entity\renderer\AggressiveCowBossRenderer.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

@@ -1,3 +1,7 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.world.gen.decorator;
 
 import com.mojang.serialization.Codec;
@@ -14,40 +18,30 @@ import net.minecraftforge.registries.IForgeRegistryEntry;
 
 import java.util.Random;
 
-public class OverworldOreFeature extends OreFeature {
+public class OverworldOreFeature extends OreFeature
+{
     public static Feature<OreFeatureConfig> INSTANCE;
-
-    public OverworldOreFeature(Codec<OreFeatureConfig> codec) {
-        super(codec);
+    
+    public OverworldOreFeature(final Codec<OreFeatureConfig> codec) {
+        super((Codec)codec);
     }
-
-
-    public boolean place(ISeedReader world, ChunkGenerator gen, Random random, BlockPos pos, OreFeatureConfig config) {
+    
+    public boolean place(final ISeedReader world, final ChunkGenerator gen, final Random random, final BlockPos pos, final OreFeatureConfig config) {
         if (world.getLevel().dimension() != World.OVERWORLD) {
             return false;
         }
-
-        if (config.size == 1) {
-            if (config.target.test(world.getBlockState(pos), random)) {
-                world.setBlock(pos, config.state, 2);
-                return true;
-            }
-
-            return false;
+        if (config.size != 1) {
+            return super.place(world, gen, random, pos, config);
         }
-        return super.place(world, gen, random, pos, config);
+        if (config.target.test(world.getBlockState(pos), random)) {
+            world.setBlock(pos, config.state, 2);
+            return true;
+        }
+        return false;
     }
-
-
-    public static void register(RegistryEvent.Register<Feature<?>> event) {
-        INSTANCE = (Feature<OreFeatureConfig>) new OverworldOreFeature(OreFeatureConfig.CODEC);
-        INSTANCE.setRegistryName(Vault.id("overworld_ore"));
-        event.getRegistry().register((IForgeRegistryEntry) INSTANCE);
+    
+    public static void register(final RegistryEvent.Register<Feature<?>> event) {
+        (OverworldOreFeature.INSTANCE = (Feature<OreFeatureConfig>)new OverworldOreFeature((Codec<OreFeatureConfig>)OreFeatureConfig.CODEC)).setRegistryName(Vault.id("overworld_ore"));
+        event.getRegistry().register(OverworldOreFeature.INSTANCE);
     }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\world\gen\decorator\OverworldOreFeature.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

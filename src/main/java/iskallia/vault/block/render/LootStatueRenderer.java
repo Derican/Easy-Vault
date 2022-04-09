@@ -1,3 +1,7 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.block.render;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
@@ -24,13 +28,13 @@ import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.entity.model.EntityModel;
 import net.minecraft.client.renderer.model.IBakedModel;
 import net.minecraft.client.renderer.model.ItemCameraTransforms;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.renderer.tileentity.TileEntityRenderer;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
 import net.minecraft.client.renderer.vertex.VertexBuffer;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.state.Property;
@@ -41,7 +45,10 @@ import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.vector.Matrix4f;
 import net.minecraft.util.math.vector.Quaternion;
 import net.minecraft.util.math.vector.Vector3f;
-import net.minecraft.util.text.*;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.ITextProperties;
+import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.LightType;
 import net.minecraft.world.World;
 import org.lwjgl.opengl.ARBShaderObjects;
@@ -53,265 +60,214 @@ import java.time.temporal.TemporalAdjusters;
 import java.util.HashMap;
 import java.util.Map;
 
-public class LootStatueRenderer extends TileEntityRenderer<LootStatueTileEntity> {
-    protected static final StatuePlayerModel<PlayerEntity> PLAYER_MODEL = new StatuePlayerModel(0.0F, false);
-
-    protected static final OmegaStatueModel OMEGA_STATUE_MODEL = new OmegaStatueModel();
-    protected static Map<Integer, VertexBuffer> lightVBOMap = new HashMap<>();
-
-    private final Minecraft mc = Minecraft.getInstance();
-
-    public LootStatueRenderer(TileEntityRendererDispatcher rendererDispatcher) {
+public class LootStatueRenderer extends TileEntityRenderer<LootStatueTileEntity>
+{
+    protected static final StatuePlayerModel<PlayerEntity> PLAYER_MODEL;
+    protected static final OmegaStatueModel OMEGA_STATUE_MODEL;
+    protected static Map<Integer, VertexBuffer> lightVBOMap;
+    private final Minecraft mc;
+    
+    public LootStatueRenderer(final TileEntityRendererDispatcher rendererDispatcher) {
         super(rendererDispatcher);
+        this.mc = Minecraft.getInstance();
     }
-
-
-    public void render(LootStatueTileEntity tileEntity, float partialTicks, MatrixStack matrixStack, IRenderTypeBuffer buffer, int combinedLight, int combinedOverlay) {
-        BlockState blockState = tileEntity.getBlockState();
-        Direction direction = (Direction) blockState.getValue((Property) LootStatueBlock.FACING);
-        Minecraft mc = Minecraft.getInstance();
+    
+    public void render(final LootStatueTileEntity tileEntity, final float partialTicks, final MatrixStack matrixStack, final IRenderTypeBuffer buffer, final int combinedLight, final int combinedOverlay) {
+        final BlockState blockState = tileEntity.getBlockState();
+        final Direction direction = blockState.getValue(LootStatueBlock.FACING);
+        final Minecraft mc = Minecraft.getInstance();
         if (mc.player == null) {
             return;
         }
-
         if (tileEntity.getStatueType() == StatueType.OMEGA && tileEntity.isMaster()) {
-            renderOmegaStatueCrystals(tileEntity, matrixStack, buffer, combinedLight, combinedOverlay);
-
+            this.renderOmegaStatueCrystals(tileEntity, matrixStack, buffer, combinedLight, combinedOverlay);
             if (tileEntity.getChipCount() > 0) {
-                ClientPlayerEntity player = mc.player;
-                int lightLevel = getLightAtPos(tileEntity.getLevel(), tileEntity.getBlockPos().above());
-
-                renderItemWithLabel(new ItemStack((IItemProvider) ModItems.ACCELERATION_CHIP),
-                        getTranslation(direction), Vector3f.YP
-                                .rotationDegrees(((direction == Direction.EAST || direction == Direction.WEST) ? 'Ď' : '´') - player.yRot), matrixStack, buffer, combinedOverlay, lightLevel, direction, new StringTextComponent("" + tileEntity
-
-                                .getChipCount()), -1);
+                final ClientPlayerEntity player = mc.player;
+                final int lightLevel = this.getLightAtPos(tileEntity.getLevel(), tileEntity.getBlockPos().above());
+                this.renderItemWithLabel(new ItemStack((IItemProvider)ModItems.ACCELERATION_CHIP), this.getTranslation(direction), Vector3f.YP.rotationDegrees(((direction == Direction.EAST || direction == Direction.WEST) ? 270 : 180) - player.yRot), matrixStack, buffer, combinedOverlay, lightLevel, direction, new StringTextComponent("" + tileEntity.getChipCount()), -1);
             }
-        } else if (tileEntity.getStatueType() == StatueType.OMEGA_VARIANT) {
+        }
+        else if (tileEntity.getStatueType() == StatueType.OMEGA_VARIANT) {
             if (tileEntity.getChipCount() > 0) {
-                ClientPlayerEntity player = mc.player;
-                int lightLevel = getLightAtPos(tileEntity.getLevel(), tileEntity.getBlockPos().above());
-
-                renderItemWithLabel(new ItemStack((IItemProvider) ModItems.ACCELERATION_CHIP),
-                        getVariantTranslation(direction), Vector3f.YP
-                                .rotationDegrees(((direction == Direction.EAST || direction == Direction.WEST) ? 'Ď' : '´') - player.yRot), matrixStack, buffer, combinedOverlay, lightLevel, direction, new StringTextComponent(
-
-                                String.valueOf(tileEntity.getChipCount())), -1);
+                final ClientPlayerEntity player = mc.player;
+                final int lightLevel = this.getLightAtPos(tileEntity.getLevel(), tileEntity.getBlockPos().above());
+                this.renderItemWithLabel(new ItemStack((IItemProvider)ModItems.ACCELERATION_CHIP), this.getVariantTranslation(direction), Vector3f.YP.rotationDegrees(((direction == Direction.EAST || direction == Direction.WEST) ? 270 : 180) - player.yRot), matrixStack, buffer, combinedOverlay, lightLevel, direction, new StringTextComponent(String.valueOf(tileEntity.getChipCount())), -1);
             }
-
-            ItemStack loot = tileEntity.getLootItem();
+            final ItemStack loot = tileEntity.getLootItem();
             if (!loot.isEmpty()) {
                 matrixStack.pushPose();
-                matrixStack.translate(0.5D, 0.4D, 0.5D);
-                matrixStack.translate(direction.getStepX() * -0.2D, 0.0D, direction.getStepZ() * -0.2D);
-                matrixStack.scale(1.6F, 1.6F, 1.6F);
-                IBakedModel ibakedmodel = mc.getItemRenderer().getModel(loot, null, null);
+                matrixStack.translate(0.5, 0.4, 0.5);
+                matrixStack.translate(direction.getStepX() * -0.2, 0.0, direction.getStepZ() * -0.2);
+                matrixStack.scale(1.6f, 1.6f, 1.6f);
+                final IBakedModel ibakedmodel = mc.getItemRenderer().getModel(loot, (World)null, (LivingEntity)null);
                 mc.getItemRenderer().render(loot, ItemCameraTransforms.TransformType.GROUND, false, matrixStack, buffer, combinedLight, combinedOverlay, ibakedmodel);
-
                 matrixStack.popPose();
             }
         }
-
-        String latestNickname = tileEntity.getSkin().getLatestNickname();
+        final String latestNickname = tileEntity.getSkin().getLatestNickname();
         if (StringUtils.isNullOrEmpty(latestNickname)) {
             return;
         }
-
-        drawPlayerModel(matrixStack, buffer, tileEntity, combinedLight, combinedOverlay);
-        StatueType statueType = tileEntity.getStatueType();
-
+        this.drawPlayerModel(matrixStack, buffer, tileEntity, combinedLight, combinedOverlay);
+        final StatueType statueType = tileEntity.getStatueType();
         if (statueType == StatueType.GIFT_MEGA) {
-            drawStatueBowHat(matrixStack, buffer, direction, combinedLight, combinedOverlay);
+            this.drawStatueBowHat(matrixStack, buffer, direction, combinedLight, combinedOverlay);
         }
         if (statueType == StatueType.TROPHY) {
-            drawRecordDisplay(matrixStack, buffer, direction, tileEntity, combinedLight, combinedOverlay);
+            this.drawRecordDisplay(matrixStack, buffer, direction, tileEntity, combinedLight, combinedOverlay);
         }
         if (statueType == StatueType.OMEGA_VARIANT) {
-            drawStatueNameplate(matrixStack, buffer, latestNickname, direction, tileEntity, combinedLight, combinedOverlay);
+            this.drawStatueNameplate(matrixStack, buffer, latestNickname, direction, tileEntity, combinedLight, combinedOverlay);
         }
-
         if (mc.hitResult != null && mc.hitResult.getType() == RayTraceResult.Type.BLOCK) {
-            BlockRayTraceResult result = (BlockRayTraceResult) mc.hitResult;
+            final BlockRayTraceResult result = (BlockRayTraceResult)mc.hitResult;
             if (tileEntity.getBlockPos().equals(result.getBlockPos())) {
-                IFormattableTextComponent iFormattableTextComponent = (new StringTextComponent(latestNickname)).withStyle(TextFormatting.WHITE);
+                ITextComponent text = (ITextComponent)new StringTextComponent(latestNickname).withStyle(TextFormatting.WHITE);
                 if (statueType.hasLimitedItems() && tileEntity.getItemsRemaining() <= 0) {
-                    iFormattableTextComponent = (new StringTextComponent("☠ ")).withStyle(TextFormatting.RED).append((ITextComponent) iFormattableTextComponent);
+                    text = (ITextComponent)new StringTextComponent("\u2620 ").withStyle(TextFormatting.RED).append(text);
                 }
-                renderLabel(matrixStack, buffer, combinedLight, (ITextComponent) iFormattableTextComponent, -1);
+                this.renderLabel(matrixStack, buffer, combinedLight, text, -1);
             }
         }
     }
-
-    private void drawStatueNameplate(MatrixStack matrixStack, IRenderTypeBuffer buffer, String latestNickname, Direction direction, LootStatueTileEntity tileEntity, int combinedLight, int combinedOverlay) {
-        IReorderingProcessor text = (new StringTextComponent(latestNickname)).withStyle(TextFormatting.BLACK).getVisualOrderText();
-        FontRenderer fr = this.renderer.getFont();
-        int xOffset = fr.width(text);
-
+    
+    private void drawStatueNameplate(final MatrixStack matrixStack, final IRenderTypeBuffer buffer, final String latestNickname, final Direction direction, final LootStatueTileEntity tileEntity, final int combinedLight, final int combinedOverlay) {
+        final IReorderingProcessor text = new StringTextComponent(latestNickname).withStyle(TextFormatting.BLACK).getVisualOrderText();
+        final FontRenderer fr = this.renderer.getFont();
+        final int xOffset = fr.width(text);
         matrixStack.pushPose();
-        matrixStack.translate(0.5D, 0.35D, 0.5D);
-        matrixStack.mulPose(Vector3f.YN.rotationDegrees(direction.toYRot() + 180.0F));
-        matrixStack.translate(0.0D, 0.0D, 0.51D);
-        matrixStack.scale(0.01F, -0.01F, 0.01F);
-
-        fr.drawInBatch(text, -xOffset / 2.0F, 0.0F, -16777216, false, matrixStack
-                .last().pose(), buffer, false, 0, combinedLight);
-
-
+        matrixStack.translate(0.5, 0.35, 0.5);
+        matrixStack.mulPose(Vector3f.YN.rotationDegrees(direction.toYRot() + 180.0f));
+        matrixStack.translate(0.0, 0.0, 0.51);
+        matrixStack.scale(0.01f, -0.01f, 0.01f);
+        fr.drawInBatch(text, -xOffset / 2.0f, 0.0f, -16777216, false, matrixStack.last().pose(), buffer, false, 0, combinedLight);
         matrixStack.popPose();
     }
-
-    private void drawRecordDisplay(MatrixStack matrixStack, IRenderTypeBuffer buffer, Direction direction, LootStatueTileEntity tileEntity, int combinedLight, int combinedOverlay) {
+    
+    private void drawRecordDisplay(final MatrixStack matrixStack, final IRenderTypeBuffer buffer, final Direction direction, final LootStatueTileEntity tileEntity, final int combinedLight, final int combinedOverlay) {
         if (!(tileEntity instanceof TrophyStatueTileEntity)) {
             return;
         }
-        TrophyStatueTileEntity trophyTile = (TrophyStatueTileEntity) tileEntity;
-        WeekKey week = trophyTile.getWeek();
-        PlayerVaultStatsData.PlayerRecordEntry recordEntry = trophyTile.getRecordEntry();
-        FontRenderer fr = this.renderer.getFont();
-
+        final TrophyStatueTileEntity trophyTile = (TrophyStatueTileEntity)tileEntity;
+        final WeekKey week = trophyTile.getWeek();
+        final PlayerVaultStatsData.PlayerRecordEntry recordEntry = trophyTile.getRecordEntry();
+        final FontRenderer fr = this.renderer.getFont();
         LocalDateTime ldt = LocalDateTime.now();
-
-
-        ldt = ldt.with(IsoFields.WEEK_BASED_YEAR, week.getYear()).with(IsoFields.WEEK_OF_WEEK_BASED_YEAR, week.getWeek()).with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY));
-        String from = ldt.getDayOfMonth() + "." + ldt.getMonthValue() + "." + ldt.getYear() + " -";
+        ldt = ldt.with(IsoFields.WEEK_BASED_YEAR, (long)week.getYear()).with(IsoFields.WEEK_OF_WEEK_BASED_YEAR, (long)week.getWeek()).with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY));
+        final String from = ldt.getDayOfMonth() + "." + ldt.getMonthValue() + "." + ldt.getYear() + " -";
         ldt = ldt.with(TemporalAdjusters.next(DayOfWeek.SUNDAY));
-        String to = ldt.getDayOfMonth() + "." + ldt.getMonthValue() + "." + ldt.getYear();
-
-        IReorderingProcessor fromCmp = (new StringTextComponent(from)).getVisualOrderText();
-        IReorderingProcessor toCmp = (new StringTextComponent(to)).getVisualOrderText();
-        IReorderingProcessor timeStr = (new StringTextComponent(UIHelper.formatTimeString(recordEntry.getTickCount()))).getVisualOrderText();
-
+        final String to = ldt.getDayOfMonth() + "." + ldt.getMonthValue() + "." + ldt.getYear();
+        final IReorderingProcessor fromCmp = new StringTextComponent(from).getVisualOrderText();
+        final IReorderingProcessor toCmp = new StringTextComponent(to).getVisualOrderText();
+        final IReorderingProcessor timeStr = new StringTextComponent(UIHelper.formatTimeString(recordEntry.getTickCount())).getVisualOrderText();
         matrixStack.pushPose();
-        matrixStack.translate(0.5D, 0.5D, 0.5D);
-        matrixStack.mulPose(Vector3f.YN.rotationDegrees(direction.toYRot() + 180.0F));
-
+        matrixStack.translate(0.5, 0.5, 0.5);
+        matrixStack.mulPose(Vector3f.YN.rotationDegrees(direction.toYRot() + 180.0f));
         matrixStack.pushPose();
-        matrixStack.translate(0.0D, 0.24D, 0.22D);
-        matrixStack.scale(0.0055F, -0.0055F, 0.0055F);
+        matrixStack.translate(0.0, 0.24, 0.22);
+        matrixStack.scale(0.0055f, -0.0055f, 0.0055f);
         int xOffset = fr.width(fromCmp);
-        fr.drawInBatch(fromCmp, -xOffset / 2.0F, 0.0F, -16777216, false, matrixStack
-                .last().pose(), buffer, false, 0, combinedLight);
-
+        fr.drawInBatch(fromCmp, -xOffset / 2.0f, 0.0f, -16777216, false, matrixStack.last().pose(), buffer, false, 0, combinedLight);
         xOffset = fr.width(toCmp);
-        fr.drawInBatch(toCmp, -xOffset / 2.0F, 10.0F, -16777216, false, matrixStack
-                .last().pose(), buffer, false, 0, combinedLight);
-
+        fr.drawInBatch(toCmp, -xOffset / 2.0f, 10.0f, -16777216, false, matrixStack.last().pose(), buffer, false, 0, combinedLight);
         matrixStack.popPose();
-
         matrixStack.pushPose();
-        matrixStack.translate(0.0D, 0.1D, 0.19D);
-        matrixStack.scale(0.008F, -0.008F, 0.008F);
+        matrixStack.translate(0.0, 0.1, 0.19);
+        matrixStack.scale(0.008f, -0.008f, 0.008f);
         xOffset = fr.width(timeStr);
-        fr.drawInBatch(timeStr, -xOffset / 2.0F, 0.0F, -16777216, false, matrixStack
-                .last().pose(), buffer, false, 0, combinedLight);
-
+        fr.drawInBatch(timeStr, -xOffset / 2.0f, 0.0f, -16777216, false, matrixStack.last().pose(), buffer, false, 0, combinedLight);
         matrixStack.popPose();
-
         matrixStack.popPose();
     }
-
-    private void drawStatueBowHat(MatrixStack matrixStack, IRenderTypeBuffer buffer, Direction direction, int combinedLight, int combinedOverlay) {
-        float hatScale = 3.0F;
+    
+    private void drawStatueBowHat(final MatrixStack matrixStack, final IRenderTypeBuffer buffer, final Direction direction, final int combinedLight, final int combinedOverlay) {
+        final float hatScale = 3.0f;
         matrixStack.pushPose();
-        matrixStack.translate(0.5D, 1.1D, 0.5D);
+        matrixStack.translate(0.5, 1.1, 0.5);
         matrixStack.scale(hatScale, hatScale, hatScale);
-        matrixStack.mulPose(Vector3f.YN.rotationDegrees(direction.toYRot() + 180.0F));
-        ItemStack stack = new ItemStack((IItemProvider) ModBlocks.BOW_HAT);
-        IBakedModel ibakedmodel = this.mc.getItemRenderer().getModel(stack, null, null);
+        matrixStack.mulPose(Vector3f.YN.rotationDegrees(direction.toYRot() + 180.0f));
+        final ItemStack stack = new ItemStack((IItemProvider)ModBlocks.BOW_HAT);
+        final IBakedModel ibakedmodel = this.mc.getItemRenderer().getModel(stack, (World)null, (LivingEntity)null);
         this.mc.getItemRenderer().render(stack, ItemCameraTransforms.TransformType.GROUND, true, matrixStack, buffer, combinedLight, combinedOverlay, ibakedmodel);
-
         matrixStack.popPose();
     }
-
-    private void drawPlayerModel(MatrixStack matrixStack, IRenderTypeBuffer buffer, LootStatueTileEntity tileEntity, int combinedLight, int combinedOverlay) {
-        BlockState blockState = tileEntity.getBlockState();
-        Direction direction = (Direction) blockState.getValue((Property) LootStatueBlock.FACING);
-        StatueType statueType = tileEntity.getStatueType();
-        ResourceLocation skinLocation = tileEntity.getSkin().getLocationSkin();
-        RenderType renderType = PLAYER_MODEL.renderType(skinLocation);
-        IVertexBuilder vertexBuilder = buffer.getBuffer(renderType);
-
-        float scale = 0.4F;
-        float headScale = 1.75F;
-        float yOffset = statueType.getPlayerRenderYOffset();
-        float statueOffset = 0.0F;
-
+    
+    private void drawPlayerModel(final MatrixStack matrixStack, final IRenderTypeBuffer buffer, final LootStatueTileEntity tileEntity, final int combinedLight, final int combinedOverlay) {
+        final BlockState blockState = tileEntity.getBlockState();
+        final Direction direction = blockState.getValue(LootStatueBlock.FACING);
+        final StatueType statueType = tileEntity.getStatueType();
+        final ResourceLocation skinLocation = tileEntity.getSkin().getLocationSkin();
+        final RenderType renderType = LootStatueRenderer.PLAYER_MODEL.renderType(skinLocation);
+        final IVertexBuilder vertexBuilder = buffer.getBuffer(renderType);
+        float scale = 0.4f;
+        float headScale = 1.75f;
+        final float yOffset = statueType.getPlayerRenderYOffset();
+        float statueOffset = 0.0f;
         if (statueType.doGrayscaleShader()) {
             ShaderUtil.useShader(ShaderUtil.GRAYSCALE_SHADER, () -> {
-                float factor = tileEntity.getItemsRemaining() / tileEntity.getTotalItems();
-
-                int grayScaleFactor = ShaderUtil.getUniformLocation(ShaderUtil.GRAYSCALE_SHADER, "grayFactor");
-
+                final float factor = tileEntity.getItemsRemaining() / (float)tileEntity.getTotalItems();
+                final int grayScaleFactor = ShaderUtil.getUniformLocation(ShaderUtil.GRAYSCALE_SHADER, "grayFactor");
                 ARBShaderObjects.glUniform1fARB(grayScaleFactor, factor);
-                float brightness = LightmapUtil.getLightmapBrightness(combinedLight);
-                int brightnessFactor = ShaderUtil.getUniformLocation(ShaderUtil.GRAYSCALE_SHADER, "brightness");
+                final float brightness = LightmapUtil.getLightmapBrightness(combinedLight);
+                final int brightnessFactor = ShaderUtil.getUniformLocation(ShaderUtil.GRAYSCALE_SHADER, "brightness");
                 ARBShaderObjects.glUniform1fARB(brightnessFactor, brightness);
+                return;
             });
         }
         matrixStack.pushPose();
-
         if (statueType == StatueType.OMEGA) {
-            float playerScale = tileEntity.getPlayerScale();
-            matrixStack.translate(0.0D, (1.0F + playerScale), 0.0D);
+            final float playerScale = tileEntity.getPlayerScale();
+            matrixStack.translate(0.0, (double)(1.0f + playerScale), 0.0);
             scale += playerScale;
         }
         if (statueType == StatueType.OMEGA_VARIANT) {
-            matrixStack.translate(0.0D, 1.5499999523162842D, 0.0D);
-            scale = 1.3F;
-            headScale = 1.0F;
-            statueOffset = 0.2F;
+            matrixStack.translate(0.0, 1.5499999523162842, 0.0);
+            scale = 1.3f;
+            headScale = 1.0f;
+            statueOffset = 0.2f;
         }
         if (statueType == StatueType.TROPHY) {
-            scale = (float) (scale - 0.04D);
+            scale -= (float)0.04;
         }
-
-        matrixStack.translate(0.5D, yOffset, 0.5D);
-        matrixStack.mulPose(Vector3f.YN.rotationDegrees(direction.toYRot() + 180.0F));
-        matrixStack.mulPose(Vector3f.XP.rotationDegrees(180.0F));
-        matrixStack.translate(0.0D, 0.0D, statueOffset);
+        matrixStack.translate(0.5, (double)yOffset, 0.5);
+        matrixStack.mulPose(Vector3f.YN.rotationDegrees(direction.toYRot() + 180.0f));
+        matrixStack.mulPose(Vector3f.XP.rotationDegrees(180.0f));
+        matrixStack.translate(0.0, 0.0, (double)statueOffset);
         matrixStack.scale(scale, scale, scale);
-        PLAYER_MODEL.body.render(matrixStack, vertexBuilder, combinedLight, combinedOverlay, 1.0F, 1.0F, 1.0F, 1.0F);
-        PLAYER_MODEL.leftLeg.render(matrixStack, vertexBuilder, combinedLight, combinedOverlay, 1.0F, 1.0F, 1.0F, 1.0F);
-        PLAYER_MODEL.rightLeg.render(matrixStack, vertexBuilder, combinedLight, combinedOverlay, 1.0F, 1.0F, 1.0F, 1.0F);
-        PLAYER_MODEL.leftArm.render(matrixStack, vertexBuilder, combinedLight, combinedOverlay, 1.0F, 1.0F, 1.0F, 1.0F);
-        PLAYER_MODEL.rightArm.render(matrixStack, vertexBuilder, combinedLight, combinedOverlay, 1.0F, 1.0F, 1.0F, 1.0F);
-
-        PLAYER_MODEL.jacket.render(matrixStack, vertexBuilder, combinedLight, combinedOverlay, 1.0F, 1.0F, 1.0F, 1.0F);
-        PLAYER_MODEL.leftPants.render(matrixStack, vertexBuilder, combinedLight, combinedOverlay, 1.0F, 1.0F, 1.0F, 1.0F);
-        PLAYER_MODEL.rightPants.render(matrixStack, vertexBuilder, combinedLight, combinedOverlay, 1.0F, 1.0F, 1.0F, 1.0F);
-        PLAYER_MODEL.leftSleeve.render(matrixStack, vertexBuilder, combinedLight, combinedOverlay, 1.0F, 1.0F, 1.0F, 1.0F);
-
+        LootStatueRenderer.PLAYER_MODEL.body.render(matrixStack, vertexBuilder, combinedLight, combinedOverlay, 1.0f, 1.0f, 1.0f, 1.0f);
+        LootStatueRenderer.PLAYER_MODEL.leftLeg.render(matrixStack, vertexBuilder, combinedLight, combinedOverlay, 1.0f, 1.0f, 1.0f, 1.0f);
+        LootStatueRenderer.PLAYER_MODEL.rightLeg.render(matrixStack, vertexBuilder, combinedLight, combinedOverlay, 1.0f, 1.0f, 1.0f, 1.0f);
+        LootStatueRenderer.PLAYER_MODEL.leftArm.render(matrixStack, vertexBuilder, combinedLight, combinedOverlay, 1.0f, 1.0f, 1.0f, 1.0f);
+        LootStatueRenderer.PLAYER_MODEL.rightArm.render(matrixStack, vertexBuilder, combinedLight, combinedOverlay, 1.0f, 1.0f, 1.0f, 1.0f);
+        LootStatueRenderer.PLAYER_MODEL.jacket.render(matrixStack, vertexBuilder, combinedLight, combinedOverlay, 1.0f, 1.0f, 1.0f, 1.0f);
+        LootStatueRenderer.PLAYER_MODEL.leftPants.render(matrixStack, vertexBuilder, combinedLight, combinedOverlay, 1.0f, 1.0f, 1.0f, 1.0f);
+        LootStatueRenderer.PLAYER_MODEL.rightPants.render(matrixStack, vertexBuilder, combinedLight, combinedOverlay, 1.0f, 1.0f, 1.0f, 1.0f);
+        LootStatueRenderer.PLAYER_MODEL.leftSleeve.render(matrixStack, vertexBuilder, combinedLight, combinedOverlay, 1.0f, 1.0f, 1.0f, 1.0f);
         matrixStack.pushPose();
-        matrixStack.translate(0.0D, 0.0D, -0.6200000047683716D);
-        PLAYER_MODEL.rightSleeve.render(matrixStack, vertexBuilder, combinedLight, combinedOverlay, 1.0F, 1.0F, 1.0F, 1.0F);
+        matrixStack.translate(0.0, 0.0, -0.6200000047683716);
+        LootStatueRenderer.PLAYER_MODEL.rightSleeve.render(matrixStack, vertexBuilder, combinedLight, combinedOverlay, 1.0f, 1.0f, 1.0f, 1.0f);
         matrixStack.popPose();
-
         matrixStack.scale(headScale, headScale, headScale);
-        PLAYER_MODEL.hat.render(matrixStack, vertexBuilder, combinedLight, combinedOverlay, 1.0F, 1.0F, 1.0F, 1.0F);
-        PLAYER_MODEL.head.render(matrixStack, vertexBuilder, combinedLight, combinedOverlay, 1.0F, 1.0F, 1.0F, 1.0F);
-
+        LootStatueRenderer.PLAYER_MODEL.hat.render(matrixStack, vertexBuilder, combinedLight, combinedOverlay, 1.0f, 1.0f, 1.0f, 1.0f);
+        LootStatueRenderer.PLAYER_MODEL.head.render(matrixStack, vertexBuilder, combinedLight, combinedOverlay, 1.0f, 1.0f, 1.0f, 1.0f);
         matrixStack.popPose();
-
         if (buffer instanceof IRenderTypeBuffer.Impl) {
-            ((IRenderTypeBuffer.Impl) buffer).endBatch(renderType);
+            ((IRenderTypeBuffer.Impl)buffer).endBatch(renderType);
         }
         if (statueType.doGrayscaleShader()) {
             ShaderUtil.releaseShader();
         }
     }
-
-    private void renderOmegaStatueCrystals(LootStatueTileEntity tileEntity, MatrixStack matrixStack, IRenderTypeBuffer buffer, int combinedLight, int combinedOverlay) {
-        RenderType omegaType = OMEGA_STATUE_MODEL.renderType(Vault.id("textures/block/mega_statue3.png"));
-        VertexBuffer vbo = lightVBOMap.computeIfAbsent(Integer.valueOf(combinedLight), lightLvl -> VBOUtil.batch((EntityModel) OMEGA_STATUE_MODEL, omegaType, lightLvl.intValue(), OverlayTexture.NO_OVERLAY));
-
-
+    
+    private void renderOmegaStatueCrystals(final LootStatueTileEntity tileEntity, final MatrixStack matrixStack, final IRenderTypeBuffer buffer, final int combinedLight, final int combinedOverlay) {
+        final RenderType omegaType = LootStatueRenderer.OMEGA_STATUE_MODEL.renderType(Vault.id("textures/block/mega_statue3.png"));
+        final VertexBuffer vbo = LootStatueRenderer.lightVBOMap.computeIfAbsent(combinedLight, lightLvl -> VBOUtil.batch(LootStatueRenderer.OMEGA_STATUE_MODEL, omegaType, lightLvl, OverlayTexture.NO_OVERLAY));
         matrixStack.pushPose();
-        matrixStack.translate(0.5D, 1.5D, 0.5D);
-        BlockState blockState = tileEntity.getBlockState();
-        Direction direction = (Direction) blockState.getValue((Property) LootStatueBlock.FACING);
-        matrixStack.mulPose(Vector3f.YN.rotationDegrees(direction.toYRot() + 180.0F));
-        matrixStack.mulPose(Vector3f.XP.rotationDegrees(180.0F));
-
+        matrixStack.translate(0.5, 1.5, 0.5);
+        final BlockState blockState = tileEntity.getBlockState();
+        final Direction direction = blockState.getValue(LootStatueBlock.FACING);
+        matrixStack.mulPose(Vector3f.YN.rotationDegrees(direction.toYRot() + 180.0f));
+        matrixStack.mulPose(Vector3f.XP.rotationDegrees(180.0f));
         omegaType.setupRenderState();
         vbo.bind();
         omegaType.format().setupBufferState(0L);
@@ -319,86 +275,87 @@ public class LootStatueRenderer extends TileEntityRenderer<LootStatueTileEntity>
         omegaType.format().clearBufferState();
         VertexBuffer.unbind();
         omegaType.clearRenderState();
-
         matrixStack.popPose();
     }
-
-    private void renderLabel(MatrixStack matrixStack, IRenderTypeBuffer buffer, int lightLevel, ITextComponent text, int color) {
-        FontRenderer fontRenderer = this.mc.font;
-
-
+    
+    private void renderLabel(final MatrixStack matrixStack, final IRenderTypeBuffer buffer, final int lightLevel, final ITextComponent text, final int color) {
+        final FontRenderer fontRenderer = this.mc.font;
         matrixStack.pushPose();
-        float scale = 0.02F;
-        int opacity = 1711276032;
-        float offset = (-fontRenderer.width((ITextProperties) text) / 2);
-        Matrix4f matrix4f = matrixStack.last().pose();
-
-        matrixStack.translate(0.5D, 1.7000000476837158D, 0.5D);
+        final float scale = 0.02f;
+        final int opacity = 1711276032;
+        final float offset = (float)(-fontRenderer.width((ITextProperties)text) / 2);
+        final Matrix4f matrix4f = matrixStack.last().pose();
+        matrixStack.translate(0.5, 1.7000000476837158, 0.5);
         matrixStack.scale(scale, scale, scale);
         matrixStack.mulPose(this.mc.getEntityRenderDispatcher().cameraOrientation());
-        matrixStack.mulPose(Vector3f.ZP.rotationDegrees(180.0F));
-
-        fontRenderer.drawInBatch(text, offset, 0.0F, color, false, matrix4f, buffer, true, opacity, lightLevel);
-        fontRenderer.drawInBatch(text, offset, 0.0F, -1, false, matrix4f, buffer, false, 0, lightLevel);
+        matrixStack.mulPose(Vector3f.ZP.rotationDegrees(180.0f));
+        fontRenderer.drawInBatch(text, offset, 0.0f, color, false, matrix4f, buffer, true, opacity, lightLevel);
+        fontRenderer.drawInBatch(text, offset, 0.0f, -1, false, matrix4f, buffer, false, 0, lightLevel);
         matrixStack.popPose();
     }
-
-
-    private void renderItemWithLabel(ItemStack stack, double[] translation, Quaternion rotation, MatrixStack matrixStack, IRenderTypeBuffer buffer, int combinedOverlay, int lightLevel, Direction direction, StringTextComponent text, int color) {
+    
+    private void renderItemWithLabel(final ItemStack stack, final double[] translation, final Quaternion rotation, final MatrixStack matrixStack, final IRenderTypeBuffer buffer, final int combinedOverlay, final int lightLevel, final Direction direction, final StringTextComponent text, final int color) {
         matrixStack.pushPose();
-        matrixStack.mulPose(Vector3f.YN.rotationDegrees(direction.toYRot() + ((direction == Direction.NORTH || direction == Direction.EAST) ? 0 : '´')));
+        matrixStack.mulPose(Vector3f.YN.rotationDegrees(direction.toYRot() + ((direction == Direction.NORTH || direction == Direction.EAST) ? 0 : 180)));
         matrixStack.translate(translation[0], translation[1], translation[2]);
         matrixStack.mulPose(rotation);
-        matrixStack.scale(0.5F, 0.5F, 0.5F);
-        IBakedModel ibakedmodel = this.mc.getItemRenderer().getModel(stack, null, null);
+        matrixStack.scale(0.5f, 0.5f, 0.5f);
+        final IBakedModel ibakedmodel = this.mc.getItemRenderer().getModel(stack, (World)null, (LivingEntity)null);
         this.mc.getItemRenderer().render(stack, ItemCameraTransforms.TransformType.GROUND, true, matrixStack, buffer, lightLevel, combinedOverlay, ibakedmodel);
-
-        float scale = -0.025F;
-        float offset = (-(Minecraft.getInstance()).font.width((ITextProperties) text) / 2);
-        matrixStack.translate(0.0D, 0.75D, 0.0D);
+        final float scale = -0.025f;
+        final float offset = (float)(-Minecraft.getInstance().font.width((ITextProperties)text) / 2);
+        matrixStack.translate(0.0, 0.75, 0.0);
         matrixStack.scale(scale, scale, scale);
-        Matrix4f matrix4f = matrixStack.last().pose();
-
-        int opacity = 1711276032;
-        (Minecraft.getInstance()).font.drawInBatch((ITextComponent) text, offset, 0.0F, color, false, matrix4f, buffer, true, opacity, lightLevel);
-        (Minecraft.getInstance()).font.drawInBatch((ITextComponent) text, offset, 0.0F, -1, false, matrix4f, buffer, false, 0, lightLevel);
+        final Matrix4f matrix4f = matrixStack.last().pose();
+        final int opacity = 1711276032;
+        Minecraft.getInstance().font.drawInBatch((ITextComponent)text, offset, 0.0f, color, false, matrix4f, buffer, true, opacity, lightLevel);
+        Minecraft.getInstance().font.drawInBatch((ITextComponent)text, offset, 0.0f, -1, false, matrix4f, buffer, false, 0, lightLevel);
         matrixStack.popPose();
     }
-
-    private int getLightAtPos(World world, BlockPos pos) {
-        int blockLight = world.getBrightness(LightType.BLOCK, pos);
-        int skyLight = world.getBrightness(LightType.SKY, pos);
+    
+    private int getLightAtPos(final World world, final BlockPos pos) {
+        final int blockLight = world.getBrightness(LightType.BLOCK, pos);
+        final int skyLight = world.getBrightness(LightType.SKY, pos);
         return LightTexture.pack(blockLight, skyLight);
     }
-
-    private double[] getTranslation(Direction direction) {
-        switch (direction) {
-            case NORTH:
-                return new double[]{-0.5D, 1.0D, -1.5D};
-            case EAST:
-                return new double[]{-0.5D, 1.0D, -0.5D};
-            case WEST:
-                return new double[]{-0.5D, 1.0D, 1.5D};
+    
+    private double[] getTranslation(final Direction direction) {
+        switch(direction)  {
+            case NORTH: {
+                return new double[] { -0.5, 1.0, -1.5 };
+            }
+            case EAST: {
+                return new double[] { -0.5, 1.0, -0.5 };
+            }
+            case WEST: {
+                return new double[] { -0.5, 1.0, 1.5 };
+            }
+            default: {
+                return new double[] { -0.5, 1.0, 0.5 };
+            }
         }
-        return new double[]{-0.5D, 1.0D, 0.5D};
     }
-
-
-    private double[] getVariantTranslation(Direction direction) {
+    
+    private double[] getVariantTranslation(final Direction direction) {
         switch (direction) {
-            case NORTH:
-                return new double[]{-0.5D, 1.1D, -0.65D};
-            case EAST:
-                return new double[]{-0.5D, 1.1D, 0.35D};
-            case WEST:
-                return new double[]{-0.5D, 1.1D, 0.65D};
+            case NORTH: {
+                return new double[] { -0.5, 1.1, -0.65 };
+            }
+            case EAST: {
+                return new double[] { -0.5, 1.1, 0.35 };
+            }
+            case WEST: {
+                return new double[] { -0.5, 1.1, 0.65 };
+            }
+            default: {
+                return new double[] { -0.5, 1.1, -0.35 };
+            }
         }
-        return new double[]{-0.5D, 1.1D, -0.35D};
+    }
+    
+    static {
+        PLAYER_MODEL = new StatuePlayerModel<PlayerEntity>(0.0f, false);
+        OMEGA_STATUE_MODEL = new OmegaStatueModel();
+        LootStatueRenderer.lightVBOMap = new HashMap<Integer, VertexBuffer>();
     }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\block\render\LootStatueRenderer.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

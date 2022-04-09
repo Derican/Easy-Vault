@@ -1,3 +1,7 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.block.item;
 
 import iskallia.vault.init.ModItems;
@@ -22,41 +26,30 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class AdvancedVendingMachineBlockItem
-        extends BlockItem {
-    public AdvancedVendingMachineBlockItem(Block block) {
-        super(block, (new Item.Properties())
-                .tab(ModItems.VAULT_MOD_GROUP)
-                .stacksTo(64));
+public class AdvancedVendingMachineBlockItem extends BlockItem
+{
+    public AdvancedVendingMachineBlockItem(final Block block) {
+        super(block, new Item.Properties().tab(ModItems.VAULT_MOD_GROUP).stacksTo(64));
     }
-
-
+    
     @OnlyIn(Dist.CLIENT)
-    public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-        CompoundNBT nbt = stack.getTag();
-
+    public void appendHoverText(final ItemStack stack, @Nullable final World worldIn, final List<ITextComponent> tooltip, final ITooltipFlag flagIn) {
+        final CompoundNBT nbt = stack.getTag();
         if (nbt != null) {
-            CompoundNBT blockEntityTag = nbt.getCompound("BlockEntityTag");
-            ListNBT cores = blockEntityTag.getList("coresList", 10);
-            for (INBT tag : cores) {
-
+            final CompoundNBT blockEntityTag = nbt.getCompound("BlockEntityTag");
+            final ListNBT cores = blockEntityTag.getList("coresList", 10);
+            for (final INBT tag : cores) {
                 try {
-                    TraderCore core = (TraderCore) NBTSerializer.deserialize(TraderCore.class, (CompoundNBT) tag);
-                    StringTextComponent text = new StringTextComponent(" Vendor: " + core.getName());
+                    final TraderCore core = NBTSerializer.deserialize(TraderCore.class, (CompoundNBT)tag);
+                    final StringTextComponent text = new StringTextComponent(" Vendor: " + core.getName());
                     text.setStyle(Style.EMPTY.withColor(Color.fromRgb(-26266)));
-                    tooltip.add(text);
-                } catch (Exception e) {
+                    tooltip.add((ITextComponent)text);
+                }
+                catch (final Exception e) {
                     e.printStackTrace();
                 }
             }
         }
-
-        super.appendHoverText(stack, worldIn, tooltip, flagIn);
+        super.appendHoverText(stack, worldIn, (List)tooltip, flagIn);
     }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\block\item\AdvancedVendingMachineBlockItem.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

@@ -1,3 +1,7 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.config;
 
 import com.google.gson.annotations.Expose;
@@ -5,31 +9,24 @@ import com.google.gson.annotations.Expose;
 import java.util.HashMap;
 import java.util.Map;
 
-
-public class PlayerScalingConfig
-        extends Config {
+public class PlayerScalingConfig extends Config
+{
     @Expose
     private Map<String, Integer> PLAYER_MOB_ADJUSTMENT;
-
+    
+    @Override
     public String getName() {
         return "player_scaling";
     }
-
-    public int getMobLevelAdjustment(String playerName) {
-        return ((Integer) this.PLAYER_MOB_ADJUSTMENT.getOrDefault(playerName, Integer.valueOf(0))).intValue();
+    
+    public int getMobLevelAdjustment(final String playerName) {
+        return this.PLAYER_MOB_ADJUSTMENT.getOrDefault(playerName, 0);
     }
-
-
+    
+    @Override
     protected void reset() {
-        this.PLAYER_MOB_ADJUSTMENT = new HashMap<>();
-        this.PLAYER_MOB_ADJUSTMENT.put("iskall85", Integer.valueOf(-5));
-        this.PLAYER_MOB_ADJUSTMENT.put("HBomb94", Integer.valueOf(10));
-        this.PLAYER_MOB_ADJUSTMENT.put("CaptainSparklez", Integer.valueOf(-10));
+        (this.PLAYER_MOB_ADJUSTMENT = new HashMap<String, Integer>()).put("iskall85", -5);
+        this.PLAYER_MOB_ADJUSTMENT.put("HBomb94", 10);
+        this.PLAYER_MOB_ADJUSTMENT.put("CaptainSparklez", -10);
     }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\config\PlayerScalingConfig.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

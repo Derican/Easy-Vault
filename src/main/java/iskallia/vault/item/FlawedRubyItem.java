@@ -1,8 +1,13 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.item;
 
 import iskallia.vault.config.FlawedRubyConfig;
 import iskallia.vault.init.ModAttributes;
 import iskallia.vault.init.ModConfigs;
+import iskallia.vault.item.gear.VaultGear;
 import iskallia.vault.skill.talent.TalentTree;
 import iskallia.vault.world.data.PlayerTalentsData;
 import net.minecraft.entity.player.PlayerEntity;
@@ -17,64 +22,64 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 
-public class FlawedRubyItem extends BasicTooltipItem {
-    public FlawedRubyItem(ResourceLocation id, Item.Properties properties, ITextComponent... components) {
+public class FlawedRubyItem extends BasicTooltipItem
+{
+    public FlawedRubyItem(final ResourceLocation id, final Item.Properties properties, final ITextComponent... components) {
         super(id, properties, components);
     }
-
-    public static void markApplied(ItemStack gearPiece) {
-        if (!(gearPiece.getItem() instanceof iskallia.vault.item.gear.VaultGear))
+    
+    public static void markApplied(final ItemStack gearPiece) {
+        if (!(gearPiece.getItem() instanceof VaultGear)) {
             return;
-        CompoundNBT nbt = gearPiece.getOrCreateTag();
+        }
+        final CompoundNBT nbt = gearPiece.getOrCreateTag();
         nbt.putBoolean("FlawedRubyApplied", true);
     }
-
-    public static void handleOutcome(ServerPlayerEntity player, ItemStack gearPiece) {
-        if (!(gearPiece.getItem() instanceof iskallia.vault.item.gear.VaultGear))
+    
+    public static void handleOutcome(final ServerPlayerEntity player, final ItemStack gearPiece) {
+        if (!(gearPiece.getItem() instanceof VaultGear)) {
             return;
+        }
         if (shouldHandleOutcome(gearPiece)) {
-            World world = player.getCommandSenderWorld();
-            if (!(world instanceof ServerWorld))
+            final World world = player.getCommandSenderWorld();
+            if (!(world instanceof ServerWorld)) {
                 return;
-            ServerWorld serverWorld = (ServerWorld) world;
-
+            }
+            final ServerWorld serverWorld = (ServerWorld)world;
             FlawedRubyConfig.Outcome outcome = FlawedRubyConfig.Outcome.FAIL;
-
-            TalentTree talents = PlayerTalentsData.get(serverWorld).getTalents((PlayerEntity) player);
+            final TalentTree talents = PlayerTalentsData.get(serverWorld).getTalents((PlayerEntity)player);
             if (talents.hasLearnedNode(ModConfigs.TALENTS.ARTISAN)) {
                 outcome = ModConfigs.FLAWED_RUBY.getForArtisan();
-            } else if (talents.hasLearnedNode(ModConfigs.TALENTS.TREASURE_HUNTER)) {
+            }
+            else if (talents.hasLearnedNode(ModConfigs.TALENTS.TREASURE_HUNTER)) {
                 outcome = ModConfigs.FLAWED_RUBY.getForTreasureHunter();
             }
-
             if (outcome == FlawedRubyConfig.Outcome.IMBUE) {
-                int max = ((Integer) ((IntegerAttribute) ModAttributes.GEAR_MAX_LEVEL.getOrDefault(gearPiece, Integer.valueOf(0))).getValue(gearPiece)).intValue();
-                ModAttributes.GEAR_MAX_LEVEL.create(gearPiece, Integer.valueOf(max + 1));
-                ModAttributes.IMBUED.create(gearPiece, Boolean.valueOf(true));
-            } else if (outcome == FlawedRubyConfig.Outcome.BREAK) {
+                final int max = ModAttributes.GEAR_MAX_LEVEL.getOrDefault(gearPiece, 0).getValue(gearPiece);
+                ModAttributes.GEAR_MAX_LEVEL.create(gearPiece, max + 1);
+                ModAttributes.IMBUED.create(gearPiece, true);
+            }
+            else if (outcome == FlawedRubyConfig.Outcome.BREAK) {
                 gearPiece.setCount(0);
-                player.getCommandSenderWorld().playSound(null, player.blockPosition(), SoundEvents.ITEM_BREAK, SoundCategory.PLAYERS, 1.0F, 1.0F);
+                player.getCommandSenderWorld().playSound((PlayerEntity)null, player.blockPosition(), SoundEvents.ITEM_BREAK, SoundCategory.PLAYERS, 1.0f, 1.0f);
             }
             resetApplied(gearPiece);
         }
     }
-
-    static void resetApplied(ItemStack gearPiece) {
-        if (!(gearPiece.getItem() instanceof iskallia.vault.item.gear.VaultGear))
+    
+    static void resetApplied(final ItemStack gearPiece) {
+        if (!(gearPiece.getItem() instanceof VaultGear)) {
             return;
-        CompoundNBT nbt = gearPiece.getOrCreateTag();
+        }
+        final CompoundNBT nbt = gearPiece.getOrCreateTag();
         nbt.putBoolean("FlawedRubyApplied", false);
     }
-
-    public static boolean shouldHandleOutcome(ItemStack gearPiece) {
-        if (!(gearPiece.getItem() instanceof iskallia.vault.item.gear.VaultGear)) return false;
-        CompoundNBT nbt = gearPiece.getOrCreateTag();
+    
+    public static boolean shouldHandleOutcome(final ItemStack gearPiece) {
+        if (!(gearPiece.getItem() instanceof VaultGear)) {
+            return false;
+        }
+        final CompoundNBT nbt = gearPiece.getOrCreateTag();
         return nbt.getBoolean("FlawedRubyApplied");
     }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\item\FlawedRubyItem.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

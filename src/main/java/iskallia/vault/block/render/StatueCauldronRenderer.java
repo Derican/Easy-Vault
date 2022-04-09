@@ -1,3 +1,7 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.block.render;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
@@ -17,68 +21,56 @@ import net.minecraft.state.Property;
 
 import java.awt.*;
 
-public class StatueCauldronRenderer extends TileEntityRenderer<StatueCauldronTileEntity> {
-    public StatueCauldronRenderer(TileEntityRendererDispatcher rendererDispatcherIn) {
+public class StatueCauldronRenderer extends TileEntityRenderer<StatueCauldronTileEntity>
+{
+    public StatueCauldronRenderer(final TileEntityRendererDispatcher rendererDispatcherIn) {
         super(rendererDispatcherIn);
     }
-
-
-    public void render(StatueCauldronTileEntity tileEntity, float partialTicks, MatrixStack matrixStackIn, IRenderTypeBuffer bufferIn, int combinedLightIn, int combinedOverlayIn) {
-        BlockState state = tileEntity.getBlockState();
-        int level = ((Integer) state.getValue((Property) StatueCauldronBlock.LEVEL)).intValue();
-        float percentage = tileEntity.getStatueCount() / tileEntity.getRequiredAmount();
-        int height = 14;
+    
+    public void render(final StatueCauldronTileEntity tileEntity, final float partialTicks, final MatrixStack matrixStackIn, final IRenderTypeBuffer bufferIn, final int combinedLightIn, final int combinedOverlayIn) {
+        final BlockState state = tileEntity.getBlockState();
+        final int level = (int)state.getValue(StatueCauldronBlock.LEVEL);
+        final float percentage = tileEntity.getStatueCount() / (float)tileEntity.getRequiredAmount();
+        final int height = 14;
         if (level < 3) {
             if (level == 1) {
-                renderLiquid(matrixStackIn, bufferIn, 0.0F, percentage, 1.0F - percentage, height - 5);
-            } else if (level == 2) {
-                renderLiquid(matrixStackIn, bufferIn, 0.0F, percentage, 1.0F - percentage, height - 2);
+                this.renderLiquid(matrixStackIn, bufferIn, 0.0f, percentage, 1.0f - percentage, height - 5);
             }
-        } else {
-            renderLiquid(matrixStackIn, bufferIn, 0.0F, percentage, 1.0F - percentage, height);
+            else if (level == 2) {
+                this.renderLiquid(matrixStackIn, bufferIn, 0.0f, percentage, 1.0f - percentage, height - 2);
+            }
         }
-
+        else {
+            this.renderLiquid(matrixStackIn, bufferIn, 0.0f, percentage, 1.0f - percentage, height);
+        }
     }
-
-    private void renderLiquid(MatrixStack matrixStack, IRenderTypeBuffer buffer, float r, float g, float b, int height) {
-        IVertexBuilder builder = buffer.getBuffer(RenderType.translucent());
-        TextureAtlasSprite sprite = Minecraft.getInstance().getTextureAtlas(PlayerContainer.BLOCK_ATLAS).apply(Fluids.WATER.getAttributes().getStillTexture());
-
+    
+    private void renderLiquid(final MatrixStack matrixStack, final IRenderTypeBuffer buffer, final float r, final float g, final float b, final int height) {
+        final IVertexBuilder builder = buffer.getBuffer(RenderType.translucent());
+        final TextureAtlasSprite sprite = Minecraft.getInstance().getTextureAtlas(PlayerContainer.BLOCK_ATLAS).apply(Fluids.WATER.getAttributes().getStillTexture());
         matrixStack.pushPose();
-        addVertex(builder, matrixStack, p2f(1), p2f(height), p2f(1), sprite.getU0(), sprite.getV0(), r, g, b, 1.0F);
-        addVertex(builder, matrixStack, p2f(1), p2f(height), p2f(15), sprite.getU1(), sprite.getV0(), r, g, b, 1.0F);
-        addVertex(builder, matrixStack, p2f(15), p2f(height), p2f(15), sprite.getU1(), sprite.getV1(), r, g, b, 1.0F);
-        addVertex(builder, matrixStack, p2f(15), p2f(height), p2f(1), sprite.getU0(), sprite.getV1(), r, g, b, 1.0F);
+        this.addVertex(builder, matrixStack, this.p2f(1), this.p2f(height), this.p2f(1), sprite.getU0(), sprite.getV0(), r, g, b, 1.0f);
+        this.addVertex(builder, matrixStack, this.p2f(1), this.p2f(height), this.p2f(15), sprite.getU1(), sprite.getV0(), r, g, b, 1.0f);
+        this.addVertex(builder, matrixStack, this.p2f(15), this.p2f(height), this.p2f(15), sprite.getU1(), sprite.getV1(), r, g, b, 1.0f);
+        this.addVertex(builder, matrixStack, this.p2f(15), this.p2f(height), this.p2f(1), sprite.getU0(), sprite.getV1(), r, g, b, 1.0f);
         matrixStack.popPose();
     }
-
-    private void addVertex(IVertexBuilder renderer, MatrixStack stack, float x, float y, float z, float u, float v, float r, float g, float b, float a) {
-        renderer.vertex(stack.last().pose(), x, y, z)
-                .color(r, g, b, 0.5F)
-                .uv(u, v)
-                .uv2(0, 240)
-                .normal(1.0F, 0.0F, 0.0F)
-                .endVertex();
+    
+    private void addVertex(final IVertexBuilder renderer, final MatrixStack stack, final float x, final float y, final float z, final float u, final float v, final float r, final float g, final float b, final float a) {
+        renderer.vertex(stack.last().pose(), x, y, z).color(r, g, b, 0.5f).uv(u, v).uv2(0, 240).normal(1.0f, 0.0f, 0.0f).endVertex();
     }
-
-    private float p2f(int pixel) {
-        return 0.0625F * pixel;
+    
+    private float p2f(final int pixel) {
+        return 0.0625f * pixel;
     }
-
-    public static Color getBlendedColor(float percentage) {
-        float green = ensureRange(percentage);
-        float blue = ensureRange(1.0F - percentage);
-
-        return new Color(0.0F, green, blue);
+    
+    public static Color getBlendedColor(final float percentage) {
+        final float green = ensureRange(percentage);
+        final float blue = ensureRange(1.0f - percentage);
+        return new Color(0.0f, green, blue);
     }
-
-    private static float ensureRange(float value) {
-        return Math.min(Math.max(value, 0.0F), 1.0F);
+    
+    private static float ensureRange(final float value) {
+        return Math.min(Math.max(value, 0.0f), 1.0f);
     }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\block\render\StatueCauldronRenderer.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

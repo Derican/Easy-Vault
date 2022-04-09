@@ -1,3 +1,7 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.util.gson;
 
 import com.google.gson.TypeAdapter;
@@ -7,73 +11,65 @@ import com.google.gson.stream.JsonWriter;
 
 import java.io.IOException;
 
-public class IgnoreEmpty {
-    public static class IntegerAdapter
-            extends TypeAdapter<Integer> {
-        public void write(JsonWriter out, Integer value) throws IOException {
-            if (value == null || value.intValue() == 0) {
+public class IgnoreEmpty
+{
+    public static class IntegerAdapter extends TypeAdapter<Integer>
+    {
+        public void write(final JsonWriter out, final Integer value) throws IOException {
+            if (value == null || value == 0) {
                 out.nullValue();
-            } else {
-                out.value(value);
+            }
+            else {
+                out.value((Number)value);
             }
         }
-
-
-        public Integer read(JsonReader in) throws IOException {
+        
+        public Integer read(final JsonReader in) throws IOException {
             if (in.peek() == JsonToken.NULL) {
                 in.nextNull();
-                return Integer.valueOf(0);
+                return 0;
             }
-
-            return Integer.valueOf(in.nextInt());
+            return in.nextInt();
         }
     }
-
-    public static class DoubleAdapter
-            extends TypeAdapter<Double> {
-        public void write(JsonWriter out, Double value) throws IOException {
-            if (value == null || value.doubleValue() == 0.0D) {
+    
+    public static class DoubleAdapter extends TypeAdapter<Double>
+    {
+        public void write(final JsonWriter out, final Double value) throws IOException {
+            if (value == null || value == 0.0) {
                 out.nullValue();
-            } else {
-                out.value(value);
+            }
+            else {
+                out.value((Number)value);
             }
         }
-
-
-        public Double read(JsonReader in) throws IOException {
+        
+        public Double read(final JsonReader in) throws IOException {
             if (in.peek() == JsonToken.NULL) {
                 in.nextNull();
-                return Double.valueOf(0.0D);
+                return 0.0;
             }
-
-            return Double.valueOf(in.nextDouble());
+            return in.nextDouble();
         }
     }
-
-    public static class StringAdapter
-            extends TypeAdapter<String> {
-        public void write(JsonWriter out, String value) throws IOException {
+    
+    public static class StringAdapter extends TypeAdapter<String>
+    {
+        public void write(final JsonWriter out, final String value) throws IOException {
             if (value == null || value.isEmpty()) {
                 out.nullValue();
-            } else {
+            }
+            else {
                 out.value(value);
             }
         }
-
-
-        public String read(JsonReader in) throws IOException {
+        
+        public String read(final JsonReader in) throws IOException {
             if (in.peek() == JsonToken.NULL) {
                 in.nextNull();
                 return "";
             }
-
             return in.nextString();
         }
     }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vaul\\util\gson\IgnoreEmpty.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

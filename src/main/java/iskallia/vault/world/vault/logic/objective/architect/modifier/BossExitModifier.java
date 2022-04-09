@@ -1,3 +1,7 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.world.vault.logic.objective.architect.modifier;
 
 import com.google.gson.annotations.Expose;
@@ -13,50 +17,44 @@ import net.minecraft.world.server.ServerWorld;
 import javax.annotation.Nullable;
 import java.util.Random;
 
-public class BossExitModifier extends VoteModifier {
+public class BossExitModifier extends VoteModifier
+{
     @Expose
     private final float portalChance;
-
-    public BossExitModifier(String name, String description, int voteLockDurationChangeSeconds, float portalChance) {
+    
+    public BossExitModifier(final String name, final String description, final int voteLockDurationChangeSeconds, final float portalChance) {
         super(name, description, voteLockDurationChangeSeconds);
         this.portalChance = portalChance;
     }
-
-    public boolean generatePortal(VaultRaid vault) {
-        return ((Boolean) vault.getProperties().getBase(VaultRaid.IDENTIFIER)
-                .map(id -> {
-                    Random r = new Random(id.getMostSignificantBits() ^ id.getLeastSignificantBits());
-                    return Boolean.valueOf((r.nextFloat() < this.portalChance));
-                }).orElse(Boolean.valueOf(false))).booleanValue();
+    
+    public boolean generatePortal(final VaultRaid vault) {
+        return vault.getProperties().getBase(VaultRaid.IDENTIFIER).map(id -> {
+            final Random r = new Random(id.getMostSignificantBits() ^ id.getLeastSignificantBits());
+            return r.nextFloat() < this.portalChance;
+        }).orElse(false);
     }
-
-
+    
     @Nullable
-    public JigsawPiece getSpecialRoom(ArchitectObjective objective, VaultRaid vault) {
-        if (generatePortal(vault)) {
+    @Override
+    public JigsawPiece getSpecialRoom(final ArchitectObjective objective, final VaultRaid vault) {
+        if (this.generatePortal(vault)) {
             return VaultJigsawHelper.getArchitectRoom();
         }
         return super.getSpecialRoom(objective, vault);
     }
-
-
+    
     @Nullable
-    public VaultPieceProcessor getPostProcessor(ArchitectObjective objective, VaultRaid vault) {
-        if (generatePortal(vault)) {
-            return (VaultPieceProcessor) new ExitPortalPieceProcessor(objective);
+    @Override
+    public VaultPieceProcessor getPostProcessor(final ArchitectObjective objective, final VaultRaid vault) {
+        if (this.generatePortal(vault)) {
+            return new ExitPortalPieceProcessor(objective);
         }
-        return (VaultPieceProcessor) new BossSpawnPieceProcessor(objective);
+        return new BossSpawnPieceProcessor(objective);
     }
-
-
-    public void onApply(ArchitectObjective objective, VaultRaid vault, ServerWorld world) {
+    
+    @Override
+    public void onApply(final ArchitectObjective objective, final VaultRaid vault, final ServerWorld world) {
         super.onApply(objective, vault, world);
         objective.setVotingLocked();
     }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\world\vault\logic\objective\architect\modifier\BossExitModifier.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

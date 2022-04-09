@@ -1,3 +1,7 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.loot;
 
 import com.google.gson.JsonObject;
@@ -16,40 +20,32 @@ import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LootModifierDestructive
-        extends LootModifier {
-    private LootModifierDestructive(ILootCondition[] conditionsIn) {
+public class LootModifierDestructive extends LootModifier
+{
+    private LootModifierDestructive(final ILootCondition[] conditionsIn) {
         super(conditionsIn);
     }
-
-
+    
     @Nonnull
-    protected List<ItemStack> doApply(List<ItemStack> generatedLoot, LootContext context) {
+    protected List<ItemStack> doApply(final List<ItemStack> generatedLoot, final LootContext context) {
         if (!LootUtils.doesContextFulfillSet(context, LootParameterSets.BLOCK)) {
             return generatedLoot;
         }
-        ItemStack tool = (ItemStack) context.getParamOrNull(LootParameters.TOOL);
+        final ItemStack tool = (ItemStack)context.getParamOrNull(LootParameters.TOOL);
         if (PaxelEnhancements.getEnhancement(tool) != PaxelEnhancements.DESTRUCTIVE) {
             return generatedLoot;
         }
-        return new ArrayList<>();
+        return new ArrayList<ItemStack>();
     }
-
-    public static class Serializer
-            extends GlobalLootModifierSerializer<LootModifierDestructive> {
-        public LootModifierDestructive read(ResourceLocation location, JsonObject object, ILootCondition[] lootConditions) {
+    
+    public static class Serializer extends GlobalLootModifierSerializer<LootModifierDestructive>
+    {
+        public LootModifierDestructive read(final ResourceLocation location, final JsonObject object, final ILootCondition[] lootConditions) {
             return new LootModifierDestructive(lootConditions);
         }
-
-
-        public JsonObject write(LootModifierDestructive instance) {
-            return makeConditions(instance.conditions);
+        
+        public JsonObject write(final LootModifierDestructive instance) {
+            return this.makeConditions(instance.conditions);
         }
     }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\loot\LootModifierDestructive.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

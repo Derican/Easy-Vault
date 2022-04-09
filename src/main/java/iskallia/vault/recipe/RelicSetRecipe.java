@@ -1,3 +1,7 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.recipe;
 
 import iskallia.vault.block.item.RelicStatueBlockItem;
@@ -16,63 +20,48 @@ import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 
-public class RelicSetRecipe
-        extends SpecialRecipe {
-    public RelicSetRecipe(ResourceLocation id) {
+public class RelicSetRecipe extends SpecialRecipe
+{
+    public RelicSetRecipe(final ResourceLocation id) {
         super(id);
     }
-
-
-    public boolean matches(CraftingInventory inv, World world) {
+    
+    public boolean matches(final CraftingInventory inv, final World world) {
         RelicSet set = null;
-        Set<RelicPartItem> parts = new HashSet<>();
-
-        for (int i = 0; i < inv.getContainerSize(); i++) {
-            ItemStack stack = inv.getItem(i);
-
+        final Set<RelicPartItem> parts = new HashSet<RelicPartItem>();
+        for (int i = 0; i < inv.getContainerSize(); ++i) {
+            final ItemStack stack = inv.getItem(i);
             if (stack.getItem() instanceof RelicPartItem) {
-                if (set != null && ((RelicPartItem) stack.getItem()).getRelicSet() != set) {
+                if (set != null && ((RelicPartItem)stack.getItem()).getRelicSet() != set) {
                     return false;
                 }
-
-                set = ((RelicPartItem) stack.getItem()).getRelicSet();
-                parts.add((RelicPartItem) stack.getItem());
-            } else if (!stack.isEmpty()) {
+                set = ((RelicPartItem)stack.getItem()).getRelicSet();
+                parts.add((RelicPartItem)stack.getItem());
+            }
+            else if (!stack.isEmpty()) {
                 return false;
             }
         }
-
-        return (set != null && parts.size() == set.getItemSet().size());
+        return set != null && parts.size() == set.getItemSet().size();
     }
-
-
-    public ItemStack assemble(CraftingInventory inv) {
-        for (int i = 0; i < inv.getContainerSize(); i++) {
-            ItemStack stack = inv.getItem(i);
-
+    
+    public ItemStack assemble(final CraftingInventory inv) {
+        for (int i = 0; i < inv.getContainerSize(); ++i) {
+            final ItemStack stack = inv.getItem(i);
             if (stack.getItem() instanceof RelicPartItem) {
-                RelicSet set = ((RelicPartItem) stack.getItem()).getRelicSet();
+                final RelicSet set = ((RelicPartItem)stack.getItem()).getRelicSet();
                 return RelicStatueBlockItem.withRelicSet(set);
             }
         }
-
         return ItemStack.EMPTY;
     }
-
-
-    public boolean canCraftInDimensions(int width, int height) {
-        Optional<RelicSet> min = RelicSet.getAll().stream().min(Comparator.comparingInt(o -> o.getItemSet().size()));
-        return (min.isPresent() && width * height >= ((RelicSet) min.get()).getItemSet().size());
+    
+    public boolean canCraftInDimensions(final int width, final int height) {
+        final Optional<RelicSet> min = RelicSet.getAll().stream().min(Comparator.comparingInt(o -> o.getItemSet().size()));
+        return min.isPresent() && width * height >= min.get().getItemSet().size();
     }
-
-
+    
     public IRecipeSerializer<?> getSerializer() {
-        return (IRecipeSerializer<?>) ModRecipes.Serializer.CRAFTING_SPECIAL_RELIC_SET;
+        return (IRecipeSerializer<?>)ModRecipes.Serializer.CRAFTING_SPECIAL_RELIC_SET;
     }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\recipe\RelicSetRecipe.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

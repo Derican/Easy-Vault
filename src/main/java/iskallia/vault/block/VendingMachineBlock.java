@@ -1,3 +1,7 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.block;
 
 import iskallia.vault.block.entity.VendingMachineTileEntity;
@@ -51,201 +55,174 @@ import net.minecraftforge.fml.network.NetworkHooks;
 
 import javax.annotation.Nullable;
 
-public class VendingMachineBlock extends Block {
-    public static final DirectionProperty FACING = HorizontalBlock.FACING;
-    public static final EnumProperty<DoubleBlockHalf> HALF = BlockStateProperties.DOUBLE_BLOCK_HALF;
-
+public class VendingMachineBlock extends Block
+{
+    public static final DirectionProperty FACING;
+    public static final EnumProperty<DoubleBlockHalf> HALF;
+    
     public VendingMachineBlock() {
-        this(AbstractBlock.Properties.of(Material.METAL, MaterialColor.METAL)
-                .strength(2.0F, 3600000.0F)
-                .sound(SoundType.METAL)
-                .noOcclusion());
+        this(AbstractBlock.Properties.of(Material.METAL, MaterialColor.METAL).strength(2.0f, 3600000.0f).sound(SoundType.METAL).noOcclusion());
     }
-
-
-    public VendingMachineBlock(AbstractBlock.Properties properties) {
+    
+    public VendingMachineBlock(final AbstractBlock.Properties properties) {
         super(properties);
-
-        registerDefaultState((BlockState) ((BlockState) ((BlockState) this.stateDefinition.any())
-                .setValue((Property) FACING, (Comparable) Direction.NORTH))
-                .setValue((Property) HALF, (Comparable) DoubleBlockHalf.LOWER));
+        this.registerDefaultState(((this.stateDefinition.any()).setValue(VendingMachineBlock.FACING, Direction.NORTH)).setValue(VendingMachineBlock.HALF, DoubleBlockHalf.LOWER));
     }
-
-
-    public boolean hasTileEntity(BlockState state) {
-        if (state.getValue((Property) HALF) == DoubleBlockHalf.LOWER) {
-            return true;
-        }
-        return false;
+    
+    public boolean hasTileEntity(final BlockState state) {
+        return state.getValue(VendingMachineBlock.HALF) == DoubleBlockHalf.LOWER;
     }
-
-
-    public TileEntity createTileEntity(BlockState state, IBlockReader world) {
-        if (state.getValue((Property) HALF) == DoubleBlockHalf.LOWER) {
+    
+    public TileEntity createTileEntity(final BlockState state, final IBlockReader world) {
+        if (state.getValue(VendingMachineBlock.HALF) == DoubleBlockHalf.LOWER) {
             return ModBlocks.VENDING_MACHINE_TILE_ENTITY.create();
         }
         return null;
     }
-
-
+    
     @Nullable
-    public BlockState getStateForPlacement(BlockItemUseContext context) {
-        BlockPos pos = context.getClickedPos();
-        World world = context.getLevel();
+    public BlockState getStateForPlacement(final BlockItemUseContext context) {
+        final BlockPos pos = context.getClickedPos();
+        final World world = context.getLevel();
         if (pos.getY() < 255 && world.getBlockState(pos.above()).canBeReplaced(context)) {
-            return (BlockState) ((BlockState) defaultBlockState().setValue((Property) FACING, (Comparable) context.getHorizontalDirection())).setValue((Property) HALF, (Comparable) DoubleBlockHalf.LOWER);
+            return (this.defaultBlockState().setValue(VendingMachineBlock.FACING, context.getHorizontalDirection())).setValue(VendingMachineBlock.HALF, DoubleBlockHalf.LOWER);
         }
         return null;
     }
-
-
-    protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) {
-        builder.add(new Property[]{(Property) HALF});
-        builder.add(new Property[]{(Property) FACING});
+    
+    protected void createBlockStateDefinition(final StateContainer.Builder<Block, BlockState> builder) {
+        builder.add(new Property[] { VendingMachineBlock.HALF });
+        builder.add(new Property[] { VendingMachineBlock.FACING });
     }
-
-
-    public void playerWillDestroy(World worldIn, BlockPos pos, BlockState state, PlayerEntity player) {
+    
+    public void playerWillDestroy(final World worldIn, final BlockPos pos, final BlockState state, final PlayerEntity player) {
         if (!worldIn.isClientSide && player.isCreative()) {
-            DoubleBlockHalf half = (DoubleBlockHalf) state.getValue((Property) HALF);
+            final DoubleBlockHalf half = (DoubleBlockHalf)state.getValue(VendingMachineBlock.HALF);
             if (half == DoubleBlockHalf.UPPER) {
-                BlockPos blockpos = pos.below();
-                BlockState blockstate = worldIn.getBlockState(blockpos);
-                if (blockstate.getBlock() == state.getBlock() && blockstate.getValue((Property) HALF) == DoubleBlockHalf.LOWER) {
+                final BlockPos blockpos = pos.below();
+                final BlockState blockstate = worldIn.getBlockState(blockpos);
+                if (blockstate.getBlock() == state.getBlock() && blockstate.getValue(VendingMachineBlock.HALF) == DoubleBlockHalf.LOWER) {
                     worldIn.setBlock(blockpos, Blocks.AIR.defaultBlockState(), 35);
                     worldIn.levelEvent(player, 2001, blockpos, Block.getId(blockstate));
                 }
             }
         }
-
         super.playerWillDestroy(worldIn, pos, state, player);
     }
-
-
-    public BlockState updateShape(BlockState stateIn, Direction facing, BlockState facingState, IWorld worldIn, BlockPos currentPos, BlockPos facingPos) {
-        DoubleBlockHalf half = (DoubleBlockHalf) stateIn.getValue((Property) HALF);
-        if (facing.getAxis() == Direction.Axis.Y)
-            if (((half == DoubleBlockHalf.LOWER) ? true : false) == ((facing == Direction.UP) ? true : false)) {
-                return (facingState.is(this) && facingState.getValue((Property) HALF) != half) ? (BlockState) stateIn.setValue((Property) FACING, facingState.getValue((Property) FACING)) : Blocks.AIR.defaultBlockState();
-            }
-        return (half == DoubleBlockHalf.LOWER && facing == Direction.DOWN && !stateIn.canSurvive((IWorldReader) worldIn, currentPos)) ? Blocks.AIR.defaultBlockState() : super.updateShape(stateIn, facing, facingState, worldIn, currentPos, facingPos);
-    }
-
-
-    public void setPlacedBy(World worldIn, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack) {
-        worldIn.setBlock(pos.above(), (BlockState) state.setValue((Property) HALF, (Comparable) DoubleBlockHalf.UPPER), 3);
-    }
-
-
-    public void onRemove(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
-        if (worldIn.isClientSide)
-            return;
-        if (!newState.isAir())
-            return;
-        VendingMachineTileEntity machine = (VendingMachineTileEntity) getBlockTileEntity(worldIn, pos, state);
-        if (machine == null)
-            return;
-        if (state.getValue((Property) HALF) == DoubleBlockHalf.LOWER) {
-            ItemStack stack = new ItemStack((IItemProvider) getBlock());
-            CompoundNBT machineNBT = machine.serializeNBT();
-            CompoundNBT stackNBT = new CompoundNBT();
-            stackNBT.put("BlockEntityTag", (INBT) machineNBT);
-
-            stack.setTag(stackNBT);
-            dropVendingMachine(stack, worldIn, pos);
+    
+    public BlockState updateShape(final BlockState stateIn, final Direction facing, final BlockState facingState, final IWorld worldIn, final BlockPos currentPos, final BlockPos facingPos) {
+        final DoubleBlockHalf half = (DoubleBlockHalf)stateIn.getValue(VendingMachineBlock.HALF);
+        if (facing.getAxis() == Direction.Axis.Y && half == DoubleBlockHalf.LOWER == (facing == Direction.UP)) {
+            return ((facingState.is((Block)this) && facingState.getValue(VendingMachineBlock.HALF) != half) ? stateIn.setValue(VendingMachineBlock.FACING, facingState.getValue(VendingMachineBlock.FACING)) : Blocks.AIR.defaultBlockState());
         }
-
+        return (half == DoubleBlockHalf.LOWER && facing == Direction.DOWN && !stateIn.canSurvive((IWorldReader)worldIn, currentPos)) ? Blocks.AIR.defaultBlockState() : super.updateShape(stateIn, facing, facingState, worldIn, currentPos, facingPos);
+    }
+    
+    public void setPlacedBy(final World worldIn, final BlockPos pos, final BlockState state, @Nullable final LivingEntity placer, final ItemStack stack) {
+        worldIn.setBlock(pos.above(), state.setValue(VendingMachineBlock.HALF, DoubleBlockHalf.UPPER), 3);
+    }
+    
+    public void onRemove(final BlockState state, final World worldIn, final BlockPos pos, final BlockState newState, final boolean isMoving) {
+        if (worldIn.isClientSide) {
+            return;
+        }
+        if (!newState.isAir()) {
+            return;
+        }
+        final VendingMachineTileEntity machine = (VendingMachineTileEntity)getBlockTileEntity(worldIn, pos, state);
+        if (machine == null) {
+            return;
+        }
+        if (state.getValue(VendingMachineBlock.HALF) == DoubleBlockHalf.LOWER) {
+            final ItemStack stack = new ItemStack((IItemProvider)this.getBlock());
+            final CompoundNBT machineNBT = machine.serializeNBT();
+            final CompoundNBT stackNBT = new CompoundNBT();
+            stackNBT.put("BlockEntityTag", (INBT)machineNBT);
+            stack.setTag(stackNBT);
+            this.dropVendingMachine(stack, worldIn, pos);
+        }
         super.onRemove(state, worldIn, pos, newState, isMoving);
     }
-
-    private void dropVendingMachine(ItemStack stack, World world, BlockPos pos) {
-        ItemEntity entity = new ItemEntity(world, pos.getX(), pos.getY(), pos.getZ(), stack);
-        world.addFreshEntity((Entity) entity);
+    
+    private void dropVendingMachine(final ItemStack stack, final World world, final BlockPos pos) {
+        final ItemEntity entity = new ItemEntity(world, (double)pos.getX(), (double)pos.getY(), (double)pos.getZ(), stack);
+        world.addFreshEntity((Entity)entity);
     }
-
-
-    public ActionResultType use(BlockState state, final World world, final BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
-        ItemStack heldStack = player.getItemInHand(hand);
-
-        VendingMachineTileEntity machine = (VendingMachineTileEntity) getBlockTileEntity(world, pos, state);
-        if (machine == null) return ActionResultType.SUCCESS;
-
+    
+    public ActionResultType use(final BlockState state, final World world, final BlockPos pos, final PlayerEntity player, final Hand hand, final BlockRayTraceResult hit) {
+        final ItemStack heldStack = player.getItemInHand(hand);
+        final VendingMachineTileEntity machine = (VendingMachineTileEntity)getBlockTileEntity(world, pos, state);
+        if (machine == null) {
+            return ActionResultType.SUCCESS;
+        }
         if (!world.isClientSide() && player.isShiftKeyDown()) {
-            ItemStack core = machine.getTraderCoreStack();
+            final ItemStack core = machine.getTraderCoreStack();
             if (!player.addItem(core)) {
                 player.drop(core, false);
             }
             machine.sendUpdates();
             return ActionResultType.SUCCESS;
         }
-
         if (heldStack.getItem() instanceof ItemTraderCore) {
-            TraderCore lastCore = machine.getLastCore();
-            TraderCore coreToInsert = ItemTraderCore.getCoreFromStack(heldStack);
-            if (coreToInsert == null || coreToInsert.getTrade() == null) return ActionResultType.FAIL;
+            final TraderCore lastCore = machine.getLastCore();
+            final TraderCore coreToInsert = ItemTraderCore.getCoreFromStack(heldStack);
+            if (coreToInsert == null || coreToInsert.getTrade() == null) {
+                return ActionResultType.FAIL;
+            }
             if (lastCore == null || lastCore.getName().equalsIgnoreCase(coreToInsert.getName())) {
                 machine.addCore(coreToInsert);
                 heldStack.shrink(1);
-            } else {
-                StringTextComponent text = new StringTextComponent("This vending machine is already occupied.");
+            }
+            else {
+                final StringTextComponent text = new StringTextComponent("This vending machine is already occupied.");
                 text.setStyle(Style.EMPTY.withColor(Color.fromRgb(-10240)));
-                player.displayClientMessage((ITextComponent) text, true);
+                player.displayClientMessage((ITextComponent)text, true);
             }
-
             return ActionResultType.SUCCESS;
         }
-
-        if (world.isClientSide) {
-            playOpenSound();
+        else {
+            if (world.isClientSide) {
+                playOpenSound();
+                return ActionResultType.SUCCESS;
+            }
+            NetworkHooks.openGui((ServerPlayerEntity)player, (INamedContainerProvider)new INamedContainerProvider() {
+                public ITextComponent getDisplayName() {
+                    return (ITextComponent)new StringTextComponent("Vending Machine");
+                }
+                
+                @Nullable
+                public Container createMenu(final int windowId, final PlayerInventory playerInventory, final PlayerEntity playerEntity) {
+                    final BlockState blockState = world.getBlockState(pos);
+                    final BlockPos vendingMachinePos = VendingMachineBlock.getTileEntityPos(blockState, pos);
+                    return new VendingMachineContainer(windowId, world, vendingMachinePos, playerInventory, playerEntity);
+                }
+            }, buffer -> {
+                final BlockState blockState = world.getBlockState(pos);
+                buffer.writeBlockPos(getTileEntityPos(blockState, pos));
+                return;
+            });
             return ActionResultType.SUCCESS;
         }
-
-        NetworkHooks.openGui((ServerPlayerEntity) player, new INamedContainerProvider() {
-
-            public ITextComponent getDisplayName() {
-                return (ITextComponent) new StringTextComponent("Vending Machine");
-            }
-
-
-            @Nullable
-            public Container createMenu(int windowId, PlayerInventory playerInventory, PlayerEntity playerEntity) {
-                BlockState blockState = world.getBlockState(pos);
-                BlockPos vendingMachinePos = VendingMachineBlock.getTileEntityPos(blockState, pos);
-                return (Container) new VendingMachineContainer(windowId, world, vendingMachinePos, playerInventory, playerEntity);
-            }
-        },buffer -> {
-            BlockState blockState = world.getBlockState(pos);
-
-
-            buffer.writeBlockPos(getTileEntityPos(blockState, pos));
-        });
-
-        return ActionResultType.SUCCESS;
     }
-
+    
     @OnlyIn(Dist.CLIENT)
     public static void playOpenSound() {
-        Minecraft minecraft = Minecraft.getInstance();
-        minecraft.getSoundManager().play((ISound) SimpleSound.forUI(ModSounds.VENDING_MACHINE_SFX, 1.0F, 0.3F));
+        final Minecraft minecraft = Minecraft.getInstance();
+        minecraft.getSoundManager().play((ISound)SimpleSound.forUI(ModSounds.VENDING_MACHINE_SFX, 1.0f, 0.3f));
     }
-
-
-    public static BlockPos getTileEntityPos(BlockState state, BlockPos pos) {
-        return (state.getValue((Property) HALF) == DoubleBlockHalf.UPPER) ? pos
-                .below() : pos;
+    
+    public static BlockPos getTileEntityPos(final BlockState state, final BlockPos pos) {
+        return (state.getValue(VendingMachineBlock.HALF) == DoubleBlockHalf.UPPER) ? pos.below() : pos;
     }
-
-    public static TileEntity getBlockTileEntity(World world, BlockPos pos, BlockState state) {
-        BlockPos vendingMachinePos = getTileEntityPos(state, pos);
-
-        TileEntity tileEntity = world.getBlockEntity(vendingMachinePos);
-
+    
+    public static TileEntity getBlockTileEntity(final World world, final BlockPos pos, final BlockState state) {
+        final BlockPos vendingMachinePos = getTileEntityPos(state, pos);
+        final TileEntity tileEntity = world.getBlockEntity(vendingMachinePos);
         return tileEntity;
     }
+    
+    static {
+        FACING = HorizontalBlock.FACING;
+        HALF = BlockStateProperties.DOUBLE_BLOCK_HALF;
+    }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\block\VendingMachineBlock.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

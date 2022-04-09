@@ -1,3 +1,7 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.config;
 
 import com.google.gson.annotations.Expose;
@@ -7,36 +11,31 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.item.Item;
 import net.minecraft.item.Items;
 import net.minecraft.item.SpawnEggItem;
+import net.minecraft.nbt.CompoundNBT;
 
 import java.util.stream.StreamSupport;
 
-public class MysteryHostileEggConfig
-        extends Config {
+public class MysteryHostileEggConfig extends Config
+{
     @Expose
-    public WeightedList<ProductEntry> POOL = new WeightedList();
-
-
+    public WeightedList<ProductEntry> POOL;
+    
+    public MysteryHostileEggConfig() {
+        this.POOL = new WeightedList<ProductEntry>();
+    }
+    
+    @Override
     public String getName() {
         return "mystery_hostile_egg";
     }
-
-
+    
+    @Override
     protected void reset() {
-        this.POOL.add(new ProductEntry(getEgg(EntityType.ZOMBIE)), 3);
-        this.POOL.add(new ProductEntry(getEgg(EntityType.SKELETON)), 1);
+        this.POOL.add(new ProductEntry(this.getEgg((EntityType<?>)EntityType.ZOMBIE)), 3);
+        this.POOL.add(new ProductEntry(this.getEgg((EntityType<?>)EntityType.SKELETON)), 1);
     }
-
-    private Item getEgg(EntityType<?> type) {
-        return StreamSupport.stream(SpawnEggItem.eggs().spliterator(), false)
-                .filter(eggItem -> type.equals(eggItem.getType(null)))
-                .findAny()
-                .map(eggItem -> eggItem)
-                .orElse((SpawnEggItem) Items.AIR);
+    
+    private Item getEgg(final EntityType<?> type) {
+        return StreamSupport.stream(SpawnEggItem.eggs().spliterator(), false).filter(eggItem -> type.equals(eggItem.getType((CompoundNBT)null))).findAny().map(eggItem -> eggItem).orElse((SpawnEggItem) Items.AIR);
     }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\config\MysteryHostileEggConfig.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

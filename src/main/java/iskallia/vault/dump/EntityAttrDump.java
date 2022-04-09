@@ -1,3 +1,7 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.dump;
 
 import com.google.gson.JsonArray;
@@ -16,62 +20,51 @@ import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Map;
 
-
-public class EntityAttrDump
-        extends JsonDump {
+public class EntityAttrDump extends JsonDump
+{
+    @Override
     public String fileName() {
         return "entity_attr.json";
     }
-
-
+    
+    @Override
     public JsonObject dumpToJSON() {
-        JsonObject root = new JsonObject();
-
+        final JsonObject root = new JsonObject();
         ForgeRegistries.ENTITIES.getValues().forEach(entity -> {
             try {
-                baseAttrsFor((EntityType<? extends LivingEntity>) entity, root);
-            } catch (Throwable throwable) {
+                this.baseAttrsFor((net.minecraft.entity.EntityType<LivingEntity>)entity, root);
             }
+            catch (final Throwable t2) {}
+            return;
         });
-
-
         return root;
     }
-
-    private <T extends LivingEntity> void baseAttrsFor(EntityType<T> entityType, JsonObject root) {
-        JsonArray attributesJson = new JsonArray();
-
-        ResourceLocation entityId = entityType.getRegistryName();
-
-        getAttributes(entityType).forEach((attr, attrInstance) -> {
-            JsonObject jsonEntry = new JsonObject();
-
+    
+    private <T extends LivingEntity> void baseAttrsFor(final EntityType<T> entityType, final JsonObject root) {
+        final JsonArray attributesJson = new JsonArray();
+        final ResourceLocation entityId = entityType.getRegistryName();
+        this.getAttributes(entityType).forEach((attr, attrInstance) -> {
+            final JsonObject jsonEntry = new JsonObject();
             jsonEntry.addProperty("attributeId", attr.getRegistryName().toString());
-            jsonEntry.addProperty("value", Double.valueOf(attrInstance.getValue()));
-            attributesJson.add((JsonElement) jsonEntry);
+            jsonEntry.addProperty("value", (Number)attrInstance.getValue());
+            attributesJson.add((JsonElement)jsonEntry);
+            return;
         });
         if (entityId == null) {
             throw new InternalError();
         }
-
-        root.add(entityId.toString(), (JsonElement) attributesJson);
+        root.add(entityId.toString(), (JsonElement)attributesJson);
     }
-
-
-    private <T extends LivingEntity> Map<Attribute, ModifiableAttributeInstance> getAttributes(EntityType<T> entityType) {
+    
+    private <T extends LivingEntity> Map<Attribute, ModifiableAttributeInstance> getAttributes(final EntityType<T> entityType) {
         try {
-            AttributeModifierMap attributes = GlobalEntityTypeAttributes.getSupplier(entityType);
-            Field attributeMapField = AttributeModifierMap.class.getDeclaredField("attributeMap");
+            final AttributeModifierMap attributes = GlobalEntityTypeAttributes.getSupplier((EntityType)entityType);
+            final Field attributeMapField = AttributeModifierMap.class.getDeclaredField("attributeMap");
             attributeMapField.setAccessible(true);
-            return (Map<Attribute, ModifiableAttributeInstance>) attributeMapField.get(attributes);
-        } catch (IllegalAccessException | NoSuchFieldException e) {
-            return new HashMap<>();
+            return (Map)attributeMapField.get(attributes);
+        }
+        catch (final IllegalAccessException | NoSuchFieldException e) {
+            return new HashMap<Attribute, ModifiableAttributeInstance>();
         }
     }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\dump\EntityAttrDump.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

@@ -1,3 +1,7 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.world.vault.gen.layout;
 
 import iskallia.vault.Vault;
@@ -10,45 +14,42 @@ import net.minecraft.world.gen.feature.jigsaw.JigsawPiece;
 
 import java.util.Random;
 
-public class DebugVaultLayout
-        extends VaultRoomLayoutGenerator {
-    public static final ResourceLocation ID = Vault.id("debug");
-
+public class DebugVaultLayout extends VaultRoomLayoutGenerator
+{
+    public static final ResourceLocation ID;
+    
     public DebugVaultLayout() {
-        super(ID);
+        super(DebugVaultLayout.ID);
     }
-
-
-    public void setSize(int size) {
+    
+    @Override
+    public void setSize(final int size) {
     }
-
-
-    public VaultRoomLayoutGenerator.Layout generateLayout() {
-        VaultRoomLayoutGenerator.Layout layout = new VaultRoomLayoutGenerator.Layout();
-
+    
+    @Override
+    public Layout generateLayout() {
+        final Layout layout = new Layout();
         int xx = 0;
-        VaultRoomLayoutGenerator.Room previousRoom = null;
-        for (WeightedList.Entry<JigsawPiece> weightedEntry : (Iterable<WeightedList.Entry<JigsawPiece>>) VaultJigsawHelper.getVaultRoomList(2147483647)) {
-            final JigsawPiece piece = (JigsawPiece) weightedEntry.value;
-            VaultRoomLayoutGenerator.Room room = new VaultRoomLayoutGenerator.Room(new Vector3i(xx, 0, 0)) {
-                public JigsawPiece getRandomPiece(JigsawPattern pattern, Random random) {
+        Room previousRoom = null;
+        for (final WeightedList.Entry<JigsawPiece> weightedEntry : VaultJigsawHelper.getVaultRoomList(Integer.MAX_VALUE)) {
+            final JigsawPiece piece = weightedEntry.value;
+            final Room room = new Room(new Vector3i(xx, 0, 0)) {
+                @Override
+                public JigsawPiece getRandomPiece(final JigsawPattern pattern, final Random random) {
                     return piece;
                 }
             };
-            xx++;
-
+            ++xx;
             layout.putRoom(room);
             if (previousRoom != null) {
-                layout.addTunnel(new VaultRoomLayoutGenerator.Tunnel(previousRoom, room));
+                layout.addTunnel(new Tunnel(previousRoom, room));
             }
             previousRoom = room;
         }
         return layout;
     }
+    
+    static {
+        ID = Vault.id("debug");
+    }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\world\vault\gen\layout\DebugVaultLayout.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

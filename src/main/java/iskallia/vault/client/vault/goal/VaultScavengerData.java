@@ -1,3 +1,7 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.client.vault.goal;
 
 import iskallia.vault.client.gui.overlay.goal.BossBarOverlay;
@@ -11,33 +15,30 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-
-public class VaultScavengerData
-        extends VaultGoalData {
-    private final List<ScavengerHuntObjective.ItemSubmission> itemSubmissions = new ArrayList<>();
-
+public class VaultScavengerData extends VaultGoalData
+{
+    private final List<ScavengerHuntObjective.ItemSubmission> itemSubmissions;
+    
+    public VaultScavengerData() {
+        this.itemSubmissions = new ArrayList<ScavengerHuntObjective.ItemSubmission>();
+    }
+    
     public List<ScavengerHuntObjective.ItemSubmission> getRequiredItemSubmissions() {
-        return Collections.unmodifiableList(this.itemSubmissions);
+        return Collections.unmodifiableList((List<? extends ScavengerHuntObjective.ItemSubmission>)this.itemSubmissions);
     }
-
-
+    
     @Nullable
+    @Override
     public BossBarOverlay getBossBarOverlay() {
-        return (BossBarOverlay) new ScavengerBarOverlay(this);
+        return new ScavengerBarOverlay(this);
     }
-
-
-    public void receive(VaultGoalMessage pkt) {
+    
+    @Override
+    public void receive(final VaultGoalMessage pkt) {
         this.itemSubmissions.clear();
-
-        ListNBT itemList = pkt.payload.getList("scavengerItems", 10);
-        for (int i = 0; i < itemList.size(); i++)
+        final ListNBT itemList = pkt.payload.getList("scavengerItems", 10);
+        for (int i = 0; i < itemList.size(); ++i) {
             this.itemSubmissions.add(ScavengerHuntObjective.ItemSubmission.deserialize(itemList.getCompound(i)));
+        }
     }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\client\vault\goal\VaultScavengerData.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

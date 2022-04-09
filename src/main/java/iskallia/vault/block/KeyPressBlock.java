@@ -1,3 +1,7 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.block;
 
 import iskallia.vault.container.KeyPressContainer;
@@ -34,90 +38,92 @@ import net.minecraftforge.fml.network.NetworkHooks;
 
 import javax.annotation.Nullable;
 
-public class KeyPressBlock extends FallingBlock {
-    public static final DirectionProperty FACING = HorizontalBlock.FACING;
-    private static final VoxelShape PART_BASE = Block.box(2.0D, 0.0D, 2.0D, 14.0D, 4.0D, 14.0D);
-    private static final VoxelShape PART_LOWER_X = Block.box(3.0D, 4.0D, 4.0D, 13.0D, 5.0D, 12.0D);
-    private static final VoxelShape PART_MID_X = Block.box(4.0D, 5.0D, 6.0D, 12.0D, 10.0D, 10.0D);
-    private static final VoxelShape PART_UPPER_X = Block.box(0.0D, 10.0D, 3.0D, 16.0D, 16.0D, 13.0D);
-    private static final VoxelShape PART_LOWER_Z = Block.box(4.0D, 4.0D, 3.0D, 12.0D, 5.0D, 13.0D);
-    private static final VoxelShape PART_MID_Z = Block.box(6.0D, 5.0D, 4.0D, 10.0D, 10.0D, 12.0D);
-    private static final VoxelShape PART_UPPER_Z = Block.box(3.0D, 10.0D, 0.0D, 13.0D, 16.0D, 16.0D);
-    private static final VoxelShape X_AXIS_AABB = VoxelShapes.or(PART_BASE, new VoxelShape[]{PART_LOWER_X, PART_MID_X, PART_UPPER_X});
-    private static final VoxelShape Z_AXIS_AABB = VoxelShapes.or(PART_BASE, new VoxelShape[]{PART_LOWER_Z, PART_MID_Z, PART_UPPER_Z});
-
+public class KeyPressBlock extends FallingBlock
+{
+    public static final DirectionProperty FACING;
+    private static final VoxelShape PART_BASE;
+    private static final VoxelShape PART_LOWER_X;
+    private static final VoxelShape PART_MID_X;
+    private static final VoxelShape PART_UPPER_X;
+    private static final VoxelShape PART_LOWER_Z;
+    private static final VoxelShape PART_MID_Z;
+    private static final VoxelShape PART_UPPER_Z;
+    private static final VoxelShape X_AXIS_AABB;
+    private static final VoxelShape Z_AXIS_AABB;
+    
     public KeyPressBlock() {
-        super(AbstractBlock.Properties.of(Material.HEAVY_METAL, MaterialColor.METAL)
-                .sound(SoundType.ANVIL)
-                .strength(2.0F, 3600000.0F));
+        super(AbstractBlock.Properties.of(Material.HEAVY_METAL, MaterialColor.METAL).sound(SoundType.ANVIL).strength(2.0f, 3600000.0f));
     }
-
-    public BlockState getStateForPlacement(BlockItemUseContext context) {
-        return (BlockState) defaultBlockState().setValue((Property) FACING, (Comparable) context.getHorizontalDirection().getClockWise());
+    
+    public BlockState getStateForPlacement(final BlockItemUseContext context) {
+        return this.defaultBlockState().setValue(KeyPressBlock.FACING, context.getHorizontalDirection().getClockWise());
     }
-
-    public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
-        Direction direction = (Direction) state.getValue((Property) FACING);
-        return (direction.getAxis() == Direction.Axis.X) ? X_AXIS_AABB : Z_AXIS_AABB;
+    
+    public VoxelShape getShape(final BlockState state, final IBlockReader worldIn, final BlockPos pos, final ISelectionContext context) {
+        final Direction direction = state.getValue(KeyPressBlock.FACING);
+        return (direction.getAxis() == Direction.Axis.X) ? KeyPressBlock.X_AXIS_AABB : KeyPressBlock.Z_AXIS_AABB;
     }
-
-
-    public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
-        if (world.isClientSide) return ActionResultType.SUCCESS;
-
-        NetworkHooks.openGui((ServerPlayerEntity) player, new INamedContainerProvider() {
-
+    
+    public ActionResultType use(final BlockState state, final World world, final BlockPos pos, final PlayerEntity player, final Hand handIn, final BlockRayTraceResult hit) {
+        if (world.isClientSide) {
+            return ActionResultType.SUCCESS;
+        }
+        NetworkHooks.openGui((ServerPlayerEntity)player, (INamedContainerProvider)new INamedContainerProvider() {
             public ITextComponent getDisplayName() {
-                return (ITextComponent) new StringTextComponent("Key Press");
+                return (ITextComponent)new StringTextComponent("Key Press");
             }
-
-
+            
             @Nullable
-            public Container createMenu(int windowId, PlayerInventory inventory, PlayerEntity player) {
-                return (Container) new KeyPressContainer(windowId, player);
+            public Container createMenu(final int windowId, final PlayerInventory inventory, final PlayerEntity player) {
+                return new KeyPressContainer(windowId, player);
             }
         });
-
-
         return ActionResultType.SUCCESS;
     }
-
-    protected void falling(FallingBlockEntity fallingEntity) {
+    
+    protected void falling(final FallingBlockEntity fallingEntity) {
         fallingEntity.setHurtsEntities(true);
     }
-
-    public void onLand(World worldIn, BlockPos pos, BlockState fallingState, BlockState hitState, FallingBlockEntity fallingBlock) {
+    
+    public void onLand(final World worldIn, final BlockPos pos, final BlockState fallingState, final BlockState hitState, final FallingBlockEntity fallingBlock) {
         if (!fallingBlock.isSilent()) {
             worldIn.levelEvent(1031, pos, 0);
         }
     }
-
-    public void onBroken(World worldIn, BlockPos pos, FallingBlockEntity fallingBlock) {
+    
+    public void onBroken(final World worldIn, final BlockPos pos, final FallingBlockEntity fallingBlock) {
         if (!fallingBlock.isSilent()) {
             worldIn.levelEvent(1029, pos, 0);
         }
     }
-
-    public BlockState rotate(BlockState state, Rotation rot) {
-        return (BlockState) state.setValue((Property) FACING, (Comparable) rot.rotate((Direction) state.getValue((Property) FACING)));
+    
+    public BlockState rotate(final BlockState state, final Rotation rot) {
+        return state.setValue(KeyPressBlock.FACING, rot.rotate(state.getValue(KeyPressBlock.FACING)));
     }
-
-    protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) {
-        builder.add(new Property[]{(Property) FACING});
+    
+    protected void createBlockStateDefinition(final StateContainer.Builder<Block, BlockState> builder) {
+        builder.add(new Property[] { KeyPressBlock.FACING });
     }
-
-    public boolean isPathfindable(BlockState state, IBlockReader worldIn, BlockPos pos, PathType type) {
+    
+    public boolean isPathfindable(final BlockState state, final IBlockReader worldIn, final BlockPos pos, final PathType type) {
         return false;
     }
-
+    
     @OnlyIn(Dist.CLIENT)
-    public int getDustColor(BlockState state, IBlockReader reader, BlockPos pos) {
-        return (state.getMapColor(reader, pos)).col;
+    public int getDustColor(final BlockState state, final IBlockReader reader, final BlockPos pos) {
+        return state.getMapColor(reader, pos).col;
+    }
+    
+    static {
+        FACING = HorizontalBlock.FACING;
+        PART_BASE = Block.box(2.0, 0.0, 2.0, 14.0, 4.0, 14.0);
+        PART_LOWER_X = Block.box(3.0, 4.0, 4.0, 13.0, 5.0, 12.0);
+        PART_MID_X = Block.box(4.0, 5.0, 6.0, 12.0, 10.0, 10.0);
+        PART_UPPER_X = Block.box(0.0, 10.0, 3.0, 16.0, 16.0, 13.0);
+        PART_LOWER_Z = Block.box(4.0, 4.0, 3.0, 12.0, 5.0, 13.0);
+        PART_MID_Z = Block.box(6.0, 5.0, 4.0, 10.0, 10.0, 12.0);
+        PART_UPPER_Z = Block.box(3.0, 10.0, 0.0, 13.0, 16.0, 16.0);
+        X_AXIS_AABB = VoxelShapes.or(KeyPressBlock.PART_BASE, new VoxelShape[] { KeyPressBlock.PART_LOWER_X, KeyPressBlock.PART_MID_X, KeyPressBlock.PART_UPPER_X });
+        Z_AXIS_AABB = VoxelShapes.or(KeyPressBlock.PART_BASE, new VoxelShape[] { KeyPressBlock.PART_LOWER_Z, KeyPressBlock.PART_MID_Z, KeyPressBlock.PART_UPPER_Z });
     }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\block\KeyPressBlock.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

@@ -1,3 +1,7 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.util.scheduler;
 
 import iskallia.vault.Vault;
@@ -11,58 +15,51 @@ import net.minecraftforge.fml.event.server.FMLServerStoppingEvent;
 import java.time.Duration;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.time.chrono.ChronoZonedDateTime;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
-
-public class DailyScheduler {
+public class DailyScheduler
+{
     private static DailyScheduler scheduler;
-    private final ScheduledExecutorService executorService = Executors.newScheduledThreadPool(1);
-
-
-    public static void start(FMLServerStartingEvent event) {
-        scheduler = new DailyScheduler();
-        ModTasks.initTasks(scheduler, event.getServer());
+    private final ScheduledExecutorService executorService;
+    
+    private DailyScheduler() {
+        this.executorService = Executors.newScheduledThreadPool(1);
     }
-
-    public void scheduleServer(int hour, Runnable task) {
-        scheduleServer(hour, 0, 0, task);
+    
+    public static void start(final FMLServerStartingEvent event) {
+        ModTasks.initTasks(DailyScheduler.scheduler = new DailyScheduler(), event.getServer());
     }
-
-    public void scheduleServer(int hour, int minute, int second, Runnable task) {
-        if (scheduler == null) {
+    
+    public void scheduleServer(final int hour, final Runnable task) {
+        this.scheduleServer(hour, 0, 0, task);
+    }
+    
+    public void scheduleServer(final int hour, final int minute, final int second, final Runnable task) {
+        if (DailyScheduler.scheduler == null) {
             throw new IllegalStateException("Startup not finished, Scheduler not running!");
         }
-
-        ZonedDateTime now = ZonedDateTime.now(ZoneId.of("UTC"));
+        final ZonedDateTime now = ZonedDateTime.now(ZoneId.of("UTC"));
         ZonedDateTime nextRun = now.withHour(hour).withMinute(minute).withSecond(second);
-        if (now.compareTo(nextRun) > 0) {
+        if (now.compareTo((ChronoZonedDateTime<?>)nextRun) > 0) {
             nextRun = nextRun.plusDays(1L);
         }
-
-        scheduler.executorService.scheduleAtFixedRate(() -> {
-            MinecraftServer srv = (MinecraftServer) LogicalSidedProvider.INSTANCE.get(LogicalSide.SERVER);
-
+        DailyScheduler.scheduler.executorService.scheduleAtFixedRate(() -> {
+            final MinecraftServer srv = (MinecraftServer)LogicalSidedProvider.INSTANCE.get(LogicalSide.SERVER);
             srv.execute(task);
-        }Duration.between(now, nextRun).getSeconds(), TimeUnit.DAYS
-                .toSeconds(1L), TimeUnit.SECONDS);
+        }, Duration.between(now, nextRun).getSeconds(), TimeUnit.DAYS.toSeconds(1L), TimeUnit.SECONDS);
     }
-
-
-    public static void stop(FMLServerStoppingEvent event) {
-        scheduler.executorService.shutdown();
+    
+    public static void stop(final FMLServerStoppingEvent event) {
+        DailyScheduler.scheduler.executorService.shutdown();
         try {
-            scheduler.executorService.awaitTermination(1L, TimeUnit.SECONDS);
-        } catch (InterruptedException ex) {
+            DailyScheduler.scheduler.executorService.awaitTermination(1L, TimeUnit.SECONDS);
+        }
+        catch (final InterruptedException ex) {
             Vault.LOGGER.error(ex);
         }
-        scheduler = null;
+        DailyScheduler.scheduler = null;
     }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vaul\\util\scheduler\DailyScheduler.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

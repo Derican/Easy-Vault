@@ -1,3 +1,7 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.client.util;
 
 import iskallia.vault.network.message.EffectMessage;
@@ -12,29 +16,24 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 
 import java.awt.*;
 
-
 @OnlyIn(Dist.CLIENT)
-public class ParticleHelper {
-    public static void spawnParticle(EffectMessage pkt) {
-        EffectMessage.Type type = pkt.getEffectType();
+public class ParticleHelper
+{
+    public static void spawnParticle(final EffectMessage pkt) {
+        final EffectMessage.Type type = pkt.getEffectType();
         switch (type) {
-            case COLORED_FIREWORK:
+            case COLORED_FIREWORK: {
                 spawnColoredFirework(pkt.getPos(), pkt.getData().readInt());
                 break;
+            }
         }
     }
-
-    private static void spawnColoredFirework(Vector3d pos, int color) {
-        ParticleManager mgr = (Minecraft.getInstance()).particleEngine;
-        SimpleAnimatedParticle fwParticle = (SimpleAnimatedParticle) mgr.createParticle((IParticleData) ParticleTypes.FIREWORK, pos.x(), pos.y(), pos.z(), 0.0D, 0.0D, 0.0D);
-        Color c = new Color(color);
-        fwParticle.setColor(c.getRed() / 255.0F, c.getGreen() / 255.0F, c.getBlue() / 255.0F);
-        fwParticle.baseGravity = 0.0F;
+    
+    private static void spawnColoredFirework(final Vector3d pos, final int color) {
+        final ParticleManager mgr = Minecraft.getInstance().particleEngine;
+        final SimpleAnimatedParticle fwParticle = (SimpleAnimatedParticle)mgr.createParticle((IParticleData)ParticleTypes.FIREWORK, pos.x(), pos.y(), pos.z(), 0.0, 0.0, 0.0);
+        final Color c = new Color(color);
+        fwParticle.setColor(c.getRed() / 255.0f, c.getGreen() / 255.0f, c.getBlue() / 255.0f);
+        fwParticle.baseGravity = 0.0f;
     }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\clien\\util\ParticleHelper.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

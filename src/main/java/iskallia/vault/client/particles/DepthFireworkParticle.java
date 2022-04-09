@@ -1,3 +1,7 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.client.particles;
 
 import com.mojang.blaze3d.systems.RenderSystem;
@@ -13,61 +17,57 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
-public class DepthFireworkParticle extends SimpleAnimatedParticle {
-    private static final IParticleRenderType DEPTH_PARTICLE_SHEET_TRANSLUCENT = new IParticleRenderType() {
-        public void begin(BufferBuilder buf, TextureManager mgr) {
-            RenderSystem.disableDepthTest();
-            PARTICLE_SHEET_TRANSLUCENT.begin(buf, mgr);
-        }
-
-
-        public void end(Tessellator tes) {
-            PARTICLE_SHEET_TRANSLUCENT.end(tes);
-            RenderSystem.enableDepthTest();
-        }
-    };
-
-    private DepthFireworkParticle(ClientWorld world, double x, double y, double z, double motionX, double motionY, double motionZ, IAnimatedSprite spriteWithAge) {
-        super(world, x, y, z, spriteWithAge, 0.0F);
+public class DepthFireworkParticle extends SimpleAnimatedParticle
+{
+    private static final IParticleRenderType DEPTH_PARTICLE_SHEET_TRANSLUCENT;
+    
+    private DepthFireworkParticle(final ClientWorld world, final double x, final double y, final double z, final double motionX, final double motionY, final double motionZ, final IAnimatedSprite spriteWithAge) {
+        super(world, x, y, z, spriteWithAge, 0.0f);
         this.xd = motionX;
         this.yd = motionY;
         this.zd = motionZ;
-        this.quadSize *= 0.75F;
+        this.quadSize *= 0.75f;
         this.lifetime = 48 + this.random.nextInt(12);
-        setSpriteFromAge(spriteWithAge);
+        this.setSpriteFromAge(spriteWithAge);
     }
-
-
-    public void render(IVertexBuilder buffer, ActiveRenderInfo renderInfo, float partialTicks) {
+    
+    public void render(final IVertexBuilder buffer, final ActiveRenderInfo renderInfo, final float partialTicks) {
         if (this.age < this.lifetime / 3 || (this.age + this.lifetime) / 3 % 2 == 0) {
             super.render(buffer, renderInfo, partialTicks);
         }
     }
-
-
+    
     public IParticleRenderType getRenderType() {
-        return DEPTH_PARTICLE_SHEET_TRANSLUCENT;
+        return DepthFireworkParticle.DEPTH_PARTICLE_SHEET_TRANSLUCENT;
     }
-
+    
+    static {
+        DEPTH_PARTICLE_SHEET_TRANSLUCENT = (IParticleRenderType)new IParticleRenderType() {
+            public void begin(final BufferBuilder buf, final TextureManager mgr) {
+                RenderSystem.disableDepthTest();
+                PARTICLE_SHEET_TRANSLUCENT.begin(buf, mgr);
+            }
+            
+            public void end(final Tessellator tes) {
+                PARTICLE_SHEET_TRANSLUCENT.end(tes);
+                RenderSystem.enableDepthTest();
+            }
+        };
+    }
+    
     @OnlyIn(Dist.CLIENT)
-    public static class Factory
-            implements IParticleFactory<BasicParticleType> {
+    public static class Factory implements IParticleFactory<BasicParticleType>
+    {
         private final IAnimatedSprite spriteSet;
-
-        public Factory(IAnimatedSprite spriteSet) {
+        
+        public Factory(final IAnimatedSprite spriteSet) {
             this.spriteSet = spriteSet;
         }
-
-        public Particle createParticle(BasicParticleType type, ClientWorld world, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
-            DepthFireworkParticle particle = new DepthFireworkParticle(world, x, y, z, 0.0D, 0.0D, 0.0D, this.spriteSet);
-            particle.setColor((float) xSpeed, (float) ySpeed, (float) zSpeed);
-            return (Particle) particle;
+        
+        public Particle createParticle(final BasicParticleType type, final ClientWorld world, final double x, final double y, final double z, final double xSpeed, final double ySpeed, final double zSpeed) {
+            final DepthFireworkParticle particle = new DepthFireworkParticle(world, x, y, z, 0.0, 0.0, 0.0, this.spriteSet);
+            particle.setColor((float)xSpeed, (float)ySpeed, (float)zSpeed);
+            return (Particle)particle;
         }
     }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\client\particles\DepthFireworkParticle.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

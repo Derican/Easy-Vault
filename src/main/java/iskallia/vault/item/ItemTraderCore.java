@@ -1,3 +1,7 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.item;
 
 import iskallia.vault.config.entry.vending.TradeEntry;
@@ -7,7 +11,6 @@ import iskallia.vault.init.ModItems;
 import iskallia.vault.skill.PlayerVaultStats;
 import iskallia.vault.util.NameProviderPublic;
 import iskallia.vault.util.RenameType;
-import iskallia.vault.util.nbt.INBTSerializable;
 import iskallia.vault.util.nbt.NBTSerializer;
 import iskallia.vault.vending.Product;
 import iskallia.vault.vending.Trade;
@@ -33,196 +36,183 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.*;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.fml.network.NetworkHooks;
 
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class ItemTraderCore extends Item {
-    public ItemTraderCore(ItemGroup group, ResourceLocation id) {
-        super((new Item.Properties())
-                .tab(group)
-                .stacksTo(1));
-
-        setRegistryName(id);
+public class ItemTraderCore extends Item
+{
+    public ItemTraderCore(final ItemGroup group, final ResourceLocation id) {
+        super(new Item.Properties().tab(group).stacksTo(1));
+        this.setRegistryName(id);
     }
-
-    public static ItemStack generate(String nickname, int vaultLevel) {
-        TradeEntry tradeEntry = ModConfigs.TRADER_CORE_COMMON.getRandomTrade(vaultLevel);
+    
+    public static ItemStack generate(final String nickname, final int vaultLevel) {
+        final TradeEntry tradeEntry = ModConfigs.TRADER_CORE_COMMON.getRandomTrade(vaultLevel);
         if (tradeEntry == null) {
             return ItemStack.EMPTY;
         }
         return getStackFromCore(new TraderCore(nickname, tradeEntry.toTrade()));
     }
-
-    public static ItemStack getStackFromCore(TraderCore core) {
-        ItemStack stack = new ItemStack((IItemProvider) ModItems.TRADER_CORE, 1);
-        CompoundNBT nbt = new CompoundNBT();
+    
+    public static ItemStack getStackFromCore(final TraderCore core) {
+        final ItemStack stack = new ItemStack((IItemProvider)ModItems.TRADER_CORE, 1);
+        final CompoundNBT nbt = new CompoundNBT();
         try {
-            nbt.put("core", (INBT) NBTSerializer.serialize((INBTSerializable) core));
+            nbt.put("core", (INBT)NBTSerializer.serialize(core));
             stack.setTag(nbt);
-        } catch (Exception e) {
+        }
+        catch (final Exception e) {
             e.printStackTrace();
         }
         return stack;
     }
-
-    public static TraderCore getCoreFromStack(ItemStack itemStack) {
-        CompoundNBT nbt = itemStack.getTag();
-        if (nbt == null) return null;
+    
+    public static TraderCore getCoreFromStack(final ItemStack itemStack) {
+        final CompoundNBT nbt = itemStack.getTag();
+        if (nbt == null) {
+            return null;
+        }
         try {
-            return (TraderCore) NBTSerializer.deserialize(TraderCore.class, nbt.getCompound("core"));
-        } catch (Exception e) {
+            return NBTSerializer.deserialize(TraderCore.class, nbt.getCompound("core"));
+        }
+        catch (final Exception e) {
             e.printStackTrace();
-
             return null;
         }
     }
-
+    
     @OnlyIn(Dist.CLIENT)
-    public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-        CompoundNBT nbt = stack.getOrCreateTag();
+    public void appendHoverText(final ItemStack stack, @Nullable final World worldIn, final List<ITextComponent> tooltip, final ITooltipFlag flagIn) {
+        final CompoundNBT nbt = stack.getOrCreateTag();
         if (nbt.contains("core")) {
             TraderCore core;
             try {
-                core = (TraderCore) NBTSerializer.deserialize(TraderCore.class, (CompoundNBT) nbt.get("core"));
-            } catch (Exception e) {
+                core = NBTSerializer.deserialize(TraderCore.class, (CompoundNBT)nbt.get("core"));
+            }
+            catch (final Exception e) {
                 e.printStackTrace();
-
                 return;
             }
-            Trade trade = core.getTrade();
+            final Trade trade = core.getTrade();
             if (!trade.isValid()) {
                 return;
             }
-
-            Product buy = trade.getBuy();
-            Product extra = trade.getExtra();
-            Product sell = trade.getSell();
-            tooltip.add(new StringTextComponent(""));
-            tooltip.add(new StringTextComponent("Trader: "));
-            StringTextComponent traderName = new StringTextComponent(" " + core.getName());
+            final Product buy = trade.getBuy();
+            final Product extra = trade.getExtra();
+            final Product sell = trade.getSell();
+            tooltip.add((ITextComponent)new StringTextComponent(""));
+            tooltip.add((ITextComponent)new StringTextComponent("Trader: "));
+            final StringTextComponent traderName = new StringTextComponent(" " + core.getName());
             traderName.setStyle(Style.EMPTY.withColor(Color.fromRgb(16755200)));
-            tooltip.add(traderName);
-            tooltip.add(new StringTextComponent(""));
-            tooltip.add(new StringTextComponent("Trades: "));
+            tooltip.add((ITextComponent)traderName);
+            tooltip.add((ITextComponent)new StringTextComponent(""));
+            tooltip.add((ITextComponent)new StringTextComponent("Trades: "));
             if (buy != null && buy.isValid()) {
-                StringTextComponent comp = new StringTextComponent(" - Buy: ");
-                TranslationTextComponent name = new TranslationTextComponent(buy.getItem().getDescriptionId());
+                final StringTextComponent comp = new StringTextComponent(" - Buy: ");
+                final TranslationTextComponent name = new TranslationTextComponent(buy.getItem().getDescriptionId());
                 name.setStyle(Style.EMPTY.withColor(Color.fromRgb(16755200)));
-                comp.append((ITextComponent) name).append((ITextComponent) new StringTextComponent(" x" + buy.getAmount()));
-                tooltip.add(comp);
+                comp.append((ITextComponent)name).append((ITextComponent)new StringTextComponent(" x" + buy.getAmount()));
+                tooltip.add((ITextComponent)comp);
             }
             if (extra != null && extra.isValid()) {
-                StringTextComponent comp = new StringTextComponent(" - Extra: ");
-                TranslationTextComponent name = new TranslationTextComponent(extra.getItem().getDescriptionId());
+                final StringTextComponent comp = new StringTextComponent(" - Extra: ");
+                final TranslationTextComponent name = new TranslationTextComponent(extra.getItem().getDescriptionId());
                 name.setStyle(Style.EMPTY.withColor(Color.fromRgb(16755200)));
-                comp.append((ITextComponent) name).append((ITextComponent) new StringTextComponent(" x" + extra.getAmount()));
-                tooltip.add(comp);
+                comp.append((ITextComponent)name).append((ITextComponent)new StringTextComponent(" x" + extra.getAmount()));
+                tooltip.add((ITextComponent)comp);
             }
             if (sell != null && sell.isValid()) {
-                StringTextComponent comp = new StringTextComponent(" - Sell: ");
-                TranslationTextComponent name = new TranslationTextComponent(sell.getItem().getDescriptionId());
+                final StringTextComponent comp = new StringTextComponent(" - Sell: ");
+                final TranslationTextComponent name = new TranslationTextComponent(sell.getItem().getDescriptionId());
                 name.setStyle(Style.EMPTY.withColor(Color.fromRgb(16755200)));
-                comp.append((ITextComponent) name).append((ITextComponent) new StringTextComponent(" x" + sell.getAmount()));
-                tooltip.add(comp);
+                comp.append((ITextComponent)name).append((ITextComponent)new StringTextComponent(" x" + sell.getAmount()));
+                tooltip.add((ITextComponent)comp);
             }
-
-            tooltip.add(new StringTextComponent(""));
+            tooltip.add((ITextComponent)new StringTextComponent(""));
             if (trade.getTradesLeft() == 0) {
-                StringTextComponent comp = new StringTextComponent("[0] Sold out, sorry!");
+                final StringTextComponent comp = new StringTextComponent("[0] Sold out, sorry!");
                 comp.setStyle(Style.EMPTY.withColor(Color.fromRgb(16711680)));
-                tooltip.add(comp);
-            } else if (trade.getTradesLeft() == -1) {
-                StringTextComponent comp = new StringTextComponent("[∞] Has unlimited trades.");
+                tooltip.add((ITextComponent)comp);
+            }
+            else if (trade.getTradesLeft() == -1) {
+                final StringTextComponent comp = new StringTextComponent("[\u221e] Has unlimited trades.");
                 comp.setStyle(Style.EMPTY.withColor(Color.fromRgb(43775)));
-                tooltip.add(comp);
-            } else {
-                StringTextComponent comp = new StringTextComponent("[" + trade.getTradesLeft() + "] Has a limited stock.");
+                tooltip.add((ITextComponent)comp);
+            }
+            else {
+                final StringTextComponent comp = new StringTextComponent("[" + trade.getTradesLeft() + "] Has a limited stock.");
                 comp.setStyle(Style.EMPTY.withColor(Color.fromRgb(16755200)));
-                tooltip.add(comp);
+                tooltip.add((ITextComponent)comp);
             }
         }
     }
-
-
-    public void inventoryTick(ItemStack stack, World world, Entity entity, int itemSlot, boolean isSelected) {
+    
+    public void inventoryTick(final ItemStack stack, final World world, final Entity entity, final int itemSlot, final boolean isSelected) {
         super.inventoryTick(stack, world, entity, itemSlot, isSelected);
         if (!(entity instanceof ServerPlayerEntity)) {
             return;
         }
-        ServerPlayerEntity sPlayer = (ServerPlayerEntity) entity;
-
-        CompoundNBT nbt = stack.getOrCreateTag();
-
+        final ServerPlayerEntity sPlayer = (ServerPlayerEntity)entity;
+        final CompoundNBT nbt = stack.getOrCreateTag();
         if (!nbt.contains("core", 10)) {
-            PlayerVaultStats stats = PlayerVaultStatsData.get(sPlayer.getLevel()).getVaultStats((PlayerEntity) sPlayer);
-
-            ItemStack generated = generate(NameProviderPublic.getRandomName(), stats.getVaultLevel());
+            final PlayerVaultStats stats = PlayerVaultStatsData.get(sPlayer.getLevel()).getVaultStats((PlayerEntity)sPlayer);
+            final ItemStack generated = generate(NameProviderPublic.getRandomName(), stats.getVaultLevel());
             if (!generated.isEmpty()) {
                 stack.setTag(generated.getTag());
             }
         }
-
         if (nbt.contains("rename_trader", 8)) {
-            String rename = nbt.getString("rename_trader");
+            final String rename = nbt.getString("rename_trader");
             stack.getOrCreateTag().getCompound("core").putString("NAME", rename);
             stack.getOrCreateTag().remove("rename_trader");
         }
     }
-
-
-    public Rarity getRarity(ItemStack stack) {
+    
+    public Rarity getRarity(final ItemStack stack) {
         return Rarity.EPIC;
     }
-
-    public ITextComponent getName(ItemStack stack) {
-        StringTextComponent stringTextComponent;
+    
+    public ITextComponent getName(final ItemStack stack) {
         ITextComponent text = super.getName(stack);
-
-        CompoundNBT nbt = stack.getOrCreateTag();
+        final CompoundNBT nbt = stack.getOrCreateTag();
         if (nbt.contains("core", 10)) {
             try {
-                TraderCore core = (TraderCore) NBTSerializer.deserialize(TraderCore.class, nbt.getCompound("core"));
-                stringTextComponent = new StringTextComponent(core.getName());
-            } catch (Exception e) {
+                final TraderCore core = NBTSerializer.deserialize(TraderCore.class, nbt.getCompound("core"));
+                text = (ITextComponent)new StringTextComponent(core.getName());
+            }
+            catch (final Exception e) {
                 e.printStackTrace();
             }
         }
-
-        return (ITextComponent) stringTextComponent;
+        return text;
     }
-
-
-    public ActionResult<ItemStack> use(World worldIn, PlayerEntity player, Hand handIn) {
-        if (worldIn.isClientSide) return super.use(worldIn, player, handIn);
-        if (handIn == Hand.OFF_HAND) return super.use(worldIn, player, handIn);
-        ItemStack stack = player.getMainHandItem();
-
+    
+    public ActionResult<ItemStack> use(final World worldIn, final PlayerEntity player, final Hand handIn) {
+        if (worldIn.isClientSide) {
+            return (ActionResult<ItemStack>)super.use(worldIn, player, handIn);
+        }
+        if (handIn == Hand.OFF_HAND) {
+            return (ActionResult<ItemStack>)super.use(worldIn, player, handIn);
+        }
+        final ItemStack stack = player.getMainHandItem();
         if (player.isShiftKeyDown()) {
             final CompoundNBT nbt = new CompoundNBT();
             nbt.putInt("RenameType", RenameType.TRADER_CORE.ordinal());
-            nbt.put("Data", (INBT) stack.serializeNBT());
-            NetworkHooks.openGui((ServerPlayerEntity) player, new INamedContainerProvider() {
-
+            nbt.put("Data", (INBT)stack.serializeNBT());
+            NetworkHooks.openGui((ServerPlayerEntity)player, (INamedContainerProvider)new INamedContainerProvider() {
                 public ITextComponent getDisplayName() {
-                    return (ITextComponent) new StringTextComponent("Trader Core");
+                    return (ITextComponent)new StringTextComponent("Trader Core");
                 }
-
-
+                
                 @Nullable
-                public Container createMenu(int windowId, PlayerInventory playerInventory, PlayerEntity playerEntity) {
-                    return (Container) new RenamingContainer(windowId, nbt);
+                public Container createMenu(final int windowId, final PlayerInventory playerInventory, final PlayerEntity playerEntity) {
+                    return new RenamingContainer(windowId, nbt);
                 }
-            }buffer -> buffer.writeNbt(nbt));
+            }, buffer -> buffer.writeNbt(nbt));
         }
-
-
-        return super.use(worldIn, player, handIn);
+        return (ActionResult<ItemStack>)super.use(worldIn, player, handIn);
     }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\item\ItemTraderCore.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

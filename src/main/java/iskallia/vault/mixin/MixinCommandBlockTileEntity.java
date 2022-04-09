@@ -1,3 +1,7 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.mixin;
 
 import iskallia.vault.Vault;
@@ -14,44 +18,37 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-
-@Mixin({CommandBlockTileEntity.class})
-public abstract class MixinCommandBlockTileEntity
-        extends TileEntity {
+@Mixin({ CommandBlockTileEntity.class })
+public abstract class MixinCommandBlockTileEntity extends TileEntity
+{
     @Shadow
     private boolean auto;
-
+    
     @Shadow
-    public abstract void setAutomatic(boolean paramBoolean);
-
-    public MixinCommandBlockTileEntity(TileEntityType<?> type) {
-        super(type);
-    }
-
+    public abstract void setAutomatic(final boolean p0);
+    
     @Shadow
     public abstract CommandBlockLogic getCommandBlock();
-
+    
     @Shadow
-    public abstract void setPowered(boolean paramBoolean);
-
-    @Inject(method = {"validate"}, at = {@At("RETURN")})
-    public void validate(CallbackInfo ci) {
-        if (!this.level.isClientSide && this.level.dimension() == Vault.VAULT_KEY)
-            this.level.getServer().tell((TickDelayedTask) new TickDelayedTask(this.level
-                    .getServer().getTickCount() + 10, () -> {
-                if (!this.level.getBlockTicks().hasScheduledTick(getBlockPos(), Blocks.COMMAND_BLOCK) && this.auto) {
+    public abstract void setPowered(final boolean p0);
+    
+    public MixinCommandBlockTileEntity(final TileEntityType<?> type) {
+        super((TileEntityType)type);
+    }
+    
+    @Inject(method = { "clearRemoved" }, at = { @At("RETURN") })
+    public void validate(final CallbackInfo ci) {
+        if (!this.level.isClientSide && this.level.dimension() == Vault.VAULT_KEY) {
+            this.level.getServer().tell(new TickDelayedTask(this.level.getServer().getTickCount() + 10, () -> {
+                if (!this.level.getBlockTicks().hasScheduledTick(this.getBlockPos(), Blocks.COMMAND_BLOCK) && this.auto) {
                     this.auto = false;
-                    setAutomatic(true);
+                    this.setAutomatic(true);
                 }
-                setPowered(false);
-                BlockState state = this.level.getBlockState(getBlockPos());
-                this.level.getBlockState(getBlockPos()).neighborChanged(this.level, getBlockPos(), state.getBlock(), getBlockPos(), false);
+                this.setPowered(false);
+                final BlockState state = this.level.getBlockState(this.getBlockPos());
+                this.level.getBlockState(this.getBlockPos()).neighborChanged(this.level, this.getBlockPos(), state.getBlock(), this.getBlockPos(), false);
             }));
+        }
     }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\mixin\MixinCommandBlockTileEntity.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

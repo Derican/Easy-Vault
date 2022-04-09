@@ -1,3 +1,7 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.skill.ability.effect;
 
 import iskallia.vault.init.ModEffects;
@@ -24,79 +28,73 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 import javax.annotation.Nullable;
 
-public class GhostWalkAbility<C extends GhostWalkConfig>
-        extends AbilityEffect<C> {
+public class GhostWalkAbility<C extends GhostWalkConfig> extends AbilityEffect<C>
+{
+    @Override
     public String getAbilityGroupName() {
         return "Ghost Walk";
     }
-
-
-    public boolean onAction(C config, ServerPlayerEntity player, boolean active) {
+    
+    @Override
+    public boolean onAction(final C config, final ServerPlayerEntity player, final boolean active) {
         if (player.hasEffect(ModEffects.GHOST_WALK)) {
             return false;
         }
-
-
-        EffectInstance newEffect = new EffectInstance(config.getEffect(), config.getDurationTicks(), config.getAmplifier(), false, (config.getType()).showParticles, (config.getType()).showIcon);
-
-        player.level.playSound((PlayerEntity) player, player.getX(), player.getY(), player.getZ(), ModSounds.GHOST_WALK_SFX, SoundCategory.PLAYERS, 0.2F, 1.0F);
-
-        player.playNotifySound(ModSounds.GHOST_WALK_SFX, SoundCategory.PLAYERS, 0.2F, 1.0F);
-
+        final EffectInstance newEffect = new EffectInstance(config.getEffect(), config.getDurationTicks(), config.getAmplifier(), false, config.getType().showParticles, config.getType().showIcon);
+        player.level.playSound((PlayerEntity)player, player.getX(), player.getY(), player.getZ(), ModSounds.GHOST_WALK_SFX, SoundCategory.PLAYERS, 0.2f, 1.0f);
+        player.playNotifySound(ModSounds.GHOST_WALK_SFX, SoundCategory.PLAYERS, 0.2f, 1.0f);
         player.addEffect(newEffect);
         return false;
     }
-
+    
     @SubscribeEvent(priority = EventPriority.LOW)
-    public void onDamage(LivingDamageEvent event) {
-        Entity attacker = event.getSource().getEntity();
-        if (attacker instanceof ServerPlayerEntity && doRemoveWhenDealingDamage()) {
-            ServerPlayerEntity player = (ServerPlayerEntity) attacker;
-            EffectInstance ghostWalk = player.getEffect(ModEffects.GHOST_WALK);
+    public void onDamage(final LivingDamageEvent event) {
+        final Entity attacker = event.getSource().getEntity();
+        if (attacker instanceof ServerPlayerEntity && this.doRemoveWhenDealingDamage()) {
+            final ServerPlayerEntity player = (ServerPlayerEntity)attacker;
+            final EffectInstance ghostWalk = player.getEffect(ModEffects.GHOST_WALK);
             if (ghostWalk != null) {
-                ServerWorld world = (ServerWorld) player.getCommandSenderWorld();
-
-                PlayerAbilitiesData data = PlayerAbilitiesData.get(world);
-                AbilityTree abilities = data.getAbilities((PlayerEntity) player);
-                AbilityNode<?, ?> node = abilities.getNodeOf(this);
+                final ServerWorld world = (ServerWorld)player.getCommandSenderWorld();
+                final PlayerAbilitiesData data = PlayerAbilitiesData.get(world);
+                final AbilityTree abilities = data.getAbilities((PlayerEntity)player);
+                final AbilityNode<?, ?> node = abilities.getNodeOf(this);
                 if (node.getAbility() == this && node.isLearned()) {
                     player.removeEffect(ModEffects.GHOST_WALK);
                 }
             }
         }
     }
-
+    
     @SubscribeEvent(priority = EventPriority.LOW)
-    public void onHurt(LivingHurtEvent event) {
-        if (isInvulnerable(event.getEntityLiving(), event.getSource())) {
+    public void onHurt(final LivingHurtEvent event) {
+        if (this.isInvulnerable(event.getEntityLiving(), event.getSource())) {
             event.setCanceled(true);
         }
     }
-
+    
     @SubscribeEvent(priority = EventPriority.LOW)
-    public void onAttack(LivingAttackEvent event) {
-        if (isInvulnerable(event.getEntityLiving(), event.getSource())) {
+    public void onAttack(final LivingAttackEvent event) {
+        if (this.isInvulnerable(event.getEntityLiving(), event.getSource())) {
             event.setCanceled(true);
         }
     }
-
+    
     @SubscribeEvent
-    public void onTarget(LivingSetAttackTargetEvent event) {
-        if (event.getEntityLiving() instanceof MobEntity && isInvulnerable(event.getTarget(), null)) {
-            ((MobEntity) event.getEntityLiving()).setTarget(null);
+    public void onTarget(final LivingSetAttackTargetEvent event) {
+        if (event.getEntityLiving() instanceof MobEntity && this.isInvulnerable(event.getTarget(), null)) {
+            ((MobEntity)event.getEntityLiving()).setTarget((LivingEntity)null);
         }
     }
-
-    private boolean isInvulnerable(@Nullable LivingEntity entity, @Nullable DamageSource source) {
+    
+    private boolean isInvulnerable(@Nullable final LivingEntity entity, @Nullable final DamageSource source) {
         if (entity instanceof ServerPlayerEntity) {
-            ServerPlayerEntity player = (ServerPlayerEntity) entity;
-            EffectInstance ghostWalk = player.getEffect(ModEffects.GHOST_WALK);
-            if (ghostWalk != null && preventsDamage() && (source == null || !source.isBypassInvul())) {
-                ServerWorld world = (ServerWorld) player.getCommandSenderWorld();
-
-                PlayerAbilitiesData data = PlayerAbilitiesData.get(world);
-                AbilityTree abilities = data.getAbilities((PlayerEntity) player);
-                AbilityNode<?, ?> node = abilities.getNodeOf(this);
+            final ServerPlayerEntity player = (ServerPlayerEntity)entity;
+            final EffectInstance ghostWalk = player.getEffect(ModEffects.GHOST_WALK);
+            if (ghostWalk != null && this.preventsDamage() && (source == null || !source.isBypassInvul())) {
+                final ServerWorld world = (ServerWorld)player.getCommandSenderWorld();
+                final PlayerAbilitiesData data = PlayerAbilitiesData.get(world);
+                final AbilityTree abilities = data.getAbilities((PlayerEntity)player);
+                final AbilityNode<?, ?> node = abilities.getNodeOf(this);
                 if (node.getAbility() == this && node.isLearned()) {
                     return true;
                 }
@@ -104,18 +102,12 @@ public class GhostWalkAbility<C extends GhostWalkConfig>
         }
         return false;
     }
-
+    
     protected boolean preventsDamage() {
         return true;
     }
-
+    
     protected boolean doRemoveWhenDealingDamage() {
         return true;
     }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\skill\ability\effect\GhostWalkAbility.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

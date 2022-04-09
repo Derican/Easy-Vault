@@ -1,3 +1,7 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.network.message;
 
 import iskallia.vault.entity.EternalEntity;
@@ -11,55 +15,55 @@ import net.minecraftforge.fml.network.NetworkEvent;
 
 import java.util.function.Supplier;
 
-
-public class FighterSizeMessage {
+public class FighterSizeMessage
+{
     private int entityId;
     private float size;
-
+    
     public FighterSizeMessage() {
     }
-
-    public FighterSizeMessage(int entityId, float size) {
+    
+    public FighterSizeMessage(final int entityId, final float size) {
         this.entityId = entityId;
         this.size = size;
     }
-
-    public FighterSizeMessage(Entity entity, float size) {
+    
+    public FighterSizeMessage(final Entity entity, final float size) {
         this(entity.getId(), size);
     }
-
-    public static void encode(FighterSizeMessage message, PacketBuffer buffer) {
+    
+    public static void encode(final FighterSizeMessage message, final PacketBuffer buffer) {
         buffer.writeInt(message.entityId);
         buffer.writeFloat(message.size);
     }
-
-    public static FighterSizeMessage decode(PacketBuffer buffer) {
-        FighterSizeMessage message = new FighterSizeMessage();
+    
+    public static FighterSizeMessage decode(final PacketBuffer buffer) {
+        final FighterSizeMessage message = new FighterSizeMessage();
         message.entityId = buffer.readInt();
         message.size = buffer.readFloat();
         return message;
     }
-
-    public static void handle(FighterSizeMessage message, Supplier<NetworkEvent.Context> contextSupplier) {
-        NetworkEvent.Context context = contextSupplier.get();
+    
+    public static void handle(final FighterSizeMessage message, final Supplier<NetworkEvent.Context> contextSupplier) {
+        final NetworkEvent.Context context = contextSupplier.get();
         context.enqueueWork(() -> {
-            Minecraft minecraft = Minecraft.getInstance();
-            ClientPlayerEntity player = minecraft.player;
-            World world = player.level;
-            Entity entity = world.getEntity(message.entityId);
-            if (entity == null || !entity.isAlive())
+            final Minecraft minecraft = Minecraft.getInstance();
+            final ClientPlayerEntity player = minecraft.player;
+            final World world = player.level;
+            final Entity entity = world.getEntity(message.entityId);
+            if (entity == null || !entity.isAlive()) {
                 return;
-            if (entity instanceof FighterEntity)
-                ((FighterEntity) entity).changeSize(message.size);
-            if (entity instanceof EternalEntity)
-                ((EternalEntity) entity).changeSize(message.size);
+            }
+            else {
+                if (entity instanceof FighterEntity) {
+                    ((FighterEntity)entity).changeSize(message.size);
+                }
+                if (entity instanceof EternalEntity) {
+                    ((EternalEntity)entity).changeSize(message.size);
+                }
+                return;
+            }
         });
         context.setPacketHandled(true);
     }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\network\message\FighterSizeMessage.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

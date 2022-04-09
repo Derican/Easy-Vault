@@ -1,3 +1,7 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.world.vault.logic.objective.raid.modifier;
 
 import iskallia.vault.world.vault.VaultRaid;
@@ -14,36 +18,33 @@ import net.minecraft.world.server.ServerWorld;
 
 import java.util.UUID;
 
-public class MonsterDamageModifier
-        extends RaidModifier {
-    private static final UUID MOB_DAMAGE_INCREASE = UUID.fromString("827b6afb-f01b-498c-9206-970f85da732a");
-
-    public MonsterDamageModifier(String name) {
+public class MonsterDamageModifier extends RaidModifier
+{
+    private static final UUID MOB_DAMAGE_INCREASE;
+    
+    public MonsterDamageModifier(final String name) {
         super(true, false, name);
     }
-
-
-    public void affectRaidMob(MobEntity mob, float value) {
-        ModifiableAttributeInstance attr = mob.getAttribute(Attributes.ATTACK_DAMAGE);
+    
+    @Override
+    public void affectRaidMob(final MobEntity mob, final float value) {
+        final ModifiableAttributeInstance attr = mob.getAttribute(Attributes.ATTACK_DAMAGE);
         if (attr != null) {
-            attr.addPermanentModifier(new AttributeModifier(MOB_DAMAGE_INCREASE, "Raid Mob Damage Increase", value, AttributeModifier.Operation.MULTIPLY_BASE));
+            attr.addPermanentModifier(new AttributeModifier(MonsterDamageModifier.MOB_DAMAGE_INCREASE, "Raid Mob Damage Increase", (double)value, AttributeModifier.Operation.MULTIPLY_BASE));
         }
     }
-
-
-    public void onVaultRaidFinish(VaultRaid vault, ServerWorld world, BlockPos controller, ActiveRaid raid, float value) {
+    
+    @Override
+    public void onVaultRaidFinish(final VaultRaid vault, final ServerWorld world, final BlockPos controller, final ActiveRaid raid, final float value) {
     }
-
-
-    public ITextComponent getDisplay(float value) {
-        int percDisplay = Math.round(value * 100.0F);
-        return (ITextComponent) (new StringTextComponent("+" + percDisplay + "% increased Mob Damage"))
-                .withStyle(TextFormatting.RED);
+    
+    @Override
+    public ITextComponent getDisplay(final float value) {
+        final int percDisplay = Math.round(value * 100.0f);
+        return (ITextComponent)new StringTextComponent("+" + percDisplay + "% increased Mob Damage").withStyle(TextFormatting.RED);
+    }
+    
+    static {
+        MOB_DAMAGE_INCREASE = UUID.fromString("827b6afb-f01b-498c-9206-970f85da732a");
     }
 }
-
-
-/* Location:              C:\Users\Grady\Desktop\the_vault-1.7.2p1.12.4.jar!\iskallia\vault\world\vault\logic\objective\raid\modifier\MonsterDamageModifier.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */
