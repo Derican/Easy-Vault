@@ -1,6 +1,7 @@
 {
-  "parent": "item/generated",
-  "textures": {
-    "layer0": "the_vault:item/leggings/plated_3_leggings"
-  }
+	"parent": "item/generated",
+	"textures": {
+		"layer0": "the_vault:item/leggings/plated_3_leggings",
+		"layer1": "the_vault:item/leggings/plated_3_leggings_overlay"
+	}
 }

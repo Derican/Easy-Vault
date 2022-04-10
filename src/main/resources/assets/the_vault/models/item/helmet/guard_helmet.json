@@ -1,7 +1,0 @@
-{
-  "parent": "item/generated",
-  "textures": {
-    "layer0": "the_vault:item/helmet/guard_helmet",
-    "layer1": "the_vault:item/helmet/guard_helmet_overlay"
-  }
-}

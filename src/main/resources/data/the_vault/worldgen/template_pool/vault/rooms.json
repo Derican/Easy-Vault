@@ -1,428 +1,2031 @@
 {
   "name": "the_vault:vault/rooms",
-  "fallback": "the_vault:vault/boss_rooms",
+  "fallback": "the_vault:vault/rooms",
   "elements": [
     {
-      "weight": 4,
-      "element": {
-        "location": "the_vault:vault/rooms/big1",
-        "processors": "minecraft:empty",
+      "weight": 200,
+      "element":
+      {
+        "processors": [
+          "the_vault:lava/pallet0",
+          "the_vault:lava/pallet0",
+          "the_vault:lava/pallet0",
+          "the_vault:lava/pallet0",
+          "the_vault:lava/pallet1",
+          "the_vault:lava/pallet1",
+          "the_vault:lava/pallet1",
+          "the_vault:lava/pallet2",
+          "the_vault:lava/pallet2",
+          "the_vault:lava/pallet3",
+          "the_vault:lava/pallet4",
+          "the_vault:lava_dark/pallet0",
+          "the_vault:lava_dark/pallet2"
+        ],
+        "element_type": "the_vault:paletted_list_pool_element",
         "projection": "rigid",
-        "element_type": "minecraft:single_pool_element"
+        "elements": [
+          {
+            "location": "the_vault:vault/enigma/rooms/lava/layer0/big1",
+            "projection": "rigid",
+            "element_type": "the_vault:paletted_single_pool_element",
+            "processors": "minecraft:empty"
+          },
+          {
+            "location": "the_vault:vault/enigma/rooms/lava/layer1/big1",
+            "projection": "rigid",
+            "element_type": "the_vault:paletted_single_pool_element",
+            "processors": "the_vault:generic/ignore_air"
+          }
+        ]
       }
     },
     {
-      "weight": 4,
-      "element": {
-        "location": "the_vault:vault/rooms/big2",
-        "processors": "minecraft:empty",
+      "weight": 200,
+      "element":
+      {
+        "processors": [
+          "the_vault:lava/pallet0",
+          "the_vault:lava/pallet0",
+          "the_vault:lava/pallet0",
+          "the_vault:lava/pallet0",
+          "the_vault:lava/pallet1",
+          "the_vault:lava/pallet1",
+          "the_vault:lava/pallet1",
+          "the_vault:lava/pallet2",
+          "the_vault:lava/pallet2",
+          "the_vault:lava/pallet3",
+          "the_vault:lava/pallet4",
+          "the_vault:lava_dark/pallet0",
+          "the_vault:lava_dark/pallet2"
+        ],
+        "element_type": "the_vault:paletted_list_pool_element",
         "projection": "rigid",
-        "element_type": "minecraft:single_pool_element"
+        "elements": [
+          {
+            "location": "the_vault:vault/enigma/rooms/lava/layer0/big2",
+            "projection": "rigid",
+            "element_type": "the_vault:paletted_single_pool_element",
+            "processors": "minecraft:empty"
+          },
+          {
+            "location": "the_vault:vault/enigma/rooms/lava/layer1/big2",
+            "projection": "rigid",
+            "element_type": "the_vault:paletted_single_pool_element",
+            "processors": "the_vault:generic/ignore_air"
+          }
+        ]
       }
     },
     {
-      "weight": 4,
-      "element": {
-        "location": "the_vault:vault/rooms/big3",
-        "processors": "minecraft:empty",
+      "weight": 200,
+      "element":
+      {
+        "processors": [
+          "the_vault:lava/pallet0",
+          "the_vault:lava/pallet0",
+          "the_vault:lava/pallet0",
+          "the_vault:lava/pallet0",
+          "the_vault:lava/pallet1",
+          "the_vault:lava/pallet1",
+          "the_vault:lava/pallet1",
+          "the_vault:lava/pallet2",
+          "the_vault:lava/pallet2",
+          "the_vault:lava/pallet3",
+          "the_vault:lava/pallet4",
+          "the_vault:lava_dark/pallet0",
+          "the_vault:lava_dark/pallet2"
+        ],
+        "element_type": "the_vault:paletted_list_pool_element",
         "projection": "rigid",
-        "element_type": "minecraft:single_pool_element"
+        "elements": [
+          {
+            "location": "the_vault:vault/enigma/rooms/lava/layer0/big3",
+            "projection": "rigid",
+            "element_type": "the_vault:paletted_single_pool_element",
+            "processors": "minecraft:empty"
+          },
+          {
+            "location": "the_vault:vault/enigma/rooms/lava/layer1/big3",
+            "projection": "rigid",
+            "element_type": "the_vault:paletted_single_pool_element",
+            "processors": "the_vault:generic/ignore_air"
+          }
+        ]
       }
     },
     {
-      "weight": 4,
-      "element": {
-        "location": "the_vault:vault/rooms/big4",
-        "processors": "minecraft:empty",
+      "weight": 200,
+      "element":
+      {
+        "processors": [
+          "the_vault:lava/pallet0",
+          "the_vault:lava/pallet0",
+          "the_vault:lava/pallet0",
+          "the_vault:lava/pallet0",
+          "the_vault:lava/pallet1",
+          "the_vault:lava/pallet1",
+          "the_vault:lava/pallet1",
+          "the_vault:lava/pallet2",
+          "the_vault:lava/pallet2",
+          "the_vault:lava/pallet3",
+          "the_vault:lava/pallet4",
+          "the_vault:lava_dark/pallet0",
+          "the_vault:lava_dark/pallet2"
+        ],
+        "element_type": "the_vault:paletted_list_pool_element",
         "projection": "rigid",
-        "element_type": "minecraft:single_pool_element"
+        "elements": [
+          {
+            "location": "the_vault:vault/enigma/rooms/lava/layer0/big4",
+            "projection": "rigid",
+            "element_type": "the_vault:paletted_single_pool_element",
+            "processors": "minecraft:empty"
+          },
+          {
+            "location": "the_vault:vault/enigma/rooms/lava/layer1/big4",
+            "projection": "rigid",
+            "element_type": "the_vault:paletted_single_pool_element",
+            "processors": "the_vault:generic/ignore_air"
+          }
+        ]
       }
     },
     {
-      "weight": 4,
-      "element": {
-        "location": "the_vault:vault/rooms/big5",
-        "processors": "minecraft:empty",
+      "weight": 80,
+      "element":
+      {
+        "processors": [
+          "minecraft:empty"
+        ],
+        "element_type": "the_vault:paletted_list_pool_element",
         "projection": "rigid",
-        "element_type": "minecraft:single_pool_element"
+        "elements": [
+          {
+            "location": "the_vault:vault/enigma/rooms/forest/layer0/big1",
+            "projection": "rigid",
+            "element_type": "the_vault:paletted_single_pool_element",
+            "processors": "minecraft:empty"
+          }
+        ]
       }
     },
     {
-      "weight": 4,
-      "element": {
-        "location": "the_vault:vault/rooms/big6",
-        "processors": "minecraft:empty",
+      "weight": 80,
+      "element":
+      {
+        "processors": [
+          "minecraft:empty"
+        ],
+        "element_type": "the_vault:paletted_list_pool_element",
         "projection": "rigid",
-        "element_type": "minecraft:single_pool_element"
+        "elements": [
+          {
+            "location": "the_vault:vault/enigma/rooms/forest/layer0/big2",
+            "projection": "rigid",
+            "element_type": "the_vault:paletted_single_pool_element",
+            "processors": "minecraft:empty"
+          }
+        ]
       }
     },
     {
-      "weight": 0,
-      "element": {
-        "location": "the_vault:vault/rooms/big7",
-        "processors": "minecraft:empty",
+      "weight": 80,
+      "element":
+      {
+        "processors": [
+          "minecraft:empty"
+        ],
+        "element_type": "the_vault:paletted_list_pool_element",
         "projection": "rigid",
-        "element_type": "minecraft:single_pool_element"
+        "elements": [
+          {
+            "location": "the_vault:vault/enigma/rooms/forest/layer0/big3",
+            "projection": "rigid",
+            "element_type": "the_vault:paletted_single_pool_element",
+            "processors": "minecraft:empty"
+          }
+        ]
       }
     },
     {
-      "weight": 4,
-      "element": {
-        "location": "the_vault:vault/rooms/big8",
-        "processors": "minecraft:empty",
+      "weight": 80,
+      "element":
+      {
+        "processors": [
+          "minecraft:empty"
+        ],
+        "element_type": "the_vault:paletted_list_pool_element",
         "projection": "rigid",
-        "element_type": "minecraft:single_pool_element"
+        "elements": [
+          {
+            "location": "the_vault:vault/enigma/rooms/forest/layer0/big4",
+            "projection": "rigid",
+            "element_type": "the_vault:paletted_single_pool_element",
+            "processors": "minecraft:empty"
+          }
+        ]
       }
     },
     {
-      "weight": 4,
-      "element": {
-        "location": "the_vault:vault/rooms/big9",
-        "processors": "minecraft:empty",
+      "weight": 80,
+      "element":
+      {
+        "processors": [
+          "minecraft:empty"
+        ],
+        "element_type": "the_vault:paletted_list_pool_element",
         "projection": "rigid",
-        "element_type": "minecraft:single_pool_element"
+        "elements": [
+          {
+            "location": "the_vault:vault/enigma/rooms/forest/layer0/big5",
+            "projection": "rigid",
+            "element_type": "the_vault:paletted_single_pool_element",
+            "processors": "minecraft:empty"
+          }
+        ]
       }
     },
     {
-      "weight": 4,
-      "element": {
-        "location": "the_vault:vault/rooms/big10",
-        "processors": "minecraft:empty",
+      "weight": 80,
+      "element":
+      {
+        "processors": [
+          "minecraft:empty"
+        ],
+        "element_type": "the_vault:paletted_list_pool_element",
         "projection": "rigid",
-        "element_type": "minecraft:single_pool_element"
+        "elements": [
+          {
+            "location": "the_vault:vault/enigma/rooms/forest/layer0/big6",
+            "projection": "rigid",
+            "element_type": "the_vault:paletted_single_pool_element",
+            "processors": "minecraft:empty"
+          }
+        ]
       }
     },
     {
-      "weight": 4,
-      "element": {
-        "location": "the_vault:vault/rooms/big11",
-        "processors": "minecraft:empty",
+      "weight": 80,
+      "element":
+      {
+        "processors": [
+          "minecraft:empty"
+        ],
+        "element_type": "the_vault:paletted_list_pool_element",
         "projection": "rigid",
-        "element_type": "minecraft:single_pool_element"
+        "elements": [
+          {
+            "location": "the_vault:vault/enigma/rooms/forest/layer0/big7",
+            "projection": "rigid",
+            "element_type": "the_vault:paletted_single_pool_element",
+            "processors": "minecraft:empty"
+          }
+        ]
       }
     },
     {
-      "weight": 4,
-      "element": {
-        "location": "the_vault:vault/rooms/big12",
-        "processors": "minecraft:empty",
+      "weight": 80,
+      "element":
+      {
+        "processors": [
+          "minecraft:empty"
+        ],
+        "element_type": "the_vault:paletted_list_pool_element",
         "projection": "rigid",
-        "element_type": "minecraft:single_pool_element"
+        "elements": [
+          {
+            "location": "the_vault:vault/enigma/rooms/forest/layer0/big8",
+            "projection": "rigid",
+            "element_type": "the_vault:paletted_single_pool_element",
+            "processors": "minecraft:empty"
+          }
+        ]
       }
     },
     {
-      "weight": 4,
-      "element": {
-        "location": "the_vault:vault/rooms/big13",
-        "processors": "minecraft:empty",
+      "weight": 80,
+      "element":
+      {
+        "processors": [
+          "minecraft:empty"
+        ],
+        "element_type": "the_vault:paletted_list_pool_element",
         "projection": "rigid",
-        "element_type": "minecraft:single_pool_element"
+        "elements": [
+          {
+            "location": "the_vault:vault/enigma/rooms/forest/layer0/big9",
+            "projection": "rigid",
+            "element_type": "the_vault:paletted_single_pool_element",
+            "processors": "minecraft:empty"
+          }
+        ]
       }
     },
     {
-      "weight": 4,
-      "element": {
-        "location": "the_vault:vault/rooms/big14",
-        "processors": "minecraft:empty",
+      "weight": 80,
+      "element":
+      {
+        "processors": [
+          "minecraft:empty"
+        ],
+        "element_type": "the_vault:paletted_list_pool_element",
         "projection": "rigid",
-        "element_type": "minecraft:single_pool_element"
+        "elements": [
+          {
+            "location": "the_vault:vault/enigma/rooms/forest/layer0/big10",
+            "projection": "rigid",
+            "element_type": "the_vault:paletted_single_pool_element",
+            "processors": "minecraft:empty"
+          }
+        ]
       }
     },
     {
-      "weight": 4,
-      "element": {
-        "location": "the_vault:vault/rooms/big15",
-        "processors": "minecraft:empty",
+      "weight": 200,
+      "element":
+      {
+        "processors": [
+          "the_vault:lakes/pallet0",
+          "the_vault:lakes/pallet0",
+          "the_vault:lakes/pallet0",
+          "the_vault:lakes/pallet0",
+          "the_vault:lakes/pallet1",
+          "the_vault:lakes/pallet1",
+          "the_vault:lakes/pallet1",
+          "the_vault:lakes/pallet2",
+          "the_vault:lakes/pallet2",
+          "the_vault:lakes/pallet3"
+        ],
+        "element_type": "the_vault:paletted_list_pool_element",
         "projection": "rigid",
-        "element_type": "minecraft:single_pool_element"
+        "elements": [
+          {
+            "location": "the_vault:vault/enigma/rooms/lakes/layer0/big1",
+            "projection": "rigid",
+            "element_type": "the_vault:paletted_single_pool_element",
+            "processors": "minecraft:empty"
+          }
+        ]
       }
     },
     {
-      "weight": 4,
-      "element": {
-        "location": "the_vault:vault/rooms/big16",
-        "processors": "minecraft:empty",
+      "weight": 200,
+      "element":
+      {
+        "processors": [
+          "the_vault:lakes/pallet0",
+          "the_vault:lakes/pallet0",
+          "the_vault:lakes/pallet0",
+          "the_vault:lakes/pallet0",
+          "the_vault:lakes/pallet1",
+          "the_vault:lakes/pallet1",
+          "the_vault:lakes/pallet1",
+          "the_vault:lakes/pallet2",
+          "the_vault:lakes/pallet2",
+          "the_vault:lakes/pallet3"
+        ],
+        "element_type": "the_vault:paletted_list_pool_element",
         "projection": "rigid",
-        "element_type": "minecraft:single_pool_element"
+        "elements": [
+          {
+            "location": "the_vault:vault/enigma/rooms/lakes/layer0/big2",
+            "projection": "rigid",
+            "element_type": "the_vault:paletted_single_pool_element",
+            "processors": "minecraft:empty"
+          }
+        ]
       }
     },
     {
-      "weight": 4,
-      "element": {
-        "location": "the_vault:vault/rooms/big17",
-        "processors": "minecraft:empty",
+      "weight": 200,
+      "element":
+      {
+        "processors": [
+          "the_vault:lakes/pallet0",
+          "the_vault:lakes/pallet0",
+          "the_vault:lakes/pallet0",
+          "the_vault:lakes/pallet0",
+          "the_vault:lakes/pallet1",
+          "the_vault:lakes/pallet1",
+          "the_vault:lakes/pallet1",
+          "the_vault:lakes/pallet2",
+          "the_vault:lakes/pallet2",
+          "the_vault:lakes/pallet3"
+        ],
+        "element_type": "the_vault:paletted_list_pool_element",
         "projection": "rigid",
-        "element_type": "minecraft:single_pool_element"
+        "elements": [
+          {
+            "location": "the_vault:vault/enigma/rooms/lakes/layer0/big3",
+            "projection": "rigid",
+            "element_type": "the_vault:paletted_single_pool_element",
+            "processors": "minecraft:empty"
+          }
+        ]
       }
     },
     {
-      "weight": 4,
-      "element": {
-        "location": "the_vault:vault/rooms/big18",
-        "processors": "minecraft:empty",
+      "weight": 200,
+      "element":
+      {
+        "processors": [
+          "the_vault:lakes/pallet0",
+          "the_vault:lakes/pallet0",
+          "the_vault:lakes/pallet0",
+          "the_vault:lakes/pallet0",
+          "the_vault:lakes/pallet1",
+          "the_vault:lakes/pallet1",
+          "the_vault:lakes/pallet1",
+          "the_vault:lakes/pallet2",
+          "the_vault:lakes/pallet2",
+          "the_vault:lakes/pallet3"
+        ],
+        "element_type": "the_vault:paletted_list_pool_element",
         "projection": "rigid",
-        "element_type": "minecraft:single_pool_element"
+        "elements": [
+          {
+            "location": "the_vault:vault/enigma/rooms/lakes/layer0/big4",
+            "projection": "rigid",
+            "element_type": "the_vault:paletted_single_pool_element",
+            "processors": "minecraft:empty"
+          }
+        ]
       }
     },
     {
-      "weight": 4,
-      "element": {
-        "location": "the_vault:vault/rooms/big19",
-        "processors": "minecraft:empty",
+      "weight": 200,
+      "element":
+      {
+        "processors": [
+          "the_vault:mushroom_forest/pallet0",
+          "the_vault:mushroom_forest/pallet0",
+          "the_vault:mushroom_forest/pallet0",
+          "the_vault:mushroom_forest/pallet0",
+          "the_vault:mushroom_forest/pallet1",
+          "the_vault:mushroom_forest/pallet1",
+          "the_vault:mushroom_forest/pallet1",
+          "the_vault:mushroom_forest/pallet2",
+          "the_vault:mushroom_forest/pallet2",
+          "the_vault:mushroom_forest/pallet3"
+        ],
+        "element_type": "the_vault:paletted_list_pool_element",
         "projection": "rigid",
-        "element_type": "minecraft:single_pool_element"
+        "elements": [
+          {
+            "location": "the_vault:vault/enigma/rooms/mushroom_forest/layer0/big1",
+            "projection": "rigid",
+            "element_type": "the_vault:paletted_single_pool_element",
+            "processors": "minecraft:empty"
+          }
+        ]
       }
     },
     {
-      "weight": 4,
-      "element": {
-        "location": "the_vault:vault/rooms/big20",
-        "processors": "minecraft:empty",
+      "weight": 200,
+      "element":
+      {
+        "processors": [
+          "the_vault:mushroom_forest/pallet0",
+          "the_vault:mushroom_forest/pallet0",
+          "the_vault:mushroom_forest/pallet0",
+          "the_vault:mushroom_forest/pallet0",
+          "the_vault:mushroom_forest/pallet1",
+          "the_vault:mushroom_forest/pallet1",
+          "the_vault:mushroom_forest/pallet1",
+          "the_vault:mushroom_forest/pallet2",
+          "the_vault:mushroom_forest/pallet2",
+          "the_vault:mushroom_forest/pallet3"
+        ],
+        "element_type": "the_vault:paletted_list_pool_element",
         "projection": "rigid",
-        "element_type": "minecraft:single_pool_element"
+        "elements": [
+          {
+            "location": "the_vault:vault/enigma/rooms/mushroom_forest/layer0/big2",
+            "projection": "rigid",
+            "element_type": "the_vault:paletted_single_pool_element",
+            "processors": "minecraft:empty"
+          }
+        ]
       }
     },
     {
-      "weight": 4,
-      "element": {
-        "location": "the_vault:vault/rooms/big21",
-        "processors": "minecraft:empty",
+      "weight": 200,
+      "element":
+      {
+        "processors": [
+          "the_vault:mushroom_forest/pallet0",
+          "the_vault:mushroom_forest/pallet0",
+          "the_vault:mushroom_forest/pallet0",
+          "the_vault:mushroom_forest/pallet0",
+          "the_vault:mushroom_forest/pallet1",
+          "the_vault:mushroom_forest/pallet1",
+          "the_vault:mushroom_forest/pallet1",
+          "the_vault:mushroom_forest/pallet2",
+          "the_vault:mushroom_forest/pallet2",
+          "the_vault:mushroom_forest/pallet3"
+        ],
+        "element_type": "the_vault:paletted_list_pool_element",
         "projection": "rigid",
-        "element_type": "minecraft:single_pool_element"
+        "elements": [
+          {
+            "location": "the_vault:vault/enigma/rooms/mushroom_forest/layer0/big3",
+            "projection": "rigid",
+            "element_type": "the_vault:paletted_single_pool_element",
+            "processors": "minecraft:empty"
+          }
+        ]
       }
     },
     {
-      "weight": 4,
-      "element": {
-        "location": "the_vault:vault/rooms/big22",
-        "processors": "minecraft:empty",
+      "weight": 200,
+      "element":
+      {
+        "processors": [
+          "the_vault:mushroom_forest/pallet0",
+          "the_vault:mushroom_forest/pallet0",
+          "the_vault:mushroom_forest/pallet0",
+          "the_vault:mushroom_forest/pallet0",
+          "the_vault:mushroom_forest/pallet1",
+          "the_vault:mushroom_forest/pallet1",
+          "the_vault:mushroom_forest/pallet1",
+          "the_vault:mushroom_forest/pallet2",
+          "the_vault:mushroom_forest/pallet2",
+          "the_vault:mushroom_forest/pallet3"
+        ],
+        "element_type": "the_vault:paletted_list_pool_element",
         "projection": "rigid",
-        "element_type": "minecraft:single_pool_element"
+        "elements": [
+          {
+            "location": "the_vault:vault/enigma/rooms/mushroom_forest/layer0/big4",
+            "projection": "rigid",
+            "element_type": "the_vault:paletted_single_pool_element",
+            "processors": "minecraft:empty"
+          }
+        ]
       }
     },
     {
-      "weight": 4,
-      "element": {
-        "location": "the_vault:vault/rooms/big23",
-        "processors": "minecraft:empty",
+      "weight": 100,
+      "element":
+      {
+        "processors": [
+          "minecraft:empty"
+        ],
+        "element_type": "the_vault:paletted_list_pool_element",
         "projection": "rigid",
-        "element_type": "minecraft:single_pool_element"
+        "elements": [
+          {
+            "location": "the_vault:vault/enigma/rooms/village/layer0/big1",
+            "projection": "rigid",
+            "element_type": "the_vault:paletted_single_pool_element",
+            "processors": "minecraft:empty"
+          }
+        ]
       }
     },
     {
-      "weight": 4,
-      "element": {
-        "location": "the_vault:vault/rooms/big24",
-        "processors": "minecraft:empty",
+      "weight": 100,
+      "element":
+      {
+        "processors": [
+          "minecraft:empty"
+        ],
+        "element_type": "the_vault:paletted_list_pool_element",
         "projection": "rigid",
-        "element_type": "minecraft:single_pool_element"
+        "elements": [
+          {
+            "location": "the_vault:vault/enigma/rooms/village/layer0/big2",
+            "projection": "rigid",
+            "element_type": "the_vault:paletted_single_pool_element",
+            "processors": "minecraft:empty"
+          }
+        ]
       }
     },
     {
-      "weight": 4,
-      "element": {
-        "location": "the_vault:vault/rooms/big25",
-        "processors": "minecraft:empty",
+      "weight": 100,
+      "element":
+      {
+        "processors": [
+          "minecraft:empty"
+        ],
+        "element_type": "the_vault:paletted_list_pool_element",
         "projection": "rigid",
-        "element_type": "minecraft:single_pool_element"
+        "elements": [
+          {
+            "location": "the_vault:vault/enigma/rooms/village/layer0/big3",
+            "projection": "rigid",
+            "element_type": "the_vault:paletted_single_pool_element",
+            "processors": "minecraft:empty"
+          }
+        ]
       }
     },
     {
-      "weight": 4,
-      "element": {
-        "location": "the_vault:vault/rooms/big26",
-        "processors": "minecraft:empty",
+      "weight": 100,
+      "element":
+      {
+        "processors": [
+          "minecraft:empty"
+        ],
+        "element_type": "the_vault:paletted_list_pool_element",
         "projection": "rigid",
-        "element_type": "minecraft:single_pool_element"
+        "elements": [
+          {
+            "location": "the_vault:vault/enigma/rooms/village/layer0/big4",
+            "projection": "rigid",
+            "element_type": "the_vault:paletted_single_pool_element",
+            "processors": "minecraft:empty"
+          }
+        ]
       }
     },
     {
-      "weight": 4,
-      "element": {
-        "location": "the_vault:vault/rooms/big27",
-        "processors": "minecraft:empty",
+      "weight": 150,
+      "element":
+      {
+        "processors": [
+          "the_vault:nether_flowers/pallet0",
+          "the_vault:nether_flowers/pallet0",
+          "the_vault:nether_flowers/pallet0",
+          "the_vault:nether_flowers/pallet0",
+          "the_vault:nether_flowers/pallet1",
+          "the_vault:nether_flowers/pallet1",
+          "the_vault:nether_flowers/pallet1",
+          "the_vault:nether_flowers/pallet2",
+          "the_vault:nether_flowers/pallet2",
+          "the_vault:nether_flowers/pallet3"
+        ],
+        "element_type": "the_vault:paletted_list_pool_element",
         "projection": "rigid",
-        "element_type": "minecraft:single_pool_element"
+        "elements": [
+          {
+            "location": "the_vault:vault/enigma/rooms/nether_flowers/layer0/big1",
+            "projection": "rigid",
+            "element_type": "the_vault:paletted_single_pool_element",
+            "processors": "minecraft:empty"
+          }
+        ]
       }
     },
     {
-      "weight": 4,
-      "element": {
-        "location": "the_vault:vault/rooms/big28",
-        "processors": "minecraft:empty",
+      "weight": 150,
+      "element":
+      {
+        "processors": [
+          "the_vault:nether_flowers/pallet0",
+          "the_vault:nether_flowers/pallet0",
+          "the_vault:nether_flowers/pallet0",
+          "the_vault:nether_flowers/pallet0",
+          "the_vault:nether_flowers/pallet1",
+          "the_vault:nether_flowers/pallet1",
+          "the_vault:nether_flowers/pallet1",
+          "the_vault:nether_flowers/pallet2",
+          "the_vault:nether_flowers/pallet2",
+          "the_vault:nether_flowers/pallet3"
+        ],
+        "element_type": "the_vault:paletted_list_pool_element",
         "projection": "rigid",
-        "element_type": "minecraft:single_pool_element"
+        "elements": [
+          {
+            "location": "the_vault:vault/enigma/rooms/nether_flowers/layer0/big2",
+            "projection": "rigid",
+            "element_type": "the_vault:paletted_single_pool_element",
+            "processors": "minecraft:empty"
+          }
+        ]
       }
     },
     {
-      "weight": 4,
-      "element": {
-        "location": "the_vault:vault/rooms/big29",
-        "processors": "minecraft:empty",
+      "weight": 150,
+      "element":
+      {
+        "processors": [
+          "the_vault:nether_flowers/pallet0",
+          "the_vault:nether_flowers/pallet0",
+          "the_vault:nether_flowers/pallet0",
+          "the_vault:nether_flowers/pallet0",
+          "the_vault:nether_flowers/pallet1",
+          "the_vault:nether_flowers/pallet1",
+          "the_vault:nether_flowers/pallet1",
+          "the_vault:nether_flowers/pallet2",
+          "the_vault:nether_flowers/pallet2",
+          "the_vault:nether_flowers/pallet3"
+        ],
+        "element_type": "the_vault:paletted_list_pool_element",
         "projection": "rigid",
-        "element_type": "minecraft:single_pool_element"
+        "elements": [
+          {
+            "location": "the_vault:vault/enigma/rooms/nether_flowers/layer0/big3",
+            "projection": "rigid",
+            "element_type": "the_vault:paletted_single_pool_element",
+            "processors": "minecraft:empty"
+          }
+        ]
       }
     },
     {
-      "weight": 4,
-      "element": {
-        "location": "the_vault:vault/rooms/big30",
-        "processors": "minecraft:empty",
+      "weight": 150,
+      "element":
+      {
+        "processors": [
+          "the_vault:nether_flowers/pallet0",
+          "the_vault:nether_flowers/pallet0",
+          "the_vault:nether_flowers/pallet0",
+          "the_vault:nether_flowers/pallet0",
+          "the_vault:nether_flowers/pallet1",
+          "the_vault:nether_flowers/pallet1",
+          "the_vault:nether_flowers/pallet1",
+          "the_vault:nether_flowers/pallet2",
+          "the_vault:nether_flowers/pallet2",
+          "the_vault:nether_flowers/pallet3"
+        ],
+        "element_type": "the_vault:paletted_list_pool_element",
         "projection": "rigid",
-        "element_type": "minecraft:single_pool_element"
+        "elements": [
+          {
+            "location": "the_vault:vault/enigma/rooms/nether_flowers/layer0/big4",
+            "projection": "rigid",
+            "element_type": "the_vault:paletted_single_pool_element",
+            "processors": "minecraft:empty"
+          }
+        ]
       }
     },
     {
-      "weight": 4,
-      "element": {
-        "location": "the_vault:vault/rooms/big31",
-        "processors": "minecraft:empty",
+      "weight": 150,
+      "element":
+      {
+        "processors": [
+          "the_vault:pirate_cove/pallet0",
+          "the_vault:pirate_cove/pallet0",
+          "the_vault:pirate_cove/pallet0",
+          "the_vault:pirate_cove/pallet0",
+          "the_vault:pirate_cove/pallet1",
+          "the_vault:pirate_cove/pallet1",
+          "the_vault:pirate_cove/pallet1",
+          "the_vault:pirate_cove/pallet2",
+          "the_vault:pirate_cove/pallet2",
+          "the_vault:pirate_cove/pallet3",
+          "the_vault:pirate_cove/pallet4"
+        ],
+        "element_type": "the_vault:paletted_list_pool_element",
         "projection": "rigid",
-        "element_type": "minecraft:single_pool_element"
+        "elements": [
+          {
+            "location": "the_vault:vault/enigma/rooms/pirate_cove/layer0/big1",
+            "projection": "rigid",
+            "element_type": "the_vault:paletted_single_pool_element",
+            "processors": "minecraft:empty"
+          }
+        ]
       }
     },
     {
-      "weight": 4,
-      "element": {
-        "location": "the_vault:vault/rooms/big32",
-        "processors": "minecraft:empty",
+      "weight": 150,
+      "element":
+      {
+        "processors": [
+          "the_vault:pirate_cove/pallet0",
+          "the_vault:pirate_cove/pallet0",
+          "the_vault:pirate_cove/pallet0",
+          "the_vault:pirate_cove/pallet0",
+          "the_vault:pirate_cove/pallet1",
+          "the_vault:pirate_cove/pallet1",
+          "the_vault:pirate_cove/pallet1",
+          "the_vault:pirate_cove/pallet2",
+          "the_vault:pirate_cove/pallet2",
+          "the_vault:pirate_cove/pallet3",
+          "the_vault:pirate_cove/pallet4"
+        ],
+        "element_type": "the_vault:paletted_list_pool_element",
         "projection": "rigid",
-        "element_type": "minecraft:single_pool_element"
+        "elements": [
+          {
+            "location": "the_vault:vault/enigma/rooms/pirate_cove/layer0/big2",
+            "projection": "rigid",
+            "element_type": "the_vault:paletted_single_pool_element",
+            "processors": "minecraft:empty"
+          }
+        ]
       }
     },
     {
-      "weight": 4,
-      "element": {
-        "location": "the_vault:vault/rooms/big33",
-        "processors": "minecraft:empty",
+      "weight": 150,
+      "element":
+      {
+        "processors": [
+          "the_vault:pirate_cove/pallet0",
+          "the_vault:pirate_cove/pallet0",
+          "the_vault:pirate_cove/pallet0",
+          "the_vault:pirate_cove/pallet0",
+          "the_vault:pirate_cove/pallet1",
+          "the_vault:pirate_cove/pallet1",
+          "the_vault:pirate_cove/pallet1",
+          "the_vault:pirate_cove/pallet2",
+          "the_vault:pirate_cove/pallet2",
+          "the_vault:pirate_cove/pallet3",
+          "the_vault:pirate_cove/pallet4"
+        ],
+        "element_type": "the_vault:paletted_list_pool_element",
         "projection": "rigid",
-        "element_type": "minecraft:single_pool_element"
+        "elements": [
+          {
+            "location": "the_vault:vault/enigma/rooms/pirate_cove/layer0/big3",
+            "projection": "rigid",
+            "element_type": "the_vault:paletted_single_pool_element",
+            "processors": "minecraft:empty"
+          }
+        ]
       }
     },
     {
-      "weight": 4,
-      "element": {
-        "location": "the_vault:vault/rooms/big34",
-        "processors": "minecraft:empty",
+      "weight": 150,
+      "element":
+      {
+        "processors": [
+          "the_vault:pirate_cove/pallet0",
+          "the_vault:pirate_cove/pallet0",
+          "the_vault:pirate_cove/pallet0",
+          "the_vault:pirate_cove/pallet0",
+          "the_vault:pirate_cove/pallet1",
+          "the_vault:pirate_cove/pallet1",
+          "the_vault:pirate_cove/pallet1",
+          "the_vault:pirate_cove/pallet2",
+          "the_vault:pirate_cove/pallet2",
+          "the_vault:pirate_cove/pallet3",
+          "the_vault:pirate_cove/pallet4"
+        ],
+        "element_type": "the_vault:paletted_list_pool_element",
         "projection": "rigid",
-        "element_type": "minecraft:single_pool_element"
+        "elements": [
+          {
+            "location": "the_vault:vault/enigma/rooms/pirate_cove/layer0/big4",
+            "projection": "rigid",
+            "element_type": "the_vault:paletted_single_pool_element",
+            "processors": "minecraft:empty"
+          }
+        ]
       }
     },
     {
-      "weight": 4,
-      "element": {
-        "location": "the_vault:vault/rooms/big35",
-        "processors": "minecraft:empty",
+      "weight": 150,
+      "element":
+      {
+        "processors": [
+          "the_vault:rainbow_forest/pallet0",
+          "the_vault:rainbow_forest/pallet0",
+          "the_vault:rainbow_forest/pallet0",
+          "the_vault:rainbow_forest/pallet0",
+          "the_vault:rainbow_forest/pallet1",
+          "the_vault:rainbow_forest/pallet1",
+          "the_vault:rainbow_forest/pallet1",
+          "the_vault:rainbow_forest/pallet2",
+          "the_vault:rainbow_forest/pallet2",
+          "the_vault:rainbow_forest/pallet3"
+        ],
+        "element_type": "the_vault:paletted_list_pool_element",
         "projection": "rigid",
-        "element_type": "minecraft:single_pool_element"
+        "elements": [
+          {
+            "location": "the_vault:vault/enigma/rooms/rainbow_forest/layer0/big1",
+            "projection": "rigid",
+            "element_type": "the_vault:paletted_single_pool_element",
+            "processors": "minecraft:empty"
+          }
+        ]
       }
     },
     {
-      "weight": 4,
-      "element": {
-        "location": "the_vault:vault/rooms/big36",
-        "processors": "minecraft:empty",
+      "weight": 150,
+      "element":
+      {
+        "processors": [
+          "the_vault:rainbow_forest/pallet0",
+          "the_vault:rainbow_forest/pallet0",
+          "the_vault:rainbow_forest/pallet0",
+          "the_vault:rainbow_forest/pallet0",
+          "the_vault:rainbow_forest/pallet1",
+          "the_vault:rainbow_forest/pallet1",
+          "the_vault:rainbow_forest/pallet1",
+          "the_vault:rainbow_forest/pallet2",
+          "the_vault:rainbow_forest/pallet2",
+          "the_vault:rainbow_forest/pallet3"
+        ],
+        "element_type": "the_vault:paletted_list_pool_element",
         "projection": "rigid",
-        "element_type": "minecraft:single_pool_element"
+        "elements": [
+          {
+            "location": "the_vault:vault/enigma/rooms/rainbow_forest/layer0/big2",
+            "projection": "rigid",
+            "element_type": "the_vault:paletted_single_pool_element",
+            "processors": "minecraft:empty"
+          }
+        ]
       }
     },
     {
-      "weight": 4,
-      "element": {
-        "location": "the_vault:vault/rooms/big37",
-        "processors": "minecraft:empty",
+      "weight": 150,
+      "element":
+      {
+        "processors": [
+          "the_vault:rainbow_forest/pallet0",
+          "the_vault:rainbow_forest/pallet0",
+          "the_vault:rainbow_forest/pallet0",
+          "the_vault:rainbow_forest/pallet0",
+          "the_vault:rainbow_forest/pallet1",
+          "the_vault:rainbow_forest/pallet1",
+          "the_vault:rainbow_forest/pallet1",
+          "the_vault:rainbow_forest/pallet2",
+          "the_vault:rainbow_forest/pallet2",
+          "the_vault:rainbow_forest/pallet3"
+        ],
+        "element_type": "the_vault:paletted_list_pool_element",
         "projection": "rigid",
-        "element_type": "minecraft:single_pool_element"
+        "elements": [
+          {
+            "location": "the_vault:vault/enigma/rooms/rainbow_forest/layer0/big3",
+            "projection": "rigid",
+            "element_type": "the_vault:paletted_single_pool_element",
+            "processors": "minecraft:empty"
+          }
+        ]
       }
     },
     {
-      "weight": 4,
-      "element": {
-        "location": "the_vault:vault/rooms/big38",
-        "processors": "minecraft:empty",
+      "weight": 150,
+      "element":
+      {
+        "processors": [
+          "the_vault:rainbow_forest/pallet0",
+          "the_vault:rainbow_forest/pallet0",
+          "the_vault:rainbow_forest/pallet0",
+          "the_vault:rainbow_forest/pallet0",
+          "the_vault:rainbow_forest/pallet1",
+          "the_vault:rainbow_forest/pallet1",
+          "the_vault:rainbow_forest/pallet1",
+          "the_vault:rainbow_forest/pallet2",
+          "the_vault:rainbow_forest/pallet2",
+          "the_vault:rainbow_forest/pallet3"
+        ],
+        "element_type": "the_vault:paletted_list_pool_element",
         "projection": "rigid",
-        "element_type": "minecraft:single_pool_element"
+        "elements": [
+          {
+            "location": "the_vault:vault/enigma/rooms/rainbow_forest/layer0/big4",
+            "projection": "rigid",
+            "element_type": "the_vault:paletted_single_pool_element",
+            "processors": "minecraft:empty"
+          }
+        ]
       }
     },
     {
-      "weight": 1,
-      "element": {
-        "location": "the_vault:vault/rooms/big40",
-        "processors": "minecraft:empty",
+      "weight": 50,
+      "element":
+      {
+        "processors": [
+          "the_vault:dungeons/pallet0",
+          "the_vault:dungeons/pallet0",
+          "the_vault:dungeons/pallet0",
+          "the_vault:dungeons/pallet0",
+          "the_vault:dungeons/pallet1",
+          "the_vault:dungeons/pallet1",
+          "the_vault:dungeons/pallet1",
+          "the_vault:dungeons/pallet2",
+          "the_vault:dungeons/pallet2",
+          "the_vault:dungeons/pallet3"
+        ],
+        "element_type": "the_vault:paletted_list_pool_element",
         "projection": "rigid",
-        "element_type": "minecraft:single_pool_element"
+        "elements": [
+          {
+            "location": "the_vault:vault/enigma/rooms/dungeons/layer0/big1",
+            "projection": "rigid",
+            "element_type": "the_vault:paletted_single_pool_element",
+            "processors": "minecraft:empty"
+          }
+        ]
       }
     },
     {
-      "weight": 1,
-      "element": {
-        "location": "the_vault:vault/rooms/big41",
-        "processors": "minecraft:empty",
+      "weight": 50,
+      "element":
+      {
+        "processors": [
+          "the_vault:dungeons/pallet0",
+          "the_vault:dungeons/pallet0",
+          "the_vault:dungeons/pallet0",
+          "the_vault:dungeons/pallet0",
+          "the_vault:dungeons/pallet1",
+          "the_vault:dungeons/pallet1",
+          "the_vault:dungeons/pallet1",
+          "the_vault:dungeons/pallet2",
+          "the_vault:dungeons/pallet2",
+          "the_vault:dungeons/pallet3"
+        ],
+        "element_type": "the_vault:paletted_list_pool_element",
         "projection": "rigid",
-        "element_type": "minecraft:single_pool_element"
+        "elements": [
+          {
+            "location": "the_vault:vault/enigma/rooms/dungeons/layer0/big2",
+            "projection": "rigid",
+            "element_type": "the_vault:paletted_single_pool_element",
+            "processors": "minecraft:empty"
+          }
+        ]
       }
     },
     {
-      "weight": 1,
-      "element": {
-        "location": "the_vault:vault/rooms/big42",
-        "processors": "minecraft:empty",
+      "weight": 50,
+      "element":
+      {
+        "processors": [
+          "the_vault:dungeons/pallet0",
+          "the_vault:dungeons/pallet0",
+          "the_vault:dungeons/pallet0",
+          "the_vault:dungeons/pallet0",
+          "the_vault:dungeons/pallet1",
+          "the_vault:dungeons/pallet1",
+          "the_vault:dungeons/pallet1",
+          "the_vault:dungeons/pallet2",
+          "the_vault:dungeons/pallet2",
+          "the_vault:dungeons/pallet3"
+        ],
+        "element_type": "the_vault:paletted_list_pool_element",
         "projection": "rigid",
-        "element_type": "minecraft:single_pool_element"
+        "elements": [
+          {
+            "location": "the_vault:vault/enigma/rooms/dungeons/layer0/big3",
+            "projection": "rigid",
+            "element_type": "the_vault:paletted_single_pool_element",
+            "processors": "minecraft:empty"
+          }
+        ]
       }
     },
     {
-      "weight": 1,
-      "element": {
-        "location": "the_vault:vault/rooms/big43",
-        "processors": "minecraft:empty",
+      "weight": 50,
+      "element":
+      {
+        "processors": [
+          "the_vault:dungeons/pallet0",
+          "the_vault:dungeons/pallet0",
+          "the_vault:dungeons/pallet0",
+          "the_vault:dungeons/pallet0",
+          "the_vault:dungeons/pallet1",
+          "the_vault:dungeons/pallet1",
+          "the_vault:dungeons/pallet1",
+          "the_vault:dungeons/pallet2",
+          "the_vault:dungeons/pallet2",
+          "the_vault:dungeons/pallet3"
+        ],
+        "element_type": "the_vault:paletted_list_pool_element",
         "projection": "rigid",
-        "element_type": "minecraft:single_pool_element"
+        "elements": [
+          {
+            "location": "the_vault:vault/enigma/rooms/dungeons/layer0/big4",
+            "projection": "rigid",
+            "element_type": "the_vault:paletted_single_pool_element",
+            "processors": "minecraft:empty"
+          }
+        ]
       }
     },
     {
-      "weight": 1,
-      "element": {
-        "location": "the_vault:vault/rooms/big44",
-        "processors": "minecraft:empty",
+      "weight": 50,
+      "element":
+      {
+        "processors": [
+          "the_vault:graves/pallet0",
+          "the_vault:graves/pallet0",
+          "the_vault:graves/pallet0",
+          "the_vault:graves/pallet0",
+          "the_vault:graves/pallet1",
+          "the_vault:graves/pallet1",
+          "the_vault:graves/pallet1",
+          "the_vault:graves/pallet2",
+          "the_vault:graves/pallet2",
+          "the_vault:graves/pallet3"
+        ],
+        "element_type": "the_vault:paletted_list_pool_element",
         "projection": "rigid",
-        "element_type": "minecraft:single_pool_element"
+        "elements": [
+          {
+            "location": "the_vault:vault/enigma/rooms/graves/layer0/big1",
+            "projection": "rigid",
+            "element_type": "the_vault:paletted_single_pool_element",
+            "processors": "minecraft:empty"
+          }
+        ]
       }
     },
     {
-      "weight": 1,
-      "element": {
-        "location": "the_vault:vault/rooms/big45",
-        "processors": "minecraft:empty",
+      "weight": 50,
+      "element":
+      {
+        "processors": [
+          "the_vault:graves/pallet0",
+          "the_vault:graves/pallet0",
+          "the_vault:graves/pallet0",
+          "the_vault:graves/pallet0",
+          "the_vault:graves/pallet1",
+          "the_vault:graves/pallet1",
+          "the_vault:graves/pallet1",
+          "the_vault:graves/pallet2",
+          "the_vault:graves/pallet2",
+          "the_vault:graves/pallet3"
+        ],
+        "element_type": "the_vault:paletted_list_pool_element",
         "projection": "rigid",
-        "element_type": "minecraft:single_pool_element"
+        "elements": [
+          {
+            "location": "the_vault:vault/enigma/rooms/graves/layer0/big2",
+            "projection": "rigid",
+            "element_type": "the_vault:paletted_single_pool_element",
+            "processors": "minecraft:empty"
+          }
+        ]
       }
     },
     {
-      "weight": 4,
-      "element": {
-        "location": "the_vault:vault/rooms/big46",
-        "processors": "minecraft:empty",
+      "weight": 50,
+      "element":
+      {
+        "processors": [
+          "the_vault:graves/pallet0",
+          "the_vault:graves/pallet0",
+          "the_vault:graves/pallet0",
+          "the_vault:graves/pallet0",
+          "the_vault:graves/pallet1",
+          "the_vault:graves/pallet1",
+          "the_vault:graves/pallet1",
+          "the_vault:graves/pallet2",
+          "the_vault:graves/pallet2",
+          "the_vault:graves/pallet3"
+        ],
+        "element_type": "the_vault:paletted_list_pool_element",
         "projection": "rigid",
-        "element_type": "minecraft:single_pool_element"
+        "elements": [
+          {
+            "location": "the_vault:vault/enigma/rooms/graves/layer0/big3",
+            "projection": "rigid",
+            "element_type": "the_vault:paletted_single_pool_element",
+            "processors": "minecraft:empty"
+          }
+        ]
       }
     },
     {
-      "weight": 4,
-      "element": {
-        "location": "the_vault:vault/rooms/big47",
-        "processors": "minecraft:empty",
+      "weight": 50,
+      "element":
+      {
+        "processors": [
+          "the_vault:graves/pallet0",
+          "the_vault:graves/pallet0",
+          "the_vault:graves/pallet0",
+          "the_vault:graves/pallet0",
+          "the_vault:graves/pallet1",
+          "the_vault:graves/pallet1",
+          "the_vault:graves/pallet1",
+          "the_vault:graves/pallet2",
+          "the_vault:graves/pallet2",
+          "the_vault:graves/pallet3"
+        ],
+        "element_type": "the_vault:paletted_list_pool_element",
         "projection": "rigid",
-        "element_type": "minecraft:single_pool_element"
+        "elements": [
+          {
+            "location": "the_vault:vault/enigma/rooms/graves/layer0/big4",
+            "projection": "rigid",
+            "element_type": "the_vault:paletted_single_pool_element",
+            "processors": "minecraft:empty"
+          }
+        ]
       }
     },
     {
-      "weight": 4,
-      "element": {
-        "location": "the_vault:vault/rooms/big48",
-        "processors": "minecraft:empty",
+      "weight": 40,
+      "element":
+      {
+        "processors": [
+          "the_vault:crystal_caves/pallet0",
+          "the_vault:crystal_caves/pallet1",
+          "the_vault:crystal_caves/pallet2",
+          "the_vault:crystal_caves/pallet3",
+          "the_vault:crystal_caves/pallet0",
+          "the_vault:crystal_caves/pallet1",
+          "the_vault:crystal_caves/pallet2",
+          "the_vault:crystal_caves/pallet3",
+          "the_vault:crystal_caves/pallet4"
+        ],
+        "element_type": "the_vault:paletted_list_pool_element",
         "projection": "rigid",
-        "element_type": "minecraft:single_pool_element"
+        "elements": [
+          {
+            "location": "the_vault:vault/enigma/rooms/crystal_caves/layer0/big1",
+            "projection": "rigid",
+            "element_type": "the_vault:paletted_single_pool_element",
+            "processors": "minecraft:empty"
+          }
+        ]
+      }
+    },
+    {
+      "weight": 40,
+      "element":
+      {
+        "processors": [
+          "the_vault:crystal_caves/pallet0",
+          "the_vault:crystal_caves/pallet1",
+          "the_vault:crystal_caves/pallet2",
+          "the_vault:crystal_caves/pallet3",
+          "the_vault:crystal_caves/pallet0",
+          "the_vault:crystal_caves/pallet1",
+          "the_vault:crystal_caves/pallet2",
+          "the_vault:crystal_caves/pallet3",
+          "the_vault:crystal_caves/pallet4"
+        ],
+        "element_type": "the_vault:paletted_list_pool_element",
+        "projection": "rigid",
+        "elements": [
+          {
+            "location": "the_vault:vault/enigma/rooms/crystal_caves/layer0/big2",
+            "projection": "rigid",
+            "element_type": "the_vault:paletted_single_pool_element",
+            "processors": "minecraft:empty"
+          }
+        ]
+      }
+    },
+    {
+      "weight": 40,
+      "element":
+      {
+        "processors": [
+          "the_vault:crystal_caves/pallet0",
+          "the_vault:crystal_caves/pallet1",
+          "the_vault:crystal_caves/pallet2",
+          "the_vault:crystal_caves/pallet3",
+          "the_vault:crystal_caves/pallet0",
+          "the_vault:crystal_caves/pallet1",
+          "the_vault:crystal_caves/pallet2",
+          "the_vault:crystal_caves/pallet3",
+          "the_vault:crystal_caves/pallet4"
+        ],
+        "element_type": "the_vault:paletted_list_pool_element",
+        "projection": "rigid",
+        "elements": [
+          {
+            "location": "the_vault:vault/enigma/rooms/crystal_caves/layer0/big3",
+            "projection": "rigid",
+            "element_type": "the_vault:paletted_single_pool_element",
+            "processors": "minecraft:empty"
+          }
+        ]
+      }
+    },
+    {
+      "weight": 40,
+      "element":
+      {
+        "processors": [
+          "the_vault:crystal_caves/pallet0",
+          "the_vault:crystal_caves/pallet1",
+          "the_vault:crystal_caves/pallet2",
+          "the_vault:crystal_caves/pallet3",
+          "the_vault:crystal_caves/pallet0",
+          "the_vault:crystal_caves/pallet1",
+          "the_vault:crystal_caves/pallet2",
+          "the_vault:crystal_caves/pallet3",
+          "the_vault:crystal_caves/pallet4"
+        ],
+        "element_type": "the_vault:paletted_list_pool_element",
+        "projection": "rigid",
+        "elements": [
+          {
+            "location": "the_vault:vault/enigma/rooms/crystal_caves/layer0/big4",
+            "projection": "rigid",
+            "element_type": "the_vault:paletted_single_pool_element",
+            "processors": "minecraft:empty"
+          }
+        ]
+      }
+    },
+    {
+      "weight": 40,
+      "element":
+      {
+        "processors": [
+          "the_vault:crystal_caves/pallet0",
+          "the_vault:crystal_caves/pallet1",
+          "the_vault:crystal_caves/pallet2",
+          "the_vault:crystal_caves/pallet3",
+          "the_vault:crystal_caves/pallet0",
+          "the_vault:crystal_caves/pallet1",
+          "the_vault:crystal_caves/pallet2",
+          "the_vault:crystal_caves/pallet3",
+          "the_vault:crystal_caves/pallet4"
+        ],
+        "element_type": "the_vault:paletted_list_pool_element",
+        "projection": "rigid",
+        "elements": [
+          {
+            "location": "the_vault:vault/enigma/rooms/crystal_caves/layer0/big5",
+            "projection": "rigid",
+            "element_type": "the_vault:paletted_single_pool_element",
+            "processors": "minecraft:empty"
+          }
+        ]
+      }
+    },
+    {
+      "weight": 5,
+      "element":
+      {
+        "processors": [
+          "the_vault:mineshaft/pallet0",
+          "the_vault:mineshaft/pallet0",
+          "the_vault:mineshaft/pallet0",
+          "the_vault:mineshaft/pallet0",
+          "the_vault:mineshaft/pallet1",
+          "the_vault:mineshaft/pallet1",
+          "the_vault:mineshaft/pallet1",
+          "the_vault:mineshaft/pallet2",
+          "the_vault:mineshaft/pallet2",
+          "the_vault:mineshaft/pallet3"
+        ],
+        "element_type": "the_vault:paletted_list_pool_element",
+        "projection": "rigid",
+        "elements": [
+          {
+            "location": "the_vault:vault/enigma/rooms/mineshaft/layer0/big1",
+            "projection": "rigid",
+            "element_type": "the_vault:paletted_single_pool_element",
+            "processors": "minecraft:empty"
+          }
+        ]
+      }
+    },
+    {
+      "weight": 5,
+      "element":
+      {
+        "processors": [
+          "the_vault:mineshaft/pallet0",
+          "the_vault:mineshaft/pallet0",
+          "the_vault:mineshaft/pallet0",
+          "the_vault:mineshaft/pallet0",
+          "the_vault:mineshaft/pallet1",
+          "the_vault:mineshaft/pallet1",
+          "the_vault:mineshaft/pallet1",
+          "the_vault:mineshaft/pallet2",
+          "the_vault:mineshaft/pallet2",
+          "the_vault:mineshaft/pallet3"
+        ],
+        "element_type": "the_vault:paletted_list_pool_element",
+        "projection": "rigid",
+        "elements": [
+          {
+            "location": "the_vault:vault/enigma/rooms/mineshaft/layer0/big2",
+            "projection": "rigid",
+            "element_type": "the_vault:paletted_single_pool_element",
+            "processors": "minecraft:empty"
+          }
+        ]
+      }
+    },
+    {
+      "weight": 5,
+      "element":
+      {
+        "processors": [
+          "the_vault:mineshaft/pallet0",
+          "the_vault:mineshaft/pallet0",
+          "the_vault:mineshaft/pallet0",
+          "the_vault:mineshaft/pallet0",
+          "the_vault:mineshaft/pallet1",
+          "the_vault:mineshaft/pallet1",
+          "the_vault:mineshaft/pallet1",
+          "the_vault:mineshaft/pallet2",
+          "the_vault:mineshaft/pallet2",
+          "the_vault:mineshaft/pallet3"
+        ],
+        "element_type": "the_vault:paletted_list_pool_element",
+        "projection": "rigid",
+        "elements": [
+          {
+            "location": "the_vault:vault/enigma/rooms/mineshaft/layer0/big3",
+            "projection": "rigid",
+            "element_type": "the_vault:paletted_single_pool_element",
+            "processors": "minecraft:empty"
+          }
+        ]
+      }
+    },
+    {
+      "weight": 5,
+      "element":
+      {
+        "processors": [
+          "the_vault:mineshaft/pallet0",
+          "the_vault:mineshaft/pallet0",
+          "the_vault:mineshaft/pallet0",
+          "the_vault:mineshaft/pallet0",
+          "the_vault:mineshaft/pallet1",
+          "the_vault:mineshaft/pallet1",
+          "the_vault:mineshaft/pallet1",
+          "the_vault:mineshaft/pallet2",
+          "the_vault:mineshaft/pallet2",
+          "the_vault:mineshaft/pallet3"
+        ],
+        "element_type": "the_vault:paletted_list_pool_element",
+        "projection": "rigid",
+        "elements": [
+          {
+            "location": "the_vault:vault/enigma/rooms/mineshaft/layer0/big4",
+            "projection": "rigid",
+            "element_type": "the_vault:paletted_single_pool_element",
+            "processors": "minecraft:empty"
+          }
+        ]
+      }
+    },
+    {
+      "weight": 7,
+      "element":
+      {
+        "processors": [
+          "the_vault:digsite/pallet0",
+          "the_vault:digsite/pallet0",
+          "the_vault:digsite/pallet0",
+          "the_vault:digsite/pallet0",
+          "the_vault:digsite/pallet1",
+          "the_vault:digsite/pallet1",
+          "the_vault:digsite/pallet1",
+          "the_vault:digsite/pallet2",
+          "the_vault:digsite/pallet2",
+          "the_vault:digsite/pallet3"
+        ],
+        "element_type": "the_vault:paletted_list_pool_element",
+        "projection": "rigid",
+        "elements": [
+          {
+            "location": "the_vault:vault/enigma/rooms/digsite/layer0/big1",
+            "projection": "rigid",
+            "element_type": "the_vault:paletted_single_pool_element",
+            "processors": "minecraft:empty"
+          }
+        ]
+      }
+    },
+    {
+      "weight": 7,
+      "element":
+      {
+        "processors": [
+          "the_vault:digsite/pallet0",
+          "the_vault:digsite/pallet0",
+          "the_vault:digsite/pallet0",
+          "the_vault:digsite/pallet0",
+          "the_vault:digsite/pallet1",
+          "the_vault:digsite/pallet1",
+          "the_vault:digsite/pallet1",
+          "the_vault:digsite/pallet2",
+          "the_vault:digsite/pallet2",
+          "the_vault:digsite/pallet3"
+        ],
+        "element_type": "the_vault:paletted_list_pool_element",
+        "projection": "rigid",
+        "elements": [
+          {
+            "location": "the_vault:vault/enigma/rooms/digsite/layer0/big2",
+            "projection": "rigid",
+            "element_type": "the_vault:paletted_single_pool_element",
+            "processors": "minecraft:empty"
+          }
+        ]
+      }
+    },
+    {
+      "weight": 7,
+      "element":
+      {
+        "processors": [
+          "the_vault:digsite/pallet0",
+          "the_vault:digsite/pallet0",
+          "the_vault:digsite/pallet0",
+          "the_vault:digsite/pallet0",
+          "the_vault:digsite/pallet1",
+          "the_vault:digsite/pallet1",
+          "the_vault:digsite/pallet1",
+          "the_vault:digsite/pallet2",
+          "the_vault:digsite/pallet2",
+          "the_vault:digsite/pallet3"
+        ],
+        "element_type": "the_vault:paletted_list_pool_element",
+        "projection": "rigid",
+        "elements": [
+          {
+            "location": "the_vault:vault/enigma/rooms/digsite/layer0/big3",
+            "projection": "rigid",
+            "element_type": "the_vault:paletted_single_pool_element",
+            "processors": "minecraft:empty"
+          }
+        ]
+      }
+    },
+    {
+      "weight": 7,
+      "element":
+      {
+        "processors": [
+          "the_vault:digsite/pallet0",
+          "the_vault:digsite/pallet0",
+          "the_vault:digsite/pallet0",
+          "the_vault:digsite/pallet0",
+          "the_vault:digsite/pallet1",
+          "the_vault:digsite/pallet1",
+          "the_vault:digsite/pallet1",
+          "the_vault:digsite/pallet2",
+          "the_vault:digsite/pallet2",
+          "the_vault:digsite/pallet3"
+        ],
+        "element_type": "the_vault:paletted_list_pool_element",
+        "projection": "rigid",
+        "elements": [
+          {
+            "location": "the_vault:vault/enigma/rooms/digsite/layer0/big4",
+            "projection": "rigid",
+            "element_type": "the_vault:paletted_single_pool_element",
+            "processors": "minecraft:empty"
+          }
+        ]
+      }
+    },
+    {
+      "weight": 14,
+      "element":
+      {
+        "processors": [
+          "minecraft:empty"
+        ],
+        "element_type": "the_vault:paletted_list_pool_element",
+        "projection": "rigid",
+        "elements": [
+          {
+            "location": "the_vault:vault/enigma/rooms/x_spot/layer0/big1",
+            "projection": "rigid",
+            "element_type": "the_vault:paletted_single_pool_element",
+            "processors": "minecraft:empty"
+          }
+        ]
+      }
+    },
+    {
+      "weight": 14,
+      "element":
+      {
+        "processors": [
+          "minecraft:empty"
+        ],
+        "element_type": "the_vault:paletted_list_pool_element",
+        "projection": "rigid",
+        "elements": [
+          {
+            "location": "the_vault:vault/enigma/rooms/x_spot/layer0/big2",
+            "projection": "rigid",
+            "element_type": "the_vault:paletted_single_pool_element",
+            "processors": "minecraft:empty"
+          }
+        ]
+      }
+    },
+    {
+      "weight": 14,
+      "element":
+      {
+        "processors": [
+          "minecraft:empty"
+        ],
+        "element_type": "the_vault:paletted_list_pool_element",
+        "projection": "rigid",
+        "elements": [
+          {
+            "location": "the_vault:vault/enigma/rooms/x_spot/layer0/big3",
+            "projection": "rigid",
+            "element_type": "the_vault:paletted_single_pool_element",
+            "processors": "minecraft:empty"
+          }
+        ]
+      }
+    },
+    {
+      "weight": 20,
+      "element":
+      {
+        "processors": [
+          "minecraft:empty"
+        ],
+        "element_type": "the_vault:paletted_list_pool_element",
+        "projection": "rigid",
+        "elements": [
+          {
+            "location": "the_vault:vault/enigma/rooms/viewer/layer0/big1",
+            "projection": "rigid",
+            "element_type": "the_vault:paletted_single_pool_element",
+            "processors": "minecraft:empty"
+          }
+        ]
+      }
+    },
+    {
+      "weight": 20,
+      "element":
+      {
+        "processors": [
+          "minecraft:empty"
+        ],
+        "element_type": "the_vault:paletted_list_pool_element",
+        "projection": "rigid",
+        "elements": [
+          {
+            "location": "the_vault:vault/enigma/rooms/viewer/layer0/big2",
+            "projection": "rigid",
+            "element_type": "the_vault:paletted_single_pool_element",
+            "processors": "minecraft:empty"
+          }
+        ]
+      }
+    },
+    {
+      "weight": 40,
+      "element":
+      {
+        "processors": [
+          "minecraft:empty"
+        ],
+        "element_type": "the_vault:paletted_list_pool_element",
+        "projection": "rigid",
+        "elements": [
+          {
+            "location": "the_vault:vault/enigma/rooms/puzzle_cube/layer0/big1",
+            "projection": "rigid",
+            "element_type": "the_vault:paletted_single_pool_element",
+            "processors": "minecraft:empty"
+          }
+        ]
+      }
+    },
+    {
+      "weight": 40,
+      "element":
+      {
+        "processors": [
+          "minecraft:empty"
+        ],
+        "element_type": "the_vault:paletted_list_pool_element",
+        "projection": "rigid",
+        "elements": [
+          {
+            "location": "the_vault:vault/enigma/rooms/vendor/layer0/big1",
+            "projection": "rigid",
+            "element_type": "the_vault:paletted_single_pool_element",
+            "processors": "minecraft:empty"
+          }
+        ]
+      }
+    },
+    {
+      "weight": 50,
+      "element":
+      {
+        "processors": [
+          "minecraft:empty",
+          "minecraft:empty",
+          "minecraft:empty",
+          "minecraft:empty",
+          "minecraft:empty",
+          "minecraft:empty",
+          "minecraft:empty",
+          "the_vault:wildwest/pallet1"
+        ],
+        "element_type": "the_vault:paletted_list_pool_element",
+        "projection": "rigid",
+        "elements": [
+          {
+            "location": "the_vault:vault/enigma/rooms/wildwest/layer0/big1",
+            "projection": "rigid",
+            "element_type": "the_vault:paletted_single_pool_element",
+            "processors": "the_vault:generic/unstable_tnt"
+          }
+        ]
+      }
+    },
+    {
+      "weight": 50,
+      "element":
+      {
+        "processors": [
+          "minecraft:empty",
+          "minecraft:empty",
+          "minecraft:empty",
+          "minecraft:empty",
+          "minecraft:empty",
+          "minecraft:empty",
+          "minecraft:empty",
+          "the_vault:wildwest/pallet1"
+        ],
+        "element_type": "the_vault:paletted_list_pool_element",
+        "projection": "rigid",
+        "elements": [
+          {
+            "location": "the_vault:vault/enigma/rooms/wildwest/layer0/big2",
+            "projection": "rigid",
+            "element_type": "the_vault:paletted_single_pool_element",
+            "processors": "the_vault:generic/unstable_tnt"
+          }
+        ]
+      }
+    },
+    {
+      "weight": 50,
+      "element":
+      {
+        "processors": [
+          "minecraft:empty",
+          "minecraft:empty",
+          "minecraft:empty",
+          "minecraft:empty",
+          "minecraft:empty",
+          "minecraft:empty",
+          "minecraft:empty",
+          "the_vault:wildwest/pallet1"
+        ],
+        "element_type": "the_vault:paletted_list_pool_element",
+        "projection": "rigid",
+        "elements": [
+          {
+            "location": "the_vault:vault/enigma/rooms/wildwest/layer0/big3",
+            "projection": "rigid",
+            "element_type": "the_vault:paletted_single_pool_element",
+            "processors": "the_vault:generic/unstable_tnt"
+          }
+        ]
+      }
+    },
+    {
+      "weight": 50,
+      "element":
+      {
+        "processors": [
+          "minecraft:empty",
+          "minecraft:empty",
+          "minecraft:empty",
+          "minecraft:empty",
+          "minecraft:empty",
+          "minecraft:empty",
+          "minecraft:empty",
+          "the_vault:wildwest/pallet1"
+        ],
+        "element_type": "the_vault:paletted_list_pool_element",
+        "projection": "rigid",
+        "elements": [
+          {
+            "location": "the_vault:vault/enigma/rooms/wildwest/layer0/big4",
+            "projection": "rigid",
+            "element_type": "the_vault:paletted_single_pool_element",
+            "processors": "the_vault:generic/unstable_tnt"
+          }
+        ]
+      }
+    },
+    {
+      "weight": 14,
+      "element":
+      {
+        "processors": [
+          "minecraft:empty"
+        ],
+        "element_type": "the_vault:paletted_list_pool_element",
+        "projection": "rigid",
+        "elements": [
+          {
+            "location": "the_vault:vault/enigma/rooms/contest_dragon/layer0/big1",
+            "projection": "rigid",
+            "element_type": "the_vault:paletted_single_pool_element",
+            "processors": "the_vault:contest/dragon_loot"
+          }
+        ]
+      }
+    },
+    {
+      "weight": 7,
+      "element":
+      {
+        "processors": [
+          "minecraft:empty"
+        ],
+        "element_type": "the_vault:paletted_list_pool_element",
+        "projection": "rigid",
+        "elements": [
+          {
+            "location": "the_vault:vault/enigma/rooms/contest_mine/layer0/big1",
+            "projection": "rigid",
+            "element_type": "the_vault:paletted_single_pool_element",
+            "processors": "the_vault:contest/mine_ores"
+          }
+        ]
+      }
+    },
+    {
+      "weight": 14,
+      "element":
+      {
+        "processors": [
+          "minecraft:empty"
+        ],
+        "element_type": "the_vault:paletted_list_pool_element",
+        "projection": "rigid",
+        "elements": [
+          {
+            "location": "the_vault:vault/enigma/rooms/contest_pixel/layer0/big1",
+            "projection": "rigid",
+            "element_type": "the_vault:paletted_single_pool_element",
+            "processors": "minecraft:empty"
+          }
+        ]
+      }
+    },
+    {
+      "weight": 100,
+      "element":
+      {
+        "processors": [
+          "minecraft:empty"
+        ],
+        "element_type": "the_vault:paletted_list_pool_element",
+        "projection": "rigid",
+        "elements": [
+          {
+            "location": "the_vault:vault/enigma/rooms/contest_tree/layer0/big1",
+            "projection": "rigid",
+            "element_type": "the_vault:paletted_single_pool_element",
+            "processors": "minecraft:empty"
+          }
+        ]
+      }
+    },
+    {
+      "weight": 100,
+      "element":
+      {
+        "processors": [
+          "minecraft:empty"
+        ],
+        "element_type": "the_vault:paletted_list_pool_element",
+        "projection": "rigid",
+        "elements": [
+          {
+            "location": "the_vault:vault/enigma/rooms/contest_prismarine/layer0/big1",
+            "projection": "rigid",
+            "element_type": "the_vault:paletted_single_pool_element",
+            "processors": "minecraft:empty"
+          }
+        ]
+      }
+    },
+    {
+      "weight": 67,
+      "element":
+      {
+        "processors": [
+          "minecraft:empty"
+        ],
+        "element_type": "the_vault:paletted_list_pool_element",
+        "projection": "rigid",
+        "elements": [
+          {
+            "location": "the_vault:vault/enigma/rooms/contest_fishtank/layer0/big1",
+            "projection": "rigid",
+            "element_type": "the_vault:paletted_single_pool_element",
+            "processors": "minecraft:empty"
+          }
+        ]
+      }
+    },
+    {
+      "weight": 200,
+      "element":
+      {
+        "processors": [
+          "minecraft:empty"
+        ],
+        "element_type": "the_vault:paletted_list_pool_element",
+        "projection": "rigid",
+        "elements": [
+          {
+            "location": "the_vault:vault/enigma/rooms/contest_oriental/layer0/big1",
+            "projection": "rigid",
+            "element_type": "the_vault:paletted_single_pool_element",
+            "processors": "minecraft:empty"
+          }
+        ]
+      }
+    },
+    {
+      "weight": 134,
+      "element":
+      {
+        "processors": [
+          "minecraft:empty"
+        ],
+        "element_type": "the_vault:paletted_list_pool_element",
+        "projection": "rigid",
+        "elements": [
+          {
+            "location": "the_vault:vault/enigma/rooms/contest_alien/layer0/big1",
+            "projection": "rigid",
+            "element_type": "the_vault:paletted_single_pool_element",
+            "processors": "minecraft:empty"
+          }
+        ]
+      }
+    },
+    {
+      "weight": 200,
+      "element":
+      {
+        "processors": [
+          "minecraft:empty"
+        ],
+        "element_type": "the_vault:paletted_list_pool_element",
+        "projection": "rigid",
+        "elements": [
+          {
+            "location": "the_vault:vault/enigma/rooms/contest_web/layer0/big1",
+            "projection": "rigid",
+            "element_type": "the_vault:paletted_single_pool_element",
+            "processors": "minecraft:empty"
+          }
+        ]
+      }
+    },
+    {
+      "weight": 100,
+      "element":
+      {
+        "processors": [
+          "minecraft:empty"
+        ],
+        "element_type": "the_vault:paletted_list_pool_element",
+        "projection": "rigid",
+        "elements": [
+          {
+            "location": "the_vault:vault/enigma/rooms/contest_city/layer0/big1",
+            "projection": "rigid",
+            "element_type": "the_vault:paletted_single_pool_element",
+            "processors": "minecraft:empty"
+          }
+        ]
+      }
+    },
+    {
+      "weight": 200,
+      "element":
+      {
+        "processors": [
+          "minecraft:empty"
+        ],
+        "element_type": "the_vault:paletted_list_pool_element",
+        "projection": "rigid",
+        "elements": [
+          {
+            "location": "the_vault:vault/enigma/rooms/contest_mustard/layer0/big1",
+            "projection": "rigid",
+            "element_type": "the_vault:paletted_single_pool_element",
+            "processors": "minecraft:empty"
+          }
+        ]
+      }
+    },
+    {
+      "weight": 14,
+      "element":
+      {
+        "processors": [
+          "minecraft:empty"
+        ],
+        "element_type": "the_vault:paletted_list_pool_element",
+        "projection": "rigid",
+        "elements": [
+          {
+            "location": "the_vault:vault/enigma/rooms/contest_birdcage/layer0/big1",
+            "projection": "rigid",
+            "element_type": "the_vault:paletted_single_pool_element",
+            "processors": "minecraft:empty"
+          }
+        ]
       }
     }
   ]

@@ -1,7 +1,0 @@
-{
-  "parent": "minecraft:block/door_top_rh",
-  "textures": {
-    "top": "the_vault:block/door_painite_top",
-    "bottom": "the_vault:block/door_painite_bottom"
-  }
-}

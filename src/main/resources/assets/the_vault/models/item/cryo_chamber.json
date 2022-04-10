@@ -1,3 +1,10 @@
 {
-  "parent": "the_vault:block/cryo_chamber_none"
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "the_vault:block/cryo_chamber_bottom_none"
+  },
+  "overrides": [
+    { "predicate": { "type": 0.0 }, "model": "the_vault:block/cryo_chamber_none_all" },
+    { "predicate": { "type": 0.5 }, "model": "the_vault:block/cryo_chamber_rusty_all" }
+  ]
 }

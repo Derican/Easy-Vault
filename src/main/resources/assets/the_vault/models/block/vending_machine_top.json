@@ -1,6 +1,6 @@
 {
-  "parent": "minecraft:block/cube_all",
+  "parent": "the_vault:block/base/nothing",
   "textures": {
-    "all": "the_vault:block/transparent"
+    "particle": "the_vault:block/vending_machine_bottom_front"
   }
 }

@@ -1,6 +1,7 @@
 {
-  "parent": "item/generated",
-  "textures": {
-    "layer0": "the_vault:item/helmet/plated_4_dark_helmet"
-  }
+	"parent": "item/generated",
+	"textures": {
+		"layer0": "the_vault:item/helmet/plated_4_dark_helmet",
+		"layer1": "the_vault:item/helmet/plated_4_dark_helmet_overlay"
+	}
 }

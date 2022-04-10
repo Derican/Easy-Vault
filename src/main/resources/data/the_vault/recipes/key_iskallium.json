@@ -1,16 +1,16 @@
 {
   "type": "minecraft:crafting_shaped",
   "pattern": [
-    " # ",
+    "###",
     "#n#",
-    " # "
+    "###"
   ],
   "key": {
     "#": {
       "item": "the_vault:gem_iskallium"
     },
     "n": {
-      "item": "minecraft:diamond_block"
+      "item": "the_vault:perfect_black_opal"
     }
   },
   "result": {

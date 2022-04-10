@@ -1,18 +1,18 @@
 {
   "variants": {
     "facing=south,half=lower": {
-      "model": "the_vault:block/vending_machine"
+      "model": "the_vault:block/multilayer/vending_machine"
     },
     "facing=east,half=lower": {
-      "model": "the_vault:block/vending_machine",
+      "model": "the_vault:block/multilayer/vending_machine",
       "y": 270
     },
     "facing=north,half=lower": {
-      "model": "the_vault:block/vending_machine",
+      "model": "the_vault:block/multilayer/vending_machine",
       "y": 180
     },
     "facing=west,half=lower": {
-      "model": "the_vault:block/vending_machine",
+      "model": "the_vault:block/multilayer/vending_machine",
       "y": 90
     },
     "facing=south,half=upper": {

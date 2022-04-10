@@ -9,7 +9,7 @@
       "layers": [
         {
           "block": "the_vault:vault_bedrock",
-          "height": 256
+          "height": 64
         }
       ],
       "structures": {

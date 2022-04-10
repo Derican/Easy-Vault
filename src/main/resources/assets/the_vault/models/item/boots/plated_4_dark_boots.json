@@ -1,6 +1,7 @@
 {
-  "parent": "item/generated",
-  "textures": {
-    "layer0": "the_vault:item/boots/plated_4_dark_boots"
-  }
+	"parent": "item/generated",
+	"textures": {
+		"layer0": "the_vault:item/boots/plated_4_dark_boots",
+		"layer1": "the_vault:item/boots/plated_4_dark_boots_overlay"
+	}
 }

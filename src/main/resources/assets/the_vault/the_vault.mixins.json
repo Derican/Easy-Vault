@@ -1,31 +1,58 @@
 {
-  "required": true,
-  "minVersion": "0.8",
-  "package": "iskallia.vault.mixin",
-  "compatibilityLevel": "JAVA_8",
-  "refmap": "the_vault.refmap.json",
-  "mixins": [
-    "MixinAttributeInstance",
-    "MixinCUpdateStructureBlockPacket",
-    "MixinEnchantment",
-    "MixinItemRenderer",
-    "MixinItemStack",
-    "MixinLivingEntity",
-    "MixinPlayerInventory",
-    "MixinRepairContainer",
-    "MixinServerWorld",
-    "MixinStructureBlockTileEntity"
-  ],
-  "client": [
-    "MixinAnvilScreen",
-    "MixinBossOverlayGui",
-    "MixinElytraLayer",
-    "MixinEnchantedBookItem",
-    "MixinItem"
-  ],
-  "server": [],
-  "injectors": {
-    "defaultRequire": 1
-  }
+    "required": true,
+    "minVersion": "0.8",
+    "package": "iskallia.vault.mixin",
+    "compatibilityLevel": "JAVA_8",
+    "refmap": "the_vault.refmap.json",
+    "mixins": [
+      "MixinAbstractSkeletonEntity",
+      "MixinArmorMaterial",
+      "MixinAttributeInstance",
+      "MixinBiome",
+      "MixinCCustomPayloadLoginPacket",
+      "MixinChunkGenerator",
+      "MixinCommandBlockTileEntity",
+      "MixinCrossbowItem",
+      "MixinCUpdateStructureBlockPacket",
+      "MixinEnchantment",
+      "MixinEnchantmentHelper",
+      "MixinEntity",
+      "MixinFallingBlock",
+      "MixinFireBlock",
+      "MixinFoodStats",
+      "MixinItemStack",
+      "MixinLavaFluid",
+      "MixinLivingEntity",
+      "MixinNBTSizeTracker",
+      "MixinNoiseChunkGenerator",
+      "MixinOverworldBiomeProvider",
+      "MixinPlayerInventory",
+      "MixinRepairContainer",
+      "MixinSCustomPayloadLoginPacket",
+      "MixinSCustomPayloadPlayPacket",
+      "MixinServerPlayNetHandler",
+      "MixinServerWorld",
+      "MixinSingleJigsawPiece",
+      "MixinSlot",
+      "MixinStructureBlockTileEntity",
+      "MixinStructureProcessor",
+      "MixinWitchEntity"
+    ],
+    "client": [
+        "MixinAnvilScreen",
+        "MixinAtlases",
+        "MixinBossOverlayGui",
+        "MixinDebugOverlayGui",
+        "MixinElytraLayer",
+        "MixinEnchantedBookItem",
+        "MixinItem",
+        "MixinItemStackClient",
+        "MixinLivingRenderer",
+        "MixinWitchRenderer"
+    ],
+    "server": [],
+    "injectors": {
+        "defaultRequire": 1
+    }
 }
 

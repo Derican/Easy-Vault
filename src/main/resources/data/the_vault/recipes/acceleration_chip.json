@@ -1,19 +1,19 @@
 {
   "type": "minecraft:crafting_shaped",
   "pattern": [
-    "cac",
-    "aba",
-    "cac"
+    "beb",
+    "ede",
+    "beb"
   ],
   "key": {
-    "a": {
-      "item": "the_vault:oozing_pizza"
+    "d": {
+      "item": "the_vault:vault_diamond_block"
     },
     "b": {
-      "item": "the_vault:vault_diamond"
+      "item": "the_vault:perfect_benitoite"
     },
-    "c": {
-      "item": "the_vault:gem_larimar"
+    "e": {
+      "item": "the_vault:gem_echo"
     }
   },
   "result": {

@@ -12,11 +12,23 @@
     "fog_color": 6840166,
     "water_color": 4159204,
     "water_fog_color": 329011,
+    "grass_color": 5884220,
+    "foliage_color": 3193611,
     "particle": {
       "options": {
         "type": "minecraft:white_ash"
       },
       "probability": 0.005
+    },
+    "music": {
+      "sound": "the_vault:no_sound",
+      "min_delay": 2147483646,
+      "max_delay": 2147483647,
+      "replace_current_music": false
+    },
+	"additions_sound": {
+      "sound": "the_vault:vault_ambient",
+      "tick_chance": 0.0005
     }
   },
   "starts": [],

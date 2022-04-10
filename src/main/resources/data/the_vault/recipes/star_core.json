@@ -1,19 +1,19 @@
 {
   "type": "minecraft:crafting_shaped",
   "pattern": [
-    "dbd",
-    "bcb",
-    "dbd"
+    "bpb",
+    "pap",
+    "bpb"
   ],
   "key": {
+    "a": {
+      "item": "the_vault:vault_diamond_block"
+    },
     "b": {
       "item": "the_vault:gem_larimar"
     },
-    "c": {
-      "item": "the_vault:vault_diamond_block"
-    },
-    "d": {
-      "item": "minecraft:air"
+    "p": {
+      "item": "the_vault:perfect_larimar"
     }
   },
   "result": {

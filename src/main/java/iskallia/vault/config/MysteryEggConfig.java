@@ -13,6 +13,7 @@ import net.minecraft.item.Items;
 import net.minecraft.item.SpawnEggItem;
 import net.minecraft.nbt.CompoundNBT;
 
+import java.util.NoSuchElementException;
 import java.util.stream.StreamSupport;
 
 public class MysteryEggConfig extends Config
@@ -36,6 +37,12 @@ public class MysteryEggConfig extends Config
     }
     
     private Item getEgg(final EntityType<?> type) {
-        return StreamSupport.stream(SpawnEggItem.eggs().spliterator(), false).filter(eggItem -> type.equals(eggItem.getType((CompoundNBT)null))).findAny().map(eggItem -> eggItem).orElse((SpawnEggItem) Items.AIR);
+        Item item=Items.AIR;
+        try {
+            item = StreamSupport.stream(SpawnEggItem.eggs().spliterator(), false).filter(eggItem -> type.equals(eggItem.getType((CompoundNBT) null))).findAny().get();
+        }catch (NoSuchElementException e){
+
+        }
+        return item;
     }
 }

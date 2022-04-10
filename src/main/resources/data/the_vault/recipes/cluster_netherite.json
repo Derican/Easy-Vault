@@ -7,13 +7,13 @@
   ],
   "key": {
     "#": {
-      "item": "minecraft:netherite_ingot"
+      "item": "the_vault:gem_wutodie"
     },
     "n": {
-      "item": "minecraft:wither_skeleton_skull"
+      "item": "the_vault:perfect_black_opal"
     },
     "a": {
-      "item": "minecraft:diamond"
+      "item": "minecraft:netherite_ingot"
     }
   },
   "result": {

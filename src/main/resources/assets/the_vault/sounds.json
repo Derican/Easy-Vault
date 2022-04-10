@@ -1,4 +1,158 @@
 {
+  "dash": {
+    "category": "master",
+    "sounds": [
+      "the_vault:ability/dash"
+    ]
+  },
+  "mega_jump": {
+    "category": "master",
+    "sounds": [
+      "the_vault:ability/mega_jump"
+    ]
+  },
+  "cleanse": {
+    "category": "master",
+    "sounds": [
+      "the_vault:ability/cleanse"
+    ]
+  },
+  "ghost_walk": {
+    "category": "master",
+    "sounds": [
+      "the_vault:ability/ghost_walk"
+    ]
+  },
+  "invisibility": {
+    "category": "master",
+    "sounds": [
+      "the_vault:ability/invisibility"
+    ]
+  },
+  "night_vision": {
+    "category": "master",
+    "sounds": [
+      "the_vault:ability/night_vision"
+    ]
+  },
+  "rampage": {
+    "category": "master",
+    "sounds": [
+      "the_vault:ability/rampage"
+    ]
+  },
+  "execution": {
+    "category": "master",
+    "sounds": [
+      "the_vault:ability/execution"
+    ]
+  },
+  "tank": {
+    "category": "master",
+    "sounds": [
+      "the_vault:ability/tank"
+    ]
+  },
+  "robot_hurt": {
+    "category": "hostile",
+    "sounds": [
+      "the_vault:robot/hurt_1",
+      "the_vault:robot/hurt_2",
+      "the_vault:robot/hurt_3",
+      "the_vault:robot/hurt_4"
+    ]
+  },
+  "robot_death": {
+    "category": "hostile",
+    "sounds": [
+      "the_vault:robot/death"
+    ]
+  },
+  "boogie_ambient": {
+    "category": "hostile",
+    "sounds": [
+      "the_vault:boogie/ambient_1",
+      "the_vault:boogie/ambient_2"
+    ]
+  },
+  "boogie_hurt": {
+    "category": "hostile",
+    "sounds": [
+      "the_vault:boogie/hurt_1",
+      "the_vault:boogie/hurt_2",
+      "the_vault:boogie/hurt_3"
+    ]
+  },
+  "boogie_death": {
+    "category": "hostile",
+    "sounds": [
+      "the_vault:boogie/death"
+    ]
+  },
+  "goblin_bail": {
+    "category": "neutral",
+    "sounds": [
+      "the_vault:treasure_goblin/bail_1",
+      "the_vault:treasure_goblin/bail_2"
+    ]
+  },
+  "goblin_death": {
+    "category": "neutral",
+    "sounds": [
+      "the_vault:treasure_goblin/death"
+    ]
+  },
+  "goblin_hurt": {
+    "category": "neutral",
+    "sounds": [
+      "the_vault:treasure_goblin/hurt_1",
+      "the_vault:treasure_goblin/hurt_2",
+      "the_vault:treasure_goblin/hurt_3"
+    ]
+  },
+  "goblin_idle": {
+    "category": "neutral",
+    "sounds": [
+      "the_vault:treasure_goblin/idle_1",
+      "the_vault:treasure_goblin/idle_2",
+      "the_vault:treasure_goblin/idle_3"
+    ]
+  },
+  "witchskall_idle": {
+    "category": "neutral",
+    "sounds": [
+      {
+        "name": "the_vault:witchskall/idle",
+        "pitch": 1.00
+      },
+      {
+        "name": "the_vault:witchskall/idle",
+        "pitch": 0.95
+      },
+      {
+        "name": "the_vault:witchskall/idle",
+        "pitch": 1.05
+      }
+    ]
+  },
+  "puzzle_completion_major": {
+    "category": "master",
+    "sounds": [
+      "the_vault:puzzle/completion_major"
+    ]
+  },
+  "puzzle_completion_minor": {
+    "category": "master",
+    "sounds": [
+      "the_vault:puzzle/completion_minor"
+    ]
+  },
+  "puzzle_completion_fail": {
+    "category": "master",
+    "sounds": [
+      "the_vault:puzzle/completion_fail"
+    ]
+  },
   "grasshopper_brrr": {
     "category": "master",
     "sounds": [
@@ -17,17 +171,11 @@
       "the_vault:timer_kill"
     ]
   },
-  "arena_horns": {
-    "category": "master",
-    "sounds": [
-      "the_vault:arena_horns"
-    ]
-  },
   "vault_ambient_loop": {
     "category": "music",
     "sounds": [
       {
-        "name": "the_vault:vault_ambient_loop",
+        "name": "the_vault:vault/ambient_loop",
         "stream": true
       }
     ]
@@ -36,7 +184,7 @@
     "category": "music",
     "sounds": [
       {
-        "name": "the_vault:boss_loop",
+        "name": "the_vault:vault/boss_loop",
         "stream": true
       }
     ]
@@ -44,16 +192,16 @@
   "vault_ambient": {
     "category": "ambient",
     "sounds": [
-      "the_vault:vault_ambient_1",
-      "the_vault:vault_ambient_2",
-      "the_vault:vault_ambient_3",
-      "the_vault:vault_ambient_4",
-      "the_vault:vault_ambient_5",
-      "the_vault:vault_ambient_6",
-      "the_vault:vault_ambient_7",
-      "the_vault:vault_ambient_8",
-      "the_vault:vault_ambient_9",
-      "the_vault:vault_ambient_10"
+      "the_vault:vault/ambient_1",
+      "the_vault:vault/ambient_2",
+      "the_vault:vault/ambient_3",
+      "the_vault:vault/ambient_4",
+      "the_vault:vault/ambient_5",
+      "the_vault:vault/ambient_6",
+      "the_vault:vault/ambient_7",
+      "the_vault:vault/ambient_8",
+      "the_vault:vault/ambient_9",
+      "the_vault:vault/ambient_10"
     ]
   },
   "timer_panic_tick": {
@@ -66,12 +214,6 @@
     "category": "master",
     "sounds": [
       "the_vault:confetti"
-    ]
-  },
-  "gift_bomb": {
-    "category": "master",
-    "sounds": [
-      "the_vault:gift_bomb"
     ]
   },
   "vault_exp": {
@@ -110,18 +252,6 @@
       "the_vault:boss_tp"
     ]
   },
-  "dash": {
-    "category": "master",
-    "sounds": [
-      "the_vault:dash"
-    ]
-  },
-  "mega_jump": {
-    "category": "master",
-    "sounds": [
-      "the_vault:mega_jump"
-    ]
-  },
   "booster_pack": {
     "category": "master",
     "sounds": [
@@ -132,18 +262,6 @@
     "category": "master",
     "sounds": [
       "the_vault:booster_pack_fail"
-    ]
-  },
-  "sub_bomb_gain": {
-    "category": "master",
-    "sounds": [
-      "the_vault:sub_bomb_gain"
-    ]
-  },
-  "sub_bomb_gain_mega": {
-    "category": "master",
-    "sounds": [
-      "the_vault:sub_bomb_gain_mega"
     ]
   },
   "vault_portal_open": {
@@ -161,89 +279,57 @@
   "vault_gem_hit": {
     "category": "block",
     "sounds": [
-      "the_vault:vault_gem_hit1",
-      "the_vault:vault_gem_hit2",
-      "the_vault:vault_gem_hit3",
-      "the_vault:vault_gem_hit4",
-      "the_vault:vault_gem_hit5"
+      "the_vault:vault_gem/hit_1",
+      "the_vault:vault_gem/hit_2",
+      "the_vault:vault_gem/hit_3",
+      "the_vault:vault_gem/hit_4",
+      "the_vault:vault_gem/hit_5"
     ]
   },
   "vault_gem_break": {
     "category": "block",
     "sounds": [
-      "the_vault:vault_gem_break"
-    ]
-  },
-  "robot_hurt": {
-    "category": "hostile",
-    "sounds": [
-      "the_vault:robot_hurt1",
-      "the_vault:robot_hurt2",
-      "the_vault:robot_hurt3",
-      "the_vault:robot_hurt4"
-    ]
-  },
-  "robot_death": {
-    "category": "hostile",
-    "sounds": [
-      "the_vault:robot_death"
-    ]
-  },
-  "boogie_ambient": {
-    "category": "hostile",
-    "sounds": [
-      "the_vault:boogie_ambient1",
-      "the_vault:boogie_ambient2"
-    ]
-  },
-  "boogie_hurt": {
-    "category": "hostile",
-    "sounds": [
-      "the_vault:boogie_hurt1",
-      "the_vault:boogie_hurt2",
-      "the_vault:boogie_hurt3"
-    ]
-  },
-  "boogie_death": {
-    "category": "hostile",
-    "sounds": [
-      "the_vault:boogie_death"
-    ]
-  },
-  "cleanse": {
-    "category": "master",
-    "sounds": [
-      "the_vault:cleanse"
-    ]
-  },
-  "ghost_walk": {
-    "category": "master",
-    "sounds": [
-      "the_vault:ghost_walk"
-    ]
-  },
-  "invisibility": {
-    "category": "master",
-    "sounds": [
-      "the_vault:invisibility"
-    ]
-  },
-  "night_vision": {
-    "category": "master",
-    "sounds": [
-      "the_vault:night_vision"
-    ]
-  },
-  "rampage": {
-    "category": "master",
-    "sounds": [
-      "the_vault:rampage"
+      "the_vault:vault_gem/break"
     ]
   },
   "vampire_hissing": {
     "category": "master",
     "sounds": [
       "the_vault:vampire_hissing"
+    ]
+  },
+  "cauldron_bubbles": {
+    "category": "master",
+    "sounds": [
+      "the_vault:cauldron_bubbles"
+    ]
+  },
+  "no_sound": {
+    "category": "master",
+    "sounds": []
+  },
+  "vault_chest_epic_open": {
+    "category": "master",
+    "sounds": [
+      "the_vault:chest/vault_chest_epic_open"
+    ]
+  },
+  "vault_chest_omega_open": {
+    "category": "master",
+    "sounds": [
+      "the_vault:chest/vault_chest_omega_open"
+    ]
+  },
+  "vault_chest_rare_open": {
+    "category": "master",
+    "sounds": [
+      "the_vault:chest/vault_chest_rare_open"
+    ]
+  },
+  "favour_up": {
+    "category": "player",
+    "sounds": [
+      "the_vault:favour_up"
     ]
   }
 }

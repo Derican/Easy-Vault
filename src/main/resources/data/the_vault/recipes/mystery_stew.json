@@ -1,3 +1,29 @@
 {
-  "type": "the_vault:crafting_special_mystery_stew"
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "dhd",
+    "pbp",
+    "ggg"
+  ],
+  "key": {
+    "d": {
+      "item": "the_vault:vault_diamond"
+    },
+    "h": {
+      "item": "the_vault:hunter_eye"
+    },
+    "b": {
+      "item": "minecraft:bowl"
+    },
+    "p": {
+      "item": "the_vault:poisonous_mushroom"
+    },
+    "g": {
+      "tag": "the_vault:playergems"
+    }
+  },
+  "result": {
+    "item": "the_vault:vault_stew_mystery",
+    "count": 1
+  }
 }

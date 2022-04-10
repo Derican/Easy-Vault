@@ -1,6 +1,7 @@
 {
-  "parent": "item/generated",
-  "textures": {
-    "layer0": "the_vault:item/chestplate/plated_3_dark_chestplate"
-  }
+	"parent": "item/generated",
+	"textures": {
+		"layer0": "the_vault:item/chestplate/plated_3_dark_chestplate",
+		"layer1": "the_vault:item/chestplate/plated_3_dark_chestplate_overlay"
+	}
 }

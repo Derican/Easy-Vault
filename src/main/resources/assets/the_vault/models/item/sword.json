@@ -1,22 +1,19 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "the_vault:item/sword/sword"
+    "layer0": "the_vault:item/sword/sword",
+    "layer1": "the_vault:item/sword/sword_overlay"
   },
   "overrides": [
-    {"predicate": {"the_vault:vault_rarity": 0, "the_vault:texture": 0}, "model": "the_vault:item/sword/common/sword_0"},
-    {"predicate": {"the_vault:vault_rarity": 0, "the_vault:texture": 1}, "model": "the_vault:item/sword/common/sword_1"},
-
-    {"predicate": {"the_vault:vault_rarity": 1, "the_vault:texture": 0}, "model": "the_vault:item/sword/rare/sword_0"},
-    {"predicate": {"the_vault:vault_rarity": 1, "the_vault:texture": 1}, "model": "the_vault:item/sword/rare/sword_1"},
-
-    {"predicate": {"the_vault:vault_rarity": 2, "the_vault:texture": 0}, "model": "the_vault:item/sword/epic/sword_0"},
-    {"predicate": {"the_vault:vault_rarity": 2, "the_vault:texture": 1}, "model": "the_vault:item/sword/epic/sword_1"},
-
-    {"predicate": {"the_vault:vault_rarity": 3, "the_vault:texture": 0}, "model": "the_vault:item/sword/omega/sword_0"},
-    {"predicate": {"the_vault:vault_rarity": 3, "the_vault:texture": 1}, "model": "the_vault:item/sword/omega/sword_1"},
-
-    {"predicate": {"the_vault:vault_rarity": 4, "the_vault:texture": 0}, "model": "the_vault:item/sword/scrappy/sword_0"},
-    {"predicate": {"the_vault:vault_rarity": 4, "the_vault:texture": 1}, "model": "the_vault:item/sword/scrappy/sword_1"}
+    {"predicate": {"the_vault:texture": 0}, "model": "the_vault:item/sword/all/sword_0"},
+    {"predicate": {"the_vault:texture": 1}, "model": "the_vault:item/sword/all/sword_1"},
+    {"predicate": {"the_vault:texture": 2}, "model": "the_vault:item/sword/all/sword_2"},
+    {"predicate": {"the_vault:texture": 3}, "model": "the_vault:item/sword/all/sword_3"},
+    {"predicate": {"the_vault:texture": 4}, "model": "the_vault:item/sword/all/sword_4"},
+    {"predicate": {"the_vault:texture": 5}, "model": "the_vault:item/sword/all/sword_5"},
+    {"predicate": {"the_vault:texture": 6}, "model": "the_vault:item/sword/all/sword_6"},
+    {"predicate": {"the_vault:texture": 7}, "model": "the_vault:item/sword/all/sword_7"},
+    {"predicate": {"the_vault:texture": 8}, "model": "the_vault:item/sword/all/greatsword"},
+    {"predicate": {"the_vault:special_texture": 0}, "model": "the_vault:item/sword/special/janitors_broom"}
   ]
 }

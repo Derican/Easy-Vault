@@ -1,9 +1,9 @@
 {
-  "name": "the_vault:vault/rooms",
+  "name": "the_vault:vault/boss_rooms",
   "fallback": "the_vault:vault/boss_rooms",
   "elements": [
     {
-      "weight": 4,
+      "weight": 1,
       "element": {
         "location": "the_vault:vault/rooms/boss1",
         "processors": "minecraft:empty",
@@ -12,7 +12,7 @@
       }
     },
     {
-      "weight": 4,
+      "weight": 1,
       "element": {
         "location": "the_vault:vault/rooms/boss2",
         "processors": "minecraft:empty",
@@ -21,7 +21,7 @@
       }
     },
     {
-      "weight": 4,
+      "weight": 1,
       "element": {
         "location": "the_vault:vault/rooms/boss3",
         "processors": "minecraft:empty",
@@ -30,7 +30,7 @@
       }
     },
     {
-      "weight": 4,
+      "weight": 1,
       "element": {
         "location": "the_vault:vault/rooms/boss4",
         "processors": "minecraft:empty",
@@ -38,8 +38,8 @@
         "element_type": "minecraft:single_pool_element"
       }
     },
-    {
-      "weight": 4,
+        {
+      "weight": 1,
       "element": {
         "location": "the_vault:vault/rooms/boss5",
         "processors": "minecraft:empty",
@@ -48,7 +48,7 @@
       }
     },
     {
-      "weight": 4,
+      "weight": 1,
       "element": {
         "location": "the_vault:vault/rooms/boss6",
         "processors": "minecraft:empty",
@@ -57,7 +57,7 @@
       }
     },
     {
-      "weight": 4,
+      "weight": 1,
       "element": {
         "location": "the_vault:vault/rooms/boss7",
         "processors": "minecraft:empty",
@@ -66,7 +66,7 @@
       }
     },
     {
-      "weight": 4,
+      "weight": 1,
       "element": {
         "location": "the_vault:vault/rooms/boss8",
         "processors": "minecraft:empty",
@@ -75,7 +75,7 @@
       }
     },
     {
-      "weight": 4,
+      "weight": 1,
       "element": {
         "location": "the_vault:vault/rooms/boss9",
         "processors": "minecraft:empty",
@@ -84,7 +84,7 @@
       }
     },
     {
-      "weight": 4,
+      "weight": 1,
       "element": {
         "location": "the_vault:vault/rooms/boss10",
         "processors": "minecraft:empty",
@@ -93,7 +93,7 @@
       }
     },
     {
-      "weight": 4,
+      "weight": 1,
       "element": {
         "location": "the_vault:vault/rooms/boss11",
         "processors": "minecraft:empty",
@@ -102,7 +102,7 @@
       }
     },
     {
-      "weight": 4,
+      "weight": 1,
       "element": {
         "location": "the_vault:vault/rooms/boss12",
         "processors": "minecraft:empty",
@@ -111,7 +111,7 @@
       }
     },
     {
-      "weight": 4,
+      "weight": 1,
       "element": {
         "location": "the_vault:vault/rooms/boss13",
         "processors": "minecraft:empty",
@@ -120,7 +120,7 @@
       }
     },
     {
-      "weight": 4,
+      "weight": 1,
       "element": {
         "location": "the_vault:vault/rooms/boss14",
         "processors": "minecraft:empty",
@@ -129,7 +129,7 @@
       }
     },
     {
-      "weight": 4,
+      "weight": 1,
       "element": {
         "location": "the_vault:vault/rooms/boss15",
         "processors": "minecraft:empty",
@@ -138,7 +138,7 @@
       }
     },
     {
-      "weight": 4,
+      "weight": 1,
       "element": {
         "location": "the_vault:vault/rooms/boss16",
         "processors": "minecraft:empty",
@@ -147,7 +147,7 @@
       }
     },
     {
-      "weight": 4,
+      "weight": 1,
       "element": {
         "location": "the_vault:vault/rooms/boss17",
         "processors": "minecraft:empty",
@@ -156,7 +156,7 @@
       }
     },
     {
-      "weight": 4,
+      "weight": 1,
       "element": {
         "location": "the_vault:vault/rooms/boss18",
         "processors": "minecraft:empty",
@@ -165,7 +165,7 @@
       }
     },
     {
-      "weight": 4,
+      "weight": 1,
       "element": {
         "location": "the_vault:vault/rooms/boss19",
         "processors": "minecraft:empty",
@@ -174,7 +174,7 @@
       }
     },
     {
-      "weight": 4,
+      "weight": 1,
       "element": {
         "location": "the_vault:vault/rooms/boss20",
         "processors": "minecraft:empty",
@@ -183,7 +183,7 @@
       }
     },
     {
-      "weight": 4,
+      "weight": 1,
       "element": {
         "location": "the_vault:vault/rooms/boss21",
         "processors": "minecraft:empty",
@@ -192,7 +192,7 @@
       }
     },
     {
-      "weight": 4,
+      "weight": 1,
       "element": {
         "location": "the_vault:vault/rooms/boss22",
         "processors": "minecraft:empty",
@@ -201,7 +201,7 @@
       }
     },
     {
-      "weight": 4,
+      "weight": 1,
       "element": {
         "location": "the_vault:vault/rooms/boss23",
         "processors": "minecraft:empty",
@@ -210,7 +210,7 @@
       }
     },
     {
-      "weight": 4,
+      "weight": 1,
       "element": {
         "location": "the_vault:vault/rooms/boss24",
         "processors": "minecraft:empty",
@@ -219,7 +219,7 @@
       }
     },
     {
-      "weight": 4,
+      "weight": 1,
       "element": {
         "location": "the_vault:vault/rooms/boss25",
         "processors": "minecraft:empty",
@@ -228,7 +228,7 @@
       }
     },
     {
-      "weight": 4,
+      "weight": 1,
       "element": {
         "location": "the_vault:vault/rooms/boss26",
         "processors": "minecraft:empty",
@@ -237,7 +237,7 @@
       }
     },
     {
-      "weight": 4,
+      "weight": 1,
       "element": {
         "location": "the_vault:vault/rooms/boss27",
         "processors": "minecraft:empty",
@@ -246,7 +246,7 @@
       }
     },
     {
-      "weight": 4,
+      "weight": 1,
       "element": {
         "location": "the_vault:vault/rooms/boss28",
         "processors": "minecraft:empty",
@@ -255,7 +255,7 @@
       }
     },
     {
-      "weight": 4,
+      "weight": 1,
       "element": {
         "location": "the_vault:vault/rooms/boss29",
         "processors": "minecraft:empty",
@@ -264,7 +264,7 @@
       }
     },
     {
-      "weight": 4,
+      "weight": 1,
       "element": {
         "location": "the_vault:vault/rooms/boss30",
         "processors": "minecraft:empty",
@@ -273,7 +273,7 @@
       }
     },
     {
-      "weight": 4,
+      "weight": 1,
       "element": {
         "location": "the_vault:vault/rooms/boss31",
         "processors": "minecraft:empty",
@@ -282,7 +282,7 @@
       }
     },
     {
-      "weight": 4,
+      "weight": 1,
       "element": {
         "location": "the_vault:vault/rooms/boss32",
         "processors": "minecraft:empty",
@@ -291,7 +291,7 @@
       }
     },
     {
-      "weight": 4,
+      "weight": 1,
       "element": {
         "location": "the_vault:vault/rooms/boss33",
         "processors": "minecraft:empty",
@@ -300,7 +300,7 @@
       }
     },
     {
-      "weight": 4,
+      "weight": 1,
       "element": {
         "location": "the_vault:vault/rooms/boss34",
         "processors": "minecraft:empty",
@@ -309,7 +309,7 @@
       }
     },
     {
-      "weight": 4,
+      "weight": 1,
       "element": {
         "location": "the_vault:vault/rooms/boss35",
         "processors": "minecraft:empty",
@@ -318,7 +318,7 @@
       }
     },
     {
-      "weight": 4,
+      "weight": 1,
       "element": {
         "location": "the_vault:vault/rooms/boss36",
         "processors": "minecraft:empty",
@@ -327,7 +327,7 @@
       }
     },
     {
-      "weight": 4,
+      "weight": 1,
       "element": {
         "location": "the_vault:vault/rooms/boss37",
         "processors": "minecraft:empty",
@@ -336,7 +336,7 @@
       }
     },
     {
-      "weight": 4,
+      "weight": 1,
       "element": {
         "location": "the_vault:vault/rooms/boss38",
         "processors": "minecraft:empty",
@@ -345,7 +345,7 @@
       }
     },
     {
-      "weight": 4,
+      "weight": 1,
       "element": {
         "location": "the_vault:vault/rooms/boss39",
         "processors": "minecraft:empty",
@@ -354,7 +354,7 @@
       }
     },
     {
-      "weight": 4,
+      "weight": 1,
       "element": {
         "location": "the_vault:vault/rooms/boss40",
         "processors": "minecraft:empty",
@@ -363,7 +363,7 @@
       }
     },
     {
-      "weight": 4,
+      "weight": 1,
       "element": {
         "location": "the_vault:vault/rooms/boss41",
         "processors": "minecraft:empty",
@@ -426,7 +426,7 @@
       }
     },
     {
-      "weight": 8,
+      "weight": 2,
       "element": {
         "location": "the_vault:vault/rooms/big1",
         "processors": "minecraft:empty",
@@ -435,7 +435,7 @@
       }
     },
     {
-      "weight": 8,
+      "weight": 2,
       "element": {
         "location": "the_vault:vault/rooms/big2",
         "processors": "minecraft:empty",
@@ -444,7 +444,7 @@
       }
     },
     {
-      "weight": 8,
+      "weight": 2,
       "element": {
         "location": "the_vault:vault/rooms/big3",
         "processors": "minecraft:empty",
@@ -453,7 +453,7 @@
       }
     },
     {
-      "weight": 8,
+      "weight": 2,
       "element": {
         "location": "the_vault:vault/rooms/big4",
         "processors": "minecraft:empty",
@@ -462,7 +462,7 @@
       }
     },
     {
-      "weight": 8,
+      "weight": 2,
       "element": {
         "location": "the_vault:vault/rooms/big5",
         "processors": "minecraft:empty",
@@ -471,7 +471,7 @@
       }
     },
     {
-      "weight": 8,
+      "weight": 2,
       "element": {
         "location": "the_vault:vault/rooms/big6",
         "processors": "minecraft:empty",
@@ -489,7 +489,7 @@
       }
     },
     {
-      "weight": 8,
+      "weight": 2,
       "element": {
         "location": "the_vault:vault/rooms/big8",
         "processors": "minecraft:empty",
@@ -498,7 +498,7 @@
       }
     },
     {
-      "weight": 8,
+      "weight": 2,
       "element": {
         "location": "the_vault:vault/rooms/big9",
         "processors": "minecraft:empty",
@@ -507,7 +507,7 @@
       }
     },
     {
-      "weight": 8,
+      "weight": 2,
       "element": {
         "location": "the_vault:vault/rooms/big10",
         "processors": "minecraft:empty",
@@ -516,7 +516,7 @@
       }
     },
     {
-      "weight": 8,
+      "weight": 2,
       "element": {
         "location": "the_vault:vault/rooms/big11",
         "processors": "minecraft:empty",
@@ -525,7 +525,7 @@
       }
     },
     {
-      "weight": 8,
+      "weight": 2,
       "element": {
         "location": "the_vault:vault/rooms/big12",
         "processors": "minecraft:empty",
@@ -534,7 +534,7 @@
       }
     },
     {
-      "weight": 8,
+      "weight": 2,
       "element": {
         "location": "the_vault:vault/rooms/big13",
         "processors": "minecraft:empty",
@@ -543,7 +543,7 @@
       }
     },
     {
-      "weight": 8,
+      "weight": 2,
       "element": {
         "location": "the_vault:vault/rooms/big14",
         "processors": "minecraft:empty",
@@ -552,7 +552,7 @@
       }
     },
     {
-      "weight": 8,
+      "weight": 2,
       "element": {
         "location": "the_vault:vault/rooms/big15",
         "processors": "minecraft:empty",
@@ -561,7 +561,7 @@
       }
     },
     {
-      "weight": 8,
+      "weight": 2,
       "element": {
         "location": "the_vault:vault/rooms/big16",
         "processors": "minecraft:empty",
@@ -570,7 +570,7 @@
       }
     },
     {
-      "weight": 8,
+      "weight": 2,
       "element": {
         "location": "the_vault:vault/rooms/big17",
         "processors": "minecraft:empty",
@@ -579,7 +579,7 @@
       }
     },
     {
-      "weight": 8,
+      "weight": 2,
       "element": {
         "location": "the_vault:vault/rooms/big18",
         "processors": "minecraft:empty",
@@ -588,7 +588,7 @@
       }
     },
     {
-      "weight": 8,
+      "weight": 2,
       "element": {
         "location": "the_vault:vault/rooms/big19",
         "processors": "minecraft:empty",
@@ -597,7 +597,7 @@
       }
     },
     {
-      "weight": 8,
+      "weight": 2,
       "element": {
         "location": "the_vault:vault/rooms/big20",
         "processors": "minecraft:empty",
@@ -606,7 +606,7 @@
       }
     },
     {
-      "weight": 8,
+      "weight": 2,
       "element": {
         "location": "the_vault:vault/rooms/big21",
         "processors": "minecraft:empty",
@@ -615,7 +615,7 @@
       }
     },
     {
-      "weight": 8,
+      "weight": 2,
       "element": {
         "location": "the_vault:vault/rooms/big22",
         "processors": "minecraft:empty",
@@ -624,7 +624,7 @@
       }
     },
     {
-      "weight": 8,
+      "weight": 2,
       "element": {
         "location": "the_vault:vault/rooms/big23",
         "processors": "minecraft:empty",
@@ -633,7 +633,7 @@
       }
     },
     {
-      "weight": 8,
+      "weight": 2,
       "element": {
         "location": "the_vault:vault/rooms/big24",
         "processors": "minecraft:empty",
@@ -642,7 +642,7 @@
       }
     },
     {
-      "weight": 8,
+      "weight": 2,
       "element": {
         "location": "the_vault:vault/rooms/big25",
         "processors": "minecraft:empty",
@@ -651,7 +651,7 @@
       }
     },
     {
-      "weight": 8,
+      "weight": 2,
       "element": {
         "location": "the_vault:vault/rooms/big26",
         "processors": "minecraft:empty",
@@ -660,7 +660,7 @@
       }
     },
     {
-      "weight": 8,
+      "weight": 2,
       "element": {
         "location": "the_vault:vault/rooms/big27",
         "processors": "minecraft:empty",
@@ -669,7 +669,7 @@
       }
     },
     {
-      "weight": 8,
+      "weight": 2,
       "element": {
         "location": "the_vault:vault/rooms/big28",
         "processors": "minecraft:empty",
@@ -678,7 +678,7 @@
       }
     },
     {
-      "weight": 8,
+      "weight": 2,
       "element": {
         "location": "the_vault:vault/rooms/big29",
         "processors": "minecraft:empty",
@@ -687,7 +687,7 @@
       }
     },
     {
-      "weight": 8,
+      "weight": 2,
       "element": {
         "location": "the_vault:vault/rooms/big30",
         "processors": "minecraft:empty",
@@ -696,7 +696,7 @@
       }
     },
     {
-      "weight": 8,
+      "weight": 2,
       "element": {
         "location": "the_vault:vault/rooms/big31",
         "processors": "minecraft:empty",
@@ -705,7 +705,7 @@
       }
     },
     {
-      "weight": 8,
+      "weight": 2,
       "element": {
         "location": "the_vault:vault/rooms/big32",
         "processors": "minecraft:empty",
@@ -714,7 +714,7 @@
       }
     },
     {
-      "weight": 8,
+      "weight": 2,
       "element": {
         "location": "the_vault:vault/rooms/big33",
         "processors": "minecraft:empty",
@@ -723,7 +723,7 @@
       }
     },
     {
-      "weight": 8,
+      "weight": 2,
       "element": {
         "location": "the_vault:vault/rooms/big34",
         "processors": "minecraft:empty",
@@ -732,7 +732,7 @@
       }
     },
     {
-      "weight": 8,
+      "weight": 2,
       "element": {
         "location": "the_vault:vault/rooms/big35",
         "processors": "minecraft:empty",
@@ -741,7 +741,7 @@
       }
     },
     {
-      "weight": 8,
+      "weight": 2,
       "element": {
         "location": "the_vault:vault/rooms/big36",
         "processors": "minecraft:empty",
@@ -750,7 +750,7 @@
       }
     },
     {
-      "weight": 8,
+      "weight": 2,
       "element": {
         "location": "the_vault:vault/rooms/big37",
         "processors": "minecraft:empty",
@@ -759,9 +759,18 @@
       }
     },
     {
-      "weight": 8,
+      "weight": 2,
       "element": {
         "location": "the_vault:vault/rooms/big38",
+        "processors": "minecraft:empty",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 2,
+      "element": {
+        "location": "the_vault:vault/rooms/big39",
         "processors": "minecraft:empty",
         "projection": "rigid",
         "element_type": "minecraft:single_pool_element"
@@ -822,7 +831,7 @@
       }
     },
     {
-      "weight": 8,
+      "weight": 2,
       "element": {
         "location": "the_vault:vault/rooms/big46",
         "processors": "minecraft:empty",
@@ -831,7 +840,7 @@
       }
     },
     {
-      "weight": 8,
+      "weight": 2,
       "element": {
         "location": "the_vault:vault/rooms/big47",
         "processors": "minecraft:empty",
@@ -840,9 +849,63 @@
       }
     },
     {
-      "weight": 8,
+      "weight": 2,
       "element": {
         "location": "the_vault:vault/rooms/big48",
+        "processors": "minecraft:empty",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 2,
+      "element": {
+        "location": "the_vault:vault/rooms/big49",
+        "processors": "minecraft:empty",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 2,
+      "element": {
+        "location": "the_vault:vault/rooms/big50",
+        "processors": "minecraft:empty",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 2,
+      "element": {
+        "location": "the_vault:vault/rooms/big51",
+        "processors": "minecraft:empty",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 2,
+      "element": {
+        "location": "the_vault:vault/rooms/big52",
+        "processors": "minecraft:empty",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 2,
+      "element": {
+        "location": "the_vault:vault/rooms/big53",
+        "processors": "minecraft:empty",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 2,
+      "element": {
+        "location": "the_vault:vault/rooms/big54",
         "processors": "minecraft:empty",
         "projection": "rigid",
         "element_type": "minecraft:single_pool_element"

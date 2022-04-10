@@ -1,7 +1,0 @@
-{
-  "parent": "minecraft:block/door_top",
-  "textures": {
-    "top": "the_vault:block/door_larimar_top",
-    "bottom": "the_vault:block/door_larimar_bottom"
-  }
-}
