@@ -1,0 +1,101 @@
+{
+  "name": "the_vault:vault/decor/puzzle_cube/chest",
+  "fallback": "the_vault:vault/decor/puzzle_cube/chest",
+  "elements": [
+	{
+        "weight": 8,
+        "element": {
+          "processors": [
+              
+              "minecraft:empty"
+          ],
+          "element_type": "the_vault:paletted_list_pool_element",
+          "projection": "rigid",
+          "elements": [
+              {
+                  "location": "the_vault:vault/prefab/decor/puzzle_cube/chest/blue",
+                  "projection": "rigid",
+                  "element_type": "the_vault:paletted_single_pool_element",
+                  "processors": "the_vault:generic/ignore_air"
+              }
+          ]
+        }
+    },
+    {
+        "weight": 6,
+        "element": {
+          "processors": [
+              
+              "minecraft:empty"
+          ],
+          "element_type": "the_vault:paletted_list_pool_element",
+          "projection": "rigid",
+          "elements": [
+              {
+                  "location": "the_vault:vault/prefab/decor/puzzle_cube/chest/yellow",
+                  "projection": "rigid",
+                  "element_type": "the_vault:paletted_single_pool_element",
+                  "processors": "the_vault:generic/ignore_air"
+              }
+          ]
+        }
+    },
+    {
+        "weight": 3,
+        "element": {
+          "processors": [
+              
+              "minecraft:empty"
+          ],
+          "element_type": "the_vault:paletted_list_pool_element",
+          "projection": "rigid",
+          "elements": [
+              {
+                  "location": "the_vault:vault/prefab/decor/puzzle_cube/chest/pink",
+                  "projection": "rigid",
+                  "element_type": "the_vault:paletted_single_pool_element",
+                  "processors": "the_vault:generic/ignore_air"
+              }
+          ]
+        }
+    },
+    {
+        "weight": 1,
+        "element": {
+          "processors": [
+              
+              "minecraft:empty"
+          ],
+          "element_type": "the_vault:paletted_list_pool_element",
+          "projection": "rigid",
+          "elements": [
+              {
+                  "location": "the_vault:vault/prefab/decor/puzzle_cube/chest/green",
+                  "projection": "rigid",
+                  "element_type": "the_vault:paletted_single_pool_element",
+                  "processors": "the_vault:generic/ignore_air"
+              }
+          ]
+        }
+    },
+    {
+        "weight": 12,
+        "element": {
+          "processors": [
+              
+              "minecraft:empty"
+          ],
+          "element_type": "the_vault:paletted_list_pool_element",
+          "projection": "rigid",
+          "elements": [
+              {
+                  "location": "the_vault:vault/prefab/decor/puzzle_cube/chest/chest",
+                  "projection": "rigid",
+                  "element_type": "the_vault:paletted_single_pool_element",
+                  "processors": "the_vault:generic/ignore_air"
+              }
+          ]
+        }
+    }
+  ]
+}

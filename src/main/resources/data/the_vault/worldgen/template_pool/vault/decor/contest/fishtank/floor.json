@@ -1,0 +1,192 @@
+{
+    "name": "the_vault:vault/decor/contest/fishtank/floor",
+    "fallback": "the_vault:vault/decor/contest/fishtank/floor",
+    "elements": [
+        {
+            "weight": 25,
+            "element": {
+              "element_type": "minecraft:empty_pool_element"
+            }
+      },
+      {
+          "weight": 4,
+          "element": {
+            "processors": [
+                "the_vault:treasure/air_half"
+            ],
+            "element_type": "the_vault:paletted_list_pool_element",
+            "projection": "rigid",
+            "elements": [
+                {
+                    "location": "the_vault:vault/prefab/decor/contest/fishtank/floor/f1",
+                    "projection": "rigid",
+                    "element_type": "the_vault:paletted_single_pool_element",
+                    "processors": "the_vault:generic/ignore_air"
+                }
+            ]
+          }
+      },
+      {
+        "weight": 4,
+        "element": {
+          "processors": [
+              "the_vault:treasure/air_half"
+          ],
+          "element_type": "the_vault:paletted_list_pool_element",
+          "projection": "rigid",
+          "elements": [
+              {
+                  "location": "the_vault:vault/prefab/decor/contest/fishtank/floor/f2",
+                  "projection": "rigid",
+                  "element_type": "the_vault:paletted_single_pool_element",
+                  "processors": "the_vault:generic/ignore_air"
+              }
+          ]
+        }
+    },
+    {
+        "weight": 4,
+        "element": {
+          "processors": [
+              "the_vault:treasure/air_half"
+          ],
+          "element_type": "the_vault:paletted_list_pool_element",
+          "projection": "rigid",
+          "elements": [
+              {
+                  "location": "the_vault:vault/prefab/decor/contest/fishtank/floor/f3",
+                  "projection": "rigid",
+                  "element_type": "the_vault:paletted_single_pool_element",
+                  "processors": "the_vault:generic/ignore_air"
+              }
+          ]
+        }
+    },
+    {
+        "weight": 4,
+        "element": {
+          "processors": [
+              "the_vault:treasure/air_half"
+          ],
+          "element_type": "the_vault:paletted_list_pool_element",
+          "projection": "rigid",
+          "elements": [
+              {
+                  "location": "the_vault:vault/prefab/decor/contest/fishtank/floor/f4",
+                  "projection": "rigid",
+                  "element_type": "the_vault:paletted_single_pool_element",
+                  "processors": "the_vault:generic/ignore_air"
+              }
+          ]
+        }
+    },
+    {
+        "weight": 4,
+        "element": {
+          "processors": [
+              "the_vault:treasure/air_half"
+          ],
+          "element_type": "the_vault:paletted_list_pool_element",
+          "projection": "rigid",
+          "elements": [
+              {
+                  "location": "the_vault:vault/prefab/decor/contest/fishtank/floor/f5",
+                  "projection": "rigid",
+                  "element_type": "the_vault:paletted_single_pool_element",
+                  "processors": "the_vault:generic/ignore_air"
+              }
+          ]
+        }
+    },
+    {
+        "weight": 4,
+        "element": {
+          "processors": [
+              "the_vault:treasure/air_half"
+          ],
+          "element_type": "the_vault:paletted_list_pool_element",
+          "projection": "rigid",
+          "elements": [
+              {
+                  "location": "the_vault:vault/prefab/decor/contest/fishtank/floor/f6",
+                  "projection": "rigid",
+                  "element_type": "the_vault:paletted_single_pool_element",
+                  "processors": "the_vault:generic/ignore_air"
+              }
+          ]
+        }
+    },
+    {
+        "weight": 4,
+        "element": {
+          "processors": [
+              "the_vault:treasure/air_half"
+          ],
+          "element_type": "the_vault:paletted_list_pool_element",
+          "projection": "rigid",
+          "elements": [
+              {
+                  "location": "the_vault:vault/prefab/decor/contest/fishtank/floor/f7",
+                  "projection": "rigid",
+                  "element_type": "the_vault:paletted_single_pool_element",
+                  "processors": "the_vault:generic/ignore_air"
+              }
+          ]
+        }
+    },
+    {
+        "weight": 4,
+        "element": {
+          "processors": [
+              "the_vault:treasure/air_half"
+          ],
+          "element_type": "the_vault:paletted_list_pool_element",
+          "projection": "rigid",
+          "elements": [
+              {
+                  "location": "the_vault:vault/prefab/decor/contest/fishtank/floor/f8",
+                  "projection": "rigid",
+                  "element_type": "the_vault:paletted_single_pool_element",
+                  "processors": "the_vault:generic/ignore_air"
+              }
+          ]
+        }
+    },
+    {
+        "weight": 4,
+        "element": {
+          "processors": [
+              "the_vault:treasure/air_half"
+          ],
+          "element_type": "the_vault:paletted_list_pool_element",
+          "projection": "rigid",
+          "elements": [
+              {
+                  "location": "the_vault:vault/prefab/decor/contest/fishtank/floor/f9",
+                  "projection": "rigid",
+                  "element_type": "the_vault:paletted_single_pool_element",
+                  "processors": "the_vault:generic/ignore_air"
+              }
+          ]
+        }
+    },
+    {
+        "weight": 4,
+        "element": {
+          "processors": [
+              "the_vault:treasure/air_half"
+          ],
+          "element_type": "the_vault:paletted_list_pool_element",
+          "projection": "rigid",
+          "elements": [
+              {
+                  "location": "the_vault:vault/prefab/decor/contest/fishtank/floor/f10",
+                  "projection": "rigid",
+                  "element_type": "the_vault:paletted_single_pool_element",
+                  "processors": "the_vault:generic/ignore_air"
+              }
+          ]
+        }
+    }
+    ]
+  }

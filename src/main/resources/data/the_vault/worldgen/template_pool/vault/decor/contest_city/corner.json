@@ -1,0 +1,294 @@
+{
+    "name": "the_vault:vault/decor/contest_city/corner",
+    "fallback": "the_vault:vault/decor/contest_city/corner",
+    "elements": [
+      {
+        "weight": 3,
+        "element": {
+          "processors": [
+              "the_vault:treasure/air_half"
+          ],
+          "element_type": "the_vault:paletted_list_pool_element",
+          "projection": "rigid",
+          "elements": [
+              {
+                  "location": "the_vault:vault/prefab/decor/contest_city/corner/c1",
+                  "projection": "rigid",
+                  "element_type": "the_vault:paletted_single_pool_element",
+                  "processors": "minecraft:empty"
+              }
+          ]
+        }
+    },
+    {
+        "weight": 3,
+        "element": {
+          "processors": [
+              "the_vault:treasure/air_half"
+          ],
+          "element_type": "the_vault:paletted_list_pool_element",
+          "projection": "rigid",
+          "elements": [
+              {
+                  "location": "the_vault:vault/prefab/decor/contest_city/corner/c2",
+                  "projection": "rigid",
+                  "element_type": "the_vault:paletted_single_pool_element",
+                  "processors": "minecraft:empty"
+              }
+          ]
+        }
+    },
+    {
+        "weight": 3,
+        "element": {
+          "processors": [
+              "the_vault:treasure/air_half"
+          ],
+          "element_type": "the_vault:paletted_list_pool_element",
+          "projection": "rigid",
+          "elements": [
+              {
+                  "location": "the_vault:vault/prefab/decor/contest_city/corner/c3",
+                  "projection": "rigid",
+                  "element_type": "the_vault:paletted_single_pool_element",
+                  "processors": "minecraft:empty"
+              }
+          ]
+        }
+    },
+    {
+        "weight": 3,
+        "element": {
+          "processors": [
+              "the_vault:treasure/air_half"
+          ],
+          "element_type": "the_vault:paletted_list_pool_element",
+          "projection": "rigid",
+          "elements": [
+              {
+                  "location": "the_vault:vault/prefab/decor/contest_city/corner/c4",
+                  "projection": "rigid",
+                  "element_type": "the_vault:paletted_single_pool_element",
+                  "processors": "minecraft:empty"
+              }
+          ]
+        }
+    },
+    {
+        "weight": 3,
+        "element": {
+          "processors": [
+              "the_vault:treasure/air_half"
+          ],
+          "element_type": "the_vault:paletted_list_pool_element",
+          "projection": "rigid",
+          "elements": [
+              {
+                  "location": "the_vault:vault/prefab/decor/contest_city/corner/c5",
+                  "projection": "rigid",
+                  "element_type": "the_vault:paletted_single_pool_element",
+                  "processors": "minecraft:empty"
+              }
+          ]
+        }
+    },
+    {
+        "weight": 3,
+        "element": {
+          "processors": [
+              "the_vault:treasure/air_half"
+          ],
+          "element_type": "the_vault:paletted_list_pool_element",
+          "projection": "rigid",
+          "elements": [
+              {
+                  "location": "the_vault:vault/prefab/decor/contest_city/corner/c6",
+                  "projection": "rigid",
+                  "element_type": "the_vault:paletted_single_pool_element",
+                  "processors": "minecraft:empty"
+              }
+          ]
+        }
+    },
+    {
+        "weight": 3,
+        "element": {
+          "processors": [
+              "the_vault:treasure/air_half"
+          ],
+          "element_type": "the_vault:paletted_list_pool_element",
+          "projection": "rigid",
+          "elements": [
+              {
+                  "location": "the_vault:vault/prefab/decor/contest_city/corner/c7",
+                  "projection": "rigid",
+                  "element_type": "the_vault:paletted_single_pool_element",
+                  "processors": "minecraft:empty"
+              }
+          ]
+        }
+    },
+    {
+        "weight": 3,
+        "element": {
+          "processors": [
+              "the_vault:treasure/air_half"
+          ],
+          "element_type": "the_vault:paletted_list_pool_element",
+          "projection": "rigid",
+          "elements": [
+              {
+                  "location": "the_vault:vault/prefab/decor/contest_city/corner/c8",
+                  "projection": "rigid",
+                  "element_type": "the_vault:paletted_single_pool_element",
+                  "processors": "minecraft:empty"
+              }
+          ]
+        }
+    },
+    {
+        "weight": 3,
+        "element": {
+          "processors": [
+              "the_vault:treasure/air_half"
+          ],
+          "element_type": "the_vault:paletted_list_pool_element",
+          "projection": "rigid",
+          "elements": [
+              {
+                  "location": "the_vault:vault/prefab/decor/contest_city/corner/c9",
+                  "projection": "rigid",
+                  "element_type": "the_vault:paletted_single_pool_element",
+                  "processors": "minecraft:empty"
+              }
+          ]
+        }
+    },
+    {
+        "weight": 3,
+        "element": {
+          "processors": [
+              "the_vault:treasure/air_half"
+          ],
+          "element_type": "the_vault:paletted_list_pool_element",
+          "projection": "rigid",
+          "elements": [
+              {
+                  "location": "the_vault:vault/prefab/decor/contest_city/corner/c10",
+                  "projection": "rigid",
+                  "element_type": "the_vault:paletted_single_pool_element",
+                  "processors": "minecraft:empty"
+              }
+          ]
+        }
+    },
+    {
+        "weight": 3,
+        "element": {
+          "processors": [
+              "the_vault:treasure/air_half"
+          ],
+          "element_type": "the_vault:paletted_list_pool_element",
+          "projection": "rigid",
+          "elements": [
+              {
+                  "location": "the_vault:vault/prefab/decor/contest_city/corner/c11",
+                  "projection": "rigid",
+                  "element_type": "the_vault:paletted_single_pool_element",
+                  "processors": "minecraft:empty"
+              }
+          ]
+        }
+    },
+    {
+        "weight": 3,
+        "element": {
+          "processors": [
+              "the_vault:treasure/air_half"
+          ],
+          "element_type": "the_vault:paletted_list_pool_element",
+          "projection": "rigid",
+          "elements": [
+              {
+                  "location": "the_vault:vault/prefab/decor/contest_city/corner/c12",
+                  "projection": "rigid",
+                  "element_type": "the_vault:paletted_single_pool_element",
+                  "processors": "minecraft:empty"
+              }
+          ]
+        }
+    },
+    {
+        "weight": 3,
+        "element": {
+          "processors": [
+              "the_vault:treasure/air_half"
+          ],
+          "element_type": "the_vault:paletted_list_pool_element",
+          "projection": "rigid",
+          "elements": [
+              {
+                  "location": "the_vault:vault/prefab/decor/contest_city/corner/c13",
+                  "projection": "rigid",
+                  "element_type": "the_vault:paletted_single_pool_element",
+                  "processors": "minecraft:empty"
+              }
+          ]
+        }
+    },
+    {
+        "weight": 3,
+        "element": {
+          "processors": [
+              "the_vault:treasure/air_half"
+          ],
+          "element_type": "the_vault:paletted_list_pool_element",
+          "projection": "rigid",
+          "elements": [
+              {
+                  "location": "the_vault:vault/prefab/decor/contest_city/corner/c14",
+                  "projection": "rigid",
+                  "element_type": "the_vault:paletted_single_pool_element",
+                  "processors": "minecraft:empty"
+              }
+          ]
+        }
+    },
+    {
+        "weight": 3,
+        "element": {
+          "processors": [
+              "the_vault:treasure/air_half"
+          ],
+          "element_type": "the_vault:paletted_list_pool_element",
+          "projection": "rigid",
+          "elements": [
+              {
+                  "location": "the_vault:vault/prefab/decor/contest_city/corner/c15",
+                  "projection": "rigid",
+                  "element_type": "the_vault:paletted_single_pool_element",
+                  "processors": "minecraft:empty"
+              }
+          ]
+        }
+    },
+    {
+        "weight": 3,
+        "element": {
+          "processors": [
+              "the_vault:treasure/air_half"
+          ],
+          "element_type": "the_vault:paletted_list_pool_element",
+          "projection": "rigid",
+          "elements": [
+              {
+                  "location": "the_vault:vault/prefab/decor/contest_city/corner/c16",
+                  "projection": "rigid",
+                  "element_type": "the_vault:paletted_single_pool_element",
+                  "processors": "minecraft:empty"
+              }
+          ]
+        }
+    }
+    ]
+  }

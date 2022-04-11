@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "bcb",
+    "ccc",
+    "aca"
+  ],
+  "key": {
+    "a": {
+      "item": "the_vault:perfect_larimar"
+    },
+    "b": {
+      "item": "the_vault:perfect_benitoite"
+    },
+    "c": {
+      "item": "the_vault:vault_catalyst_fragment"
+    }
+  },
+  "result": {
+    "item": "the_vault:vault_catalyst",
+    "count": 1
+  }
+}

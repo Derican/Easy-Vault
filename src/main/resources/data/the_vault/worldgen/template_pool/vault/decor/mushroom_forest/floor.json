@@ -1,0 +1,202 @@
+{
+    "name": "the_vault:vault/decor/mushroom_forest/floor",
+    "fallback": "the_vault:vault/decor/mushroom_forest/floor",
+    "elements": [
+      {
+        "weight": 12,
+        "element": {
+          "element_type": "minecraft:empty_pool_element"
+        }
+      },
+      {
+          "weight": 6,
+          "element": {
+            "processors": [
+                
+                "the_vault:treasure/air_half"
+            ],
+            "element_type": "the_vault:paletted_list_pool_element",
+            "projection": "rigid",
+            "elements": [
+                {
+                    "location": "the_vault:vault/prefab/decor/mushroom_forest/floor/m1",
+                    "projection": "rigid",
+                    "element_type": "the_vault:paletted_single_pool_element",
+                    "processors": "the_vault:generic/ignore_air"
+                }
+            ]
+          }
+      },
+      {
+        "weight": 6,
+        "element": {
+          "processors": [
+              
+              "the_vault:treasure/air_half"
+          ],
+          "element_type": "the_vault:paletted_list_pool_element",
+          "projection": "rigid",
+          "elements": [
+              {
+                  "location": "the_vault:vault/prefab/decor/mushroom_forest/floor/m2",
+                  "projection": "rigid",
+                  "element_type": "the_vault:paletted_single_pool_element",
+                  "processors": "the_vault:generic/ignore_air"
+              }
+          ]
+        }
+      },
+      {
+        "weight": 3,
+        "element": {
+          "processors": [
+              
+              "the_vault:treasure/air_half"
+          ],
+          "element_type": "the_vault:paletted_list_pool_element",
+          "projection": "rigid",
+          "elements": [
+              {
+                  "location": "the_vault:vault/prefab/decor/mushroom_forest/floor/b1",
+                  "projection": "rigid",
+                  "element_type": "the_vault:paletted_single_pool_element",
+                  "processors": "the_vault:generic/ignore_air"
+              }
+          ]
+        }
+      },
+      {
+        "weight": 3,
+        "element": {
+          "processors": [
+              
+              "the_vault:treasure/air_half"
+          ],
+          "element_type": "the_vault:paletted_list_pool_element",
+          "projection": "rigid",
+          "elements": [
+              {
+                  "location": "the_vault:vault/prefab/decor/mushroom_forest/floor/b2",
+                  "projection": "rigid",
+                  "element_type": "the_vault:paletted_single_pool_element",
+                  "processors": "the_vault:generic/ignore_air"
+              }
+          ]
+        }
+      },
+      {
+        "weight": 3,
+        "element": {
+          "processors": [
+              
+              "the_vault:treasure/air_half"
+          ],
+          "element_type": "the_vault:paletted_list_pool_element",
+          "projection": "rigid",
+          "elements": [
+              {
+                  "location": "the_vault:vault/prefab/decor/mushroom_forest/floor/b3",
+                  "projection": "rigid",
+                  "element_type": "the_vault:paletted_single_pool_element",
+                  "processors": "the_vault:generic/ignore_air"
+              }
+          ]
+        }
+      },
+      {
+        "weight": 3,
+        "element": {
+          "processors": [
+              
+              "the_vault:treasure/air_half"
+          ],
+          "element_type": "the_vault:paletted_list_pool_element",
+          "projection": "rigid",
+          "elements": [
+              {
+                  "location": "the_vault:vault/prefab/decor/mushroom_forest/floor/b4",
+                  "projection": "rigid",
+                  "element_type": "the_vault:paletted_single_pool_element",
+                  "processors": "the_vault:generic/ignore_air"
+              }
+          ]
+        }
+      },
+      {
+        "weight": 3,
+        "element": {
+          "processors": [
+              
+              "the_vault:treasure/air_half"
+          ],
+          "element_type": "the_vault:paletted_list_pool_element",
+          "projection": "rigid",
+          "elements": [
+              {
+                  "location": "the_vault:vault/prefab/decor/mushroom_forest/floor/r1",
+                  "projection": "rigid",
+                  "element_type": "the_vault:paletted_single_pool_element",
+                  "processors": "the_vault:generic/ignore_air"
+              }
+          ]
+        }
+      },
+      {
+        "weight": 3,
+        "element": {
+          "processors": [
+              
+              "the_vault:treasure/air_half"
+          ],
+          "element_type": "the_vault:paletted_list_pool_element",
+          "projection": "rigid",
+          "elements": [
+              {
+                  "location": "the_vault:vault/prefab/decor/mushroom_forest/floor/r2",
+                  "projection": "rigid",
+                  "element_type": "the_vault:paletted_single_pool_element",
+                  "processors": "the_vault:generic/ignore_air"
+              }
+          ]
+        }
+      },
+      {
+        "weight": 3,
+        "element": {
+          "processors": [
+              
+              "the_vault:treasure/air_half"
+          ],
+          "element_type": "the_vault:paletted_list_pool_element",
+          "projection": "rigid",
+          "elements": [
+              {
+                  "location": "the_vault:vault/prefab/decor/mushroom_forest/floor/r3",
+                  "projection": "rigid",
+                  "element_type": "the_vault:paletted_single_pool_element",
+                  "processors": "the_vault:generic/ignore_air"
+              }
+          ]
+        }
+      },
+      {
+        "weight": 12,
+        "element": {
+          "processors": [
+              
+              "the_vault:treasure/air_half"
+          ],
+          "element_type": "the_vault:paletted_list_pool_element",
+          "projection": "rigid",
+          "elements": [
+              {
+                  "location": "the_vault:vault/prefab/decor/mushroom_forest/floor/a1",
+                  "projection": "rigid",
+                  "element_type": "the_vault:paletted_single_pool_element",
+                  "processors": "the_vault:generic/ignore_air"
+              }
+          ]
+        }
+      }
+    ]
+  }

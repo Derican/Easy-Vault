@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "aba",
+    "bzb",
+    "aba"
+  ],
+  "key": {
+    "a": {
+      "item": "the_vault:perfect_painite"
+    },
+    "b": {
+      "item": "minecraft:lava_bucket"
+    },
+    "z": {
+      "item": "the_vault:reset_flask"
+    }
+  },
+  "result": {
+    "item": "the_vault:reset_flask",
+    "nbt": "{Skillable:\"Fire Resistance\"}"
+  }
+}

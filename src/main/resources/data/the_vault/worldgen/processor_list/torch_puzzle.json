@@ -1,0 +1,35 @@
+{
+  "processors": [
+    {
+      "rules": [
+	    {
+          "output_state": {
+            "Name": "minecraft:repeater",
+			"Properties": {
+			  "delay": "1",
+			  "facing": "south",
+			  "locked": "false",
+			  "powered": "false"
+			}
+          },
+          "input_predicate": {
+            "predicate_type": "minecraft:blockstate_match",
+            "block_state": {
+			  "Name": "minecraft:redstone_wall_torch",
+			  "Properties": {
+			    "facing": "north",
+				"lit": "true"
+			  }
+			}
+          },
+          "location_predicate": {
+            "block": "minecraft:air",
+			"probability": 0.50,
+            "predicate_type": "minecraft:random_block_match"
+          }
+        }
+      ],
+      "processor_type": "minecraft:rule"
+    }
+  ]
+}

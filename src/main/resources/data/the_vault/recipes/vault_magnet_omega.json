@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "nnn",
+    "ncn",
+    "npn"
+  ],
+  "key": {
+    "n": {
+      "item": "the_vault:magnetite"
+    },
+    "c": {
+      "item": "the_vault:magnet_core_omega"
+    },
+    "p": {
+      "item": "the_vault:gem_pog"
+    }
+  },
+  "result": {
+    "item": "the_vault:vault_magnet_omega",
+    "count": 1
+  }
+}

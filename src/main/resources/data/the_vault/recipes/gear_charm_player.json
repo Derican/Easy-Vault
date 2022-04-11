@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "idi",
+    "ehe",
+    "beb"
+  ],
+  "key": {
+    "i": {
+      "item": "the_vault:vaulterite_ingot"
+    },
+    "d": {
+      "tag": "the_vault:playerclusters"
+    },
+    "b": {
+      "item": "the_vault:vault_essence"
+    },
+    "e": {
+      "item": "the_vault:star_shard"
+    },
+    "h": {
+      "item": "the_vault:hunter_eye"
+    }
+  },
+  "result": {
+    "item": "the_vault:gear_charm",
+    "count": 1
+  }
+}

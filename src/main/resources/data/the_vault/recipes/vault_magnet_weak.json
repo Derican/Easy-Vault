@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "nnn",
+    "ncn",
+    "nwn"
+  ],
+  "key": {
+    "n": {
+      "item": "the_vault:magnetite"
+    },
+    "c": {
+      "item": "the_vault:magnet_core_weak"
+    },
+    "w": {
+      "item": "the_vault:gem_wutodie"
+    }
+  },
+  "result": {
+    "item": "the_vault:vault_magnet_weak",
+    "count": 1
+  }
+}

@@ -1,0 +1,335 @@
+{
+  "name": "the_vault:vault/decor/graves/small_grave",
+  "fallback": "the_vault:vault/decor/graves/small_grave",
+  "elements": [
+    {
+      "weight": 20,
+      "element": {
+        "element_type": "minecraft:empty_pool_element"
+      }
+    },
+	{
+        "weight": 5,
+        "element": {
+          "processors": [
+              
+              "the_vault:treasure/air_half"
+          ],
+          "element_type": "the_vault:paletted_list_pool_element",
+          "projection": "rigid",
+          "elements": [
+              {
+                  "location": "the_vault:vault/prefab/decor/graves/small_grave/s1",
+                  "projection": "rigid",
+                  "element_type": "the_vault:paletted_single_pool_element",
+                  "processors": "minecraft:empty"
+              }
+          ]
+        }
+    },
+	{
+        "weight": 5,
+        "element": {
+          "processors": [
+              
+              "the_vault:treasure/air_half"
+          ],
+          "element_type": "the_vault:paletted_list_pool_element",
+          "projection": "rigid",
+          "elements": [
+              {
+                  "location": "the_vault:vault/prefab/decor/graves/small_grave/s2",
+                  "projection": "rigid",
+                  "element_type": "the_vault:paletted_single_pool_element",
+                  "processors": "minecraft:empty"
+              }
+          ]
+        }
+    },
+	{
+        "weight": 5,
+        "element": {
+          "processors": [
+              
+              "the_vault:treasure/air_half"
+          ],
+          "element_type": "the_vault:paletted_list_pool_element",
+          "projection": "rigid",
+          "elements": [
+              {
+                  "location": "the_vault:vault/prefab/decor/graves/small_grave/s3",
+                  "projection": "rigid",
+                  "element_type": "the_vault:paletted_single_pool_element",
+                  "processors": "minecraft:empty"
+              }
+          ]
+        }
+    },
+	{
+        "weight": 5,
+        "element": {
+          "processors": [
+              
+              "the_vault:treasure/air_half"
+          ],
+          "element_type": "the_vault:paletted_list_pool_element",
+          "projection": "rigid",
+          "elements": [
+              {
+                  "location": "the_vault:vault/prefab/decor/graves/small_grave/s4",
+                  "projection": "rigid",
+                  "element_type": "the_vault:paletted_single_pool_element",
+                  "processors": "minecraft:empty"
+              }
+          ]
+        }
+    },
+	{
+        "weight": 5,
+        "element": {
+          "processors": [
+              
+              "the_vault:treasure/air_half"
+          ],
+          "element_type": "the_vault:paletted_list_pool_element",
+          "projection": "rigid",
+          "elements": [
+              {
+                  "location": "the_vault:vault/prefab/decor/graves/small_grave/s5",
+                  "projection": "rigid",
+                  "element_type": "the_vault:paletted_single_pool_element",
+                  "processors": "minecraft:empty"
+              }
+          ]
+        }
+    },
+	{
+        "weight": 5,
+        "element": {
+          "processors": [
+              
+              "the_vault:treasure/air_half"
+          ],
+          "element_type": "the_vault:paletted_list_pool_element",
+          "projection": "rigid",
+          "elements": [
+              {
+                  "location": "the_vault:vault/prefab/decor/graves/small_grave/s6",
+                  "projection": "rigid",
+                  "element_type": "the_vault:paletted_single_pool_element",
+                  "processors": "minecraft:empty"
+              }
+          ]
+        }
+    },
+	{
+        "weight": 5,
+        "element": {
+          "processors": [
+              
+              "the_vault:treasure/air_half"
+          ],
+          "element_type": "the_vault:paletted_list_pool_element",
+          "projection": "rigid",
+          "elements": [
+              {
+                  "location": "the_vault:vault/prefab/decor/graves/small_grave/s7",
+                  "projection": "rigid",
+                  "element_type": "the_vault:paletted_single_pool_element",
+                  "processors": "minecraft:empty"
+              }
+          ]
+        }
+    },
+	{
+        "weight": 5,
+        "element": {
+          "processors": [
+              
+              "the_vault:treasure/air_half"
+          ],
+          "element_type": "the_vault:paletted_list_pool_element",
+          "projection": "rigid",
+          "elements": [
+              {
+                  "location": "the_vault:vault/prefab/decor/graves/small_grave/s8",
+                  "projection": "rigid",
+                  "element_type": "the_vault:paletted_single_pool_element",
+                  "processors": "minecraft:empty"
+              }
+          ]
+        }
+    },
+	{
+        "weight": 3,
+        "element": {
+          "processors": [
+              
+              "the_vault:treasure/air_half"
+          ],
+          "element_type": "the_vault:paletted_list_pool_element",
+          "projection": "rigid",
+          "elements": [
+              {
+                  "location": "the_vault:vault/prefab/decor/graves/small_grave/e1",
+                  "projection": "rigid",
+                  "element_type": "the_vault:paletted_single_pool_element",
+                  "processors": "minecraft:empty"
+              }
+          ]
+        }
+    },
+	{
+        "weight": 3,
+        "element": {
+          "processors": [
+              
+              "the_vault:treasure/air_half"
+          ],
+          "element_type": "the_vault:paletted_list_pool_element",
+          "projection": "rigid",
+          "elements": [
+              {
+                  "location": "the_vault:vault/prefab/decor/graves/small_grave/e2",
+                  "projection": "rigid",
+                  "element_type": "the_vault:paletted_single_pool_element",
+                  "processors": "minecraft:empty"
+              }
+          ]
+        }
+    },
+	{
+        "weight": 3,
+        "element": {
+          "processors": [
+              
+              "the_vault:treasure/air_half"
+          ],
+          "element_type": "the_vault:paletted_list_pool_element",
+          "projection": "rigid",
+          "elements": [
+              {
+                  "location": "the_vault:vault/prefab/decor/graves/small_grave/e3",
+                  "projection": "rigid",
+                  "element_type": "the_vault:paletted_single_pool_element",
+                  "processors": "minecraft:empty"
+              }
+          ]
+        }
+    },
+	{
+        "weight": 3,
+        "element": {
+          "processors": [
+              
+              "the_vault:treasure/air_half"
+          ],
+          "element_type": "the_vault:paletted_list_pool_element",
+          "projection": "rigid",
+          "elements": [
+              {
+                  "location": "the_vault:vault/prefab/decor/graves/small_grave/e4",
+                  "projection": "rigid",
+                  "element_type": "the_vault:paletted_single_pool_element",
+                  "processors": "minecraft:empty"
+              }
+          ]
+        }
+    },
+	{
+        "weight": 3,
+        "element": {
+          "processors": [
+              
+              "the_vault:treasure/air_half"
+          ],
+          "element_type": "the_vault:paletted_list_pool_element",
+          "projection": "rigid",
+          "elements": [
+              {
+                  "location": "the_vault:vault/prefab/decor/graves/small_grave/e5",
+                  "projection": "rigid",
+                  "element_type": "the_vault:paletted_single_pool_element",
+                  "processors": "minecraft:empty"
+              }
+          ]
+        }
+    },
+	{
+        "weight": 3,
+        "element": {
+          "processors": [
+              
+              "the_vault:treasure/air_half"
+          ],
+          "element_type": "the_vault:paletted_list_pool_element",
+          "projection": "rigid",
+          "elements": [
+              {
+                  "location": "the_vault:vault/prefab/decor/graves/small_grave/e6",
+                  "projection": "rigid",
+                  "element_type": "the_vault:paletted_single_pool_element",
+                  "processors": "minecraft:empty"
+              }
+          ]
+        }
+    },
+	{
+        "weight": 3,
+        "element": {
+          "processors": [
+              
+              "the_vault:treasure/air_half"
+          ],
+          "element_type": "the_vault:paletted_list_pool_element",
+          "projection": "rigid",
+          "elements": [
+              {
+                  "location": "the_vault:vault/prefab/decor/graves/small_grave/e7",
+                  "projection": "rigid",
+                  "element_type": "the_vault:paletted_single_pool_element",
+                  "processors": "minecraft:empty"
+              }
+          ]
+        }
+    },
+	{
+        "weight": 3,
+        "element": {
+          "processors": [
+              
+              "the_vault:treasure/air_half"
+          ],
+          "element_type": "the_vault:paletted_list_pool_element",
+          "projection": "rigid",
+          "elements": [
+              {
+                  "location": "the_vault:vault/prefab/decor/graves/small_grave/e8",
+                  "projection": "rigid",
+                  "element_type": "the_vault:paletted_single_pool_element",
+                  "processors": "minecraft:empty"
+              }
+          ]
+        }
+    },
+    {
+        "weight": 3,
+        "element": {
+          "processors": [
+              
+              "the_vault:treasure/air_half"
+          ],
+          "element_type": "the_vault:paletted_list_pool_element",
+          "projection": "rigid",
+          "elements": [
+              {
+                  "location": "the_vault:vault/prefab/decor/graves/small_grave/r1",
+                  "projection": "rigid",
+                  "element_type": "the_vault:paletted_single_pool_element",
+                  "processors": "minecraft:empty"
+              }
+          ]
+        }
+    }
+  ]
+}

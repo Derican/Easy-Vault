@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "GG",
+    "GG"
+  ],
+  "key": {
+    "G": {
+      "item": "the_vault:gem_wutodie"
+    }
+  },
+  "result": {
+    "item": "the_vault:perfect_wutodie",
+    "count": 1
+  }
+}

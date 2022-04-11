@@ -1,0 +1,698 @@
+{
+    "pools": [
+      { "name": "Bonus Pool",
+        "rolls": {
+          "min": 3,
+          "max": 4
+        },
+        "entries": [
+          { "_name": "overenchantedbook1",
+                "type": "minecraft:loot_table",
+                "weight": 4,
+                "name": "the_vault:chest/t1enchantedbooks",
+                "functions": [
+                    {
+                    "function": "minecraft:set_count",
+                    "count": {
+                        "min": 1,
+                        "max": 1
+                    }
+                    }
+                ]
+          },
+          { "_name": "vaultdust",
+            "type": "minecraft:item",
+            "weight": 3,
+            "name": "the_vault:vault_dust",
+            "functions": [
+              {
+                "function": "minecraft:set_count",
+                "count": {
+                  "min": 2,
+                  "max": 8
+                }
+              },
+              {
+                "function": "minecraft:set_count",
+                "count": 0,
+                "conditions": [
+                  {
+                    "condition": "minecraft:random_chance",
+                    "chance": 0.0
+                  }
+                ]
+              }
+            ]
+          },
+          { "_name": "vaultplating",
+            "type": "minecraft:item",
+            "weight": 3,
+            "name": "the_vault:vault_plating",
+            "functions": [
+              {
+                "function": "minecraft:set_count",
+                "count": {
+                  "min": 1,
+                  "max": 2
+                }
+              },
+              {
+                "function": "minecraft:set_count",
+                "count": 0,
+                "conditions": [
+                  {
+                    "condition": "minecraft:random_chance",
+                    "chance": 0.0
+                  }
+                ]
+              }
+            ]
+          },
+          { "_name": "wutaxshard",
+            "type": "minecraft:item",
+            "weight": 3,
+            "name": "the_vault:wutax_shard",
+            "functions": [
+              {
+                "function": "minecraft:set_count",
+                "count": {
+                  "min": 2,
+                  "max": 3
+                }
+              },
+              {
+                "function": "minecraft:set_count",
+                "count": 0,
+                "conditions": [
+                  {
+                    "condition": "minecraft:random_chance",
+                    "chance": 0.0
+                  }
+                ]
+              }
+            ]
+          },
+          { "_name": "vaultbronze",
+            "type": "minecraft:item",
+            "weight": 4,
+            "name": "the_vault:vault_silver",
+            "functions": [
+              {
+                "function": "minecraft:set_count",
+                "count": {
+                  "min": 4,
+                  "max": 16
+                }
+              },
+              {
+                "function": "minecraft:set_count",
+                "count": 0,
+                "conditions": [
+                  {
+                    "condition": "minecraft:random_chance",
+                    "chance": 0.0
+                  }
+                ]
+              }
+            ]
+          },
+          { "_name": "staressence",
+            "type": "minecraft:item",
+            "weight": 2,
+            "name": "the_vault:star_essence",
+            "functions": [
+              {
+                "function": "minecraft:set_count",
+                "count": {
+                  "min": 2,
+                  "max": 4
+                }
+              },
+              {
+                "function": "minecraft:set_count",
+                "count": 0,
+                "conditions": [
+                  {
+                    "condition": "minecraft:random_chance",
+                    "chance": 0.0
+                  }
+                ]
+              }
+            ]
+          },
+          { "_name": "skillessence",
+            "type": "minecraft:item",
+            "weight": 1,
+            "name": "the_vault:skill_essence",
+            "functions": [
+              {
+                "function": "minecraft:set_count",
+                "count": {
+                  "min": 1,
+                  "max": 1
+                }
+              },
+              {
+                "function": "minecraft:set_count",
+                "count": 0,
+                "conditions": [
+                  {
+                    "condition": "minecraft:random_chance",
+                    "chance": 0.0
+                  }
+                ]
+              }
+            ]
+          },
+          { "_name": "magnetite",
+            "type": "minecraft:item",
+            "weight": 2,
+            "name": "the_vault:magnetite",
+            "functions": [
+              {
+                "function": "minecraft:set_count",
+                "count": {
+                  "min": 2,
+                  "max": 3
+                }
+              },
+              {
+                "function": "minecraft:set_count",
+                "count": 0,
+                "conditions": [
+                  {
+                    "condition": "minecraft:random_chance",
+                    "chance": 0.1
+                  }
+                ]
+              }
+            ]
+          },
+          { "_name": "catalyst",
+            "type": "minecraft:item",
+            "weight": 1,
+            "name": "the_vault:vault_catalyst_fragment",
+            "functions": [
+              {
+                "function": "minecraft:set_count",
+                "count": {
+                  "min": 2,
+                  "max": 4
+                }
+              },
+              {
+                "function": "minecraft:set_count",
+                "count": 0,
+                "conditions": [
+                  {
+                    "condition": "minecraft:random_chance",
+                    "chance": 0.0
+                  }
+                ]
+              }
+            ]
+          },
+          { "_name": "luckyapple", 
+            "type": "minecraft:item",
+            "weight": 2,
+            "name": "the_vault:lucky_apple",
+            "functions": [
+              {
+                "function": "minecraft:set_count",
+                "count": {
+                  "min": 1,
+                  "max": 1
+                }
+              },
+              {
+                "function": "minecraft:set_count",
+                "count": 0,
+                "conditions": [
+                  {
+                    "condition": "minecraft:random_chance",
+                    "chance": 0.0
+                  }
+                ]
+              }
+            ]
+          },
+          { "_name": "candybar",
+            "type": "minecraft:item",
+            "weight": 4,
+            "name": "the_vault:candy_bar",
+            "functions": [
+              {
+                "function": "minecraft:set_count",
+                "count": {
+                  "min": 1,
+                  "max": 1
+                }
+              },
+              {
+                "function": "minecraft:set_count",
+                "count": 0,
+                "conditions": [
+                  {
+                    "condition": "minecraft:random_chance",
+                    "chance": 0.0
+                  }
+                ]
+              }
+            ]
+          },
+          { "_name": "goldenapple",
+            "type": "minecraft:item",
+            "weight": 4,
+            "name": "minecraft:golden_apple",
+            "functions": [
+              {
+                "function": "minecraft:set_count",
+                "count": {
+                  "min": 2,
+                  "max": 2
+                }
+              },
+              {
+                "function": "minecraft:set_count",
+                "count": 0,
+                "conditions": [
+                  {
+                    "condition": "minecraft:random_chance",
+                    "chance": 0.0
+                  }
+                ]
+              }
+            ]
+          },
+          { "_name": "heartyapple",
+            "type": "minecraft:item",
+            "weight": 4,
+            "name": "the_vault:hearty_apple",
+            "functions": [
+              {
+                "function": "minecraft:set_count",
+                "count": {
+                  "min": 1,
+                  "max": 4
+                }
+              },
+              {
+                "function": "minecraft:set_count",
+                "count": 0,
+                "conditions": [
+                  {
+                    "condition": "minecraft:random_chance",
+                    "chance": 0.0
+                  }
+                ]
+              }
+            ]
+          },
+          { "_name": "relic",
+            "type": "minecraft:item",
+            "weight": 4,
+            "name": "the_vault:unidentified_relic",
+            "functions": [
+              {
+                "function": "minecraft:set_count",
+                "count": {
+                  "min": 1,
+                  "max": 1
+                }
+              },
+              {
+                "function": "minecraft:set_count",
+                "count": 0,
+                "conditions": [
+                  {
+                    "condition": "minecraft:random_chance",
+                    "chance": 0.0
+                  }
+                ]
+              }
+            ]
+          },
+          { "_name": "vaultburger",
+            "type": "minecraft:item",
+            "weight": 4,
+            "name": "the_vault:vault_burger",
+            "functions": [
+              {
+                "function": "minecraft:set_count",
+                "count": {
+                  "min": 2,
+                  "max": 2
+                }
+              },
+              {
+                "function": "minecraft:set_count",
+                "count": 0,
+                "conditions": [
+                  {
+                    "condition": "minecraft:random_chance",
+                    "chance": 0.0
+                  }
+                ]
+              }
+            ]
+          },
+          { "_name": "respecflask",
+            "type": "minecraft:item",
+            "weight": 4,
+            "name": "the_vault:respec_flask",
+            "functions": [
+              {
+                "function": "minecraft:set_count",
+                "count": {
+                  "min": 1,
+                  "max": 1
+                }
+              },
+              {
+                "function": "minecraft:set_count",
+                "count": 0,
+                "conditions": [
+                  {
+                    "condition": "minecraft:random_chance",
+                    "chance": 0.0
+                  }
+                ]
+              }
+            ]
+          },
+          { "_name": "repaircore",
+            "type": "minecraft:item",
+            "weight": 3,
+            "name": "the_vault:repair_core",
+            "functions": [
+              {
+                "function": "minecraft:set_count",
+                "count": {
+                  "min": 1,
+                  "max": 1
+                }
+              },
+              {
+                "function": "minecraft:set_count",
+                "count": 0,
+                "conditions": [
+                  {
+                    "condition": "minecraft:random_chance",
+                    "chance": 0.0
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      { "name": "Vault Gear",
+        "rolls": {
+          "min": 1,
+          "max": 3
+        },
+        "entries": [
+          {
+            "type": "minecraft:item",
+            "weight": 1,
+            "name": "the_vault:idol_benevolent",
+            "functions": [
+              {
+                "function": "minecraft:set_count",
+                "count": {
+                  "min": 1,
+                  "max": 1
+                }
+              },
+              {
+                "function": "minecraft:set_count",
+                "count": 0,
+                "conditions": [
+                  {
+                    "condition": "minecraft:random_chance",
+                    "chance": 0.5
+                  }
+                ]
+              },
+              {
+                "function": "set_nbt",
+                "tag": "{Vault:{Attributes:[{Id:\"the_vault:gear_roll_pool\",BaseValue:\"special\"}]}}"
+              }
+            ]
+          },
+          {
+            "type": "minecraft:item",
+            "weight": 1,
+            "name": "the_vault:idol_omniscient",
+            "functions": [
+              {
+                "function": "minecraft:set_count",
+                "count": {
+                  "min": 1,
+                  "max": 1
+                }
+              },
+              {
+                "function": "minecraft:set_count",
+                "count": 0,
+                "conditions": [
+                  {
+                    "condition": "minecraft:random_chance",
+                    "chance": 0.5
+                  }
+                ]
+              },
+              {
+                "function": "set_nbt",
+                "tag": "{Vault:{Attributes:[{Id:\"the_vault:gear_roll_pool\",BaseValue:\"special\"}]}}"
+              }
+            ]
+          },
+          {
+            "type": "minecraft:item",
+            "weight": 1,
+            "name": "the_vault:idol_timekeeper",
+            "functions": [
+              {
+                "function": "minecraft:set_count",
+                "count": {
+                  "min": 1,
+                  "max": 1
+                }
+              },
+              {
+                "function": "minecraft:set_count",
+                "count": 0,
+                "conditions": [
+                  {
+                    "condition": "minecraft:random_chance",
+                    "chance": 0.5
+                  }
+                ]
+              },
+              {
+                "function": "set_nbt",
+                "tag": "{Vault:{Attributes:[{Id:\"the_vault:gear_roll_pool\",BaseValue:\"special\"}]}}"
+              }
+            ]
+          },
+          {
+            "type": "minecraft:item",
+            "weight": 1,
+            "name": "the_vault:idol_malevolence",
+            "functions": [
+              {
+                "function": "minecraft:set_count",
+                "count": {
+                  "min": 1,
+                  "max": 1
+                }
+              },
+              {
+                "function": "minecraft:set_count",
+                "count": 0,
+                "conditions": [
+                  {
+                    "condition": "minecraft:random_chance",
+                    "chance": 0.5
+                  }
+                ]
+              },
+              {
+                "function": "set_nbt",
+                "tag": "{Vault:{Attributes:[{Id:\"the_vault:gear_roll_pool\",BaseValue:\"special\"}]}}"
+              }
+            ]
+          },
+          {
+            "type": "minecraft:item",
+            "weight": 3,
+            "name": "the_vault:sword",
+            "functions": [
+              {
+                "function": "minecraft:set_count",
+                "count": {
+                  "min": 1,
+                  "max": 1
+                }
+              },
+              {
+                "function": "minecraft:set_count",
+                "count": 0,
+                "conditions": [
+                  {
+                    "condition": "minecraft:random_chance",
+                    "chance": 0
+                  }
+                ]
+              },
+              {
+                "function": "set_nbt",
+                "tag": "{Vault:{Attributes:[{Id:\"the_vault:gear_roll_pool\",BaseValue:\"special\"}]}}"
+              }
+            ]
+          },
+          {
+            "type": "minecraft:item",
+            "weight": 3,
+            "name": "the_vault:axe",
+            "functions": [
+              {
+                "function": "minecraft:set_count",
+                "count": {
+                  "min": 1,
+                  "max": 1
+                }
+              },
+              {
+                "function": "minecraft:set_count",
+                "count": 0,
+                "conditions": [
+                  {
+                    "condition": "minecraft:random_chance",
+                    "chance": 0
+                  }
+                ]
+              },
+              {
+                "function": "set_nbt",
+                "tag": "{Vault:{Attributes:[{Id:\"the_vault:gear_roll_pool\",BaseValue:\"special\"}]}}"
+              }
+            ]
+          },
+          {
+            "type": "minecraft:item",
+            "weight": 3,
+            "name": "the_vault:helmet",
+            "functions": [
+              {
+                "function": "minecraft:set_count",
+                "count": {
+                  "min": 1,
+                  "max": 1
+                }
+              },
+              {
+                "function": "minecraft:set_count",
+                "count": 0,
+                "conditions": [
+                  {
+                    "condition": "minecraft:random_chance",
+                    "chance": 0
+                  }
+                ]
+              },
+              {
+                "function": "set_nbt",
+                "tag": "{Vault:{Attributes:[{Id:\"the_vault:gear_roll_pool\",BaseValue:\"special\"}]}}"
+              }
+            ]
+          },
+          {
+            "type": "minecraft:item",
+            "weight": 3,
+            "name": "the_vault:chestplate",
+            "functions": [
+              {
+                "function": "minecraft:set_count",
+                "count": {
+                  "min": 1,
+                  "max": 1
+                }
+              },
+              {
+                "function": "minecraft:set_count",
+                "count": 0,
+                "conditions": [
+                  {
+                    "condition": "minecraft:random_chance",
+                    "chance": 0
+                  }
+                ]
+              },
+              {
+                "function": "set_nbt",
+                "tag": "{Vault:{Attributes:[{Id:\"the_vault:gear_roll_pool\",BaseValue:\"special\"}]}}"
+              }
+            ]
+          },
+          {
+            "type": "minecraft:item",
+            "weight": 3,
+            "name": "the_vault:leggings",
+            "functions": [
+              {
+                "function": "minecraft:set_count",
+                "count": {
+                  "min": 1,
+                  "max": 1
+                }
+              },
+              {
+                "function": "minecraft:set_count",
+                "count": 0,
+                "conditions": [
+                  {
+                    "condition": "minecraft:random_chance",
+                    "chance": 0
+                  }
+                ]
+              },
+              {
+                "function": "set_nbt",
+                "tag": "{Vault:{Attributes:[{Id:\"the_vault:gear_roll_pool\",BaseValue:\"special\"}]}}"
+              }
+            ]
+          },
+          {
+            "type": "minecraft:item",
+            "weight": 3,
+            "name": "the_vault:boots",
+            "functions": [
+              {
+                "function": "minecraft:set_count",
+                "count": {
+                  "min": 1,
+                  "max": 1
+                }
+              },
+              {
+                "function": "minecraft:set_count",
+                "count": 0,
+                "conditions": [
+                  {
+                    "condition": "minecraft:random_chance",
+                    "chance": 0
+                  }
+                ]
+              },
+              {
+                "function": "set_nbt",
+                "tag": "{Vault:{Attributes:[{Id:\"the_vault:gear_roll_pool\",BaseValue:\"special\"}]}}"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }

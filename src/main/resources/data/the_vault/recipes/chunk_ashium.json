@@ -1,0 +1,18 @@
+{
+    "type": "minecraft:crafting_shapeless",
+    "ingredients": [
+      {"item": "the_vault:cluster_ashium"},
+      {"item": "the_vault:cluster_ashium"},
+      {"item": "the_vault:cluster_ashium"},
+      {"item": "the_vault:cluster_ashium"},
+      {"item": "the_vault:cluster_ashium"},
+      {"item": "the_vault:cluster_ashium"},
+      {"item": "the_vault:cluster_ashium"},
+      {"item": "the_vault:cluster_ashium"},
+      {"item": "the_vault:cluster_ashium"}
+    ],
+    "result": {
+      "item": "the_vault:chunk_ashium",
+      "count": 1
+    }
+  }

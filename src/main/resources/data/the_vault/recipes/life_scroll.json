@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "p",
+    "r",
+    "p"
+  ],
+  "key": {
+    "p": {
+      "item": "minecraft:paper"
+    },
+    "r": {
+      "item": "the_vault:vault_essence"
+    }
+  },
+  "result": {
+    "item": "the_vault:life_scroll",
+    "count": 1
+  }
+}

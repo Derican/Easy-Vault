@@ -1,0 +1,7 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "the_vault:item/helmet/special/iskall_hololens",
+    "layer1": "the_vault:item/helmet/special/iskall_hololens_overlay"
+  }
+}

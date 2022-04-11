@@ -1,0 +1,73 @@
+{
+    "processors": [
+      {
+      "rules": [
+          {
+            "output_state": {
+              "Name": "minecraft:composter",
+              "Properties": {
+                "level": "1"
+              }
+            },
+            "input_predicate": {
+              "predicate_type": "minecraft:random_block_match",
+              "block": "minecraft:brown_concrete",
+              "probability": 0.2
+            },
+            "location_predicate": {
+              "predicate_type": "minecraft:always_true"
+            }
+          },
+          {
+            "output_state": {
+              "Name": "minecraft:composter",
+              "Properties": {
+                "level": "2"
+              }
+            },
+            "input_predicate": {
+              "predicate_type": "minecraft:random_block_match",
+              "block": "minecraft:brown_concrete",
+              "probability": 0.33
+            },
+            "location_predicate": {
+              "predicate_type": "minecraft:always_true"
+            }
+          },
+          {
+            "output_state": {
+              "Name": "minecraft:composter",
+              "Properties": {
+                "level": "3"
+              }
+            },
+            "input_predicate": {
+              "predicate_type": "minecraft:random_block_match",
+              "block": "minecraft:brown_concrete",
+              "probability": 0.5
+            },
+            "location_predicate": {
+              "predicate_type": "minecraft:always_true"
+            }
+          },
+          {
+            "output_state": {
+              "Name": "minecraft:composter",
+              "Properties": {
+                "level": "4"
+              }
+            },
+            "input_predicate": {
+              "predicate_type": "minecraft:random_block_match",
+              "block": "minecraft:brown_concrete",
+              "probability": 1.0
+            },
+            "location_predicate": {
+              "predicate_type": "minecraft:always_true"
+            }
+          }
+        ],
+        "processor_type": "minecraft:rule"
+      }
+    ]
+  }

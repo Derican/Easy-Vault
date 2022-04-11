@@ -1,0 +1,516 @@
+{
+    "name": "the_vault:vault/decor/viewer/floor",
+    "fallback": "the_vault:vault/decor/viewer/floor",
+    "elements": [
+      {
+        "weight": 10,
+        "element": {
+          "element_type": "minecraft:empty_pool_element"
+        }
+      },
+      {
+          "weight": 3,
+          "element": {
+            "processors": [
+                "the_vault:treasure/air_half"
+            ],
+            "element_type": "the_vault:paletted_list_pool_element",
+            "projection": "rigid",
+            "elements": [
+                {
+                    "location": "the_vault:vault/prefab/decor/viewer/floor/s1",
+                    "projection": "rigid",
+                    "element_type": "the_vault:paletted_single_pool_element",
+                    "processors": "the_vault:generic/ignore_air"
+                }
+            ]
+          }
+      },
+      {
+        "weight": 3,
+        "element": {
+          "processors": [
+              "the_vault:treasure/air_half"
+          ],
+          "element_type": "the_vault:paletted_list_pool_element",
+          "projection": "rigid",
+          "elements": [
+              {
+                  "location": "the_vault:vault/prefab/decor/viewer/floor/s2",
+                  "projection": "rigid",
+                  "element_type": "the_vault:paletted_single_pool_element",
+                  "processors": "the_vault:generic/ignore_air"
+              }
+          ]
+        }
+    },
+    {
+        "weight": 3,
+        "element": {
+          "processors": [
+              "the_vault:treasure/air_half"
+          ],
+          "element_type": "the_vault:paletted_list_pool_element",
+          "projection": "rigid",
+          "elements": [
+              {
+                  "location": "the_vault:vault/prefab/decor/viewer/floor/s3",
+                  "projection": "rigid",
+                  "element_type": "the_vault:paletted_single_pool_element",
+                  "processors": "the_vault:generic/ignore_air"
+              }
+          ]
+        }
+    },
+    {
+        "weight": 3,
+        "element": {
+          "processors": [
+              "the_vault:treasure/air_half"
+          ],
+          "element_type": "the_vault:paletted_list_pool_element",
+          "projection": "rigid",
+          "elements": [
+              {
+                  "location": "the_vault:vault/prefab/decor/viewer/floor/s4",
+                  "projection": "rigid",
+                  "element_type": "the_vault:paletted_single_pool_element",
+                  "processors": "the_vault:generic/ignore_air"
+              }
+          ]
+        }
+    },
+    {
+        "weight": 3,
+        "element": {
+          "processors": [
+              "the_vault:treasure/air_half"
+          ],
+          "element_type": "the_vault:paletted_list_pool_element",
+          "projection": "rigid",
+          "elements": [
+              {
+                  "location": "the_vault:vault/prefab/decor/viewer/floor/s5",
+                  "projection": "rigid",
+                  "element_type": "the_vault:paletted_single_pool_element",
+                  "processors": "the_vault:generic/ignore_air"
+              }
+          ]
+        }
+    },
+    {
+        "weight": 3,
+        "element": {
+          "processors": [
+              "the_vault:treasure/air_half"
+          ],
+          "element_type": "the_vault:paletted_list_pool_element",
+          "projection": "rigid",
+          "elements": [
+              {
+                  "location": "the_vault:vault/prefab/decor/viewer/floor/s6",
+                  "projection": "rigid",
+                  "element_type": "the_vault:paletted_single_pool_element",
+                  "processors": "the_vault:generic/ignore_air"
+              }
+          ]
+        }
+    },
+    {
+        "weight": 3,
+        "element": {
+          "processors": [
+              "the_vault:treasure/air_half"
+          ],
+          "element_type": "the_vault:paletted_list_pool_element",
+          "projection": "rigid",
+          "elements": [
+              {
+                  "location": "the_vault:vault/prefab/decor/viewer/floor/s7",
+                  "projection": "rigid",
+                  "element_type": "the_vault:paletted_single_pool_element",
+                  "processors": "the_vault:generic/ignore_air"
+              }
+          ]
+        }
+    },
+    {
+        "weight": 3,
+        "element": {
+          "processors": [
+              "the_vault:treasure/air_half"
+          ],
+          "element_type": "the_vault:paletted_list_pool_element",
+          "projection": "rigid",
+          "elements": [
+              {
+                  "location": "the_vault:vault/prefab/decor/viewer/floor/s8",
+                  "projection": "rigid",
+                  "element_type": "the_vault:paletted_single_pool_element",
+                  "processors": "the_vault:generic/ignore_air"
+              }
+          ]
+        }
+    },
+    {
+        "weight": 3,
+        "element": {
+          "processors": [
+              "the_vault:treasure/air_half"
+          ],
+          "element_type": "the_vault:paletted_list_pool_element",
+          "projection": "rigid",
+          "elements": [
+              {
+                  "location": "the_vault:vault/prefab/decor/viewer/bucket/b1",
+                  "projection": "rigid",
+                  "element_type": "the_vault:paletted_single_pool_element",
+                  "processors": "the_vault:generic/ignore_air"
+              }
+          ]
+        }
+    },
+    {
+        "weight": 3,
+        "element": {
+          "processors": [
+              "the_vault:treasure/air_half"
+          ],
+          "element_type": "the_vault:paletted_list_pool_element",
+          "projection": "rigid",
+          "elements": [
+              {
+                  "location": "the_vault:vault/prefab/decor/viewer/bucket/b2",
+                  "projection": "rigid",
+                  "element_type": "the_vault:paletted_single_pool_element",
+                  "processors": "the_vault:generic/ignore_air"
+              }
+          ]
+        }
+    },
+    {
+        "weight": 3,
+        "element": {
+          "processors": [
+              "the_vault:treasure/air_half"
+          ],
+          "element_type": "the_vault:paletted_list_pool_element",
+          "projection": "rigid",
+          "elements": [
+              {
+                  "location": "the_vault:vault/prefab/decor/viewer/bucket/b3",
+                  "projection": "rigid",
+                  "element_type": "the_vault:paletted_single_pool_element",
+                  "processors": "the_vault:generic/ignore_air"
+              }
+          ]
+        }
+    },
+    {
+        "weight": 3,
+        "element": {
+          "processors": [
+              "the_vault:treasure/air_half"
+          ],
+          "element_type": "the_vault:paletted_list_pool_element",
+          "projection": "rigid",
+          "elements": [
+              {
+                  "location": "the_vault:vault/prefab/decor/viewer/bucket/b4",
+                  "projection": "rigid",
+                  "element_type": "the_vault:paletted_single_pool_element",
+                  "processors": "the_vault:generic/ignore_air"
+              }
+          ]
+        }
+    },
+    {
+        "weight": 3,
+        "element": {
+          "processors": [
+              "the_vault:treasure/air_half"
+          ],
+          "element_type": "the_vault:paletted_list_pool_element",
+          "projection": "rigid",
+          "elements": [
+              {
+                  "location": "the_vault:vault/prefab/decor/viewer/bucket/b5",
+                  "projection": "rigid",
+                  "element_type": "the_vault:paletted_single_pool_element",
+                  "processors": "the_vault:generic/ignore_air"
+              }
+          ]
+        }
+    },
+    {
+        "weight": 3,
+        "element": {
+          "processors": [
+              "the_vault:treasure/air_half"
+          ],
+          "element_type": "the_vault:paletted_list_pool_element",
+          "projection": "rigid",
+          "elements": [
+              {
+                  "location": "the_vault:vault/prefab/decor/viewer/bucket/b6",
+                  "projection": "rigid",
+                  "element_type": "the_vault:paletted_single_pool_element",
+                  "processors": "the_vault:generic/ignore_air"
+              }
+          ]
+        }
+    },
+    {
+        "weight": 3,
+        "element": {
+          "processors": [
+              "the_vault:treasure/air_half"
+          ],
+          "element_type": "the_vault:paletted_list_pool_element",
+          "projection": "rigid",
+          "elements": [
+              {
+                  "location": "the_vault:vault/prefab/decor/viewer/bucket/b7",
+                  "projection": "rigid",
+                  "element_type": "the_vault:paletted_single_pool_element",
+                  "processors": "the_vault:generic/ignore_air"
+              }
+          ]
+        }
+    },
+    {
+        "weight": 3,
+        "element": {
+          "processors": [
+              "the_vault:treasure/air_half"
+          ],
+          "element_type": "the_vault:paletted_list_pool_element",
+          "projection": "rigid",
+          "elements": [
+              {
+                  "location": "the_vault:vault/prefab/decor/viewer/bucket/b8",
+                  "projection": "rigid",
+                  "element_type": "the_vault:paletted_single_pool_element",
+                  "processors": "the_vault:generic/ignore_air"
+              }
+          ]
+        }
+    },
+    {
+        "weight": 3,
+        "element": {
+          "processors": [
+              "the_vault:treasure/air_half"
+          ],
+          "element_type": "the_vault:paletted_list_pool_element",
+          "projection": "rigid",
+          "elements": [
+              {
+                  "location": "the_vault:vault/prefab/decor/viewer/bucket/b9",
+                  "projection": "rigid",
+                  "element_type": "the_vault:paletted_single_pool_element",
+                  "processors": "the_vault:generic/ignore_air"
+              }
+          ]
+        }
+    },
+    {
+        "weight": 3,
+        "element": {
+          "processors": [
+              "the_vault:treasure/air_half"
+          ],
+          "element_type": "the_vault:paletted_list_pool_element",
+          "projection": "rigid",
+          "elements": [
+              {
+                  "location": "the_vault:vault/prefab/decor/viewer/bucket/b10",
+                  "projection": "rigid",
+                  "element_type": "the_vault:paletted_single_pool_element",
+                  "processors": "the_vault:generic/ignore_air"
+              }
+          ]
+        }
+    },
+    {
+        "weight": 2,
+        "element": {
+          "processors": [
+              "the_vault:treasure/air_half"
+          ],
+          "element_type": "the_vault:paletted_list_pool_element",
+          "projection": "rigid",
+          "elements": [
+              {
+                  "location": "the_vault:vault/prefab/decor/viewer/brush/b2",
+                  "projection": "rigid",
+                  "element_type": "the_vault:paletted_single_pool_element",
+                  "processors": "the_vault:generic/ignore_air"
+              }
+          ]
+        }
+    },
+    {
+        "weight": 2,
+        "element": {
+          "processors": [
+              "the_vault:treasure/air_half"
+          ],
+          "element_type": "the_vault:paletted_list_pool_element",
+          "projection": "rigid",
+          "elements": [
+              {
+                  "location": "the_vault:vault/prefab/decor/viewer/brush/b3",
+                  "projection": "rigid",
+                  "element_type": "the_vault:paletted_single_pool_element",
+                  "processors": "the_vault:generic/ignore_air"
+              }
+          ]
+        }
+    },
+    {
+        "weight": 2,
+        "element": {
+          "processors": [
+              "the_vault:treasure/air_half"
+          ],
+          "element_type": "the_vault:paletted_list_pool_element",
+          "projection": "rigid",
+          "elements": [
+              {
+                  "location": "the_vault:vault/prefab/decor/viewer/brush/b4",
+                  "projection": "rigid",
+                  "element_type": "the_vault:paletted_single_pool_element",
+                  "processors": "the_vault:generic/ignore_air"
+              }
+          ]
+        }
+    },
+    {
+        "weight": 2,
+        "element": {
+          "processors": [
+              "the_vault:treasure/air_half"
+          ],
+          "element_type": "the_vault:paletted_list_pool_element",
+          "projection": "rigid",
+          "elements": [
+              {
+                  "location": "the_vault:vault/prefab/decor/viewer/brush/b5",
+                  "projection": "rigid",
+                  "element_type": "the_vault:paletted_single_pool_element",
+                  "processors": "the_vault:generic/ignore_air"
+              }
+          ]
+        }
+    },
+    {
+        "weight": 2,
+        "element": {
+          "processors": [
+              "the_vault:treasure/air_half"
+          ],
+          "element_type": "the_vault:paletted_list_pool_element",
+          "projection": "rigid",
+          "elements": [
+              {
+                  "location": "the_vault:vault/prefab/decor/viewer/brush/b6",
+                  "projection": "rigid",
+                  "element_type": "the_vault:paletted_single_pool_element",
+                  "processors": "the_vault:generic/ignore_air"
+              }
+          ]
+        }
+    },
+    {
+        "weight": 2,
+        "element": {
+          "processors": [
+              "the_vault:treasure/air_half"
+          ],
+          "element_type": "the_vault:paletted_list_pool_element",
+          "projection": "rigid",
+          "elements": [
+              {
+                  "location": "the_vault:vault/prefab/decor/viewer/brush/b7",
+                  "projection": "rigid",
+                  "element_type": "the_vault:paletted_single_pool_element",
+                  "processors": "the_vault:generic/ignore_air"
+              }
+          ]
+        }
+    },
+    {
+        "weight": 2,
+        "element": {
+          "processors": [
+              "the_vault:treasure/air_half"
+          ],
+          "element_type": "the_vault:paletted_list_pool_element",
+          "projection": "rigid",
+          "elements": [
+              {
+                  "location": "the_vault:vault/prefab/decor/viewer/brush/b8",
+                  "projection": "rigid",
+                  "element_type": "the_vault:paletted_single_pool_element",
+                  "processors": "the_vault:generic/ignore_air"
+              }
+          ]
+        }
+    },
+    {
+        "weight": 2,
+        "element": {
+          "processors": [
+              "the_vault:treasure/air_half"
+          ],
+          "element_type": "the_vault:paletted_list_pool_element",
+          "projection": "rigid",
+          "elements": [
+              {
+                  "location": "the_vault:vault/prefab/decor/viewer/brush/b9",
+                  "projection": "rigid",
+                  "element_type": "the_vault:paletted_single_pool_element",
+                  "processors": "the_vault:generic/ignore_air"
+              }
+          ]
+        }
+    },
+    {
+        "weight": 2,
+        "element": {
+          "processors": [
+              "the_vault:treasure/air_half"
+          ],
+          "element_type": "the_vault:paletted_list_pool_element",
+          "projection": "rigid",
+          "elements": [
+              {
+                  "location": "the_vault:vault/prefab/decor/viewer/brush/b10",
+                  "projection": "rigid",
+                  "element_type": "the_vault:paletted_single_pool_element",
+                  "processors": "the_vault:generic/ignore_air"
+              }
+          ]
+        }
+    },
+    {
+        "weight": 2,
+        "element": {
+          "processors": [
+              "the_vault:treasure/air_half"
+          ],
+          "element_type": "the_vault:paletted_list_pool_element",
+          "projection": "rigid",
+          "elements": [
+              {
+                  "location": "the_vault:vault/prefab/decor/viewer/brush/b11",
+                  "projection": "rigid",
+                  "element_type": "the_vault:paletted_single_pool_element",
+                  "processors": "the_vault:generic/ignore_air"
+              }
+          ]
+        }
+    }
+    ]
+  }

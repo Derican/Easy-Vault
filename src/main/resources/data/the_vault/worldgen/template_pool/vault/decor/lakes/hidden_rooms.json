@@ -1,0 +1,222 @@
+{
+  "name": "the_vault:vault/decor/lakes/hidden_rooms",
+  "fallback": "the_vault:vault/decor/lakes/hidden_rooms",
+  "elements": [
+    {
+      "weight": 90,
+      "element": {
+        "element_type": "minecraft:empty_pool_element"
+      }
+    },
+	{
+        "weight": 15,
+        "element": {
+          "processors": [
+              
+              "the_vault:treasure/air_half"
+          ],
+          "element_type": "the_vault:paletted_list_pool_element",
+          "projection": "rigid",
+          "elements": [
+              {
+                  "location": "the_vault:vault/prefab/decor/lakes/hidden_rooms/r1",
+                  "projection": "rigid",
+                  "element_type": "the_vault:paletted_single_pool_element",
+                  "processors": "the_vault:generic/ignore_barrier"
+              }
+          ]
+        }
+    },
+	{
+        "weight": 15,
+        "element": {
+          "processors": [
+              
+              "the_vault:treasure/air_half"
+          ],
+          "element_type": "the_vault:paletted_list_pool_element",
+          "projection": "rigid",
+          "elements": [
+              {
+                  "location": "the_vault:vault/prefab/decor/lakes/hidden_rooms/r2",
+                  "projection": "rigid",
+                  "element_type": "the_vault:paletted_single_pool_element",
+                  "processors": "the_vault:generic/ignore_barrier"
+              }
+          ]
+        }
+    },
+	{
+        "weight": 15,
+        "element": {
+          "processors": [
+              
+              "the_vault:treasure/air_half"
+          ],
+          "element_type": "the_vault:paletted_list_pool_element",
+          "projection": "rigid",
+          "elements": [
+              {
+                  "location": "the_vault:vault/prefab/decor/lakes/hidden_rooms/r3",
+                  "projection": "rigid",
+                  "element_type": "the_vault:paletted_single_pool_element",
+                  "processors": "the_vault:generic/ignore_barrier"
+              }
+          ]
+        }
+    },
+	{
+        "weight": 15,
+        "element": {
+          "processors": [
+              
+              "the_vault:treasure/air_half"
+          ],
+          "element_type": "the_vault:paletted_list_pool_element",
+          "projection": "rigid",
+          "elements": [
+              {
+                  "location": "the_vault:vault/prefab/decor/lakes/hidden_rooms/r4",
+                  "projection": "rigid",
+                  "element_type": "the_vault:paletted_single_pool_element",
+                  "processors": "the_vault:generic/ignore_barrier"
+              }
+          ]
+        }
+    },
+	{
+        "weight": 15,
+        "element": {
+          "processors": [
+              
+              "the_vault:treasure/air_half"
+          ],
+          "element_type": "the_vault:paletted_list_pool_element",
+          "projection": "rigid",
+          "elements": [
+              {
+                  "location": "the_vault:vault/prefab/decor/lakes/hidden_rooms/r5",
+                  "projection": "rigid",
+                  "element_type": "the_vault:paletted_single_pool_element",
+                  "processors": "the_vault:generic/ignore_barrier"
+              }
+          ]
+        }
+    },
+	{
+        "weight": 15,
+        "element": {
+          "processors": [
+              
+              "the_vault:treasure/air_half"
+          ],
+          "element_type": "the_vault:paletted_list_pool_element",
+          "projection": "rigid",
+          "elements": [
+              {
+                  "location": "the_vault:vault/prefab/decor/lakes/hidden_rooms/r6",
+                  "projection": "rigid",
+                  "element_type": "the_vault:paletted_single_pool_element",
+                  "processors": "the_vault:generic/ignore_barrier"
+              }
+          ]
+        }
+    },
+    {
+        "weight": 1,
+        "element": {
+          "processors": [
+              "the_vault:geode/pallet0",
+              "the_vault:geode/pallet1",
+              "the_vault:geode/pallet2",
+              "the_vault:geode/pallet3",
+              "the_vault:geode/pallet4",
+              "the_vault:geode/pallet5",
+              "the_vault:geode/pallet6",
+              "the_vault:geode/pallet7",
+              "the_vault:geode/pallet8",
+              "the_vault:geode/pallet9",
+              "the_vault:geode/pallet10",
+              "the_vault:geode/pallet11",
+              "the_vault:geode/pallet12",
+              "the_vault:geode/pallet13",
+              "the_vault:geode/pallet14"
+          ],
+          "element_type": "the_vault:paletted_list_pool_element",
+          "projection": "rigid",
+          "elements": [
+              {
+                  "location": "the_vault:vault/prefab/decor/generic/geode/s1",
+                  "projection": "rigid",
+                  "element_type": "the_vault:paletted_single_pool_element",
+                  "processors": "the_vault:generic/geode_air"
+              }
+          ]
+        }
+    },
+    {
+        "weight": 1,
+        "element": {
+          "processors": [
+              "the_vault:geode/pallet0",
+              "the_vault:geode/pallet1",
+              "the_vault:geode/pallet2",
+              "the_vault:geode/pallet3",
+              "the_vault:geode/pallet4",
+              "the_vault:geode/pallet5",
+              "the_vault:geode/pallet6",
+              "the_vault:geode/pallet7",
+              "the_vault:geode/pallet8",
+              "the_vault:geode/pallet9",
+              "the_vault:geode/pallet10",
+              "the_vault:geode/pallet11",
+              "the_vault:geode/pallet12",
+              "the_vault:geode/pallet13",
+              "the_vault:geode/pallet14"
+          ],
+          "element_type": "the_vault:paletted_list_pool_element",
+          "projection": "rigid",
+          "elements": [
+              {
+                  "location": "the_vault:vault/prefab/decor/generic/geode/s2",
+                  "projection": "rigid",
+                  "element_type": "the_vault:paletted_single_pool_element",
+                  "processors": "the_vault:generic/geode_air"
+              }
+          ]
+        }
+    },
+    {
+        "weight": 1,
+        "element": {
+          "processors": [
+              "the_vault:geode/pallet0",
+              "the_vault:geode/pallet1",
+              "the_vault:geode/pallet2",
+              "the_vault:geode/pallet3",
+              "the_vault:geode/pallet4",
+              "the_vault:geode/pallet5",
+              "the_vault:geode/pallet6",
+              "the_vault:geode/pallet7",
+              "the_vault:geode/pallet8",
+              "the_vault:geode/pallet9",
+              "the_vault:geode/pallet10",
+              "the_vault:geode/pallet11",
+              "the_vault:geode/pallet12",
+              "the_vault:geode/pallet13",
+              "the_vault:geode/pallet14"
+          ],
+          "element_type": "the_vault:paletted_list_pool_element",
+          "projection": "rigid",
+          "elements": [
+              {
+                  "location": "the_vault:vault/prefab/decor/generic/geode/s3",
+                  "projection": "rigid",
+                  "element_type": "the_vault:paletted_single_pool_element",
+                  "processors": "the_vault:generic/geode_air"
+              }
+          ]
+        }
+    }
+  ]
+}

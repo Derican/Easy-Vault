@@ -1,0 +1,892 @@
+{
+    "__comment": "Model generated using MrCrayfish's Model Creator (https://mrcrayfish.com/tools?id=mc)",
+    "textures": {
+        "trophy": "the_vault:block/trophy_statue",
+        "trophy-metal-base": "the_vault:block/trophy_statue_base",
+        "particle": "the_vault:block/trophy_statue"
+    },
+    "display": {
+        "thirdperson_righthand": {
+            "rotation": [75, 135, 0],
+            "translation": [0, 2.5, 0],
+            "scale": [0.6, 0.6, 0.6]
+        },
+        "firstperson_righthand": {
+            "rotation": [0, 135, 0],
+            "translation": [0, 2.5, 0],
+            "scale": [0.6, 0.6, 0.6]
+        },
+        "ground": {
+            "translation": [0, 3, 0],
+            "scale": [0.25, 0.25, 0.25]
+        },
+        "gui": {
+            "rotation": [30, 135, 0],
+            "translation": [0, 0, 0],
+            "scale": [0.8, 0.8, 0.8]
+        },
+        "head": {
+            "rotation": [0, 180, 0]
+        },
+        "fixed": {
+            "rotation": [0, 180, 0]
+        }
+    },
+    "elements": [
+        {
+            "name": "metal-base",
+            "from": [ 4.75, 0, 4.75 ], 
+            "to": [ 11.25, 1, 11.25 ], 
+            "faces": {
+                "north": { "texture": "#trophy-metal-base", "uv": [ 0, 0, 6.5, 1 ] },
+                "east": { "texture": "#trophy-metal-base", "uv": [ 0, 0, 6.5, 1 ] },
+                "south": { "texture": "#trophy-metal-base", "uv": [ 0, 0, 6.5, 1 ] },
+                "west": { "texture": "#trophy-metal-base", "uv": [ 0, 0, 6.5, 1 ] },
+                "up": { "texture": "#trophy-metal-base", "uv": [ 3.25, 7.25, 9.75, 13.75 ] },
+                "down": { "texture": "#trophy-metal-base", "uv": [ 3.25, 7.25, 9.75, 13.75 ] }
+            }
+        },
+        {
+            "name": "troph-base1",
+            "from": [ 5.5, 1, 5.5 ], 
+            "to": [ 10.5, 2, 10.5 ], 
+            "faces": {
+                "north": { "texture": "#trophy", "uv": [ 1, 5, 6, 6 ] },
+                "east": { "texture": "#trophy", "uv": [ 1, 4, 6, 5 ] },
+                "south": { "texture": "#trophy", "uv": [ 1, 5, 6, 6 ] },
+                "west": { "texture": "#trophy", "uv": [ 1, 5, 6, 6 ] },
+                "up": { "texture": "#trophy", "uv": [ 1, 9, 6, 14 ] }
+            }
+        },
+        {
+            "name": "troph-base2",
+            "from": [ 5, 1, 6 ], 
+            "to": [ 5.5, 2, 10 ], 
+            "faces": {
+                "north": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 1 ] },
+                "south": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 1 ] },
+                "west": { "texture": "#trophy", "uv": [ 0, 0, 4, 1 ] },
+                "up": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 4 ] }
+            }
+        },
+        {
+            "name": "troph-base3",
+            "from": [ 10.5, 1, 6 ], 
+            "to": [ 11, 2, 10 ], 
+            "faces": {
+                "north": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 1 ] },
+                "east": { "texture": "#trophy", "uv": [ 0, 0, 4, 1 ] },
+                "south": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 1 ] },
+                "up": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 4 ] }
+            }
+        },
+        {
+            "name": "troph-base3",
+            "from": [ 6, 1, 5 ], 
+            "to": [ 10, 2, 5.5 ], 
+            "faces": {
+                "north": { "texture": "#trophy", "uv": [ 0, 0, 4, 1 ] },
+                "east": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 1 ] },
+                "west": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 1 ] },
+                "up": { "texture": "#trophy", "uv": [ 0, 0, 4, 0.5 ] }
+            }
+        },
+        {
+            "name": "troph-base4",
+            "from": [ 6, 1, 10.5 ], 
+            "to": [ 10, 2, 11 ], 
+            "faces": {
+                "east": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 1 ] },
+                "south": { "texture": "#trophy", "uv": [ 0, 0, 4, 1 ] },
+                "west": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 1 ] },
+                "up": { "texture": "#trophy", "uv": [ 0, 0, 4, 0.5 ] }
+            }
+        },
+        {
+            "name": "troph-foot1",
+            "from": [ 6, 2, 6 ], 
+            "to": [ 10, 3, 10 ], 
+            "faces": {
+                "north": { "texture": "#trophy", "uv": [ 0, 0, 4, 1 ] },
+                "east": { "texture": "#trophy", "uv": [ 0, 0, 4, 1 ] },
+                "south": { "texture": "#trophy", "uv": [ 0, 0, 4, 1 ] },
+                "west": { "texture": "#trophy", "uv": [ 0, 0, 4, 1 ] },
+                "up": { "texture": "#trophy", "uv": [ 0, 0, 4, 4 ] }
+            }
+        },
+        {
+            "name": "troph-foot2",
+            "from": [ 5.5, 2, 6.25 ], 
+            "to": [ 6, 2.5, 9.75 ], 
+            "faces": {
+                "north": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 0.5 ] },
+                "south": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 0.5 ] },
+                "west": { "texture": "#trophy", "uv": [ 0, 0, 3.5, 0.5 ] },
+                "up": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 3.5 ] }
+            }
+        },
+        {
+            "name": "troph-foot3",
+            "from": [ 10, 2, 6.25 ], 
+            "to": [ 10.5, 2.5, 9.75 ], 
+            "faces": {
+                "north": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 0.5 ] },
+                "east": { "texture": "#trophy", "uv": [ 0, 0, 3.5, 0.5 ] },
+                "south": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 0.5 ] },
+                "up": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 3.5 ] }
+            }
+        },
+        {
+            "name": "troph-foot4",
+            "from": [ 6.25, 2, 5.5 ], 
+            "to": [ 9.75, 2.5, 6 ], 
+            "faces": {
+                "north": { "texture": "#trophy", "uv": [ 0, 0, 3.5, 0.5 ] },
+                "east": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 0.5 ] },
+                "west": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 0.5 ] },
+                "up": { "texture": "#trophy", "uv": [ 0, 0, 3.5, 0.5 ] }
+            }
+        },
+        {
+            "name": "troph-foot5",
+            "from": [ 6.25, 2, 10 ], 
+            "to": [ 9.75, 2.5, 10.5 ], 
+            "faces": {
+                "east": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 0.5 ] },
+                "south": { "texture": "#trophy", "uv": [ 0, 0, 3.5, 0.5 ] },
+                "west": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 0.5 ] },
+                "up": { "texture": "#trophy", "uv": [ 0, 0, 3.5, 0.5 ] }
+            }
+        },
+        {
+            "name": "stem",
+            "from": [ 7, 0, 7 ], 
+            "to": [ 9, 5, 9 ], 
+            "faces": {
+                "north": { "texture": "#trophy", "uv": [ 0, 0, 2, 5 ] },
+                "east": { "texture": "#trophy", "uv": [ 0, 0, 2, 5 ] },
+                "south": { "texture": "#trophy", "uv": [ 0, 0, 2, 5 ] },
+                "west": { "texture": "#trophy", "uv": [ 0, 0, 2, 5 ] },
+                "up": { "texture": "#trophy", "uv": [ 0, 0, 2, 2 ] }
+            }
+        },
+        {
+            "name": "stem-bevel1",
+            "from": [ 7.25, 3, 9 ], 
+            "to": [ 8.75, 3.5, 9.5 ], 
+            "faces": {
+                "east": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 0.5 ] },
+                "south": { "texture": "#trophy", "uv": [ 0, 0, 1.5, 0.5 ] },
+                "west": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 0.5 ] },
+                "up": { "texture": "#trophy", "uv": [ 0, 0, 1.5, 0.5 ] }
+            }
+        },
+        {
+            "name": "stem-bevel2",
+            "from": [ 7.25, 3, 6.5 ], 
+            "to": [ 8.75, 3.5, 7 ], 
+            "faces": {
+                "north": { "texture": "#trophy", "uv": [ 0, 0, 1.5, 0.5 ] },
+                "east": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 0.5 ] },
+                "west": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 0.5 ] },
+                "up": { "texture": "#trophy", "uv": [ 0, 0, 1.5, 0.5 ] }
+            }
+        },
+        {
+            "name": "stem-bevel3",
+            "from": [ 6.5, 3, 7.25 ], 
+            "to": [ 7, 3.5, 8.75 ], 
+            "faces": {
+                "north": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 0.5 ] },
+                "south": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 0.5 ] },
+                "west": { "texture": "#trophy", "uv": [ 0, 0, 1.5, 0.5 ] },
+                "up": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 1.5 ] }
+            }
+        },
+        {
+            "name": "stem-bevel4",
+            "from": [ 9, 3, 7.25 ], 
+            "to": [ 9.5, 3.5, 8.75 ], 
+            "faces": {
+                "north": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 0.5 ] },
+                "east": { "texture": "#trophy", "uv": [ 0, 0, 1.5, 0.5 ] },
+                "south": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 0.5 ] },
+                "up": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 1.5 ] }
+            }
+        },
+        {
+            "name": "cup1",
+            "from": [ 9, 5, 7 ], 
+            "to": [ 9.5, 5.5, 9 ], 
+            "faces": {
+                "north": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 0.5 ] },
+                "east": { "texture": "#trophy", "uv": [ 0, 0, 2, 0.5 ] },
+                "south": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 0.5 ] },
+                "west": { "texture": "#trophy", "uv": [ 0, 0, 2, 0.5 ] },
+                "up": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 2 ] },
+                "down": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 2 ] }
+            }
+        },
+        {
+            "name": "cup2",
+            "from": [ 6.5, 5, 7 ], 
+            "to": [ 7, 5.5, 9 ], 
+            "faces": {
+                "north": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 0.5 ] },
+                "east": { "texture": "#trophy", "uv": [ 0, 0, 2, 0.5 ] },
+                "south": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 0.5 ] },
+                "west": { "texture": "#trophy", "uv": [ 0, 0, 2, 0.5 ] },
+                "up": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 2 ] },
+                "down": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 2 ] }
+            }
+        },
+        {
+            "name": "cup3",
+            "from": [ 7, 5, 6.5 ], 
+            "to": [ 9, 5.5, 7 ], 
+            "faces": {
+                "north": { "texture": "#trophy", "uv": [ 0, 0, 2, 0.5 ] },
+                "east": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 0.5 ] },
+                "south": { "texture": "#trophy", "uv": [ 0, 0, 2, 0.5 ] },
+                "west": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 0.5 ] },
+                "up": { "texture": "#trophy", "uv": [ 0, 0, 2, 0.5 ] },
+                "down": { "texture": "#trophy", "uv": [ 0, 0, 2, 0.5 ] }
+            }
+        },
+        {
+            "name": "cup4",
+            "from": [ 7, 5, 9 ], 
+            "to": [ 9, 5.5, 9.5 ], 
+            "faces": {
+                "north": { "texture": "#trophy", "uv": [ 0, 0, 2, 0.5 ] },
+                "east": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 0.5 ] },
+                "south": { "texture": "#trophy", "uv": [ 0, 0, 2, 0.5 ] },
+                "west": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 0.5 ] },
+                "up": { "texture": "#trophy", "uv": [ 0, 0, 2, 0.5 ] },
+                "down": { "texture": "#trophy", "uv": [ 0, 0, 2, 0.5 ] }
+            }
+        },
+        {
+            "name": "cup5",
+            "from": [ 9, 5.5, 9 ], 
+            "to": [ 9.5, 6, 9.5 ], 
+            "faces": {
+                "north": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 0.5 ] },
+                "east": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 0.5 ] },
+                "south": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 0.5 ] },
+                "west": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 0.5 ] },
+                "up": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 0.5 ] },
+                "down": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 0.5 ] }
+            }
+        },
+        {
+            "name": "cup6",
+            "from": [ 6.5, 5.5, 9 ], 
+            "to": [ 7, 6, 9.5 ], 
+            "faces": {
+                "north": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 0.5 ] },
+                "east": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 0.5 ] },
+                "south": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 0.5 ] },
+                "west": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 0.5 ] },
+                "up": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 0.5 ] },
+                "down": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 0.5 ] }
+            }
+        },
+        {
+            "name": "cup7",
+            "from": [ 6.5, 5.5, 6.5 ], 
+            "to": [ 7, 6, 7 ], 
+            "faces": {
+                "north": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 0.5 ] },
+                "east": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 0.5 ] },
+                "south": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 0.5 ] },
+                "west": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 0.5 ] },
+                "up": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 0.5 ] },
+                "down": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 0.5 ] }
+            }
+        },
+        {
+            "name": "cup8",
+            "from": [ 9, 5.5, 6.5 ], 
+            "to": [ 9.5, 6, 7 ], 
+            "faces": {
+                "north": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 0.5 ] },
+                "east": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 0.5 ] },
+                "south": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 0.5 ] },
+                "west": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 0.5 ] },
+                "up": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 0.5 ] },
+                "down": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 0.5 ] }
+            }
+        },
+        {
+            "name": "cup9",
+            "from": [ 7, 5.5, 9.5 ], 
+            "to": [ 9, 6, 10 ], 
+            "faces": {
+                "north": { "texture": "#trophy", "uv": [ 0, 0, 2, 0.5 ] },
+                "east": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 0.5 ] },
+                "south": { "texture": "#trophy", "uv": [ 0, 0, 2, 0.5 ] },
+                "west": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 0.5 ] },
+                "down": { "texture": "#trophy", "uv": [ 0, 0, 2, 0.5 ] }
+            }
+        },
+        {
+            "name": "cup10",
+            "from": [ 7, 5.5, 6 ], 
+            "to": [ 9, 6, 6.5 ], 
+            "faces": {
+                "north": { "texture": "#trophy", "uv": [ 0, 0, 2, 0.5 ] },
+                "east": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 0.5 ] },
+                "south": { "texture": "#trophy", "uv": [ 0, 0, 2, 0.5 ] },
+                "west": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 0.5 ] },
+                "down": { "texture": "#trophy", "uv": [ 0, 0, 2, 0.5 ] }
+            }
+        },
+        {
+            "name": "cup11",
+            "from": [ 6, 5.5, 7 ], 
+            "to": [ 6.5, 6, 9 ], 
+            "faces": {
+                "north": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 0.5 ] },
+                "east": { "texture": "#trophy", "uv": [ 0, 0, 2, 0.5 ] },
+                "south": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 0.5 ] },
+                "west": { "texture": "#trophy", "uv": [ 0, 0, 2, 0.5 ] },
+                "down": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 2 ] }
+            }
+        },
+        {
+            "name": "cup12",
+            "from": [ 9.5, 5.5, 7 ], 
+            "to": [ 10, 6, 9 ], 
+            "faces": {
+                "north": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 0.5 ] },
+                "east": { "texture": "#trophy", "uv": [ 0, 0, 2, 0.5 ] },
+                "south": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 0.5 ] },
+                "west": { "texture": "#trophy", "uv": [ 0, 0, 2, 0.5 ] },
+                "down": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 2 ] }
+            }
+        },
+        {
+            "name": "cup13",
+            "from": [ 9.5, 6, 6 ], 
+            "to": [ 10, 7, 10 ], 
+            "faces": {
+                "east": { "texture": "#trophy", "uv": [ 0, 0, 4, 1 ] },
+                "west": { "texture": "#trophy", "uv": [ 0, 0, 4, 1 ] },
+                "up": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 4 ] },
+                "down": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 4 ] }
+            }
+        },
+        {
+            "name": "cup14",
+            "from": [ 6, 6, 6 ], 
+            "to": [ 6.5, 7, 10 ], 
+            "faces": {
+                "east": { "texture": "#trophy", "uv": [ 0, 0, 4, 1 ] },
+                "west": { "texture": "#trophy", "uv": [ 0, 0, 4, 1 ] },
+                "up": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 4 ] },
+                "down": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 4 ] }
+            }
+        },
+        {
+            "name": "cup15",
+            "from": [ 6, 6, 6 ], 
+            "to": [ 10, 7, 6.5 ], 
+            "faces": {
+                "north": { "texture": "#trophy", "uv": [ 0, 0, 4, 1 ] },
+                "south": { "texture": "#trophy", "uv": [ 0, 0, 4, 1 ] },
+                "up": { "texture": "#trophy", "uv": [ 0, 0, 4, 0.5 ] },
+                "down": { "texture": "#trophy", "uv": [ 0, 0, 4, 0.5 ] }
+            }
+        },
+        {
+            "name": "cup16",
+            "from": [ 6, 6, 9.5 ], 
+            "to": [ 10, 7, 10 ], 
+            "faces": {
+                "north": { "texture": "#trophy", "uv": [ 0, 0, 4, 1 ] },
+                "south": { "texture": "#trophy", "uv": [ 0, 0, 4, 1 ] },
+                "up": { "texture": "#trophy", "uv": [ 0, 0, 4, 0.5 ] },
+                "down": { "texture": "#trophy", "uv": [ 0, 0, 4, 0.5 ] }
+            }
+        },
+        {
+            "name": "cup17",
+            "from": [ 5.5, 7, 10 ], 
+            "to": [ 10.5, 8, 10.5 ], 
+            "faces": {
+                "north": { "texture": "#trophy", "uv": [ 0, 0, 5, 1 ] },
+                "south": { "texture": "#trophy", "uv": [ 0, 0, 5, 1 ] },
+                "up": { "texture": "#trophy", "uv": [ 0, 0, 5, 0.5 ] },
+                "down": { "texture": "#trophy", "uv": [ 0, 0, 5, 0.5 ] }
+            }
+        },
+        {
+            "name": "cup18",
+            "from": [ 5.5, 7, 5.5 ], 
+            "to": [ 10.5, 8, 6 ], 
+            "faces": {
+                "north": { "texture": "#trophy", "uv": [ 0, 0, 5, 1 ] },
+                "south": { "texture": "#trophy", "uv": [ 0, 0, 5, 1 ] },
+                "up": { "texture": "#trophy", "uv": [ 0, 0, 5, 0.5 ] },
+                "down": { "texture": "#trophy", "uv": [ 0, 0, 5, 0.5 ] }
+            }
+        },
+        {
+            "name": "cup19",
+            "from": [ 5.5, 7, 5.5 ], 
+            "to": [ 6, 8, 10.5 ], 
+            "faces": {
+                "east": { "texture": "#trophy", "uv": [ 0, 0, 5, 1 ] },
+                "west": { "texture": "#trophy", "uv": [ 0, 0, 5, 1 ] },
+                "up": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 5 ] },
+                "down": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 5 ] }
+            }
+        },
+        {
+            "name": "cup20",
+            "from": [ 10, 7, 5.5 ], 
+            "to": [ 10.5, 8, 10.5 ], 
+            "faces": {
+                "east": { "texture": "#trophy", "uv": [ 0, 0, 5, 1 ] },
+                "west": { "texture": "#trophy", "uv": [ 0, 0, 5, 1 ] },
+                "up": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 5 ] },
+                "down": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 5 ] }
+            }
+        },
+        {
+            "name": "cup21",
+            "from": [ 10.5, 8, 5.5 ], 
+            "to": [ 11, 10, 10.5 ], 
+            "faces": {
+                "north": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 2 ] },
+                "east": { "texture": "#trophy", "uv": [ 0, 0, 5, 2 ] },
+                "south": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 2 ] },
+                "west": { "texture": "#trophy", "uv": [ 0, 0, 5, 2 ] },
+                "up": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 5 ] },
+                "down": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 5 ] }
+            }
+        },
+        {
+            "name": "cup22",
+            "from": [ 5, 8, 5.5 ], 
+            "to": [ 5.5, 10, 10.5 ], 
+            "faces": {
+                "north": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 2 ] },
+                "east": { "texture": "#trophy", "uv": [ 0, 0, 5, 2 ] },
+                "south": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 2 ] },
+                "west": { "texture": "#trophy", "uv": [ 0, 0, 5, 2 ] },
+                "up": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 5 ] },
+                "down": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 5 ] }
+            }
+        },
+        {
+            "name": "cup23",
+            "from": [ 5.5, 8, 5 ], 
+            "to": [ 10.5, 10, 5.5 ], 
+            "faces": {
+                "north": { "texture": "#trophy", "uv": [ 0, 0, 5, 2 ] },
+                "east": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 2 ] },
+                "south": { "texture": "#trophy", "uv": [ 0, 0, 5, 2 ] },
+                "west": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 2 ] },
+                "up": { "texture": "#trophy", "uv": [ 0, 0, 5, 0.5 ] },
+                "down": { "texture": "#trophy", "uv": [ 0, 0, 5, 0.5 ] }
+            }
+        },
+        {
+            "name": "cup24",
+            "from": [ 5.5, 8, 10.5 ], 
+            "to": [ 10.5, 10, 11 ], 
+            "faces": {
+                "north": { "texture": "#trophy", "uv": [ 0, 0, 5, 2 ] },
+                "east": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 2 ] },
+                "south": { "texture": "#trophy", "uv": [ 0, 0, 5, 2 ] },
+                "west": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 2 ] },
+                "up": { "texture": "#trophy", "uv": [ 0, 0, 5, 0.5 ] },
+                "down": { "texture": "#trophy", "uv": [ 0, 0, 5, 0.5 ] }
+            }
+        },
+        {
+            "name": "cup25",
+            "from": [ 5.5, 10, 11 ], 
+            "to": [ 10.5, 13, 11.5 ], 
+            "faces": {
+                "north": { "texture": "#trophy", "uv": [ 10, 11, 15, 14 ] },
+                "east": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 3 ] },
+                "south": { "texture": "#trophy", "uv": [ 10, 11, 15, 14 ] },
+                "west": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 3 ] },
+                "up": { "texture": "#trophy", "uv": [ 0, 0, 5, 0.5 ] },
+                "down": { "texture": "#trophy", "uv": [ 0, 0, 5, 0.5 ] }
+            }
+        },
+        {
+            "name": "cup26",
+            "from": [ 5.5, 10, 4.5 ], 
+            "to": [ 10.5, 13, 5 ], 
+            "faces": {
+                "north": { "texture": "#trophy", "uv": [ 10, 11, 15, 14 ] },
+                "east": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 3 ] },
+                "south": { "texture": "#trophy", "uv": [ 10, 11, 15, 14 ] },
+                "west": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 3 ] },
+                "up": { "texture": "#trophy", "uv": [ 0, 0, 5, 0.5 ] },
+                "down": { "texture": "#trophy", "uv": [ 0, 0, 5, 0.5 ] }
+            }
+        },
+        {
+            "name": "cup27",
+            "from": [ 4.5, 10, 5.5 ], 
+            "to": [ 5, 13, 10.5 ], 
+            "faces": {
+                "north": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 3 ] },
+                "east": { "texture": "#trophy", "uv": [ 10, 11, 15, 14 ] },
+                "south": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 3 ] },
+                "west": { "texture": "#trophy", "uv": [ 10, 11, 15, 14 ] },
+                "up": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 5 ] },
+                "down": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 5 ] }
+            }
+        },
+        {
+            "name": "cup28",
+            "from": [ 11, 10, 5.5 ], 
+            "to": [ 11.5, 13, 10.5 ], 
+            "faces": {
+                "north": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 3 ] },
+                "east": { "texture": "#trophy", "uv": [ 10, 11, 15, 14 ] },
+                "south": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 3 ] },
+                "west": { "texture": "#trophy", "uv": [ 10, 11, 15, 14 ] },
+                "up": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 5 ] },
+                "down": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 5 ] }
+            }
+        },
+        {
+            "name": "cup29",
+            "from": [ 10.5, 10, 5 ], 
+            "to": [ 11, 13, 5.5 ], 
+            "faces": {
+                "north": { "texture": "#trophy", "uv": [ 10, 11, 10.5, 14 ] },
+                "east": { "texture": "#trophy", "uv": [ 10, 11, 10.5, 14 ] },
+                "south": { "texture": "#trophy", "uv": [ 10, 11, 10.5, 14 ] },
+                "west": { "texture": "#trophy", "uv": [ 10, 11, 10.5, 14 ] },
+                "up": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 0.5 ] },
+                "down": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 0.5 ] }
+            }
+        },
+        {
+            "name": "cup30",
+            "from": [ 10.5, 10, 10.5 ], 
+            "to": [ 11, 13, 11 ], 
+            "faces": {
+                "north": { "texture": "#trophy", "uv": [ 10, 11, 10.5, 14 ] },
+                "east": { "texture": "#trophy", "uv": [ 10, 11, 10.5, 14 ] },
+                "south": { "texture": "#trophy", "uv": [ 10, 11, 10.5, 14 ] },
+                "west": { "texture": "#trophy", "uv": [ 10, 11, 10.5, 14 ] },
+                "up": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 0.5 ] },
+                "down": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 0.5 ] }
+            }
+        },
+        {
+            "name": "cup31",
+            "from": [ 5, 10, 10.5 ], 
+            "to": [ 5.5, 13, 11 ], 
+            "faces": {
+                "north": { "texture": "#trophy", "uv": [ 10, 11, 10.5, 14 ] },
+                "east": { "texture": "#trophy", "uv": [ 10, 11, 10.5, 14 ] },
+                "south": { "texture": "#trophy", "uv": [ 10, 11, 10.5, 14 ] },
+                "west": { "texture": "#trophy", "uv": [ 10, 11, 10.5, 14 ] },
+                "up": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 0.5 ] },
+                "down": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 0.5 ] }
+            }
+        },
+        {
+            "name": "cup32",
+            "from": [ 5, 10, 5 ], 
+            "to": [ 5.5, 13, 5.5 ], 
+            "faces": {
+                "north": { "texture": "#trophy", "uv": [ 10, 11, 10.5, 14 ] },
+                "east": { "texture": "#trophy", "uv": [ 10, 11, 10.5, 14 ] },
+                "south": { "texture": "#trophy", "uv": [ 10, 11, 10.5, 14 ] },
+                "west": { "texture": "#trophy", "uv": [ 10, 11, 10.5, 14 ] },
+                "up": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 0.5 ] },
+                "down": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 0.5 ] }
+            }
+        },
+        {
+            "name": "handle-left1",
+            "from": [ 7.5, 11, 4 ], 
+            "to": [ 8, 11.5, 4.5 ], 
+            "faces": {
+                "north": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 0.5 ] },
+                "east": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 0.5 ] },
+                "west": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 0.5 ] },
+                "up": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 0.5 ] },
+                "down": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 0.5 ] }
+            }
+        },
+        {
+            "name": "handle-left2",
+            "from": [ 7.5, 11.5, 3.5 ], 
+            "to": [ 8, 12, 4 ], 
+            "faces": {
+                "north": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 0.5 ] },
+                "east": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 0.5 ] },
+                "south": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 0.5 ] },
+                "west": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 0.5 ] },
+                "up": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 0.5 ] },
+                "down": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 0.5 ] }
+            }
+        },
+        {
+            "name": "handle-left3",
+            "from": [ 7.5, 12, 3 ], 
+            "to": [ 8, 12.5, 3.5 ], 
+            "faces": {
+                "north": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 0.5 ] },
+                "east": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 0.5 ] },
+                "south": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 0.5 ] },
+                "west": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 0.5 ] },
+                "up": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 0.5 ] },
+                "down": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 0.5 ] }
+            }
+        },
+        {
+            "name": "handle-left4",
+            "from": [ 7.5, 12.5, 2 ], 
+            "to": [ 8, 13, 3 ], 
+            "faces": {
+                "north": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 0.5 ] },
+                "east": { "texture": "#trophy", "uv": [ 0, 0, 1, 0.5 ] },
+                "south": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 0.5 ] },
+                "west": { "texture": "#trophy", "uv": [ 0, 0, 1, 0.5 ] },
+                "up": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 1 ] },
+                "down": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 1 ] }
+            }
+        },
+        {
+            "name": "handle-left5",
+            "from": [ 7.5, 10.5, 1.5 ], 
+            "to": [ 8, 12.5, 2 ], 
+            "faces": {
+                "north": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 2 ] },
+                "east": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 2 ] },
+                "south": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 2 ] },
+                "west": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 2 ] },
+                "up": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 0.5 ] },
+                "down": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 0.5 ] }
+            }
+        },
+        {
+            "name": "handle-left6",
+            "from": [ 7.5, 10, 2 ], 
+            "to": [ 8, 10.5, 2.5 ], 
+            "faces": {
+                "north": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 0.5 ] },
+                "east": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 0.5 ] },
+                "south": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 0.5 ] },
+                "west": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 0.5 ] },
+                "up": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 0.5 ] },
+                "down": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 0.5 ] }
+            }
+        },
+        {
+            "name": "handle-left7",
+            "from": [ 7.5, 9.5, 2.5 ], 
+            "to": [ 8, 10, 3 ], 
+            "faces": {
+                "north": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 0.5 ] },
+                "east": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 0.5 ] },
+                "south": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 0.5 ] },
+                "west": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 0.5 ] },
+                "up": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 0.5 ] },
+                "down": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 0.5 ] }
+            }
+        },
+        {
+            "name": "handle-left8",
+            "from": [ 7.5, 9, 3 ], 
+            "to": [ 8, 9.5, 3.5 ], 
+            "faces": {
+                "north": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 0.5 ] },
+                "east": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 0.5 ] },
+                "south": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 0.5 ] },
+                "west": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 0.5 ] },
+                "up": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 0.5 ] },
+                "down": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 0.5 ] }
+            }
+        },
+        {
+            "name": "handle-left9",
+            "from": [ 7.5, 8.5, 3.5 ], 
+            "to": [ 8, 9, 4 ], 
+            "faces": {
+                "north": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 0.5 ] },
+                "east": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 0.5 ] },
+                "south": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 0.5 ] },
+                "west": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 0.5 ] },
+                "up": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 0.5 ] },
+                "down": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 0.5 ] }
+            }
+        },
+        {
+            "name": "handle-left10",
+            "from": [ 7.5, 8, 4 ], 
+            "to": [ 8, 8.5, 5 ], 
+            "faces": {
+                "north": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 0.5 ] },
+                "east": { "texture": "#trophy", "uv": [ 0, 0, 1, 0.5 ] },
+                "west": { "texture": "#trophy", "uv": [ 0, 0, 1, 0.5 ] },
+                "up": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 1 ] },
+                "down": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 1 ] }
+            }
+        },
+        {
+            "name": "handle-left11",
+            "from": [ 7.5, 7, 5 ], 
+            "to": [ 8, 8, 5.5 ], 
+            "faces": {
+                "north": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 1 ] },
+                "east": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 1 ] },
+                "west": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 1 ] },
+                "down": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 0.5 ] }
+            }
+        },
+        {
+            "name": "handle-right1",
+            "from": [ 7.5, 11, 11.5 ], 
+            "to": [ 8, 11.5, 12 ], 
+            "faces": {
+                "east": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 0.5 ] },
+                "south": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 0.5 ] },
+                "west": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 0.5 ] },
+                "up": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 0.5 ] },
+                "down": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 0.5 ] }
+            }
+        },
+        {
+            "name": "handle-right2",
+            "from": [ 7.5, 11.5, 12 ], 
+            "to": [ 8, 12, 12.5 ], 
+            "faces": {
+                "north": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 0.5 ] },
+                "east": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 0.5 ] },
+                "south": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 0.5 ] },
+                "west": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 0.5 ] },
+                "up": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 0.5 ] },
+                "down": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 0.5 ] }
+            }
+        },
+        {
+            "name": "handle-right3",
+            "from": [ 7.5, 12, 12.5 ], 
+            "to": [ 8, 12.5, 13 ], 
+            "faces": {
+                "north": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 0.5 ] },
+                "east": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 0.5 ] },
+                "south": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 0.5 ] },
+                "west": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 0.5 ] },
+                "up": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 0.5 ] },
+                "down": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 0.5 ] }
+            }
+        },
+        {
+            "name": "handle-right4",
+            "from": [ 7.5, 12.5, 13 ], 
+            "to": [ 8, 13, 14 ], 
+            "faces": {
+                "north": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 0.5 ] },
+                "east": { "texture": "#trophy", "uv": [ 0, 0, 1, 0.5 ] },
+                "south": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 0.5 ] },
+                "west": { "texture": "#trophy", "uv": [ 0, 0, 1, 0.5 ] },
+                "up": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 1 ] },
+                "down": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 1 ] }
+            }
+        },
+        {
+            "name": "handle-right5",
+            "from": [ 7.5, 10.5, 14 ], 
+            "to": [ 8, 12.5, 14.5 ], 
+            "faces": {
+                "north": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 2 ] },
+                "east": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 2 ] },
+                "south": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 2 ] },
+                "west": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 2 ] },
+                "up": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 0.5 ] },
+                "down": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 0.5 ] }
+            }
+        },
+        {
+            "name": "handle-right6",
+            "from": [ 7.5, 10, 13.5 ], 
+            "to": [ 8, 10.5, 14 ], 
+            "faces": {
+                "north": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 0.5 ] },
+                "east": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 0.5 ] },
+                "south": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 0.5 ] },
+                "west": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 0.5 ] },
+                "up": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 0.5 ] },
+                "down": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 0.5 ] }
+            }
+        },
+        {
+            "name": "handle-right7",
+            "from": [ 7.5, 9.5, 13 ], 
+            "to": [ 8, 10, 13.5 ], 
+            "faces": {
+                "north": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 0.5 ] },
+                "east": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 0.5 ] },
+                "south": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 0.5 ] },
+                "west": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 0.5 ] },
+                "up": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 0.5 ] },
+                "down": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 0.5 ] }
+            }
+        },
+        {
+            "name": "handle-right8",
+            "from": [ 7.5, 9, 12.5 ], 
+            "to": [ 8, 9.5, 13 ], 
+            "faces": {
+                "north": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 0.5 ] },
+                "east": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 0.5 ] },
+                "south": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 0.5 ] },
+                "west": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 0.5 ] },
+                "up": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 0.5 ] },
+                "down": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 0.5 ] }
+            }
+        },
+        {
+            "name": "handle-right9",
+            "from": [ 7.5, 8.5, 12 ], 
+            "to": [ 8, 9, 12.5 ], 
+            "faces": {
+                "north": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 0.5 ] },
+                "east": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 0.5 ] },
+                "south": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 0.5 ] },
+                "west": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 0.5 ] },
+                "up": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 0.5 ] },
+                "down": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 0.5 ] }
+            }
+        },
+        {
+            "name": "handle-right10",
+            "from": [ 7.5, 8, 11 ], 
+            "to": [ 8, 8.5, 12 ], 
+            "faces": {
+                "east": { "texture": "#trophy", "uv": [ 0, 0, 1, 0.5 ] },
+                "south": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 0.5 ] },
+                "west": { "texture": "#trophy", "uv": [ 0, 0, 1, 0.5 ] },
+                "up": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 1 ] },
+                "down": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 1 ] }
+            }
+        },
+        {
+            "name": "handle-right11",
+            "from": [ 7.5, 7, 10.5 ], 
+            "to": [ 8, 8, 11 ], 
+            "faces": {
+                "east": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 1 ] },
+                "south": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 1 ] },
+                "west": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 1 ] },
+                "down": { "texture": "#trophy", "uv": [ 0, 0, 0.5, 0.5 ] }
+            }
+        }
+    ]
+}

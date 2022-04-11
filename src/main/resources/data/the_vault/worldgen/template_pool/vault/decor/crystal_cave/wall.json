@@ -1,0 +1,12 @@
+{
+  "name": "the_vault:vault/decor/crystal_cave/wall",
+  "fallback": "the_vault:vault/decor/crystal_cave/wall",
+  "elements": [
+    {
+      "weight": 20,
+      "element": {
+        "element_type": "minecraft:empty_pool_element"
+      }
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "aba",
+    "bzb",
+    "ada"
+  ],
+  "key": {
+    "a": {
+      "item": "the_vault:perfect_alexandrite"
+    },
+    "z": {
+      "item": "the_vault:reset_flask"
+    },
+    "b": {
+      "item": "minecraft:sweet_berries"
+    },
+    "d": {
+      "item": "minecraft:diamond_axe"
+    }
+  },
+  "result": {
+    "item": "the_vault:reset_flask",
+    "nbt": "{Skillable:\"Barbaric\"}"
+  }
+}

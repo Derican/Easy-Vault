@@ -1,0 +1,59 @@
+{
+    "processors": [
+      {
+      "rules": [
+          {
+            "output_state": {
+              "Name": "minecraft:tnt",
+              "Properties": {
+                "unstable": "true"
+              }
+            },
+            "input_predicate": {
+              "predicate_type": "minecraft:random_block_match",
+              "block": "minecraft:red_concrete",
+              "probability": 1.0
+            },
+            "location_predicate": {
+              "predicate_type": "minecraft:always_true"
+            }
+          },
+          {
+            "output_state": {
+              "Name": "byg:blue_smooth_sandstone"
+            },
+            "input_predicate": {
+              "predicate_type": "minecraft:always_true"
+            },
+            "location_predicate": {
+                "predicate_type": "minecraft:random_block_match",
+                "block": "byg:blue_smooth_sandstone",
+                "probability": 1.0
+            }
+          },
+          {
+            "output_state": {
+              "Name": "byg:blue_sand"
+            },
+            "input_predicate": {
+              "predicate_type": "minecraft:always_true"
+            },
+            "location_predicate": {
+                "predicate_type": "minecraft:random_block_match",
+                "block": "byg:blue_sand",
+                "probability": 1.0
+            }
+          }
+        ],
+        "processor_type": "minecraft:rule"
+      },
+      {
+          "blocks": [
+            {
+              "Name": "minecraft:air"
+            }
+          ],
+          "processor_type": "minecraft:block_ignore"
+        }
+    ]
+  }

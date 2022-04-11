@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " b ",
+    "bab",
+    " b "
+  ],
+  "key": {
+    "b": {
+      "item": "the_vault:gem_benitoite"
+    },
+    "a": {
+      "item": "the_vault:vault_apple"
+    }
+  },
+  "result": {
+    "item": "the_vault:cobalt_apple",
+    "count": 1
+  }
+}

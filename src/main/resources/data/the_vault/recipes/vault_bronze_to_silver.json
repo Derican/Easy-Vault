@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {"item": "the_vault:vault_bronze"},
+    {"item": "the_vault:vault_bronze"},
+    {"item": "the_vault:vault_bronze"},
+    {"item": "the_vault:vault_bronze"},
+    {"item": "the_vault:vault_bronze"},
+    {"item": "the_vault:vault_bronze"},
+    {"item": "the_vault:vault_bronze"},
+    {"item": "the_vault:vault_bronze"},
+    {"item": "the_vault:vault_bronze"}
+  ],
+  "result": {
+    "item": "the_vault:vault_silver",
+    "count": 1
+  }
+}

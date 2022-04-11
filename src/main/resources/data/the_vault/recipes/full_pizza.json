@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "ppp",
+    "pgp",
+    "ppp"
+  ],
+  "key": {
+    "p": {
+      "item": "the_vault:oozing_pizza"
+    },
+    "g": {
+      "item": "the_vault:vault_diamond"
+    }
+  },
+  "result": {
+    "item": "the_vault:full_pizza",
+    "count": 1
+  }
+}

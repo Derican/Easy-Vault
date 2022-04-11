@@ -1,0 +1,48 @@
+{
+    "name": "the_vault:vault/decor/contest/prismarine/pool",
+    "fallback": "the_vault:vault/decor/contest/prismarine/pool",
+    "elements": [
+        {
+            "weight":6,
+            "element": {
+              "element_type": "minecraft:empty_pool_element"
+            }
+      },
+      {
+          "weight": 6,
+          "element": {
+            "processors": [
+                "the_vault:treasure/air_half_chest"
+            ],
+            "element_type": "the_vault:paletted_list_pool_element",
+            "projection": "rigid",
+            "elements": [
+                {
+                    "location": "the_vault:vault/prefab/decor/contest/prismarine/pool/p1",
+                    "projection": "rigid",
+                    "element_type": "the_vault:paletted_single_pool_element",
+                    "processors": "the_vault:generic/ignore_air"
+                }
+            ]
+          }
+      },
+      {
+        "weight": 6,
+        "element": {
+          "processors": [
+              "the_vault:treasure/air_half_chest"
+          ],
+          "element_type": "the_vault:paletted_list_pool_element",
+          "projection": "rigid",
+          "elements": [
+              {
+                  "location": "the_vault:vault/prefab/decor/contest/prismarine/pool/p2",
+                  "projection": "rigid",
+                  "element_type": "the_vault:paletted_single_pool_element",
+                  "processors": "the_vault:generic/ignore_air"
+              }
+          ]
+        }
+    }
+    ]
+  }

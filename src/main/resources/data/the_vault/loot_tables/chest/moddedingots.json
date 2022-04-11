@@ -1,0 +1,155 @@
+{
+    "pools": [
+      {
+        "name": "Modded Ingots",
+        "rolls": {
+          "min": 1,
+          "max": 1
+        },
+        "entries": [
+            { "_name": "Copper",
+                "type": "minecraft:item",
+                "weight": 10,
+                "name": "thermal:copper_ore",
+                "functions": [
+                  {
+                    "function": "minecraft:set_count",
+                    "count": {
+                      "min": 1,
+                      "max": 3
+                    }
+                  }
+                ]
+            },
+            { "_name": "Tin",
+              "type": "minecraft:item",
+              "weight": 10,
+              "name": "thermal:tin_ore",
+              "functions": [
+                {
+                  "function": "minecraft:set_count",
+                  "count": {
+                    "min": 1,
+                    "max": 3
+                  }
+                }
+              ]
+            },
+            { "_name": "Lead",
+              "type": "minecraft:item",
+              "weight": 8,
+              "name": "thermal:lead_ore",
+              "functions": [
+                {
+                  "function": "minecraft:set_count",
+                  "count": {
+                    "min": 1,
+                    "max": 3
+                  }
+                }
+              ]
+            },
+            { "_name": "Silver",
+              "type": "minecraft:item",
+              "weight": 8,
+              "name": "thermal:silver_ore",
+              "functions": [
+                {
+                  "function": "minecraft:set_count",
+                  "count": {
+                    "min": 1,
+                    "max": 3
+                  }
+                }
+              ]
+            },
+            { "_name": "Nickel",
+              "type": "minecraft:item",
+              "weight": 4,
+              "name": "thermal:nickel_ore",
+              "functions": [
+                {
+                  "function": "minecraft:set_count",
+                  "count": {
+                    "min": 1,
+                    "max": 3
+                  }
+                }
+              ]
+            },
+            { "_name": "Zinc",
+              "type": "minecraft:item",
+              "weight": 10,
+              "name": "create:zinc_ore",
+              "functions": [
+                {
+                  "function": "minecraft:set_count",
+                  "count": {
+                    "min": 1,
+                    "max": 3
+                  }
+                }
+              ]
+            },
+            { "_name": "Uranite",
+              "type": "minecraft:item",
+              "weight": 3,
+              "name": "powah:uraninite_ore",
+              "functions": [
+                {
+                  "function": "minecraft:set_count",
+                  "count": {
+                    "min": 1,
+                    "max": 3
+                  }
+                }
+              ]
+            },
+            { "_name": "Certus",
+              "type": "minecraft:item",
+              "weight": 8,
+              "name": "appliedenergistics2:quartz_ore",
+              "functions": [
+                {
+                  "function": "minecraft:set_count",
+                  "count": {
+                    "min": 1,
+                    "max": 3
+                  }
+                }
+              ]
+            },
+            { "_name": "Charged Certus",
+              "type": "minecraft:item",
+              "weight": 4,
+              "name": "appliedenergistics2:charged_quartz_ore",
+              "functions": [
+                {
+                  "function": "minecraft:set_count",
+                  "count": {
+                    "min": 1,
+                    "max": 3
+                  }
+                }
+              ]
+            },
+            { "_name": "Uranium",
+              "type": "minecraft:item",
+              "weight": 4,
+              "name": "immersiveengineering:ore_uranium",
+              "functions": [
+                {
+                  "function": "minecraft:set_count",
+                  "count": {
+                    "min": 1,
+                    "max": 3
+                  }
+                }
+              ]
+            }
+
+
+        ]
+      }
+    ]
+}

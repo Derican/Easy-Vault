@@ -1,0 +1,7 @@
+{
+	"parent": "item/generated",
+	"textures": {
+		"layer0": "the_vault:item/boots/special/fairy_boots",
+		"layer1": "the_vault:item/boots/special/fairy_boots_overlay"
+	}
+}

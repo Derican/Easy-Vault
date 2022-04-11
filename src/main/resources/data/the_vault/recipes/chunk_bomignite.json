@@ -1,0 +1,18 @@
+{
+    "type": "minecraft:crafting_shapeless",
+    "ingredients": [
+      {"item": "the_vault:cluster_bomignite"},
+      {"item": "the_vault:cluster_bomignite"},
+      {"item": "the_vault:cluster_bomignite"},
+      {"item": "the_vault:cluster_bomignite"},
+      {"item": "the_vault:cluster_bomignite"},
+      {"item": "the_vault:cluster_bomignite"},
+      {"item": "the_vault:cluster_bomignite"},
+      {"item": "the_vault:cluster_bomignite"},
+      {"item": "the_vault:cluster_bomignite"}
+    ],
+    "result": {
+      "item": "the_vault:chunk_bomignite",
+      "count": 1
+    }
+  }

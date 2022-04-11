@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "flf",
+    "eme",
+    "fbf"
+  ],
+  "key": {
+    "f": {
+      "item": "the_vault:vault_catalyst_fragment"
+    },
+    "l": {
+      "item": "the_vault:perfect_larimar"
+    },
+    "b": {
+      "item": "the_vault:perfect_benitoite"
+    },
+    "e": {
+      "item": "the_vault:vault_essence"
+    },
+    "m": {
+      "item": "minecraft:lectern"
+    }
+  },
+  "result": {
+    "item": "the_vault:catalyst_decryption_table",
+    "count": 1
+  }
+}

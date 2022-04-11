@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "aea",
+    "bzb",
+    "aba"
+  ],
+  "key": {
+    "a": {
+      "item": "the_vault:gem_black_opal"
+    },
+    "b": {
+      "item": "minecraft:diamond_chestplate"
+    },
+    "z": {
+      "item": "the_vault:reset_flask"
+    },
+    "e": {
+      "item": "the_vault:vault_essence"
+    }
+  },
+  "result": {
+    "item": "the_vault:reset_flask",
+    "nbt": "{Skillable:\"Tank\"}"
+  }
+}

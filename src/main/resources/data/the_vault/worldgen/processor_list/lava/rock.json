@@ -1,0 +1,93 @@
+{
+  "processors": [
+    {
+      "rules": [
+	    {
+          "output_state": {
+            "Name": "minecraft:air"
+          },
+          "input_predicate": {
+            "predicate_type": "minecraft:random_block_match",
+            "block": "minecraft:basalt",
+			"probability": 0.1
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          }
+        },
+		{
+          "output_state": {
+            "Name": "enviromats:granodiorite_cobble"
+          },
+          "input_predicate": {
+            "predicate_type": "minecraft:random_block_match",
+            "block": "minecraft:basalt",
+			"probability": 0.14
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          }
+        },
+        {
+          "output_state": {
+            "Name": "minecraft:basalt",
+			"Properties": {
+				"axis": "z"
+			}
+          },
+          "input_predicate": {
+            "predicate_type": "minecraft:random_block_match",
+            "block": "minecraft:basalt",
+			"probability": 0.16
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          }
+        },
+		{
+          "output_state": {
+            "Name": "minecraft:basalt",
+			"Properties": {
+				"axis": "x"
+			}
+          },
+          "input_predicate": {
+            "predicate_type": "minecraft:random_block_match",
+            "block": "minecraft:basalt",
+			"probability": 0.20
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          }
+        },
+		{
+          "output_state": {
+            "Name": "byg:soapstone"
+          },
+          "input_predicate": {
+            "predicate_type": "minecraft:random_block_match",
+            "block": "minecraft:basalt",
+			"probability": 0.25
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          }
+        },
+		{
+          "output_state": {
+            "Name": "minecraft:andesite"
+          },
+          "input_predicate": {
+            "predicate_type": "minecraft:random_block_match",
+            "block": "minecraft:basalt",
+			"probability": 0.33
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          }
+        }
+      ],
+      "processor_type": "minecraft:rule"
+    }
+  ]
+}

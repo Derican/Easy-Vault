@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " b ",
+    "bab",
+    " e "
+  ],
+  "key": {
+    "a": {
+      "item": "the_vault:vault_apple"
+    },
+    "b": {
+      "item": "the_vault:vault_nugget"
+    },
+    "e": {
+      "item": "the_vault:perfect_black_opal"
+    }
+  },
+  "result": {
+    "item": "the_vault:ghost_apple",
+    "count": 1
+  }
+}

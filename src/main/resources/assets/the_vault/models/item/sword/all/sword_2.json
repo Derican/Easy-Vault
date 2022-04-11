@@ -1,0 +1,7 @@
+{
+    "parent": "item/handheld",
+    "textures": {
+      "layer0": "the_vault:item/sword/all/invisible",
+      "layer1": "the_vault:item/sword/all/sword_2"
+    }
+  }

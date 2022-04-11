@@ -1,0 +1,85 @@
+{
+	"credit": "Made with Blockbench",
+	"textures": {
+		"0": "the_vault:item/sword/special/janitors_broom"
+	},
+	"elements": [
+		{
+			"name": "pole_bottom",
+			"from": [7, 0, 7],
+			"to": [9, 16, 9],
+			"faces": {
+				"north": {"uv": [0, 0, 2, 16], "texture": "#0"},
+				"east": {"uv": [0, 0, 2, 16], "texture": "#0"},
+				"south": {"uv": [0, 0, 2, 16], "texture": "#0"},
+				"west": {"uv": [0, 0, 2, 16], "texture": "#0"},
+				"up": {"uv": [0, 0, 2, 2], "texture": "#0"},
+				"down": {"uv": [0, 0, 2, 2], "texture": "#0"}
+			}
+		},
+		{
+			"name": "pole_top",
+			"from": [7, 16, 7],
+			"to": [9, 23, 9],
+			"faces": {
+				"north": {"uv": [0, 0, 2, 7], "texture": "#0"},
+				"east": {"uv": [0, 0, 2, 7], "texture": "#0"},
+				"south": {"uv": [0, 0, 2, 7], "texture": "#0"},
+				"west": {"uv": [0, 0, 2, 7], "texture": "#0"},
+				"up": {"uv": [0, 0, 2, 2], "texture": "#0"},
+				"down": {"uv": [0, 0, 2, 2], "texture": "#0"}
+			}
+		},
+		{
+			"name": "head",
+			"from": [2, 23, 6],
+			"to": [14, 26, 10],
+			"faces": {
+				"north": {"uv": [2, 0, 14, 3], "texture": "#0"},
+				"east": {"uv": [3, 0, 7, 3], "texture": "#0"},
+				"south": {"uv": [2, 0, 14, 3], "texture": "#0"},
+				"west": {"uv": [2, 0, 6, 3], "texture": "#0"},
+				"up": {"uv": [2, 0, 14, 4], "texture": "#0"},
+				"down": {"uv": [2, 0, 14, 4], "texture": "#0"}
+			}
+		},
+		{
+			"name": "straw",
+			"from": [3, 26, 7],
+			"to": [13, 30, 9],
+			"faces": {
+				"north": {"uv": [2, 4, 12, 8], "texture": "#0"},
+				"east": {"uv": [3, 4, 5, 8], "texture": "#0"},
+				"south": {"uv": [3, 4, 13, 8], "texture": "#0"},
+				"west": {"uv": [4, 4, 6, 8], "texture": "#0"},
+				"up": {"uv": [2, 9, 12, 11], "texture": "#0"},
+				"down": {"uv": [0, 0, 10, 2], "texture": "#0"}
+			}
+		}
+	],
+	"display": {
+		"firstperson_righthand": {
+			"rotation": [-18, 0, -1],
+			"translation": [0, -6.75, 0]
+		},
+		"firstperson_lefthand": {
+			"rotation": [-26, -4, -4],
+			"translation": [0, -5, 0]
+		},
+		"ground": {
+			"scale": [0.52, 0.52, 0.52]
+		},
+		"gui": {
+			"rotation": [0, 0, -35],
+			"translation": [-2.5, -3.5, 0],
+			"scale": [0.47, 0.47, 0.47]
+		},
+		"head": {
+			"translation": [0, -0.75, 0]
+		},
+		"fixed": {
+			"translation": [0, -4.25, -0.5],
+			"scale": [0.6, 0.6, 0.6]
+		}
+	}
+}

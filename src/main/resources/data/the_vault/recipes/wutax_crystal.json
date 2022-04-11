@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {"item": "the_vault:wutax_shard"},
+    {"item": "the_vault:wutax_shard"},
+    {"item": "the_vault:wutax_shard"},
+    {"item": "the_vault:wutax_shard"},
+    {"item": "the_vault:perfect_wutodie"},
+    {"item": "the_vault:wutax_shard"},
+    {"item": "the_vault:wutax_shard"},
+    {"item": "the_vault:wutax_shard"},
+    {"item": "the_vault:wutax_shard"}
+  ],
+  "result": {
+    "item": "the_vault:wutax_crystal",
+    "count": 1
+  }
+}

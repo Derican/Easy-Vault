@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "the_vault:block/trophy_statue",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "the_vault:block/trophy_statue",
+      "y": 270
+    },
+    "facing=west": {
+      "model": "the_vault:block/trophy_statue",
+      "y": 180
+    },
+    "facing=east": {
+      "model": "the_vault:block/trophy_statue"
+    }
+  }
+}

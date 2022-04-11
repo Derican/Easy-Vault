@@ -1,0 +1,23 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "BMB",
+        "MEM",
+        "BMB"
+    ],
+    "key": {
+        "M": {
+            "item": "the_vault:magnetite"
+        },
+        "B": {
+            "item": "the_vault:perfect_benitoite"
+        },
+        "E": {
+            "item": "the_vault:vault_essence"
+        }
+    },
+    "result": {
+        "item": "the_vault:paxel_charm",
+        "count": 1
+    }
+}

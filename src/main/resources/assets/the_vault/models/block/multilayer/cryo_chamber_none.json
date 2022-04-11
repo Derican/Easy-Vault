@@ -1,0 +1,15 @@
+{
+  "loader": "forge:multi-layer",
+  "layers": {
+    "solid": {
+      "parent": "the_vault:block/cryo_chamber_none_solid"
+    },
+    "translucent": {
+      "parent": "the_vault:block/cryo_chamber_none_translucent"
+    }
+  },
+  "ambientocclusion": false,
+  "textures": {
+    "particle": "the_vault:block/cryo_chamber_bottom_none"
+  }
+}

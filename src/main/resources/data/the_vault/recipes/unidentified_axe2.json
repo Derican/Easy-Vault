@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "II",
+    "IS",
+    " E"
+  ],
+  "key": {
+    "I": {
+      "item": "the_vault:vaulterite_ingot"
+    },
+    "E": {
+      "item": "the_vault:red_vault_essence"
+    },
+    "S": {
+      "item": "minecraft:stick"
+    }
+  },
+  "result": {
+    "item": "the_vault:axe"
+  }
+}

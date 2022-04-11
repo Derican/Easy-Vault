@@ -1,0 +1,107 @@
+{
+  "name": "the_vault:vault/decor/lava/rooms",
+  "fallback": "the_vault:vault/decor/lava/rooms",
+  "elements": [
+    {
+      "weight": 25,
+      "element": {
+        "element_type": "minecraft:empty_pool_element"
+      }
+    },
+	{
+        "weight": 5,
+        "element": {
+          "processors": [
+              
+              "the_vault:treasure/basalt_half"
+          ],
+          "element_type": "the_vault:paletted_list_pool_element",
+          "projection": "rigid",
+          "elements": [
+              {
+                  "location": "the_vault:vault/prefab/decor/lava/rooms/r1",
+                  "projection": "rigid",
+                  "element_type": "the_vault:paletted_single_pool_element",
+                  "processors": "the_vault:lava/rooms"
+              }
+          ]
+        }
+    },
+	{
+        "weight": 5,
+        "element": {
+          "processors": [
+              
+              "the_vault:treasure/basalt_half"
+          ],
+          "element_type": "the_vault:paletted_list_pool_element",
+          "projection": "rigid",
+          "elements": [
+              {
+                  "location": "the_vault:vault/prefab/decor/lava/rooms/r2",
+                  "projection": "rigid",
+                  "element_type": "the_vault:paletted_single_pool_element",
+                  "processors": "the_vault:lava/rooms"
+              }
+          ]
+        }
+    },
+	{
+        "weight": 5,
+        "element": {
+          "processors": [
+              
+              "the_vault:treasure/basalt_half"
+          ],
+          "element_type": "the_vault:paletted_list_pool_element",
+          "projection": "rigid",
+          "elements": [
+              {
+                  "location": "the_vault:vault/prefab/decor/lava/rooms/r3",
+                  "projection": "rigid",
+                  "element_type": "the_vault:paletted_single_pool_element",
+                  "processors": "the_vault:lava/rooms"
+              }
+          ]
+        }
+    },
+	{
+        "weight": 5,
+        "element": {
+          "processors": [
+              
+              "the_vault:treasure/basalt_half"
+          ],
+          "element_type": "the_vault:paletted_list_pool_element",
+          "projection": "rigid",
+          "elements": [
+              {
+                  "location": "the_vault:vault/prefab/decor/lava/rooms/r4",
+                  "projection": "rigid",
+                  "element_type": "the_vault:paletted_single_pool_element",
+                  "processors": "the_vault:lava/rooms"
+              }
+          ]
+        }
+    },
+	{
+        "weight": 5,
+        "element": {
+          "processors": [
+              
+              "the_vault:treasure/basalt_half"
+          ],
+          "element_type": "the_vault:paletted_list_pool_element",
+          "projection": "rigid",
+          "elements": [
+              {
+                  "location": "the_vault:vault/prefab/decor/lava/rooms/r5",
+                  "projection": "rigid",
+                  "element_type": "the_vault:paletted_single_pool_element",
+                  "processors": "the_vault:lava/rooms"
+              }
+          ]
+        }
+    }
+  ]
+}

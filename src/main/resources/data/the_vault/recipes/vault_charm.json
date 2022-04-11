@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "pep",
+    "ece",
+    "pep"
+  ],
+  "key": {
+    "p": {
+      "item": "the_vault:perfect_black_opal"
+    },
+    "c": {
+      "item": "the_vault:vault_crate_scavenger"
+    },
+    "e": {
+      "item": "the_vault:perfect_echo_gem"
+    }
+  },
+  "result": {
+    "item": "the_vault:vault_charm",
+    "count": 1
+  }
+}

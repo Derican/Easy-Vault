@@ -1,0 +1,61 @@
+{
+    "processors": [
+      {
+        "rules": [
+            {
+                "output_state": {
+                    "Name": "the_vault:green_puzzle_concrete"
+                },
+                "input_predicate": {
+                  "predicate_type": "minecraft:random_block_match",
+                  "block": "minecraft:white_concrete",
+                  "probability": 0.18
+                },
+                "location_predicate": {
+                  "predicate_type": "minecraft:always_true"
+                }
+              },
+              {
+                "output_state": {
+                    "Name": "the_vault:pink_puzzle_concrete"
+                },
+                "input_predicate": {
+                  "predicate_type": "minecraft:random_block_match",
+                  "block": "minecraft:white_concrete",
+                  "probability": 0.29
+                },
+                "location_predicate": {
+                  "predicate_type": "minecraft:always_true"
+                }
+              },
+              {
+                "output_state": {
+                    "Name": "the_vault:yellow_puzzle_concrete"
+                },
+                "input_predicate": {
+                  "predicate_type": "minecraft:random_block_match",
+                  "block": "minecraft:white_concrete",
+                  "probability": 0.45
+                },
+                "location_predicate": {
+                  "predicate_type": "minecraft:always_true"
+                }
+              },
+          {
+            "output_state": {
+                "Name": "the_vault:blue_puzzle_concrete"
+            },
+            "input_predicate": {
+              "predicate_type": "minecraft:random_block_match",
+              "block": "minecraft:white_concrete",
+              "probability": 1.0
+            },
+            "location_predicate": {
+              "predicate_type": "minecraft:always_true"
+            }
+          }
+        ],
+        "processor_type": "minecraft:rule"
+      }
+    ]
+  }

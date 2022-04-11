@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "bpb",
+    "pap",
+    "bpb"
+  ],
+  "key": {
+    "a": {
+      "item": "the_vault:vault_diamond_block"
+    },
+    "b": {
+      "item": "the_vault:gem_black_opal"
+    },
+    "p": {
+      "item": "the_vault:perfect_black_opal"
+    }
+  },
+  "result": {
+    "item": "the_vault:orb_frame",
+    "count": 1
+  }
+}

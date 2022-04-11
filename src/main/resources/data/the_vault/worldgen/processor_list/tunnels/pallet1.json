@@ -1,0 +1,355 @@
+{
+  "processors": [
+    {
+	  "rules": [
+	    {
+          "output_state": {
+            "Name": "enviromats:granodiorite_cobble"
+          },
+          "input_predicate": {
+            "block": "minecraft:stone",
+			"probability": 0.20,
+            "predicate_type": "minecraft:random_block_match"
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          }
+        },
+		{
+          "output_state": {
+            "Name": "enviromats:granodiorite"
+          },
+          "input_predicate": {
+            "block": "minecraft:stone",
+			"probability": 0.20,
+            "predicate_type": "minecraft:random_block_match"
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          }
+        },
+		{
+          "output_state": {
+            "Name": "enviromats:hardened_stone_brick"
+          },
+          "input_predicate": {
+            "block": "minecraft:stone",
+			"probability": 0.20,
+            "predicate_type": "minecraft:random_block_match"
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          }
+        },
+		{
+          "output_state": {
+            "Name": "byg:black_smooth_sandstone"
+          },
+          "input_predicate": {
+            "block": "minecraft:stone",
+            "predicate_type": "minecraft:block_match"
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          }
+        },
+		{
+          "output_state": {
+            "Name": "byg:vermilion_sculk",
+			"Properties": {
+			  "snowy": "false"
+			}
+          },
+          "input_predicate": {
+            "block": "minecraft:coarse_dirt",
+			"probability": 0.20,
+            "predicate_type": "minecraft:random_block_match"
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          }
+        },
+		{
+          "output_state": {
+            "Name": "minecraft:black_concrete_powder"
+          },
+          "input_predicate": {
+            "block": "minecraft:coarse_dirt",
+			"probability": 0.20,
+            "predicate_type": "minecraft:random_block_match"
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          }
+        },
+		{
+          "output_state": {
+            "Name": "botania:black_petal_block"
+          },
+          "input_predicate": {
+            "block": "minecraft:coarse_dirt",
+			"probability": 0.20,
+            "predicate_type": "minecraft:random_block_match"
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          }
+        },
+		{
+          "output_state": {
+            "Name": "minecraft:gray_concrete_powder"
+          },
+          "input_predicate": {
+            "block": "minecraft:coarse_dirt",
+            "predicate_type": "minecraft:block_match"
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          }
+        },
+		{
+          "output_state": {
+            "Name": "byg:stripped_ebony_wood",
+			"Properties": {
+				"axis": "x"
+			}
+          },
+          "input_predicate": {
+            "block_state": {
+				"Name": "minecraft:oak_log",
+				"Properties": {
+					"axis": "x"
+				}
+			},
+            "predicate_type": "minecraft:blockstate_match"
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          }
+        },
+		{
+          "output_state": {
+            "Name": "byg:stripped_ebony_wood",
+			"Properties": {
+				"axis": "y"
+			}
+          },
+          "input_predicate": {
+            "block_state": {
+				"Name": "minecraft:oak_log",
+				"Properties": {
+					"axis": "y"
+				}
+			},
+            "predicate_type": "minecraft:blockstate_match"
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          }
+        },
+		{
+          "output_state": {
+            "Name": "byg:stripped_ebony_wood",
+			"Properties": {
+				"axis": "z"
+			}
+          },
+          "input_predicate": {
+            "block_state": {
+				"Name": "minecraft:oak_log",
+				"Properties": {
+					"axis": "z"
+				}
+			},
+            "predicate_type": "minecraft:blockstate_match"
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          }
+        },
+		{
+          "output_state": {
+            "Name": "enviromats:granodiorite_cobble_slab",
+			"Properties": {
+				"type": "bottom",
+				"waterlogged": "false"
+			}
+          },
+          "input_predicate": {
+            "block": "minecraft:oak_slab",
+            "predicate_type": "minecraft:block_match"
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          }
+        },
+		{
+          "output_state": {
+            "Name": "enviromats:granodiorite_cobble_slab",
+			"Properties": {
+				"type": "bottom",
+				"waterlogged": "false"
+			}
+          },
+          "input_predicate": {
+            "block": "minecraft:stone_slab",
+            "predicate_type": "minecraft:block_match"
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          }
+        },
+		{
+          "output_state": {
+            "Name": "enviromats:granodiorite_stairs",
+			"Properties": {
+				"facing": "north",
+				"half": "bottom",
+				"shape": "straight",
+				"waterlogged": "false"
+			}
+          },
+          "input_predicate": {
+            "block": "minecraft:stone_stairs",
+            "predicate_type": "minecraft:block_match"
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          }
+        },
+		{
+          "output_state": {
+            "Name": "enviromats:granodiorite_wall",
+			"Properties": {
+				"east": "none",
+				"west": "none",
+				"north": "none",
+				"south": "none",
+				"up": "true",
+				"waterlogged": "false"
+			}
+          },
+          "input_predicate": {
+            "block": "minecraft:cobblestone_wall",
+            "predicate_type": "minecraft:block_match"
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          }
+        },
+		{
+          "output_state": {
+            "Name": "byg:ebony_fence",
+			"Properties": {
+				"east": "false",
+				"west": "false",
+				"north": "false",
+				"south": "false",
+				"waterlogged": "false"
+			}
+          },
+          "input_predicate": {
+            "block": "minecraft:spruce_fence",
+            "predicate_type": "minecraft:block_match"
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          }
+        },
+		{
+          "output_state": {
+            "Name": "minecraft:soul_lantern",
+			"Properties": {
+				"hanging": "true",
+				"waterlogged": "false"
+			}
+          },
+          "input_predicate": {
+            "block": "minecraft:lantern",
+            "predicate_type": "minecraft:block_match"
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          }
+        },
+		{
+          "output_state": {
+            "Name": "byg:tall_crimson_roots",
+			"Properties": {
+				"half": "lower"
+			}
+          },
+          "input_predicate": {
+            "block_state": {
+				"Name": "minecraft:tall_grass",
+				"Properties": {
+					"half": "lower"
+				}
+			},
+            "predicate_type": "minecraft:blockstate_match"
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          }
+        },
+		{
+          "output_state": {
+            "Name": "byg:tall_crimson_roots",
+			"Properties": {
+				"half": "upper"
+			}
+          },
+          "input_predicate": {
+            "block_state": {
+				"Name": "minecraft:tall_grass",
+				"Properties": {
+					"half": "upper"
+				}
+			},
+            "predicate_type": "minecraft:blockstate_match"
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          }
+        },
+		{
+          "output_state": {
+            "Name": "minecraft:crimson_roots"
+          },
+          "input_predicate": {
+            "block": "minecraft:grass",
+            "predicate_type": "minecraft:block_match"
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          }
+        },
+		{
+          "output_state": {
+            "Name": "minecraft:cave_air"
+          },
+          "input_predicate": {
+            "block": "minecraft:water",
+            "predicate_type": "minecraft:block_match"
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          }
+        },
+		{
+          "output_state": {
+            "Name": "minecraft:cave_air"
+          },
+          "input_predicate": {
+            "block": "minecraft:seagrass",
+            "predicate_type": "minecraft:block_match"
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          }
+        }
+	  ],
+	  "processor_type": "minecraft:rule"
+	}
+  ]
+}

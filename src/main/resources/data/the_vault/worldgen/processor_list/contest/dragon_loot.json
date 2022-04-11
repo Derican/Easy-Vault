@@ -1,0 +1,58 @@
+{
+    "processors": [
+      {
+        "rules": [
+            {
+                "output_state": {
+                  "Name": "the_vault:vault_richity"
+                },
+                "input_predicate": {
+                  "predicate_type": "minecraft:random_block_match",
+                  "block": "minecraft:yellow_concrete",
+                  "probability": 0.01
+                },
+                "location_predicate": {
+                  "predicate_type": "minecraft:always_true"
+                }
+              },
+          {
+            "output_state": {
+              "Name": "the_vault:vault_chest",
+              "Properties": {
+                    "facing": "north",
+                    "type": "single",
+                    "waterlogged": "false"      
+                }
+            },
+            "input_predicate": {
+              "predicate_type": "minecraft:random_block_match",
+              "block": "minecraft:yellow_concrete",
+              "probability": 0.01
+            },
+            "location_predicate": {
+              "predicate_type": "minecraft:always_true"
+            }
+          },
+          {
+            "output_state": {
+              "Name": "the_vault:vault_bonus_chest",
+              "Properties": {
+                "facing": "north",
+                "type": "single",
+                "waterlogged": "false"      
+              }
+            },
+            "input_predicate": {
+              "predicate_type": "minecraft:random_block_match",
+              "block": "minecraft:yellow_concrete",
+              "probability": 0.005
+            },
+            "location_predicate": {
+              "predicate_type": "minecraft:always_true"
+            }
+          }
+        ],
+        "processor_type": "minecraft:rule"
+      }
+    ]
+  }

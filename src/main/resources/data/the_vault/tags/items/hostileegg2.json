@@ -1,0 +1,12 @@
+{
+  "values": [
+    "minecraft:enderman_spawn_egg",
+    "minecraft:blaze_spawn_egg",
+    "minecraft:ghast_spawn_egg",
+    "minecraft:guardian_spawn_egg",
+    "minecraft:ravager_spawn_egg",
+    "minecraft:wither_skeleton_spawn_egg",
+    "minecraft:witch_spawn_egg",
+    "minecraft:vindicator_spawn_egg"
+  ]
+}

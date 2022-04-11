@@ -1,0 +1,24 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        " TT",
+        " S ",
+        "F  "
+    ],
+    "key": {
+        "T": {
+            "item": "the_vault:drill_arrow_part"
+        },
+        "S": {
+            "tag": "forge:rods/wooden"
+        },
+        "F": {
+            "tag": "forge:feathers"
+        }
+    },
+    "result": {
+        "item": "the_vault:drill_arrow",
+        "count": 3,
+        "nbt": "{tier:1}"
+    }
+}

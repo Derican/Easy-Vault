@@ -1,0 +1,48 @@
+{
+    "processors": [
+      {
+        "rules": [
+            {
+                "output_state": {
+                  "Name": "minecraft:air"
+                },
+                "input_predicate": {
+                  "predicate_type": "minecraft:block_match",
+                  "block": "minecraft:stone"
+                },
+                "location_predicate": {
+                    "predicate_type": "minecraft:block_match",
+                    "block": "minecraft:air"
+                }
+            },
+            {
+                "output_state": {
+                  "Name": "minecraft:air"
+                },
+                "input_predicate": {
+                  "predicate_type": "minecraft:block_match",
+                  "block": "minecraft:cyan_wool"
+                },
+                "location_predicate": {
+                    "predicate_type": "minecraft:block_match",
+                    "block": "minecraft:air"
+                }
+            },
+          {
+            "output_state": {
+              "Name": "minecraft:air"
+            },
+            "input_predicate": {
+              "predicate_type": "minecraft:random_block_match",
+              "block": "ispawner:spawner",
+              "probability": 0.5
+            },
+            "location_predicate": {
+              "predicate_type": "minecraft:always_true"
+            }
+          }
+        ],
+        "processor_type": "minecraft:rule"
+      }
+    ]
+  }

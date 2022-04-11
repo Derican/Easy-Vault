@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " d ",
+    "sbs",
+    " e "
+  ],
+  "key": {
+    "s": {
+      "item": "the_vault:vault_scrap"
+    },
+    "b": {
+      "item": "the_vault:void_liquid_bucket"
+    },
+    "e": {
+      "item": "the_vault:red_vault_essence"
+    },
+    "d": {
+      "item": "the_vault:vault_diamond"
+    }
+  },
+  "result": {
+    "item": "the_vault:void_orb",
+    "count": 1
+  }
+}

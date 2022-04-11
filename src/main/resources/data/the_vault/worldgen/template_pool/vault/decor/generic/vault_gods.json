@@ -1,0 +1,815 @@
+{
+  "name": "the_vault:vault/decor/generic/vault_gods",
+  "fallback": "the_vault:vault/decor/generic/vault_gods",
+  "elements": [
+	{
+      "weight": 180,
+      "element": {
+        "element_type": "minecraft:empty_pool_element"
+      }
+    },
+	{
+      "weight": 1,
+      "element": {
+	    "location": "the_vault:vault/prefab/decor/generic/vault_gods/v1",
+	    "projection": "rigid",
+	    "element_type": "minecraft:legacy_single_pool_element",
+	    "processors": "minecraft:empty"
+	  }
+    },
+	{
+      "weight": 1,
+      "element": {
+	    "location": "the_vault:vault/prefab/decor/generic/vault_gods/v2",
+	    "projection": "rigid",
+	    "element_type": "minecraft:legacy_single_pool_element",
+	    "processors": "minecraft:empty"
+	  }
+    },
+	{
+      "weight": 1,
+      "element": {
+	    "location": "the_vault:vault/prefab/decor/generic/vault_gods/v3",
+	    "projection": "rigid",
+	    "element_type": "minecraft:legacy_single_pool_element",
+	    "processors": "minecraft:empty"
+	  }
+    },
+	{
+      "weight": 1,
+      "element": {
+	    "location": "the_vault:vault/prefab/decor/generic/vault_gods/v4",
+	    "projection": "rigid",
+	    "element_type": "minecraft:legacy_single_pool_element",
+	    "processors": "minecraft:empty"
+	  }
+    }
+	,
+	{
+      "weight": 1,
+      "element": {
+	    "location": "the_vault:vault/prefab/decor/generic/vault_gods/v5",
+	    "projection": "rigid",
+	    "element_type": "minecraft:legacy_single_pool_element",
+	    "processors": "minecraft:empty"
+	  }
+    },
+	{
+      "weight": 1,
+      "element": {
+	    "location": "the_vault:vault/prefab/decor/generic/vault_gods/v6",
+	    "projection": "rigid",
+	    "element_type": "minecraft:legacy_single_pool_element",
+	    "processors": "minecraft:empty"
+	  }
+    },
+	{
+      "weight": 1,
+      "element": {
+	    "location": "the_vault:vault/prefab/decor/generic/vault_gods/v7",
+	    "projection": "rigid",
+	    "element_type": "minecraft:legacy_single_pool_element",
+	    "processors": "minecraft:empty"
+	  }
+    },
+	{
+      "weight": 1,
+      "element": {
+	    "location": "the_vault:vault/prefab/decor/generic/vault_gods/v8",
+	    "projection": "rigid",
+	    "element_type": "minecraft:legacy_single_pool_element",
+	    "processors": "minecraft:empty"
+	  }
+    },
+    {
+        "weight": 1,
+        "element": {
+          "location": "the_vault:vault/prefab/decor/generic/vault_gods/a1",
+          "projection": "rigid",
+          "element_type": "minecraft:legacy_single_pool_element",
+          "processors": "minecraft:empty"
+        }
+      },
+      {
+        "weight": 1,
+        "element": {
+          "location": "the_vault:vault/prefab/decor/generic/vault_gods/a2",
+          "projection": "rigid",
+          "element_type": "minecraft:legacy_single_pool_element",
+          "processors": "minecraft:empty"
+        }
+      },
+      {
+        "weight": 1,
+        "element": {
+          "location": "the_vault:vault/prefab/decor/generic/vault_gods/a3",
+          "projection": "rigid",
+          "element_type": "minecraft:legacy_single_pool_element",
+          "processors": "minecraft:empty"
+        }
+      },
+      {
+        "weight": 1,
+        "element": {
+          "location": "the_vault:vault/prefab/decor/generic/vault_gods/a4",
+          "projection": "rigid",
+          "element_type": "minecraft:legacy_single_pool_element",
+          "processors": "minecraft:empty"
+        }
+      }
+      ,
+      {
+        "weight": 1,
+        "element": {
+          "location": "the_vault:vault/prefab/decor/generic/vault_gods/a5",
+          "projection": "rigid",
+          "element_type": "minecraft:legacy_single_pool_element",
+          "processors": "minecraft:empty"
+        }
+      },
+      {
+        "weight": 1,
+        "element": {
+          "location": "the_vault:vault/prefab/decor/generic/vault_gods/a6",
+          "projection": "rigid",
+          "element_type": "minecraft:legacy_single_pool_element",
+          "processors": "minecraft:empty"
+        }
+      },
+      {
+        "weight": 1,
+        "element": {
+          "location": "the_vault:vault/prefab/decor/generic/vault_gods/a7",
+          "projection": "rigid",
+          "element_type": "minecraft:legacy_single_pool_element",
+          "processors": "minecraft:empty"
+        }
+      },
+      {
+        "weight": 1,
+        "element": {
+          "location": "the_vault:vault/prefab/decor/generic/vault_gods/a8",
+          "projection": "rigid",
+          "element_type": "minecraft:legacy_single_pool_element",
+          "processors": "minecraft:empty"
+        }
+      },
+      {
+        "weight": 1,
+        "element": {
+          "location": "the_vault:vault/prefab/decor/generic/vault_gods/b1",
+          "projection": "rigid",
+          "element_type": "minecraft:legacy_single_pool_element",
+          "processors": "minecraft:empty"
+        }
+      },
+      {
+        "weight": 1,
+        "element": {
+          "location": "the_vault:vault/prefab/decor/generic/vault_gods/b2",
+          "projection": "rigid",
+          "element_type": "minecraft:legacy_single_pool_element",
+          "processors": "minecraft:empty"
+        }
+      },
+      {
+        "weight": 1,
+        "element": {
+          "location": "the_vault:vault/prefab/decor/generic/vault_gods/b3",
+          "projection": "rigid",
+          "element_type": "minecraft:legacy_single_pool_element",
+          "processors": "minecraft:empty"
+        }
+      },
+      {
+        "weight": 1,
+        "element": {
+          "location": "the_vault:vault/prefab/decor/generic/vault_gods/b4",
+          "projection": "rigid",
+          "element_type": "minecraft:legacy_single_pool_element",
+          "processors": "minecraft:empty"
+        }
+      }
+      ,
+      {
+        "weight": 1,
+        "element": {
+          "location": "the_vault:vault/prefab/decor/generic/vault_gods/b5",
+          "projection": "rigid",
+          "element_type": "minecraft:legacy_single_pool_element",
+          "processors": "minecraft:empty"
+        }
+      },
+      {
+        "weight": 1,
+        "element": {
+          "location": "the_vault:vault/prefab/decor/generic/vault_gods/b6",
+          "projection": "rigid",
+          "element_type": "minecraft:legacy_single_pool_element",
+          "processors": "minecraft:empty"
+        }
+      },
+      {
+        "weight": 1,
+        "element": {
+          "location": "the_vault:vault/prefab/decor/generic/vault_gods/b7",
+          "projection": "rigid",
+          "element_type": "minecraft:legacy_single_pool_element",
+          "processors": "minecraft:empty"
+        }
+      },
+      {
+        "weight": 1,
+        "element": {
+          "location": "the_vault:vault/prefab/decor/generic/vault_gods/b8",
+          "projection": "rigid",
+          "element_type": "minecraft:legacy_single_pool_element",
+          "processors": "minecraft:empty"
+        }
+      },
+      {
+        "weight": 1,
+        "element": {
+          "location": "the_vault:vault/prefab/decor/generic/vault_gods/c1",
+          "projection": "rigid",
+          "element_type": "minecraft:legacy_single_pool_element",
+          "processors": "minecraft:empty"
+        }
+      },
+      {
+        "weight": 1,
+        "element": {
+          "location": "the_vault:vault/prefab/decor/generic/vault_gods/c2",
+          "projection": "rigid",
+          "element_type": "minecraft:legacy_single_pool_element",
+          "processors": "minecraft:empty"
+        }
+      },
+      {
+        "weight": 1,
+        "element": {
+          "location": "the_vault:vault/prefab/decor/generic/vault_gods/c3",
+          "projection": "rigid",
+          "element_type": "minecraft:legacy_single_pool_element",
+          "processors": "minecraft:empty"
+        }
+      },
+      {
+        "weight": 1,
+        "element": {
+          "location": "the_vault:vault/prefab/decor/generic/vault_gods/c4",
+          "projection": "rigid",
+          "element_type": "minecraft:legacy_single_pool_element",
+          "processors": "minecraft:empty"
+        }
+      }
+      ,
+      {
+        "weight": 1,
+        "element": {
+          "location": "the_vault:vault/prefab/decor/generic/vault_gods/c5",
+          "projection": "rigid",
+          "element_type": "minecraft:legacy_single_pool_element",
+          "processors": "minecraft:empty"
+        }
+      },
+      {
+        "weight": 1,
+        "element": {
+          "location": "the_vault:vault/prefab/decor/generic/vault_gods/c6",
+          "projection": "rigid",
+          "element_type": "minecraft:legacy_single_pool_element",
+          "processors": "minecraft:empty"
+        }
+      },
+      {
+        "weight": 1,
+        "element": {
+          "location": "the_vault:vault/prefab/decor/generic/vault_gods/c7",
+          "projection": "rigid",
+          "element_type": "minecraft:legacy_single_pool_element",
+          "processors": "minecraft:empty"
+        }
+      },
+      {
+        "weight": 1,
+        "element": {
+          "location": "the_vault:vault/prefab/decor/generic/vault_gods/c8",
+          "projection": "rigid",
+          "element_type": "minecraft:legacy_single_pool_element",
+          "processors": "minecraft:empty"
+        }
+      },
+      {
+        "weight": 1,
+        "element": {
+          "location": "the_vault:vault/prefab/decor/generic/vault_gods/d1",
+          "projection": "rigid",
+          "element_type": "minecraft:legacy_single_pool_element",
+          "processors": "minecraft:empty"
+        }
+      },
+      {
+        "weight": 1,
+        "element": {
+          "location": "the_vault:vault/prefab/decor/generic/vault_gods/d2",
+          "projection": "rigid",
+          "element_type": "minecraft:legacy_single_pool_element",
+          "processors": "minecraft:empty"
+        }
+      },
+      {
+        "weight": 1,
+        "element": {
+          "location": "the_vault:vault/prefab/decor/generic/vault_gods/d3",
+          "projection": "rigid",
+          "element_type": "minecraft:legacy_single_pool_element",
+          "processors": "minecraft:empty"
+        }
+      },
+      {
+        "weight": 1,
+        "element": {
+          "location": "the_vault:vault/prefab/decor/generic/vault_gods/d4",
+          "projection": "rigid",
+          "element_type": "minecraft:legacy_single_pool_element",
+          "processors": "minecraft:empty"
+        }
+      }
+      ,
+      {
+        "weight": 1,
+        "element": {
+          "location": "the_vault:vault/prefab/decor/generic/vault_gods/d5",
+          "projection": "rigid",
+          "element_type": "minecraft:legacy_single_pool_element",
+          "processors": "minecraft:empty"
+        }
+      },
+      {
+        "weight": 1,
+        "element": {
+          "location": "the_vault:vault/prefab/decor/generic/vault_gods/d6",
+          "projection": "rigid",
+          "element_type": "minecraft:legacy_single_pool_element",
+          "processors": "minecraft:empty"
+        }
+      },
+      {
+        "weight": 1,
+        "element": {
+          "location": "the_vault:vault/prefab/decor/generic/vault_gods/d7",
+          "projection": "rigid",
+          "element_type": "minecraft:legacy_single_pool_element",
+          "processors": "minecraft:empty"
+        }
+      },
+      {
+        "weight": 1,
+        "element": {
+          "location": "the_vault:vault/prefab/decor/generic/vault_gods/d8",
+          "projection": "rigid",
+          "element_type": "minecraft:legacy_single_pool_element",
+          "processors": "minecraft:empty"
+        }
+      },
+      {
+        "weight": 1,
+        "element": {
+          "location": "the_vault:vault/prefab/decor/generic/vault_gods/e1",
+          "projection": "rigid",
+          "element_type": "minecraft:legacy_single_pool_element",
+          "processors": "minecraft:empty"
+        }
+      },
+      {
+        "weight": 1,
+        "element": {
+          "location": "the_vault:vault/prefab/decor/generic/vault_gods/e2",
+          "projection": "rigid",
+          "element_type": "minecraft:legacy_single_pool_element",
+          "processors": "minecraft:empty"
+        }
+      },
+      {
+        "weight": 1,
+        "element": {
+          "location": "the_vault:vault/prefab/decor/generic/vault_gods/e3",
+          "projection": "rigid",
+          "element_type": "minecraft:legacy_single_pool_element",
+          "processors": "minecraft:empty"
+        }
+      },
+      {
+        "weight": 1,
+        "element": {
+          "location": "the_vault:vault/prefab/decor/generic/vault_gods/e4",
+          "projection": "rigid",
+          "element_type": "minecraft:legacy_single_pool_element",
+          "processors": "minecraft:empty"
+        }
+      }
+      ,
+      {
+        "weight": 1,
+        "element": {
+          "location": "the_vault:vault/prefab/decor/generic/vault_gods/e5",
+          "projection": "rigid",
+          "element_type": "minecraft:legacy_single_pool_element",
+          "processors": "minecraft:empty"
+        }
+      },
+      {
+        "weight": 1,
+        "element": {
+          "location": "the_vault:vault/prefab/decor/generic/vault_gods/e6",
+          "projection": "rigid",
+          "element_type": "minecraft:legacy_single_pool_element",
+          "processors": "minecraft:empty"
+        }
+      },
+      {
+        "weight": 1,
+        "element": {
+          "location": "the_vault:vault/prefab/decor/generic/vault_gods/e7",
+          "projection": "rigid",
+          "element_type": "minecraft:legacy_single_pool_element",
+          "processors": "minecraft:empty"
+        }
+      },
+      {
+        "weight": 1,
+        "element": {
+          "location": "the_vault:vault/prefab/decor/generic/vault_gods/e8",
+          "projection": "rigid",
+          "element_type": "minecraft:legacy_single_pool_element",
+          "processors": "minecraft:empty"
+        }
+      },
+      {
+        "weight": 1,
+        "element": {
+          "location": "the_vault:vault/prefab/decor/generic/vault_gods/f1",
+          "projection": "rigid",
+          "element_type": "minecraft:legacy_single_pool_element",
+          "processors": "minecraft:empty"
+        }
+      },
+      {
+        "weight": 1,
+        "element": {
+          "location": "the_vault:vault/prefab/decor/generic/vault_gods/f2",
+          "projection": "rigid",
+          "element_type": "minecraft:legacy_single_pool_element",
+          "processors": "minecraft:empty"
+        }
+      },
+      {
+        "weight": 1,
+        "element": {
+          "location": "the_vault:vault/prefab/decor/generic/vault_gods/f3",
+          "projection": "rigid",
+          "element_type": "minecraft:legacy_single_pool_element",
+          "processors": "minecraft:empty"
+        }
+      },
+      {
+        "weight": 1,
+        "element": {
+          "location": "the_vault:vault/prefab/decor/generic/vault_gods/f4",
+          "projection": "rigid",
+          "element_type": "minecraft:legacy_single_pool_element",
+          "processors": "minecraft:empty"
+        }
+      }
+      ,
+      {
+        "weight": 1,
+        "element": {
+          "location": "the_vault:vault/prefab/decor/generic/vault_gods/f5",
+          "projection": "rigid",
+          "element_type": "minecraft:legacy_single_pool_element",
+          "processors": "minecraft:empty"
+        }
+      },
+      {
+        "weight": 1,
+        "element": {
+          "location": "the_vault:vault/prefab/decor/generic/vault_gods/f6",
+          "projection": "rigid",
+          "element_type": "minecraft:legacy_single_pool_element",
+          "processors": "minecraft:empty"
+        }
+      },
+      {
+        "weight": 1,
+        "element": {
+          "location": "the_vault:vault/prefab/decor/generic/vault_gods/f7",
+          "projection": "rigid",
+          "element_type": "minecraft:legacy_single_pool_element",
+          "processors": "minecraft:empty"
+        }
+      },
+      {
+        "weight": 1,
+        "element": {
+          "location": "the_vault:vault/prefab/decor/generic/vault_gods/f8",
+          "projection": "rigid",
+          "element_type": "minecraft:legacy_single_pool_element",
+          "processors": "minecraft:empty"
+        }
+      },
+      {
+        "weight": 1,
+        "element": {
+          "location": "the_vault:vault/prefab/decor/generic/vault_gods/g1",
+          "projection": "rigid",
+          "element_type": "minecraft:legacy_single_pool_element",
+          "processors": "minecraft:empty"
+        }
+      },
+      {
+        "weight": 1,
+        "element": {
+          "location": "the_vault:vault/prefab/decor/generic/vault_gods/g2",
+          "projection": "rigid",
+          "element_type": "minecraft:legacy_single_pool_element",
+          "processors": "minecraft:empty"
+        }
+      },
+      {
+        "weight": 1,
+        "element": {
+          "location": "the_vault:vault/prefab/decor/generic/vault_gods/g3",
+          "projection": "rigid",
+          "element_type": "minecraft:legacy_single_pool_element",
+          "processors": "minecraft:empty"
+        }
+      },
+      {
+        "weight": 1,
+        "element": {
+          "location": "the_vault:vault/prefab/decor/generic/vault_gods/g4",
+          "projection": "rigid",
+          "element_type": "minecraft:legacy_single_pool_element",
+          "processors": "minecraft:empty"
+        }
+      }
+      ,
+      {
+        "weight": 1,
+        "element": {
+          "location": "the_vault:vault/prefab/decor/generic/vault_gods/g5",
+          "projection": "rigid",
+          "element_type": "minecraft:legacy_single_pool_element",
+          "processors": "minecraft:empty"
+        }
+      },
+      {
+        "weight": 1,
+        "element": {
+          "location": "the_vault:vault/prefab/decor/generic/vault_gods/g6",
+          "projection": "rigid",
+          "element_type": "minecraft:legacy_single_pool_element",
+          "processors": "minecraft:empty"
+        }
+      },
+      {
+        "weight": 1,
+        "element": {
+          "location": "the_vault:vault/prefab/decor/generic/vault_gods/g7",
+          "projection": "rigid",
+          "element_type": "minecraft:legacy_single_pool_element",
+          "processors": "minecraft:empty"
+        }
+      },
+      {
+        "weight": 1,
+        "element": {
+          "location": "the_vault:vault/prefab/decor/generic/vault_gods/g8",
+          "projection": "rigid",
+          "element_type": "minecraft:legacy_single_pool_element",
+          "processors": "minecraft:empty"
+        }
+      },
+      {
+        "weight": 1,
+        "element": {
+          "location": "the_vault:vault/prefab/decor/generic/vault_gods/h1",
+          "projection": "rigid",
+          "element_type": "minecraft:legacy_single_pool_element",
+          "processors": "minecraft:empty"
+        }
+      },
+      {
+        "weight": 1,
+        "element": {
+          "location": "the_vault:vault/prefab/decor/generic/vault_gods/h2",
+          "projection": "rigid",
+          "element_type": "minecraft:legacy_single_pool_element",
+          "processors": "minecraft:empty"
+        }
+      },
+      {
+        "weight": 1,
+        "element": {
+          "location": "the_vault:vault/prefab/decor/generic/vault_gods/h3",
+          "projection": "rigid",
+          "element_type": "minecraft:legacy_single_pool_element",
+          "processors": "minecraft:empty"
+        }
+      },
+      {
+        "weight": 1,
+        "element": {
+          "location": "the_vault:vault/prefab/decor/generic/vault_gods/h4",
+          "projection": "rigid",
+          "element_type": "minecraft:legacy_single_pool_element",
+          "processors": "minecraft:empty"
+        }
+      }
+      ,
+      {
+        "weight": 1,
+        "element": {
+          "location": "the_vault:vault/prefab/decor/generic/vault_gods/h5",
+          "projection": "rigid",
+          "element_type": "minecraft:legacy_single_pool_element",
+          "processors": "minecraft:empty"
+        }
+      },
+      {
+        "weight": 1,
+        "element": {
+          "location": "the_vault:vault/prefab/decor/generic/vault_gods/h6",
+          "projection": "rigid",
+          "element_type": "minecraft:legacy_single_pool_element",
+          "processors": "minecraft:empty"
+        }
+      },
+      {
+        "weight": 1,
+        "element": {
+          "location": "the_vault:vault/prefab/decor/generic/vault_gods/h7",
+          "projection": "rigid",
+          "element_type": "minecraft:legacy_single_pool_element",
+          "processors": "minecraft:empty"
+        }
+      },
+      {
+        "weight": 1,
+        "element": {
+          "location": "the_vault:vault/prefab/decor/generic/vault_gods/h8",
+          "projection": "rigid",
+          "element_type": "minecraft:legacy_single_pool_element",
+          "processors": "minecraft:empty"
+        }
+      },
+      {
+        "weight": 1,
+        "element": {
+          "location": "the_vault:vault/prefab/decor/generic/vault_gods/i1",
+          "projection": "rigid",
+          "element_type": "minecraft:legacy_single_pool_element",
+          "processors": "minecraft:empty"
+        }
+      },
+      {
+        "weight": 1,
+        "element": {
+          "location": "the_vault:vault/prefab/decor/generic/vault_gods/i2",
+          "projection": "rigid",
+          "element_type": "minecraft:legacy_single_pool_element",
+          "processors": "minecraft:empty"
+        }
+      },
+      {
+        "weight": 1,
+        "element": {
+          "location": "the_vault:vault/prefab/decor/generic/vault_gods/i3",
+          "projection": "rigid",
+          "element_type": "minecraft:legacy_single_pool_element",
+          "processors": "minecraft:empty"
+        }
+      },
+      {
+        "weight": 1,
+        "element": {
+          "location": "the_vault:vault/prefab/decor/generic/vault_gods/i4",
+          "projection": "rigid",
+          "element_type": "minecraft:legacy_single_pool_element",
+          "processors": "minecraft:empty"
+        }
+      }
+      ,
+      {
+        "weight": 1,
+        "element": {
+          "location": "the_vault:vault/prefab/decor/generic/vault_gods/i5",
+          "projection": "rigid",
+          "element_type": "minecraft:legacy_single_pool_element",
+          "processors": "minecraft:empty"
+        }
+      },
+      {
+        "weight": 1,
+        "element": {
+          "location": "the_vault:vault/prefab/decor/generic/vault_gods/i6",
+          "projection": "rigid",
+          "element_type": "minecraft:legacy_single_pool_element",
+          "processors": "minecraft:empty"
+        }
+      },
+      {
+        "weight": 1,
+        "element": {
+          "location": "the_vault:vault/prefab/decor/generic/vault_gods/i7",
+          "projection": "rigid",
+          "element_type": "minecraft:legacy_single_pool_element",
+          "processors": "minecraft:empty"
+        }
+      },
+      {
+        "weight": 1,
+        "element": {
+          "location": "the_vault:vault/prefab/decor/generic/vault_gods/i8",
+          "projection": "rigid",
+          "element_type": "minecraft:legacy_single_pool_element",
+          "processors": "minecraft:empty"
+        }
+      },
+      {
+        "weight": 1,
+        "element": {
+          "location": "the_vault:vault/prefab/decor/generic/vault_gods/j1",
+          "projection": "rigid",
+          "element_type": "minecraft:legacy_single_pool_element",
+          "processors": "minecraft:empty"
+        }
+      },
+      {
+        "weight": 1,
+        "element": {
+          "location": "the_vault:vault/prefab/decor/generic/vault_gods/j2",
+          "projection": "rigid",
+          "element_type": "minecraft:legacy_single_pool_element",
+          "processors": "minecraft:empty"
+        }
+      },
+      {
+        "weight": 1,
+        "element": {
+          "location": "the_vault:vault/prefab/decor/generic/vault_gods/j3",
+          "projection": "rigid",
+          "element_type": "minecraft:legacy_single_pool_element",
+          "processors": "minecraft:empty"
+        }
+      },
+      {
+        "weight": 1,
+        "element": {
+          "location": "the_vault:vault/prefab/decor/generic/vault_gods/j4",
+          "projection": "rigid",
+          "element_type": "minecraft:legacy_single_pool_element",
+          "processors": "minecraft:empty"
+        }
+      }
+      ,
+      {
+        "weight": 1,
+        "element": {
+          "location": "the_vault:vault/prefab/decor/generic/vault_gods/j5",
+          "projection": "rigid",
+          "element_type": "minecraft:legacy_single_pool_element",
+          "processors": "minecraft:empty"
+        }
+      },
+      {
+        "weight": 1,
+        "element": {
+          "location": "the_vault:vault/prefab/decor/generic/vault_gods/j6",
+          "projection": "rigid",
+          "element_type": "minecraft:legacy_single_pool_element",
+          "processors": "minecraft:empty"
+        }
+      },
+      {
+        "weight": 1,
+        "element": {
+          "location": "the_vault:vault/prefab/decor/generic/vault_gods/j7",
+          "projection": "rigid",
+          "element_type": "minecraft:legacy_single_pool_element",
+          "processors": "minecraft:empty"
+        }
+      },
+      {
+        "weight": 1,
+        "element": {
+          "location": "the_vault:vault/prefab/decor/generic/vault_gods/j8",
+          "projection": "rigid",
+          "element_type": "minecraft:legacy_single_pool_element",
+          "processors": "minecraft:empty"
+        }
+      }
+  ]
+}

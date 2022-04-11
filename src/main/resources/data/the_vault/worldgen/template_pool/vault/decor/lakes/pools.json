@@ -1,0 +1,107 @@
+{
+  "name": "the_vault:vault/decor/lakes/pools",
+  "fallback": "the_vault:vault/decor/lakes/pools",
+  "elements": [
+    {
+      "weight": 25,
+      "element": {
+        "element_type": "minecraft:empty_pool_element"
+      }
+    },
+	{
+        "weight": 5,
+        "element": {
+          "processors": [
+              
+              "the_vault:treasure/water_half"
+          ],
+          "element_type": "the_vault:paletted_list_pool_element",
+          "projection": "rigid",
+          "elements": [
+              {
+                  "location": "the_vault:vault/prefab/decor/lakes/pools/p1",
+                  "projection": "rigid",
+                  "element_type": "the_vault:paletted_single_pool_element",
+                  "processors": "the_vault:generic/ignore_barrier"
+              }
+          ]
+        }
+    },
+	{
+        "weight": 5,
+        "element": {
+          "processors": [
+              
+              "the_vault:treasure/water_half"
+          ],
+          "element_type": "the_vault:paletted_list_pool_element",
+          "projection": "rigid",
+          "elements": [
+              {
+                  "location": "the_vault:vault/prefab/decor/lakes/pools/p2",
+                  "projection": "rigid",
+                  "element_type": "the_vault:paletted_single_pool_element",
+                  "processors": "the_vault:generic/ignore_barrier"
+              }
+          ]
+        }
+    },
+	{
+        "weight": 5,
+        "element": {
+          "processors": [
+              
+              "the_vault:treasure/water_half"
+          ],
+          "element_type": "the_vault:paletted_list_pool_element",
+          "projection": "rigid",
+          "elements": [
+              {
+                  "location": "the_vault:vault/prefab/decor/lakes/pools/p3",
+                  "projection": "rigid",
+                  "element_type": "the_vault:paletted_single_pool_element",
+                  "processors": "the_vault:generic/ignore_barrier"
+              }
+          ]
+        }
+    },
+	{
+        "weight": 5,
+        "element": {
+          "processors": [
+              
+              "the_vault:treasure/water_half"
+          ],
+          "element_type": "the_vault:paletted_list_pool_element",
+          "projection": "rigid",
+          "elements": [
+              {
+                  "location": "the_vault:vault/prefab/decor/lakes/pools/p4",
+                  "projection": "rigid",
+                  "element_type": "the_vault:paletted_single_pool_element",
+                  "processors": "the_vault:generic/ignore_barrier"
+              }
+          ]
+        }
+    },
+	{
+        "weight": 5,
+        "element": {
+          "processors": [
+              
+              "the_vault:treasure/water_half"
+          ],
+          "element_type": "the_vault:paletted_list_pool_element",
+          "projection": "rigid",
+          "elements": [
+              {
+                  "location": "the_vault:vault/prefab/decor/lakes/pools/p5",
+                  "projection": "rigid",
+                  "element_type": "the_vault:paletted_single_pool_element",
+                  "processors": "the_vault:generic/ignore_barrier"
+              }
+          ]
+        }
+    }
+  ]
+}

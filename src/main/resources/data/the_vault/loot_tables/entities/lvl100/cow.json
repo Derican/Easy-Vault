@@ -1,0 +1,108 @@
+{
+    "pools": [
+        {
+            "rolls": {
+            "min": 1,
+            "max": 1
+          },
+          "entries": [
+            {
+              "type": "minecraft:empty",
+              "weight": 4
+            },
+            {
+              "type": "minecraft:item",
+              "weight": 8,
+              "name": "the_vault:vault_bronze",
+              "functions": [
+                {
+                  "function": "minecraft:set_count",
+                  "count": {
+                    "min": 10,
+                    "max": 32
+                  }
+                }
+              ]
+            },
+            {
+              "type": "minecraft:item",
+              "weight": 2,
+              "name": "minecraft:cooked_beef",
+              "functions": [
+                {
+                  "function": "minecraft:set_count",
+                  "count": {
+                    "min": 1,
+                    "max": 1
+                  }
+                },
+                {
+                  "function": "set_nbt",
+                  "tag": "{display:{Lore:['{\"italic\":true,\"color\":\"gold\",\"text\":\"Prime steak from the depths of the vaults.\"}']}}"
+                }
+              ]
+            },
+            {
+              "type": "minecraft:item",
+              "weight": 1,
+              "name": "minecraft:cooked_porkchop",
+              "functions": [
+                {
+                  "function": "minecraft:set_count",
+                  "count": {
+                    "min": 1,
+                    "max": 1
+                  }
+                },
+                {
+                  "function": "set_nbt",
+                  "tag": "{display:{Lore:['{\"italic\":true,\"color\":\"gold\",\"text\":\"Prime steak.... wait, this makes no sense?\"}']}}"
+                }
+              ]
+            },
+            {
+              "type": "minecraft:item",
+              "weight": 1,
+              "name": "minecraft:cooked_cod",
+              "functions": [
+                {
+                  "function": "minecraft:set_count",
+                  "count": {
+                    "min": 1,
+                    "max": 1
+                  }
+                },
+                {
+                  "function": "set_nbt",
+                  "tag": "{display:{Lore:['{\"italic\":true,\"color\":\"aqua\",\"text\":\"Prime steak.... POOOOOOOOOOOOOOOOOGGG\"}']}}"
+                }
+              ]
+            },
+            {
+              "type": "minecraft:item",
+              "weight": 1,
+              "name": "minecraft:cooked_chicken",
+              "functions": [
+                {
+                  "function": "minecraft:set_count",
+                  "count": {
+                    "min": 1,
+                    "max": 1
+                  }
+                },
+                {
+                  "function": "set_nbt",
+                  "tag": "{display:{Lore:['{\"italic\":true,\"color\":\"aqua\",\"text\":\"Prime steak.... nope, no.. no no.\"}']}}"
+                }
+              ]
+            }
+              
+
+          ]
+        }
+
+    ]
+
+
+}
+

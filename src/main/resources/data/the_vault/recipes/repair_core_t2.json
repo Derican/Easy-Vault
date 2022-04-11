@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "NNN",
+    "RER",
+    "NNN"
+  ],
+  "key": {
+    "N": {
+      "item": "minecraft:netherite_ingot"
+    },
+    "R": {
+      "item": "the_vault:repair_core"
+    },
+    "E": {
+      "item": "the_vault:red_vault_essence"
+    }
+  },
+  "result": {
+    "item": "the_vault:repair_core_t2",
+    "count": 1
+  }
+}

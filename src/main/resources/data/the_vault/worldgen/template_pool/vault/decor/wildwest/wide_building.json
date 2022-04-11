@@ -1,0 +1,60 @@
+{
+    "name": "the_vault:vault/decor/wildwest/wide_building",
+    "fallback": "the_vault:vault/decor/wildwest/wide_building",
+    "elements": [
+      {
+          "weight": 1,
+          "element": {
+            "processors": [
+                "the_vault:treasure/air_half_chest"
+            ],
+            "element_type": "the_vault:paletted_list_pool_element",
+            "projection": "rigid",
+            "elements": [
+                {
+                    "location": "the_vault:vault/prefab/decor/wildwest/wide_building/b1",
+                    "projection": "rigid",
+                    "element_type": "the_vault:paletted_single_pool_element",
+                    "processors": "the_vault:wildwest/building_ignore_air"
+                }
+            ]
+          }
+      },
+      {
+        "weight": 1,
+        "element": {
+          "processors": [
+            "the_vault:treasure/air_half_chest"
+          ],
+          "element_type": "the_vault:paletted_list_pool_element",
+          "projection": "rigid",
+          "elements": [
+              {
+                  "location": "the_vault:vault/prefab/decor/wildwest/wide_building/b2",
+                  "projection": "rigid",
+                  "element_type": "the_vault:paletted_single_pool_element",
+                  "processors": "the_vault:wildwest/building_ignore_air"
+              }
+          ]
+        }
+    },
+    {
+        "weight": 1,
+        "element": {
+          "processors": [
+            "the_vault:treasure/air_half_chest"
+          ],
+          "element_type": "the_vault:paletted_list_pool_element",
+          "projection": "rigid",
+          "elements": [
+              {
+                  "location": "the_vault:vault/prefab/decor/wildwest/wide_building/b3",
+                  "projection": "rigid",
+                  "element_type": "the_vault:paletted_single_pool_element",
+                  "processors": "the_vault:wildwest/building"
+              }
+          ]
+        }
+    }
+    ]
+  }

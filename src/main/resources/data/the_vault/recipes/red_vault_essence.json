@@ -1,0 +1,19 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+      "E",
+      "P"
+    ],
+    "key": {
+      "E": {
+        "item": "the_vault:vault_essence"
+      },
+      "P": {
+        "item": "the_vault:perfect_painite"
+      }
+    },
+    "result": {
+      "item": "the_vault:red_vault_essence",
+      "count": 1
+    }
+  }

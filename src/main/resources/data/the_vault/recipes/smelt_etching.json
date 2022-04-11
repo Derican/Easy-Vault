@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:blasting",
+  "ingredient": {
+    "item": "the_vault:etching"
+  },
+  "result": {
+    "item": "the_vault:etching_fragment",
+    "count": 4
+  },
+  "experience": 0.1,
+  "cookingtime": 1200
+}

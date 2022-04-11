@@ -1,0 +1,140 @@
+{
+    "pools": [
+        {
+            "rolls": {
+            "min": 1,
+            "max": 1
+          },
+          "entries": [
+            {
+              "type": "minecraft:empty",
+              "weight": 3
+            },
+            {
+                "type": "minecraft:item",
+                "weight": 1,
+                "name": "the_vault:vault_diamond",
+                "functions": [
+                  {
+                    "function": "minecraft:set_count",
+                    "count": {
+                      "min": 1,
+                      "max": 1
+                    }
+                  }
+                ],
+                "conditions": [
+                  {
+                    "condition": "minecraft:random_chance",
+                    "chance": 1
+                  }
+                ]
+              },
+              {
+                "type": "minecraft:item",
+                "weight": 8,
+                "name": "the_vault:vault_bronze",
+                "functions": [
+                  {
+                    "function": "minecraft:set_count",
+                    "count": {
+                      "min": 4,
+                      "max": 12
+                    }
+                  }
+                ],
+                "conditions": [
+                  {
+                    "condition": "minecraft:random_chance",
+                    "chance": 1
+                  }
+                ]
+              },
+              {
+                "type": "minecraft:item",
+                "weight": 8,
+                "name": "the_vault:vault_dust",
+                "functions": [
+                  {
+                    "function": "minecraft:set_count",
+                    "count": {
+                      "min": 6,
+                      "max": 16
+                    }
+                  }
+                ],
+                "conditions": [
+                  {
+                    "condition": "minecraft:random_chance",
+                    "chance": 1
+                  }
+                ]
+              },
+              {
+                "type": "minecraft:item",
+                "weight": 4,
+                "name": "the_vault:star_essence",
+                "functions": [
+                  {
+                    "function": "minecraft:set_count",
+                    "count": {
+                      "min": 1,
+                      "max": 2
+                    }
+                  }
+                ],
+                "conditions": [
+                  {
+                    "condition": "minecraft:random_chance",
+                    "chance": 1
+                  }
+                ]
+              },
+              {
+                "type": "minecraft:item",
+                "weight": 4,
+                "name": "the_vault:skill_essence",
+                "functions": [
+                  {
+                    "function": "minecraft:set_count",
+                    "count": {
+                      "min": 1,
+                      "max": 2
+                    }
+                  }
+                ],
+                "conditions": [
+                  {
+                    "condition": "minecraft:random_chance",
+                    "chance": 1
+                  }
+                ]
+              },
+              {
+                "type": "minecraft:item",
+                "weight": 1,
+                "name": "the_vault:pandoras_box",
+                "functions": [
+                  {
+                    "function": "minecraft:set_count",
+                    "count": {
+                      "min": 1,
+                      "max": 1
+                    }
+                  }
+                ],
+                "conditions": [
+                  {
+                    "condition": "minecraft:random_chance",
+                    "chance": 0.6
+                  }
+                ]
+              }
+
+          ]
+        }
+
+    ]
+
+
+}

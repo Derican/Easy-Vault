@@ -1,0 +1,10 @@
+{
+    "variants": {
+        "half=upper": {
+            "model": "the_vault:block/raid_controller_nothing"
+        },
+        "half=lower": {
+            "model": "the_vault:block/multilayer/raid_controller"
+        }
+    }
+}

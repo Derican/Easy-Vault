@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "level=0": {
+      "model": "the_vault:block/statue_cauldron"
+    },
+    "level=1": {
+      "model": "the_vault:block/statue_cauldron"
+    },
+    "level=2": {
+      "model": "the_vault:block/statue_cauldron"
+    },
+    "level=3": {
+      "model": "the_vault:block/statue_cauldron"
+    }
+  }
+}

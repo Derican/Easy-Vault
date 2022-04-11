@@ -1,0 +1,29 @@
+{
+    "type": "the_vault:non_raffle_crystal_shaped",
+    "pattern": [
+        "pnp",
+        "scs",
+        "pvp"
+    ],
+    "key": {
+        "p": {
+            "item": "the_vault:perfect_painite"
+        },
+        "s": {
+            "item": "the_vault:skill_shard"
+        },
+        "n": {
+            "item": "the_vault:knowledge_star"
+        },
+        "c": {
+            "item": "the_vault:vault_crystal"
+        },
+        "v": {
+            "item": "the_vault:infused_eternal_soul"
+        }
+    },
+    "result": {
+        "item": "the_vault:crystal_seal_ancients",
+        "count": 1
+    }
+}

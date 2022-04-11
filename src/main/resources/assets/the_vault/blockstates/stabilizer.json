@@ -1,0 +1,10 @@
+{
+    "variants": {
+        "half=upper": {
+            "model": "the_vault:block/stabilizer_nothing"
+        },
+        "half=lower": {
+            "model": "the_vault:block/multilayer/stabilizer"
+        }
+    }
+}

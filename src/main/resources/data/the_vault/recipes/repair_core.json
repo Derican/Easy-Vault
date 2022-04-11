@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "#D#",
+    "#G#",
+    "#E#"
+  ],
+  "key": {
+    "#": {
+      "item": "the_vault:vault_scrap"
+    },
+    "G": {
+      "item": "the_vault:vault_essence"
+    },
+    "E": {
+      "item": "the_vault:gem_echo"
+    },
+    "D": {
+      "item": "the_vault:gem_pog"
+    }
+  },
+  "result": {
+    "item": "the_vault:repair_core",
+    "count": 1
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "ree",
+    "rs ",
+    " s "
+  ],
+  "key": {
+    "r": {
+      "item": "the_vault:perfect_larimar"
+    },
+    "e": {
+      "item": "the_vault:perfect_benitoite"
+    },
+    "s": {
+      "item": "minecraft:stick"
+    }
+  },
+  "result": {
+    "item": "the_vault:vault_paxel",
+    "count": 1
+  }
+}

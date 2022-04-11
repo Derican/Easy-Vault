@@ -1,0 +1,12 @@
+{
+  "processors": [
+	{
+	  "blocks": [
+		{
+		  "Name": "minecraft:barrier"
+		}
+	  ],
+	  "processor_type": "minecraft:block_ignore"
+	}
+  ]
+}

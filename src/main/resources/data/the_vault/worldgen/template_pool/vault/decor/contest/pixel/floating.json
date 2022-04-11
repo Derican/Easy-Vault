@@ -1,0 +1,354 @@
+{
+    "name": "the_vault:vault/decor/contest/pixel/floating",
+    "fallback": "the_vault:vault/decor/contest/pixel/floating",
+    "elements": [
+        {
+            "weight": 44,
+            "element": {
+              "element_type": "minecraft:empty_pool_element"
+            }
+      },
+      {
+          "weight": 4,
+          "element": {
+            "processors": [
+                "the_vault:contest/pixel_chests"
+            ],
+            "element_type": "the_vault:paletted_list_pool_element",
+            "projection": "rigid",
+            "elements": [
+                {
+                    "location": "the_vault:vault/prefab/decor/contest/pixel/floating/f1",
+                    "projection": "rigid",
+                    "element_type": "the_vault:paletted_single_pool_element",
+                    "processors": "the_vault:generic/ignore_air"
+                }
+            ]
+          }
+      },
+      {
+        "weight": 4,
+        "element": {
+          "processors": [
+            "the_vault:contest/pixel_chests"
+          ],
+          "element_type": "the_vault:paletted_list_pool_element",
+          "projection": "rigid",
+          "elements": [
+              {
+                  "location": "the_vault:vault/prefab/decor/contest/pixel/floating/f2",
+                  "projection": "rigid",
+                  "element_type": "the_vault:paletted_single_pool_element",
+                  "processors": "the_vault:generic/ignore_air"
+              }
+          ]
+        }
+    },
+    {
+        "weight": 4,
+        "element": {
+          "processors": [
+            "the_vault:contest/pixel_chests"
+          ],
+          "element_type": "the_vault:paletted_list_pool_element",
+          "projection": "rigid",
+          "elements": [
+              {
+                  "location": "the_vault:vault/prefab/decor/contest/pixel/floating/f3",
+                  "projection": "rigid",
+                  "element_type": "the_vault:paletted_single_pool_element",
+                  "processors": "the_vault:generic/ignore_air"
+              }
+          ]
+        }
+    },
+    {
+        "weight": 4,
+        "element": {
+          "processors": [
+            "the_vault:contest/pixel_chests"
+          ],
+          "element_type": "the_vault:paletted_list_pool_element",
+          "projection": "rigid",
+          "elements": [
+              {
+                  "location": "the_vault:vault/prefab/decor/contest/pixel/floating/f4",
+                  "projection": "rigid",
+                  "element_type": "the_vault:paletted_single_pool_element",
+                  "processors": "the_vault:generic/ignore_air"
+              }
+          ]
+        }
+    },
+    {
+        "weight": 1,
+        "element": {
+          "processors": [
+              "the_vault:contest/pixel_chests"
+          ],
+          "element_type": "the_vault:paletted_list_pool_element",
+          "projection": "rigid",
+          "elements": [
+              {
+                  "location": "the_vault:vault/prefab/decor/contest/pixel/floating/f5",
+                  "projection": "rigid",
+                  "element_type": "the_vault:paletted_single_pool_element",
+                  "processors": "the_vault:generic/ignore_air"
+              }
+          ]
+        }
+    },
+    {
+        "weight": 4,
+        "element": {
+          "processors": [
+            "the_vault:contest/pixel_chests"
+          ],
+          "element_type": "the_vault:paletted_list_pool_element",
+          "projection": "rigid",
+          "elements": [
+              {
+                  "location": "the_vault:vault/prefab/decor/contest/pixel/floating/f6",
+                  "projection": "rigid",
+                  "element_type": "the_vault:paletted_single_pool_element",
+                  "processors": "the_vault:generic/ignore_air"
+              }
+          ]
+        }
+    },
+    {
+        "weight": 4,
+        "element": {
+          "processors": [
+            "the_vault:contest/pixel_chests"
+          ],
+          "element_type": "the_vault:paletted_list_pool_element",
+          "projection": "rigid",
+          "elements": [
+              {
+                  "location": "the_vault:vault/prefab/decor/contest/pixel/floating/b1",
+                  "projection": "rigid",
+                  "element_type": "the_vault:paletted_single_pool_element",
+                  "processors": "the_vault:generic/ignore_air"
+              }
+          ]
+        }
+    },
+    {
+        "weight": 4,
+        "element": {
+          "processors": [
+            "the_vault:contest/pixel_chests"
+          ],
+          "element_type": "the_vault:paletted_list_pool_element",
+          "projection": "rigid",
+          "elements": [
+              {
+                  "location": "the_vault:vault/prefab/decor/contest/pixel/floating/b2",
+                  "projection": "rigid",
+                  "element_type": "the_vault:paletted_single_pool_element",
+                  "processors": "the_vault:generic/ignore_air"
+              }
+          ]
+        }
+    },
+    {
+        "weight": 4,
+        "element": {
+          "processors": [
+            "the_vault:contest/pixel_chests"
+          ],
+          "element_type": "the_vault:paletted_list_pool_element",
+          "projection": "rigid",
+          "elements": [
+              {
+                  "location": "the_vault:vault/prefab/decor/contest/pixel/floating/b8",
+                  "projection": "rigid",
+                  "element_type": "the_vault:paletted_single_pool_element",
+                  "processors": "the_vault:generic/ignore_air"
+              }
+          ]
+        }
+    },
+    {
+        "weight": 4,
+        "element": {
+          "processors": [
+            "the_vault:contest/pixel_chests"
+          ],
+          "element_type": "the_vault:paletted_list_pool_element",
+          "projection": "rigid",
+          "elements": [
+              {
+                  "location": "the_vault:vault/prefab/decor/contest/pixel/floating/b9",
+                  "projection": "rigid",
+                  "element_type": "the_vault:paletted_single_pool_element",
+                  "processors": "the_vault:generic/ignore_air"
+              }
+          ]
+        }
+    },
+    {
+        "weight": 4,
+        "element": {
+          "processors": [
+            "the_vault:contest/pixel_chests"
+          ],
+          "element_type": "the_vault:paletted_list_pool_element",
+          "projection": "rigid",
+          "elements": [
+              {
+                  "location": "the_vault:vault/prefab/decor/contest/pixel/floating/b10",
+                  "projection": "rigid",
+                  "element_type": "the_vault:paletted_single_pool_element",
+                  "processors": "the_vault:generic/unstable_tnt"
+              }
+          ]
+        }
+    },
+    {
+        "weight": 4,
+        "element": {
+          "processors": [
+            "the_vault:contest/pixel_chests"
+          ],
+          "element_type": "the_vault:paletted_list_pool_element",
+          "projection": "rigid",
+          "elements": [
+              {
+                  "location": "the_vault:vault/prefab/decor/contest/pixel/floating/b11",
+                  "projection": "rigid",
+                  "element_type": "the_vault:paletted_single_pool_element",
+                  "processors": "the_vault:generic/ignore_air"
+              }
+          ]
+        }
+    },
+    {
+        "weight": 4,
+        "element": {
+          "processors": [
+            "the_vault:contest/pixel_chests"
+          ],
+          "element_type": "the_vault:paletted_list_pool_element",
+          "projection": "rigid",
+          "elements": [
+              {
+                  "location": "the_vault:vault/prefab/decor/contest/pixel/floating/b12",
+                  "projection": "rigid",
+                  "element_type": "the_vault:paletted_single_pool_element",
+                  "processors": "the_vault:generic/ignore_air"
+              }
+          ]
+        }
+    },
+    {
+        "weight": 4,
+        "element": {
+          "processors": [
+            "the_vault:contest/pixel_chests"
+          ],
+          "element_type": "the_vault:paletted_list_pool_element",
+          "projection": "rigid",
+          "elements": [
+              {
+                  "location": "the_vault:vault/prefab/decor/contest/pixel/floating/b13",
+                  "projection": "rigid",
+                  "element_type": "the_vault:paletted_single_pool_element",
+                  "processors": "the_vault:generic/ignore_air"
+              }
+          ]
+        }
+    },
+    {
+        "weight": 4,
+        "element": {
+          "processors": [
+            "the_vault:contest/pixel_chests"
+          ],
+          "element_type": "the_vault:paletted_list_pool_element",
+          "projection": "rigid",
+          "elements": [
+              {
+                  "location": "the_vault:vault/prefab/decor/contest/pixel/floating/b14",
+                  "projection": "rigid",
+                  "element_type": "the_vault:paletted_single_pool_element",
+                  "processors": "the_vault:generic/ignore_air"
+              }
+          ]
+        }
+    },
+    {
+        "weight": 4,
+        "element": {
+          "processors": [
+            "the_vault:contest/pixel_chests"
+          ],
+          "element_type": "the_vault:paletted_list_pool_element",
+          "projection": "rigid",
+          "elements": [
+              {
+                  "location": "the_vault:vault/prefab/decor/contest/pixel/floating/b15",
+                  "projection": "rigid",
+                  "element_type": "the_vault:paletted_single_pool_element",
+                  "processors": "the_vault:generic/ignore_air"
+              }
+          ]
+        }
+    },
+    {
+        "weight": 4,
+        "element": {
+          "processors": [
+            "the_vault:contest/pixel_chests"
+          ],
+          "element_type": "the_vault:paletted_list_pool_element",
+          "projection": "rigid",
+          "elements": [
+              {
+                  "location": "the_vault:vault/prefab/decor/contest/pixel/floating/b16",
+                  "projection": "rigid",
+                  "element_type": "the_vault:paletted_single_pool_element",
+                  "processors": "the_vault:generic/ignore_air"
+              }
+          ]
+        }
+    },
+    {
+        "weight": 4,
+        "element": {
+          "processors": [
+            "the_vault:contest/pixel_chests"
+          ],
+          "element_type": "the_vault:paletted_list_pool_element",
+          "projection": "rigid",
+          "elements": [
+              {
+                  "location": "the_vault:vault/prefab/decor/contest/pixel/floating/b17",
+                  "projection": "rigid",
+                  "element_type": "the_vault:paletted_single_pool_element",
+                  "processors": "the_vault:generic/ignore_air"
+              }
+          ]
+        }
+    },
+    {
+        "weight": 4,
+        "element": {
+          "processors": [
+            "the_vault:contest/pixel_chests"
+          ],
+          "element_type": "the_vault:paletted_list_pool_element",
+          "projection": "rigid",
+          "elements": [
+              {
+                  "location": "the_vault:vault/prefab/decor/contest/pixel/floating/b18",
+                  "projection": "rigid",
+                  "element_type": "the_vault:paletted_single_pool_element",
+                  "processors": "the_vault:generic/ignore_air"
+              }
+          ]
+        }
+    }
+    ]
+  }

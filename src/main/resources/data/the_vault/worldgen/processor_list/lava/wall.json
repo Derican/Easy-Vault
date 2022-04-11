@@ -1,0 +1,93 @@
+{
+  "processors": [
+	{
+      "rules": [
+        {
+          "output_state": {
+            "Name": "decorative_blocks:chain",
+			"Properties": {
+				"axis": "y",
+				"waterlogged": "false"
+			}
+          },
+          "input_predicate": {
+            "predicate_type": "minecraft:block_match",
+            "block": "minecraft:red_concrete"
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:block_match",
+            "block": "minecraft:air"
+          }
+        },
+		{
+          "output_state": {
+            "Name": "minecraft:polished_basalt",
+			"Properties": {
+				"axis": "y"
+			}
+          },
+          "input_predicate": {
+            "predicate_type": "minecraft:block_match",
+            "block": "minecraft:orange_concrete"
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:block_match",
+            "block": "minecraft:air"
+          }
+        }
+      ],
+      "processor_type": "minecraft:rule"
+    },
+	{
+	  "blocks": [
+		{
+		  "Name": "minecraft:red_concrete"
+		},
+		{
+		  "Name": "minecraft:orange_concrete"
+		},
+		{
+		  "Name": "minecraft:air"
+		}
+	  ],
+	  "processor_type": "minecraft:block_ignore"
+	},
+	{
+	  "rules": [
+        {
+          "output_state": {
+            "Name": "minecraft:basalt",
+			"Properties": {
+				"axis": "z"
+			}
+          },
+          "input_predicate": {
+            "predicate_type": "minecraft:random_block_match",
+            "block": "minecraft:basalt",
+			"probability": 0.1
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          }
+        },
+		{
+          "output_state": {
+            "Name": "minecraft:basalt",
+			"Properties": {
+				"axis": "x"
+			}
+          },
+          "input_predicate": {
+            "predicate_type": "minecraft:random_block_match",
+            "block": "minecraft:basalt",
+			"probability": 0.1
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          }
+        }
+      ],
+      "processor_type": "minecraft:rule"
+    }
+  ]
+}

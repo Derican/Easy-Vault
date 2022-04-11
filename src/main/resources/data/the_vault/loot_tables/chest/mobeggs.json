@@ -1,0 +1,29 @@
+{
+    "pools": [
+      {
+        "name": "EnchantedBooks",
+        "rolls": {
+          "min": 4,
+          "max": 6
+        },
+        "entries": [
+            { "_name": "Mystery Egg",
+                "type": "minecraft:item",
+                "weight": 4,
+                "name": "the_vault:mystery_egg",
+                "functions": [
+                  {
+                    "function": "minecraft:set_count",
+                    "count": {
+                      "min": 1,
+                      "max": 2
+                    }
+                  }
+                ]
+            }
+
+
+        ]
+      }
+    ]
+}

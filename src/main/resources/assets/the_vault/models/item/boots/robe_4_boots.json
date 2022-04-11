@@ -1,0 +1,7 @@
+{
+	"parent": "item/generated",
+	"textures": {
+		"layer0": "the_vault:item/boots/robe_4_boots",
+		"layer1": "the_vault:item/boots/robe_4_boots_overlay"
+	}
+}

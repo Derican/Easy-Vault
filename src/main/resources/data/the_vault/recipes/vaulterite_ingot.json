@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " p ",
+    "nnn",
+    " s "
+  ],
+  "key": {
+    "p": {
+      "item": "the_vault:gem_painite"
+    },
+    "s": {
+      "item": "minecraft:netherite_scrap"
+    },
+    "n": {
+      "item": "the_vault:vault_scrap"
+    }
+  },
+  "result": {
+    "item": "the_vault:vaulterite_ingot",
+    "count": 1
+  }
+}

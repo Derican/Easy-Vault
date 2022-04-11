@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " e ",
+    "lal",
+    " e "
+  ],
+  "key": {
+    "e": {
+      "item": "minecraft:emerald"
+    },
+    "l": {
+      "item": "the_vault:gem_larimar"
+    },
+    "a": {
+      "item": "the_vault:vault_apple"
+    }
+  },
+  "result": {
+    "item": "the_vault:jade_apple",
+    "count": 1
+  }
+}

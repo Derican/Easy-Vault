@@ -1,0 +1,146 @@
+{
+  "processors": [
+    {
+	  "rules": [
+	    {
+          "output_state": {
+            "Name": "minecraft:cobblestone"
+          },
+          "input_predicate": {
+            "block": "minecraft:stone",
+			"probability": 0.30,
+            "predicate_type": "minecraft:random_block_match"
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          }
+        },
+		{
+          "output_state": {
+            "Name": "minecraft:cracked_stone_bricks"
+          },
+          "input_predicate": {
+            "block": "minecraft:stone",
+			"probability": 0.30,
+            "predicate_type": "minecraft:random_block_match"
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          }
+        },
+		{
+          "output_state": {
+            "Name": "minecraft:podzol",
+			"Properties": {
+			  "snowy": "false"
+			}
+          },
+          "input_predicate": {
+            "block": "minecraft:coarse_dirt",
+			"probability": 0.30,
+            "predicate_type": "minecraft:random_block_match"
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          }
+        },
+		{
+          "output_state": {
+            "Name": "minecraft:brown_concrete_powder"
+          },
+          "input_predicate": {
+            "block": "minecraft:coarse_dirt",
+			"probability": 0.10,
+            "predicate_type": "minecraft:random_block_match"
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          }
+        },
+		{
+          "output_state": {
+            "Name": "minecraft:grass_block",
+			"Properties": {
+			  "snowy": "false"
+			}
+          },
+          "input_predicate": {
+            "block": "minecraft:coarse_dirt",
+			"probability": 0.30,
+            "predicate_type": "minecraft:random_block_match"
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          }
+        },
+		{
+          "output_state": {
+            "Name": "minecraft:stripped_spruce_log",
+			"Properties": {
+				"axis": "x"
+			}
+          },
+          "input_predicate": {
+            "block_state": {
+				"Name": "minecraft:oak_log",
+				"Properties": {
+					"axis": "x"
+				}
+			},
+            "predicate_type": "minecraft:blockstate_match"
+          },
+          "location_predicate": {
+            "block": "the_vault:vault_bedrock",
+			"probability": 0.30,
+            "predicate_type": "minecraft:random_block_match"
+          }
+        },
+		{
+          "output_state": {
+            "Name": "minecraft:stripped_spruce_log",
+			"Properties": {
+				"axis": "y"
+			}
+          },
+          "input_predicate": {
+            "block_state": {
+				"Name": "minecraft:oak_log",
+				"Properties": {
+					"axis": "y"
+				}
+			},
+            "predicate_type": "minecraft:blockstate_match"
+          },
+          "location_predicate": {
+            "block": "the_vault:vault_bedrock",
+			"probability": 0.30,
+            "predicate_type": "minecraft:random_block_match"
+          }
+        },
+		{
+          "output_state": {
+            "Name": "minecraft:stripped_spruce_log",
+			"Properties": {
+				"axis": "z"
+			}
+          },
+          "input_predicate": {
+            "block_state": {
+				"Name": "minecraft:oak_log",
+				"Properties": {
+					"axis": "z"
+				}
+			},
+            "predicate_type": "minecraft:blockstate_match"
+          },
+          "location_predicate": {
+            "block": "the_vault:vault_bedrock",
+			"probability": 0.30,
+            "predicate_type": "minecraft:random_block_match"
+          }
+        }
+	  ],
+	  "processor_type": "minecraft:rule"
+	}
+  ]
+}

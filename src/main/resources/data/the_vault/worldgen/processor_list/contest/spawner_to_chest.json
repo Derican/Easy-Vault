@@ -1,0 +1,27 @@
+{
+    "processors": [
+      {
+        "rules": [
+          {
+            "output_state": {
+              "Name": "the_vault:vault_chest",
+              "Properties": {
+                "facing": "north",
+                "type": "single",
+                "waterlogged": "false"      
+            }
+            },
+            "input_predicate": {
+              "predicate_type": "minecraft:random_block_match",
+              "block": "ispawner:spawner",
+              "probability": 1.0
+            },
+            "location_predicate": {
+              "predicate_type": "minecraft:always_true"
+            }
+          }
+        ],
+        "processor_type": "minecraft:rule"
+      }
+    ]
+  }

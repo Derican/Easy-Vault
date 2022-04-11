@@ -1,0 +1,174 @@
+{
+    "name": "the_vault:vault/decor/wildwest/pile",
+    "fallback": "the_vault:vault/decor/wildwest/pile",
+    "elements": [
+        {
+            "weight": 10,
+            "element": {
+              "element_type": "minecraft:empty_pool_element"
+            }
+      },
+      {
+          "weight": 1,
+          "element": {
+            "processors": [
+                "the_vault:treasure/air_half_chest"
+            ],
+            "element_type": "the_vault:paletted_list_pool_element",
+            "projection": "rigid",
+            "elements": [
+                {
+                    "location": "the_vault:vault/prefab/decor/wildwest/pile/p1",
+                    "projection": "rigid",
+                    "element_type": "the_vault:paletted_single_pool_element",
+                    "processors": "the_vault:generic/unstable_tnt_ignore_air"
+                }
+            ]
+          }
+      },
+      {
+        "weight": 1,
+        "element": {
+          "processors": [
+            "the_vault:treasure/air_half_chest"
+          ],
+          "element_type": "the_vault:paletted_list_pool_element",
+          "projection": "rigid",
+          "elements": [
+              {
+                  "location": "the_vault:vault/prefab/decor/wildwest/pile/p2",
+                  "projection": "rigid",
+                  "element_type": "the_vault:paletted_single_pool_element",
+                  "processors": "the_vault:generic/unstable_tnt_ignore_air"
+              }
+          ]
+        }
+    },
+    {
+        "weight": 1,
+        "element": {
+          "processors": [
+            "the_vault:treasure/air_half_chest"
+          ],
+          "element_type": "the_vault:paletted_list_pool_element",
+          "projection": "rigid",
+          "elements": [
+              {
+                  "location": "the_vault:vault/prefab/decor/wildwest/pile/p3",
+                  "projection": "rigid",
+                  "element_type": "the_vault:paletted_single_pool_element",
+                  "processors": "the_vault:generic/unstable_tnt_ignore_air"
+              }
+          ]
+        }
+    },
+    {
+        "weight": 1,
+        "element": {
+          "processors": [
+            "the_vault:treasure/air_half_chest"
+          ],
+          "element_type": "the_vault:paletted_list_pool_element",
+          "projection": "rigid",
+          "elements": [
+              {
+                  "location": "the_vault:vault/prefab/decor/wildwest/pile/p4",
+                  "projection": "rigid",
+                  "element_type": "the_vault:paletted_single_pool_element",
+                  "processors": "the_vault:generic/unstable_tnt_ignore_air"
+              }
+          ]
+        }
+    },
+    {
+        "weight": 1,
+        "element": {
+          "processors": [
+            "the_vault:treasure/air_half_chest"
+          ],
+          "element_type": "the_vault:paletted_list_pool_element",
+          "projection": "rigid",
+          "elements": [
+              {
+                  "location": "the_vault:vault/prefab/decor/wildwest/pile/p5",
+                  "projection": "rigid",
+                  "element_type": "the_vault:paletted_single_pool_element",
+                  "processors": "the_vault:generic/unstable_tnt_ignore_air"
+              }
+          ]
+        }
+    },
+    {
+        "weight": 1,
+        "element": {
+          "processors": [
+            "the_vault:treasure/air_half_chest"
+          ],
+          "element_type": "the_vault:paletted_list_pool_element",
+          "projection": "rigid",
+          "elements": [
+              {
+                  "location": "the_vault:vault/prefab/decor/wildwest/pile/p6",
+                  "projection": "rigid",
+                  "element_type": "the_vault:paletted_single_pool_element",
+                  "processors": "the_vault:generic/unstable_tnt_ignore_air"
+              }
+          ]
+        }
+    },
+    {
+        "weight": 1,
+        "element": {
+          "processors": [
+            "the_vault:treasure/air_half_chest"
+          ],
+          "element_type": "the_vault:paletted_list_pool_element",
+          "projection": "rigid",
+          "elements": [
+              {
+                  "location": "the_vault:vault/prefab/decor/wildwest/pile/p7",
+                  "projection": "rigid",
+                  "element_type": "the_vault:paletted_single_pool_element",
+                  "processors": "the_vault:generic/unstable_tnt_ignore_air"
+              }
+          ]
+        }
+    },
+    {
+        "weight": 1,
+        "element": {
+          "processors": [
+            "the_vault:treasure/air_half_chest"
+          ],
+          "element_type": "the_vault:paletted_list_pool_element",
+          "projection": "rigid",
+          "elements": [
+              {
+                  "location": "the_vault:vault/prefab/decor/wildwest/pile/p8",
+                  "projection": "rigid",
+                  "element_type": "the_vault:paletted_single_pool_element",
+                  "processors": "the_vault:generic/unstable_tnt_ignore_air"
+              }
+          ]
+        }
+    },
+    {
+        "weight": 1,
+        "element": {
+          "processors": [
+            "the_vault:treasure/air_half_chest"
+          ],
+          "element_type": "the_vault:paletted_list_pool_element",
+          "projection": "rigid",
+          "elements": [
+              {
+                  "location": "the_vault:vault/prefab/decor/wildwest/pile/p9",
+                  "projection": "rigid",
+                  "element_type": "the_vault:paletted_single_pool_element",
+                  "processors": "the_vault:generic/unstable_tnt_ignore_air"
+              }
+          ]
+        }
+    }
+    ]
+  }

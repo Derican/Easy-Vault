@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "minecraft:bread"
+    },
+    {
+      "item": "the_vault:mature_cheddar"
+    },
+    {
+      "item": "the_vault:mystic_tomato"
+    }
+  ],
+  "result": {
+    "item": "the_vault:oozing_pizza",
+    "count": 1
+  }
+}

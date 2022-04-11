@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " b ",
+    "bab",
+    " e "
+  ],
+  "key": {
+    "a": {
+      "item": "the_vault:vault_apple"
+    },
+    "b": {
+      "item": "the_vault:vault_nugget"
+    },
+    "e": {
+      "item": "the_vault:gem_echo"
+    }
+  },
+  "result": {
+    "item": "the_vault:golem_apple",
+    "count": 1
+  }
+}

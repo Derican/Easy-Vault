@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " a ",
+    "wpw",
+    "   "
+  ],
+  "key": {
+    "a": {
+      "item": "the_vault:perfect_alexandrite"
+    },
+    "p": {
+      "item": "the_vault:gem_pog"
+    },
+    "w": {
+      "item": "minecraft:water_bucket"
+    }
+  },
+  "result": {
+    "item": "the_vault:infinite_water_bucket",
+    "count": 1
+  }
+}

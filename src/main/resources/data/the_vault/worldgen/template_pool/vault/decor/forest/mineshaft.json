@@ -1,0 +1,297 @@
+{
+  "name": "the_vault:vault/decor/forest/mineshaft",
+  "fallback": "the_vault:vault/decor/forest/mineshaft",
+  "elements": [
+    {
+      "weight": 15,
+      "element": {
+        "element_type": "minecraft:empty_pool_element"
+      }
+    },
+	{
+        "weight": 5,
+        "element": {
+          "processors": [
+              
+              "the_vault:treasure/air_half"
+          ],
+          "element_type": "the_vault:paletted_list_pool_element",
+          "projection": "rigid",
+          "elements": [
+              {
+                  "location": "the_vault:vault/prefab/decor/forest/mineshaft/x1",
+                  "projection": "rigid",
+                  "element_type": "the_vault:paletted_single_pool_element",
+                  "processors": "the_vault:forest/mineshaft"
+              }
+          ]
+        }
+    },
+	{
+        "weight": 5,
+        "element": {
+          "processors": [
+              
+              "the_vault:treasure/air_half"
+          ],
+          "element_type": "the_vault:paletted_list_pool_element",
+          "projection": "rigid",
+          "elements": [
+              {
+                  "location": "the_vault:vault/prefab/decor/forest/mineshaft/x2",
+                  "projection": "rigid",
+                  "element_type": "the_vault:paletted_single_pool_element",
+                  "processors": "the_vault:forest/mineshaft"
+              }
+          ]
+        }
+    },
+	{
+        "weight": 5,
+        "element": {
+          "processors": [
+              
+              "the_vault:treasure/air_half"
+          ],
+          "element_type": "the_vault:paletted_list_pool_element",
+          "projection": "rigid",
+          "elements": [
+              {
+                  "location": "the_vault:vault/prefab/decor/forest/mineshaft/l1",
+                  "projection": "rigid",
+                  "element_type": "the_vault:paletted_single_pool_element",
+                  "processors": "the_vault:forest/mineshaft"
+              }
+          ]
+        }
+    },
+	{
+        "weight": 5,
+        "element": {
+          "processors": [
+              
+              "the_vault:treasure/air_half"
+          ],
+          "element_type": "the_vault:paletted_list_pool_element",
+          "projection": "rigid",
+          "elements": [
+              {
+                  "location": "the_vault:vault/prefab/decor/forest/mineshaft/l2",
+                  "projection": "rigid",
+                  "element_type": "the_vault:paletted_single_pool_element",
+                  "processors": "the_vault:forest/mineshaft"
+              }
+          ]
+        }
+    },
+	{
+        "weight": 5,
+        "element": {
+          "processors": [
+              
+              "the_vault:treasure/air_half"
+          ],
+          "element_type": "the_vault:paletted_list_pool_element",
+          "projection": "rigid",
+          "elements": [
+              {
+                  "location": "the_vault:vault/prefab/decor/forest/mineshaft/l3",
+                  "projection": "rigid",
+                  "element_type": "the_vault:paletted_single_pool_element",
+                  "processors": "the_vault:forest/mineshaft"
+              }
+          ]
+        }
+    },
+	{
+        "weight": 5,
+        "element": {
+          "processors": [
+              
+              "the_vault:treasure/air_half"
+          ],
+          "element_type": "the_vault:paletted_list_pool_element",
+          "projection": "rigid",
+          "elements": [
+              {
+                  "location": "the_vault:vault/prefab/decor/forest/mineshaft/l4",
+                  "projection": "rigid",
+                  "element_type": "the_vault:paletted_single_pool_element",
+                  "processors": "the_vault:forest/mineshaft"
+              }
+          ]
+        }
+    },
+	{
+        "weight": 5,
+        "element": {
+          "processors": [
+              
+              "the_vault:treasure/air_half"
+          ],
+          "element_type": "the_vault:paletted_list_pool_element",
+          "projection": "rigid",
+          "elements": [
+              {
+                  "location": "the_vault:vault/prefab/decor/forest/mineshaft/d1",
+                  "projection": "rigid",
+                  "element_type": "the_vault:paletted_single_pool_element",
+                  "processors": "the_vault:forest/mineshaft"
+              }
+          ]
+        }
+    },
+	{
+        "weight": 5,
+        "element": {
+          "processors": [
+              
+              "the_vault:treasure/air_half"
+          ],
+          "element_type": "the_vault:paletted_list_pool_element",
+          "projection": "rigid",
+          "elements": [
+              {
+                  "location": "the_vault:vault/prefab/decor/forest/mineshaft/d2",
+                  "projection": "rigid",
+                  "element_type": "the_vault:paletted_single_pool_element",
+                  "processors": "the_vault:forest/mineshaft"
+              }
+          ]
+        }
+    },
+	{
+        "weight": 5,
+        "element": {
+          "processors": [
+              
+              "the_vault:treasure/air_half"
+          ],
+          "element_type": "the_vault:paletted_list_pool_element",
+          "projection": "rigid",
+          "elements": [
+              {
+                  "location": "the_vault:vault/prefab/decor/forest/mineshaft/d3",
+                  "projection": "rigid",
+                  "element_type": "the_vault:paletted_single_pool_element",
+                  "processors": "the_vault:forest/mineshaft"
+              }
+          ]
+        }
+    },
+	{
+        "weight": 5,
+        "element": {
+          "processors": [
+              
+              "the_vault:treasure/air_half"
+          ],
+          "element_type": "the_vault:paletted_list_pool_element",
+          "projection": "rigid",
+          "elements": [
+              {
+                  "location": "the_vault:vault/prefab/decor/forest/mineshaft/t1",
+                  "projection": "rigid",
+                  "element_type": "the_vault:paletted_single_pool_element",
+                  "processors": "the_vault:forest/mineshaft"
+              }
+          ]
+        }
+    },
+	{
+        "weight": 5,
+        "element": {
+          "processors": [
+              
+              "the_vault:treasure/air_half"
+          ],
+          "element_type": "the_vault:paletted_list_pool_element",
+          "projection": "rigid",
+          "elements": [
+              {
+                  "location": "the_vault:vault/prefab/decor/forest/mineshaft/t2",
+                  "projection": "rigid",
+                  "element_type": "the_vault:paletted_single_pool_element",
+                  "processors": "the_vault:forest/mineshaft"
+              }
+          ]
+        }
+    },
+	{
+        "weight": 5,
+        "element": {
+          "processors": [
+              
+              "the_vault:treasure/air_half"
+          ],
+          "element_type": "the_vault:paletted_list_pool_element",
+          "projection": "rigid",
+          "elements": [
+              {
+                  "location": "the_vault:vault/prefab/decor/forest/mineshaft/t3",
+                  "projection": "rigid",
+                  "element_type": "the_vault:paletted_single_pool_element",
+                  "processors": "the_vault:forest/mineshaft"
+              }
+          ]
+        }
+    },
+	{
+        "weight": 5,
+        "element": {
+          "processors": [
+              
+              "the_vault:treasure/air_half"
+          ],
+          "element_type": "the_vault:paletted_list_pool_element",
+          "projection": "rigid",
+          "elements": [
+              {
+                  "location": "the_vault:vault/prefab/decor/forest/mineshaft/t4",
+                  "projection": "rigid",
+                  "element_type": "the_vault:paletted_single_pool_element",
+                  "processors": "the_vault:forest/mineshaft"
+              }
+          ]
+        }
+    },
+	{
+        "weight": 5,
+        "element": {
+          "processors": [
+              
+              "the_vault:treasure/air_half"
+          ],
+          "element_type": "the_vault:paletted_list_pool_element",
+          "projection": "rigid",
+          "elements": [
+              {
+                  "location": "the_vault:vault/prefab/decor/forest/mineshaft/s1",
+                  "projection": "rigid",
+                  "element_type": "the_vault:paletted_single_pool_element",
+                  "processors": "the_vault:forest/mineshaft"
+              }
+          ]
+        }
+    },
+	{
+        "weight": 5,
+        "element": {
+          "processors": [
+              
+              "the_vault:treasure/air_half"
+          ],
+          "element_type": "the_vault:paletted_list_pool_element",
+          "projection": "rigid",
+          "elements": [
+              {
+                  "location": "the_vault:vault/prefab/decor/forest/mineshaft/s2",
+                  "projection": "rigid",
+                  "element_type": "the_vault:paletted_single_pool_element",
+                  "processors": "the_vault:forest/mineshaft"
+              }
+          ]
+        }
+    }
+  ]
+}

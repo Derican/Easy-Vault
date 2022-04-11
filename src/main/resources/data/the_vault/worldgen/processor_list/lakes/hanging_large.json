@@ -1,0 +1,69 @@
+{
+  "processors": [
+	{
+	  "rules": [
+        {
+          "output_state": {
+            "Name": "minecraft:dead_bush"
+          },
+          "input_predicate": {
+            "predicate_type": "minecraft:random_block_match",
+            "block": "byg:firecracker_flower_bush",
+			"probability": 0.5
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          }
+        },
+		{
+          "output_state": {
+            "Name": "minecraft:light_gray_terracotta"
+          },
+          "input_predicate": {
+            "predicate_type": "minecraft:random_block_match",
+            "block": "minecraft:terracotta",
+			"probability": 0.25
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          }
+        },
+		{
+          "output_state": {
+            "Name": "quark:light_gray_shingles"
+          },
+          "input_predicate": {
+            "predicate_type": "minecraft:random_block_match",
+            "block": "minecraft:terracotta",
+			"probability": 0.33
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          }
+        },
+		{
+          "output_state": {
+            "Name": "quark:shingles"
+          },
+          "input_predicate": {
+            "predicate_type": "minecraft:random_block_match",
+            "block": "minecraft:terracotta",
+			"probability": 0.5
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          }
+        }
+      ],
+      "processor_type": "minecraft:rule"
+    },
+	{
+	  "blocks": [
+		{
+		  "Name": "minecraft:air"
+		}
+	  ],
+	  "processor_type": "minecraft:block_ignore"
+	}
+  ]
+}

@@ -1,0 +1,33 @@
+{
+  "parent": "the_vault:armors/armor_crate_dank/crate",
+  "display": {
+    "title": {
+      "text": "Dank Full Set"
+    },
+    "description": {
+      "text": "TO BE FILLED"
+    },
+    "icon": {
+      "item": "the_vault:helmet",
+      "nbt": "{Vault:{Attributes:[{BaseValue:5,Id:\"the_vault:gear_special_model\"},{BaseValue:\"IDENTIFIED\",Id:\"the_vault:gear_state\"},{BaseValue:\"UNIQUE\",Id:\"the_vault:gear_rarity\"},{BaseValue:\"NONE\",Id:\"the_vault:gear_set\"},{BaseValue:-1,Id:\"the_vault:gear_color\"},{BaseValue:-874411670668418424L,Id:\"the_vault:gear_random_seed\"},{BaseValue:\"All\",Id:\"the_vault:gear_roll_type\"},{BaseValue:0,Id:\"the_vault:gear_tier\"}]}}"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "looted_helmet": {
+      "trigger": "minecraft:impossible"
+    },
+    "looted_chestplate": {
+      "trigger": "minecraft:impossible"
+    },
+    "looted_leggings": {
+      "trigger": "minecraft:impossible"
+    },
+    "looted_boots": {
+      "trigger": "minecraft:impossible"
+    }
+  }
+}

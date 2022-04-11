@@ -1,0 +1,40 @@
+{
+    "processors": [
+      {
+        "rules": [
+          {
+            "output_state": {
+              "Name": "the_vault:vault_bonus_chest",
+              "Properties": {
+                "facing": "north",
+                "type": "single",
+                "waterlogged": "false"      
+              }
+            },
+            "input_predicate": {
+              "predicate_type": "minecraft:random_block_match",
+              "block": "minecraft:white_wool",
+              "probability": 0.001
+            },
+            "location_predicate": {
+              "predicate_type": "minecraft:always_true"
+            }
+          },
+          {
+            "output_state": {
+              "Name": "minecraft:air"
+            },
+            "input_predicate": {
+              "predicate_type": "minecraft:random_block_match",
+              "block": "minecraft:white_wool",
+              "probability": 1.0
+            },
+            "location_predicate": {
+              "predicate_type": "minecraft:always_true"
+            }
+          }
+        ],
+        "processor_type": "minecraft:rule"
+      }
+    ]
+  }

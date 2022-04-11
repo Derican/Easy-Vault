@@ -1,0 +1,12 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "the_vault:item/vault_crystal"
+  },
+  "overrides": [
+    { "predicate": { "type": 0 }, "model": "the_vault:item/vault_crystal" },
+    { "predicate": { "type": 1 }, "model": "the_vault:item/vault_crystal" },
+    { "predicate": { "type": 2 }, "model": "the_vault:item/vault_crystal" },
+    { "predicate": { "type": 3 }, "model": "the_vault:item/vault_crystal_trove" }
+  ]
+}

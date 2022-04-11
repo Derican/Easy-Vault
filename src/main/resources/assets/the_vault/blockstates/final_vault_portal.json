@@ -1,0 +1,11 @@
+{
+  "variants": {
+    "axis=x": {
+      "model": "the_vault:block/final_vault_portal"
+    },
+    "axis=z": {
+      "model": "the_vault:block/final_vault_portal",
+      "y": 90
+    }
+  }
+}

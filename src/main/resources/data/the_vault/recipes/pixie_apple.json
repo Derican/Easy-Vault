@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "afa",
+    "fwf",
+    "afa"
+  ],
+  "key": {
+    "w": {
+      "item": "minecraft:phantom_membrane"
+    },
+    "f": {
+      "item": "the_vault:vault_apple"
+    },
+    "a": {
+      "item": "the_vault:vault_dust"
+    }
+  },
+  "result": {
+    "item": "the_vault:pixie_apple",
+    "count": 4
+  }
+}

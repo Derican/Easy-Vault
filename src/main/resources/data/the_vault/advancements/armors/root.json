@@ -1,0 +1,23 @@
+{
+  "display": {
+    "title": {
+      "text": "Mod Armors Tab"
+    },
+    "description": {
+      "text": "YET TO BE FILLED"
+    },
+    "icon": {
+      "item": "the_vault:transmog_table"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": false,
+    "background": "the_vault:textures/block/vault_bedrock.png"
+  },
+  "criteria": {
+    "entered_vault": {
+      "trigger": "minecraft:impossible"
+    }
+  }
+}

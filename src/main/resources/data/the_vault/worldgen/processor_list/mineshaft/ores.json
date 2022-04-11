@@ -1,0 +1,43 @@
+{
+  "processors": [
+	{
+      "rules": [
+		{
+          "output_state": {
+            "Name": "minecraft:air"
+          },
+          "input_predicate": {
+            "predicate_type": "minecraft:block_match",
+            "block": "the_vault:ore_unknown" 
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:block_match",
+            "block": "minecraft:air"
+          }
+        },
+		{
+          "output_state": {
+            "Name": "minecraft:barrier"
+          },
+          "input_predicate": {
+            "predicate_type": "minecraft:block_match",
+            "block": "the_vault:ore_unknown" 
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:tag_match",
+            "tag": "the_vault:ore_ignore"
+          }
+        }
+      ],
+      "processor_type": "minecraft:rule"
+    },
+	{
+	  "blocks": [
+		{
+		  "Name": "minecraft:barrier"
+		}
+	  ],
+	  "processor_type": "minecraft:block_ignore"
+	}
+  ]
+}

@@ -1,0 +1,210 @@
+{
+  "name": "the_vault:vault/decor/lava/ceiling",
+  "fallback": "the_vault:vault/decor/lava/ceiling",
+  "elements": [
+    {
+      "weight": 36,
+      "element": {
+        "element_type": "minecraft:empty_pool_element"
+      }
+    },
+	{
+        "weight": 2,
+        "element": {
+          "processors": [
+              
+              "the_vault:treasure/basalt_half"
+          ],
+          "element_type": "the_vault:paletted_list_pool_element",
+          "projection": "rigid",
+          "elements": [
+              {
+                  "location": "the_vault:vault/prefab/decor/lava/ceiling/c1",
+                  "projection": "rigid",
+                  "element_type": "the_vault:paletted_single_pool_element",
+                  "processors": "the_vault:lava/wall"
+              }
+          ]
+        }
+    },
+	{
+        "weight": 2,
+        "element": {
+          "processors": [
+              
+              "the_vault:treasure/basalt_half"
+          ],
+          "element_type": "the_vault:paletted_list_pool_element",
+          "projection": "rigid",
+          "elements": [
+              {
+                  "location": "the_vault:vault/prefab/decor/lava/ceiling/c2",
+                  "projection": "rigid",
+                  "element_type": "the_vault:paletted_single_pool_element",
+                  "processors": "the_vault:lava/wall"
+              }
+          ]
+        }
+    },
+	{
+        "weight": 5,
+        "element": {
+          "processors": [
+              
+              "the_vault:treasure/basalt_half"
+          ],
+          "element_type": "the_vault:paletted_list_pool_element",
+          "projection": "rigid",
+          "elements": [
+              {
+                  "location": "the_vault:vault/prefab/decor/lava/ceiling/c3",
+                  "projection": "rigid",
+                  "element_type": "the_vault:paletted_single_pool_element",
+                  "processors": "the_vault:lava/wall"
+              }
+          ]
+        }
+    },
+	{
+        "weight": 5,
+        "element": {
+          "processors": [
+              
+              "the_vault:treasure/basalt_half"
+          ],
+          "element_type": "the_vault:paletted_list_pool_element",
+          "projection": "rigid",
+          "elements": [
+              {
+                  "location": "the_vault:vault/prefab/decor/lava/ceiling/c4",
+                  "projection": "rigid",
+                  "element_type": "the_vault:paletted_single_pool_element",
+                  "processors": "the_vault:lava/wall"
+              }
+          ]
+        }
+    },
+	{
+        "weight": 5,
+        "element": {
+          "processors": [
+              
+              "the_vault:treasure/basalt_half"
+          ],
+          "element_type": "the_vault:paletted_list_pool_element",
+          "projection": "rigid",
+          "elements": [
+              {
+                  "location": "the_vault:vault/prefab/decor/lava/ceiling/c5",
+                  "projection": "rigid",
+                  "element_type": "the_vault:paletted_single_pool_element",
+                  "processors": "the_vault:lava/wall"
+              }
+          ]
+        }
+    },
+	{
+        "weight": 2,
+        "element": {
+          "processors": [
+              
+              "the_vault:treasure/basalt_half"
+          ],
+          "element_type": "the_vault:paletted_list_pool_element",
+          "projection": "rigid",
+          "elements": [
+              {
+                  "location": "the_vault:vault/prefab/decor/lava/ceiling/c6",
+                  "projection": "rigid",
+                  "element_type": "the_vault:paletted_single_pool_element",
+                  "processors": "the_vault:lava/wall"
+              }
+          ]
+        }
+    },
+	{
+        "weight": 2,
+        "element": {
+          "processors": [
+              
+              "the_vault:treasure/basalt_half"
+          ],
+          "element_type": "the_vault:paletted_list_pool_element",
+          "projection": "rigid",
+          "elements": [
+              {
+                  "location": "the_vault:vault/prefab/decor/lava/ceiling/c7",
+                  "projection": "rigid",
+                  "element_type": "the_vault:paletted_single_pool_element",
+                  "processors": "the_vault:lava/wall"
+              }
+          ]
+        }
+    },
+	{
+        "weight": 2,
+        "element": {
+          "processors": [
+              
+              "the_vault:treasure/basalt_half"
+          ],
+          "element_type": "the_vault:paletted_list_pool_element",
+          "projection": "rigid",
+          "elements": [
+              {
+                  "location": "the_vault:vault/prefab/decor/lava/ceiling/c8",
+                  "projection": "rigid",
+                  "element_type": "the_vault:paletted_single_pool_element",
+                  "processors": "the_vault:lava/wall"
+              }
+          ]
+        }
+    },
+	{
+        "weight": 2,
+        "element": {
+          "processors": [
+              
+              "the_vault:treasure/basalt_half"
+          ],
+          "element_type": "the_vault:paletted_list_pool_element",
+          "projection": "rigid",
+          "elements": [
+              {
+                  "location": "the_vault:vault/prefab/decor/lava/ceiling/c9",
+                  "projection": "rigid",
+                  "element_type": "the_vault:paletted_single_pool_element",
+                  "processors": "the_vault:lava/wall"
+              }
+          ]
+        }
+    },
+	{
+		"weight": 8,
+		"element": {
+			"element_type": "minecraft:single_pool_element",
+			"projection": "rigid",
+			"processors": "minecraft:empty",
+			"location": "the_vault:vault/prefab/decor/generic/chains/c1"
+		}
+	},
+	{
+		"weight": 8,
+		"element": {
+			"element_type": "minecraft:single_pool_element",
+			"projection": "rigid",
+			"processors": "minecraft:empty",
+			"location": "the_vault:vault/prefab/decor/generic/chains/c2"
+		}
+	},
+	{
+		"weight": 8,
+		"element": {
+			"element_type": "minecraft:single_pool_element",
+			"projection": "rigid",
+			"processors": "minecraft:empty",
+			"location": "the_vault:vault/prefab/decor/generic/chains/c3"
+		}
+	}
+  ]
+}

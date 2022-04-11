@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "aba",
+    "bzb",
+    "aca"
+  ],
+  "key": {
+    "a": {
+      "item": "the_vault:gem_black_opal"
+    },
+    "b": {
+      "item": "minecraft:obsidian"
+    },
+    "c": {
+      "item": "minecraft:crying_obsidian"
+    },
+    "z": {
+      "item": "the_vault:reset_flask"
+    }
+  },
+  "result": {
+    "item": "the_vault:reset_flask",
+    "nbt": "{Skillable:\"Unbreakable\"}"
+  }
+}

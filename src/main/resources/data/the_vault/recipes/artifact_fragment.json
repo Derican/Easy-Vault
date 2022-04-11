@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "the_vault:artifact_fragment"
+    },
+    {
+      "item": "the_vault:artifact_fragment"
+    },
+    {
+      "item": "the_vault:artifact_fragment"
+    },
+    {
+      "item": "the_vault:artifact_fragment"
+    }
+  ],
+  "result": {
+    "item": "the_vault:unidentified_artifact",
+    "count": 1
+  }
+}

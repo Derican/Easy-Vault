@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "aba",
+    "bzb",
+    "aba"
+  ],
+  "key": {
+    "a": {
+      "item": "the_vault:perfect_alexandrite"
+    },
+    "z": {
+      "item": "the_vault:reset_flask"
+    },
+    "b": {
+      "item": "the_vault:eternal_soul"
+    }
+  },
+  "result": {
+    "item": "the_vault:reset_flask",
+    "nbt": "{Skillable:\"Commander\"}"
+  }
+}

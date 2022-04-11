@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "g",
+    "p"
+  ],
+  "key": {
+    "p": {
+      "item": "minecraft:book"
+    },
+    "g": {
+      "item": "the_vault:gear_charm"
+    }
+  },
+  "result": {
+    "item": "the_vault:identification_tome",
+    "count": 1
+  }
+}

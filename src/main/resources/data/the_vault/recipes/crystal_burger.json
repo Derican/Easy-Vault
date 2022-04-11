@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "the_vault:vault_burger"
+    },
+    {
+      "item": "the_vault:vault_diamond"
+    },
+    {
+      "item": "the_vault:poisonous_mushroom"
+    }
+  ],
+  "result": {
+    "item": "the_vault:crystal_burger",
+    "count": 1
+  }
+}

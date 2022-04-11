@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "aba",
+    "bzb",
+    "aba"
+  ],
+  "key": {
+    "a": {
+      "item": "the_vault:perfect_benitoite"
+    },
+    "b": {
+      "item": "minecraft:potion"
+    },
+    "z": {
+      "item": "the_vault:reset_flask"
+    }
+  },
+  "result": {
+    "item": "the_vault:reset_flask",
+    "nbt": "{Skillable:\"Water Breathing\"}"
+  }
+}

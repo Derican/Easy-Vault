@@ -1,0 +1,9 @@
+{
+    "type": "minecraft:smelting",
+    "ingredient": {
+      "item": "the_vault:ore_ashium"
+    },
+    "result": "the_vault:gem_ashium",
+    "experience": 1.0,
+    "cookingtime": 200
+  }

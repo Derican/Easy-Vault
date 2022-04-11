@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " p ",
+    "pkp",
+    " p "
+  ],
+  "key": {
+    "p": {
+      "item": "the_vault:perfect_painite"
+    },
+    "k": {
+      "item": "the_vault:knowledge_star"
+    }
+  },
+  "result": {
+    "item": "the_vault:painite_star",
+    "count": 1
+  }
+}

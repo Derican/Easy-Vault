@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "bcb",
+    "eae",
+    "bdb"
+  ],
+  "key": {
+    "a": {
+      "item": "the_vault:vault_apple"
+    },
+    "b": {
+      "item": "the_vault:vault_dust"
+    },
+    "d": {
+      "item": "the_vault:magnetite"
+    },
+    "e": {
+      "item": "the_vault:vault_nugget"
+    },
+    "c": {
+      "item": "the_vault:candy_bar"
+    }
+  },
+  "result": {
+    "item": "the_vault:sweet_apple",
+    "count": 1
+  }
+}

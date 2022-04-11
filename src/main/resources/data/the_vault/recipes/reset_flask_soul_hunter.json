@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "aba",
+    "bzb",
+    "aba"
+  ],
+  "key": {
+    "a": {
+      "item": "the_vault:perfect_black_opal"
+    },
+    "b": {
+      "item": "the_vault:infused_eternal_soul"
+    },
+    "z": {
+      "item": "the_vault:reset_flask"
+    }
+  },
+  "result": {
+    "item": "the_vault:reset_flask",
+    "nbt": "{Skillable:\"Soul Hunter\"}"
+  }
+}

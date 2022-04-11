@@ -1,0 +1,15 @@
+{
+  "replace": false,
+  "values": [
+    "minecraft:donkey_spawn_egg",
+    "minecraft:dolphin_spawn_egg",
+    "minecraft:chicken_spawn_egg",
+    "minecraft:cow_spawn_egg",
+    "minecraft:mooshroom_spawn_egg",
+    "minecraft:pig_spawn_egg",
+    "minecraft:polar_bear_spawn_egg",
+    "minecraft:sheep_spawn_egg",
+    "minecraft:squid_spawn_egg",
+    "minecraft:strider_spawn_egg"
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "IEI",
+    "I I"
+  ],
+  "key": {
+    "I": {
+      "item": "the_vault:vaulterite_ingot"
+    },
+    "E": {
+      "item": "the_vault:red_vault_essence"
+    }
+  },
+  "result": {
+    "item": "the_vault:boots"
+  }
+}

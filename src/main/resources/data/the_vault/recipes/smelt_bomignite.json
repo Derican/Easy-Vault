@@ -1,0 +1,9 @@
+{
+    "type": "minecraft:smelting",
+    "ingredient": {
+      "item": "the_vault:ore_bomignite"
+    },
+    "result": "the_vault:gem_bomignite",
+    "experience": 1.0,
+    "cookingtime": 200
+  }

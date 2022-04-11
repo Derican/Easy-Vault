@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "RER"
+  ],
+  "key": {
+    "R": {
+      "item": "the_vault:repair_core_t2"
+    },
+    "E": {
+      "item": "the_vault:hunter_eye"
+    }
+  },
+  "result": {
+    "item": "the_vault:repair_core_t3",
+    "count": 1
+  }
+}

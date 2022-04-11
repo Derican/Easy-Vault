@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "beb",
+    "wpw",
+    "lel"
+  ],
+  "key": {
+    "e": {
+      "item": "the_vault:perfect_echo_gem"
+    },
+    "l": {
+      "item": "the_vault:perfect_larimar"
+    },
+    "b": {
+      "item": "the_vault:perfect_benitoite"
+    },
+    "p": {
+      "item": "the_vault:gem_pog"
+    },
+    "w": {
+      "item": "the_vault:gem_wutodie"
+    }
+  },
+  "result": {
+    "item": "the_vault:echo_pog",
+    "count": 1
+  }
+}

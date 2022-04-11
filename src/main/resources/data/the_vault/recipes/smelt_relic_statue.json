@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smelting",
+  "ingredient": {
+    "item": "the_vault:relic_statue"
+  },
+  "result": "the_vault:bitter_lemon",
+  "experience": 4.0,
+  "cookingtime": 200
+}

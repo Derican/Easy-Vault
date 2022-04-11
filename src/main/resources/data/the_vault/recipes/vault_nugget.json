@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {"item": "the_vault:vault_dust"},
+    {"item": "the_vault:vault_dust"},
+    {"item": "the_vault:vault_dust"},
+    {"item": "the_vault:vault_dust"},
+    {"item": "minecraft:diamond"},
+    {"item": "the_vault:vault_dust"},
+    {"item": "the_vault:vault_dust"},
+    {"item": "the_vault:vault_dust"},
+    {"item": "the_vault:vault_dust"}
+  ],
+  "result": {
+    "item": "the_vault:vault_nugget",
+    "count": 1
+  }
+}

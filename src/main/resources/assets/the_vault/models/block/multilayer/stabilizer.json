@@ -1,0 +1,15 @@
+{
+    "loader": "forge:multi-layer",
+    "layers": {
+        "solid": {
+            "parent": "the_vault:block/stabilizer_solid"
+        },
+        "translucent": {
+            "parent": "the_vault:block/stabilizer_translucent"
+        }
+    },
+    "ambientocclusion": false,
+    "textures": {
+        "particle": "the_vault:block/stabilizer"
+    }
+}

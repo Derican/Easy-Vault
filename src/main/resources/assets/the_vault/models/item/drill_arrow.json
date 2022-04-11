@@ -1,0 +1,11 @@
+{
+    "parent": "item/generated",
+    "textures": {
+        "layer0": "the_vault:item/drill_arrow_small"
+    },
+    "overrides": [
+        { "predicate": { "tier": 0.00 }, "model": "the_vault:item/drill_arrow_small" },
+        { "predicate": { "tier": 0.33 }, "model": "the_vault:item/drill_arrow_medium" },
+        { "predicate": { "tier": 0.66 }, "model": "the_vault:item/drill_arrow_large" }
+    ]
+}

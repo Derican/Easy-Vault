@@ -1,0 +1,114 @@
+{
+    "variants": {
+        "facing=down,horizontal_facing=north": {
+            "model": "the_vault:block/multilayer/vault_crate_scavenger",
+            "x": 180
+        },
+        "facing=down,horizontal_facing=east": {
+            "model": "the_vault:block/multilayer/vault_crate_scavenger",
+            "x": 180,
+            "y": 90
+        },
+        "facing=down,horizontal_facing=south": {
+            "model": "the_vault:block/multilayer/vault_crate_scavenger",
+            "x": 180,
+            "y": 180
+        },
+        "facing=down,horizontal_facing=west": {
+            "model": "the_vault:block/multilayer/vault_crate_scavenger",
+            "x": 180,
+            "y": 270
+        },
+        "facing=up,horizontal_facing=north": {
+            "model": "the_vault:block/multilayer/vault_crate_scavenger"
+        },
+        "facing=up,horizontal_facing=east": {
+            "model": "the_vault:block/multilayer/vault_crate_scavenger",
+            "y": 90
+        },
+        "facing=up,horizontal_facing=south": {
+            "model": "the_vault:block/multilayer/vault_crate_scavenger",
+            "y": 180
+        },
+        "facing=up,horizontal_facing=west": {
+            "model": "the_vault:block/multilayer/vault_crate_scavenger",
+            "y": 270
+        },
+        "facing=north,horizontal_facing=north": {
+            "model": "the_vault:block/multilayer/vault_crate_scavenger",
+            "x": 270,
+            "y": 180
+        },
+        "facing=north,horizontal_facing=east": {
+            "model": "the_vault:block/multilayer/vault_crate_scavenger",
+            "x": 270,
+            "y": 180
+        },
+        "facing=north,horizontal_facing=south": {
+            "model": "the_vault:block/multilayer/vault_crate_scavenger",
+            "x": 270,
+            "y": 180
+        },
+        "facing=north,horizontal_facing=west": {
+            "model": "the_vault:block/multilayer/vault_crate_scavenger",
+            "x": 270,
+            "y": 180
+        },
+        "facing=south,horizontal_facing=north": {
+            "model": "the_vault:block/multilayer/vault_crate_scavenger",
+            "x": 270
+        },
+        "facing=south,horizontal_facing=east": {
+            "model": "the_vault:block/multilayer/vault_crate_scavenger",
+            "x": 270
+        },
+        "facing=south,horizontal_facing=south": {
+            "model": "the_vault:block/multilayer/vault_crate_scavenger",
+            "x": 270
+        },
+        "facing=south,horizontal_facing=west": {
+            "model": "the_vault:block/multilayer/vault_crate_scavenger",
+            "x": 270
+        },
+        "facing=west,horizontal_facing=north": {
+            "model": "the_vault:block/multilayer/vault_crate_scavenger",
+            "x": 270,
+            "y": 90
+        },
+        "facing=west,horizontal_facing=east": {
+            "model": "the_vault:block/multilayer/vault_crate_scavenger",
+            "x": 270,
+            "y": 90
+        },
+        "facing=west,horizontal_facing=south": {
+            "model": "the_vault:block/multilayer/vault_crate_scavenger",
+            "x": 270,
+            "y": 90
+        },
+        "facing=west,horizontal_facing=west": {
+            "model": "the_vault:block/multilayer/vault_crate_scavenger",
+            "x": 270,
+            "y": 90
+        },
+        "facing=east,horizontal_facing=north": {
+            "model": "the_vault:block/multilayer/vault_crate_scavenger",
+            "x": 270,
+            "y": 270
+        },
+        "facing=east,horizontal_facing=east": {
+            "model": "the_vault:block/multilayer/vault_crate_scavenger",
+            "x": 270,
+            "y": 270
+        },
+        "facing=east,horizontal_facing=south": {
+            "model": "the_vault:block/multilayer/vault_crate_scavenger",
+            "x": 270,
+            "y": 270
+        },
+        "facing=east,horizontal_facing=west": {
+            "model": "the_vault:block/multilayer/vault_crate_scavenger",
+            "x": 270,
+            "y": 270
+        }
+    }
+}

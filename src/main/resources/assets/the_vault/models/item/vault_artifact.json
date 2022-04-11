@@ -1,0 +1,33 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "the_vault:block/vault_artifact_1"
+  },
+  "overrides": [
+    {"predicate": { "custom_model_data": 1 }, "model":  "the_vault:item/artifact/vault_artifact_1"},
+    {"predicate": { "custom_model_data": 2 }, "model":  "the_vault:item/artifact/vault_artifact_2"},
+    {"predicate": { "custom_model_data": 3 }, "model":  "the_vault:item/artifact/vault_artifact_3"},
+    {"predicate": { "custom_model_data": 4 }, "model":  "the_vault:item/artifact/vault_artifact_4"},
+    {"predicate": { "custom_model_data": 5 }, "model":  "the_vault:item/artifact/vault_artifact_5"},
+    {"predicate": { "custom_model_data": 6 }, "model":  "the_vault:item/artifact/vault_artifact_6"},
+    {"predicate": { "custom_model_data": 7 }, "model":  "the_vault:item/artifact/vault_artifact_7"},
+    {"predicate": { "custom_model_data": 8 }, "model":  "the_vault:item/artifact/vault_artifact_8"},
+    {"predicate": { "custom_model_data": 9 }, "model":  "the_vault:item/artifact/vault_artifact_9"},
+    {"predicate": { "custom_model_data": 10 }, "model":  "the_vault:item/artifact/vault_artifact_10"},
+    {"predicate": { "custom_model_data": 11 }, "model":  "the_vault:item/artifact/vault_artifact_11"},
+    {"predicate": { "custom_model_data": 12 }, "model":  "the_vault:item/artifact/vault_artifact_12"},
+    {"predicate": { "custom_model_data": 13 }, "model":  "the_vault:item/artifact/vault_artifact_13"},
+    {"predicate": { "custom_model_data": 14 }, "model":  "the_vault:item/artifact/vault_artifact_14"},
+    {"predicate": { "custom_model_data": 15 }, "model":  "the_vault:item/artifact/vault_artifact_15"},
+    {"predicate": { "custom_model_data": 16 }, "model":  "the_vault:item/artifact/vault_artifact_16"},
+    {"predicate": { "custom_model_data": 17 }, "model":  "the_vault:item/artifact/vault_artifact_17"},
+    {"predicate": { "custom_model_data": 18 }, "model":  "the_vault:item/artifact/vault_artifact_18"},
+    {"predicate": { "custom_model_data": 19 }, "model":  "the_vault:item/artifact/vault_artifact_19"},
+    {"predicate": { "custom_model_data": 20 }, "model":  "the_vault:item/artifact/vault_artifact_20"},
+    {"predicate": { "custom_model_data": 21 }, "model":  "the_vault:item/artifact/vault_artifact_21"},
+    {"predicate": { "custom_model_data": 22 }, "model":  "the_vault:item/artifact/vault_artifact_22"},
+    {"predicate": { "custom_model_data": 23 }, "model":  "the_vault:item/artifact/vault_artifact_23"},
+    {"predicate": { "custom_model_data": 24 }, "model":  "the_vault:item/artifact/vault_artifact_24"},
+    {"predicate": { "custom_model_data": 25 }, "model":  "the_vault:item/artifact/vault_artifact_25"}
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "type": "the_vault:crafting_shapeless_copy_nbt",
+  "ingredients": [
+    {
+      "item": "the_vault:omega_statue_variant"
+    }
+  ],
+  "result": {
+    "item": "the_vault:omega_statue",
+    "count": 1
+  }
+}

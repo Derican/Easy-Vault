@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "cbc"
+  ],
+  "key": {
+    "c": {
+      "item": "the_vault:vault_catalyst"
+    },
+    "b": {
+      "item": "the_vault:perfect_alexandrite"
+    }
+  },
+  "result": {
+    "item": "the_vault:vault_catalyst",
+    "count": 1
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "pep",
+    "ece",
+    "pep"
+  ],
+  "key": {
+    "p": {
+      "item": "the_vault:gem_pog"
+    },
+    "c": {
+      "item": "the_vault:echo_pog"
+    },
+    "e": {
+      "item": "the_vault:vault_diamond"
+    }
+  },
+  "result": {
+    "item": "the_vault:charm_upgrade_tier_1",
+    "count": 1
+  }
+}

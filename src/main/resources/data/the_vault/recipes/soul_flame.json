@@ -1,0 +1,23 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "SAS",
+        "ALA",
+        "SAS"
+    ],
+    "key": {
+        "S": {
+            "item": "minecraft:soul_sand"
+        },
+        "A": {
+            "item": "minecraft:wither_skeleton_skull"
+        },
+        "L": {
+            "item": "minecraft:soul_lantern"
+        }
+    },
+    "result": {
+        "item": "the_vault:soul_flame",
+        "count": 1
+    }
+}

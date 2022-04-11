@@ -1,0 +1,17 @@
+{
+	"values": [
+		"minecraft:oak_log",
+		"minecraft:dark_oak_log",
+		"minecraft:acacia_wood",
+		"byg:maple_log",
+		"decorative_blocks:rocky_dirt",
+		"minecraft:brown_concrete_powder",
+		"byg:brown_mushroom_stem",
+		"quark:smooth_soul_sandstone",
+		"#minecraft:slabs",
+		"#minecraft:fences",
+		"#minecraft:campfires",
+		"#minecraft:walls",
+		"#forge:dirt"
+	]
+}

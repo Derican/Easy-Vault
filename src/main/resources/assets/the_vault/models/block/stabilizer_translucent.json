@@ -1,0 +1,65 @@
+{
+	"credit": "Made with Blockbench",
+	"texture_size": [64, 64],
+	"textures": {
+		"0": "the_vault:block/stabilizer",
+		"particle": "the_vault:block/stabilizer"
+	},
+	"elements": [
+		{
+			"from": [5, 3, 3.25],
+			"to": [11, 23, 3.25],
+			"faces": {
+				"north": {"uv": [3, 3, 4.5, 8], "texture": "#0"},
+				"east": {"uv": [3, 3, 6, 8.25], "texture": "#0"},
+				"south": {"uv": [3, 3, 4.5, 8], "texture": "#0"},
+				"west": {"uv": [0, 0, 0, 5], "texture": "#0"},
+				"up": {"uv": [0, 7.25, 3, 10.25], "texture": "#0"},
+				"down": {"uv": [0, 7.25, 3, 10.25], "texture": "#0"}
+			}
+		},
+		{
+			"from": [12.5, 3, 5],
+			"to": [12.5, 23, 11],
+			"faces": {
+				"north": {"uv": [0, 0, 3, 5.25], "texture": "#0"},
+				"east": {"uv": [3, 3, 4.5, 8], "texture": "#0"},
+				"south": {"uv": [3, 3, 3, 8], "texture": "#0"},
+				"west": {"uv": [3, 3, 4.5, 8], "texture": "#0"},
+				"up": {"uv": [0, 7.25, 3, 10.25], "texture": "#0"},
+				"down": {"uv": [0, 7.25, 3, 10.25], "texture": "#0"}
+			}
+		},
+		{
+			"from": [5, 3, 12.75],
+			"to": [11, 23, 12.75],
+			"faces": {
+				"north": {"uv": [3, 3, 4.5, 8], "texture": "#0"},
+				"east": {"uv": [3, 3, 6, 8.25], "texture": "#0"},
+				"south": {"uv": [3, 3, 4.5, 8], "texture": "#0"},
+				"west": {"uv": [0, 0, 0, 5], "texture": "#0"},
+				"up": {"uv": [0, 7.25, 3, 10.25], "texture": "#0"},
+				"down": {"uv": [0, 7.25, 3, 10.25], "texture": "#0"}
+			}
+		},
+		{
+			"from": [3.5, 3, 5],
+			"to": [3.5, 23, 11],
+			"faces": {
+				"north": {"uv": [4.5, 3, 4.5, 8], "texture": "#0"},
+				"east": {"uv": [3, 3, 4.5, 8], "texture": "#0"},
+				"south": {"uv": [3, 3, 3, 8], "texture": "#0"},
+				"west": {"uv": [3, 3, 4.5, 8], "texture": "#0"},
+				"up": {"uv": [0, 7.25, 3, 10.25], "texture": "#0"},
+				"down": {"uv": [0, 7.25, 3, 10.25], "texture": "#0"}
+			}
+		}
+	],
+	"groups": [
+		{
+			"name": "glass",
+			"origin": [0, 0, 0],
+			"children": [0, 1, 2, 3]
+		}
+	]
+}

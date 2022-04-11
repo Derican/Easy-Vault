@@ -1,0 +1,24 @@
+{
+    "name": "the_vault:vault/decor/viewer/match_puzzle",
+    "fallback": "the_vault:vault/decor/viewer/match_puzzle",
+    "elements": [
+      {
+          "weight": 3,
+          "element": {
+            "processors": [
+                "the_vault:treasure/air_half"
+            ],
+            "element_type": "the_vault:paletted_list_pool_element",
+            "projection": "rigid",
+            "elements": [
+                {
+                    "location": "the_vault:vault/prefab/decor/viewer/match_puzzle/m1",
+                    "projection": "rigid",
+                    "element_type": "the_vault:paletted_single_pool_element",
+                    "processors": "the_vault:generic/composter_puzzle"
+                }
+            ]
+          }
+      }
+    ]
+  }

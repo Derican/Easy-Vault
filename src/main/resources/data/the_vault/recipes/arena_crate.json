@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "pbp",
+    "bxb",
+    "pbp"
+  ],
+  "key": {
+    "p": {
+      "tag": "minecraft:planks"
+    },
+    "b": {
+      "item": "the_vault:gem_benitoite"
+    },
+    "x": {
+      "item": "minecraft:shulker_box"
+    }
+  },
+  "result": {
+    "item": "the_vault:vault_crate_arena",
+    "count": 1
+  }
+}

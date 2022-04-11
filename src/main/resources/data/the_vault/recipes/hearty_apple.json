@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "bab",
+    "aca",
+    "bab"
+  ],
+  "key": {
+    "a": {
+      "item": "the_vault:vault_apple"
+    },
+    "b": {
+      "item": "the_vault:vault_dust"
+    },
+    "c": {
+      "item": "minecraft:golden_apple"
+    }
+  },
+  "result": {
+    "item": "the_vault:hearty_apple",
+    "count": 4
+  }
+}

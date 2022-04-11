@@ -1,0 +1,30 @@
+{
+  "parent": "the_vault:armors/root",
+  "display": {
+    "title": {
+      "text": "Mod Armor Crate: Ie"
+    },
+    "description": {
+      "text": "TO BE FILLED"
+    },
+    "icon": {
+      "item": "the_vault:armor_crate_ie"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": false
+  },
+  "criteria": {
+    "obtained_crate": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "the_vault:armor_crate_ie"
+          }
+        ]
+      }
+    }
+  }
+}

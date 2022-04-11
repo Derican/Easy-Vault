@@ -1,0 +1,22 @@
+{
+    "processors": [
+      {
+        "rules": [
+          {
+            "output_state": {
+              "Name": "minecraft:air"
+            },
+            "input_predicate": {
+              "predicate_type": "minecraft:random_block_match",
+              "block": "minecraft:stone",
+              "probability": 1.0
+            },
+            "location_predicate": {
+              "predicate_type": "minecraft:always_true"
+            }
+          }
+        ],
+        "processor_type": "minecraft:rule"
+      }
+    ]
+  }

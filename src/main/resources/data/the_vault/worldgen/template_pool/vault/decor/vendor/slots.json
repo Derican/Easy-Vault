@@ -1,0 +1,42 @@
+{
+    "name": "the_vault:vault/decor/vendor/slots",
+    "fallback": "the_vault:vault/decor/vendor/slots",
+    "elements": [
+      {
+          "weight": 9,
+          "element": {
+            "processors": [
+                "minecraft:empty"
+            ],
+            "element_type": "the_vault:paletted_list_pool_element",
+            "projection": "rigid",
+            "elements": [
+                {
+                    "location": "the_vault:vault/prefab/decor/vendor/slots/s1",
+                    "projection": "rigid",
+                    "element_type": "the_vault:paletted_single_pool_element",
+                    "processors": "minecraft:empty"
+                }
+            ]
+          }
+      },
+      {
+        "weight": 1,
+        "element": {
+          "processors": [
+            "minecraft:empty"
+          ],
+          "element_type": "the_vault:paletted_list_pool_element",
+          "projection": "rigid",
+          "elements": [
+              {
+                  "location": "the_vault:vault/prefab/decor/vendor/slots/s2",
+                  "projection": "rigid",
+                  "element_type": "the_vault:paletted_single_pool_element",
+                  "processors": "minecraft:empty"
+              }
+          ]
+        }
+    }
+    ]
+  }

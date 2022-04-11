@@ -1,0 +1,25 @@
+{
+  "name": "the_vault:vault/decor/x_spot/activator",
+  "fallback": "the_vault:vault/decor/x_spot/activator",
+  "elements": [
+	{
+        "weight": 5,
+        "element": {
+          "processors": [
+              
+              "the_vault:treasure/air_half"
+          ],
+          "element_type": "the_vault:paletted_list_pool_element",
+          "projection": "rigid",
+          "elements": [
+              {
+                  "location": "the_vault:vault/prefab/decor/x_spot/activator/a1",
+                  "projection": "rigid",
+                  "element_type": "the_vault:paletted_single_pool_element",
+                  "processors": "the_vault:x_spot/stone_to_air"
+              }
+          ]
+        }
+    }
+  ]
+}

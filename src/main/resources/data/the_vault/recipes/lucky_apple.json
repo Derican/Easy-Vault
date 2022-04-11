@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "cbc",
+    "bab",
+    "cbc"
+  ],
+  "key": {
+    "a": {
+      "item": "the_vault:vault_apple"
+    },
+    "b": {
+      "item": "the_vault:perfect_alexandrite"
+    },
+    "c": {
+      "item": "the_vault:perfect_wutodie"
+    }
+  },
+  "result": {
+    "item": "the_vault:lucky_apple",
+    "count": 1
+  }
+}

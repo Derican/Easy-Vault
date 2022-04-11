@@ -1,0 +1,346 @@
+{
+  "name": "the_vault:vault/decor/mineshaft/hidden_room",
+  "fallback": "the_vault:vault/decor/mineshaft/hidden_room",
+  "elements": [
+    {
+      "weight": 10,
+      "element": {
+        "element_type": "minecraft:empty_pool_element"
+      }
+    },
+	{
+        "weight": 2,
+        "element": {
+          "processors": [
+              
+              "the_vault:treasure/stone_half"
+          ],
+          "element_type": "the_vault:paletted_list_pool_element",
+          "projection": "rigid",
+          "elements": [
+              {
+                  "location": "the_vault:vault/prefab/decor/mineshaft/hidden_room/r1",
+                  "projection": "rigid",
+                  "element_type": "the_vault:paletted_single_pool_element",
+                  "processors": "the_vault:generic/ignore_barrier"
+              }
+          ]
+        }
+    },
+	{
+        "weight": 2,
+        "element": {
+          "processors": [
+              
+              "the_vault:treasure/stone_half"
+          ],
+          "element_type": "the_vault:paletted_list_pool_element",
+          "projection": "rigid",
+          "elements": [
+              {
+                  "location": "the_vault:vault/prefab/decor/mineshaft/hidden_room/r2",
+                  "projection": "rigid",
+                  "element_type": "the_vault:paletted_single_pool_element",
+                  "processors": "the_vault:generic/ignore_barrier"
+              }
+          ]
+        }
+    },
+	{
+        "weight": 2,
+        "element": {
+          "processors": [
+              
+              "the_vault:treasure/stone_half"
+          ],
+          "element_type": "the_vault:paletted_list_pool_element",
+          "projection": "rigid",
+          "elements": [
+              {
+                  "location": "the_vault:vault/prefab/decor/mineshaft/hidden_room/r3",
+                  "projection": "rigid",
+                  "element_type": "the_vault:paletted_single_pool_element",
+                  "processors": "the_vault:generic/ignore_barrier"
+              }
+          ]
+        }
+    },
+	{
+        "weight": 2,
+        "element": {
+          "processors": [
+              
+              "the_vault:treasure/stone_half"
+          ],
+          "element_type": "the_vault:paletted_list_pool_element",
+          "projection": "rigid",
+          "elements": [
+              {
+                  "location": "the_vault:vault/prefab/decor/mineshaft/hidden_room/r4",
+                  "projection": "rigid",
+                  "element_type": "the_vault:paletted_single_pool_element",
+                  "processors": "the_vault:generic/ignore_barrier"
+              }
+          ]
+        }
+    },
+	{
+        "weight": 2,
+        "element": {
+          "processors": [
+              
+              "the_vault:treasure/stone_half"
+          ],
+          "element_type": "the_vault:paletted_list_pool_element",
+          "projection": "rigid",
+          "elements": [
+              {
+                  "location": "the_vault:vault/prefab/decor/mineshaft/hidden_room/r5",
+                  "projection": "rigid",
+                  "element_type": "the_vault:paletted_single_pool_element",
+                  "processors": "the_vault:generic/ignore_barrier"
+              }
+          ]
+        }
+    },
+	{
+        "weight": 2,
+        "element": {
+          "processors": [
+              
+              "the_vault:treasure/stone_half"
+          ],
+          "element_type": "the_vault:paletted_list_pool_element",
+          "projection": "rigid",
+          "elements": [
+              {
+                  "location": "the_vault:vault/prefab/decor/mineshaft/hidden_room/r6",
+                  "projection": "rigid",
+                  "element_type": "the_vault:paletted_single_pool_element",
+                  "processors": "the_vault:generic/ignore_barrier"
+              }
+          ]
+        }
+    },
+	{
+        "weight": 2,
+        "element": {
+          "processors": [
+              
+              "the_vault:treasure/stone_half"
+          ],
+          "element_type": "the_vault:paletted_list_pool_element",
+          "projection": "rigid",
+          "elements": [
+              {
+                  "location": "the_vault:vault/prefab/decor/mineshaft/hidden_room/l1",
+                  "projection": "rigid",
+                  "element_type": "the_vault:paletted_single_pool_element",
+                  "processors": "the_vault:generic/ignore_barrier"
+              }
+          ]
+        }
+    },
+	{
+        "weight": 2,
+        "element": {
+          "processors": [
+              
+              "the_vault:treasure/stone_half"
+          ],
+          "element_type": "the_vault:paletted_list_pool_element",
+          "projection": "rigid",
+          "elements": [
+              {
+                  "location": "the_vault:vault/prefab/decor/mineshaft/hidden_room/l2",
+                  "projection": "rigid",
+                  "element_type": "the_vault:paletted_single_pool_element",
+                  "processors": "the_vault:generic/ignore_barrier"
+              }
+          ]
+        }
+    },
+	{
+        "weight": 2,
+        "element": {
+          "processors": [
+              
+              "the_vault:treasure/stone_half"
+          ],
+          "element_type": "the_vault:paletted_list_pool_element",
+          "projection": "rigid",
+          "elements": [
+              {
+                  "location": "the_vault:vault/prefab/decor/mineshaft/hidden_room/l3",
+                  "projection": "rigid",
+                  "element_type": "the_vault:paletted_single_pool_element",
+                  "processors": "the_vault:generic/ignore_barrier"
+              }
+          ]
+        }
+    },
+	{
+        "weight": 2,
+        "element": {
+          "processors": [
+              
+              "the_vault:treasure/stone_half"
+          ],
+          "element_type": "the_vault:paletted_list_pool_element",
+          "projection": "rigid",
+          "elements": [
+              {
+                  "location": "the_vault:vault/prefab/decor/mineshaft/hidden_room/l4",
+                  "projection": "rigid",
+                  "element_type": "the_vault:paletted_single_pool_element",
+                  "processors": "the_vault:generic/ignore_barrier"
+              }
+          ]
+        }
+    },
+	{
+        "weight": 3,
+        "element": {
+          "processors": [
+              "minecraft:empty"
+          ],
+          "element_type": "the_vault:paletted_list_pool_element",
+          "projection": "rigid",
+          "elements": [
+              {
+                  "location": "the_vault:vault/prefab/decor/mineshaft/hidden_room/b1",
+                  "projection": "rigid",
+                  "element_type": "the_vault:paletted_single_pool_element",
+                  "processors": "the_vault:mineshaft/ores"
+              }
+          ]
+        }
+    },
+	{
+        "weight": 3,
+        "element": {
+          "processors": [
+              "minecraft:empty"
+          ],
+          "element_type": "the_vault:paletted_list_pool_element",
+          "projection": "rigid",
+          "elements": [
+              {
+                  "location": "the_vault:vault/prefab/decor/mineshaft/hidden_room/b2",
+                  "projection": "rigid",
+                  "element_type": "the_vault:paletted_single_pool_element",
+                  "processors": "the_vault:mineshaft/ores"
+              }
+          ]
+        }
+    },
+	{
+        "weight": 3,
+        "element": {
+          "processors": [
+              "minecraft:empty"
+          ],
+          "element_type": "the_vault:paletted_list_pool_element",
+          "projection": "rigid",
+          "elements": [
+              {
+                  "location": "the_vault:vault/prefab/decor/mineshaft/hidden_room/b3",
+                  "projection": "rigid",
+                  "element_type": "the_vault:paletted_single_pool_element",
+                  "processors": "the_vault:mineshaft/ores"
+              }
+          ]
+        }
+    },
+	{
+        "weight": 3,
+        "element": {
+          "processors": [
+              "minecraft:empty"
+          ],
+          "element_type": "the_vault:paletted_list_pool_element",
+          "projection": "rigid",
+          "elements": [
+              {
+                  "location": "the_vault:vault/prefab/decor/mineshaft/hidden_room/b4",
+                  "projection": "rigid",
+                  "element_type": "the_vault:paletted_single_pool_element",
+                  "processors": "the_vault:mineshaft/ores"
+              }
+          ]
+        }
+    },
+	{
+        "weight": 3,
+        "element": {
+          "processors": [
+              "minecraft:empty"
+          ],
+          "element_type": "the_vault:paletted_list_pool_element",
+          "projection": "rigid",
+          "elements": [
+              {
+                  "location": "the_vault:vault/prefab/decor/mineshaft/hidden_room/b5",
+                  "projection": "rigid",
+                  "element_type": "the_vault:paletted_single_pool_element",
+                  "processors": "the_vault:mineshaft/ores"
+              }
+          ]
+        }
+    },
+	{
+        "weight": 3,
+        "element": {
+          "processors": [
+              "minecraft:empty"
+          ],
+          "element_type": "the_vault:paletted_list_pool_element",
+          "projection": "rigid",
+          "elements": [
+              {
+                  "location": "the_vault:vault/prefab/decor/mineshaft/hidden_room/b6",
+                  "projection": "rigid",
+                  "element_type": "the_vault:paletted_single_pool_element",
+                  "processors": "the_vault:mineshaft/ores"
+              }
+          ]
+        }
+    },
+	{
+        "weight": 3,
+        "element": {
+          "processors": [
+              "minecraft:empty"
+          ],
+          "element_type": "the_vault:paletted_list_pool_element",
+          "projection": "rigid",
+          "elements": [
+              {
+                  "location": "the_vault:vault/prefab/decor/mineshaft/hidden_room/b7",
+                  "projection": "rigid",
+                  "element_type": "the_vault:paletted_single_pool_element",
+                  "processors": "the_vault:mineshaft/ores"
+              }
+          ]
+        }
+    },
+	{
+        "weight": 3,
+        "element": {
+          "processors": [
+              "minecraft:empty"
+          ],
+          "element_type": "the_vault:paletted_list_pool_element",
+          "projection": "rigid",
+          "elements": [
+              {
+                  "location": "the_vault:vault/prefab/decor/mineshaft/hidden_room/b8",
+                  "projection": "rigid",
+                  "element_type": "the_vault:paletted_single_pool_element",
+                  "processors": "the_vault:mineshaft/ores"
+              }
+          ]
+        }
+    }
+  ]
+}

@@ -1,0 +1,1174 @@
+{
+  "pools": [
+    { "name": "Consumables",
+      "rolls": {
+        "min": 7,
+        "max": 9
+      },
+      "entries": [
+        { "_name": "EMPTY",
+          "type": "minecraft:empty",
+          "weight": 0
+        },
+        { "_name": "Cheddar",
+          "type": "minecraft:item",
+          "weight": 10,
+          "name": "the_vault:mature_cheddar",
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 1,
+                "max": 1
+              }
+            }
+          ]
+        },
+        { "_name": "Tomato",
+          "type": "minecraft:item",
+          "weight": 10,
+          "name": "the_vault:mystic_tomato",
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 1,
+                "max": 1
+              }
+            }
+          ]
+        },
+        { "_name": "BurgerBun",
+          "type": "minecraft:item",
+          "weight": 10,
+          "name": "the_vault:burger_bun",
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 1,
+                "max": 1
+              }
+            }
+          ]
+        },
+        { "_name": "Burger Patty",
+          "type": "minecraft:item",
+          "weight": 10,
+          "name": "the_vault:burger_patty",
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 1,
+                "max": 1
+              }
+            }
+          ]
+        },
+        { "_name": "Mystery Box",
+          "type": "minecraft:item",
+          "weight": 10,
+          "name": "the_vault:mystery_box",
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 1,
+                "max": 1
+              }
+            }
+          ]
+        },
+        { "_name": "Netherite Scrap",
+          "type": "minecraft:item",
+          "weight": 10,
+          "name": "minecraft:netherite_scrap",
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 1,
+                "max": 1
+              }
+            }
+          ]
+        },
+        { "_name": "Hearty Apple",
+          "type": "minecraft:item",
+          "weight": 8,
+          "name": "the_vault:hearty_apple",
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 1,
+                "max": 2
+              }
+            }
+          ]
+        },
+        { "_name": "XP Bottles",
+          "type": "minecraft:item",
+          "weight": 10,
+          "name": "minecraft:experience_bottle",
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 6,
+                "max": 18
+              }
+            }
+          ]
+        },
+        { "_name": "Vault Dust",
+          "type": "minecraft:item",
+          "weight": 6,
+          "name": "the_vault:vault_dust",
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 4,
+                "max": 12
+              }
+            }
+          ]
+        },
+        { "_name": "Vault Bronze",
+          "type": "minecraft:item",
+          "weight": 10,
+          "name": "the_vault:vault_bronze",
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 12,
+                "max": 36
+              }
+            }
+          ]
+        },
+        { "_name": "Candy Bar",
+          "type": "minecraft:item",
+          "weight": 8,
+          "name": "the_vault:candy_bar",
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 1,
+                "max": 1
+              }
+            }
+          ]
+        },
+        { "_name": "Wutax Shard",
+          "type": "minecraft:item",
+          "weight": 4,
+          "name": "the_vault:wutax_shard",
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 1,
+                "max": 1
+              }
+            }
+          ]
+        }
+      ]
+    },
+    { "name": "HighTier",
+      "rolls": {
+        "min": 3,
+        "max": 4
+      },
+      "entries": [
+        { "_name": "EMPTY",
+          "type": "minecraft:empty",
+          "weight": 0
+        },
+        { "_name": "Vault Essence",
+          "type": "minecraft:item",
+          "weight": 1,
+          "name": "the_vault:vault_essence",
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 1,
+                "max": 1
+              }
+            }
+          ]
+        },
+        { "_name": "Mod Box",
+          "type": "minecraft:item",
+          "weight": 4,
+          "name": "the_vault:mod_box",
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 1,
+                "max": 2
+              }
+            }
+          ]
+        },
+        { "_name": "Vault Burger",
+          "type": "minecraft:item",
+          "weight": 6,
+          "name": "the_vault:vault_burger",
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 2,
+                "max": 4
+              }
+            }
+          ]
+        },
+        { "_name": "StarEssence",
+          "type": "minecraft:item",
+          "weight": 3,
+          "name": "the_vault:star_essence",
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 2,
+                "max": 8
+              }
+            }
+          ]
+        },
+        { "_name": "SkillEssence",
+          "type": "minecraft:item",
+          "weight": 2,
+          "name": "the_vault:skill_essence",
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 2,
+                "max": 6
+              }
+            }
+          ]
+        },
+        { "_name": "UnidentifiedRelic",
+          "type": "minecraft:item",
+          "weight": 4,
+          "name": "the_vault:unidentified_relic",
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 1,
+                "max": 1
+              }
+            }
+          ]
+        },
+        { "_name": "CatalystFrag",
+          "type": "minecraft:item",
+          "weight": 4,
+          "name": "the_vault:vault_catalyst_fragment",
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 1,
+                "max": 2
+              }
+            }
+          ]
+        },
+        { "_name": "Kiwi",
+          "type": "minecraft:item",
+          "weight": 4,
+          "name": "the_vault:sweet_kiwi",
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 1,
+                "max": 1
+              }
+            }
+          ]
+        }
+      ]
+    },
+    { "name": "AltarRares",
+      "rolls": {
+        "min": 0,
+        "max": 1
+      },
+      "entries": [
+        { "_name": "EMPTY",
+          "type": "minecraft:empty",
+          "weight": 0
+        },
+        { "_name": "Heart of Diamond",
+          "type": "minecraft:item",
+          "weight": 1,
+          "name": "quark:diamond_heart",
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 1,
+                "max": 1
+              }
+            }
+          ]
+        },
+        { "_name": "Membrane",
+          "type": "minecraft:item",
+          "weight": 4,
+          "name": "minecraft:phantom_membrane",
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 1,
+                "max": 1
+              }
+            }
+          ]
+        },
+        { "_name": "Nautilus Shell",
+          "type": "minecraft:item",
+          "weight": 4,
+          "name": "minecraft:nautilus_shell",
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 1,
+                "max": 1
+              }
+            }
+          ]
+        },
+        { "_name": "Nether Star",
+          "type": "minecraft:item",
+          "weight": 2,
+          "name": "minecraft:nether_star",
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 1,
+                "max": 1
+              }
+            }
+          ]
+        },
+        { "_name": "Overgrown Seed",
+          "type": "minecraft:item",
+          "weight": 1,
+          "name": "botania:overgrowth_seed",
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 1,
+                "max": 1
+              }
+            }
+          ]
+        }
+      ]
+    },
+    { "name": "Vault Gear",
+      "rolls": {
+        "min": 1,
+        "max": 3
+      },
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "weight": 1,
+          "name": "the_vault:idol_benevolent",
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 1,
+                "max": 1
+              }
+            },
+            {
+              "function": "minecraft:set_count",
+              "count": 0,
+              "conditions": [
+                {
+                  "condition": "minecraft:random_chance",
+                  "chance": 0.5
+                }
+              ]
+            },
+            {
+              "function": "set_nbt",
+              "tag": "{Vault:{Attributes:[{Id:\"the_vault:gear_roll_pool\",BaseValue:\"special\"}]}}"
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 1,
+          "name": "the_vault:idol_omniscient",
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 1,
+                "max": 1
+              }
+            },
+            {
+              "function": "minecraft:set_count",
+              "count": 0,
+              "conditions": [
+                {
+                  "condition": "minecraft:random_chance",
+                  "chance": 0.5
+                }
+              ]
+            },
+            {
+              "function": "set_nbt",
+              "tag": "{Vault:{Attributes:[{Id:\"the_vault:gear_roll_pool\",BaseValue:\"special\"}]}}"
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 1,
+          "name": "the_vault:idol_timekeeper",
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 1,
+                "max": 1
+              }
+            },
+            {
+              "function": "minecraft:set_count",
+              "count": 0,
+              "conditions": [
+                {
+                  "condition": "minecraft:random_chance",
+                  "chance": 0.5
+                }
+              ]
+            },
+            {
+              "function": "set_nbt",
+              "tag": "{Vault:{Attributes:[{Id:\"the_vault:gear_roll_pool\",BaseValue:\"special\"}]}}"
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 1,
+          "name": "the_vault:idol_malevolence",
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 1,
+                "max": 1
+              }
+            },
+            {
+              "function": "minecraft:set_count",
+              "count": 0,
+              "conditions": [
+                {
+                  "condition": "minecraft:random_chance",
+                  "chance": 0.5
+                }
+              ]
+            },
+            {
+              "function": "set_nbt",
+              "tag": "{Vault:{Attributes:[{Id:\"the_vault:gear_roll_pool\",BaseValue:\"special\"}]}}"
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 3,
+          "name": "the_vault:sword",
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 1,
+                "max": 1
+              }
+            },
+            {
+              "function": "minecraft:set_count",
+              "count": 0,
+              "conditions": [
+                {
+                  "condition": "minecraft:random_chance",
+                  "chance": 0
+                }
+              ]
+            },
+            {
+              "function": "set_nbt",
+              "tag": "{Vault:{Attributes:[{Id:\"the_vault:gear_roll_pool\",BaseValue:\"special\"}]}}"
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 3,
+          "name": "the_vault:axe",
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 1,
+                "max": 1
+              }
+            },
+            {
+              "function": "minecraft:set_count",
+              "count": 0,
+              "conditions": [
+                {
+                  "condition": "minecraft:random_chance",
+                  "chance": 0
+                }
+              ]
+            },
+            {
+              "function": "set_nbt",
+              "tag": "{Vault:{Attributes:[{Id:\"the_vault:gear_roll_pool\",BaseValue:\"special\"}]}}"
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 3,
+          "name": "the_vault:helmet",
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 1,
+                "max": 1
+              }
+            },
+            {
+              "function": "minecraft:set_count",
+              "count": 0,
+              "conditions": [
+                {
+                  "condition": "minecraft:random_chance",
+                  "chance": 0
+                }
+              ]
+            },
+            {
+              "function": "set_nbt",
+              "tag": "{Vault:{Attributes:[{Id:\"the_vault:gear_roll_pool\",BaseValue:\"special\"}]}}"
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 3,
+          "name": "the_vault:chestplate",
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 1,
+                "max": 1
+              }
+            },
+            {
+              "function": "minecraft:set_count",
+              "count": 0,
+              "conditions": [
+                {
+                  "condition": "minecraft:random_chance",
+                  "chance": 0
+                }
+              ]
+            },
+            {
+              "function": "set_nbt",
+              "tag": "{Vault:{Attributes:[{Id:\"the_vault:gear_roll_pool\",BaseValue:\"special\"}]}}"
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 3,
+          "name": "the_vault:leggings",
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 1,
+                "max": 1
+              }
+            },
+            {
+              "function": "minecraft:set_count",
+              "count": 0,
+              "conditions": [
+                {
+                  "condition": "minecraft:random_chance",
+                  "chance": 0
+                }
+              ]
+            },
+            {
+              "function": "set_nbt",
+              "tag": "{Vault:{Attributes:[{Id:\"the_vault:gear_roll_pool\",BaseValue:\"special\"}]}}"
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 3,
+          "name": "the_vault:boots",
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 1,
+                "max": 1
+              }
+            },
+            {
+              "function": "minecraft:set_count",
+              "count": 0,
+              "conditions": [
+                {
+                  "condition": "minecraft:random_chance",
+                  "chance": 0
+                }
+              ]
+            },
+            {
+              "function": "set_nbt",
+              "tag": "{Vault:{Attributes:[{Id:\"the_vault:gear_roll_pool\",BaseValue:\"special\"}]}}"
+            }
+          ]
+        }
+      ]
+    },
+    { "name": "Lvl25+",
+      "rolls": {
+        "min": 0,
+        "max": 2
+      },
+      "entries": [
+        { "_name": "EMPTY",
+          "type": "minecraft:empty",
+          "weight": 30
+        },
+        { "_name": "Vault Paxel",
+          "type": "minecraft:item",
+          "weight": 1,
+          "name": "the_vault:vault_paxel",
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 1,
+                "max": 1
+              }
+            }
+          ]
+        },
+        { "_name": "Magnet Weak",
+          "type": "minecraft:item",
+          "weight": 4,
+          "name": "the_vault:vault_magnet_weak",
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 1,
+                "max": 1
+              }
+            }
+          ]
+        },
+        { "_name": "Vault Pearl",
+          "type": "minecraft:item",
+          "weight": 4,
+          "name": "the_vault:vault_pearl",
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 1,
+                "max": 1
+              }
+            }
+          ]
+        },
+        { "_name": "Respec Flask",
+          "type": "minecraft:item",
+          "weight": 8,
+          "name": "the_vault:respec_flask",
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 1,
+                "max": 1
+              }
+            }
+          ]
+        },
+        { "_name": "Key Piece",
+          "type": "minecraft:item",
+          "weight": 2,
+          "name": "the_vault:key_piece",
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 1,
+                "max": 1
+              }
+            }
+          ]
+        },
+        { "_name": "God Apple",
+          "type": "minecraft:item",
+          "weight": 1,
+          "name": "minecraft:enchanted_golden_apple",
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 1,
+                "max": 1
+              }
+            }
+          ]
+        },
+        { "_name": "Vault Scrap",
+          "type": "minecraft:item",
+          "weight": 10,
+          "name": "the_vault:vault_scrap",
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 2,
+                "max": 3
+              }
+            }
+          ]
+        },
+        { "_name": "Pandoras Box",
+          "type": "minecraft:item",
+          "weight": 8,
+          "name": "the_vault:pandoras_box",
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 1,
+                "max": 1
+              }
+            }
+          ]
+        },
+        { "_name": "Common Backpack",
+          "type": "minecraft:item",
+          "weight": 1,
+          "name": "simplybackpacks:commonbackpack",
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 1,
+                "max": 1
+              }
+            }
+          ]
+        },
+        { "_name": "Dank 1",
+          "type": "minecraft:item",
+          "weight": 1,
+          "name": "dankstorage:dank_1",
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 1,
+                "max": 1
+              }
+            }
+          ]
+        }
+      ]
+    },
+    { "name": "Lvl50+",
+      "rolls": {
+        "min": 0,
+        "max": 2
+      },
+      "entries": [
+        { "_name": "EMPTY",
+          "type": "minecraft:empty",
+          "weight": 30
+        },
+        { "_name": "Strong Magnet Core",
+          "type": "minecraft:item",
+          "weight": 4,
+          "name": "the_vault:magnet_core_strong",
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 1,
+                "max": 1
+              }
+            }
+          ]
+        },
+        { "_name": "Paxel Charm",
+          "type": "minecraft:item",
+          "weight": 4,
+          "name": "the_vault:paxel_charm",
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 1,
+                "max": 1
+              }
+            }
+          ]
+        },
+        { "_name": "Acceleration Chip",
+          "type": "minecraft:item",
+          "weight": 1,
+          "name": "the_vault:acceleration_chip",
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 1,
+                "max": 1
+              }
+            }
+          ]
+        },
+        { "_name": "Vault Catalyst",
+          "type": "minecraft:item",
+          "weight": 4,
+          "name": "the_vault:vault_catalyst",
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 1,
+                "max": 1
+              }
+            }
+          ]
+        },
+        { "_name": "Vault Mystery Stew",
+          "type": "minecraft:item",
+          "weight": 2,
+          "name": "the_vault:vault_stew_mystery",
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 1,
+                "max": 1
+              }
+            }
+          ]
+        },
+        { "_name": "Vault Nugget",
+          "type": "minecraft:item",
+          "weight": 6,
+          "name": "the_vault:vault_nugget",
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 1,
+                "max": 1
+              }
+            }
+          ]
+        },
+        { "_name": "Echo Gem",
+          "type": "minecraft:item",
+          "weight": 4,
+          "name": "the_vault:gem_echo",
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 1,
+                "max": 1
+              }
+            }
+          ]
+        },
+        { "_name": "Wutax Crystal",
+          "type": "minecraft:item",
+          "weight": 10,
+          "name": "the_vault:wutax_crystal",
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 1,
+                "max": 1
+              }
+            }
+          ]
+        }
+      ]
+    },
+    { "name": "Lvl75+",
+      "rolls": {
+        "min": 0,
+        "max": 2
+      },
+      "entries": [
+        { "_name": "EMPTY",
+          "type": "minecraft:empty",
+          "weight": 30
+        },
+        { "_name": "Strong Magnet Core",
+          "type": "minecraft:item",
+          "weight": 4,
+          "name": "the_vault:magnet_core_strong",
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 1,
+                "max": 1
+              }
+            }
+          ]
+        },
+        { "_name": "Paxel Charm",
+          "type": "minecraft:item",
+          "weight": 4,
+          "name": "the_vault:paxel_charm",
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 1,
+                "max": 1
+              }
+            }
+          ]
+        },
+        { "_name": "Acceleration Chip",
+          "type": "minecraft:item",
+          "weight": 6,
+          "name": "the_vault:acceleration_chip",
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 1,
+                "max": 1
+              }
+            }
+          ]
+        },
+        { "_name": "Vault Catalyst",
+          "type": "minecraft:item",
+          "weight": 4,
+          "name": "the_vault:vault_catalyst",
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 1,
+                "max": 1
+              }
+            }
+          ]
+        },
+        { "_name": "Vault Mystery Stew",
+          "type": "minecraft:item",
+          "weight": 2,
+          "name": "the_vault:vault_stew_mystery",
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 1,
+                "max": 1
+              }
+            }
+          ]
+        },
+        { "_name": "Vault Nugget",
+          "type": "minecraft:item",
+          "weight": 6,
+          "name": "the_vault:vault_nugget",
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 1,
+                "max": 1
+              }
+            }
+          ]
+        },
+        { "_name": "Echo Gem",
+          "type": "minecraft:item",
+          "weight": 4,
+          "name": "the_vault:gem_echo",
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 1,
+                "max": 1
+              }
+            }
+          ]
+        },
+        { "_name": "Wutax Crystal",
+          "type": "minecraft:item",
+          "weight": 10,
+          "name": "the_vault:wutax_crystal",
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 1,
+                "max": 1
+              }
+            }
+          ]
+        }
+      ]
+    },
+    { "name": "Lvl100+",
+      "rolls": {
+        "min": 0,
+        "max": 2
+      },
+      "entries": [
+        { "_name": "EMPTY",
+          "type": "minecraft:empty",
+          "weight": 30
+        },
+        { "_name": "Acceleration Chip",
+          "type": "minecraft:item",
+          "weight": 6,
+          "name": "the_vault:acceleration_chip",
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 1,
+                "max": 1
+              }
+            }
+          ]
+        },
+        { "_name": "Vault Catalyst",
+          "type": "minecraft:item",
+          "weight": 4,
+          "name": "the_vault:vault_catalyst",
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 1,
+                "max": 1
+              }
+            }
+          ]
+        },
+        { "_name": "Vault Mystery Stew",
+          "type": "minecraft:item",
+          "weight": 2,
+          "name": "the_vault:vault_stew_mystery",
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 1,
+                "max": 1
+              }
+            }
+          ]
+        },
+        { "_name": "Vault Nugget",
+          "type": "minecraft:item",
+          "weight": 6,
+          "name": "the_vault:vault_nugget",
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 2,
+                "max": 8
+              }
+            }
+          ]
+        },
+        { "_name": "Echo Gem",
+          "type": "minecraft:item",
+          "weight": 4,
+          "name": "the_vault:gem_echo",
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 1,
+                "max": 1
+              }
+            }
+          ]
+        },
+        { "_name": "Wutax Crystal",
+          "type": "minecraft:item",
+          "weight": 10,
+          "name": "the_vault:wutax_crystal",
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 1,
+                "max": 1
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,88 @@
+{
+    "name": "the_vault:vault/decor/contest/dragon/hanging",
+    "fallback": "the_vault:vault/decor/contest/dragon/hanging",
+    "elements": [
+        {
+            "weight": 8,
+            "element": {
+              "element_type": "minecraft:empty_pool_element"
+            }
+      },
+      {
+          "weight": 2,
+          "element": {
+            "processors": [
+                "minecraft:empty",
+                "the_vault:contest/spawner_to_chest"
+            ],
+            "element_type": "the_vault:paletted_list_pool_element",
+            "projection": "rigid",
+            "elements": [
+                {
+                    "location": "the_vault:vault/prefab/decor/contest/dragon/hanging/h1",
+                    "projection": "rigid",
+                    "element_type": "the_vault:paletted_single_pool_element",
+                    "processors": "the_vault:generic/ignore_air"
+                }
+            ]
+          }
+      },
+      {
+        "weight": 2,
+        "element": {
+          "processors": [
+              "minecraft:empty",
+              "the_vault:contest/spawner_to_chest"
+          ],
+          "element_type": "the_vault:paletted_list_pool_element",
+          "projection": "rigid",
+          "elements": [
+              {
+                  "location": "the_vault:vault/prefab/decor/contest/dragon/hanging/h2",
+                  "projection": "rigid",
+                  "element_type": "the_vault:paletted_single_pool_element",
+                  "processors": "the_vault:generic/ignore_air"
+              }
+          ]
+        }
+    },
+    {
+        "weight": 2,
+        "element": {
+          "processors": [
+              "minecraft:empty",
+              "the_vault:contest/spawner_to_chest"
+          ],
+          "element_type": "the_vault:paletted_list_pool_element",
+          "projection": "rigid",
+          "elements": [
+              {
+                  "location": "the_vault:vault/prefab/decor/contest/dragon/hanging/h3",
+                  "projection": "rigid",
+                  "element_type": "the_vault:paletted_single_pool_element",
+                  "processors": "the_vault:generic/ignore_air"
+              }
+          ]
+        }
+    },
+    {
+        "weight": 2,
+        "element": {
+          "processors": [
+              "minecraft:empty",
+              "the_vault:contest/spawner_to_chest"
+          ],
+          "element_type": "the_vault:paletted_list_pool_element",
+          "projection": "rigid",
+          "elements": [
+              {
+                  "location": "the_vault:vault/prefab/decor/contest/dragon/hanging/h4",
+                  "projection": "rigid",
+                  "element_type": "the_vault:paletted_single_pool_element",
+                  "processors": "the_vault:generic/ignore_air"
+              }
+          ]
+        }
+    }
+    ]
+  }

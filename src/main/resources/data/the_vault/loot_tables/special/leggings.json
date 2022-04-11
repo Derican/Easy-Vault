@@ -1,0 +1,33 @@
+{
+    "type": "minecraft:chest",
+    "pools": [
+        {
+            "rolls": 1,
+            "entries": [
+                {
+                    "type": "minecraft:empty",
+                    "weight": 10
+                },
+                {
+                    "type": "minecraft:item",
+                    "weight": 10,
+                    "name": "the_vault:leggings",
+                    "functions": [
+                        {
+                            "function": "minecraft:set_nbt",
+                            "tag": "{Vault:{Attributes:[{Id:\"the_vault:gear_roll_pool\",BaseValue:\"normal\"}]}}"
+                        },
+                        {
+                            "function": "minecraft:set_count",
+                            "count": {
+                                "min": 1,
+                                "max": 2,
+                                "type": "minecraft:uniform"
+                            }                            
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
