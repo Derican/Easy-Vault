@@ -10,7 +10,6 @@ import iskallia.vault.Vault;
 import iskallia.vault.config.EternalAuraConfig;
 import iskallia.vault.entity.eternal.EternalData;
 import iskallia.vault.init.ModConfigs;
-import iskallia.vault.research.ResearchTree;
 import iskallia.vault.skill.PlayerVaultStats;
 import iskallia.vault.skill.ability.AbilityTree;
 import iskallia.vault.skill.talent.TalentTree;
@@ -78,8 +77,6 @@ public class PlayerSnapshotDump
         });
         final TalentTree talents = PlayerTalentsData.get(sWorld).getTalents((PlayerEntity)sPlayer);
         talents.getLearnedNodes().forEach(node -> snapshot.talents.put(node.getGroup().getParentName(), node.getLevel()));
-        final ResearchTree researches = PlayerResearchesData.get(sWorld).getResearches((PlayerEntity)sPlayer);
-        snapshot.researches.addAll(researches.getResearchesDone());
         final PlayerStatisticsCollector.VaultRunsSnapshot vaultRunsSnapshot = PlayerStatisticsCollector.VaultRunsSnapshot.ofPlayer(sPlayer);
         snapshot.vaultRuns = vaultRunsSnapshot.vaultRuns;
         snapshot.vaultWins = vaultRunsSnapshot.bossKills;

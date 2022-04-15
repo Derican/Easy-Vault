@@ -46,7 +46,6 @@ public class SkillTreeScreen extends ContainerScreen<SkillTreeContainer>
         this.dialogs.add(statisticsDialog);
         this.dialogs.add(new AbilityDialog(((SkillTreeContainer)this.getMenu()).getAbilityTree(), this));
         this.dialogs.add(new TalentDialog(((SkillTreeContainer)this.getMenu()).getTalentTree(), this));
-        this.dialogs.add(new ResearchDialog(((SkillTreeContainer)this.getMenu()).getResearchTree(), this));
         this.selectDialog(statisticsDialog);
         this.imageWidth = 270;
         this.imageHeight = 200;

@@ -10,7 +10,6 @@ import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import iskallia.vault.world.data.PlayerAbilitiesData;
-import iskallia.vault.world.data.PlayerResearchesData;
 import iskallia.vault.world.data.PlayerTalentsData;
 import iskallia.vault.world.data.PlayerVaultStatsData;
 import net.minecraft.command.CommandSource;
@@ -59,7 +58,6 @@ public class VaultLevelCommand extends Command
         PlayerVaultStatsData.get(source.getLevel()).reset(source.getPlayerOrException());
         PlayerAbilitiesData.get(source.getLevel()).resetAbilityTree(source.getPlayerOrException());
         PlayerTalentsData.get(source.getLevel()).resetTalentTree(source.getPlayerOrException());
-        PlayerResearchesData.get(source.getLevel()).resetResearchTree(source.getPlayerOrException());
         return 0;
     }
 }

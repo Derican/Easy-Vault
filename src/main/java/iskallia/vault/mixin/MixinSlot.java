@@ -4,9 +4,6 @@
 
 package iskallia.vault.mixin;
 
-import iskallia.vault.research.ResearchTree;
-import iskallia.vault.research.Restrictions;
-import iskallia.vault.research.StageManager;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.container.CraftingResultSlot;
 import net.minecraft.inventory.container.Slot;
@@ -32,14 +29,6 @@ public abstract class MixinSlot
         if (!(thisSlot instanceof CraftingResultSlot)) {
             return;
         }
-        if (!this.hasItem()) {
-            return;
-        }
-        final ItemStack resultStack = this.getItem();
-        final ResearchTree researchTree = StageManager.getResearchTree(player);
-        final String restrictedBy = researchTree.restrictedBy(resultStack.getItem(), Restrictions.Type.CRAFTABILITY);
-        if (restrictedBy != null) {
-            cir.setReturnValue(false);
-        }
+        this.hasItem();
     }
 }

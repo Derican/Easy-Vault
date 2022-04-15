@@ -13,10 +13,6 @@ public class ModConfigs
     public static AbilitiesGUIConfig ABILITIES_GUI;
     public static TalentsConfig TALENTS;
     public static TalentsGUIConfig TALENTS_GUI;
-    public static ResearchConfig RESEARCHES;
-    public static ResearchesGUIConfig RESEARCHES_GUI;
-    public static ResearchGroupConfig RESEARCH_GROUPS;
-    public static ResearchGroupStyleConfig RESEARCH_GROUP_STYLES;
     public static SkillDescriptionsConfig SKILL_DESCRIPTIONS;
     public static SkillGatesConfig SKILL_GATES;
     public static VaultLevelsConfig LEVELS_META;
@@ -100,10 +96,6 @@ public class ModConfigs
         ModConfigs.ABILITIES_GUI = new AbilitiesGUIConfig().readConfig();
         ModConfigs.TALENTS = new TalentsConfig().readConfig();
         ModConfigs.TALENTS_GUI = new TalentsGUIConfig().readConfig();
-        ModConfigs.RESEARCHES = new ResearchConfig().readConfig();
-        ModConfigs.RESEARCHES_GUI = new ResearchesGUIConfig().readConfig();
-        ModConfigs.RESEARCH_GROUPS = new ResearchGroupConfig().readConfig();
-        ModConfigs.RESEARCH_GROUP_STYLES = new ResearchGroupStyleConfig().readConfig();
         ModConfigs.SKILL_DESCRIPTIONS = new SkillDescriptionsConfig().readConfig();
         ModConfigs.SKILL_GATES = new SkillGatesConfig().readConfig();
         ModConfigs.LEVELS_META = new VaultLevelsConfig().readConfig();

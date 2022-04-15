@@ -5,11 +5,9 @@
 package iskallia.vault.network.message;
 
 import iskallia.vault.container.SkillTreeContainer;
-import iskallia.vault.research.ResearchTree;
 import iskallia.vault.skill.ability.AbilityTree;
 import iskallia.vault.skill.talent.TalentTree;
 import iskallia.vault.world.data.PlayerAbilitiesData;
-import iskallia.vault.world.data.PlayerResearchesData;
 import iskallia.vault.world.data.PlayerTalentsData;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -47,8 +45,6 @@ public class OpenSkillTreeMessage
                 final AbilityTree abilityTree = playerAbilitiesData.getAbilities((PlayerEntity)sender);
                 final PlayerTalentsData playerTalentsData = PlayerTalentsData.get((ServerWorld)sender.level);
                 final TalentTree talentTree = playerTalentsData.getTalents((PlayerEntity)sender);
-                final PlayerResearchesData playerResearchesData = PlayerResearchesData.get((ServerWorld)sender.level);
-                final ResearchTree researchTree = playerResearchesData.getResearches((PlayerEntity)sender);
                 NetworkHooks.openGui(sender, (INamedContainerProvider)new INamedContainerProvider() {
                     
                     public ITextComponent getDisplayName() {
@@ -57,12 +53,11 @@ public class OpenSkillTreeMessage
                     
                     @Nullable
                     public Container createMenu(final int i, final PlayerInventory playerInventory, final PlayerEntity playerEntity) {
-                        return new SkillTreeContainer(i, abilityTree, talentTree, researchTree);
+                        return new SkillTreeContainer(i, abilityTree, talentTree);
                     }
                 }, buffer -> {
                     buffer.writeNbt(abilityTree.serializeNBT());
                     buffer.writeNbt(talentTree.serializeNBT());
-                    buffer.writeNbt(researchTree.serializeNBT());
                 });
                 return;
             }

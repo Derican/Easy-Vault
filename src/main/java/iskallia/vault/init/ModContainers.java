@@ -6,7 +6,6 @@ package iskallia.vault.init;
 
 import iskallia.vault.container.*;
 import iskallia.vault.container.inventory.*;
-import iskallia.vault.research.ResearchTree;
 import iskallia.vault.skill.ability.AbilityTree;
 import iskallia.vault.skill.talent.TalentTree;
 import net.minecraft.entity.player.PlayerEntity;
@@ -50,9 +49,7 @@ public class ModContainers
             abilityTree.deserializeNBT(Optional.ofNullable(buffer.readNbt()).orElse(new CompoundNBT()));
             final TalentTree talentTree = new TalentTree(uniqueID);
             talentTree.deserialize(Optional.ofNullable(buffer.readNbt()).orElse(new CompoundNBT()), false);
-            final ResearchTree researchTree = new ResearchTree(uniqueID);
-            researchTree.deserializeNBT(Optional.ofNullable(buffer.readNbt()).orElse(new CompoundNBT()));
-            return new SkillTreeContainer(windowId, abilityTree, talentTree, researchTree);
+            return new SkillTreeContainer(windowId, abilityTree, talentTree);
         }));
         ModContainers.VAULT_CRATE_CONTAINER = createContainerType((net.minecraftforge.fml.network.IContainerFactory<VaultCrateContainer>)((windowId, inventory, buffer) -> {
             final World world = inventory.player.getCommandSenderWorld();

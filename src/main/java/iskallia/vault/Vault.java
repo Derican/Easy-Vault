@@ -34,16 +34,13 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.util.function.Consumer;
-
 @Mod("the_vault")
-public class Vault
-{
+public class Vault {
     public static final String MOD_ID = "the_vault";
     public static final Logger LOGGER;
     public static RegistryKey<World> VAULT_KEY;
     public static RegistryKey<World> OTHER_SIDE_KEY;
-    
+
     public Vault() {
         MinecraftForge.EVENT_BUS.addListener(EventPriority.NORMAL, this::onCommandRegister);
         MinecraftForge.EVENT_BUS.addListener(EventPriority.HIGH, this::onBiomeLoad);
@@ -59,56 +56,55 @@ public class Vault
         this.registerDeferredRegistries();
         ModCommands.registerArgumentTypes();
     }
-    
+
     public void registerDeferredRegistries() {
         final IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
         ModParticles.REGISTRY.register(modEventBus);
         ModFluids.REGISTRY.register(modEventBus);
         ModPotions.REGISTRY.register(modEventBus);
     }
-    
+
     public void onCommandRegister(final RegisterCommandsEvent event) {
-        ModCommands.registerCommands((CommandDispatcher<CommandSource>)event.getDispatcher(), event.getEnvironment());
+        ModCommands.registerCommands((CommandDispatcher<CommandSource>) event.getDispatcher(), event.getEnvironment());
     }
-    
+
     public void onBiomeLoad(final BiomeLoadingEvent event) {
-        event.getGeneration().addFeature(GenerationStage.Decoration.UNDERGROUND_ORES, (ConfiguredFeature)ModFeatures.VAULT_ROCK_ORE);
+        event.getGeneration().addFeature(GenerationStage.Decoration.UNDERGROUND_ORES, (ConfiguredFeature) ModFeatures.VAULT_ROCK_ORE);
     }
-    
+
     public void onBiomeLoadPost(final BiomeLoadingEvent event) {
         if (event.getName().equals(id("spoopy"))) {
             for (final GenerationStage.Decoration stage : GenerationStage.Decoration.values()) {
                 event.getGeneration().getFeatures(stage).clear();
             }
-            event.getGeneration().addFeature(GenerationStage.Decoration.UNDERGROUND_DECORATION, (ConfiguredFeature)ModFeatures.BREADCRUMB_CHEST);
+            event.getGeneration().addFeature(GenerationStage.Decoration.UNDERGROUND_DECORATION, (ConfiguredFeature) ModFeatures.BREADCRUMB_CHEST);
         }
     }
-    
+
     public void onPlayerLoggedIn(final PlayerEvent.PlayerLoggedInEvent event) {
-        final ServerPlayerEntity player = (ServerPlayerEntity)event.getPlayer();
+        final ServerPlayerEntity player = (ServerPlayerEntity) event.getPlayer();
         final ServerWorld serverWorld = player.getLevel();
         final MinecraftServer server = player.getServer();
-        PlayerVaultStatsData.get(serverWorld).getVaultStats((PlayerEntity)player).sync(server);
-        PlayerResearchesData.get(serverWorld).getResearches((PlayerEntity)player).sync(server);
-        PlayerAbilitiesData.get(serverWorld).getAbilities((PlayerEntity)player).sync(server);
-        PlayerTalentsData.get(serverWorld).getTalents((PlayerEntity)player).sync(server);
+        PlayerVaultStatsData.get(serverWorld).getVaultStats((PlayerEntity) player).sync(server);
+        PlayerAbilitiesData.get(serverWorld).getAbilities((PlayerEntity) player).sync(server);
+        PlayerTalentsData.get(serverWorld).getTalents((PlayerEntity) player).sync(server);
         EternalsData.get(serverWorld).syncTo(player);
         SoulShardTraderData.get(serverWorld).syncTo(player);
         ModConfigs.SOUL_SHARD.syncTo(player);
         GlobalDifficultyData.get(serverWorld).openDifficultySelection(player);
     }
-    
+
     public static String sId(final String name) {
         return "the_vault:" + name;
     }
-    
+
     public static ResourceLocation id(final String name) {
         return new ResourceLocation("the_vault", name);
     }
-    
+
     static {
         LOGGER = LogManager.getLogger();
-        Vault.VAULT_KEY = (RegistryKey<World>)RegistryKey.create(Registry.DIMENSION_REGISTRY, id("vault"));
-        Vault.OTHER_SIDE_KEY = (RegistryKey<World>)RegistryKey.create(Registry.DIMENSION_REGISTRY, id("the_other_side"));
+        Vault.VAULT_KEY = (RegistryKey<World>) RegistryKey.create(Registry.DIMENSION_REGISTRY, id("vault"));
+        Vault.OTHER_SIDE_KEY = (RegistryKey<World>) RegistryKey.create(Registry.DIMENSION_REGISTRY, id("the_other_side"));
     }
 }

@@ -6,8 +6,6 @@ package iskallia.vault.skill;
 
 import com.google.gson.annotations.Expose;
 import iskallia.vault.init.ModConfigs;
-import iskallia.vault.research.ResearchTree;
-import iskallia.vault.research.type.Research;
 import iskallia.vault.skill.ability.AbilityGroup;
 import iskallia.vault.skill.talent.ArchetypeTalentGroup;
 import iskallia.vault.skill.talent.TalentGroup;
@@ -107,50 +105,7 @@ public class SkillGates
         }
         return talents;
     }
-    
-    public List<Research> getDependencyResearches(final String researchName) {
-        final List<Research> researches = new LinkedList<Research>();
-        final Entry entry = this.entries.get(researchName);
-        if (entry == null) {
-            return researches;
-        }
-        entry.dependsOn.forEach(dependencyName -> {
-            final Research dependency = ModConfigs.RESEARCHES.getByName(dependencyName);
-            researches.add(dependency);
-            return;
-        });
-        return researches;
-    }
-    
-    public List<Research> getLockedByResearches(final String researchName) {
-        final List<Research> researches = new LinkedList<Research>();
-        final Entry entry = this.entries.get(researchName);
-        if (entry == null) {
-            return researches;
-        }
-        entry.lockedBy.forEach(dependencyName -> {
-            final Research dependency = ModConfigs.RESEARCHES.getByName(dependencyName);
-            researches.add(dependency);
-            return;
-        });
-        return researches;
-    }
-    
-    public boolean isLocked(final String researchName, final ResearchTree researchTree) {
-        final SkillGates gates = ModConfigs.SKILL_GATES.getGates();
-        final List<String> researchesDone = researchTree.getResearchesDone();
-        for (final Research dependencyResearch : gates.getDependencyResearches(researchName)) {
-            if (!researchesDone.contains(dependencyResearch.getName())) {
-                return true;
-            }
-        }
-        for (final Research lockedByResearch : gates.getLockedByResearches(researchName)) {
-            if (researchesDone.contains(lockedByResearch.getName())) {
-                return true;
-            }
-        }
-        return false;
-    }
+
     
     public boolean isLocked(final TalentGroup<?> talent, final TalentTree talentTree) {
         final SkillGates gates = ModConfigs.SKILL_GATES.getGates();
