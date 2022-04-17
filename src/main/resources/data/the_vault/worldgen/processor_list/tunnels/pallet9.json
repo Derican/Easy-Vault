@@ -4,7 +4,7 @@
       "rules": [
         {
           "output_state": {
-            "Name": "quark:light_gray_stained_planks"
+            "Name": "minecraft:gray_wool"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -17,7 +17,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:dacite_cobblestone"
+            "Name": "minecraft:cobblestone"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -30,7 +30,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:dacite"
+            "Name": "minecraft:cobblestone"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -43,7 +43,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:stripped_mangrove_wood",
+            "Name": "minecraft:stripped_oak_log",
             "Properties": {
               "axis": "y"
             }
@@ -59,7 +59,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:pink_sandstone"
+            "Name": "minecraft:pink_wool"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -72,7 +72,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:purple_sand"
+            "Name": "minecraft:purple_wool"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -85,7 +85,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:purple_smooth_sandstone"
+            "Name": "minecraft:purple_concrete_powder"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -98,7 +98,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:purpur_stone"
+            "Name": "minecraft:purpur_block"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -111,7 +111,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:green_enchanted_log",
+            "Name": "minecraft:green_wool",
             "Properties": {
               "axis": "x"
             }
@@ -131,7 +131,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:green_enchanted_log",
+            "Name": "minecraft:green_wool",
             "Properties": {
               "axis": "y"
             }
@@ -151,7 +151,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:green_enchanted_log",
+            "Name": "minecraft:green_wool",
             "Properties": {
               "axis": "z"
             }
@@ -171,7 +171,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:dacite_slab",
+            "Name": "minecraft:cobblestone_slab",
             "Properties": {
               "type": "bottom",
               "waterlogged": "false"
@@ -188,7 +188,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:dacite_cobblestone_slab",
+            "Name": "minecraft:cobblestone_slab",
             "Properties": {
               "type": "bottom",
               "waterlogged": "false"
@@ -205,7 +205,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:dacite_stairs",
+            "Name": "minecraft:cobblestone_stairs",
             "Properties": {
               "facing": "north",
               "half": "bottom",
@@ -224,7 +224,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:purpur_stone_wall",
+            "Name": "minecraft:purpur_stairs",
             "Properties": {
               "east": "none",
               "north": "none",
@@ -245,7 +245,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:purpur_stone_slab",
+            "Name": "minecraft:purpur_slab",
             "Properties": {
               "type": "bottom",
               "waterlogged": "false"
@@ -262,7 +262,7 @@
         },
         {
           "output_state": {
-            "Name": "quark:magenta_stained_planks_slab",
+            "Name": "minecraft:purpur_slab",
             "Properties": {
               "type": "bottom",
               "waterlogged": "false"
@@ -299,7 +299,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:therium_lantern",
+            "Name": "minecraft:soul_lantern",
             "Properties": {
               "hanging": "false",
               "waterlogged": "false"
@@ -316,7 +316,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:ivis_roots"
+            "Name": "minecraft:warped_roots"
           },
           "input_predicate": {
             "block_state": {
@@ -350,7 +350,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:ivis_sprout"
+            "Name": "minecraft:chorus_plant"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -363,7 +363,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:bulbis_button",
+            "Name": "minecraft:oak_button",
             "Properties": {
               "face": "wall",
               "facing": "north",

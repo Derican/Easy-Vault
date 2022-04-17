@@ -4,7 +4,7 @@
       "rules": [
         {
           "output_state": {
-            "Name": "byg:blue_netherrack"
+            "Name": "minecraft:blue_concrete"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -59,7 +59,7 @@
         },
         {
           "output_state": {
-            "Name": "enviromats:granodiorite_cobble"
+            "Name": "minecraft:polished_granite"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -88,7 +88,7 @@
         },
         {
           "output_state": {
-            "Name": "enviromats:hardened_stone_cobble_stairs",
+            "Name": "minecraft:polished_diorite_stairs",
             "Properties": {
               "facing": "north",
               "half": "bottom",
@@ -107,7 +107,7 @@
         },
         {
           "output_state": {
-            "Name": "enviromats:hardened_stone_polished_stairs",
+            "Name": "minecraft:polished_diorite_stairs",
             "Properties": {
               "facing": "north",
               "half": "bottom",
@@ -126,7 +126,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:nightshade_fence",
+            "Name": "minecraft:dark_oak_fence",
             "Properties": {
               "east": "false",
               "north": "false",
@@ -146,7 +146,7 @@
         },
         {
           "output_state": {
-            "Name": "enviromats:alabaster_gray_cobble_slab",
+            "Name": "minecraft:diorite_slab",
             "Properties": {
               "type": "bottom",
               "waterlogged": "false"
@@ -163,7 +163,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:scoria_pillar",
+            "Name": "minecraft:quartz_block",
             "Properties": {
               "axis": "y"
             }

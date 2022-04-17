@@ -4,7 +4,7 @@
       "rules": [
         {
           "output_state": {
-            "Name": "enviromats:granodiorite"
+            "Name": "minecraft:granite"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -17,7 +17,7 @@
         },
         {
           "output_state": {
-            "Name": "enviromats:hardened_stone"
+            "Name": "minecraft:diorite"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -30,7 +30,7 @@
         },
         {
           "output_state": {
-            "Name": "enviromats:granodiorite_cobble"
+            "Name": "minecraft:polished_granite"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -43,7 +43,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:black_smooth_sandstone"
+            "Name": "minecraft:blackstone"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -56,7 +56,7 @@
         },
         {
           "output_state": {
-            "Name": "botania:dry_grass"
+            "Name": "minecraft:grass"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -69,7 +69,7 @@
         },
         {
           "output_state": {
-            "Name": "enviromats:alabaster_green_cobble"
+            "Name": "minecraft:emerald_block"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -121,7 +121,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:blue_glowshroom_block",
+            "Name": "minecraft:blue_glazed_terracotta",
             "Properties": {
               "down": "true",
               "east": "true",
@@ -142,7 +142,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:bulbis_shell",
+            "Name": "minecraft:purple_glazed_terracotta",
             "Properties": {
               "down": "true",
               "east": "true",
@@ -163,7 +163,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:blue_glowcane_block"
+            "Name": "minecraft:light_blue_glazed_terracotta"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -189,7 +189,7 @@
         },
         {
           "output_state": {
-            "Name": "quark:waxed_violet_crystal"
+            "Name": "minecraft:purple_stained_glass"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -215,7 +215,7 @@
         },
         {
           "output_state": {
-            "Name": "quark:waxed_green_crystal"
+            "Name": "minecraft:green_stained_glass"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -241,7 +241,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:willow_slab",
+            "Name": "minecraft:wooden_slab",
             "Properties": {
               "type": "bottom",
               "waterlogged": "false"
@@ -258,7 +258,7 @@
         },
         {
           "output_state": {
-            "Name": "enviromats:alabaster_green_cobble_slab",
+            "Name": "minecraft:stone_slab",
             "Properties": {
               "type": "bottom",
               "waterlogged": "false"
@@ -275,7 +275,7 @@
         },
         {
           "output_state": {
-            "Name": "botania:magenta_mystical_flower"
+            "Name": "minecraft:purple_candle"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -288,7 +288,7 @@
         },
         {
           "output_state": {
-            "Name": "botania:lime_mystical_flower"
+            "Name": "minecraft:lime_candle"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -301,7 +301,7 @@
         },
         {
           "output_state": {
-            "Name": "botania:magenta_double_flower",
+            "Name": "minecraft:purple_candle",
             "Properties": {
               "half": "lower"
             }
@@ -321,7 +321,7 @@
         },
         {
           "output_state": {
-            "Name": "botania:magenta_double_flower",
+            "Name": "minecraft:purple_candle",
             "Properties": {
               "half": "upper"
             }
@@ -341,7 +341,7 @@
         },
         {
           "output_state": {
-            "Name": "botania:lime_double_flower",
+            "Name": "minecraft:lime_candle",
             "Properties": {
               "half": "lower"
             }
@@ -361,7 +361,7 @@
         },
         {
           "output_state": {
-            "Name": "botania:lime_double_flower",
+            "Name": "minecraft:lime_candle",
             "Properties": {
               "half": "upper"
             }

@@ -4,7 +4,7 @@
       "rules": [
         {
           "output_state": {
-            "Name": "immersiveengineering:concrete"
+            "Name": "minecraft:white_concrete"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -17,7 +17,7 @@
         },
         {
           "output_state": {
-            "Name": "immersiveengineering:concrete_tile"
+            "Name": "minecraft:white_concrete"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -30,7 +30,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:stripped_green_enchanted_wood",
+            "Name": "minecraft:warped_hyphae",
             "Properties": {
               "axis": "y"
             }
@@ -46,7 +46,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:green_mushroom_block",
+            "Name": "minecraft:green_wool",
             "Properties": {
               "down": "true",
               "east": "true",
@@ -67,7 +67,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:shulkren_phylium",
+            "Name": "minecraft:end_stone",
             "Properties": {
               "snowy": "false"
             }
@@ -83,14 +83,14 @@
         },
         {
           "output_state": {
-            "Name": "byg:imbued_nightshade_log",
+            "Name": "minecraft:dark_oak_log",
             "Properties": {
               "axis": "y"
             }
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
-            "block": "byg:maple_log",
+            "block": "minecraft:oak_log",
             "probability": 1.0
           },
           "location_predicate": {
@@ -99,7 +99,7 @@
         },
         {
           "output_state": {
-            "Name": "quark:orange_blossom_leaves",
+            "Name": "minecraft:oak_leaves",
             "Properties": {
               "distance": "7",
               "persistent": "false"
@@ -107,7 +107,7 @@
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
-            "block": "byg:silver_maple_leaves",
+            "block": "minecraft:oak_leaves",
             "probability": 1.0
           },
           "location_predicate": {
@@ -116,14 +116,14 @@
         },
         {
           "output_state": {
-            "Name": "byg:shulkren_vine",
+            "Name": "minecraft:chorus_plant",
             "Properties": {
               "age": "17"
             }
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
-            "block": "byg:weeping_roots",
+            "block": "minecraft:weeping_vines",
             "probability": 1.0
           },
           "location_predicate": {
@@ -132,11 +132,11 @@
         },
         {
           "output_state": {
-            "Name": "byg:shulkren_vine_plant"
+            "Name": "minecraft:chorus_plant"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
-            "block": "byg:weeping_roots_plant",
+            "block": "minecraft:weeping_vines_plant",
             "probability": 1.0
           },
           "location_predicate": {
@@ -149,7 +149,7 @@
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
-            "block": "byg:black_rose",
+            "block": "minecraft:wither_rose",
             "probability": 1.0
           },
           "location_predicate": {
@@ -158,7 +158,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:blue_spruce_sapling",
+            "Name": "minecraft:spruce_sapling",
             "Properties": {
               "stage": "0"
             }
@@ -174,7 +174,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:imparius_mushroom"
+            "Name": "minecraft:mushroom_stem"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -187,7 +187,7 @@
         },
         {
           "output_state": {
-            "Name": "botania:orange_double_flower",
+            "Name": "minecraft:orange_tulip",
             "Properties": {
               "half": "lower"
             }
@@ -207,7 +207,7 @@
         },
         {
           "output_state": {
-            "Name": "botania:orange_double_flower",
+            "Name": "minecraft:orange_tulip",
             "Properties": {
               "half": "upper"
             }
@@ -240,7 +240,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:therium_lantern",
+            "Name": "minecraft:soul_lantern",
             "Properties": {
               "hanging": "true",
               "waterlogged": "false"
@@ -257,7 +257,7 @@
         },
         {
           "output_state": {
-            "Name": "quark:green_stained_planks_slab",
+            "Name": "minecraft:warped_slab",
             "Properties": {
               "type": "bottom",
               "waterlogged": "false"

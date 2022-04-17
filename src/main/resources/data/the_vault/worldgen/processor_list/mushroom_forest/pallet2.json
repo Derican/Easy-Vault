@@ -4,7 +4,7 @@
       "rules": [
         {
           "output_state": {
-            "Name": "create:gabbro"
+            "Name": "minecraft:stone_bricks"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -17,7 +17,7 @@
         },
         {
           "output_state": {
-            "Name": "create:gabbro_pillar",
+            "Name": "minecraft:cobblestone",
             "Properties": {
               "axis": "y"
             }
@@ -33,7 +33,7 @@
         },
         {
           "output_state": {
-            "Name": "create:mossy_gabbro"
+            "Name": "minecraft:mossy_cobblestone"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -46,7 +46,7 @@
         },
         {
           "output_state": {
-            "Name": "create:overgrown_gabbro"
+            "Name": "minecraft:mossy_stone_bricks"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -59,7 +59,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:overgrown_stone",
+            "Name": "minecraft:mossy_cobblestone",
             "Properties": {
               "snowy": "false"
             }
@@ -75,7 +75,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:mossy_stone"
+            "Name": "minecraft:mossy_cobblestone"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -88,7 +88,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:meadow_dirt"
+            "Name": "minecraft:dirt"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -101,7 +101,7 @@
         },
         {
           "output_state": {
-            "Name": "immersiveengineering:concrete"
+            "Name": "minecraft:white_concrete"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -114,7 +114,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:stripped_maple_wood",
+            "Name": "minecraft:stripped_acacia_wood",
             "Properties": {
               "axis": "y"
             }
@@ -130,7 +130,7 @@
         },
         {
           "output_state": {
-            "Name": "quark:yellow_blossom_leaves",
+            "Name": "minecraft:oak_leaves",
             "Properties": {
               "distance": "7",
               "persistent": "false"
@@ -147,7 +147,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:flowering_palo_verde_leaves",
+            "Name": "minecraft:oak_leaves",
             "Properties": {
               "distance": "7",
               "persistent": "false"
@@ -164,7 +164,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:flowering_orchard_leaves",
+            "Name": "minecraft:birch_leaves",
             "Properties": {
               "distance": "7",
               "persistent": "false"
@@ -181,7 +181,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:yellow_daffodil"
+            "Name": "minecraft:blue_orchid"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -194,7 +194,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:yellow_tulip"
+            "Name": "minecraft:blue_orchid"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -220,7 +220,7 @@
         },
         {
           "output_state": {
-            "Name": "botania:yellow_mystical_flower"
+            "Name": "minecraft:double_plant"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -233,7 +233,7 @@
         },
         {
           "output_state": {
-            "Name": "botania:yellow_shiny_flower"
+            "Name": "minecraft:sunflower"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -259,7 +259,7 @@
         },
         {
           "output_state": {
-            "Name": "botania:yellow_double_flower",
+            "Name": "minecraft:yellow_flower",
             "Properties": {
               "half": "lower"
             }
@@ -279,7 +279,7 @@
         },
         {
           "output_state": {
-            "Name": "botania:yellow_double_flower",
+            "Name": "minecraft:yellow_flower",
             "Properties": {
               "half": "upper"
             }
@@ -299,7 +299,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:sythian_roots"
+            "Name": "minecraft:warped_roots"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -348,7 +348,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:peach_leather_flower"
+            "Name": "minecraft:warped_fungus"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -361,7 +361,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:mossy_stone_slab",
+            "Name": "minecraft:mossy_cobblestone_slab",
             "Properties": {
               "type": "bottom",
               "waterlogged": "false"

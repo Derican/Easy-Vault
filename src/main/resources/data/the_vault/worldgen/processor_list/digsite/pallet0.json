@@ -69,7 +69,7 @@
         },
         {
           "output_state": {
-            "Name": "engineersdecor:dense_grit_sand_block"
+            "Name": "minecraft:cut_sandstone"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",

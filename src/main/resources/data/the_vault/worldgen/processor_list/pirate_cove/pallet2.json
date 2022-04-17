@@ -4,7 +4,7 @@
       "rules": [
         {
           "output_state": {
-            "Name": "byg:soapstone_bricks"
+            "Name": "minecraft:quartz_bricks"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -17,7 +17,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:soapstone"
+            "Name": "minecraft:quartz_block"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -30,7 +30,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:black_smooth_sandstone"
+            "Name": "minecraft:blackstone"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -69,7 +69,7 @@
         },
         {
           "output_state": {
-            "Name": "quark:soul_sandstone_bricks"
+            "Name": "minecraft:cut_sandstone"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -82,7 +82,7 @@
         },
         {
           "output_state": {
-            "Name": "quark:orange_blossom_leaves",
+            "Name": "minecraft:oak_leaves",
             "Properties": {
               "distance": "7",
               "persistent": "false"
@@ -99,7 +99,7 @@
         },
         {
           "output_state": {
-            "Name": "quark:red_blossom_leaves",
+            "Name": "minecraft:birch_leaves",
             "Properties": {
               "distance": "7",
               "persistent": "false"
@@ -116,7 +116,7 @@
         },
         {
           "output_state": {
-            "Name": "quark:orange_framed_glass"
+            "Name": "minecraft:orange_stained_glass"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -172,7 +172,7 @@
         },
         {
           "output_state": {
-            "Name": "quark:red_sandstone_bricks_slab",
+            "Name": "minecraft:cut_sandstone_slab",
             "Properties": {
               "type": "bottom",
               "waterlogged": "false"
@@ -194,7 +194,7 @@
         },
         {
           "output_state": {
-            "Name": "quark:red_sandstone_bricks_slab",
+            "Name": "minecraft:cut_sandstone_slab",
             "Properties": {
               "type": "top",
               "waterlogged": "false"
@@ -216,7 +216,7 @@
         },
         {
           "output_state": {
-            "Name": "create:gabbro_cobblestone_wall",
+            "Name": "minecraft:cobblestone_wall",
             "Properties": {
               "east": "none",
               "north": "none",
@@ -237,7 +237,7 @@
         },
         {
           "output_state": {
-            "Name": "create:gabbro_cobblestone_wall",
+            "Name": "minecraft:cobblestone_wall",
             "Properties": {
               "east": "none",
               "north": "none",
@@ -258,7 +258,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:imparius_mushroom"
+            "Name": "minecraft:mushroom_stem"
           },
           "input_predicate": {
             "block_state": {
@@ -292,7 +292,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:sythian_fungus"
+            "Name": "minecraft:warped_fungus"
           },
           "input_predicate": {
             "block_state": {
@@ -326,7 +326,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:soul_shroom"
+            "Name": "minecraft:brown_mushroom"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -339,7 +339,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:glowstone_lantern",
+            "Name": "minecraft:lantern",
             "Properties": {
               "hanging": "true",
               "waterlogged": "false"

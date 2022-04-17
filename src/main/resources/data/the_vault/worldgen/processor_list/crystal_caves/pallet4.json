@@ -4,7 +4,7 @@
       "rules": [
         {
           "output_state": {
-            "Name": "enviromats:granodiorite"
+            "Name": "minecraft:granite"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -17,7 +17,7 @@
         },
         {
           "output_state": {
-            "Name": "enviromats:hardened_stone"
+            "Name": "minecraft:diorite"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -30,7 +30,7 @@
         },
         {
           "output_state": {
-            "Name": "enviromats:granodiorite_cobble"
+            "Name": "minecraft:polished_granite"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -43,7 +43,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:black_smooth_sandstone"
+            "Name": "minecraft:blackstone"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -56,7 +56,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:black_sand"
+            "Name": "minecraft:soul_sand"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -69,7 +69,7 @@
         },
         {
           "output_state": {
-            "Name": "enviromats:alabaster_light_gray_cobble"
+            "Name": "minecraft:gray_terracotta"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -121,7 +121,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:blue_smooth_sandstone"
+            "Name": "minecraft:blue_concrete"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -134,7 +134,7 @@
         },
         {
           "output_state": {
-            "Name": "quark:permafrost"
+            "Name": "minecraft:purpur_block"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -147,7 +147,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:frost_magma"
+            "Name": "minecraft:magma_block"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -160,7 +160,7 @@
         },
         {
           "output_state": {
-            "Name": "quark:waxed_black_crystal"
+            "Name": "minecraft:black_stained_glass"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -186,7 +186,7 @@
         },
         {
           "output_state": {
-            "Name": "quark:waxed_white_crystal"
+            "Name": "minecraft:white_stained_glass"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -229,7 +229,7 @@
         },
         {
           "output_state": {
-            "Name": "enviromats:alabaster_light_gray_cobble_slab",
+            "Name": "minecraft:stone_slab",
             "Properties": {
               "type": "bottom",
               "waterlogged": "false"
@@ -310,7 +310,7 @@
         },
         {
           "output_state": {
-            "Name": "botania:gray_double_flower",
+            "Name": "minecraft:gray_candle",
             "Properties": {
               "half": "lower"
             }
@@ -330,7 +330,7 @@
         },
         {
           "output_state": {
-            "Name": "botania:gray_double_flower",
+            "Name": "minecraft:gray_candle",
             "Properties": {
               "half": "upper"
             }
@@ -350,7 +350,7 @@
         },
         {
           "output_state": {
-            "Name": "botania:light_gray_double_flower",
+            "Name": "minecraft:light_gray_candle",
             "Properties": {
               "half": "lower"
             }
@@ -370,7 +370,7 @@
         },
         {
           "output_state": {
-            "Name": "botania:light_gray_double_flower",
+            "Name": "minecraft:light_gray_candle",
             "Properties": {
               "half": "upper"
             }

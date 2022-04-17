@@ -51,7 +51,7 @@
 	  "rules": [
 	    {
           "output_state": {
-            "Name": "enviromats:granodiorite_cobble"
+            "Name": "minecraft:polished_granite"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -96,7 +96,7 @@
         },
 		{
           "output_state": {
-            "Name": "byg:soapstone"
+            "Name": "minecraft:quartz_block"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",

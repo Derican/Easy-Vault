@@ -4,7 +4,7 @@
       "rules": [
         {
           "output_state": {
-            "Name": "botania:metamorphic_taiga_stone"
+            "Name": "minecraft:red_concrete"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -17,7 +17,7 @@
         },
         {
           "output_state": {
-            "Name": "botania:metamorphic_taiga_cobblestone"
+            "Name": "minecraft:red_sandstone"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -30,7 +30,7 @@
         },
         {
           "output_state": {
-            "Name": "botania:infused_grass"
+            "Name": "minecraft:grass_block"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -56,7 +56,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:nylium_soul_sand"
+            "Name": "minecraft:soul_sand"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -69,7 +69,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:nylium_soul_soil"
+            "Name": "minecraft:soul_soil"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -82,7 +82,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:red_spruce_leaves",
+            "Name": "minecraft:oak_leaves",
             "Properties": {
               "distance": "7",
               "persistent": "false"
@@ -99,7 +99,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:flowering_orchard_leaves",
+            "Name": "minecraft:birch_leaves",
             "Properties": {
               "distance": "7",
               "persistent": "false"
@@ -142,7 +142,7 @@
         },
         {
           "output_state": {
-            "Name": "create:gabbro_cobblestone_slab",
+            "Name": "minecraft:cobblestone_slab",
             "Properties": {
               "type": "bottom",
               "waterlogged": "false"
@@ -159,7 +159,7 @@
         },
         {
           "output_state": {
-            "Name": "botania:metamorphic_taiga_cobblestone_slab",
+            "Name": "minecraft:red_sandstone_slab",
             "Properties": {
               "type": "bottom",
               "waterlogged": "false"
@@ -176,7 +176,7 @@
         },
         {
           "output_state": {
-            "Name": "masonry:darkprismarinecobbledslab",
+            "Name": "minecraft:cobblestone_slab",
             "Properties": {
               "type": "bottom",
               "waterlogged": "false"
@@ -198,7 +198,7 @@
         },
         {
           "output_state": {
-            "Name": "masonry:darkprismarinecobbledslab",
+            "Name": "minecraft:cobblestone_slab",
             "Properties": {
               "type": "top",
               "waterlogged": "false"
@@ -220,7 +220,7 @@
         },
         {
           "output_state": {
-            "Name": "masonry:darkprismarinecobbledmossywall",
+            "Name": "minecraft:mossy_cobblestone_wall",
             "Properties": {
               "east": "none",
               "north": "none",
@@ -241,7 +241,7 @@
         },
         {
           "output_state": {
-            "Name": "masonry:darkprismarinecobbledmossywall",
+            "Name": "minecraft:mossy_cobblestone_wall",
             "Properties": {
               "east": "none",
               "north": "none",
@@ -262,7 +262,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:soul_shroom"
+            "Name": "minecraft:brown_mushroom"
           },
           "input_predicate": {
             "block_state": {
@@ -296,7 +296,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:tall_crimson_roots",
+            "Name": "minecraft:crimson_roots",
             "Properties": {
               "half": "lower"
             }
@@ -316,7 +316,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:tall_crimson_roots",
+            "Name": "minecraft:crimson_roots",
             "Properties": {
               "half": "upper"
             }
@@ -349,7 +349,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:embur_sprouts"
+            "Name": "minecraft:grass"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -379,7 +379,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:embur_slab",
+            "Name": "minecraft:spruce_slab",
             "Properties": {
               "type": "bottom",
               "waterlogged": "false"
@@ -401,7 +401,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:embur_slab",
+            "Name": "minecraft:spruce_slab",
             "Properties": {
               "type": "top",
               "waterlogged": "false"
@@ -423,7 +423,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:stripped_embur_pedu",
+            "Name": "minecraft:stripped_oak_wood",
             "Properties": {
               "axis": "y"
             }

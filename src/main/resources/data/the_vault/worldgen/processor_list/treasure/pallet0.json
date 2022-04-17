@@ -30,7 +30,7 @@
         },
         {
           "output_state": {
-            "Name": "masonry:andesitelargebricks"
+            "Name": "minecraft:polished_andesite"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -43,7 +43,7 @@
         },
         {
           "output_state": {
-            "Name": "enviromats:granodiorite_cobble_stairs",
+            "Name": "minecraft:polished_granite_stairs",
             "Properties": {
               "facing": "north",
               "half": "bottom",
@@ -62,7 +62,7 @@
         },
         {
           "output_state": {
-            "Name": "enviromats:granodiorite_tile_stairs",
+            "Name": "minecraft:polished_granite_stairs",
             "Properties": {
               "facing": "north",
               "half": "bottom",
@@ -155,7 +155,7 @@
         },
         {
           "output_state": {
-            "Name": "enviromats:granodiorite_slab",
+            "Name": "minecraft:granite_slab",
             "Properties": {
               "type": "bottom",
               "waterlogged": "false"
@@ -172,7 +172,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:soapstone_pillar",
+            "Name": "minecraft:quartz_pillar",
             "Properties": {
               "axis": "y"
             }

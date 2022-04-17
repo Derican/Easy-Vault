@@ -4,7 +4,7 @@
       "rules": [
         {
           "output_state": {
-            "Name": "create:weathered_limestone"
+            "Name": "minecraft:mossy_cobblestone"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -17,7 +17,7 @@
         },
         {
           "output_state": {
-            "Name": "decorative_blocks:rocky_dirt"
+            "Name": "minecraft:coarse_dirt"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -116,7 +116,7 @@
         },
         {
           "output_state": {
-            "Name": "enviromats:hardened_stone"
+            "Name": "minecraft:diorite"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -129,7 +129,7 @@
         },
         {
           "output_state": {
-            "Name": "enviromats:hardened_stone_cobble"
+            "Name": "minecraft:polished_diorite"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -142,7 +142,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:palm_slab",
+            "Name": "minecraft:oak_slab",
             "Properties": {
               "type": "bottom",
               "waterlogged": "false"
@@ -236,7 +236,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:palm_slab",
+            "Name": "minecraft:oak_slab",
             "Properties": {
               "type": "bottom",
               "waterlogged": "false"
@@ -258,7 +258,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:palm_slab",
+            "Name": "minecraft:oak_slab",
             "Properties": {
               "type": "top",
               "waterlogged": "false"

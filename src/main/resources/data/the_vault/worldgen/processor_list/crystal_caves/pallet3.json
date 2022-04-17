@@ -4,7 +4,7 @@
       "rules": [
         {
           "output_state": {
-            "Name": "enviromats:granodiorite"
+            "Name": "minecraft:granite"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -17,7 +17,7 @@
         },
         {
           "output_state": {
-            "Name": "enviromats:hardened_stone"
+            "Name": "minecraft:diorite"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -30,7 +30,7 @@
         },
         {
           "output_state": {
-            "Name": "enviromats:granodiorite_cobble"
+            "Name": "minecraft:polished_granite"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -43,7 +43,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:black_smooth_sandstone"
+            "Name": "minecraft:blackstone"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -56,7 +56,7 @@
         },
         {
           "output_state": {
-            "Name": "botania:dry_grass"
+            "Name": "minecraft:grass"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -69,7 +69,7 @@
         },
         {
           "output_state": {
-            "Name": "enviromats:alabaster_green_cobble"
+            "Name": "minecraft:emerald_block"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -121,7 +121,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:blue_glowshroom_block",
+            "Name": "minecraft:blue_glazed_terracotta",
             "Properties": {
               "down": "true",
               "east": "true",
@@ -142,7 +142,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:bulbis_shell",
+            "Name": "minecraft:purple_glazed_terracotta",
             "Properties": {
               "down": "true",
               "east": "true",
@@ -163,7 +163,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:blue_glowcane_block"
+            "Name": "minecraft:light_blue_glazed_terracotta"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -189,7 +189,7 @@
         },
         {
           "output_state": {
-            "Name": "quark:waxed_black_crystal"
+            "Name": "minecraft:black_stained_glass"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -215,7 +215,7 @@
         },
         {
           "output_state": {
-            "Name": "quark:waxed_red_crystal"
+            "Name": "minecraft:red_stained_glass"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -241,7 +241,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:willow_slab",
+            "Name": "minecraft:wooden_slab",
             "Properties": {
               "type": "bottom",
               "waterlogged": "false"
@@ -258,7 +258,7 @@
         },
         {
           "output_state": {
-            "Name": "enviromats:alabaster_green_cobble_slab",
+            "Name": "minecraft:stone_slab",
             "Properties": {
               "type": "bottom",
               "waterlogged": "false"
@@ -275,7 +275,7 @@
         },
         {
           "output_state": {
-            "Name": "botania:red_mystical_flower"
+            "Name": "minecraft:red_tulip"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -288,7 +288,7 @@
         },
         {
           "output_state": {
-            "Name": "botania:black_mystical_flower"
+            "Name": "minecraft:wither_rose"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -301,7 +301,7 @@
         },
         {
           "output_state": {
-            "Name": "botania:red_double_flower",
+            "Name": "minecraft:red_tulip",
             "Properties": {
               "half": "lower"
             }
@@ -321,7 +321,7 @@
         },
         {
           "output_state": {
-            "Name": "botania:red_double_flower",
+            "Name": "minecraft:red_tulip",
             "Properties": {
               "half": "upper"
             }
@@ -341,7 +341,7 @@
         },
         {
           "output_state": {
-            "Name": "botania:black_double_flower",
+            "Name": "minecraft:wither_rose",
             "Properties": {
               "half": "lower"
             }
@@ -361,7 +361,7 @@
         },
         {
           "output_state": {
-            "Name": "botania:black_double_flower",
+            "Name": "minecraft:wither_rose",
             "Properties": {
               "half": "upper"
             }

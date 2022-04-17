@@ -75,7 +75,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:sythian_nylium",
+            "Name": "minecraft:cyan_wool",
             "Properties": {
               "snowy": "false"
             }
@@ -91,7 +91,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:reed_thatch",
+            "Name": "minecraft:green_concrete",
             "Properties": {
               "axis": "y"
             }
@@ -107,7 +107,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:palm_planks"
+            "Name": "minecraft:warped_planks"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -120,7 +120,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:mahogany_leaves",
+            "Name": "minecraft:oak_leaves",
             "Properties": {
               "distance": "7",
               "persistent": "false"
@@ -137,7 +137,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:maple_leaves",
+            "Name": "minecraft:oak_leaves",
             "Properties": {
               "distance": "7",
               "persistent": "false"
@@ -154,7 +154,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:flowering_orchard_leaves",
+            "Name": "minecraft:birch_leaves",
             "Properties": {
               "distance": "7",
               "persistent": "false"
@@ -197,7 +197,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:lolipop_flower"
+            "Name": "minecraft:blue_orchid"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -210,7 +210,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:prairie_grass"
+            "Name": "minecraft:grass"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -223,7 +223,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:prairie_grass"
+            "Name": "minecraft:grass"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -236,7 +236,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:tall_prairie_grass",
+            "Name": "minecraft:grass",
             "Properties": {
               "half": "lower"
             }
@@ -256,7 +256,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:tall_prairie_grass",
+            "Name": "minecraft:grass",
             "Properties": {
               "half": "upper"
             }
@@ -276,7 +276,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:reed_thatch_slab",
+            "Name": "minecraft:prismarine_brick_slab",
             "Properties": {
               "type": "bottom",
               "waterlogged": "false"

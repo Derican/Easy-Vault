@@ -4,7 +4,7 @@
       "rules": [
         {
           "output_state": {
-            "Name": "byg:dacite"
+            "Name": "minecraft:cobblestone"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -17,7 +17,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:dacite_cobblestone"
+            "Name": "minecraft:cobblestone"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -59,7 +59,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:meadow_grass_block",
+            "Name": "minecraft:emerald_block",
             "Properties": {
               "snowy": "false"
             }
@@ -159,7 +159,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:flowering_orchard_leaves",
+            "Name": "minecraft:birch_leaves",
             "Properties": {
               "distance": "7",
               "persistent": "false"
@@ -210,11 +210,11 @@
         },
         {
           "output_state": {
-            "Name": "byg:pink_smooth_sandstone"
+            "Name": "minecraft:cut_sandstone"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
-            "block": "byg:blue_smooth_sandstone",
+            "block": "minecraft:blue_concrete",
             "probability": 0.5
           },
           "location_predicate": {
@@ -223,11 +223,11 @@
         },
         {
           "output_state": {
-            "Name": "byg:blue_smooth_sandstone"
+            "Name": "minecraft:blue_concrete"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
-            "block": "byg:blue_smooth_sandstone",
+            "block": "minecraft:blue_concrete",
             "probability": 1.0
           },
           "location_predicate": {
@@ -236,7 +236,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:yellow_daffodil"
+            "Name": "minecraft:blue_orchid"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -249,7 +249,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:orange_daisy"
+            "Name": "minecraft:orange_tulip"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -262,7 +262,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:violet_leather_flower"
+            "Name": "minecraft:allium"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -275,7 +275,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:cyan_amaranth"
+            "Name": "minecraft:blue_orchid"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -288,7 +288,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:purple_amaranth"
+            "Name": "minecraft:allium"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -301,7 +301,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:winter_cyclamen"
+            "Name": "minecraft:grass"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -314,7 +314,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:torch_ginger"
+            "Name": "minecraft:poppy"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -340,7 +340,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:delphinium",
+            "Name": "minecraft:sweet_berry_bush",
             "Properties": {
               "half": "lower"
             }
@@ -360,7 +360,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:delphinium",
+            "Name": "minecraft:sweet_berry_bush",
             "Properties": {
               "half": "upper"
             }
@@ -380,38 +380,12 @@
         },
         {
           "output_state": {
-            "Name": "byg:clover_patch"
+            "Name": "minecraft:oak_leaves"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
             "block": "byg:leaf_pile",
             "probability": 0.33
-          },
-          "location_predicate": {
-            "predicate_type": "minecraft:always_true"
-          }
-        },
-        {
-          "output_state": {
-            "Name": "byg:flower_patch"
-          },
-          "input_predicate": {
-            "predicate_type": "minecraft:random_block_match",
-            "block": "byg:leaf_pile",
-            "probability": 0.5
-          },
-          "location_predicate": {
-            "predicate_type": "minecraft:always_true"
-          }
-        },
-        {
-          "output_state": {
-            "Name": "byg:leaf_pile"
-          },
-          "input_predicate": {
-            "predicate_type": "minecraft:random_block_match",
-            "block": "byg:leaf_pile",
-            "probability": 1.0
           },
           "location_predicate": {
             "predicate_type": "minecraft:always_true"

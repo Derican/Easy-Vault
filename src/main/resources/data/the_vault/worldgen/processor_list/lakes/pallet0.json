@@ -188,7 +188,7 @@
         },
         {
           "output_state": {
-            "Name": "masonry:prismarinecobbledmossy"
+            "Name": "minecraft:mossy_cobblestone"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -201,7 +201,7 @@
         },
         {
           "output_state": {
-            "Name": "masonry:darkprismarinecobbled"
+            "Name": "minecraft:cobblestone"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -214,7 +214,7 @@
         },
         {
           "output_state": {
-            "Name": "masonry:darkprismarinecobbledmossy"
+            "Name": "minecraft:mossy_cobblestone"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -257,7 +257,7 @@
         },
         {
           "output_state": {
-            "Name": "masonry:prismarinecobbledslab",
+            "Name": "minecraft:cobblestone_slab",
             "Properties": {
               "type": "bottom",
               "waterlogged": "false"

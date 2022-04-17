@@ -117,7 +117,7 @@
         },
         {
           "output_state": {
-            "Name": "enviromats:alabaster_red_cobble"
+            "Name": "minecraft:red_concrete"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -130,7 +130,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:red_petal_block"
+            "Name": "minecraft:red_wool"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -143,7 +143,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:red_glowcane_block"
+            "Name": "minecraft:red_concrete"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -169,7 +169,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:torch_ginger"
+            "Name": "minecraft:poppy"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",

@@ -4,7 +4,7 @@
       "rules": [
         {
           "output_state": {
-            "Name": "byg:rocky_stone"
+            "Name": "minecraft:stone"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -17,7 +17,7 @@
         },
         {
           "output_state": {
-            "Name": "create:andesite_cobblestone"
+            "Name": "minecraft:andesite"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -30,7 +30,7 @@
         },
         {
           "output_state": {
-            "Name": "enviromats:granodiorite_cobble"
+            "Name": "minecraft:polished_granite"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -43,7 +43,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:stripped_bulbis_wood",
+            "Name": "minecraft:purple_concrete",
             "Properties": {
               "axis": "y"
             }
@@ -59,7 +59,7 @@
         },
         {
           "output_state": {
-            "Name": "quark:violet_crystal"
+            "Name": "minecraft:purple_stained_glass"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -72,7 +72,7 @@
         },
         {
           "output_state": {
-            "Name": "quark:magenta_slime_block"
+            "Name": "minecraft:magenta_concrete_powder"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",

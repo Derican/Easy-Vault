@@ -4,7 +4,7 @@
       "rules": [
         {
           "output_state": {
-            "Name": "iskallutilities:plain_concrete"
+            "Name": "minecraft:white_concrete"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -17,7 +17,7 @@
         },
         {
           "output_state": {
-            "Name": "immersiveengineering:concrete"
+            "Name": "minecraft:white_concrete"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -30,7 +30,7 @@
         },
         {
           "output_state": {
-            "Name": "iskallutilities:lightly_weathered_concrete_4"
+            "Name": "minecraft:white_concrete"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -43,7 +43,7 @@
         },
         {
           "output_state": {
-            "Name": "iskallutilities:concrete_rusty_vent"
+            "Name": "minecraft:white_concrete"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -124,7 +124,7 @@
         },
         {
           "output_state": {
-            "Name": "create:layred_gabbro"
+            "Name": "minecraft:white_concrete"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -137,7 +137,7 @@
         },
         {
           "output_state": {
-            "Name": "create:gabbro_cobblestone"
+            "Name": "minecraft:cobblestone"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -150,7 +150,7 @@
         },
         {
           "output_state": {
-            "Name": "create:gabbro_pillar",
+            "Name": "minecraft:cobblestone",
             "Properties": {
               "axis": "y"
             }
@@ -166,7 +166,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:scorched_grass"
+            "Name": "minecraft:grass"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -179,7 +179,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:weed_grass"
+            "Name": "minecraft:grass"
           },
           "input_predicate": {
             "block_state": {
@@ -213,7 +213,7 @@
         },
         {
           "output_state": {
-            "Name": "create:paved_gabbro_slab",
+            "Name": "minecraft:spruce_slab",
             "Properties": {
               "type": "bottom",
               "waterlogged": "false"
@@ -230,7 +230,7 @@
         },
         {
           "output_state": {
-            "Name": "create:gabbro_cobblestone_wall",
+            "Name": "minecraft:cobblestone_wall",
             "Properties": {
               "east": "none",
               "north": "none",

@@ -213,7 +213,7 @@
         },
         {
           "output_state": {
-            "Name": "create:andesite_cobblestone_stairs",
+            "Name": "minecraft:andesite_stairs",
             "Properties": {
               "facing": "north",
               "half": "bottom",

@@ -4,7 +4,7 @@
       "rules": [
         {
           "output_state": {
-            "Name": "byg:dacite"
+            "Name": "minecraft:cobblestone"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -17,7 +17,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:stripped_mangrove_wood",
+            "Name": "minecraft:stripped_oak_log",
             "Properties": {
               "axis": "y"
             }
@@ -33,7 +33,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:quartzite_sand"
+            "Name": "minecraft:quartz_block"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -46,7 +46,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:dacite_cobblestone"
+            "Name": "minecraft:cobblestone"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -59,7 +59,7 @@
         },
         {
           "output_state": {
-            "Name": "botania:infused_grass"
+            "Name": "minecraft:grass_block"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -88,7 +88,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:nylium_soul_sand"
+            "Name": "minecraft:soul_sand"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -101,7 +101,7 @@
         },
         {
           "output_state": {
-            "Name": "masonry:prismarinecobbled"
+            "Name": "minecraft:cobblestone"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -114,7 +114,7 @@
         },
         {
           "output_state": {
-            "Name": "quark:gravisand"
+            "Name": "minecraft:soul_sand"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -127,7 +127,7 @@
         },
         {
           "output_state": {
-            "Name": "quark:orange_blossom_leaves",
+            "Name": "minecraft:oak_leaves",
             "Properties": {
               "distance": "7",
               "persistent": "false"
@@ -144,7 +144,7 @@
         },
         {
           "output_state": {
-            "Name": "quark:red_blossom_leaves",
+            "Name": "minecraft:birch_leaves",
             "Properties": {
               "distance": "7",
               "persistent": "false"
@@ -161,7 +161,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:pink_daffodil"
+            "Name": "minecraft:blue_orchid"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -174,7 +174,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:lolipop_flower"
+            "Name": "minecraft:blue_orchid"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -187,7 +187,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:pink_allium"
+            "Name": "minecraft:blue_orchid"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -200,7 +200,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:magenta_amaranth"
+            "Name": "minecraft:blue_orchid"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -213,7 +213,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:firecracker_flower_bush"
+            "Name": "minecraft:blue_orchid"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -226,7 +226,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:winter_succulent"
+            "Name": "minecraft:tall_seagrass"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -239,7 +239,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:silver_vase_flower"
+            "Name": "minecraft:blue_orchid"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -265,7 +265,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:tall_pink_allium",
+            "Name": "minecraft:tall_seagrass",
             "Properties": {
               "half": "lower"
             }
@@ -285,7 +285,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:tall_pink_allium",
+            "Name": "minecraft:tall_seagrass",
             "Properties": {
               "half": "upper"
             }
@@ -305,7 +305,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:pink_anemone"
+            "Name": "minecraft:blue_orchid"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -318,7 +318,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:leaf_pile"
+            "Name": "minecraft:blue_orchid"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -331,7 +331,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:pink_cherry_foliage"
+            "Name": "minecraft:blue_orchid"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -344,7 +344,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:clover_patch"
+            "Name": "minecraft:blue_orchid"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -357,7 +357,7 @@
         },
         {
           "output_state": {
-            "Name": "quark:red_blossom_leaf_carpet"
+            "Name": "minecraft:blue_orchid"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -370,7 +370,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:flower_patch"
+            "Name": "minecraft:blue_orchid"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -422,7 +422,7 @@
         },
         {
           "output_state": {
-            "Name": "quark:cyan_stained_planks_slab",
+            "Name": "minecraft:warped_slab",
             "Properties": {
               "type": "bottom",
               "waterlogged": "false"
@@ -439,7 +439,7 @@
         },
         {
           "output_state": {
-            "Name": "masonry:prismarinecobbledslab",
+            "Name": "minecraft:cobblestone_slab",
             "Properties": {
               "type": "bottom",
               "waterlogged": "false"
@@ -456,7 +456,7 @@
         },
         {
           "output_state": {
-            "Name": "masonry:prismarinecobbledmossyslab",
+            "Name": "minecraft:mossy_cobblestone_slab",
             "Properties": {
               "type": "bottom",
               "waterlogged": "false"

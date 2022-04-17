@@ -4,7 +4,7 @@
 	  "rules": [
 	    {
           "output_state": {
-            "Name": "enviromats:granodiorite_cobble"
+            "Name": "minecraft:polished_granite"
           },
           "input_predicate": {
             "block": "minecraft:stone",
@@ -17,7 +17,7 @@
         },
 		{
           "output_state": {
-            "Name": "enviromats:granodiorite"
+            "Name": "minecraft:granite"
           },
           "input_predicate": {
             "block": "minecraft:stone",
@@ -30,7 +30,7 @@
         },
 		{
           "output_state": {
-            "Name": "enviromats:hardened_stone_brick"
+            "Name": "minecraft:polished_diorite"
           },
           "input_predicate": {
             "block": "minecraft:stone",
@@ -43,7 +43,7 @@
         },
 		{
           "output_state": {
-            "Name": "byg:black_smooth_sandstone"
+            "Name": "minecraft:blackstone"
           },
           "input_predicate": {
             "block": "minecraft:stone",
@@ -55,7 +55,7 @@
         },
 		{
           "output_state": {
-            "Name": "byg:vermilion_sculk",
+            "Name": "minecraft:warped_planks",
 			"Properties": {
 			  "snowy": "false"
 			}
@@ -84,19 +84,6 @@
         },
 		{
           "output_state": {
-            "Name": "botania:black_petal_block"
-          },
-          "input_predicate": {
-            "block": "minecraft:coarse_dirt",
-			"probability": 0.20,
-            "predicate_type": "minecraft:random_block_match"
-          },
-          "location_predicate": {
-            "predicate_type": "minecraft:always_true"
-          }
-        },
-		{
-          "output_state": {
             "Name": "minecraft:gray_concrete_powder"
           },
           "input_predicate": {
@@ -109,7 +96,7 @@
         },
 		{
           "output_state": {
-            "Name": "byg:stripped_ebony_wood",
+            "Name": "minecraft:stripped_birch_wood",
 			"Properties": {
 				"axis": "x"
 			}
@@ -129,7 +116,7 @@
         },
 		{
           "output_state": {
-            "Name": "byg:stripped_ebony_wood",
+            "Name": "minecraft:stripped_birch_wood",
 			"Properties": {
 				"axis": "y"
 			}
@@ -149,7 +136,7 @@
         },
 		{
           "output_state": {
-            "Name": "byg:stripped_ebony_wood",
+            "Name": "minecraft:stripped_birch_wood",
 			"Properties": {
 				"axis": "z"
 			}
@@ -169,7 +156,7 @@
         },
 		{
           "output_state": {
-            "Name": "enviromats:granodiorite_cobble_slab",
+            "Name": "minecraft:polished_granite_slab",
 			"Properties": {
 				"type": "bottom",
 				"waterlogged": "false"
@@ -185,7 +172,7 @@
         },
 		{
           "output_state": {
-            "Name": "enviromats:granodiorite_cobble_slab",
+            "Name": "minecraft:polished_granite_slab",
 			"Properties": {
 				"type": "bottom",
 				"waterlogged": "false"
@@ -201,7 +188,7 @@
         },
 		{
           "output_state": {
-            "Name": "enviromats:granodiorite_stairs",
+            "Name": "minecraft:granite_stairs",
 			"Properties": {
 				"facing": "north",
 				"half": "bottom",
@@ -219,7 +206,7 @@
         },
 		{
           "output_state": {
-            "Name": "enviromats:granodiorite_wall",
+            "Name": "minecraft:granite_wall",
 			"Properties": {
 				"east": "none",
 				"west": "none",
@@ -231,25 +218,6 @@
           },
           "input_predicate": {
             "block": "minecraft:cobblestone_wall",
-            "predicate_type": "minecraft:block_match"
-          },
-          "location_predicate": {
-            "predicate_type": "minecraft:always_true"
-          }
-        },
-		{
-          "output_state": {
-            "Name": "byg:ebony_fence",
-			"Properties": {
-				"east": "false",
-				"west": "false",
-				"north": "false",
-				"south": "false",
-				"waterlogged": "false"
-			}
-          },
-          "input_predicate": {
-            "block": "minecraft:spruce_fence",
             "predicate_type": "minecraft:block_match"
           },
           "location_predicate": {
@@ -274,7 +242,7 @@
         },
 		{
           "output_state": {
-            "Name": "byg:tall_crimson_roots",
+            "Name": "minecraft:crimson_roots",
 			"Properties": {
 				"half": "lower"
 			}
@@ -294,7 +262,7 @@
         },
 		{
           "output_state": {
-            "Name": "byg:tall_crimson_roots",
+            "Name": "minecraft:crimson_roots",
 			"Properties": {
 				"half": "upper"
 			}

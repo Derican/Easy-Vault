@@ -4,7 +4,7 @@
       "rules": [
         {
           "output_state": {
-            "Name": "byg:white_smooth_sandstone"
+            "Name": "minecraft:sandstone"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -17,7 +17,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:quartzite_sand"
+            "Name": "minecraft:quartz_block"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -30,7 +30,7 @@
         },
         {
           "output_state": {
-            "Name": "create:dolomite"
+            "Name": "minecraft:cobblestone"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -43,7 +43,7 @@
         },
         {
           "output_state": {
-            "Name": "enviromats:marble_cobble"
+            "Name": "minecraft:stone"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -56,7 +56,7 @@
         },
         {
           "output_state": {
-            "Name": "botania:dry_grass"
+            "Name": "minecraft:grass"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -69,7 +69,7 @@
         },
         {
           "output_state": {
-            "Name": "enviromats:alabaster_green_cobble"
+            "Name": "minecraft:emerald_block"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -121,7 +121,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:purple_glowshroom_block",
+            "Name": "minecraft:purple_concrete",
             "Properties": {
               "down": "true",
               "east": "true",
@@ -142,7 +142,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:purple_bulbis_shell",
+            "Name": "minecraft:purple_concrete",
             "Properties": {
               "down": "true",
               "east": "true",
@@ -163,7 +163,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:purple_glowcane_block"
+            "Name": "minecraft:purple_concrete"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -189,7 +189,7 @@
         },
         {
           "output_state": {
-            "Name": "quark:waxed_orange_crystal"
+            "Name": "minecraft:orange_concrete"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -215,7 +215,7 @@
         },
         {
           "output_state": {
-            "Name": "quark:waxed_indigo_crystal"
+            "Name": "minecraft:prismarine_crystals"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -241,7 +241,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:willow_slab",
+            "Name": "minecraft:wooden_slab",
             "Properties": {
               "type": "bottom",
               "waterlogged": "false"
@@ -258,7 +258,7 @@
         },
         {
           "output_state": {
-            "Name": "enviromats:alabaster_green_cobble_slab",
+            "Name": "minecraft:stone_slab",
             "Properties": {
               "type": "bottom",
               "waterlogged": "false"
@@ -275,7 +275,7 @@
         },
         {
           "output_state": {
-            "Name": "botania:blue_mystical_flower"
+            "Name": "minecraft:blue_orchid"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -288,7 +288,7 @@
         },
         {
           "output_state": {
-            "Name": "botania:orange_mystical_flower"
+            "Name": "minecraft:orange_tulip"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -301,7 +301,7 @@
         },
         {
           "output_state": {
-            "Name": "botania:blue_double_flower",
+            "Name": "minecraft:blue_orchid",
             "Properties": {
               "half": "lower"
             }
@@ -321,7 +321,7 @@
         },
         {
           "output_state": {
-            "Name": "botania:blue_double_flower",
+            "Name": "minecraft:blue_orchid",
             "Properties": {
               "half": "upper"
             }
@@ -341,7 +341,7 @@
         },
         {
           "output_state": {
-            "Name": "botania:orange_double_flower",
+            "Name": "minecraft:orange_tulip",
             "Properties": {
               "half": "lower"
             }
@@ -361,7 +361,7 @@
         },
         {
           "output_state": {
-            "Name": "botania:orange_double_flower",
+            "Name": "minecraft:orange_tulip",
             "Properties": {
               "half": "upper"
             }

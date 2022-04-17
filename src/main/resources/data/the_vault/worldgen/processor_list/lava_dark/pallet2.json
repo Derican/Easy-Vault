@@ -4,7 +4,7 @@
       "rules": [
         {
           "output_state": {
-            "Name": "enviromats:hardened_stone_cobble"
+            "Name": "minecraft:polished_diorite"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -17,7 +17,7 @@
         },
         {
           "output_state": {
-            "Name": "enviromats:granodiorite"
+            "Name": "minecraft:granite"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -62,7 +62,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:black_smooth_sandstone"
+            "Name": "minecraft:blackstone"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -114,7 +114,7 @@
         },
         {
           "output_state": {
-            "Name": "enviromats:basalt_cobble",
+            "Name": "minecraft:cobblestone",
             "Properties": {
               "axis": "y"
             }
@@ -130,7 +130,7 @@
         },
         {
           "output_state": {
-            "Name": "enviromats:hardened_stone_cobble_slab",
+            "Name": "minecraft:polished_diorite_slab",
             "Properties": {
               "waterlogged": "false",
               "type": "top"
@@ -152,7 +152,7 @@
         },
         {
           "output_state": {
-            "Name": "enviromats:hardened_stone_cobble_slab",
+            "Name": "minecraft:polished_diorite_slab",
             "Properties": {
               "waterlogged": "false",
               "type": "bottom"
@@ -187,7 +187,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:magmatic_stone"
+            "Name": "minecraft:magma_block"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -200,7 +200,7 @@
         },
         {
           "output_state": {
-            "Name": "enviromats:basalt_stairs",
+            "Name": "minecraft:stone_stairs",
             "Properties": {
               "facing": "north",
               "half": "bottom",
@@ -219,7 +219,7 @@
         },
         {
           "output_state": {
-            "Name": "enviromats:alabaster_gray_stairs",
+            "Name": "minecraft:stone_stairs",
             "Properties": {
               "facing": "north",
               "half": "bottom",
@@ -276,7 +276,7 @@
         },
         {
           "output_state": {
-            "Name": "quark:charred_nether_bricks"
+            "Name": "minecraft:nether_bricks"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -302,7 +302,7 @@
         },
         {
           "output_state": {
-            "Name": "enviromats:basalt_cobble",
+            "Name": "minecraft:cobblestone",
             "Properties": {
               "axis": "y"
             }
@@ -318,7 +318,7 @@
         },
         {
           "output_state": {
-            "Name": "enviromats:basalt_cobble_slab",
+            "Name": "minecraft:cobblestone_slab",
             "Properties": {
               "type": "bottom",
               "waterlogged": "false"
@@ -335,7 +335,7 @@
         },
         {
           "output_state": {
-            "Name": "enviromats:basalt_cobble_slab",
+            "Name": "minecraft:cobblestone_slab",
             "Properties": {
               "type": "top",
               "waterlogged": "false"

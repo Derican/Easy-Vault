@@ -4,7 +4,7 @@
       "rules": [
         {
           "output_state": {
-            "Name": "enviromats:granodiorite_cobble"
+            "Name": "minecraft:polished_granite"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -17,7 +17,7 @@
         },
         {
           "output_state": {
-            "Name": "enviromats:hardened_stone_brick"
+            "Name": "minecraft:polished_diorite"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -30,7 +30,7 @@
         },
         {
           "output_state": {
-            "Name": "enviromats:granodiorite"
+            "Name": "minecraft:granite"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -43,7 +43,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:vermilion_sculk",
+            "Name": "minecraft:warped_planks",
             "Properties": {
               "snowy": "false"
             }
@@ -85,7 +85,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:stripped_ebony_wood",
+            "Name": "minecraft:stripped_birch_wood",
             "Properties": {
               "axis": "y"
             }
@@ -101,7 +101,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:ether_soil"
+            "Name": "minecraft:warped_wart_block"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -133,7 +133,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:soapstone_stairs",
+            "Name": "minecraft:smooth_quartz_stairs",
             "Properties": {
               "facing": "north",
               "half": "bottom",
@@ -189,7 +189,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:ebony_slab",
+            "Name": "minecraft:smooth_quartz_slab",
             "Properties": {
               "type": "bottom",
               "waterlogged": "false"
@@ -206,7 +206,7 @@
         },
         {
           "output_state": {
-            "Name": "quark:biotite_pillar",
+            "Name": "minecraft:quartz_bricks",
             "Properties": {
               "axis": "y"
             }

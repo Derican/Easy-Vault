@@ -101,7 +101,7 @@
         },
         {
           "output_state": {
-            "Name": "enviromats:hardened_stone_tile"
+            "Name": "minecraft:polished_diorite"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -133,7 +133,7 @@
         },
         {
           "output_state": {
-            "Name": "enviromats:hardened_stone_cobble_wall",
+            "Name": "minecraft:diorite_wall",
             "Properties": {
               "east": "none",
               "north": "none",

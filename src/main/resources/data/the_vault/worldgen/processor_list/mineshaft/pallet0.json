@@ -30,7 +30,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:rocky_stone"
+            "Name": "minecraft:stone"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -56,7 +56,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:meadow_dirt"
+            "Name": "minecraft:dirt"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -111,7 +111,7 @@
         },
         {
           "output_state": {
-            "Name": "decorative_blocks:rocky_dirt"
+            "Name": "minecraft:coarse_dirt"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",

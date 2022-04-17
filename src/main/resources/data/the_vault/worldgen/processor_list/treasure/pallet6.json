@@ -4,7 +4,7 @@
       "rules": [
         {
           "output_state": {
-            "Name": "enviromats:granodiorite_cobble"
+            "Name": "minecraft:polished_granite"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -17,7 +17,7 @@
         },
         {
           "output_state": {
-            "Name": "enviromats:granodiorite"
+            "Name": "minecraft:granite"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -30,7 +30,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:black_smooth_sandstone"
+            "Name": "minecraft:blackstone"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -43,7 +43,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:vermilion_sculk",
+            "Name": "minecraft:warped_planks",
             "Properties": {
               "snowy": "false"
             }
@@ -85,7 +85,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:stripped_ebony_wood",
+            "Name": "minecraft:stripped_birch_wood",
             "Properties": {
               "axis": "y"
             }
@@ -101,7 +101,7 @@
         },
         {
           "output_state": {
-            "Name": "enviromats:alabaster_gray_polished_stairs",
+            "Name": "minecraft:blackstone_stairs",
             "Properties": {
               "facing": "north",
               "half": "bottom",
@@ -120,7 +120,7 @@
         },
         {
           "output_state": {
-            "Name": "enviromats:alabaster_gray_tile_stairs",
+            "Name": "minecraft:stone_brick_stairs",
             "Properties": {
               "facing": "north",
               "half": "bottom",
@@ -139,7 +139,7 @@
         },
         {
           "output_state": {
-            "Name": "enviromats:hardened_stone_cobble_wall",
+            "Name": "minecraft:diorite_wall",
             "Properties": {
               "east": "none",
               "north": "none",
@@ -160,7 +160,7 @@
         },
         {
           "output_state": {
-            "Name": "enviromats:basalt_cobble_slab",
+            "Name": "minecraft:cobblestone_slab",
             "Properties": {
               "type": "bottom",
               "waterlogged": "false"

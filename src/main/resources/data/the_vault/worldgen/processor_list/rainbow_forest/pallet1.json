@@ -4,7 +4,7 @@
       "rules": [
         {
           "output_state": {
-            "Name": "quark:light_blue_shingles"
+            "Name": "minecraft:light_blue_wool"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -30,7 +30,7 @@
         },
         {
           "output_state": {
-            "Name": "quark:blue_stained_planks"
+            "Name": "minecraft:warped_planks"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -82,7 +82,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:lament_leaves",
+            "Name": "minecraft:oak_leaves",
             "Properties": {
               "distance": "7",
               "persistent": "false"
@@ -99,7 +99,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:jacaranda_leaves",
+            "Name": "minecraft:oak_leaves",
             "Properties": {
               "distance": "7",
               "persistent": "false"
@@ -116,7 +116,7 @@
         },
         {
           "output_state": {
-            "Name": "quark:lavender_blossom_leaves",
+            "Name": "minecraft:oak_leaves",
             "Properties": {
               "distance": "7",
               "persistent": "false"
@@ -137,7 +137,7 @@
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
-            "block": "byg:blue_smooth_sandstone",
+            "block": "minecraft:blue_concrete",
             "probability": 0.5
           },
           "location_predicate": {
@@ -150,34 +150,8 @@
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
-            "block": "byg:blue_smooth_sandstone",
+            "block": "minecraft:blue_concrete",
             "probability": 1.0
-          },
-          "location_predicate": {
-            "predicate_type": "minecraft:always_true"
-          }
-        },
-        {
-          "output_state": {
-            "Name": "byg:ether_grass"
-          },
-          "input_predicate": {
-            "predicate_type": "minecraft:random_block_match",
-            "block": "minecraft:grass",
-            "probability": 0.14
-          },
-          "location_predicate": {
-            "predicate_type": "minecraft:always_true"
-          }
-        },
-        {
-          "output_state": {
-            "Name": "byg:cryptic_vent"
-          },
-          "input_predicate": {
-            "predicate_type": "minecraft:random_block_match",
-            "block": "minecraft:grass",
-            "probability": 0.17
           },
           "location_predicate": {
             "predicate_type": "minecraft:always_true"
@@ -198,36 +172,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:lament_sapling",
-            "Properties": {
-              "stage": "0"
-            }
-          },
-          "input_predicate": {
-            "predicate_type": "minecraft:random_block_match",
-            "block": "minecraft:grass",
-            "probability": 0.25
-          },
-          "location_predicate": {
-            "predicate_type": "minecraft:always_true"
-          }
-        },
-        {
-          "output_state": {
-            "Name": "byg:ether_bush"
-          },
-          "input_predicate": {
-            "predicate_type": "minecraft:random_block_match",
-            "block": "minecraft:grass",
-            "probability": 0.33
-          },
-          "location_predicate": {
-            "predicate_type": "minecraft:always_true"
-          }
-        },
-        {
-          "output_state": {
-            "Name": "byg:pink_anemone"
+            "Name": "minecraft:pink_tulip"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -253,7 +198,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:tall_ether_grass",
+            "Name": "minecraft:tall_grass",
             "Properties": {
               "half": "lower"
             }
@@ -273,7 +218,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:tall_ether_grass",
+            "Name": "minecraft:tall_grass",
             "Properties": {
               "half": "upper"
             }
@@ -293,7 +238,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:skyris_fence",
+            "Name": "minecraft:warped_fence",
             "Properties": {
               "east": "false",
               "north": "false",
@@ -304,7 +249,7 @@
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
-            "block": "byg:maple_fence",
+            "block": "minecraft:warped_fence",
             "probability": 1.0
           },
           "location_predicate": {
@@ -321,7 +266,7 @@
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
-            "block": "byg:glowstone_lantern",
+            "block": "minecraft:lantern",
             "probability": 1.0
           },
           "location_predicate": {
@@ -330,7 +275,7 @@
         },
         {
           "output_state": {
-            "Name": "create:granite_cobblestone_slab",
+            "Name": "minecraft:polished_granite_slab",
             "Properties": {
               "type": "bottom",
               "waterlogged": "false"

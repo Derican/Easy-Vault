@@ -75,7 +75,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:overgrown_crimson_blackstone",
+            "Name": "minecraft:blackstone",
             "Properties": {
               "snowy": "false"
             }
@@ -91,7 +91,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:red_petal_block"
+            "Name": "minecraft:red_wool"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -213,7 +213,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:cherry_stairs",
+            "Name": "minecraft:polished_blackstone_brick_stairs",
             "Properties": {
               "facing": "north",
               "half": "bottom",
@@ -291,7 +291,7 @@
         },
         {
           "output_state": {
-            "Name": "masonry:netherracktiledslab",
+            "Name": "minecraft:nether_brick_slab",
             "Properties": {
               "type": "bottom",
               "waterlogged": "false"
@@ -345,7 +345,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:tall_crimson_roots",
+            "Name": "minecraft:crimson_roots",
             "Properties": {
               "half": "lower"
             }
@@ -365,7 +365,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:tall_crimson_roots",
+            "Name": "minecraft:crimson_roots",
             "Properties": {
               "half": "upper"
             }

@@ -86,7 +86,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:mahogany_leaves",
+            "Name": "minecraft:oak_leaves",
             "Properties": {
               "distance": "7",
               "persistent": "false"
@@ -103,7 +103,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:mangrove_leaves",
+            "Name": "minecraft:jungle_leaves",
             "Properties": {
               "distance": "7",
               "persistent": "false"
@@ -165,7 +165,7 @@
         },
         {
           "output_state": {
-            "Name": "masonry:granitecobbledmossy"
+            "Name": "minecraft:granite"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -267,7 +267,7 @@
         },
         {
           "output_state": {
-            "Name": "masonry:darkprismarinecobbledmossy"
+            "Name": "minecraft:mossy_cobblestone"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -434,7 +434,7 @@
         },
         {
           "output_state": {
-            "Name": "masonry:darkprismarinecobbledmossy"
+            "Name": "minecraft:mossy_cobblestone"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -447,7 +447,7 @@
         },
         {
           "output_state": {
-            "Name": "masonry:darkprismarinelargebrickscracked"
+            "Name": "minecraft:dark_prismarine"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -460,7 +460,7 @@
         },
         {
           "output_state": {
-            "Name": "masonry:darkprismarinelargebricksmossy"
+            "Name": "minecraft:dark_prismarine"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -473,7 +473,7 @@
         },
         {
           "output_state": {
-            "Name": "masonry:darkprismarinelargebricksmossyslab",
+            "Name": "minecraft:dark_prismarine_slab",
             "Properties": {
               "type": "bottom",
               "waterlogged": "false"
@@ -490,7 +490,7 @@
         },
         {
           "output_state": {
-            "Name": "masonry:darkprismarinelargebricksmossyslab",
+            "Name": "minecraft:dark_prismarine_slab",
             "Properties": {
               "type": "top",
               "waterlogged": "false"

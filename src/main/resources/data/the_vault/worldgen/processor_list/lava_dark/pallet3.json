@@ -30,7 +30,7 @@
         },
         {
           "output_state": {
-            "Name": "enviromats:granodiorite_cobble"
+            "Name": "minecraft:polished_granite"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -43,7 +43,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:stripped_ether_wood",
+            "Name": "minecraft:stripped_warped_stem",
             "Properties": {
               "axis": "y"
             }
@@ -59,7 +59,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:ether_leaves",
+            "Name": "minecraft:warped_wart_block",
             "Properties": {
               "distance": "7",
               "persistent": "false"
@@ -105,7 +105,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:ether_soil"
+            "Name": "minecraft:warped_wart_block"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -118,7 +118,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:ether_wood",
+            "Name": "minecraft:warped_stem",
             "Properties": {
               "axis": "y"
             }
@@ -134,7 +134,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:vermilion_sculk",
+            "Name": "minecraft:warped_planks",
             "Properties": {
               "snowy": "false"
             }
@@ -150,7 +150,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:ether_stone_slab",
+            "Name": "minecraft:stone_slab",
             "Properties": {
               "type": "bottom",
               "waterlogged": "false"
@@ -180,7 +180,7 @@
         },
         {
           "output_state": {
-            "Name": "quark:orange_shingles"
+            "Name": "minecraft:magma_block"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -193,7 +193,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:sythian_wart_block"
+            "Name": "minecraft:magma_block"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -206,7 +206,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:ether_stone_stairs",
+            "Name": "minecraft:stone_stairs",
             "Properties": {
               "facing": "north",
               "half": "bottom",
@@ -225,7 +225,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:ether_stone_wall",
+            "Name": "minecraft:cobblestone_wall",
             "Properties": {
               "east": "none",
               "north": "none",
@@ -246,7 +246,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:therium_lantern",
+            "Name": "minecraft:soul_lantern",
             "Properties": {
               "hanging": "false",
               "waterlogged": "false"
@@ -263,7 +263,7 @@
         },
         {
           "output_state": {
-            "Name": "masonry:dioritesmallbrick"
+            "Name": "minecraft:polished_diorite"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -276,7 +276,7 @@
         },
         {
           "output_state": {
-            "Name": "create:paved_diorite_stairs",
+            "Name": "minecraft:polished_diorite_stairs",
             "Properties": {
               "facing": "north",
               "half": "bottom",
@@ -295,7 +295,7 @@
         },
         {
           "output_state": {
-            "Name": "masonry:dioritesmallbrickslab",
+            "Name": "minecraft:polished_diorite_slab",
             "Properties": {
               "type": "top",
               "waterlogged": "false"
@@ -312,7 +312,7 @@
         },
         {
           "output_state": {
-            "Name": "masonry:dioritesmallbrickslab",
+            "Name": "minecraft:polished_diorite_slab",
             "Properties": {
               "type": "bottom",
               "waterlogged": "false"

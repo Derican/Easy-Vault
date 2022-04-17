@@ -111,7 +111,7 @@
         },
         {
           "output_state": {
-            "Name": "create:diorite_pillar",
+            "Name": "minecraft:polished_diorite",
             "Properties": {
               "axis": "y"
             }
@@ -127,7 +127,7 @@
         },
         {
           "output_state": {
-            "Name": "create:limestone_pillar",
+            "Name": "minecraft:quartz_pillar",
             "Properties": {
               "axis": "x"
             }
@@ -147,7 +147,7 @@
         },
         {
           "output_state": {
-            "Name": "create:limestone_pillar",
+            "Name": "minecraft:quartz_pillar",
             "Properties": {
               "axis": "y"
             }
@@ -167,7 +167,7 @@
         },
         {
           "output_state": {
-            "Name": "create:limestone_pillar",
+            "Name": "minecraft:quartz_pillar",
             "Properties": {
               "axis": "z"
             }
@@ -299,7 +299,7 @@
         },
         {
           "output_state": {
-            "Name": "quark:elder_prismarine_bricks_slab",
+            "Name": "minecraft:dark_prismarine_slab",
             "Properties": {
               "type": "bottom",
               "waterlogged": "false"
@@ -353,7 +353,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:glowstone_lantern",
+            "Name": "minecraft:lantern",
             "Properties": {
               "hanging": "false",
               "waterlogged": "false"

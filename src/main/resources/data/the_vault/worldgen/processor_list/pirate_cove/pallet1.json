@@ -4,7 +4,7 @@
       "rules": [
         {
           "output_state": {
-            "Name": "create:gabbro_bricks"
+            "Name": "minecraft:bricks"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -17,7 +17,7 @@
         },
         {
           "output_state": {
-            "Name": "create:gabbro_cobblestone"
+            "Name": "minecraft:cobblestone"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -30,7 +30,7 @@
         },
         {
           "output_state": {
-            "Name": "immersiveengineering:concrete"
+            "Name": "minecraft:white_concrete"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -43,7 +43,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:meadow_grass_block",
+            "Name": "minecraft:emerald_block",
             "Properties": {
               "snowy": "false"
             }
@@ -72,7 +72,7 @@
         },
         {
           "output_state": {
-            "Name": "decorative_blocks:rocky_dirt"
+            "Name": "minecraft:coarse_dirt"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -85,7 +85,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:flowering_palo_verde_leaves",
+            "Name": "minecraft:oak_leaves",
             "Properties": {
               "distance": "7",
               "persistent": "false"
@@ -102,7 +102,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:pine_leaves",
+            "Name": "minecraft:oak_leaves",
             "Properties": {
               "distance": "7",
               "persistent": "false"
@@ -173,7 +173,7 @@
         },
         {
           "output_state": {
-            "Name": "enviromats:alabaster_red_cobble"
+            "Name": "minecraft:red_concrete"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -203,7 +203,7 @@
         },
         {
           "output_state": {
-            "Name": "enviromats:granodiorite_cobble_slab",
+            "Name": "minecraft:polished_granite_slab",
             "Properties": {
               "type": "bottom",
               "waterlogged": "false"
@@ -220,7 +220,7 @@
         },
         {
           "output_state": {
-            "Name": "enviromats:granodiorite_slab",
+            "Name": "minecraft:granite_slab",
             "Properties": {
               "type": "bottom",
               "waterlogged": "false"
@@ -242,7 +242,7 @@
         },
         {
           "output_state": {
-            "Name": "enviromats:granodiorite_slab",
+            "Name": "minecraft:granite_slab",
             "Properties": {
               "type": "top",
               "waterlogged": "false"
@@ -264,7 +264,7 @@
         },
         {
           "output_state": {
-            "Name": "create:gabbro_cobblestone_wall",
+            "Name": "minecraft:cobblestone_wall",
             "Properties": {
               "east": "none",
               "north": "none",
@@ -285,7 +285,7 @@
         },
         {
           "output_state": {
-            "Name": "create:gabbro_bricks_wall",
+            "Name": "minecraft:brick_wall",
             "Properties": {
               "east": "none",
               "north": "none",
@@ -306,7 +306,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:clover_patch"
+            "Name": "minecraft:oak_leaves"
           },
           "input_predicate": {
             "block_state": {
@@ -340,7 +340,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:cyan_tulip"
+            "Name": "minecraft:blue_orchid"
           },
           "input_predicate": {
             "block_state": {
@@ -374,7 +374,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:white_anemone"
+            "Name": "minecraft:azure_bluet"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -387,7 +387,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:glowstone_lantern",
+            "Name": "minecraft:lantern",
             "Properties": {
               "hanging": "true",
               "waterlogged": "false"
@@ -404,7 +404,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:fir_slab",
+            "Name": "minecraft:oak_slab",
             "Properties": {
               "type": "bottom",
               "waterlogged": "false"
@@ -426,7 +426,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:fir_slab",
+            "Name": "minecraft:oak_slab",
             "Properties": {
               "type": "top",
               "waterlogged": "false"
@@ -448,7 +448,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:fir_log",
+            "Name": "minecraft:dark_oak_log",
             "Properties": {
               "axis": "y"
             }

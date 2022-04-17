@@ -4,7 +4,7 @@
       "rules": [
         {
           "output_state": {
-            "Name": "masonry:prismarinecobbled"
+            "Name": "minecraft:cobblestone"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -30,7 +30,7 @@
         },
         {
           "output_state": {
-            "Name": "masonry:prismarinepolished"
+            "Name": "minecraft:prismarine_bricks"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -43,7 +43,7 @@
         },
         {
           "output_state": {
-            "Name": "masonry:prismarineengraved"
+            "Name": "minecraft:dark_prismarine"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -56,7 +56,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:purpur_stone"
+            "Name": "minecraft:purpur_block"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -82,7 +82,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:purple_smooth_sandstone"
+            "Name": "minecraft:purple_concrete_powder"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -95,7 +95,7 @@
         },
         {
           "output_state": {
-            "Name": "masonry:darkprismarinepillar",
+            "Name": "minecraft:dark_prismarine",
             "Properties": {
               "axis": "y"
             }
@@ -128,7 +128,7 @@
         },
         {
           "output_state": {
-            "Name": "masonry:darkprismarinecobbledmossyslab",
+            "Name": "minecraft:mossy_cobblestone_slab",
             "Properties": {
               "type": "bottom",
               "waterlogged": "false"
@@ -145,7 +145,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:purpur_stone_stairs",
+            "Name": "minecraft:purpur_stairs",
             "Properties": {
               "facing": "north",
               "half": "bottom",
@@ -183,7 +183,7 @@
         },
         {
           "output_state": {
-            "Name": "quark:magenta_stained_planks_stairs",
+            "Name": "minecraft:purpur_stairs",
             "Properties": {
               "facing": "north",
               "half": "bottom",
@@ -223,7 +223,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:purpur_stone_slab",
+            "Name": "minecraft:purpur_slab",
             "Properties": {
               "type": "bottom",
               "waterlogged": "false"
@@ -257,7 +257,7 @@
         },
         {
           "output_state": {
-            "Name": "quark:magenta_stained_planks_slab",
+            "Name": "minecraft:purpur_slab",
             "Properties": {
               "type": "bottom",
               "waterlogged": "false"
@@ -294,7 +294,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:therium_lantern",
+            "Name": "minecraft:soul_lantern",
             "Properties": {
               "hanging": "false",
               "waterlogged": "false"
@@ -311,7 +311,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:tall_ether_grass",
+            "Name": "minecraft:tall_grass",
             "Properties": {
               "half": "lower"
             }
@@ -331,7 +331,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:tall_ether_grass",
+            "Name": "minecraft:tall_grass",
             "Properties": {
               "half": "upper"
             }

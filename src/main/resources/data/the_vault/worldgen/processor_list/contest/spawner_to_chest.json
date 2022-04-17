@@ -13,7 +13,7 @@
             },
             "input_predicate": {
               "predicate_type": "minecraft:random_block_match",
-              "block": "ispawner:spawner",
+              "block": "minecraft:mob_spawner",
               "probability": 1.0
             },
             "location_predicate": {

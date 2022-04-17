@@ -43,7 +43,7 @@
         },
         {
           "output_state": {
-            "Name": "masonry:endstonetiled"
+            "Name": "minecraft:end_stone"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -69,7 +69,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:bulbis_phycelium",
+            "Name": "minecraft:end_stone_bricks",
             "Properties": {
               "snowy": "false"
             }
@@ -85,7 +85,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:end_sand"
+            "Name": "minecraft:end_stone"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -98,14 +98,14 @@
         },
         {
           "output_state": {
-            "Name": "byg:lament_log",
+            "Name": "minecraft:end_stone",
             "Properties": {
               "axis": "y"
             }
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
-            "block": "byg:maple_log",
+            "block": "minecraft:oak_log",
             "probability": 1.0
           },
           "location_predicate": {
@@ -114,7 +114,7 @@
         },
         {
           "output_state": {
-            "Name": "quark:lavender_blossom_leaves",
+            "Name": "minecraft:oak_leaves",
             "Properties": {
               "distance": "7",
               "persistent": "false"
@@ -122,7 +122,7 @@
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
-            "block": "byg:silver_maple_leaves",
+            "block": "minecraft:oak_leaves",
             "probability": 1.0
           },
           "location_predicate": {
@@ -138,7 +138,7 @@
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
-            "block": "byg:weeping_roots",
+            "block": "minecraft:weeping_vines",
             "probability": 1.0
           },
           "location_predicate": {
@@ -159,7 +159,7 @@
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
-            "block": "byg:weeping_roots_plant",
+            "block": "minecraft:weeping_vines_plant",
             "probability": 1.0
           },
           "location_predicate": {
@@ -168,11 +168,11 @@
         },
         {
           "output_state": {
-            "Name": "byg:ivis_roots"
+            "Name": "minecraft:warped_roots"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
-            "block": "byg:black_rose",
+            "block": "minecraft:wither_rose",
             "probability": 1.0
           },
           "location_predicate": {
@@ -197,7 +197,7 @@
         },
         {
           "output_state": {
-            "Name": "quark:chorus_twist"
+            "Name": "minecraft:chorus_plant"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -210,7 +210,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:ivis_sprout"
+            "Name": "minecraft:chorus_plant"
           },
           "input_predicate": {
             "block_state": {
@@ -244,7 +244,7 @@
         },
         {
           "output_state": {
-            "Name": "quark:chorus_weeds"
+            "Name": "minecraft:chorus_plant"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -257,7 +257,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:therium_lantern",
+            "Name": "minecraft:soul_lantern",
             "Properties": {
               "hanging": "true",
               "waterlogged": "false"

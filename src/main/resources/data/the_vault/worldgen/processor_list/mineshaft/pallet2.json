@@ -17,7 +17,7 @@
         },
         {
           "output_state": {
-            "Name": "quark:light_blue_stained_planks"
+            "Name": "minecraft:warped_planks"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -30,7 +30,7 @@
         },
         {
           "output_state": {
-            "Name": "quark:blue_stained_planks"
+            "Name": "minecraft:warped_planks"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -43,7 +43,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:stripped_blue_enchanted_wood",
+            "Name": "minecraft:warped_stem",
             "Properties": {
               "axis": "y"
             }
@@ -88,7 +88,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:rocky_stone"
+            "Name": "minecraft:stone"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -101,7 +101,7 @@
         },
         {
           "output_state": {
-            "Name": "enviromats:alabaster_light_gray_cobble"
+            "Name": "minecraft:gray_terracotta"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -170,7 +170,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:embur_fence",
+            "Name": "minecraft:dark_oak_fence",
             "Properties": {
               "east": "false",
               "north": "false",
@@ -190,7 +190,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:maple_fence",
+            "Name": "minecraft:warped_fence",
             "Properties": {
               "east": "false",
               "north": "false",
@@ -210,7 +210,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:mossy_stone_wall",
+            "Name": "minecraft:mossy_cobblestone_wall",
             "Properties": {
               "east": "none",
               "north": "none",

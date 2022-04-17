@@ -17,7 +17,7 @@
         },
         {
           "output_state": {
-            "Name": "enviromats:pumice_cobble"
+            "Name": "minecraft:cobblestone"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -43,7 +43,7 @@
         },
         {
           "output_state": {
-            "Name": "iskallutilities:plain_concrete"
+            "Name": "minecraft:white_concrete"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -151,7 +151,7 @@
         },
         {
           "output_state": {
-            "Name": "decorative_blocks:rocky_dirt"
+            "Name": "minecraft:coarse_dirt"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -228,7 +228,7 @@
         },
         {
           "output_state": {
-            "Name": "enviromats:pumice_cobble_slab",
+            "Name": "minecraft:cobblestone_slab",
             "Properties": {
               "type": "bottom",
               "waterlogged": "false"
@@ -278,7 +278,7 @@
         },
         {
           "output_state": {
-            "Name": "enviromats:pumice_cobble_stairs",
+            "Name": "minecraft:cobblestone_stairs",
             "Properties": {
               "facing": "north",
               "half": "bottom",
@@ -316,7 +316,7 @@
         },
         {
           "output_state": {
-            "Name": "enviromats:pumice_cobble_wall",
+            "Name": "minecraft:cobblestone_wall",
             "Properties": {
               "east": "none",
               "north": "none",
@@ -337,7 +337,7 @@
         },
         {
           "output_state": {
-            "Name": "create:paved_gabbro",
+            "Name": "minecraft:cobblestone",
             "Properties": {
               "covered": "false"
             }
@@ -353,7 +353,7 @@
         },
         {
           "output_state": {
-            "Name": "create:gabbro"
+            "Name": "minecraft:stone_bricks"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -366,7 +366,7 @@
         },
         {
           "output_state": {
-            "Name": "create:overgrown_gabbro"
+            "Name": "minecraft:mossy_stone_bricks"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -379,7 +379,7 @@
         },
         {
           "output_state": {
-            "Name": "create:fancy_gabbro_bricks_stairs",
+            "Name": "minecraft:stone_brick_stairs",
             "Properties": {
               "facing": "north",
               "half": "bottom",
@@ -398,7 +398,7 @@
         },
         {
           "output_state": {
-            "Name": "create:fancy_gabbro_bricks_slab",
+            "Name": "minecraft:stone_brick_slab",
             "Properties": {
               "type": "top",
               "waterlogged": "false"
@@ -415,7 +415,7 @@
         },
         {
           "output_state": {
-            "Name": "create:fancy_gabbro_bricks_slab",
+            "Name": "minecraft:stone_brick_slab",
             "Properties": {
               "type": "bottom",
               "waterlogged": "false"

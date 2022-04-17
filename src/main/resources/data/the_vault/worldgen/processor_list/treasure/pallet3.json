@@ -30,7 +30,7 @@
         },
         {
           "output_state": {
-            "Name": "masonry:stonepolished"
+            "Name": "minecraft:polished_diorite"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -69,7 +69,7 @@
         },
         {
           "output_state": {
-            "Name": "quark:elder_prismarine_bricks"
+            "Name": "minecraft:dark_prismarine"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -82,7 +82,7 @@
         },
         {
           "output_state": {
-            "Name": "masonry:stonepolished"
+            "Name": "minecraft:polished_diorite"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -200,7 +200,7 @@
         },
         {
           "output_state": {
-            "Name": "create:diorite_pillar",
+            "Name": "minecraft:polished_diorite",
             "Properties": {
               "axis": "y"
             }

@@ -4,7 +4,7 @@
       "rules": [
         {
           "output_state": {
-            "Name": "enviromats:hardened_stone"
+            "Name": "minecraft:diorite"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -17,7 +17,7 @@
         },
         {
           "output_state": {
-            "Name": "enviromats:hardened_stone_cobble"
+            "Name": "minecraft:polished_diorite"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -30,7 +30,7 @@
         },
         {
           "output_state": {
-            "Name": "enviromats:hardened_stone_brick"
+            "Name": "minecraft:polished_diorite"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -43,7 +43,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:black_sand"
+            "Name": "minecraft:soul_sand"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -56,7 +56,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:black_sandstone"
+            "Name": "minecraft:soul_sandstone"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -69,67 +69,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:soapstone_pillar",
-            "Properties": {
-              "axis": "x"
-            }
-          },
-          "input_predicate": {
-            "block_state": {
-              "Name": "create:andesite_pillar",
-              "Properties": {
-                "axis": "x"
-              }
-            },
-            "predicate_type": "minecraft:blockstate_match"
-          },
-          "location_predicate": {
-            "predicate_type": "minecraft:always_true"
-          }
-        },
-        {
-          "output_state": {
-            "Name": "byg:soapstone_pillar",
-            "Properties": {
-              "axis": "y"
-            }
-          },
-          "input_predicate": {
-            "block_state": {
-              "Name": "create:andesite_pillar",
-              "Properties": {
-                "axis": "y"
-              }
-            },
-            "predicate_type": "minecraft:blockstate_match"
-          },
-          "location_predicate": {
-            "predicate_type": "minecraft:always_true"
-          }
-        },
-        {
-          "output_state": {
-            "Name": "byg:soapstone_pillar",
-            "Properties": {
-              "axis": "z"
-            }
-          },
-          "input_predicate": {
-            "block_state": {
-              "Name": "create:andesite_pillar",
-              "Properties": {
-                "axis": "z"
-              }
-            },
-            "predicate_type": "minecraft:blockstate_match"
-          },
-          "location_predicate": {
-            "predicate_type": "minecraft:always_true"
-          }
-        },
-        {
-          "output_state": {
-            "Name": "byg:soapstone_tile"
+            "Name": "minecraft:smooth_quartz"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -142,7 +82,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:soapstone_bricks"
+            "Name": "minecraft:quartz_bricks"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -155,7 +95,7 @@
         },
         {
           "output_state": {
-            "Name": "enviromats:hardened_stone_cobble_slab",
+            "Name": "minecraft:polished_diorite_slab",
             "Properties": {
               "type": "bottom",
               "waterlogged": "false"
@@ -172,24 +112,7 @@
         },
         {
           "output_state": {
-            "Name": "decorative_blocks:soul_brazier",
-            "Properties": {
-              "lit": "true",
-              "waterlogged": "false"
-            }
-          },
-          "input_predicate": {
-            "predicate_type": "minecraft:random_block_match",
-            "block": "decorative_blocks:brazier",
-            "probability": 1.0
-          },
-          "location_predicate": {
-            "predicate_type": "minecraft:always_true"
-          }
-        },
-        {
-          "output_state": {
-            "Name": "byg:soapstone_brick_stairs",
+            "Name": "minecraft:quartz_stairs",
             "Properties": {
               "facing": "south",
               "half": "bottom",
@@ -215,7 +138,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:soapstone_brick_stairs",
+            "Name": "minecraft:quartz_stairs",
             "Properties": {
               "facing": "north",
               "half": "bottom",
@@ -241,7 +164,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:soapstone_brick_stairs",
+            "Name": "minecraft:quartz_stairs",
             "Properties": {
               "facing": "west",
               "half": "bottom",
@@ -267,7 +190,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:soapstone_brick_stairs",
+            "Name": "minecraft:quartz_stairs",
             "Properties": {
               "facing": "east",
               "half": "bottom",
@@ -293,7 +216,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:soapstone_brick_stairs",
+            "Name": "minecraft:quartz_stairs",
             "Properties": {
               "facing": "south",
               "half": "top",
@@ -319,7 +242,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:soapstone_brick_stairs",
+            "Name": "minecraft:quartz_stairs",
             "Properties": {
               "facing": "north",
               "half": "top",
@@ -345,7 +268,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:soapstone_brick_stairs",
+            "Name": "minecraft:quartz_stairs",
             "Properties": {
               "facing": "west",
               "half": "top",
@@ -371,7 +294,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:soapstone_brick_stairs",
+            "Name": "minecraft:quartz_stairs",
             "Properties": {
               "facing": "east",
               "half": "top",
@@ -423,7 +346,7 @@
         },
         {
           "output_state": {
-            "Name": "quark:glowshroom_stem",
+            "Name": "minecraft:mushroom_stem",
             "Properties": {
               "down": "true",
               "east": "true",
@@ -435,7 +358,7 @@
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
-            "block": "quark:glowshroom_block",
+            "block": "minecraft:brown_mushroom_block",
             "probability": 1.0
           },
           "location_predicate": {

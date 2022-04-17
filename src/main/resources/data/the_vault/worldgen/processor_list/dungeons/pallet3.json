@@ -4,7 +4,7 @@
       "rules": [
         {
           "output_state": {
-            "Name": "enviromats:hardened_stone"
+            "Name": "minecraft:diorite"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -17,7 +17,7 @@
         },
         {
           "output_state": {
-            "Name": "enviromats:hardened_stone_cobble"
+            "Name": "minecraft:polished_diorite"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -30,7 +30,7 @@
         },
         {
           "output_state": {
-            "Name": "enviromats:hardened_stone_brick"
+            "Name": "minecraft:polished_diorite"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -56,7 +56,7 @@
         },
         {
           "output_state": {
-            "Name": "enviromats:granodiorite_polished"
+            "Name": "minecraft:polished_granite"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -69,7 +69,7 @@
         },
         {
           "output_state": {
-            "Name": "masonry:andesiteengraved"
+            "Name": "minecraft:andesite"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -82,7 +82,7 @@
         },
         {
           "output_state": {
-            "Name": "masonry:darkprismarinecobbled"
+            "Name": "minecraft:cobblestone"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -111,7 +111,7 @@
         },
         {
           "output_state": {
-            "Name": "enviromats:hardened_stone_brick_slab",
+            "Name": "minecraft:polished_diorite_slab",
             "Properties": {
               "type": "bottom",
               "waterlogged": "false"
@@ -133,7 +133,7 @@
         },
         {
           "output_state": {
-            "Name": "enviromats:hardened_stone_brick_slab",
+            "Name": "minecraft:polished_diorite_slab",
             "Properties": {
               "type": "top",
               "waterlogged": "false"
@@ -155,7 +155,7 @@
         },
         {
           "output_state": {
-            "Name": "enviromats:hardened_stone_cobble_slab",
+            "Name": "minecraft:polished_diorite_slab",
             "Properties": {
               "type": "bottom",
               "waterlogged": "false"
@@ -177,7 +177,7 @@
         },
         {
           "output_state": {
-            "Name": "enviromats:hardened_stone_cobble_slab",
+            "Name": "minecraft:polished_diorite_slab",
             "Properties": {
               "type": "top",
               "waterlogged": "false"
@@ -199,7 +199,7 @@
         },
         {
           "output_state": {
-            "Name": "enviromats:hardened_stone_slab",
+            "Name": "minecraft:diorite_slab",
             "Properties": {
               "type": "bottom",
               "waterlogged": "false"
@@ -221,7 +221,7 @@
         },
         {
           "output_state": {
-            "Name": "enviromats:hardened_stone_slab",
+            "Name": "minecraft:diorite_slab",
             "Properties": {
               "type": "top",
               "waterlogged": "false"
@@ -243,7 +243,7 @@
         },
         {
           "output_state": {
-            "Name": "enviromats:hardened_stone_cobble_wall",
+            "Name": "minecraft:diorite_wall",
             "Properties": {
               "east": "none",
               "north": "none",
@@ -277,7 +277,7 @@
         },
         {
           "output_state": {
-            "Name": "enviromats:hardened_stone_brick_stairs",
+            "Name": "minecraft:polished_diorite_stairs",
             "Properties": {
               "facing": "south",
               "half": "bottom",
@@ -303,7 +303,7 @@
         },
         {
           "output_state": {
-            "Name": "enviromats:hardened_stone_brick_stairs",
+            "Name": "minecraft:polished_diorite_stairs",
             "Properties": {
               "facing": "north",
               "half": "bottom",
@@ -329,7 +329,7 @@
         },
         {
           "output_state": {
-            "Name": "enviromats:hardened_stone_brick_stairs",
+            "Name": "minecraft:polished_diorite_stairs",
             "Properties": {
               "facing": "west",
               "half": "bottom",
@@ -355,7 +355,7 @@
         },
         {
           "output_state": {
-            "Name": "enviromats:hardened_stone_brick_stairs",
+            "Name": "minecraft:polished_diorite_stairs",
             "Properties": {
               "facing": "east",
               "half": "bottom",
@@ -381,7 +381,7 @@
         },
         {
           "output_state": {
-            "Name": "enviromats:hardened_stone_brick_stairs",
+            "Name": "minecraft:polished_diorite_stairs",
             "Properties": {
               "facing": "south",
               "half": "top",
@@ -407,7 +407,7 @@
         },
         {
           "output_state": {
-            "Name": "enviromats:hardened_stone_brick_stairs",
+            "Name": "minecraft:polished_diorite_stairs",
             "Properties": {
               "facing": "north",
               "half": "top",
@@ -433,7 +433,7 @@
         },
         {
           "output_state": {
-            "Name": "enviromats:hardened_stone_brick_stairs",
+            "Name": "minecraft:polished_diorite_stairs",
             "Properties": {
               "facing": "west",
               "half": "top",
@@ -459,7 +459,7 @@
         },
         {
           "output_state": {
-            "Name": "enviromats:hardened_stone_brick_stairs",
+            "Name": "minecraft:polished_diorite_stairs",
             "Properties": {
               "facing": "east",
               "half": "top",
@@ -485,7 +485,7 @@
         },
         {
           "output_state": {
-            "Name": "enviromats:hardened_stone_cobble_stairs",
+            "Name": "minecraft:polished_diorite_stairs",
             "Properties": {
               "facing": "south",
               "half": "bottom",
@@ -511,7 +511,7 @@
         },
         {
           "output_state": {
-            "Name": "enviromats:hardened_stone_cobble_stairs",
+            "Name": "minecraft:polished_diorite_stairs",
             "Properties": {
               "facing": "north",
               "half": "bottom",
@@ -537,7 +537,7 @@
         },
         {
           "output_state": {
-            "Name": "enviromats:hardened_stone_cobble_stairs",
+            "Name": "minecraft:polished_diorite_stairs",
             "Properties": {
               "facing": "west",
               "half": "bottom",
@@ -563,7 +563,7 @@
         },
         {
           "output_state": {
-            "Name": "enviromats:hardened_stone_cobble_stairs",
+            "Name": "minecraft:polished_diorite_stairs",
             "Properties": {
               "facing": "east",
               "half": "bottom",
@@ -589,7 +589,7 @@
         },
         {
           "output_state": {
-            "Name": "enviromats:hardened_stone_cobble_stairs",
+            "Name": "minecraft:polished_diorite_stairs",
             "Properties": {
               "facing": "south",
               "half": "top",
@@ -615,7 +615,7 @@
         },
         {
           "output_state": {
-            "Name": "enviromats:hardened_stone_cobble_stairs",
+            "Name": "minecraft:polished_diorite_stairs",
             "Properties": {
               "facing": "north",
               "half": "top",
@@ -641,7 +641,7 @@
         },
         {
           "output_state": {
-            "Name": "enviromats:hardened_stone_cobble_stairs",
+            "Name": "minecraft:polished_diorite_stairs",
             "Properties": {
               "facing": "west",
               "half": "top",
@@ -667,7 +667,7 @@
         },
         {
           "output_state": {
-            "Name": "enviromats:hardened_stone_cobble_stairs",
+            "Name": "minecraft:polished_diorite_stairs",
             "Properties": {
               "facing": "east",
               "half": "top",

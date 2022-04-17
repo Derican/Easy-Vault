@@ -4,7 +4,7 @@
       "rules": [
         {
           "output_state": {
-            "Name": "create:weathered_limestone_bricks"
+            "Name": "minecraft:mossy_stone_bricks"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -17,7 +17,7 @@
         },
         {
           "output_state": {
-            "Name": "create:weathered_limestone"
+            "Name": "minecraft:mossy_cobblestone"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -30,7 +30,7 @@
         },
         {
           "output_state": {
-            "Name": "create:weathered_limestone_cobblestone"
+            "Name": "minecraft:mossy_cobblestone"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -43,7 +43,7 @@
         },
         {
           "output_state": {
-            "Name": "create:mossy_weathered_limestone"
+            "Name": "minecraft:mossy_cobblestone"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -56,7 +56,7 @@
         },
         {
           "output_state": {
-            "Name": "create:layered_weathered_limestone"
+            "Name": "minecraft:mossy_cobblestone"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -69,7 +69,7 @@
         },
         {
           "output_state": {
-            "Name": "create:chiseled_weathered_limestone"
+            "Name": "minecraft:mossy_cobblestone"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -108,7 +108,7 @@
         },
         {
           "output_state": {
-            "Name": "create:weathered_limestone_bricks_slab",
+            "Name": "minecraft:mossy_stone_brick_slab",
             "Properties": {
               "type": "bottom",
               "waterlogged": "false"
@@ -130,7 +130,7 @@
         },
         {
           "output_state": {
-            "Name": "create:weathered_limestone_bricks_slab",
+            "Name": "minecraft:mossy_stone_brick_slab",
             "Properties": {
               "type": "top",
               "waterlogged": "false"
@@ -152,7 +152,7 @@
         },
         {
           "output_state": {
-            "Name": "create:weathered_limestone_cobblestone_slab",
+            "Name": "minecraft:mossy_cobblestone_slab",
             "Properties": {
               "type": "bottom",
               "waterlogged": "false"
@@ -174,7 +174,7 @@
         },
         {
           "output_state": {
-            "Name": "create:weathered_limestone_cobblestone_slab",
+            "Name": "minecraft:mossy_cobblestone_slab",
             "Properties": {
               "type": "top",
               "waterlogged": "false"
@@ -196,7 +196,7 @@
         },
         {
           "output_state": {
-            "Name": "create:polished_weathered_limestone_slab",
+            "Name": "minecraft:mossy_stone_brick_slab",
             "Properties": {
               "type": "bottom",
               "waterlogged": "false"
@@ -218,7 +218,7 @@
         },
         {
           "output_state": {
-            "Name": "create:polished_weathered_limestone_slab",
+            "Name": "minecraft:mossy_stone_brick_slab",
             "Properties": {
               "type": "top",
               "waterlogged": "false"
@@ -240,7 +240,7 @@
         },
         {
           "output_state": {
-            "Name": "create:weathered_limestone_cobblestone_wall",
+            "Name": "minecraft:mossy_cobblestone_wall",
             "Properties": {
               "east": "none",
               "north": "none",
@@ -261,7 +261,7 @@
         },
         {
           "output_state": {
-            "Name": "create:weathered_limestone_bricks_stairs",
+            "Name": "minecraft:mossy_stone_brick_stairs",
             "Properties": {
               "facing": "south",
               "half": "bottom",
@@ -287,7 +287,7 @@
         },
         {
           "output_state": {
-            "Name": "create:weathered_limestone_bricks_stairs",
+            "Name": "minecraft:mossy_stone_brick_stairs",
             "Properties": {
               "facing": "north",
               "half": "bottom",
@@ -313,7 +313,7 @@
         },
         {
           "output_state": {
-            "Name": "create:weathered_limestone_bricks_stairs",
+            "Name": "minecraft:mossy_stone_brick_stairs",
             "Properties": {
               "facing": "west",
               "half": "bottom",
@@ -339,7 +339,7 @@
         },
         {
           "output_state": {
-            "Name": "create:weathered_limestone_bricks_stairs",
+            "Name": "minecraft:mossy_stone_brick_stairs",
             "Properties": {
               "facing": "east",
               "half": "bottom",
@@ -365,7 +365,7 @@
         },
         {
           "output_state": {
-            "Name": "create:weathered_limestone_bricks_stairs",
+            "Name": "minecraft:mossy_stone_brick_stairs",
             "Properties": {
               "facing": "south",
               "half": "top",
@@ -391,7 +391,7 @@
         },
         {
           "output_state": {
-            "Name": "create:weathered_limestone_bricks_stairs",
+            "Name": "minecraft:mossy_stone_brick_stairs",
             "Properties": {
               "facing": "north",
               "half": "top",
@@ -417,7 +417,7 @@
         },
         {
           "output_state": {
-            "Name": "create:weathered_limestone_bricks_stairs",
+            "Name": "minecraft:mossy_stone_brick_stairs",
             "Properties": {
               "facing": "west",
               "half": "top",
@@ -443,7 +443,7 @@
         },
         {
           "output_state": {
-            "Name": "create:weathered_limestone_bricks_stairs",
+            "Name": "minecraft:mossy_stone_brick_stairs",
             "Properties": {
               "facing": "east",
               "half": "top",
@@ -469,7 +469,7 @@
         },
         {
           "output_state": {
-            "Name": "create:weathered_limestone_cobblestone_stairs",
+            "Name": "minecraft:mossy_cobblestone_stairs",
             "Properties": {
               "facing": "south",
               "half": "bottom",
@@ -495,7 +495,7 @@
         },
         {
           "output_state": {
-            "Name": "create:weathered_limestone_cobblestone_stairs",
+            "Name": "minecraft:mossy_cobblestone_stairs",
             "Properties": {
               "facing": "north",
               "half": "bottom",
@@ -521,7 +521,7 @@
         },
         {
           "output_state": {
-            "Name": "create:weathered_limestone_cobblestone_stairs",
+            "Name": "minecraft:mossy_cobblestone_stairs",
             "Properties": {
               "facing": "west",
               "half": "bottom",
@@ -547,7 +547,7 @@
         },
         {
           "output_state": {
-            "Name": "create:weathered_limestone_cobblestone_stairs",
+            "Name": "minecraft:mossy_cobblestone_stairs",
             "Properties": {
               "facing": "east",
               "half": "bottom",
@@ -573,7 +573,7 @@
         },
         {
           "output_state": {
-            "Name": "create:weathered_limestone_cobblestone_stairs",
+            "Name": "minecraft:mossy_cobblestone_stairs",
             "Properties": {
               "facing": "south",
               "half": "top",
@@ -599,7 +599,7 @@
         },
         {
           "output_state": {
-            "Name": "create:weathered_limestone_cobblestone_stairs",
+            "Name": "minecraft:mossy_cobblestone_stairs",
             "Properties": {
               "facing": "north",
               "half": "top",
@@ -625,7 +625,7 @@
         },
         {
           "output_state": {
-            "Name": "create:weathered_limestone_cobblestone_stairs",
+            "Name": "minecraft:mossy_cobblestone_stairs",
             "Properties": {
               "facing": "west",
               "half": "top",
@@ -651,7 +651,7 @@
         },
         {
           "output_state": {
-            "Name": "create:weathered_limestone_cobblestone_stairs",
+            "Name": "minecraft:mossy_cobblestone_stairs",
             "Properties": {
               "facing": "east",
               "half": "top",

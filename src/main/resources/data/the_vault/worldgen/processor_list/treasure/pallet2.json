@@ -30,7 +30,7 @@
         },
         {
           "output_state": {
-            "Name": "quark:charred_nether_bricks"
+            "Name": "minecraft:nether_bricks"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -127,7 +127,7 @@
         },
         {
           "output_state": {
-            "Name": "quark:charred_nether_bricks_stairs",
+            "Name": "minecraft:nether_brick_stairs",
             "Properties": {
               "facing": "north",
               "half": "bottom",
@@ -165,7 +165,7 @@
         },
         {
           "output_state": {
-            "Name": "quark:charred_nether_bricks_wall",
+            "Name": "minecraft:nether_brick_wall",
             "Properties": {
               "east": "none",
               "north": "none",
@@ -257,7 +257,7 @@
         },
         {
           "output_state": {
-            "Name": "create:scoria_pillar",
+            "Name": "minecraft:polished_diorite",
             "Properties": {
               "axis": "y"
             }

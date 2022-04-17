@@ -17,7 +17,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:blue_smooth_sandstone"
+            "Name": "minecraft:blue_concrete"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -43,7 +43,7 @@
         },
         {
           "output_state": {
-            "Name": "quark:snow_bricks"
+            "Name": "minecraft:polished_diorite"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -56,7 +56,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:silver_maple_leaves",
+            "Name": "minecraft:oak_leaves",
             "Properties": {
               "distance": "7",
               "persistent": "false"
@@ -73,7 +73,7 @@
         },
         {
           "output_state": {
-            "Name": "quark:permafrost"
+            "Name": "minecraft:purpur_block"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -112,7 +112,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:blue_sand"
+            "Name": "minecraft:blue_wool"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -125,7 +125,7 @@
         },
         {
           "output_state": {
-            "Name": "enviromats:pumice_cobble"
+            "Name": "minecraft:cobblestone"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -164,7 +164,7 @@
         },
         {
           "output_state": {
-            "Name": "quark:snow_bricks_slab",
+            "Name": "minecraft:polished_diorite_slab",
             "Properties": {
               "type": "top",
               "waterlogged": "false"
@@ -186,7 +186,7 @@
         },
         {
           "output_state": {
-            "Name": "quark:snow_bricks_slab",
+            "Name": "minecraft:polished_diorite_slab",
             "Properties": {
               "type": "bottom",
               "waterlogged": "false"
@@ -203,7 +203,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:frost_magma"
+            "Name": "minecraft:magma_block"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -216,7 +216,7 @@
         },
         {
           "output_state": {
-            "Name": "quark:snow_bricks_stairs",
+            "Name": "minecraft:polished_diorite_stairs",
             "Properties": {
               "facing": "north",
               "half": "bottom",
@@ -235,7 +235,7 @@
         },
         {
           "output_state": {
-            "Name": "quark:snow_bricks_wall",
+            "Name": "minecraft:diorite_wall",
             "Properties": {
               "east": "none",
               "north": "none",
@@ -273,7 +273,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:blue_smooth_sandstone"
+            "Name": "minecraft:blue_concrete"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -286,7 +286,7 @@
         },
         {
           "output_state": {
-            "Name": "quark:snow_bricks"
+            "Name": "minecraft:polished_diorite"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -299,7 +299,7 @@
         },
         {
           "output_state": {
-            "Name": "quark:permafrost_bricks"
+            "Name": "minecraft:purpur_pillar"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -312,7 +312,7 @@
         },
         {
           "output_state": {
-            "Name": "quark:permafrost_bricks_slab",
+            "Name": "minecraft:purpur_slab",
             "Properties": {
               "type": "bottom",
               "waterlogged": "false"
@@ -329,7 +329,7 @@
         },
         {
           "output_state": {
-            "Name": "quark:permafrost_bricks_slab",
+            "Name": "minecraft:purpur_slab",
             "Properties": {
               "type": "top",
               "waterlogged": "false"
@@ -346,7 +346,7 @@
         },
         {
           "output_state": {
-            "Name": "quark:permafrost_bricks_stairs",
+            "Name": "minecraft:purpur_stairs",
             "Properties": {
               "facing": "north",
               "half": "bottom",

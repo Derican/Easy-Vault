@@ -20,27 +20,27 @@
           },
           {
             "output_state": {
-              "Name": "byg:blue_smooth_sandstone"
+              "Name": "minecraft:blue_concrete"
             },
             "input_predicate": {
               "predicate_type": "minecraft:always_true"
             },
             "location_predicate": {
                 "predicate_type": "minecraft:random_block_match",
-                "block": "byg:blue_smooth_sandstone",
+                "block": "minecraft:blue_concrete",
                 "probability": 1.0
             }
           },
           {
             "output_state": {
-              "Name": "byg:blue_sand"
+              "Name": "minecraft:blue_wool"
             },
             "input_predicate": {
               "predicate_type": "minecraft:always_true"
             },
             "location_predicate": {
                 "predicate_type": "minecraft:random_block_match",
-                "block": "byg:blue_sand",
+                "block": "minecraft:blue_wool",
                 "probability": 1.0
             }
           }

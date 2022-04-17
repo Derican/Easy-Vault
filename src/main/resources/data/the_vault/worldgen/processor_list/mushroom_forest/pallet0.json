@@ -98,7 +98,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:holly_leaves",
+            "Name": "minecraft:birch_leaves",
             "Properties": {
               "distance": "7",
               "persistent": "false"
@@ -115,7 +115,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:flowering_orchard_leaves",
+            "Name": "minecraft:birch_leaves",
             "Properties": {
               "distance": "7",
               "persistent": "false"
@@ -132,7 +132,7 @@
         },
         {
           "output_state": {
-            "Name": "masonry:darkprismarinecobbledmossyslab",
+            "Name": "minecraft:mossy_cobblestone_slab",
             "Properties": {
               "type": "bottom",
               "waterlogged": "false"

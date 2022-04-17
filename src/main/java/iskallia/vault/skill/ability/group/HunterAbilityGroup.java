@@ -74,7 +74,7 @@ public class HunterAbilityGroup extends AbilityGroup<HunterConfig, HunterAbility
     }
     
     public static HunterAbilityGroup defaultConfig() {
-        final List<String> spawnerKeys = Arrays.asList("minecraft:mob_spawner", "ispawner:spawner", "ispawner:survival_spawner");
+        final List<String> spawnerKeys = Arrays.asList("minecraft:mob_spawner");
         final List<String> chestKeys = Arrays.asList("minecraft:chest", "minecraft:trapped_chest", "the_vault:vault_chest_tile_entity");
         final List<String> objectiveKeys = Arrays.asList("the_vault:obelisk_tile_entity", "the_vault:scavenger_chest_tile_entity", "the_vault:stabilizer_tile_entity", "the_vault:xp_altar_tile_entity", "the_vault:blood_altar_tile_entity", "the_vault:time_altar_tile_entity", "the_vault:soul_altar_tile_entity", "the_vault:vault_treasure_chest_tile_entity");
         final HunterAbilityGroup group = new HunterAbilityGroup();

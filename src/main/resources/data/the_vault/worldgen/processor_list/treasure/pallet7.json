@@ -117,7 +117,7 @@
         },
         {
           "output_state": {
-            "Name": "create:andesite_cobblestone_stairs",
+            "Name": "minecraft:andesite_stairs",
             "Properties": {
               "facing": "north",
               "half": "bottom",
@@ -210,7 +210,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:soapstone_pillar",
+            "Name": "minecraft:quartz_pillar",
             "Properties": {
               "axis": "y"
             }

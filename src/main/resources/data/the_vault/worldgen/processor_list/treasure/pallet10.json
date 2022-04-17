@@ -17,7 +17,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:stripped_ebony_wood",
+            "Name": "minecraft:stripped_birch_wood",
             "Properties": {
               "axis": "y"
             }
@@ -62,7 +62,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:overgrown_crimson_blackstone",
+            "Name": "minecraft:blackstone",
             "Properties": {
               "snowy": "false"
             }
@@ -78,7 +78,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:red_petal_block"
+            "Name": "minecraft:red_wool"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -139,7 +139,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:cherry_stairs",
+            "Name": "minecraft:polished_blackstone_brick_stairs",
             "Properties": {
               "facing": "north",
               "half": "bottom",
@@ -196,7 +196,7 @@
         },
         {
           "output_state": {
-            "Name": "masonry:prismarinepillar",
+            "Name": "minecraft:dark_prismarine",
             "Properties": {
               "axis": "y"
             }

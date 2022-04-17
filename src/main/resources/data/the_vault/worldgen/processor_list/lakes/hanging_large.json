@@ -30,7 +30,7 @@
         },
 		{
           "output_state": {
-            "Name": "quark:light_gray_shingles"
+            "Name": "minecraft:light_gray_terracotta"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -43,7 +43,7 @@
         },
 		{
           "output_state": {
-            "Name": "quark:shingles"
+            "Name": "minecraft:light_gray_terracotta"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",

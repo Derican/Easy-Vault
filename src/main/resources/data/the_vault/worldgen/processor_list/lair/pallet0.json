@@ -4,7 +4,7 @@
       "rules": [
         {
           "output_state": {
-            "Name": "enviromats:hardened_stone"
+            "Name": "minecraft:diorite"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -17,7 +17,7 @@
         },
         {
           "output_state": {
-            "Name": "enviromats:hardened_stone_polished"
+            "Name": "minecraft:polished_diorite"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -30,7 +30,7 @@
         },
         {
           "output_state": {
-            "Name": "enviromats:hardened_stone_bricks"
+            "Name": "minecraft:polished_diorites"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -59,7 +59,7 @@
         },
         {
           "output_state": {
-            "Name": "quark:orange_crystal"
+            "Name": "minecraft:orange_stained_glass"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -72,7 +72,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:pollen_block"
+            "Name": "minecraft:orange_wool"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -98,7 +98,7 @@
         },
         {
           "output_state": {
-            "Name": "quark:yellow_crystal"
+            "Name": "minecraft:yellow_stained_glass"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -143,7 +143,7 @@
         },
         {
           "output_state": {
-            "Name": "quark:red_crystal"
+            "Name": "minecraft:red_stained_glass"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",

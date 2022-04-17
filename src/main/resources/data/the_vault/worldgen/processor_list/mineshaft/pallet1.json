@@ -17,7 +17,7 @@
         },
         {
           "output_state": {
-            "Name": "create:gabbro"
+            "Name": "minecraft:stone_bricks"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -30,7 +30,7 @@
         },
         {
           "output_state": {
-            "Name": "create:polished_gabbro"
+            "Name": "minecraft:polished_diorite"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -43,7 +43,7 @@
         },
         {
           "output_state": {
-            "Name": "create:gabbro_cobblestone"
+            "Name": "minecraft:cobblestone"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -72,7 +72,7 @@
         },
         {
           "output_state": {
-            "Name": "quark:smooth_soul_sandstone"
+            "Name": "minecraft:smooth_sandstone"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -85,7 +85,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:brown_mushroom_stem",
+            "Name": "minecraft:mushroom_stem",
             "Properties": {
               "down": "true",
               "east": "true",
@@ -106,7 +106,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:meadow_dirt"
+            "Name": "minecraft:dirt"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -156,7 +156,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:embur_fence",
+            "Name": "minecraft:dark_oak_fence",
             "Properties": {
               "east": "false",
               "north": "false",
@@ -176,7 +176,7 @@
         },
         {
           "output_state": {
-            "Name": "create:gabbro_cobblestone_wall",
+            "Name": "minecraft:cobblestone_wall",
             "Properties": {
               "east": "none",
               "north": "none",

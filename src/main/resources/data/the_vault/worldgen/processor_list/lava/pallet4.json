@@ -30,7 +30,7 @@
         },
         {
           "output_state": {
-            "Name": "immersiveengineering:sheetmetal_colored_black"
+            "Name": "minecraft:black_wool"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -57,7 +57,7 @@
         },
         {
           "output_state": {
-            "Name": "immersiveengineering:sheetmetal_colored_black"
+            "Name": "minecraft:black_wool"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -84,7 +84,7 @@
         },
         {
           "output_state": {
-            "Name": "iskallutilities:metal_plate_rivets"
+            "Name": "minecraft:gray_wool"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -97,7 +97,7 @@
         },
         {
           "output_state": {
-            "Name": "iskallutilities:rusty_corrugated_metal_sheet_2"
+            "Name": "minecraft:cyan_wool"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -110,7 +110,7 @@
         },
         {
           "output_state": {
-            "Name": "iskallutilities:rusty_corrugated_metal_sheet_1"
+            "Name": "minecraft:cyan_wool"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -123,7 +123,7 @@
         },
         {
           "output_state": {
-            "Name": "immersiveengineering:sheetmetal_steel"
+            "Name": "minecraft:iron_block"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -136,7 +136,7 @@
         },
         {
           "output_state": {
-            "Name": "immersiveengineering:sheetmetal_colored_light_gray"
+            "Name": "minecraft:iron_block"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -188,7 +188,7 @@
         },
         {
           "output_state": {
-            "Name": "quark:green_crystal"
+            "Name": "minecraft:green_stained_glass"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -201,7 +201,7 @@
         },
         {
           "output_state": {
-            "Name": "enviromats:alabaster_lime"
+            "Name": "minecraft:lime_wool"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -214,7 +214,7 @@
         },
         {
           "output_state": {
-            "Name": "enviromats:alabaster_lime_cobble"
+            "Name": "minecraft:lime_wool"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -227,7 +227,7 @@
         },
         {
           "output_state": {
-            "Name": "enviromats:alabaster_gray_slab",
+            "Name": "minecraft:stone_slab",
             "Properties": {
               "type": "bottom",
               "waterlogged": "false"
@@ -244,7 +244,7 @@
         },
         {
           "output_state": {
-            "Name": "immersiveengineering:slab_sheetmetal_colored_gray",
+            "Name": "minecraft:stone_slab",
             "Properties": {
               "type": "bottom",
               "waterlogged": "false"
@@ -288,7 +288,7 @@
         },
         {
           "output_state": {
-            "Name": "enviromats:granodiorite_stairs",
+            "Name": "minecraft:granite_stairs",
             "Properties": {
               "facing": "north",
               "half": "bottom",
@@ -307,7 +307,7 @@
         },
         {
           "output_state": {
-            "Name": "enviromats:hardened_stone_stairs",
+            "Name": "minecraft:diorite_stairs",
             "Properties": {
               "facing": "north",
               "half": "bottom",
@@ -326,7 +326,7 @@
         },
         {
           "output_state": {
-            "Name": "enviromats:alabaster_light_gray_wall",
+            "Name": "minecraft:cobblestone_wall",
             "Properties": {
               "east": "none",
               "north": "none",
@@ -360,7 +360,7 @@
         },
         {
           "output_state": {
-            "Name": "decorative_blocks:chain",
+            "Name": "minecraft:chain",
             "Properties": { 
 				"axis": "y",
 				"waterlogged": "false"
@@ -377,7 +377,7 @@
         },
         {
           "output_state": {
-            "Name": "iskallutilities:semi_rusty_metal_plate_2"
+            "Name": "minecraft:yellow_wool"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -390,7 +390,7 @@
         },
         {
           "output_state": {
-            "Name": "iskallutilities:metal_plate_rivets"
+            "Name": "minecraft:gray_wool"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -403,7 +403,7 @@
         },
         {
           "output_state": {
-            "Name": "iskallutilities:metal_plate"
+            "Name": "minecraft:yellow_wool"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -416,7 +416,7 @@
         },
         {
           "output_state": {
-            "Name": "iskallutilities:gray_metal_rivets_2",
+            "Name": "minecraft:yellow_wool",
             "Properties": {
               "type": "bottom",
               "waterlogged": "false"

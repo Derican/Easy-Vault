@@ -30,7 +30,7 @@
         },
         {
           "output_state": {
-            "Name": "masonry:dioritecobbled"
+            "Name": "minecraft:diorite"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -43,7 +43,7 @@
         },
         {
           "output_state": {
-            "Name": "create:diorite_cobblestone"
+            "Name": "minecraft:diorite"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -56,7 +56,7 @@
         },
         {
           "output_state": {
-            "Name": "masonry:dioritecobbledmossy"
+            "Name": "minecraft:polished_diorite"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -69,7 +69,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:maple_log",
+            "Name": "minecraft:oak_log",
             "Properties": {
               "axis": "y"
             }
@@ -98,7 +98,7 @@
         },
         {
           "output_state": {
-            "Name": "masonry:granitecobbled"
+            "Name": "minecraft:granite"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -132,7 +132,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:embur_slab",
+            "Name": "minecraft:spruce_slab",
             "Properties": {
               "type": "bottom",
               "waterlogged": "false"
@@ -169,7 +169,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:pine_fence",
+            "Name": "minecraft:spruce_fence",
             "Properties": {
               "east": "false",
               "north": "false",
@@ -189,7 +189,7 @@
         },
         {
           "output_state": {
-            "Name": "create:granite_cobblestone_wall",
+            "Name": "minecraft:granite_wall",
             "Properties": {
               "east": "none",
               "north": "none",

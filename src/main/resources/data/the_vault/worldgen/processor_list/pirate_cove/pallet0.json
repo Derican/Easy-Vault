@@ -140,7 +140,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:ripe_orchard_leaves",
+            "Name": "minecraft:dark_oak_leaves",
             "Properties": {
               "distance": "7",
               "persistent": "false"
@@ -157,7 +157,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:red_maple_leaves",
+            "Name": "minecraft:dark_oak_leaves",
             "Properties": {
               "distance": "7",
               "persistent": "false"
@@ -190,7 +190,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:pollen_block"
+            "Name": "minecraft:orange_wool"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -216,7 +216,7 @@
         },
         {
           "output_state": {
-            "Name": "masonry:granitecobbledmossyslab",
+            "Name": "minecraft:granite_slab",
             "Properties": {
               "type": "bottom",
               "waterlogged": "false"
@@ -292,7 +292,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:pine_slab",
+            "Name": "minecraft:cobbled_deepslate_slab",
             "Properties": {
               "type": "bottom",
               "waterlogged": "false"
@@ -314,7 +314,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:pine_slab",
+            "Name": "minecraft:cobbled_deepslate_slab",
             "Properties": {
               "type": "top",
               "waterlogged": "false"
@@ -336,7 +336,7 @@
         },
         {
           "output_state": {
-            "Name": "byg:stripped_pine_wood",
+            "Name": "minecraft:stripped_dark_oak_log",
             "Properties": {
               "axis": "y"
             }
