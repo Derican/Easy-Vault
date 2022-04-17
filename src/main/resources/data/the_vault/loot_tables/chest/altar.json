@@ -1451,7 +1451,7 @@
 		    {
           "type": "minecraft:item",
           "weight": 6,
-          "name": "quark:soul_bead",
+          "name": "minecraft:cocoa_beans",
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -1465,7 +1465,7 @@
 		    {
           "type": "minecraft:item",
           "weight": 1,
-          "name": "quark:diamond_heart",
+          "name": "minecraft:heart_of_the_sea",
           "functions": [
             {
               "function": "minecraft:set_count",

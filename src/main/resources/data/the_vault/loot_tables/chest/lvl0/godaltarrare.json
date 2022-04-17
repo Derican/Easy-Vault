@@ -846,7 +846,7 @@
         {
           "type": "minecraft:item",
           "weight": 3,
-          "name": "botania:overgrowth_seed",
+          "name": "minecraft:gold_block",
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -1110,7 +1110,7 @@
         {
           "type": "minecraft:item",
           "weight": 1,
-          "name": "quark:pickarang",
+          "name": "minecraft:netherite_pickaxe",
           "functions": [
             {
               "function": "minecraft:set_count",

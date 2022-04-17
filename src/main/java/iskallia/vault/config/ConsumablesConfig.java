@@ -36,7 +36,6 @@ public class ConsumablesConfig extends Config
     @Override
     protected void reset() {
         final ConsumableEntry jadeAppleEntry = new ConsumableEntry("the_vault:jade_apple", true, 4.0f, ConsumableType.BASIC).addEffect(new ConsumableEffect("minecraft:haste", 3, 6000).showIcon());
-        final ConsumableEntry cobaltAppleEntry = new ConsumableEntry("the_vault:cobalt_apple", true, 0.0f, ConsumableType.BASIC).addEffect(new ConsumableEffect("minecraft:fire_resistance", 1, 6000).showIcon()).addEffect(new ConsumableEffect("botania:feather_feet", 1, 6000).showIcon());
         final ConsumableEntry pixieAppleEntry = new ConsumableEntry("the_vault:pixie_apple", true, 8.0f, ConsumableType.BASIC).addEffect(new ConsumableEffect("minecraft:speed", 5, 600).showIcon()).addEffect(new ConsumableEffect("minecraft:slow_falling", 2, 600).showIcon()).addEffect(new ConsumableEffect("minecraft:jump_boost", 2, 600).showIcon());
         final ConsumableEntry candyBarEntry = new ConsumableEntry("the_vault:candy_bar", false, 0.0f, ConsumableType.BASIC).addEffect(new ConsumableEffect("minecraft:speed", 5, 1200).showIcon());
         final ConsumableEntry powerBarEntry = new ConsumableEntry("the_vault:power_bar", false, 0.0f, ConsumableType.BASIC).addEffect(new ConsumableEffect("minecraft:strength", 4, 600).showIcon());
@@ -50,7 +49,6 @@ public class ConsumablesConfig extends Config
         this.itemEffects = new ArrayList<ConsumableEntry>() {
             {
                 this.add(jadeAppleEntry);
-                this.add(cobaltAppleEntry);
                 this.add(pixieAppleEntry);
                 this.add(candyBarEntry);
                 this.add(powerBarEntry);

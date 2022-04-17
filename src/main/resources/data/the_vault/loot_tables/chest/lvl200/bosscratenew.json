@@ -207,7 +207,7 @@
         { "_name": "Mod Box",
           "type": "minecraft:item",
           "weight": 4,
-          "name": "the_vault:mod_box",
+          "name": "minecraft:shulker_box",
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -331,7 +331,7 @@
         { "_name": "Heart of Diamond",
           "type": "minecraft:item",
           "weight": 1,
-          "name": "quark:diamond_heart",
+          "name": "minecraft:heart_of_the_sea",
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -387,7 +387,7 @@
         { "_name": "Overgrown Seed",
           "type": "minecraft:item",
           "weight": 1,
-          "name": "botania:overgrowth_seed",
+          "name": "minecraft:gold_block",
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -813,7 +813,7 @@
         { "_name": "Common Backpack",
           "type": "minecraft:item",
           "weight": 1,
-          "name": "simplybackpacks:commonbackpack",
+          "name": "minecraft:coal_block",
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -827,7 +827,7 @@
         { "_name": "Dank 1",
           "type": "minecraft:item",
           "weight": 1,
-          "name": "dankstorage:dank_1",
+          "name": "minecraft:dragon_egg",
           "functions": [
             {
               "function": "minecraft:set_count",

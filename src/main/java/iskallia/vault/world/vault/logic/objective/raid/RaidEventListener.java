@@ -127,7 +127,7 @@ public class RaidEventListener
             return false;
         }
         final ResourceLocation key = interacted.getItem().getRegistryName();
-        return (key.getNamespace().equals("dankstorage") && key.getPath().startsWith("dank_")) || (key.toString().equals("quark:pickarang") || key.toString().equals("quark:flamerang")) || key.getNamespace().equals("simplybackpacks");
+        return (key.getNamespace().equals("dankstorage") && key.getPath().startsWith("dank_")) || (key.toString().equals("minecraft:netherite_pickaxe") || key.toString().equals("quark:flamerang")) || key.getNamespace().equals("simplybackpacks");
     }
     
     private static boolean isInLockedRaidRoom(final IWorld world, final BlockPos pos) {

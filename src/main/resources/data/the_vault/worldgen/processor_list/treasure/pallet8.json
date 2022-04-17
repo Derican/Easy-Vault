@@ -56,19 +56,6 @@
         },
         {
           "output_state": {
-            "Name": "create:limesand"
-          },
-          "input_predicate": {
-            "predicate_type": "minecraft:random_block_match",
-            "block": "minecraft:cyan_wool",
-            "probability": 1.0
-          },
-          "location_predicate": {
-            "predicate_type": "minecraft:always_true"
-          }
-        },
-        {
-          "output_state": {
             "Name": "minecraft:deepslate_tiles"
           },
           "input_predicate": {

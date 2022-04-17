@@ -999,7 +999,7 @@
         {
           "type": "minecraft:item",
           "weight": 2,
-          "name": "the_vault:mod_box",
+          "name": "minecraft:shulker_box",
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -1223,7 +1223,7 @@
         {
           "type": "minecraft:tag",
           "weight": 1,
-          "name": "quark:runes",
+          "name": "minecraft:nether_star",
           "expand": "true",
           "functions": [
             {

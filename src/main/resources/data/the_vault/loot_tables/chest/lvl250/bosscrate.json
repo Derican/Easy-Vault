@@ -691,7 +691,7 @@
         {
           "type": "minecraft:item",
           "weight": 5,
-          "name": "easy_villagers:villager",
+          "name": "minecraft:netherite_block",
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -1060,7 +1060,7 @@
         {
           "type": "minecraft:item",
           "weight": 2,
-          "name": "darkutils:charm_experience",
+          "name": "minecraft:trident",
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -1084,7 +1084,7 @@
         {
           "type": "minecraft:item",
           "weight": 2,
-          "name": "simplybackpacks:commonbackpack",
+          "name": "minecraft:coal_block",
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -1258,7 +1258,7 @@
         {
           "type": "minecraft:tag",
           "weight": 6,
-          "name": "quark:runes",
+          "name": "minecraft:nether_star",
           "expand": "true",
           "functions": [
             {

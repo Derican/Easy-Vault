@@ -266,7 +266,7 @@
         },
         {
           "output_state": {
-            "Name": "decorative_blocks:warped_beam",
+            "Name": "minecraft:blue_wool",
             "Properties": {
               "axis": "y"
             }

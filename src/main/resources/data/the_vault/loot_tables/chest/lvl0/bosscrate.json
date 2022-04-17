@@ -855,7 +855,7 @@
             }
           ]
         },
-        { "name": "quark:pickarang",
+        { "name": "minecraft:netherite_pickaxe",
           "type": "minecraft:item",
           "weight": 1,
           "functions": [

@@ -1070,7 +1070,7 @@
         {
           "type": "minecraft:item",
           "weight": 4,
-          "name": "the_vault:mod_box",
+          "name": "minecraft:shulker_box",
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -1174,7 +1174,7 @@
         {
           "type": "minecraft:item",
           "weight": 3,
-          "name": "botania:laputa_shard",
+          "name": "minecraft:gold_block",
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -1198,7 +1198,7 @@
         {
           "type": "minecraft:item",
           "weight": 7,
-          "name": "refinedstorage:4k_storage_disk",
+          "name": "minecraft:music_disc_mall",
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -1222,7 +1222,7 @@
         {
           "type": "minecraft:item",
           "weight": 3,
-          "name": "refinedstorage:16k_storage_disk",
+          "name": "minecraft:music_disc_strad",
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -1246,7 +1246,7 @@
         {
           "type": "minecraft:item",
           "weight": 12,
-          "name": "refinedstorage:cable",
+          "name": "minecraft:music_disc_stal",
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -1270,7 +1270,7 @@
         {
           "type": "minecraft:item",
           "weight": 1,
-          "name": "refinedstorage:disk_drive",
+          "name": "minecraft:music_disc_ward",
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -1294,7 +1294,7 @@
         {
           "type": "minecraft:item",
           "weight": 1,
-          "name": "refinedstorage:grid",
+          "name": "minecraft:music_disc_chirp",
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -1318,7 +1318,7 @@
         {
           "type": "minecraft:item",
           "weight": 5,
-          "name": "darkutils:vector_plate",
+          "name": "minecraft:trident",
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -1342,7 +1342,7 @@
         {
           "type": "minecraft:item",
           "weight": 1,
-          "name": "darkutils:charm_gluttony",
+          "name": "minecraft:trident",
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -1366,7 +1366,7 @@
         {
           "type": "minecraft:item",
           "weight": 1,
-          "name": "botania:cloud_pendant",
+          "name": "minecraft:gold_block",
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -1390,7 +1390,7 @@
         {
           "type": "minecraft:item",
           "weight": 3,
-          "name": "storagedrawers:compacting_drawers_3",
+          "name": "minecraft:lapis_block",
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -1414,7 +1414,7 @@
         {
           "type": "minecraft:item",
           "weight": 1,
-          "name": "darkutils:rune_damage_player",
+          "name": "minecraft:trident",
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -1438,7 +1438,7 @@
         {
           "type": "minecraft:item",
           "weight": 5,
-          "name": "metalbarrels:netherite_barrel",
+          "name": "minecraft:netherite_block",
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -1462,7 +1462,7 @@
         {
           "type": "minecraft:item",
           "weight": 7,
-          "name": "metalbarrels:diamond_barrel",
+          "name": "minecraft:diamond_block",
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -1486,7 +1486,7 @@
         {
           "type": "minecraft:item",
           "weight": 5,
-          "name": "metalbarrels:gold_barrel",
+          "name": "minecraft:gold_block",
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -1510,7 +1510,7 @@
         {
           "type": "minecraft:item",
           "weight": 6,
-          "name": "waystones:waystone",
+          "name": "minecraft:gold_block",
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -1678,7 +1678,7 @@
         {
           "type": "minecraft:item",
           "weight": 4,
-          "name": "ironchest:gold_chest",
+          "name": "minecraft:gold_block",
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -1702,7 +1702,7 @@
         {
           "type": "minecraft:item",
           "weight": 7,
-          "name": "ironchest:diamond_chest",
+          "name": "minecraft:diamond_block",
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -1726,7 +1726,7 @@
         {
           "type": "minecraft:item",
           "weight": 9,
-          "name": "ironfurnaces:iron_furnace",
+          "name": "minecraft:iron_block",
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -1750,7 +1750,7 @@
         {
           "type": "minecraft:item",
           "weight": 7,
-          "name": "ironfurnaces:gold_furnace",
+          "name": "minecraft:gold_block",
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -1774,7 +1774,7 @@
         {
           "type": "minecraft:item",
           "weight": 4,
-          "name": "ironfurnaces:diamond_furnace",
+          "name": "minecraft:diamond_block",
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -1798,7 +1798,7 @@
         {
           "type": "minecraft:item",
           "weight": 3,
-          "name": "ironfurnaces:emerald_furnace",
+          "name": "minecraft:emerald_block",
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -1822,7 +1822,7 @@
         {
           "type": "minecraft:item",
           "weight": 7,
-          "name": "appliedenergistics2:4k_storage_cell",
+          "name": "minecraft:iron_block",
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -1846,7 +1846,7 @@
         {
           "type": "minecraft:item",
           "weight": 3,
-          "name": "appliedenergistics2:16k_storage_cell",
+          "name": "minecraft:diamond_block",
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -1870,7 +1870,7 @@
         {
           "type": "minecraft:item",
           "weight": 12,
-          "name": "appliedenergistics2:fluix_glass_cable",
+          "name": "minecraft:iron_block",
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -1894,7 +1894,7 @@
         {
           "type": "minecraft:item",
           "weight": 3,
-          "name": "appliedenergistics2:drive",
+          "name": "minecraft:diamond_block",
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -1918,7 +1918,7 @@
         {
           "type": "minecraft:item",
           "weight": 1,
-          "name": "appliedenergistics2:terminal",
+          "name": "minecraft:diamond_block",
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -2086,7 +2086,7 @@
         {
           "type": "minecraft:item",
           "weight": 3,
-          "name": "torchmaster:megatorch",
+          "name": "minecraft:lapis_block",
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -2110,7 +2110,7 @@
         {
           "type": "minecraft:item",
           "weight": 3,
-          "name": "torchmaster:dreadlamp",
+          "name": "minecraft:slime_block",
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -2134,7 +2134,7 @@
         {
           "type": "minecraft:item",
           "weight": 3,
-          "name": "elevatorid:elevator_white",
+          "name": "minecraft:iron_block",
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -2158,7 +2158,7 @@
         {
           "type": "minecraft:item",
           "weight": 3,
-          "name": "easy_villagers:trader",
+          "name": "minecraft:netherite_block",
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -2182,7 +2182,7 @@
         {
           "type": "minecraft:item",
           "weight": 2,
-          "name": "easy_villagers:farmer",
+          "name": "minecraft:hay_block",
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -2206,7 +2206,7 @@
         {
           "type": "minecraft:item",
           "weight": 3,
-          "name": "easy_villagers:breeder",
+          "name": "minecraft:hay_block",
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -2230,7 +2230,7 @@
         {
           "type": "minecraft:item",
           "weight": 1,
-          "name": "easy_villagers:iron_farm",
+          "name": "minecraft:iron_block",
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -2254,7 +2254,7 @@
         {
           "type": "minecraft:item",
           "weight": 4,
-          "name": "easy_villagers:villager",
+          "name": "minecraft:netherite_block",
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -2302,7 +2302,7 @@
         {
           "type": "minecraft:item",
           "weight": 3,
-          "name": "simplybackpacks:uncommonbackpack",
+          "name": "minecraft:iron_block",
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -2326,7 +2326,7 @@
         {
           "type": "minecraft:item",
           "weight": 3,
-          "name": "dankstorage:dank_2",
+          "name": "minecraft:dragon_egg",
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -2350,7 +2350,7 @@
         {
           "type": "minecraft:item",
           "weight": 2,
-          "name": "dankstorage:dank_3",
+          "name": "minecraft:dragon_egg",
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -3458,7 +3458,7 @@
         { "_name": "Dank4",
           "type": "minecraft:item",
           "weight": 6,
-          "name": "dankstorage:dank_4",
+          "name": "minecraft:dragon_egg",
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -3482,7 +3482,7 @@
         { "_name": "Dank5",
           "type": "minecraft:item",
           "weight": 4,
-          "name": "dankstorage:dank_5",
+          "name": "minecraft:dragon_egg",
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -3506,7 +3506,7 @@
         { "_name": "Dank6",
           "type": "minecraft:item",
           "weight": 3,
-          "name": "dankstorage:dank_6",
+          "name": "minecraft:dragon_egg",
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -3530,7 +3530,7 @@
         { "_name": "Dank7",
           "type": "minecraft:item",
           "weight": 1,
-          "name": "dankstorage:dank_7",
+          "name": "minecraft:dragon_egg",
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -3602,7 +3602,7 @@
         { "_name": "Blue Backpack",
           "type": "minecraft:item",
           "weight": 6,
-          "name": "simplybackpacks:rarebackpack",
+          "name": "minecraft:diamond_block",
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -3626,7 +3626,7 @@
         { "_name": "Purple Backpack",
           "type": "minecraft:item",
           "weight": 2,
-          "name": "simplybackpacks:epicbackpack",
+          "name": "minecraft:emerald_block",
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -3650,7 +3650,7 @@
         { "_name": "RS64k",
           "type": "minecraft:item",
           "weight": 6,
-          "name": "refinedstorage:64k_storage_disk",
+          "name": "minecraft:music_disc_mellohi",
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -3674,7 +3674,7 @@
         { "_name": "AE64k",
           "type": "minecraft:item",
           "weight": 6,
-          "name": "appliedenergistics2:64k_storage_cell",
+          "name": "minecraft:diamond_block",
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -3698,7 +3698,7 @@
         { "_name": "MEKTIME",
           "type": "minecraft:item",
           "weight": 6,
-          "name": "mekanism:qio_drive_time_dilating",
+          "name": "minecraft:diamond_block",
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -3722,7 +3722,7 @@
         { "_name": "MEKSUPER",
           "type": "minecraft:item",
           "weight": 1,
-          "name": "mekanism:qio_drive_supermassive",
+          "name": "minecraft:diamond_block",
           "functions": [
             {
               "function": "minecraft:set_count",

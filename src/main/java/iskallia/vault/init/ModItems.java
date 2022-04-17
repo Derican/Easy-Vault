@@ -320,7 +320,6 @@ public class ModItems
     public static VaultMagnetItem VAULT_MAGNET_STRONG;
     public static VaultMagnetItem VAULT_MAGNET_OMEGA;
     public static final BucketItem VOID_LIQUID_BUCKET;
-    public static GatedLootableItem MOD_BOX;
     public static LootableItem UNIDENTIFIED_TREASURE_KEY;
     public static VoidOrbItem VOID_ORB;
     public static BasicItem CRYSTAL_BURGER;
@@ -644,7 +643,6 @@ public class ModItems
         registry.register(ModItems.SCAVENGER_SCRAP_SPICE_JAR);
         registry.register(ModItems.SCAVENGER_SCRAP_WIZARD_WAND);
         registry.register(ModItems.VOID_LIQUID_BUCKET);
-        registry.register(ModItems.MOD_BOX);
         registry.register(ModItems.VAULTERITE_INGOT);
         registry.register(ModItems.RED_VAULT_ESSENCE);
         registry.register(ModItems.UNIDENTIFIED_TREASURE_KEY);
@@ -990,7 +988,6 @@ public class ModItems
         ModItems.VAULT_MAGNET_STRONG = new VaultMagnetItem(Vault.id("vault_magnet_strong"), VaultMagnetItem.MagnetType.STRONG);
         ModItems.VAULT_MAGNET_OMEGA = new VaultMagnetItem(Vault.id("vault_magnet_omega"), VaultMagnetItem.MagnetType.OMEGA);
         VOID_LIQUID_BUCKET = (BucketItem)new BucketItem((Supplier)ModFluids.VOID_LIQUID, new Item.Properties().craftRemainder(Items.BUCKET).stacksTo(1).tab(ModItems.VAULT_MOD_GROUP)).setRegistryName(Vault.id("void_liquid_bucket"));
-        ModItems.MOD_BOX = new GatedLootableItem(Vault.id("mod_box"), new Item.Properties().tab(ModItems.VAULT_MOD_GROUP), new ITextComponent[] { (ITextComponent)new StringTextComponent("Contains a random modded item from any of your unlocked mods") });
         ModItems.UNIDENTIFIED_TREASURE_KEY = new LootableItem(Vault.id("unidentified_treasure_key"), new Item.Properties().tab(ModItems.VAULT_MOD_GROUP), () -> ModConfigs.UNIDENTIFIED_TREASURE_KEY.getRandomKey(new Random()));
         ModItems.VOID_ORB = new VoidOrbItem(Vault.id("void_orb"), new Item.Properties().tab(ModItems.VAULT_MOD_GROUP).stacksTo(1));
         ModItems.CRYSTAL_BURGER = new BasicTooltipItem(Vault.id("crystal_burger"), new Item.Properties().tab(ModItems.VAULT_MOD_GROUP), new ITextComponent[] { (ITextComponent)new StringTextComponent("Eternal Exp food").withStyle(TextFormatting.GOLD) });

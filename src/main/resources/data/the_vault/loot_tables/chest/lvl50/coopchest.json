@@ -778,7 +778,7 @@
         { "_name": "quarkrunes",
           "type": "minecraft:tag",
           "weight": 1,
-          "name": "quark:runes",
+          "name": "minecraft:nether_star",
           "expand": "true",
           "functions": [
             {

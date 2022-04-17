@@ -85,66 +85,6 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:dark_oak_log",
-            "Properties": {
-              "axis": "x"
-            }
-          },
-          "input_predicate": {
-            "block_state": {
-              "Name": "create:andesite_pillar",
-              "Properties": {
-                "axis": "x"
-              }
-            },
-            "predicate_type": "minecraft:blockstate_match"
-          },
-          "location_predicate": {
-            "predicate_type": "minecraft:always_true"
-          }
-        },
-        {
-          "output_state": {
-            "Name": "minecraft:dark_oak_log",
-            "Properties": {
-              "axis": "y"
-            }
-          },
-          "input_predicate": {
-            "block_state": {
-              "Name": "create:andesite_pillar",
-              "Properties": {
-                "axis": "y"
-              }
-            },
-            "predicate_type": "minecraft:blockstate_match"
-          },
-          "location_predicate": {
-            "predicate_type": "minecraft:always_true"
-          }
-        },
-        {
-          "output_state": {
-            "Name": "minecraft:dark_oak_log",
-            "Properties": {
-              "axis": "z"
-            }
-          },
-          "input_predicate": {
-            "block_state": {
-              "Name": "create:andesite_pillar",
-              "Properties": {
-                "axis": "z"
-              }
-            },
-            "predicate_type": "minecraft:blockstate_match"
-          },
-          "location_predicate": {
-            "predicate_type": "minecraft:always_true"
-          }
-        },
-        {
-          "output_state": {
             "Name": "minecraft:note_block",
             "Properties": {
               "instrument": "harp",

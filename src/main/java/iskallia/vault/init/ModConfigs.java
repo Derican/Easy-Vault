@@ -62,7 +62,6 @@ public class ModConfigs
     public static PaxelEnhancementConfig PAXEL_ENHANCEMENTS;
     public static ScavengerHuntConfig SCAVENGER_HUNT;
     public static DurabilityConfig DURBILITY;
-    public static ModBoxConfig MOD_BOX;
     public static ArchitectEventConfig ARCHITECT_EVENT;
     public static UnidentifiedTreasureKeyConfig UNIDENTIFIED_TREASURE_KEY;
     public static VaultGearUpgradeConfig VAULT_GEAR_UPGRADE;
@@ -145,7 +144,6 @@ public class ModConfigs
         ModConfigs.PAXEL_ENHANCEMENTS = new PaxelEnhancementConfig().readConfig();
         ModConfigs.SCAVENGER_HUNT = new ScavengerHuntConfig().readConfig();
         ModConfigs.DURBILITY = new DurabilityConfig().readConfig();
-        ModConfigs.MOD_BOX = new ModBoxConfig().readConfig();
         ModConfigs.ARCHITECT_EVENT = new ArchitectEventConfig().readConfig();
         ModConfigs.UNIDENTIFIED_TREASURE_KEY = new UnidentifiedTreasureKeyConfig().readConfig();
         ModConfigs.VAULT_GEAR_UPGRADE = new VaultGearUpgradeConfig().readConfig();

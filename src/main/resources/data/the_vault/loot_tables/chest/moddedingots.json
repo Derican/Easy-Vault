@@ -77,20 +77,6 @@
                 }
               ]
             },
-            { "_name": "Zinc",
-              "type": "minecraft:item",
-              "weight": 10,
-              "name": "create:zinc_ore",
-              "functions": [
-                {
-                  "function": "minecraft:set_count",
-                  "count": {
-                    "min": 1,
-                    "max": 3
-                  }
-                }
-              ]
-            },
             { "_name": "Uranite",
               "type": "minecraft:item",
               "weight": 3,
@@ -108,7 +94,7 @@
             { "_name": "Certus",
               "type": "minecraft:item",
               "weight": 8,
-              "name": "appliedenergistics2:quartz_ore",
+              "name": "minecraft:quartz_block",
               "functions": [
                 {
                   "function": "minecraft:set_count",
@@ -122,21 +108,7 @@
             { "_name": "Charged Certus",
               "type": "minecraft:item",
               "weight": 4,
-              "name": "appliedenergistics2:charged_quartz_ore",
-              "functions": [
-                {
-                  "function": "minecraft:set_count",
-                  "count": {
-                    "min": 1,
-                    "max": 3
-                  }
-                }
-              ]
-            },
-            { "_name": "Uranium",
-              "type": "minecraft:item",
-              "weight": 4,
-              "name": "immersiveengineering:ore_uranium",
+              "name": "minecraft:quartz_block",
               "functions": [
                 {
                   "function": "minecraft:set_count",

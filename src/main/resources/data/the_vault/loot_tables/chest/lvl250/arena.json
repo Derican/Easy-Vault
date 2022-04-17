@@ -787,7 +787,7 @@
         {
           "type": "minecraft:item",
           "weight": 5,
-          "name": "easy_villagers:villager",
+          "name": "minecraft:netherite_block",
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -1204,7 +1204,7 @@
         {
           "type": "minecraft:item",
           "weight": 3,
-          "name": "botania:overgrowth_seed",
+          "name": "minecraft:gold_block",
           "functions": [
             {
               "function": "minecraft:set_count",

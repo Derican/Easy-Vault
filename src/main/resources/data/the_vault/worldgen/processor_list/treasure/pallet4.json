@@ -114,7 +114,7 @@
         },
         {
           "output_state": {
-            "Name": "enviromats:alabaster_gray_cobble_stairs",
+            "Name": "minecraft:cobblestone_stairs",
             "Properties": {
               "facing": "north",
               "half": "bottom",

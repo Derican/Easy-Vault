@@ -111,7 +111,7 @@
         },
         {
           "output_state": {
-            "Name": "masonry:darkprismarinepolishedslab",
+            "Name": "minecraft:oak_slab",
             "Properties": {
               "type": "bottom",
               "waterlogged": "false"
@@ -202,7 +202,7 @@
         },
         {
           "output_state": {
-            "Name": "masonry:darkprismarinepaverswall",
+            "Name": "minecraft:cobblestone_wall",
             "Properties": {
               "east": "none",
               "north": "none",

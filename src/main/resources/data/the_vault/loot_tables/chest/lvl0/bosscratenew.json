@@ -483,7 +483,7 @@
         {
           "type": "minecraft:item",
           "weight": 3,
-          "name": "botania:overgrowth_seed",
+          "name": "minecraft:gold_block",
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -699,7 +699,7 @@
         { "_name": "Heart of Diamond",
           "type": "minecraft:item",
           "weight": 1,
-          "name": "quark:diamond_heart",
+          "name": "minecraft:heart_of_the_sea",
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -713,7 +713,7 @@
         { "_name": "Overgrown Seed",
           "type": "minecraft:item",
           "weight": 1,
-          "name": "botania:overgrowth_seed",
+          "name": "minecraft:gold_block",
           "functions": [
             {
               "function": "minecraft:set_count",
