@@ -16,7 +16,6 @@
           "the_vault:lava/pallet1",
           "the_vault:lava/pallet2",
           "the_vault:lava/pallet2",
-          "the_vault:lava/pallet3",
           "the_vault:lava/pallet4",
           "the_vault:lava_dark/pallet0",
           "the_vault:lava_dark/pallet2"
@@ -53,7 +52,6 @@
           "the_vault:lava/pallet1",
           "the_vault:lava/pallet2",
           "the_vault:lava/pallet2",
-          "the_vault:lava/pallet3",
           "the_vault:lava/pallet4",
           "the_vault:lava_dark/pallet0",
           "the_vault:lava_dark/pallet2"
@@ -90,7 +88,6 @@
           "the_vault:lava/pallet1",
           "the_vault:lava/pallet2",
           "the_vault:lava/pallet2",
-          "the_vault:lava/pallet3",
           "the_vault:lava/pallet4",
           "the_vault:lava_dark/pallet0",
           "the_vault:lava_dark/pallet2"
@@ -127,7 +124,6 @@
           "the_vault:lava/pallet1",
           "the_vault:lava/pallet2",
           "the_vault:lava/pallet2",
-          "the_vault:lava/pallet3",
           "the_vault:lava/pallet4",
           "the_vault:lava_dark/pallet0",
           "the_vault:lava_dark/pallet2"
@@ -349,12 +345,8 @@
           "the_vault:lakes/pallet0",
           "the_vault:lakes/pallet0",
           "the_vault:lakes/pallet0",
-          "the_vault:lakes/pallet1",
-          "the_vault:lakes/pallet1",
-          "the_vault:lakes/pallet1",
           "the_vault:lakes/pallet2",
-          "the_vault:lakes/pallet2",
-          "the_vault:lakes/pallet3"
+          "the_vault:lakes/pallet2"
         ],
         "element_type": "the_vault:paletted_list_pool_element",
         "projection": "rigid",
@@ -377,12 +369,8 @@
           "the_vault:lakes/pallet0",
           "the_vault:lakes/pallet0",
           "the_vault:lakes/pallet0",
-          "the_vault:lakes/pallet1",
-          "the_vault:lakes/pallet1",
-          "the_vault:lakes/pallet1",
           "the_vault:lakes/pallet2",
-          "the_vault:lakes/pallet2",
-          "the_vault:lakes/pallet3"
+          "the_vault:lakes/pallet2"
         ],
         "element_type": "the_vault:paletted_list_pool_element",
         "projection": "rigid",
@@ -405,12 +393,8 @@
           "the_vault:lakes/pallet0",
           "the_vault:lakes/pallet0",
           "the_vault:lakes/pallet0",
-          "the_vault:lakes/pallet1",
-          "the_vault:lakes/pallet1",
-          "the_vault:lakes/pallet1",
           "the_vault:lakes/pallet2",
-          "the_vault:lakes/pallet2",
-          "the_vault:lakes/pallet3"
+          "the_vault:lakes/pallet2"
         ],
         "element_type": "the_vault:paletted_list_pool_element",
         "projection": "rigid",
@@ -433,12 +417,8 @@
           "the_vault:lakes/pallet0",
           "the_vault:lakes/pallet0",
           "the_vault:lakes/pallet0",
-          "the_vault:lakes/pallet1",
-          "the_vault:lakes/pallet1",
-          "the_vault:lakes/pallet1",
           "the_vault:lakes/pallet2",
-          "the_vault:lakes/pallet2",
-          "the_vault:lakes/pallet3"
+          "the_vault:lakes/pallet2"
         ],
         "element_type": "the_vault:paletted_list_pool_element",
         "projection": "rigid",
@@ -463,10 +443,7 @@
           "the_vault:mushroom_forest/pallet0",
           "the_vault:mushroom_forest/pallet1",
           "the_vault:mushroom_forest/pallet1",
-          "the_vault:mushroom_forest/pallet1",
-          "the_vault:mushroom_forest/pallet2",
-          "the_vault:mushroom_forest/pallet2",
-          "the_vault:mushroom_forest/pallet3"
+          "the_vault:mushroom_forest/pallet1"
         ],
         "element_type": "the_vault:paletted_list_pool_element",
         "projection": "rigid",
@@ -491,10 +468,7 @@
           "the_vault:mushroom_forest/pallet0",
           "the_vault:mushroom_forest/pallet1",
           "the_vault:mushroom_forest/pallet1",
-          "the_vault:mushroom_forest/pallet1",
-          "the_vault:mushroom_forest/pallet2",
-          "the_vault:mushroom_forest/pallet2",
-          "the_vault:mushroom_forest/pallet3"
+          "the_vault:mushroom_forest/pallet1"
         ],
         "element_type": "the_vault:paletted_list_pool_element",
         "projection": "rigid",
@@ -519,10 +493,7 @@
           "the_vault:mushroom_forest/pallet0",
           "the_vault:mushroom_forest/pallet1",
           "the_vault:mushroom_forest/pallet1",
-          "the_vault:mushroom_forest/pallet1",
-          "the_vault:mushroom_forest/pallet2",
-          "the_vault:mushroom_forest/pallet2",
-          "the_vault:mushroom_forest/pallet3"
+          "the_vault:mushroom_forest/pallet1"
         ],
         "element_type": "the_vault:paletted_list_pool_element",
         "projection": "rigid",
@@ -547,10 +518,7 @@
           "the_vault:mushroom_forest/pallet0",
           "the_vault:mushroom_forest/pallet1",
           "the_vault:mushroom_forest/pallet1",
-          "the_vault:mushroom_forest/pallet1",
-          "the_vault:mushroom_forest/pallet2",
-          "the_vault:mushroom_forest/pallet2",
-          "the_vault:mushroom_forest/pallet3"
+          "the_vault:mushroom_forest/pallet1"
         ],
         "element_type": "the_vault:paletted_list_pool_element",
         "projection": "rigid",
@@ -649,12 +617,7 @@
           "the_vault:nether_flowers/pallet0",
           "the_vault:nether_flowers/pallet0",
           "the_vault:nether_flowers/pallet0",
-          "the_vault:nether_flowers/pallet1",
-          "the_vault:nether_flowers/pallet1",
-          "the_vault:nether_flowers/pallet1",
-          "the_vault:nether_flowers/pallet2",
-          "the_vault:nether_flowers/pallet2",
-          "the_vault:nether_flowers/pallet3"
+          "the_vault:nether_flowers/pallet2"
         ],
         "element_type": "the_vault:paletted_list_pool_element",
         "projection": "rigid",
@@ -677,12 +640,8 @@
           "the_vault:nether_flowers/pallet0",
           "the_vault:nether_flowers/pallet0",
           "the_vault:nether_flowers/pallet0",
-          "the_vault:nether_flowers/pallet1",
-          "the_vault:nether_flowers/pallet1",
-          "the_vault:nether_flowers/pallet1",
           "the_vault:nether_flowers/pallet2",
-          "the_vault:nether_flowers/pallet2",
-          "the_vault:nether_flowers/pallet3"
+          "the_vault:nether_flowers/pallet2"
         ],
         "element_type": "the_vault:paletted_list_pool_element",
         "projection": "rigid",
@@ -705,12 +664,8 @@
           "the_vault:nether_flowers/pallet0",
           "the_vault:nether_flowers/pallet0",
           "the_vault:nether_flowers/pallet0",
-          "the_vault:nether_flowers/pallet1",
-          "the_vault:nether_flowers/pallet1",
-          "the_vault:nether_flowers/pallet1",
           "the_vault:nether_flowers/pallet2",
-          "the_vault:nether_flowers/pallet2",
-          "the_vault:nether_flowers/pallet3"
+          "the_vault:nether_flowers/pallet2"
         ],
         "element_type": "the_vault:paletted_list_pool_element",
         "projection": "rigid",
@@ -733,12 +688,8 @@
           "the_vault:nether_flowers/pallet0",
           "the_vault:nether_flowers/pallet0",
           "the_vault:nether_flowers/pallet0",
-          "the_vault:nether_flowers/pallet1",
-          "the_vault:nether_flowers/pallet1",
-          "the_vault:nether_flowers/pallet1",
           "the_vault:nether_flowers/pallet2",
-          "the_vault:nether_flowers/pallet2",
-          "the_vault:nether_flowers/pallet3"
+          "the_vault:nether_flowers/pallet2"
         ],
         "element_type": "the_vault:paletted_list_pool_element",
         "projection": "rigid",
@@ -761,12 +712,6 @@
           "the_vault:pirate_cove/pallet0",
           "the_vault:pirate_cove/pallet0",
           "the_vault:pirate_cove/pallet0",
-          "the_vault:pirate_cove/pallet1",
-          "the_vault:pirate_cove/pallet1",
-          "the_vault:pirate_cove/pallet1",
-          "the_vault:pirate_cove/pallet2",
-          "the_vault:pirate_cove/pallet2",
-          "the_vault:pirate_cove/pallet3",
           "the_vault:pirate_cove/pallet4"
         ],
         "element_type": "the_vault:paletted_list_pool_element",
@@ -790,12 +735,6 @@
           "the_vault:pirate_cove/pallet0",
           "the_vault:pirate_cove/pallet0",
           "the_vault:pirate_cove/pallet0",
-          "the_vault:pirate_cove/pallet1",
-          "the_vault:pirate_cove/pallet1",
-          "the_vault:pirate_cove/pallet1",
-          "the_vault:pirate_cove/pallet2",
-          "the_vault:pirate_cove/pallet2",
-          "the_vault:pirate_cove/pallet3",
           "the_vault:pirate_cove/pallet4"
         ],
         "element_type": "the_vault:paletted_list_pool_element",
@@ -819,12 +758,6 @@
           "the_vault:pirate_cove/pallet0",
           "the_vault:pirate_cove/pallet0",
           "the_vault:pirate_cove/pallet0",
-          "the_vault:pirate_cove/pallet1",
-          "the_vault:pirate_cove/pallet1",
-          "the_vault:pirate_cove/pallet1",
-          "the_vault:pirate_cove/pallet2",
-          "the_vault:pirate_cove/pallet2",
-          "the_vault:pirate_cove/pallet3",
           "the_vault:pirate_cove/pallet4"
         ],
         "element_type": "the_vault:paletted_list_pool_element",
@@ -848,12 +781,6 @@
           "the_vault:pirate_cove/pallet0",
           "the_vault:pirate_cove/pallet0",
           "the_vault:pirate_cove/pallet0",
-          "the_vault:pirate_cove/pallet1",
-          "the_vault:pirate_cove/pallet1",
-          "the_vault:pirate_cove/pallet1",
-          "the_vault:pirate_cove/pallet2",
-          "the_vault:pirate_cove/pallet2",
-          "the_vault:pirate_cove/pallet3",
           "the_vault:pirate_cove/pallet4"
         ],
         "element_type": "the_vault:paletted_list_pool_element",
@@ -873,16 +800,9 @@
       "element":
       {
         "processors": [
-          "the_vault:rainbow_forest/pallet0",
-          "the_vault:rainbow_forest/pallet0",
-          "the_vault:rainbow_forest/pallet0",
-          "the_vault:rainbow_forest/pallet0",
           "the_vault:rainbow_forest/pallet1",
           "the_vault:rainbow_forest/pallet1",
-          "the_vault:rainbow_forest/pallet1",
-          "the_vault:rainbow_forest/pallet2",
-          "the_vault:rainbow_forest/pallet2",
-          "the_vault:rainbow_forest/pallet3"
+          "the_vault:rainbow_forest/pallet1"
         ],
         "element_type": "the_vault:paletted_list_pool_element",
         "projection": "rigid",
@@ -901,16 +821,9 @@
       "element":
       {
         "processors": [
-          "the_vault:rainbow_forest/pallet0",
-          "the_vault:rainbow_forest/pallet0",
-          "the_vault:rainbow_forest/pallet0",
-          "the_vault:rainbow_forest/pallet0",
           "the_vault:rainbow_forest/pallet1",
           "the_vault:rainbow_forest/pallet1",
-          "the_vault:rainbow_forest/pallet1",
-          "the_vault:rainbow_forest/pallet2",
-          "the_vault:rainbow_forest/pallet2",
-          "the_vault:rainbow_forest/pallet3"
+          "the_vault:rainbow_forest/pallet1"
         ],
         "element_type": "the_vault:paletted_list_pool_element",
         "projection": "rigid",
@@ -929,16 +842,9 @@
       "element":
       {
         "processors": [
-          "the_vault:rainbow_forest/pallet0",
-          "the_vault:rainbow_forest/pallet0",
-          "the_vault:rainbow_forest/pallet0",
-          "the_vault:rainbow_forest/pallet0",
           "the_vault:rainbow_forest/pallet1",
           "the_vault:rainbow_forest/pallet1",
-          "the_vault:rainbow_forest/pallet1",
-          "the_vault:rainbow_forest/pallet2",
-          "the_vault:rainbow_forest/pallet2",
-          "the_vault:rainbow_forest/pallet3"
+          "the_vault:rainbow_forest/pallet1"
         ],
         "element_type": "the_vault:paletted_list_pool_element",
         "projection": "rigid",
@@ -957,16 +863,9 @@
       "element":
       {
         "processors": [
-          "the_vault:rainbow_forest/pallet0",
-          "the_vault:rainbow_forest/pallet0",
-          "the_vault:rainbow_forest/pallet0",
-          "the_vault:rainbow_forest/pallet0",
           "the_vault:rainbow_forest/pallet1",
           "the_vault:rainbow_forest/pallet1",
-          "the_vault:rainbow_forest/pallet1",
-          "the_vault:rainbow_forest/pallet2",
-          "the_vault:rainbow_forest/pallet2",
-          "the_vault:rainbow_forest/pallet3"
+          "the_vault:rainbow_forest/pallet1"
         ],
         "element_type": "the_vault:paletted_list_pool_element",
         "projection": "rigid",
@@ -1100,13 +999,8 @@
           "the_vault:graves/pallet0",
           "the_vault:graves/pallet0",
           "the_vault:graves/pallet0",
-          "the_vault:graves/pallet0",
-          "the_vault:graves/pallet1",
-          "the_vault:graves/pallet1",
-          "the_vault:graves/pallet1",
-          "the_vault:graves/pallet2",
-          "the_vault:graves/pallet2",
-          "the_vault:graves/pallet3"
+          "the_vault:graves/pallet0"
+
         ],
         "element_type": "the_vault:paletted_list_pool_element",
         "projection": "rigid",
@@ -1128,13 +1022,8 @@
           "the_vault:graves/pallet0",
           "the_vault:graves/pallet0",
           "the_vault:graves/pallet0",
-          "the_vault:graves/pallet0",
-          "the_vault:graves/pallet1",
-          "the_vault:graves/pallet1",
-          "the_vault:graves/pallet1",
-          "the_vault:graves/pallet2",
-          "the_vault:graves/pallet2",
-          "the_vault:graves/pallet3"
+          "the_vault:graves/pallet0"
+
         ],
         "element_type": "the_vault:paletted_list_pool_element",
         "projection": "rigid",
@@ -1156,13 +1045,8 @@
           "the_vault:graves/pallet0",
           "the_vault:graves/pallet0",
           "the_vault:graves/pallet0",
-          "the_vault:graves/pallet0",
-          "the_vault:graves/pallet1",
-          "the_vault:graves/pallet1",
-          "the_vault:graves/pallet1",
-          "the_vault:graves/pallet2",
-          "the_vault:graves/pallet2",
-          "the_vault:graves/pallet3"
+          "the_vault:graves/pallet0"
+
         ],
         "element_type": "the_vault:paletted_list_pool_element",
         "projection": "rigid",
@@ -1184,13 +1068,8 @@
           "the_vault:graves/pallet0",
           "the_vault:graves/pallet0",
           "the_vault:graves/pallet0",
-          "the_vault:graves/pallet0",
-          "the_vault:graves/pallet1",
-          "the_vault:graves/pallet1",
-          "the_vault:graves/pallet1",
-          "the_vault:graves/pallet2",
-          "the_vault:graves/pallet2",
-          "the_vault:graves/pallet3"
+          "the_vault:graves/pallet0"
+
         ],
         "element_type": "the_vault:paletted_list_pool_element",
         "projection": "rigid",
@@ -1211,12 +1090,12 @@
         "processors": [
           "the_vault:crystal_caves/pallet0",
           "the_vault:crystal_caves/pallet1",
-          "the_vault:crystal_caves/pallet2",
-          "the_vault:crystal_caves/pallet3",
+
+
           "the_vault:crystal_caves/pallet0",
           "the_vault:crystal_caves/pallet1",
-          "the_vault:crystal_caves/pallet2",
-          "the_vault:crystal_caves/pallet3",
+
+
           "the_vault:crystal_caves/pallet4"
         ],
         "element_type": "the_vault:paletted_list_pool_element",
@@ -1238,12 +1117,12 @@
         "processors": [
           "the_vault:crystal_caves/pallet0",
           "the_vault:crystal_caves/pallet1",
-          "the_vault:crystal_caves/pallet2",
-          "the_vault:crystal_caves/pallet3",
+
+
           "the_vault:crystal_caves/pallet0",
           "the_vault:crystal_caves/pallet1",
-          "the_vault:crystal_caves/pallet2",
-          "the_vault:crystal_caves/pallet3",
+
+
           "the_vault:crystal_caves/pallet4"
         ],
         "element_type": "the_vault:paletted_list_pool_element",
@@ -1265,12 +1144,12 @@
         "processors": [
           "the_vault:crystal_caves/pallet0",
           "the_vault:crystal_caves/pallet1",
-          "the_vault:crystal_caves/pallet2",
-          "the_vault:crystal_caves/pallet3",
+
+
           "the_vault:crystal_caves/pallet0",
           "the_vault:crystal_caves/pallet1",
-          "the_vault:crystal_caves/pallet2",
-          "the_vault:crystal_caves/pallet3",
+
+
           "the_vault:crystal_caves/pallet4"
         ],
         "element_type": "the_vault:paletted_list_pool_element",
@@ -1292,12 +1171,12 @@
         "processors": [
           "the_vault:crystal_caves/pallet0",
           "the_vault:crystal_caves/pallet1",
-          "the_vault:crystal_caves/pallet2",
-          "the_vault:crystal_caves/pallet3",
+
+
           "the_vault:crystal_caves/pallet0",
           "the_vault:crystal_caves/pallet1",
-          "the_vault:crystal_caves/pallet2",
-          "the_vault:crystal_caves/pallet3",
+
+
           "the_vault:crystal_caves/pallet4"
         ],
         "element_type": "the_vault:paletted_list_pool_element",
@@ -1319,12 +1198,12 @@
         "processors": [
           "the_vault:crystal_caves/pallet0",
           "the_vault:crystal_caves/pallet1",
-          "the_vault:crystal_caves/pallet2",
-          "the_vault:crystal_caves/pallet3",
+
+
           "the_vault:crystal_caves/pallet0",
           "the_vault:crystal_caves/pallet1",
-          "the_vault:crystal_caves/pallet2",
-          "the_vault:crystal_caves/pallet3",
+
+
           "the_vault:crystal_caves/pallet4"
         ],
         "element_type": "the_vault:paletted_list_pool_element",

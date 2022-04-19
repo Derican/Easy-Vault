@@ -950,7 +950,7 @@
         {
           "type": "minecraft:item",
           "weight": 1,
-          "name": "mekanismgenerators:wind_generator",
+          "name": "minecraft:beacon",
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -1534,7 +1534,7 @@
         {
           "type": "minecraft:item",
           "weight": 3,
-          "name": "rftoolsbase:machine_frame",
+          "name": "minecraft:iron_block",
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -1558,7 +1558,7 @@
         {
           "type": "minecraft:item",
           "weight": 4,
-          "name": "thermal:machine_furnace",
+          "name": "minecraft:iron_block",
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -1582,7 +1582,7 @@
         {
           "type": "minecraft:item",
           "weight": 4,
-          "name": "thermal:machine_pulverizer",
+          "name": "minecraft:iron_block",
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -1606,7 +1606,7 @@
         {
           "type": "minecraft:item",
           "weight": 4,
-          "name": "thermal:dynamo_stirling",
+          "name": "minecraft:diamond_block",
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -1630,7 +1630,7 @@
         {
           "type": "minecraft:item",
           "weight": 4,
-          "name": "thermal:dynamo_lapidary",
+          "name": "minecraft:diamond_block",
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -1654,7 +1654,7 @@
         {
           "type": "minecraft:item",
           "weight": 4,
-          "name": "rftoolspower:coalgenerator",
+          "name": "minecraft:coal_block",
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -1942,7 +1942,7 @@
         {
           "type": "minecraft:item",
           "weight": 4,
-          "name": "powah:solar_panel_starter",
+          "name": "minecraft:bookshelf",
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -1966,7 +1966,7 @@
         {
           "type": "minecraft:item",
           "weight": 4,
-          "name": "powah:furnator_starter",
+          "name": "minecraft:dragon_breath",
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -1990,7 +1990,7 @@
         {
           "type": "minecraft:item",
           "weight": 4,
-          "name": "industrialforegoing:animal_rancher",
+          "name": "minecraft:end_crystal",
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -2014,7 +2014,7 @@
         {
           "type": "minecraft:item",
           "weight": 4,
-          "name": "industrialforegoing:plant_gatherer",
+          "name": "minecraft:glistering_melon_slice",
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -2038,7 +2038,7 @@
         {
           "type": "minecraft:item",
           "weight": 4,
-          "name": "industrialforegoing:plant_fertilizer",
+          "name": "minecraft:bone_block",
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -2062,7 +2062,7 @@
         {
           "type": "minecraft:item",
           "weight": 4,
-          "name": "industrialforegoing:plant_sower",
+          "name": "minecraft:nether_wart_block",
           "functions": [
             {
               "function": "minecraft:set_count",

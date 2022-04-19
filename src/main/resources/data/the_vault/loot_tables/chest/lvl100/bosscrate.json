@@ -1254,21 +1254,6 @@
               }
             }
           ]
-        },
-        {
-          "type": "minecraft:tag",
-          "weight": 6,
-          "name": "minecraft:nether_star",
-          "expand": "true",
-          "functions": [
-            {
-              "function": "minecraft:set_count",
-              "count": {
-                "min": 1,
-                "max": 1
-              }
-            }
-          ]
         }
       ]
     },

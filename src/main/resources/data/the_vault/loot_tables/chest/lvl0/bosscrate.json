@@ -1390,7 +1390,7 @@
             }
           ]
         },
-        { "name": "minecraft:nautilus_shell",
+        { "name": "minecraft:nether_star",
           "type": "minecraft:item",
           "weight": 4,
           

@@ -107,18 +107,18 @@
         "weight": 1,
         "element": {
           "processors": [
-              "the_vault:geode/pallet0",
+
               "the_vault:geode/pallet1",
               "the_vault:geode/pallet2",
               "the_vault:geode/pallet3",
               "the_vault:geode/pallet4",
               "the_vault:geode/pallet5",
-              "the_vault:geode/pallet6",
+
               "the_vault:geode/pallet7",
               "the_vault:geode/pallet8",
               "the_vault:geode/pallet9",
               "the_vault:geode/pallet10",
-              "the_vault:geode/pallet11",
+
               "the_vault:geode/pallet12",
               "the_vault:geode/pallet13",
               "the_vault:geode/pallet14"
@@ -139,18 +139,18 @@
         "weight": 1,
         "element": {
           "processors": [
-              "the_vault:geode/pallet0",
+
               "the_vault:geode/pallet1",
               "the_vault:geode/pallet2",
               "the_vault:geode/pallet3",
               "the_vault:geode/pallet4",
               "the_vault:geode/pallet5",
-              "the_vault:geode/pallet6",
+
               "the_vault:geode/pallet7",
               "the_vault:geode/pallet8",
               "the_vault:geode/pallet9",
               "the_vault:geode/pallet10",
-              "the_vault:geode/pallet11",
+
               "the_vault:geode/pallet12",
               "the_vault:geode/pallet13",
               "the_vault:geode/pallet14"
@@ -171,18 +171,18 @@
         "weight": 1,
         "element": {
           "processors": [
-              "the_vault:geode/pallet0",
+
               "the_vault:geode/pallet1",
               "the_vault:geode/pallet2",
               "the_vault:geode/pallet3",
               "the_vault:geode/pallet4",
               "the_vault:geode/pallet5",
-              "the_vault:geode/pallet6",
+
               "the_vault:geode/pallet7",
               "the_vault:geode/pallet8",
               "the_vault:geode/pallet9",
               "the_vault:geode/pallet10",
-              "the_vault:geode/pallet11",
+
               "the_vault:geode/pallet12",
               "the_vault:geode/pallet13",
               "the_vault:geode/pallet14"

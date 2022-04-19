@@ -62,7 +62,7 @@ public class VaultPortalBlock extends NetherPortalBlock
             return;
         }
         final VoxelShape playerVoxel = VoxelShapes.create(entity.getBoundingBox().move((double)(-pos.getX()), (double)(-pos.getY()), (double)(-pos.getZ())));
-        if (!VoxelShapes.joinIsNotEmpty(playerVoxel, state.getShape((IBlockReader)world, pos), IBooleanFunction.AND)) {
+        if (!VoxelShapes.joinIsNotEmpty(playerVoxel, state.getShape(world, pos), IBooleanFunction.AND)) {
             return;
         }
         final RegistryKey<World> destinationKey = (RegistryKey<World>)((world.dimension() == Vault.VAULT_KEY) ? World.OVERWORLD : Vault.VAULT_KEY);

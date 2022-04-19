@@ -1276,7 +1276,7 @@
         {
           "type": "minecraft:item",
           "weight": 4,
-          "name": "minecraft:nautilus_shell",
+          "name": "minecraft:nether_star",
           "functions": [
             {
               "function": "minecraft:set_count",

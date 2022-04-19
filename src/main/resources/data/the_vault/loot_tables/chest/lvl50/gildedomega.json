@@ -1060,39 +1060,6 @@
           ]
         }
       ]
-    },
-    { "name": "Quark Runes",
-      "rolls": {
-        "min": 0,
-        "max": 1
-      },
-      "entries": [
-        { "_name": "quarkrunes",
-          "type": "minecraft:tag",
-          "weight": 1,
-          "name": "minecraft:nether_star",
-          "expand": "true",
-          "functions": [
-            {
-              "function": "minecraft:set_count",
-              "count": {
-                "min": 0,
-                "max": 1
-              }
-            },
-            {
-              "function": "minecraft:set_count",
-              "count": 0,
-              "conditions": [
-                {
-                  "condition": "minecraft:random_chance",
-                  "chance": 0.0
-                }
-              ]
-            }
-          ]
-        }
-      ]
     }
   ]
 }
