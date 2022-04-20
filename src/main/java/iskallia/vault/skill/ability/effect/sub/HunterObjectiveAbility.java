@@ -1,7 +1,3 @@
-// 
-// Decompiled by Procyon v0.6.0
-// 
-
 package iskallia.vault.skill.ability.effect.sub;
 
 import iskallia.vault.init.ModEntities;
@@ -17,13 +13,12 @@ import java.awt.*;
 import java.util.List;
 import java.util.function.Predicate;
 
-public class HunterObjectiveAbility extends HunterAbility<HunterObjectiveConfig>
-{
+public class HunterObjectiveAbility extends HunterAbility<HunterObjectiveConfig> {
     @Override
     protected Predicate<LivingEntity> getEntityFilter() {
         return e -> e.isAlive() && !e.isSpectator() && e.getType().equals(ModEntities.TREASURE_GOBLIN);
     }
-    
+
     @Override
     protected List<Tuple<BlockPos, Color>> selectPositions(final HunterObjectiveConfig config, final World world, final PlayerEntity player) {
         final List<Tuple<BlockPos, Color>> entityPositions = super.selectPositions(config, world, player);

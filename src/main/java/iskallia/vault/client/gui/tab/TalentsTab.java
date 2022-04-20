@@ -1,7 +1,3 @@
-// 
-// Decompiled by Procyon v0.6.0
-// 
-
 package iskallia.vault.client.gui.tab;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
@@ -24,24 +20,23 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-public class TalentsTab extends SkillTab
-{
+public class TalentsTab extends SkillTab {
     private final Map<String, TalentWidget> talentWidgets;
     private final List<ConnectorWidget> talentConnectors;
     private final TalentDialog talentDialog;
     private TalentWidget selectedWidget;
-    
+
     public TalentsTab(final TalentDialog talentDialog, final SkillTreeScreen parentScreen) {
-        super(parentScreen, (ITextComponent)new StringTextComponent("Talents Tab"));
+        super(parentScreen, (ITextComponent) new StringTextComponent("Talents Tab"));
         this.talentWidgets = new HashMap<String, TalentWidget>();
         this.talentConnectors = new LinkedList<ConnectorWidget>();
         this.talentDialog = talentDialog;
     }
-    
+
     @Override
     public void refresh() {
         this.talentWidgets.clear();
-        final TalentTree talentTree = ((SkillTreeContainer)this.parentScreen.getMenu()).getTalentTree();
+        final TalentTree talentTree = ((SkillTreeContainer) this.parentScreen.getMenu()).getTalentTree();
         ModConfigs.TALENTS_GUI.getStyles().forEach((talentName, style) -> this.talentWidgets.put(talentName, new TalentWidget(ModConfigs.TALENTS.getByName(talentName), talentTree, style)));
         ModConfigs.TALENTS_GUI.getStyles().forEach((researchName, style) -> {
             final TalentWidget target = this.talentWidgets.get(researchName);
@@ -50,8 +45,7 @@ public class TalentsTab extends SkillTab
                     final TalentWidget source = this.talentWidgets.get(dependentOn.getParentName());
                     if (source == null) {
                         return;
-                    }
-                    else {
+                    } else {
                         this.talentConnectors.add(new ConnectorWidget(source, target, ConnectorWidget.ConnectorType.ARROW));
                         return;
                     }
@@ -67,18 +61,18 @@ public class TalentsTab extends SkillTab
             }
         });
     }
-    
+
     @Override
     public String getTabName() {
         return "Talents";
     }
-    
+
     @Override
     public boolean mouseClicked(final double mouseX, final double mouseY, final int button) {
         final boolean mouseClicked = super.mouseClicked(mouseX, mouseY, button);
         final Point2D.Float midpoint = MiscUtils.getMidpoint(this.parentScreen.getContainerBounds());
-        final int containerMouseX = (int)((mouseX - midpoint.x) / this.viewportScale - this.viewportTranslation.x);
-        final int containerMouseY = (int)((mouseY - midpoint.y) / this.viewportScale - this.viewportTranslation.y);
+        final int containerMouseX = (int) ((mouseX - midpoint.x) / this.viewportScale - this.viewportTranslation.x);
+        final int containerMouseY = (int) ((mouseY - midpoint.y) / this.viewportScale - this.viewportTranslation.y);
         for (final TalentWidget abilityWidget : this.talentWidgets.values()) {
             if (abilityWidget.isMouseOver(containerMouseX, containerMouseY) && abilityWidget.mouseClicked(containerMouseX, containerMouseY, button)) {
                 if (this.selectedWidget != null) {
@@ -91,17 +85,17 @@ public class TalentsTab extends SkillTab
         }
         return mouseClicked;
     }
-    
+
     @Override
     public void renderTabForeground(final MatrixStack renderStack, final int mouseX, final int mouseY, final float pTicks, final List<Runnable> postContainerRender) {
         RenderSystem.enableBlend();
         final Point2D.Float midpoint = MiscUtils.getMidpoint(this.parentScreen.getContainerBounds());
         renderStack.pushPose();
-        renderStack.translate((double)midpoint.x, (double)midpoint.y, 0.0);
+        renderStack.translate((double) midpoint.x, (double) midpoint.y, 0.0);
         renderStack.scale(this.viewportScale, this.viewportScale, 1.0f);
-        renderStack.translate((double)this.viewportTranslation.x, (double)this.viewportTranslation.y, 0.0);
-        final int containerMouseX = (int)((mouseX - midpoint.x) / this.viewportScale - this.viewportTranslation.x);
-        final int containerMouseY = (int)((mouseY - midpoint.y) / this.viewportScale - this.viewportTranslation.y);
+        renderStack.translate((double) this.viewportTranslation.x, (double) this.viewportTranslation.y, 0.0);
+        final int containerMouseX = (int) ((mouseX - midpoint.x) / this.viewportScale - this.viewportTranslation.x);
+        final int containerMouseY = (int) ((mouseY - midpoint.y) / this.viewportScale - this.viewportTranslation.y);
         for (final ConnectorWidget talentConnector : this.talentConnectors) {
             talentConnector.renderConnection(renderStack, containerMouseX, containerMouseY, pTicks, this.viewportScale);
         }

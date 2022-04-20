@@ -1,7 +1,3 @@
-// 
-// Decompiled by Procyon v0.6.0
-// 
-
 package iskallia.vault.world.vault.gen.layout;
 
 import iskallia.vault.Vault;
@@ -9,25 +5,24 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.vector.Vector3i;
 
-public class SquareRoomLayout extends ConnectedRoomGenerator
-{
+public class SquareRoomLayout extends ConnectedRoomGenerator {
     public static final ResourceLocation ID;
     private int size;
-    
+
     public SquareRoomLayout() {
         this(11);
     }
-    
+
     public SquareRoomLayout(final int size) {
         super(SquareRoomLayout.ID);
         this.size = size;
     }
-    
+
     @Override
     public void setSize(final int size) {
         this.size = size;
     }
-    
+
     @Override
     public Layout generateLayout() {
         final Layout layout = new Layout();
@@ -38,7 +33,7 @@ public class SquareRoomLayout extends ConnectedRoomGenerator
         this.connectRooms(layout, this.size);
         return layout;
     }
-    
+
     private void calculateRooms(final Layout layout, final int size) {
         for (int halfSize = size / 2, x = -halfSize; x <= halfSize; ++x) {
             for (int z = -halfSize; z <= halfSize; ++z) {
@@ -46,7 +41,7 @@ public class SquareRoomLayout extends ConnectedRoomGenerator
             }
         }
     }
-    
+
     @Override
     protected void deserialize(final CompoundNBT tag) {
         super.deserialize(tag);
@@ -54,14 +49,14 @@ public class SquareRoomLayout extends ConnectedRoomGenerator
             this.size = tag.getInt("size");
         }
     }
-    
+
     @Override
     protected CompoundNBT serialize() {
         final CompoundNBT tag = super.serialize();
         tag.putInt("size", this.size);
         return tag;
     }
-    
+
     static {
         ID = Vault.id("square");
     }

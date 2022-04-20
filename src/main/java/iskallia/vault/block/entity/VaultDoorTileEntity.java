@@ -1,7 +1,3 @@
-// 
-// Decompiled by Procyon v0.6.0
-// 
-
 package iskallia.vault.block.entity;
 
 import iskallia.vault.block.UnknownVaultDoorBlock;
@@ -12,28 +8,25 @@ import iskallia.vault.world.vault.VaultRaid;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.DoorBlock;
-import net.minecraft.state.Property;
 import net.minecraft.state.properties.DoubleBlockHalf;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
-import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.server.ServerWorld;
 
 import java.util.UUID;
 
-public class VaultDoorTileEntity extends TileEntity implements ITickableTileEntity
-{
+public class VaultDoorTileEntity extends TileEntity implements ITickableTileEntity {
     public VaultDoorTileEntity() {
-        super((TileEntityType)ModBlocks.VAULT_DOOR_TILE_ENTITY);
+        super((TileEntityType) ModBlocks.VAULT_DOOR_TILE_ENTITY);
     }
-    
+
     public void tick() {
         if (this.getLevel() == null || this.getLevel().isClientSide) {
             return;
         }
-        final ServerWorld world = (ServerWorld)this.getLevel();
+        final ServerWorld world = (ServerWorld) this.getLevel();
         final BlockState state = world.getBlockState(this.getBlockPos());
         if (state.getBlock() instanceof UnknownVaultDoorBlock && state.getValue(DoorBlock.HALF) == DoubleBlockHalf.LOWER) {
             final VaultRaid vault = VaultRaidData.get(world).getAt(world, this.getBlockPos());
@@ -55,8 +48,7 @@ public class VaultDoorTileEntity extends TileEntity implements ITickableTileEnti
                     if (drilling) {
                         break;
                     }
-                }
-                else if (!drilling) {
+                } else if (!drilling) {
                     drilling = true;
                 }
                 this.getLevel().setBlockAndUpdate(p, Blocks.AIR.defaultBlockState());

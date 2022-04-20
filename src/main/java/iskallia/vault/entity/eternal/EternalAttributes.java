@@ -1,7 +1,3 @@
-// 
-// Decompiled by Procyon v0.6.0
-// 
-
 package iskallia.vault.entity.eternal;
 
 import iskallia.vault.init.ModConfigs;
@@ -16,57 +12,56 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
-public class EternalAttributes implements INBTSerializable<CompoundNBT>
-{
+public class EternalAttributes implements INBTSerializable<CompoundNBT> {
     public static final String HEALTH = "health";
     public static final String DAMAGE = "damage";
     public static final String MOVEMENT_SPEED = "movespeed";
     private final Map<Attribute, Float> attributes;
-    
+
     public EternalAttributes() {
         this.attributes = new HashMap<Attribute, Float>();
     }
-    
+
     private EternalAttributes(final CompoundNBT tag) {
         this.attributes = new HashMap<Attribute, Float>();
         this.deserializeNBT(tag);
     }
-    
+
     public static EternalAttributes fromNBT(final CompoundNBT tag) {
         return new EternalAttributes(tag);
     }
-    
+
     void initializeAttributes() {
         ModConfigs.ETERNAL_ATTRIBUTES.createAttributes().forEach(this.attributes::put);
     }
-    
+
     public Optional<Float> getAttributeValue(final Attribute attribute) {
         return Optional.ofNullable(this.attributes.get(attribute));
     }
-    
+
     public Map<Attribute, Float> getAttributes() {
-        return Collections.unmodifiableMap((Map<? extends Attribute, ? extends Float>)this.attributes);
+        return Collections.unmodifiableMap((Map<? extends Attribute, ? extends Float>) this.attributes);
     }
-    
+
     private void setAttributeValue(final Attribute attribute, final float value) {
         this.attributes.put(attribute, value);
     }
-    
+
     void addAttributeValue(final Attribute attribute, final float value) {
         final float existing = this.getAttributeValue(attribute).orElse(0.0f);
         this.setAttributeValue(attribute, existing + value);
     }
-    
+
     public CompoundNBT serializeNBT() {
         final CompoundNBT tag = new CompoundNBT();
-        this.attributes.forEach((attribute, value) -> tag.putFloat(attribute.getRegistryName().toString(), (float)value));
+        this.attributes.forEach((attribute, value) -> tag.putFloat(attribute.getRegistryName().toString(), (float) value));
         return tag;
     }
-    
+
     public void deserializeNBT(final CompoundNBT tag) {
         this.attributes.clear();
         tag.getAllKeys().forEach(attributeKey -> {
-            final Attribute attr = (Attribute)ForgeRegistries.ATTRIBUTES.getValue(new ResourceLocation(attributeKey));
+            final Attribute attr = (Attribute) ForgeRegistries.ATTRIBUTES.getValue(new ResourceLocation(attributeKey));
             if (attr != null) {
                 this.attributes.put(attr, tag.getFloat(attributeKey));
             }

@@ -1,7 +1,3 @@
-// 
-// Decompiled by Procyon v0.6.0
-// 
-
 package iskallia.vault.world.vault.gen.layout;
 
 import net.minecraft.nbt.CompoundNBT;
@@ -13,28 +9,27 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Supplier;
 
-public class VaultRoomLayoutRegistry
-{
+public class VaultRoomLayoutRegistry {
     private static final Map<ResourceLocation, Supplier<VaultRoomLayoutGenerator>> layoutRegistry;
-    
+
     public static void init() {
-        VaultRoomLayoutRegistry.layoutRegistry.put(SingularVaultRoomLayout.ID, (Supplier<VaultRoomLayoutGenerator>)SingularVaultRoomLayout::new);
-        VaultRoomLayoutRegistry.layoutRegistry.put(LineRoomLayout.ID, (Supplier<VaultRoomLayoutGenerator>)LineRoomLayout::new);
-        VaultRoomLayoutRegistry.layoutRegistry.put(DiamondRoomLayout.ID, (Supplier<VaultRoomLayoutGenerator>)DiamondRoomLayout::new);
-        VaultRoomLayoutRegistry.layoutRegistry.put(SquareRoomLayout.ID, (Supplier<VaultRoomLayoutGenerator>)SquareRoomLayout::new);
-        VaultRoomLayoutRegistry.layoutRegistry.put(CircleRoomLayout.ID, (Supplier<VaultRoomLayoutGenerator>)CircleRoomLayout::new);
-        VaultRoomLayoutRegistry.layoutRegistry.put(TriangleRoomLayout.ID, (Supplier<VaultRoomLayoutGenerator>)TriangleRoomLayout::new);
-        VaultRoomLayoutRegistry.layoutRegistry.put(SpiralRoomLayout.ID, (Supplier<VaultRoomLayoutGenerator>)SpiralRoomLayout::new);
-        VaultRoomLayoutRegistry.layoutRegistry.put(DebugVaultLayout.ID, (Supplier<VaultRoomLayoutGenerator>)DebugVaultLayout::new);
-        VaultRoomLayoutRegistry.layoutRegistry.put(DenseDiamondRoomLayout.ID, (Supplier<VaultRoomLayoutGenerator>)DenseDiamondRoomLayout::new);
-        VaultRoomLayoutRegistry.layoutRegistry.put(DenseSquareRoomLayout.ID, (Supplier<VaultRoomLayoutGenerator>)DenseSquareRoomLayout::new);
+        VaultRoomLayoutRegistry.layoutRegistry.put(SingularVaultRoomLayout.ID, (Supplier<VaultRoomLayoutGenerator>) SingularVaultRoomLayout::new);
+        VaultRoomLayoutRegistry.layoutRegistry.put(LineRoomLayout.ID, (Supplier<VaultRoomLayoutGenerator>) LineRoomLayout::new);
+        VaultRoomLayoutRegistry.layoutRegistry.put(DiamondRoomLayout.ID, (Supplier<VaultRoomLayoutGenerator>) DiamondRoomLayout::new);
+        VaultRoomLayoutRegistry.layoutRegistry.put(SquareRoomLayout.ID, (Supplier<VaultRoomLayoutGenerator>) SquareRoomLayout::new);
+        VaultRoomLayoutRegistry.layoutRegistry.put(CircleRoomLayout.ID, (Supplier<VaultRoomLayoutGenerator>) CircleRoomLayout::new);
+        VaultRoomLayoutRegistry.layoutRegistry.put(TriangleRoomLayout.ID, (Supplier<VaultRoomLayoutGenerator>) TriangleRoomLayout::new);
+        VaultRoomLayoutRegistry.layoutRegistry.put(SpiralRoomLayout.ID, (Supplier<VaultRoomLayoutGenerator>) SpiralRoomLayout::new);
+        VaultRoomLayoutRegistry.layoutRegistry.put(DebugVaultLayout.ID, (Supplier<VaultRoomLayoutGenerator>) DebugVaultLayout::new);
+        VaultRoomLayoutRegistry.layoutRegistry.put(DenseDiamondRoomLayout.ID, (Supplier<VaultRoomLayoutGenerator>) DenseDiamondRoomLayout::new);
+        VaultRoomLayoutRegistry.layoutRegistry.put(DenseSquareRoomLayout.ID, (Supplier<VaultRoomLayoutGenerator>) DenseSquareRoomLayout::new);
     }
-    
+
     @Nullable
     public static VaultRoomLayoutGenerator getLayoutGenerator(final ResourceLocation id) {
         return VaultRoomLayoutRegistry.layoutRegistry.containsKey(id) ? VaultRoomLayoutRegistry.layoutRegistry.get(id).get() : null;
     }
-    
+
     @Nullable
     public static VaultRoomLayoutGenerator deserialize(final CompoundNBT tag) {
         if (!tag.contains("Id", 8)) {
@@ -48,14 +43,14 @@ public class VaultRoomLayoutRegistry
         layout.generateLayout();
         return layout;
     }
-    
+
     public static CompoundNBT serialize(final VaultRoomLayoutGenerator roomLayout) {
         final CompoundNBT layoutTag = new CompoundNBT();
         layoutTag.putString("Id", roomLayout.getId().toString());
-        layoutTag.put("Data", (INBT)roomLayout.serialize());
+        layoutTag.put("Data", (INBT) roomLayout.serialize());
         return layoutTag;
     }
-    
+
     static {
         layoutRegistry = new HashMap<ResourceLocation, Supplier<VaultRoomLayoutGenerator>>();
     }

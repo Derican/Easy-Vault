@@ -1,22 +1,17 @@
-// 
-// Decompiled by Procyon v0.6.0
-// 
-
 package iskallia.vault.skill.set;
 
 import com.google.gson.annotations.Expose;
 import iskallia.vault.item.gear.VaultGear;
 
-public class TreasureSet extends PlayerSet
-{
+public class TreasureSet extends PlayerSet {
     @Expose
     private float increasedChestRarity;
-    
+
     public TreasureSet(final float increasedChestRarity) {
         super(VaultGear.Set.TREASURE);
         this.increasedChestRarity = increasedChestRarity;
     }
-    
+
     public float getIncreasedChestRarity() {
         return this.increasedChestRarity;
     }

@@ -1,7 +1,3 @@
-// 
-// Decompiled by Procyon v0.6.0
-// 
-
 package iskallia.vault.mixin;
 
 import iskallia.vault.Vault;
@@ -18,26 +14,25 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-@Mixin({ CommandBlockTileEntity.class })
-public abstract class MixinCommandBlockTileEntity extends TileEntity
-{
+@Mixin({CommandBlockTileEntity.class})
+public abstract class MixinCommandBlockTileEntity extends TileEntity {
     @Shadow
     private boolean auto;
-    
+
     @Shadow
     public abstract void setAutomatic(final boolean p0);
-    
+
     @Shadow
     public abstract CommandBlockLogic getCommandBlock();
-    
+
     @Shadow
     public abstract void setPowered(final boolean p0);
-    
+
     public MixinCommandBlockTileEntity(final TileEntityType<?> type) {
-        super((TileEntityType)type);
+        super((TileEntityType) type);
     }
-    
-    @Inject(method = { "clearRemoved" }, at = { @At("RETURN") })
+
+    @Inject(method = {"clearRemoved"}, at = {@At("RETURN")})
     public void validate(final CallbackInfo ci) {
         if (!this.level.isClientSide && this.level.dimension() == Vault.VAULT_KEY) {
             this.level.getServer().tell(new TickDelayedTask(this.level.getServer().getTickCount() + 10, () -> {

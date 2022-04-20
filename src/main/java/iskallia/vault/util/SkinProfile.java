@@ -1,7 +1,3 @@
-// 
-// Decompiled by Procyon v0.6.0
-// 
-
 package iskallia.vault.util;
 
 import com.mojang.authlib.GameProfile;
@@ -15,22 +11,21 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicReference;
 
-public class SkinProfile
-{
+public class SkinProfile {
     public static final ExecutorService SERVICE;
     private String latestNickname;
     public AtomicReference<GameProfile> gameProfile;
     public AtomicReference<NetworkPlayerInfo> playerInfo;
-    
+
     public SkinProfile() {
         this.gameProfile = new AtomicReference<GameProfile>();
         this.playerInfo = new AtomicReference<NetworkPlayerInfo>();
     }
-    
+
     public String getLatestNickname() {
         return this.latestNickname;
     }
-    
+
     public void updateSkin(final String name) {
         // 
         // This method could not be decompiled.
@@ -81,7 +76,7 @@ public class SkinProfile
         // 
         throw new IllegalStateException("An error occurred while decompiling this method.");
     }
-    
+
     @OnlyIn(Dist.CLIENT)
     public ResourceLocation getLocationSkin() {
         if (this.playerInfo == null || this.playerInfo.get() == null) {
@@ -89,13 +84,12 @@ public class SkinProfile
         }
         try {
             return this.playerInfo.get().getSkinLocation();
-        }
-        catch (final Exception e) {
+        } catch (final Exception e) {
             e.printStackTrace();
             return DefaultPlayerSkin.getDefaultSkin();
         }
     }
-    
+
     static {
         SERVICE = Executors.newFixedThreadPool(4);
     }

@@ -1,7 +1,3 @@
-// 
-// Decompiled by Procyon v0.6.0
-// 
-
 package iskallia.vault.recipe;
 
 import iskallia.vault.init.ModItems;
@@ -15,12 +11,11 @@ import net.minecraft.util.IItemProvider;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 
-public class MysteryEggRecipe extends SpecialRecipe
-{
+public class MysteryEggRecipe extends SpecialRecipe {
     public MysteryEggRecipe(final ResourceLocation id) {
         super(id);
     }
-    
+
     public boolean matches(final CraftingInventory inv, final World world) {
         int foundEggs = 0;
         int foundAlex = 0;
@@ -37,16 +32,16 @@ public class MysteryEggRecipe extends SpecialRecipe
         }
         return foundEggs == 4 && foundAlex == 1;
     }
-    
+
     public ItemStack assemble(final CraftingInventory inv) {
-        return new ItemStack((IItemProvider)ModItems.MYSTERY_EGG, 4);
+        return new ItemStack((IItemProvider) ModItems.MYSTERY_EGG, 4);
     }
-    
+
     public boolean canCraftInDimensions(final int width, final int height) {
         return width * height >= 5;
     }
-    
+
     public IRecipeSerializer<?> getSerializer() {
-        return (IRecipeSerializer<?>)ModRecipes.Serializer.MYSTERY_EGG_RECIPE;
+        return (IRecipeSerializer<?>) ModRecipes.Serializer.MYSTERY_EGG_RECIPE;
     }
 }

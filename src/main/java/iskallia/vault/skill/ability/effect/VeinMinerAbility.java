@@ -1,7 +1,3 @@
-// 
-// Decompiled by Procyon v0.6.0
-// 
-
 package iskallia.vault.skill.ability.effect;
 
 import iskallia.vault.event.ActiveFlags;
@@ -31,28 +27,27 @@ import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Set;
 
-public class VeinMinerAbility<C extends VeinMinerConfig> extends AbilityEffect<C>
-{
+public class VeinMinerAbility<C extends VeinMinerConfig> extends AbilityEffect<C> {
     @Override
     public String getAbilityGroupName() {
         return "Vein Miner";
     }
-    
+
     @SubscribeEvent
     public void onBlockMined(final BlockEvent.BreakEvent event) {
         if (event.getWorld().isClientSide() || event.getPlayer() instanceof FakePlayer) {
             return;
         }
-        final ServerPlayerEntity player = (ServerPlayerEntity)event.getPlayer();
-        final AbilityTree abilityTree = PlayerAbilitiesData.get((ServerWorld)event.getWorld()).getAbilities((PlayerEntity)player);
+        final ServerPlayerEntity player = (ServerPlayerEntity) event.getPlayer();
+        final AbilityTree abilityTree = PlayerAbilitiesData.get((ServerWorld) event.getWorld()).getAbilities((PlayerEntity) player);
         if (!abilityTree.isActive()) {
             return;
         }
         ActiveFlags.IS_AOE_MINING.runIfNotSet(() -> {
             final AbilityNode<?, ?> focusedAbilityNode = abilityTree.getSelectedAbility();
             if (focusedAbilityNode != null && focusedAbilityNode.getAbility() == this) {
-                final C veinMinerConfig = (C)focusedAbilityNode.getAbilityConfig();
-                final ServerWorld world = (ServerWorld)event.getWorld();
+                final C veinMinerConfig = (C) focusedAbilityNode.getAbilityConfig();
+                final ServerWorld world = (ServerWorld) event.getWorld();
                 final BlockPos pos = event.getPos();
                 final BlockState blockState = world.getBlockState(pos);
                 if (this.captureVeinMining(player, world, blockState.getBlock(), pos, veinMinerConfig)) {
@@ -62,17 +57,16 @@ public class VeinMinerAbility<C extends VeinMinerConfig> extends AbilityEffect<C
             }
         });
     }
-    
+
     protected boolean captureVeinMining(final ServerPlayerEntity player, final ServerWorld world, final Block targetBlock, final BlockPos pos, final C config) {
         BlockDropCaptureHelper.startCapturing();
         try {
             return this.doVeinMine(player, world, targetBlock, pos, config);
-        }
-        finally {
-            BlockDropCaptureHelper.getCapturedStacksAndStop().forEach(entity -> Block.popResource((World)world, entity.blockPosition(), entity.getItem()));
+        } finally {
+            BlockDropCaptureHelper.getCapturedStacksAndStop().forEach(entity -> Block.popResource((World) world, entity.blockPosition(), entity.getItem()));
         }
     }
-    
+
     protected boolean doVeinMine(final ServerPlayerEntity player, final ServerWorld world, final Block targetBlock, final BlockPos pos, final C config) {
         final ItemStack heldItem = player.getItemInHand(Hand.MAIN_HAND);
         if (heldItem.isDamageableItem()) {
@@ -91,21 +85,17 @@ public class VeinMinerAbility<C extends VeinMinerConfig> extends AbilityEffect<C
                 if (traversedBlocks.size() >= limit) {
                     positionQueue.clear();
                     return;
-                }
-                else if (traversedBlocks.contains(offset)) {
+                } else if (traversedBlocks.contains(offset)) {
                     return;
-                }
-                else {
+                } else {
                     final BlockState at = world.getBlockState(offset);
-                    if (at.isAir((IBlockReader)world, offset) || at.getBlock() != targetBlock) {
+                    if (at.isAir((IBlockReader) world, offset) || at.getBlock() != targetBlock) {
                         return;
-                    }
-                    else {
+                    } else {
                         if (this.shouldVoid(world, targetBlock)) {
-                            at.removedByPlayer((World)world, offset, (PlayerEntity)player, false, at.getFluidState());
+                            at.removedByPlayer((World) world, offset, (PlayerEntity) player, false, at.getFluidState());
                             BlockHelper.damageMiningItem(heldItem, player, 1);
-                        }
-                        else if (this.doDestroy(world, offset, player, config)) {
+                        } else if (this.doDestroy(world, offset, player, config)) {
                             BlockHelper.damageMiningItem(heldItem, player, 1);
                         }
                         positionQueue.add(offset.immutable());
@@ -117,20 +107,21 @@ public class VeinMinerAbility<C extends VeinMinerConfig> extends AbilityEffect<C
         }
         return true;
     }
-    
+
     private boolean doDestroy(final ServerWorld world, final BlockPos pos, final ServerPlayerEntity player, final C config) {
-        final ItemStack miningStack = this.getVeinMiningItem((PlayerEntity)player, config);
+        final ItemStack miningStack = this.getVeinMiningItem((PlayerEntity) player, config);
         return BlockHelper.breakBlock(world, player, pos, world.getBlockState(pos), miningStack, true, false);
     }
-    
+
     public void damageMiningItem(final ItemStack heldItem, final PlayerEntity player, final C config) {
-        heldItem.hurtAndBreak(1, (LivingEntity)player, playerEntity -> {});
+        heldItem.hurtAndBreak(1, (LivingEntity) player, playerEntity -> {
+        });
     }
-    
+
     protected ItemStack getVeinMiningItem(final PlayerEntity player, final C config) {
         return player.getItemInHand(Hand.MAIN_HAND);
     }
-    
+
     public boolean shouldVoid(final ServerWorld world, final Block targetBlock) {
         return false;
     }

@@ -1,7 +1,3 @@
-// 
-// Decompiled by Procyon v0.6.0
-// 
-
 package iskallia.vault.event;
 
 import com.google.common.collect.Lists;
@@ -32,33 +28,32 @@ import net.minecraftforge.fml.common.Mod;
 import java.util.Iterator;
 import java.util.List;
 
-@Mod.EventBusSubscriber({ Dist.CLIENT })
-public class ClientEvents
-{
+@Mod.EventBusSubscriber({Dist.CLIENT})
+public class ClientEvents {
     private static final ResourceLocation OVERLAY_ICONS;
-    
+
     @SubscribeEvent(priority = EventPriority.LOW)
     public static void setupHealthTexture(final RenderGameOverlayEvent.Pre event) {
         if (event.getType() != RenderGameOverlayEvent.ElementType.HEALTH) {
             return;
         }
-        final PlayerEntity player = (PlayerEntity)Minecraft.getInstance().player;
+        final PlayerEntity player = (PlayerEntity) Minecraft.getInstance().player;
         if (player == null) {
             return;
         }
-        final TalentNode<?> talentNode = ClientTalentData.getLearnedTalentNode((TalentGroup<?>)ModConfigs.TALENTS.FRENZY);
+        final TalentNode<?> talentNode = ClientTalentData.getLearnedTalentNode((TalentGroup<?>) ModConfigs.TALENTS.FRENZY);
         if (talentNode == null || !talentNode.isLearned()) {
             return;
         }
-        final PlayerTalent talent = (PlayerTalent)talentNode.getTalent();
+        final PlayerTalent talent = (PlayerTalent) talentNode.getTalent();
         if (!(talent instanceof FrenzyTalent)) {
             return;
         }
-        if (player.getHealth() / player.getMaxHealth() <= ((FrenzyTalent)talent).getThreshold()) {
+        if (player.getHealth() / player.getMaxHealth() <= ((FrenzyTalent) talent).getThreshold()) {
             Minecraft.getInstance().getTextureManager().bind(ClientEvents.OVERLAY_ICONS);
         }
     }
-    
+
     @SubscribeEvent
     public static void cleanupHealthTexture(final RenderGameOverlayEvent.Post event) {
         if (event.getType() != RenderGameOverlayEvent.ElementType.HEALTH) {
@@ -66,14 +61,14 @@ public class ClientEvents
         }
         Minecraft.getInstance().getTextureManager().bind(AbstractGui.GUI_ICONS_LOCATION);
     }
-    
+
     @SubscribeEvent
     public static void onDisconnect(final ClientPlayerNetworkEvent.LoggedOutEvent event) {
         PlayerRageHelper.clearClientCache();
         ClientActiveEternalData.clearClientCache();
         ClientDamageData.clearClientCache();
     }
-    
+
     @SubscribeEvent
     public static void onItemTooltip(final ItemTooltipEvent event) {
         ModConfigs.TOOLTIP.getTooltipString(event.getItemStack().getItem()).ifPresent(str -> {
@@ -82,7 +77,7 @@ public class ClientEvents
             if (!added.isEmpty()) {
                 tooltip.add(1, StringTextComponent.EMPTY);
 
-                final Iterator<String> iterator=added.iterator();
+                final Iterator<String> iterator = added.iterator();
                 while (iterator.hasNext()) {
                     final String newStr = iterator.next();
                     tooltip.add(1, new StringTextComponent(newStr).withStyle(TextFormatting.GRAY));
@@ -90,7 +85,7 @@ public class ClientEvents
             }
         });
     }
-    
+
     static {
         OVERLAY_ICONS = Vault.id("textures/gui/overlay_icons.png");
     }

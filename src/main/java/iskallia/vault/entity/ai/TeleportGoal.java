@@ -1,7 +1,3 @@
-// 
-// Decompiled by Procyon v0.6.0
-// 
-
 package iskallia.vault.entity.ai;
 
 import net.minecraft.entity.LivingEntity;

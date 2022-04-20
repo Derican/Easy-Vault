@@ -1,7 +1,3 @@
-// 
-// Decompiled by Procyon v0.6.0
-// 
-
 package iskallia.vault.block.entity;
 
 import iskallia.vault.container.inventory.CatalystDecryptionContainer;
@@ -31,12 +27,11 @@ import net.minecraftforge.items.ItemStackHandler;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-public class CatalystDecryptionTableTileEntity extends TileEntity implements INamedContainerProvider, ITickableTileEntity
-{
+public class CatalystDecryptionTableTileEntity extends TileEntity implements INamedContainerProvider, ITickableTileEntity {
     private final ItemStackHandler handler;
-    
+
     public CatalystDecryptionTableTileEntity() {
-        super((TileEntityType)ModBlocks.CATALYST_DECRYPTION_TABLE_TILE_ENTITY);
+        super((TileEntityType) ModBlocks.CATALYST_DECRYPTION_TABLE_TILE_ENTITY);
         this.handler = new ItemStackHandler(11) {
             protected void onContentsChanged(final int slot) {
                 super.onContentsChanged(slot);
@@ -44,13 +39,13 @@ public class CatalystDecryptionTableTileEntity extends TileEntity implements INa
             }
         };
     }
-    
+
     public void sendUpdates() {
         this.level.sendBlockUpdated(this.worldPosition, this.getBlockState(), this.getBlockState(), 3);
         this.level.updateNeighborsAt(this.worldPosition, this.getBlockState().getBlock());
         this.setChanged();
     }
-    
+
     public void tick() {
         for (int slot = 0; slot < this.handler.getSlots(); ++slot) {
             final ItemStack stack = this.handler.getStackInSlot(slot);
@@ -65,29 +60,29 @@ public class CatalystDecryptionTableTileEntity extends TileEntity implements INa
             }
         }
     }
-    
+
     public void load(final BlockState state, final CompoundNBT tag) {
         this.handler.deserializeNBT(tag.getCompound("inventory"));
         super.load(state, tag);
     }
-    
+
     public CompoundNBT save(final CompoundNBT tag) {
-        tag.put("inventory", (INBT)this.handler.serializeNBT());
+        tag.put("inventory", (INBT) this.handler.serializeNBT());
         return super.save(tag);
     }
-    
+
     @Nonnull
     public <T> LazyOptional<T> getCapability(@Nonnull final Capability<T> cap, @Nullable final Direction side) {
         if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
-            return (LazyOptional<T>)LazyOptional.of(() -> this.handler).cast();
+            return (LazyOptional<T>) LazyOptional.of(() -> this.handler).cast();
         }
-        return (LazyOptional<T>)super.getCapability((Capability)cap, side);
+        return (LazyOptional<T>) super.getCapability((Capability) cap, side);
     }
-    
+
     public ITextComponent getDisplayName() {
-        return (ITextComponent)new StringTextComponent("Catalyst Decryption Table");
+        return (ITextComponent) new StringTextComponent("Catalyst Decryption Table");
     }
-    
+
     @Nullable
     public Container createMenu(final int windowId, final PlayerInventory playerInventory, final PlayerEntity player) {
         if (this.getLevel() == null) {

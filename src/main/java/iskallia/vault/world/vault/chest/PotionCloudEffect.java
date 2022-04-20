@@ -1,7 +1,3 @@
-// 
-// Decompiled by Procyon v0.6.0
-// 
-
 package iskallia.vault.world.vault.chest;
 
 import com.google.gson.annotations.Expose;
@@ -24,33 +20,30 @@ import net.minecraftforge.registries.ForgeRegistryEntry;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
-import java.util.function.Function;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
-public class PotionCloudEffect extends VaultChestEffect
-{
+public class PotionCloudEffect extends VaultChestEffect {
     @Expose
     public List<String> potions;
-    
+
     public PotionCloudEffect(final String name, final Potion... potions) {
         super(name);
         this.potions = Arrays.stream(potions).map(ForgeRegistryEntry::getRegistryName).filter(Objects::nonNull).map(ResourceLocation::toString).collect(Collectors.toList());
     }
-    
+
     public List<Potion> getPotions() {
         return this.potions.stream().map(s -> Registry.POTION.getOptional(new ResourceLocation(s)).orElse(null)).filter(Objects::nonNull).collect(Collectors.toList());
     }
-    
+
     @Override
     public void apply(final VaultRaid vault, final VaultPlayer player, final ServerWorld world) {
         player.runIfPresent(world.getServer(), playerEntity -> {
-            final PotionEntity entity = new PotionEntity((World)world, (LivingEntity)playerEntity);
-            final ItemStack stack = new ItemStack((IItemProvider)Items.LINGERING_POTION);
+            final PotionEntity entity = new PotionEntity((World) world, (LivingEntity) playerEntity);
+            final ItemStack stack = new ItemStack((IItemProvider) Items.LINGERING_POTION);
             this.getPotions().forEach(potion -> PotionUtils.setPotion(stack, potion));
             entity.setItem(stack);
-            entity.shootFromRotation((Entity)playerEntity, playerEntity.xRot, playerEntity.yRot, -20.0f, 0.5f, 1.0f);
-            world.addFreshEntity((Entity)entity);
+            entity.shootFromRotation((Entity) playerEntity, playerEntity.xRot, playerEntity.yRot, -20.0f, 0.5f, 1.0f);
+            world.addFreshEntity((Entity) entity);
         });
     }
 }

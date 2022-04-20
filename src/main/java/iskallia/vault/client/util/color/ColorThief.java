@@ -1,7 +1,3 @@
-// 
-// Decompiled by Procyon v0.6.0
-// 
-
 package iskallia.vault.client.util.color;
 
 import javax.annotation.Nullable;
@@ -9,11 +5,10 @@ import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferByte;
 import java.util.Arrays;
 
-public class ColorThief
-{
+public class ColorThief {
     private static final int DEFAULT_QUALITY = 2;
     private static final boolean DEFAULT_IGNORE_WHITE = false;
-    
+
     @Nullable
     public static int[] getColor(final BufferedImage sourceImage) {
         final int[][] palette = getPalette(sourceImage, 5);
@@ -23,7 +18,7 @@ public class ColorThief
         final int[] dominantColor = palette[0];
         return dominantColor;
     }
-    
+
     @Nullable
     public static int[] getColor(final BufferedImage sourceImage, final int quality, final boolean ignoreWhite) {
         final int[][] palette = getPalette(sourceImage, 5, quality, ignoreWhite);
@@ -33,7 +28,7 @@ public class ColorThief
         final int[] dominantColor = palette[0];
         return dominantColor;
     }
-    
+
     @Nullable
     public static int[][] getPalette(final BufferedImage sourceImage, final int colorCount) {
         final MMCQ.CMap cmap = getColorMap(sourceImage, colorCount);
@@ -42,7 +37,7 @@ public class ColorThief
         }
         return cmap.palette();
     }
-    
+
     @Nullable
     public static int[][] getPalette(final BufferedImage sourceImage, final int colorCount, final int quality, final boolean ignoreWhite) {
         final MMCQ.CMap cmap = getColorMap(sourceImage, colorCount, quality, ignoreWhite);
@@ -51,12 +46,12 @@ public class ColorThief
         }
         return cmap.palette();
     }
-    
+
     @Nullable
     public static MMCQ.CMap getColorMap(final BufferedImage sourceImage, final int colorCount) {
         return getColorMap(sourceImage, colorCount, 2, false);
     }
-    
+
     @Nullable
     public static MMCQ.CMap getColorMap(final BufferedImage sourceImage, final int colorCount, final int quality, final boolean ignoreWhite) {
         int[][] pixelArray = null;
@@ -74,9 +69,9 @@ public class ColorThief
         final MMCQ.CMap cmap = MMCQ.quantize(pixelArray, colorCount);
         return cmap;
     }
-    
+
     private static int[][] getPixelsFast(final BufferedImage sourceImage, final int quality, final boolean ignoreWhite) {
-        final DataBufferByte imageData = (DataBufferByte)sourceImage.getRaster().getDataBuffer();
+        final DataBufferByte imageData = (DataBufferByte) sourceImage.getRaster().getDataBuffer();
         final byte[] pixels = imageData.getData();
         final int pixelCount = sourceImage.getWidth() * sourceImage.getHeight();
         final int type = sourceImage.getType();
@@ -109,7 +104,7 @@ public class ColorThief
                     final int g = pixels[offset + 1] & 0xFF;
                     final int r = pixels[offset + 2] & 0xFF;
                     if (!ignoreWhite || r <= 250 || g <= 250 || b <= 250) {
-                        pixelArray[numUsedPixels] = new int[] { r, g, b };
+                        pixelArray[numUsedPixels] = new int[]{r, g, b};
                         ++numUsedPixels;
                     }
                 }
@@ -123,7 +118,7 @@ public class ColorThief
                     final int g = pixels[offset + 2] & 0xFF;
                     final int r = pixels[offset + 3] & 0xFF;
                     if (a >= 125 && (!ignoreWhite || r <= 250 || g <= 250 || b <= 250)) {
-                        pixelArray[numUsedPixels] = new int[] { r, g, b };
+                        pixelArray[numUsedPixels] = new int[]{r, g, b};
                         ++numUsedPixels;
                     }
                 }
@@ -135,7 +130,7 @@ public class ColorThief
         }
         return Arrays.copyOfRange(pixelArray, 0, numUsedPixels);
     }
-    
+
     private static int[][] getPixelsSlow(final BufferedImage sourceImage, final int quality, final boolean ignoreWhite) {
         final int width = sourceImage.getWidth();
         final int height = sourceImage.getHeight();
@@ -151,7 +146,7 @@ public class ColorThief
             final int g = rgb >> 8 & 0xFF;
             final int b = rgb & 0xFF;
             if (!ignoreWhite || r <= 250 || r <= 250 || r <= 250) {
-                res[numUsedPixels] = new int[] { r, g, b };
+                res[numUsedPixels] = new int[]{r, g, b};
                 ++numUsedPixels;
             }
         }

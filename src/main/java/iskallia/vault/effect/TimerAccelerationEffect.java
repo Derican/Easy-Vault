@@ -1,7 +1,3 @@
-// 
-// Decompiled by Procyon v0.6.0
-// 
-
 package iskallia.vault.effect;
 
 import iskallia.vault.init.ModEffects;
@@ -18,17 +14,16 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.FORGE)
-public class TimerAccelerationEffect extends Effect
-{
+public class TimerAccelerationEffect extends Effect {
     public TimerAccelerationEffect(final EffectType typeIn, final int liquidColorIn, final ResourceLocation id) {
         super(typeIn, liquidColorIn);
         this.setRegistryName(id);
     }
-    
+
     public boolean isInstantenous() {
         return false;
     }
-    
+
     @SubscribeEvent
     public static void onPlayerTick(final TickEvent.PlayerTickEvent event) {
         if (event.side.isClient()) {
@@ -37,7 +32,7 @@ public class TimerAccelerationEffect extends Effect
         if (event.phase != TickEvent.Phase.END) {
             return;
         }
-        final ServerPlayerEntity player = (ServerPlayerEntity)event.player;
+        final ServerPlayerEntity player = (ServerPlayerEntity) event.player;
         final EffectInstance effect = player.getEffect(ModEffects.TIMER_ACCELERATION);
         if (effect == null) {
             return;

@@ -1,7 +1,3 @@
-// 
-// Decompiled by Procyon v0.6.0
-// 
-
 package iskallia.vault.client.vault.goal;
 
 import iskallia.vault.client.gui.overlay.goal.BossBarOverlay;
@@ -9,18 +5,17 @@ import iskallia.vault.network.message.VaultGoalMessage;
 
 import javax.annotation.Nullable;
 
-public abstract class VaultGoalData
-{
+public abstract class VaultGoalData {
     public static VaultGoalData CURRENT_DATA;
     public static VaultGoalData ADDITIONAL_DATA;
-    
+
     public abstract void receive(final VaultGoalMessage p0);
-    
+
     @Nullable
     public abstract BossBarOverlay getBossBarOverlay();
-    
+
     public static void create(final VaultGoalMessage pkt) {
-        switch ((VaultGoalMessage.VaultGoal)pkt.opcode) {
+        switch ((VaultGoalMessage.VaultGoal) pkt.opcode) {
             case OBELISK_GOAL:
             case OBELISK_MESSAGE: {
                 (VaultGoalData.CURRENT_DATA = new VaultObeliskData()).receive(pkt);
@@ -53,7 +48,7 @@ public abstract class VaultGoalData
             }
         }
     }
-    
+
     static {
         VaultGoalData.CURRENT_DATA = null;
         VaultGoalData.ADDITIONAL_DATA = null;

@@ -1,7 +1,3 @@
-// 
-// Decompiled by Procyon v0.6.0
-// 
-
 package iskallia.vault.config;
 
 import com.google.gson.annotations.Expose;
@@ -20,10 +16,12 @@ import net.minecraft.world.server.ServerWorld;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.*;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.Random;
+import java.util.UUID;
 
-public class VaultLootablesConfig extends Config
-{
+public class VaultLootablesConfig extends Config {
     @Expose
     public Lootable ORE;
     @Expose
@@ -38,7 +36,7 @@ public class VaultLootablesConfig extends Config
     public Lootable VAULT_CHEST;
     @Expose
     public Lootable VAULT_TREASURE;
-    
+
     public VaultLootablesConfig() {
         this.ORE = Lootable.defaultConfig();
         this.DOOR = Lootable.defaultConfig();
@@ -48,28 +46,27 @@ public class VaultLootablesConfig extends Config
         this.VAULT_CHEST = Lootable.defaultConfig();
         this.VAULT_TREASURE = Lootable.defaultConfig();
     }
-    
+
     @Override
     public String getName() {
         return "vault_lootables";
     }
-    
+
     @Override
     protected void reset() {
     }
-    
-    public static class Lootable
-    {
+
+    public static class Lootable {
         @Expose
         private WeightedList<String> DEFAULT;
         @Expose
         private Map<String, WeightedList<String>> OVERRIDES;
-        
+
         public Lootable() {
             this.DEFAULT = new WeightedList<String>();
             this.OVERRIDES = new LinkedHashMap<String, WeightedList<String>>();
         }
-        
+
         @Nonnull
         public BlockState get(final ServerWorld world, final BlockPos pos, final Random random, final String poolName, final UUID playerUUID) {
             RandomListAccess<String> pool = this.getPool(playerUUID);
@@ -79,9 +76,9 @@ public class VaultLootablesConfig extends Config
                     pool = modifier.adjustLootWeighting(poolName, pool);
                 }
             }
-            return Registry.BLOCK.getOptional(new ResourceLocation((String)pool.getRandom(random))).orElse(Blocks.AIR).defaultBlockState();
+            return Registry.BLOCK.getOptional(new ResourceLocation((String) pool.getRandom(random))).orElse(Blocks.AIR).defaultBlockState();
         }
-        
+
         public WeightedList<String> getPool(@Nullable final UUID playerUUID) {
             final WeightedList<String> pool = new WeightedList<String>();
             if (playerUUID != null) {
@@ -95,7 +92,7 @@ public class VaultLootablesConfig extends Config
             });
             return pool;
         }
-        
+
         public static Lootable defaultConfig() {
             final Lootable lootable = new Lootable();
             lootable.DEFAULT.add(Blocks.AIR.getRegistryName().toString(), 1);

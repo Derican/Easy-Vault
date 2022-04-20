@@ -1,7 +1,3 @@
-// 
-// Decompiled by Procyon v0.6.0
-// 
-
 package iskallia.vault.mixin;
 
 import net.minecraft.util.Rotation;
@@ -18,20 +14,18 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
 
-import java.util.function.Consumer;
 import java.util.function.Supplier;
 
-@Mixin(value = { SingleJigsawPiece.class }, priority = 1001)
-public abstract class MixinSingleJigsawPiece extends JigsawPiece
-{
+@Mixin(value = {SingleJigsawPiece.class}, priority = 1001)
+public abstract class MixinSingleJigsawPiece extends JigsawPiece {
     @Shadow
     @Final
     protected Supplier<StructureProcessorList> processors;
-    
+
     protected MixinSingleJigsawPiece(final JigsawPattern.PlacementBehaviour projection) {
         super(projection);
     }
-    
+
     /**
      * @author
      * @reason
@@ -45,7 +39,7 @@ public abstract class MixinSingleJigsawPiece extends JigsawPiece
         placementsettings.setIgnoreEntities(false);
         placementsettings.setFinalizeEntities(true);
         if (!p_230379_3_) {
-            placementsettings.addProcessor((StructureProcessor)JigsawReplacementStructureProcessor.INSTANCE);
+            placementsettings.addProcessor((StructureProcessor) JigsawReplacementStructureProcessor.INSTANCE);
         }
         this.processors.get().list().forEach(placementsettings::addProcessor);
         this.getProjection().getProcessors().forEach(placementsettings::addProcessor);

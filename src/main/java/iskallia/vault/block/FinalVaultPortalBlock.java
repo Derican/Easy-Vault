@@ -1,7 +1,3 @@
-// 
-// Decompiled by Procyon v0.6.0
-// 
-
 package iskallia.vault.block;
 
 import net.minecraft.block.*;
@@ -10,7 +6,6 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.particles.IParticleData;
 import net.minecraft.particles.ParticleTypes;
-import net.minecraft.state.Property;
 import net.minecraft.state.StateContainer;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ITag;
@@ -29,19 +24,18 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 
 import java.util.Random;
 
-public class FinalVaultPortalBlock extends NetherPortalBlock
-{
+public class FinalVaultPortalBlock extends NetherPortalBlock {
     public FinalVaultPortalBlock() {
-        super(AbstractBlock.Properties.copy((AbstractBlock)Blocks.NETHER_PORTAL));
+        super(AbstractBlock.Properties.copy((AbstractBlock) Blocks.NETHER_PORTAL));
         this.registerDefaultState((this.stateDefinition.any()).setValue(FinalVaultPortalBlock.AXIS, Direction.Axis.X));
     }
-    
+
     protected static BlockPos getSpawnPoint(final ServerWorld p_241092_0_, final int p_241092_1_, final int p_241092_2_, final boolean p_241092_3_) {
         final BlockPos.Mutable blockpos$mutable = new BlockPos.Mutable(p_241092_1_, 0, p_241092_2_);
-        final Biome biome = p_241092_0_.getBiome((BlockPos)blockpos$mutable);
+        final Biome biome = p_241092_0_.getBiome((BlockPos) blockpos$mutable);
         final boolean flag = p_241092_0_.dimensionType().hasCeiling();
         final BlockState blockstate = biome.getGenerationSettings().getSurfaceBuilderConfig().getTopMaterial();
-        if (p_241092_3_ && !blockstate.getBlock().is((ITag)BlockTags.VALID_SPAWN)) {
+        if (p_241092_3_ && !blockstate.getBlock().is((ITag) BlockTags.VALID_SPAWN)) {
             return null;
         }
         final Chunk chunk = p_241092_0_.getChunk(p_241092_1_ >> 4, p_241092_2_ >> 4);
@@ -55,7 +49,7 @@ public class FinalVaultPortalBlock extends NetherPortalBlock
         }
         for (int k = i + 1; k >= 0; --k) {
             blockpos$mutable.set(p_241092_1_, k, p_241092_2_);
-            final BlockState blockstate2 = p_241092_0_.getBlockState((BlockPos)blockpos$mutable);
+            final BlockState blockstate2 = p_241092_0_.getBlockState((BlockPos) blockpos$mutable);
             if (!blockstate2.getFluidState().isEmpty()) {
                 break;
             }
@@ -65,27 +59,27 @@ public class FinalVaultPortalBlock extends NetherPortalBlock
         }
         return null;
     }
-    
+
     public boolean hasTileEntity(final BlockState state) {
         return false;
     }
-    
+
     public void randomTick(final BlockState state, final ServerWorld world, final BlockPos pos, final Random random) {
     }
-    
+
     public BlockState updateShape(final BlockState stateIn, final Direction facing, final BlockState facingState, final IWorld worldIn, final BlockPos currentPos, final BlockPos facingPos) {
         World world = null;
         if (worldIn instanceof World) {
-            world = (World)worldIn;
+            world = (World) worldIn;
         }
         if (world != null && world.dimension() == World.OVERWORLD) {
             final Direction.Axis direction$axis = facing.getAxis();
-            final Direction.Axis direction$axis2 = (Direction.Axis)stateIn.getValue(FinalVaultPortalBlock.AXIS);
+            final Direction.Axis direction$axis2 = (Direction.Axis) stateIn.getValue(FinalVaultPortalBlock.AXIS);
             final boolean b = direction$axis2 != direction$axis && direction$axis.isHorizontal();
         }
         return stateIn;
     }
-    
+
     public void entityInside(final BlockState state, final World world, final BlockPos pos, final Entity entity) {
         if (world.isClientSide || !(entity instanceof PlayerEntity)) {
             return;
@@ -93,10 +87,10 @@ public class FinalVaultPortalBlock extends NetherPortalBlock
         if (entity.isPassenger() || entity.isVehicle() || !entity.canChangeDimensions()) {
             return;
         }
-        final ServerPlayerEntity player = (ServerPlayerEntity)entity;
-        final VoxelShape playerVoxel = VoxelShapes.create(player.getBoundingBox().move((double)(-pos.getX()), (double)(-pos.getY()), (double)(-pos.getZ())));
+        final ServerPlayerEntity player = (ServerPlayerEntity) entity;
+        final VoxelShape playerVoxel = VoxelShapes.create(player.getBoundingBox().move((double) (-pos.getX()), (double) (-pos.getY()), (double) (-pos.getZ())));
     }
-    
+
     @OnlyIn(Dist.CLIENT)
     public void animateTick(final BlockState state, final World world, final BlockPos pos, final Random rand) {
         for (int i = 0; i < 4; ++i) {
@@ -107,19 +101,18 @@ public class FinalVaultPortalBlock extends NetherPortalBlock
             final double d5 = (rand.nextFloat() - 0.5) * 0.5;
             double d6 = (rand.nextFloat() - 0.5) * 0.5;
             final int j = rand.nextInt(2) * 2 - 1;
-            if (!world.getBlockState(pos.west()).is((Block)this) && !world.getBlockState(pos.east()).is((Block)this)) {
+            if (!world.getBlockState(pos.west()).is((Block) this) && !world.getBlockState(pos.east()).is((Block) this)) {
                 d0 = pos.getX() + 0.5 + 0.25 * j;
                 d4 = rand.nextFloat() * 2.0f * j;
-            }
-            else {
+            } else {
                 d3 = pos.getZ() + 0.5 + 0.25 * j;
                 d6 = rand.nextFloat() * 2.0f * j;
             }
-            world.addParticle((IParticleData)ParticleTypes.ASH, d0, d2, d3, d4, d5, d6);
+            world.addParticle((IParticleData) ParticleTypes.ASH, d0, d2, d3, d4, d5, d6);
         }
     }
-    
+
     protected void createBlockStateDefinition(final StateContainer.Builder<Block, BlockState> builder) {
-        super.createBlockStateDefinition((StateContainer.Builder)builder);
+        super.createBlockStateDefinition((StateContainer.Builder) builder);
     }
 }

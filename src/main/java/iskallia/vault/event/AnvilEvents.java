@@ -1,7 +1,3 @@
-// 
-// Decompiled by Procyon v0.6.0
-// 
-
 package iskallia.vault.event;
 
 import iskallia.vault.Vault;
@@ -45,8 +41,7 @@ import java.util.List;
 import java.util.Map;
 
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.FORGE)
-public class AnvilEvents
-{
+public class AnvilEvents {
     @SubscribeEvent(priority = EventPriority.HIGH)
     public static void onVaultAnvil(final AnvilUpdateEvent event) {
         final World world = event.getPlayer().getCommandSenderWorld();
@@ -58,14 +53,14 @@ public class AnvilEvents
             event.setCanceled(true);
         }
     }
-    
+
     @SubscribeEvent(priority = EventPriority.HIGH)
     public static void onCombineVaultGear(final AnvilUpdateEvent event) {
         if (event.getLeft().getItem() instanceof VaultGear && event.getRight().getItem() instanceof VaultGear) {
             event.setCanceled(true);
         }
     }
-    
+
     @SubscribeEvent
     public static void onAnvilUpdate(final AnvilUpdateEvent event) {
         final ItemStack equipment = event.getLeft();
@@ -93,17 +88,16 @@ public class AnvilEvents
             final int nextLevel = (currentLevel == bookLevel) ? (currentLevel + 1) : Math.max(currentLevel, bookLevel);
             enchantmentsToApply.put(bookEnchantment, nextLevel);
         }
-        EnchantmentHelper.setEnchantments((Map)enchantmentsToApply, upgradedEquipment);
+        EnchantmentHelper.setEnchantments((Map) enchantmentsToApply, upgradedEquipment);
         if (upgradedEquipment.equals(equipment, true)) {
             event.setCanceled(true);
-        }
-        else {
+        } else {
             final EnchantedBookEntry bookTier = ModConfigs.OVERLEVEL_ENCHANT.getTier(overlevels);
             event.setOutput(upgradedEquipment);
             event.setCost((bookTier == null) ? 1 : bookTier.getLevelNeeded());
         }
     }
-    
+
     @SubscribeEvent
     public static void onApplyPaxelCharm(final AnvilUpdateEvent event) {
         final ItemStack paxelStack = event.getLeft();
@@ -122,7 +116,7 @@ public class AnvilEvents
         event.setCost(5);
         event.setOutput(enhancedStack);
     }
-    
+
     @SubscribeEvent
     public static void onApplySeal(final AnvilUpdateEvent event) {
         if (event.getLeft().getItem() instanceof VaultCrystalItem && event.getRight().getItem() instanceof ItemVaultCrystalSeal) {
@@ -135,7 +129,7 @@ public class AnvilEvents
                 return;
             }
             VaultRaid.init();
-            final ResourceLocation objectiveKey = ((ItemVaultCrystalSeal)event.getRight().getItem()).getObjectiveId();
+            final ResourceLocation objectiveKey = ((ItemVaultCrystalSeal) event.getRight().getItem()).getObjectiveId();
             final VaultObjective objective = VaultObjective.getObjective(objectiveKey);
             if (objective != null) {
                 data.setSelectedObjective(objectiveKey);
@@ -146,7 +140,7 @@ public class AnvilEvents
             }
         }
     }
-    
+
     @SubscribeEvent
     public static void onApplyCake(final AnvilUpdateEvent event) {
         if (event.getLeft().getItem() instanceof VaultCrystalItem && event.getRight().getItem() == Items.CAKE) {
@@ -163,7 +157,7 @@ public class AnvilEvents
             event.setCost(8);
         }
     }
-    
+
     @SubscribeEvent
     public static void onApplyRaffleSeal(final AnvilUpdateEvent event) {
         if (event.getLeft().getItem() instanceof VaultCrystalItem && event.getRight().getItem() instanceof ItemVaultRaffleSeal) {
@@ -182,7 +176,7 @@ public class AnvilEvents
             event.setCost(8);
         }
     }
-    
+
     @SubscribeEvent
     public static void onApplyCatalyst(final AnvilUpdateEvent event) {
         if (event.getLeft().getItem() instanceof VaultCrystalItem && event.getRight().getItem() instanceof VaultCatalystItem) {
@@ -201,15 +195,15 @@ public class AnvilEvents
             event.setMaterialCost(1);
         }
     }
-    
+
     @SubscribeEvent
     public static void onApplyRune(final AnvilUpdateEvent event) {
         if (!(event.getPlayer() instanceof ServerPlayerEntity)) {
             return;
         }
         if (event.getLeft().getItem() instanceof VaultCrystalItem && event.getRight().getItem() instanceof VaultRuneItem) {
-            final ServerPlayerEntity sPlayer = (ServerPlayerEntity)event.getPlayer();
-            final int level = PlayerVaultStatsData.get(sPlayer.getLevel()).getVaultStats((PlayerEntity)sPlayer).getVaultLevel();
+            final ServerPlayerEntity sPlayer = (ServerPlayerEntity) event.getPlayer();
+            final int level = PlayerVaultStatsData.get(sPlayer.getLevel()).getVaultStats((PlayerEntity) sPlayer).getVaultLevel();
             final int minLevel = ModConfigs.VAULT_RUNE.getMinimumLevel(event.getRight().getItem()).orElse(0);
             if (level < minLevel) {
                 return;
@@ -219,7 +213,7 @@ public class AnvilEvents
             if (!data.canModifyWithCrafting()) {
                 return;
             }
-            final VaultRuneItem runeItem = (VaultRuneItem)event.getRight().getItem();
+            final VaultRuneItem runeItem = (VaultRuneItem) event.getRight().getItem();
             if (!data.canAddRoom(runeItem.getRoomName())) {
                 return;
             }
@@ -232,7 +226,7 @@ public class AnvilEvents
             event.setMaterialCost(amount);
         }
     }
-    
+
     @SubscribeEvent
     public static void onCraftInhibitor(final AnvilUpdateEvent event) {
         if (!(event.getLeft().getItem() instanceof VaultCatalystItem)) {
@@ -242,14 +236,14 @@ public class AnvilEvents
             return;
         }
         final ItemStack catalyst = event.getLeft().copy();
-        final ItemStack inhibitor = new ItemStack((IItemProvider)ModItems.VAULT_INHIBITOR);
+        final ItemStack inhibitor = new ItemStack((IItemProvider) ModItems.VAULT_INHIBITOR);
         final List<ModifierRollResult> modifiers = VaultCatalystItem.getModifierRolls(catalyst).orElse(Collections.emptyList());
         VaultInhibitorItem.setModifierRolls(inhibitor, modifiers);
         event.setOutput(inhibitor);
         event.setCost(1);
         event.setMaterialCost(1);
     }
-    
+
     @SubscribeEvent
     public static void onApplyPainiteStar(final AnvilUpdateEvent event) {
         if (event.getLeft().getItem() instanceof VaultCrystalItem && event.getRight().getItem() == ModItems.PAINITE_STAR) {
@@ -263,7 +257,7 @@ public class AnvilEvents
             event.setMaterialCost(1);
         }
     }
-    
+
     @SubscribeEvent
     public static void onApplyInhibitor(final AnvilUpdateEvent event) {
         if (event.getLeft().getItem() instanceof VaultCrystalItem && event.getRight().getItem() instanceof VaultInhibitorItem) {
@@ -285,7 +279,7 @@ public class AnvilEvents
             event.setMaterialCost(1);
         }
     }
-    
+
     @SubscribeEvent
     public static void onApplyEchoGemToCrystal(final AnvilUpdateEvent event) {
         if (event.getLeft().getItem() instanceof VaultCrystalItem && event.getRight().getItem() == ModItems.ECHO_GEM) {
@@ -295,8 +289,7 @@ public class AnvilEvents
                 data.addEchoGems(1);
                 data.setModifiable(false);
                 event.setMaterialCost(1);
-            }
-            else {
+            } else {
                 VaultCrystalItem.markAttemptApplyEcho(output, event.getRight().getCount());
                 event.setMaterialCost(event.getRight().getCount());
             }
@@ -304,7 +297,7 @@ public class AnvilEvents
             event.setOutput(output);
         }
     }
-    
+
     @SubscribeEvent
     public static void onApplyEchoCrystal(final AnvilUpdateEvent event) {
         if (!(event.getLeft().getItem() instanceof VaultCrystalItem)) {
@@ -335,7 +328,7 @@ public class AnvilEvents
         event.setMaterialCost(1);
         event.setOutput(output);
     }
-    
+
     @SubscribeEvent
     public static void onRepairDeny(final AnvilUpdateEvent event) {
         if (event.getLeft().getItem() instanceof VaultPaxelItem && event.getRight().getItem() instanceof VaultPaxelItem) {
@@ -345,7 +338,7 @@ public class AnvilEvents
             event.setCanceled(true);
         }
     }
-    
+
     @SubscribeEvent
     public static void onApplySoulFlame(final AnvilUpdateEvent event) {
         if (event.getLeft().getItem() instanceof VaultCrystalItem && event.getRight().getItem() == ModItems.SOUL_FLAME) {
@@ -364,7 +357,7 @@ public class AnvilEvents
             }
         }
     }
-    
+
     @SubscribeEvent
     public static void onApplyPog(final AnvilUpdateEvent event) {
         if (event.getRight().getItem() != ModItems.OMEGA_POG) {
@@ -372,12 +365,12 @@ public class AnvilEvents
         }
         final ResourceLocation name = event.getLeft().getItem().getRegistryName();
         if (name.equals(ModBlocks.VAULT_ARTIFACT.getRegistryName())) {
-            event.setOutput(new ItemStack((IItemProvider)ModItems.UNIDENTIFIED_ARTIFACT));
+            event.setOutput(new ItemStack((IItemProvider) ModItems.UNIDENTIFIED_ARTIFACT));
             event.setMaterialCost(1);
             event.setCost(1);
         }
     }
-    
+
     @SubscribeEvent
     public static void onApplyMending(final AnvilUpdateEvent event) {
         final ItemStack out = event.getOutput();
@@ -391,7 +384,7 @@ public class AnvilEvents
             event.setCanceled(true);
         }
     }
-    
+
     @SubscribeEvent
     public static void onRepairMagnet(final AnvilUpdateEvent event) {
         if (!(event.getLeft().getItem() instanceof VaultMagnetItem)) {
@@ -413,12 +406,12 @@ public class AnvilEvents
             output.setTag(nbt);
         }
         final int damage = magnet.getDamageValue();
-        final int repairAmount = (int)Math.ceil(magnet.getMaxDamage() * 0.1);
+        final int repairAmount = (int) Math.ceil(magnet.getMaxDamage() * 0.1);
         final int newDamage = Math.max(0, damage - magnetite.getCount() * repairAmount);
-        final int materialCost = (int)Math.ceil((damage - newDamage) / (double)repairAmount);
+        final int materialCost = (int) Math.ceil((damage - newDamage) / (double) repairAmount);
         event.setMaterialCost(materialCost);
         event.setCost(materialCost);
-        nbt.putInt("TotalRepairs", (int)Math.ceil(materialCost + nbt.getInt("TotalRepairs")));
+        nbt.putInt("TotalRepairs", (int) Math.ceil(materialCost + nbt.getInt("TotalRepairs")));
         output.setTag(nbt);
         output.setDamageValue(newDamage);
         event.setOutput(output);

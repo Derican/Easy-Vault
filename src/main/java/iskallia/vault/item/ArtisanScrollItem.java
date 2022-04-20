@@ -1,7 +1,3 @@
-// 
-// Decompiled by Procyon v0.6.0
-// 
-
 package iskallia.vault.item;
 
 import com.mojang.datafixers.util.Pair;
@@ -31,40 +27,39 @@ import org.apache.commons.lang3.StringUtils;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class ArtisanScrollItem extends BasicItem
-{
+public class ArtisanScrollItem extends BasicItem {
     public ArtisanScrollItem(final ResourceLocation id, final Item.Properties properties) {
         super(id, properties);
     }
-    
+
     public ITextComponent getName(final ItemStack stack) {
-        final IFormattableTextComponent displayName = (IFormattableTextComponent)super.getName(stack);
-        return (ITextComponent)displayName.setStyle(Style.EMPTY.withColor(Color.fromRgb(-1213660)));
+        final IFormattableTextComponent displayName = (IFormattableTextComponent) super.getName(stack);
+        return (ITextComponent) displayName.setStyle(Style.EMPTY.withColor(Color.fromRgb(-1213660)));
     }
-    
+
     @OnlyIn(Dist.CLIENT)
     @Override
     public void appendHoverText(final ItemStack stack, @Nullable final World worldIn, final List<ITextComponent> tooltip, final ITooltipFlag flagIn) {
         tooltip.add(StringTextComponent.EMPTY);
-        tooltip.add((ITextComponent)new StringTextComponent("Reforges a gear piece to").withStyle(TextFormatting.GRAY));
-        tooltip.add((ITextComponent)new StringTextComponent("it's unidentified state,").withStyle(TextFormatting.GRAY));
-        tooltip.add((ITextComponent)new StringTextComponent("allowing you to re-roll it").withStyle(TextFormatting.GRAY));
+        tooltip.add((ITextComponent) new StringTextComponent("Reforges a gear piece to").withStyle(TextFormatting.GRAY));
+        tooltip.add((ITextComponent) new StringTextComponent("it's unidentified state,").withStyle(TextFormatting.GRAY));
+        tooltip.add((ITextComponent) new StringTextComponent("allowing you to re-roll it").withStyle(TextFormatting.GRAY));
         final Pair<EquipmentSlotType, VAttribute<?, ?>> gearModifier = getPredefinedRoll(stack);
         if (gearModifier != null) {
-            final String slotName = StringUtils.capitalize(((EquipmentSlotType)gearModifier.getFirst()).getName());
-            final ITextComponent attributeTxt = VaultGearHelper.getDisplayName((VAttribute<?, ?>)gearModifier.getSecond());
+            final String slotName = StringUtils.capitalize(((EquipmentSlotType) gearModifier.getFirst()).getName());
+            final ITextComponent attributeTxt = VaultGearHelper.getDisplayName((VAttribute<?, ?>) gearModifier.getSecond());
             tooltip.add(StringTextComponent.EMPTY);
-            tooltip.add((ITextComponent)new StringTextComponent("Only for: ").withStyle(TextFormatting.GRAY).append((ITextComponent)new StringTextComponent(slotName).withStyle(TextFormatting.AQUA)));
-            tooltip.add((ITextComponent)new StringTextComponent("Adds: ").withStyle(TextFormatting.GRAY).append(attributeTxt));
+            tooltip.add((ITextComponent) new StringTextComponent("Only for: ").withStyle(TextFormatting.GRAY).append((ITextComponent) new StringTextComponent(slotName).withStyle(TextFormatting.AQUA)));
+            tooltip.add((ITextComponent) new StringTextComponent("Adds: ").withStyle(TextFormatting.GRAY).append(attributeTxt));
         }
     }
-    
+
     public void inventoryTick(final ItemStack stack, final World world, final Entity entity, final int itemSlot, final boolean isSelected) {
         if (isInitialized(stack) || !(entity instanceof ServerPlayerEntity)) {
             return;
         }
         if (world instanceof ServerWorld) {
-            final ServerPlayerEntity player = (ServerPlayerEntity)entity;
+            final ServerPlayerEntity player = (ServerPlayerEntity) entity;
             if (stack.getCount() > 1) {
                 while (stack.getCount() > 1) {
                     stack.shrink(1);
@@ -78,18 +73,18 @@ public class ArtisanScrollItem extends BasicItem
             setInitialized(stack, true);
         }
     }
-    
+
     public static void setInitialized(final ItemStack stack, final boolean initialized) {
         if (stack.isEmpty() || !(stack.getItem() instanceof ArtisanScrollItem)) {
             return;
         }
         stack.getOrCreateTag().putBoolean("initialized", initialized);
     }
-    
+
     public static boolean isInitialized(final ItemStack stack) {
         return stack.isEmpty() || !(stack.getItem() instanceof ArtisanScrollItem) || stack.getOrCreateTag().getBoolean("initialized");
     }
-    
+
     @Nullable
     public static Pair<EquipmentSlotType, VAttribute<?, ?>> getPredefinedRoll(final ItemStack stack) {
         if (stack.isEmpty() || !(stack.getItem() instanceof ArtisanScrollItem)) {
@@ -104,9 +99,9 @@ public class ArtisanScrollItem extends BasicItem
         if (attribute == null) {
             return null;
         }
-        return (Pair<EquipmentSlotType, VAttribute<?, ?>>)new Pair(slotType, attribute);
+        return (Pair<EquipmentSlotType, VAttribute<?, ?>>) new Pair(slotType, attribute);
     }
-    
+
     public static void setPredefinedRoll(final ItemStack stack, final EquipmentSlotType slotType, final VAttribute<?, ?> attribute) {
         if (stack.isEmpty() || !(stack.getItem() instanceof ArtisanScrollItem)) {
             return;
@@ -115,28 +110,27 @@ public class ArtisanScrollItem extends BasicItem
         tag.putInt("slot", slotType.ordinal());
         tag.putString("attribute", attribute.getId().toString());
     }
-    
+
     private static boolean generateRoll(final ItemStack out) {
         final VaultGearConfig config = VaultGearConfig.get(VaultGear.Rarity.OMEGA);
         final VaultGearConfig.Tier tierConfig = config.TIERS.get(0);
         final String itemKey = MiscUtils.getRandomEntry(tierConfig.BASE_MODIFIERS.keySet(), ArtisanScrollItem.random);
         Item item;
         try {
-            item = (Item)ForgeRegistries.ITEMS.getValue(new ResourceLocation(itemKey));
-        }
-        catch (final Exception exc) {
+            item = (Item) ForgeRegistries.ITEMS.getValue(new ResourceLocation(itemKey));
+        } catch (final Exception exc) {
             return false;
         }
         if (!(item instanceof VaultGear)) {
             return false;
         }
-        final EquipmentSlotType slotType = ((VaultGear)item).getIntendedSlot();
+        final EquipmentSlotType slotType = ((VaultGear) item).getIntendedSlot();
         if (slotType == null) {
             return false;
         }
         final VaultGearConfig.BaseModifiers modifiers = tierConfig.BASE_MODIFIERS.get(itemKey);
         final WeightedList<Pair<VAttribute<?, ?>, VAttribute.Instance.Generator<?>>> generatorList = new WeightedList<Pair<VAttribute<?, ?>, VAttribute.Instance.Generator<?>>>();
-        ModAttributes.REGISTRY.values().stream().map(attr -> new Pair(attr, modifiers.getGenerator(attr))).filter(pair -> pair.getSecond() != null).forEach(pair -> generatorList.add(new Pair(pair.getFirst(), ((WeightedList.Entry)pair.getSecond()).value), ((WeightedList.Entry)pair.getSecond()).weight));
+        ModAttributes.REGISTRY.values().stream().map(attr -> new Pair(attr, modifiers.getGenerator(attr))).filter(pair -> pair.getSecond() != null).forEach(pair -> generatorList.add(new Pair(pair.getFirst(), ((WeightedList.Entry) pair.getSecond()).value), ((WeightedList.Entry) pair.getSecond()).weight));
         if (generatorList.isEmpty()) {
             return false;
         }
@@ -144,7 +138,7 @@ public class ArtisanScrollItem extends BasicItem
         if (generatorPair == null) {
             return false;
         }
-        setPredefinedRoll(out, slotType, (VAttribute<?, ?>)generatorPair.getFirst());
+        setPredefinedRoll(out, slotType, (VAttribute<?, ?>) generatorPair.getFirst());
         return true;
     }
 }

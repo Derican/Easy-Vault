@@ -1,7 +1,3 @@
-// 
-// Decompiled by Procyon v0.6.0
-// 
-
 package iskallia.vault.skill.ability.group;
 
 import com.google.common.collect.Lists;
@@ -20,8 +16,7 @@ import net.minecraft.potion.Effects;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CleanseAbilityGroup extends AbilityGroup<CleanseConfig, CleanseAbility<CleanseConfig>>
-{
+public class CleanseAbilityGroup extends AbilityGroup<CleanseConfig, CleanseAbility<CleanseConfig>> {
     @Expose
     private final List<CleanseApplyConfig> applyLevelConfiguration;
     @Expose
@@ -30,7 +25,7 @@ public class CleanseAbilityGroup extends AbilityGroup<CleanseConfig, CleanseAbil
     private final List<CleanseHealConfig> healLevelConfiguration;
     @Expose
     private final List<CleanseImmuneConfig> immuneLevelConfiguration;
-    
+
     private CleanseAbilityGroup() {
         super("Cleanse");
         this.applyLevelConfiguration = new ArrayList<CleanseApplyConfig>();
@@ -38,7 +33,7 @@ public class CleanseAbilityGroup extends AbilityGroup<CleanseConfig, CleanseAbil
         this.healLevelConfiguration = new ArrayList<CleanseHealConfig>();
         this.immuneLevelConfiguration = new ArrayList<CleanseImmuneConfig>();
     }
-    
+
     @Override
     protected CleanseConfig getSubConfig(final String specialization, final int level) {
         switch (specialization) {
@@ -59,7 +54,7 @@ public class CleanseAbilityGroup extends AbilityGroup<CleanseConfig, CleanseAbil
             }
         }
     }
-    
+
     @Override
     public String getSpecializationName(final String specialization) {
         switch (specialization) {
@@ -80,9 +75,9 @@ public class CleanseAbilityGroup extends AbilityGroup<CleanseConfig, CleanseAbil
             }
         }
     }
-    
+
     public static CleanseAbilityGroup defaultConfig() {
-        final List<Effect> effects = Lists.newArrayList(new Effect[] { Effects.DIG_SPEED, Effects.DAMAGE_BOOST, Effects.REGENERATION, Effects.SATURATION, Effects.LUCK, Effects.FIRE_RESISTANCE, Effects.NIGHT_VISION });
+        final List<Effect> effects = Lists.newArrayList(new Effect[]{Effects.DIG_SPEED, Effects.DAMAGE_BOOST, Effects.REGENERATION, Effects.SATURATION, Effects.LUCK, Effects.FIRE_RESISTANCE, Effects.NIGHT_VISION});
         final CleanseAbilityGroup group = new CleanseAbilityGroup();
         group.addLevel(new CleanseConfig(1, AbilityConfig.Behavior.RELEASE_TO_PERFORM, 600));
         group.addLevel(new CleanseConfig(1, AbilityConfig.Behavior.RELEASE_TO_PERFORM, 540));

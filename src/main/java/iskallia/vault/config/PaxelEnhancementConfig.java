@@ -1,7 +1,3 @@
-// 
-// Decompiled by Procyon v0.6.0
-// 
-
 package iskallia.vault.config;
 
 import com.google.gson.annotations.Expose;
@@ -13,16 +9,15 @@ import net.minecraft.util.ResourceLocation;
 import javax.annotation.Nullable;
 import java.util.Random;
 
-public class PaxelEnhancementConfig extends Config
-{
+public class PaxelEnhancementConfig extends Config {
     @Expose
     private WeightedList<String> ENHANCEMENT_WEIGHTS;
-    
+
     @Override
     public String getName() {
         return "paxel_enhancement";
     }
-    
+
     @Nullable
     public PaxelEnhancement getRandomEnhancement(final Random random) {
         final String enhancementSid = this.ENHANCEMENT_WEIGHTS.getRandom(random);
@@ -31,7 +26,7 @@ public class PaxelEnhancementConfig extends Config
         }
         return PaxelEnhancements.REGISTRY.get(new ResourceLocation(enhancementSid));
     }
-    
+
     @Override
     protected void reset() {
         this.ENHANCEMENT_WEIGHTS = new WeightedList<String>();

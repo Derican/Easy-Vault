@@ -1,7 +1,3 @@
-// 
-// Decompiled by Procyon v0.6.0
-// 
-
 package iskallia.vault.client.util;
 
 import iskallia.vault.Vault;
@@ -30,14 +26,13 @@ import java.util.Optional;
 import java.util.Random;
 
 @OnlyIn(Dist.CLIENT)
-public class ColorizationHelper
-{
+public class ColorizationHelper {
     private static final Random rand;
     private static final Map<Item, Optional<Color>> itemColors;
-    
+
     private ColorizationHelper() {
     }
-    
+
     @Nonnull
     public static Optional<Color> getColor(final ItemStack stack) {
         if (stack.isEmpty()) {
@@ -52,14 +47,13 @@ public class ColorizationHelper
             final TextureAtlasSprite tas = getParticleTexture(stack);
             if (tas != null) {
                 ColorizationHelper.itemColors.put(i, getDominantColor(tas));
-            }
-            else {
+            } else {
                 ColorizationHelper.itemColors.put(i, Optional.empty());
             }
         }
         return ColorizationHelper.itemColors.get(i).map(c -> MiscUtils.overlayColor(c, new Color(MiscUtils.getOverlayColor(stack))));
     }
-    
+
     public static Optional<Color> getCustomColorOverride(final ItemStack stack) {
         final Item i = stack.getItem();
         if (i == ModItems.VAULT_PLATINUM) {
@@ -73,7 +67,7 @@ public class ColorizationHelper
         }
         return Optional.empty();
     }
-    
+
     @Nullable
     private static TextureAtlasSprite getParticleTexture(final ItemStack stack) {
         if (stack.isEmpty()) {
@@ -84,9 +78,9 @@ public class ColorizationHelper
         if (mdl.equals(imm.getModelManager().getMissingModel())) {
             return null;
         }
-        return mdl.getParticleTexture((IModelData)EmptyModelData.INSTANCE);
+        return mdl.getParticleTexture((IModelData) EmptyModelData.INSTANCE);
     }
-    
+
     private static Optional<Color> getDominantColor(final TextureAtlasSprite tas) {
         if (tas == null) {
             return Optional.empty();
@@ -96,14 +90,13 @@ public class ColorizationHelper
             final int[] dominantColor = ColorThief.getColor(extractedImage);
             final int color = (dominantColor[0] & 0xFF) << 16 | (dominantColor[1] & 0xFF) << 8 | (dominantColor[2] & 0xFF);
             return Optional.of(new Color(color));
-        }
-        catch (final Exception exc) {
+        } catch (final Exception exc) {
             Vault.LOGGER.error("Item Colorization Helper: Ignoring non-resolvable image " + tas.getName().toString());
             exc.printStackTrace();
             return Optional.empty();
         }
     }
-    
+
     @Nullable
     private static BufferedImage extractImage(final TextureAtlasSprite tas) {
         final int w = tas.getWidth();
@@ -125,7 +118,7 @@ public class ColorizationHelper
         }
         return bufferedImage;
     }
-    
+
     static {
         rand = new Random();
         itemColors = new HashMap<Item, Optional<Color>>();

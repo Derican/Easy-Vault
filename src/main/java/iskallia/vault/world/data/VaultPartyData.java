@@ -1,7 +1,3 @@
-// 
-// Decompiled by Procyon v0.6.0
-// 
-
 package iskallia.vault.world.data;
 
 import iskallia.vault.client.ClientPartyData;
@@ -33,47 +29,46 @@ import java.util.*;
 import java.util.function.Supplier;
 
 @Mod.EventBusSubscriber
-public class VaultPartyData extends WorldSavedData
-{
+public class VaultPartyData extends WorldSavedData {
     private static final Random rand;
     protected static final String DATA_NAME = "the_vault_VaultParty";
     protected VListNBT<Party, CompoundNBT> activeParties;
-    
+
     public VaultPartyData() {
         this("the_vault_VaultParty");
     }
-    
+
     public VaultPartyData(final String name) {
         super(name);
         this.activeParties = VListNBT.of(Party::new);
     }
-    
+
     public void load(final CompoundNBT nbt) {
         this.activeParties.deserializeNBT(nbt.getList("ActiveParties", 10));
     }
-    
+
     public CompoundNBT save(final CompoundNBT nbt) {
-        nbt.put("ActiveParties", (INBT)this.activeParties.serializeNBT());
+        nbt.put("ActiveParties", (INBT) this.activeParties.serializeNBT());
         return nbt;
     }
-    
+
     public static VaultPartyData get(final ServerWorld world) {
         return get(world.getServer());
     }
-    
+
     public static VaultPartyData get(final MinecraftServer server) {
-        return (VaultPartyData)server.overworld().getDataStorage().computeIfAbsent((Supplier)VaultPartyData::new, "the_vault_VaultParty");
+        return (VaultPartyData) server.overworld().getDataStorage().computeIfAbsent((Supplier) VaultPartyData::new, "the_vault_VaultParty");
     }
-    
+
     public static void broadcastPartyData(final ServerWorld world) {
         final VaultPartyData data = get(world);
         ModNetwork.CHANNEL.send(PacketDistributor.ALL.noArg(), new PartyStatusMessage(data.activeParties.serializeNBT()));
     }
-    
+
     public Optional<Party> getParty(final UUID playerId) {
         return this.activeParties.stream().filter(party -> party.hasMember(playerId)).findFirst();
     }
-    
+
     public boolean createParty(final UUID playerId) {
         if (this.getParty(playerId).isPresent()) {
             return false;
@@ -83,7 +78,7 @@ public class VaultPartyData extends WorldSavedData
         this.activeParties.add(newParty);
         return true;
     }
-    
+
     public boolean disbandParty(final UUID playerId) {
         final Optional<Party> party = this.getParty(playerId);
         if (!party.isPresent()) {
@@ -92,10 +87,10 @@ public class VaultPartyData extends WorldSavedData
         this.activeParties.remove(party.get());
         return true;
     }
-    
+
     @SubscribeEvent
     public static void onServerTick(final TickEvent.ServerTickEvent event) {
-        final MinecraftServer serverInstance = (MinecraftServer)LogicalSidedProvider.INSTANCE.get(LogicalSide.SERVER);
+        final MinecraftServer serverInstance = (MinecraftServer) LogicalSidedProvider.INSTANCE.get(LogicalSide.SERVER);
         if (event.phase != TickEvent.Phase.END) {
             return;
         }
@@ -113,39 +108,38 @@ public class VaultPartyData extends WorldSavedData
             });
         }
     }
-    
+
     static {
         rand = new Random();
     }
-    
-    public static class Party implements INBTSerializable<CompoundNBT>
-    {
+
+    public static class Party implements INBTSerializable<CompoundNBT> {
         private UUID leader;
         private final VListNBT<UUID, StringNBT> members;
         private final VListNBT<UUID, StringNBT> invites;
-        
+
         public Party() {
             this.leader = null;
             this.members = VListNBT.ofUUID();
             this.invites = VListNBT.ofUUID();
         }
-        
+
         public List<UUID> getMembers() {
-            return Collections.unmodifiableList((List<? extends UUID>)this.members);
+            return Collections.unmodifiableList((List<? extends UUID>) this.members);
         }
-        
+
         @Nullable
         public UUID getLeader() {
             return this.leader;
         }
-        
+
         public boolean addMember(final UUID member) {
             if (this.members.isEmpty()) {
                 this.leader = member;
             }
             return this.members.add(member);
         }
-        
+
         public boolean invite(final UUID member) {
             if (this.invites.contains(member)) {
                 return false;
@@ -153,15 +147,15 @@ public class VaultPartyData extends WorldSavedData
             this.invites.add(member);
             return true;
         }
-        
+
         public boolean remove(final UUID member) {
             final boolean removed = this.members.remove(member);
             if (removed && member.equals(this.leader)) {
-                this.leader = MiscUtils.getRandomEntry((Collection<UUID>)this.members, VaultPartyData.rand);
+                this.leader = MiscUtils.getRandomEntry((Collection<UUID>) this.members, VaultPartyData.rand);
             }
             return removed;
         }
-        
+
         public boolean confirmInvite(final UUID member) {
             if (this.invites.contains(member) && this.invites.remove(member)) {
                 this.members.add(member);
@@ -169,35 +163,35 @@ public class VaultPartyData extends WorldSavedData
             }
             return false;
         }
-        
+
         public boolean hasMember(final UUID member) {
             return this.members.contains(member);
         }
-        
+
         public ListNBT toClientMemberList() {
-            final MinecraftServer serverInstance = (MinecraftServer)LogicalSidedProvider.INSTANCE.get(LogicalSide.SERVER);
+            final MinecraftServer serverInstance = (MinecraftServer) LogicalSidedProvider.INSTANCE.get(LogicalSide.SERVER);
             final ListNBT partyMembers = new ListNBT();
             for (final UUID uuid : this.members) {
                 final ServerPlayerEntity player = serverInstance.getPlayerList().getPlayer(uuid);
                 if (player == null) {
                     continue;
                 }
-                final ClientPartyData.PartyMember partyMember = new ClientPartyData.PartyMember((PlayerEntity)player);
+                final ClientPartyData.PartyMember partyMember = new ClientPartyData.PartyMember((PlayerEntity) player);
                 partyMembers.add(partyMember.serializeNBT());
             }
             return partyMembers;
         }
-        
+
         public CompoundNBT serializeNBT() {
             final CompoundNBT nbt = new CompoundNBT();
             if (this.leader != null) {
                 nbt.putUUID("leader", this.leader);
             }
-            nbt.put("Members", (INBT)this.members.serializeNBT());
-            nbt.put("Invites", (INBT)this.invites.serializeNBT());
+            nbt.put("Members", (INBT) this.members.serializeNBT());
+            nbt.put("Invites", (INBT) this.invites.serializeNBT());
             return nbt;
         }
-        
+
         public void deserializeNBT(final CompoundNBT nbt) {
             this.leader = null;
             if (nbt.hasUUID("leader")) {

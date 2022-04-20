@@ -1,7 +1,3 @@
-// 
-// Decompiled by Procyon v0.6.0
-// 
-
 package iskallia.vault.skill.ability.group;
 
 import com.google.gson.annotations.Expose;
@@ -15,22 +11,21 @@ import iskallia.vault.skill.ability.effect.RampageAbility;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RampageAbilityGroup extends AbilityGroup<RampageConfig, RampageAbility<RampageConfig>>
-{
+public class RampageAbilityGroup extends AbilityGroup<RampageConfig, RampageAbility<RampageConfig>> {
     @Expose
     private final List<RampageDotConfig> dotLevelConfiguration;
     @Expose
     private final List<RampageTimeConfig> timeLevelConfiguration;
     @Expose
     private final List<RampageLeechConfig> leechLevelConfiguration;
-    
+
     private RampageAbilityGroup() {
         super("Rampage");
         this.dotLevelConfiguration = new ArrayList<RampageDotConfig>();
         this.timeLevelConfiguration = new ArrayList<RampageTimeConfig>();
         this.leechLevelConfiguration = new ArrayList<RampageLeechConfig>();
     }
-    
+
     @Override
     protected RampageConfig getSubConfig(final String specialization, final int level) {
         switch (specialization) {
@@ -48,7 +43,7 @@ public class RampageAbilityGroup extends AbilityGroup<RampageConfig, RampageAbil
             }
         }
     }
-    
+
     @Override
     public String getSpecializationName(final String specialization) {
         switch (specialization) {
@@ -66,7 +61,7 @@ public class RampageAbilityGroup extends AbilityGroup<RampageConfig, RampageAbil
             }
         }
     }
-    
+
     public static RampageAbilityGroup defaultConfig() {
         final RampageAbilityGroup group = new RampageAbilityGroup();
         group.addLevel(new RampageConfig(1, 1.0f, 100, 100));

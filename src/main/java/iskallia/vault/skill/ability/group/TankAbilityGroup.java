@@ -1,7 +1,3 @@
-// 
-// Decompiled by Procyon v0.6.0
-// 
-
 package iskallia.vault.skill.ability.group;
 
 import com.google.gson.annotations.Expose;
@@ -15,22 +11,21 @@ import iskallia.vault.skill.ability.effect.TankAbility;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TankAbilityGroup extends AbilityGroup<TankConfig, TankAbility<TankConfig>>
-{
+public class TankAbilityGroup extends AbilityGroup<TankConfig, TankAbility<TankConfig>> {
     @Expose
     private final List<TankParryConfig> parryLevelConfiguration;
     @Expose
     private final List<TankReflectConfig> reflectLevelConfiguration;
     @Expose
     private final List<TankSlowConfig> slowLevelConfiguration;
-    
+
     private TankAbilityGroup() {
         super("Tank");
         this.parryLevelConfiguration = new ArrayList<TankParryConfig>();
         this.reflectLevelConfiguration = new ArrayList<TankReflectConfig>();
         this.slowLevelConfiguration = new ArrayList<TankSlowConfig>();
     }
-    
+
     @Override
     protected TankConfig getSubConfig(final String specialization, final int level) {
         switch (specialization) {
@@ -48,7 +43,7 @@ public class TankAbilityGroup extends AbilityGroup<TankConfig, TankAbility<TankC
             }
         }
     }
-    
+
     @Override
     public String getSpecializationName(final String specialization) {
         switch (specialization) {
@@ -66,7 +61,7 @@ public class TankAbilityGroup extends AbilityGroup<TankConfig, TankAbility<TankC
             }
         }
     }
-    
+
     public static TankAbilityGroup defaultConfig() {
         final TankAbilityGroup group = new TankAbilityGroup();
         group.addLevel(new TankConfig(3, 100, 0.1f));

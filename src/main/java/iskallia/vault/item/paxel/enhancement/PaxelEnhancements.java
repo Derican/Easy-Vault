@@ -1,7 +1,3 @@
-// 
-// Decompiled by Procyon v0.6.0
-// 
-
 package iskallia.vault.item.paxel.enhancement;
 
 import iskallia.vault.Vault;
@@ -16,8 +12,7 @@ import javax.annotation.Nullable;
 import java.util.HashMap;
 import java.util.Map;
 
-public class PaxelEnhancements
-{
+public class PaxelEnhancements {
     public static Map<ResourceLocation, PaxelEnhancement> REGISTRY;
     public static DurabilityEnhancement FRAGILE;
     public static DurabilityEnhancement STURDY;
@@ -31,23 +26,23 @@ public class PaxelEnhancements
     public static final String ID_TAG = "Id";
     public static final String ENHANCEMENT_TAG = "Enhancement";
     public static final String SHOULD_ENHANCE_TAG = "ShouldEnhance";
-    
+
     private static <T extends PaxelEnhancement> T register(final String name, final T enhancement) {
         return register(Vault.id(name), enhancement);
     }
-    
+
     private static <T extends PaxelEnhancement> T register(final ResourceLocation resourceLocation, final T enhancement) {
         enhancement.setResourceLocation(resourceLocation);
         PaxelEnhancements.REGISTRY.put(resourceLocation, enhancement);
         return enhancement;
     }
-    
+
     public static void enhance(final ItemStack itemStack, final PaxelEnhancement enhancement) {
         final CompoundNBT nbt = itemStack.getOrCreateTag();
-        nbt.put("Enhancement", (INBT)enhancement.serializeNBT());
+        nbt.put("Enhancement", (INBT) enhancement.serializeNBT());
         nbt.putBoolean("ShouldEnhance", false);
     }
-    
+
     @Nullable
     public static PaxelEnhancement getEnhancement(final ItemStack itemStack) {
         if (itemStack.getItem() != ModItems.VAULT_PAXEL) {
@@ -64,17 +59,17 @@ public class PaxelEnhancements
         }
         return PaxelEnhancements.REGISTRY.get(new ResourceLocation(sId));
     }
-    
+
     public static void markShouldEnhance(final ItemStack itemStack) {
         final CompoundNBT nbt = itemStack.getOrCreateTag();
         nbt.putBoolean("ShouldEnhance", true);
     }
-    
+
     public static boolean shouldEnhance(final ItemStack itemStack) {
         final CompoundNBT nbt = itemStack.getOrCreateTag();
         return nbt.getBoolean("ShouldEnhance") && !nbt.contains("Enhancement", 10);
     }
-    
+
     static {
         PaxelEnhancements.REGISTRY = new HashMap<ResourceLocation, PaxelEnhancement>();
         PaxelEnhancements.FRAGILE = register("fragile", new DurabilityEnhancement(-3000));

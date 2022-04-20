@@ -1,7 +1,3 @@
-// 
-// Decompiled by Procyon v0.6.0
-// 
-
 package iskallia.vault.item.paxel;
 
 import com.google.common.collect.Multimap;
@@ -26,7 +22,6 @@ import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.*;
-import net.minecraft.state.Property;
 import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.*;
@@ -41,47 +36,46 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-public class VaultPaxelItem extends ToolItem
-{
+public class VaultPaxelItem extends ToolItem {
     public static final ToolType PAXEL_TOOL_TYPE;
-    
+
     public VaultPaxelItem(final ResourceLocation id) {
-        super(3.0f, -3.0f, (IItemTier)PaxelItemTier.INSTANCE, (Set)Collections.emptySet(), new Item.Properties().tab(ModItems.VAULT_MOD_GROUP).addToolType(VaultPaxelItem.PAXEL_TOOL_TYPE, PaxelItemTier.INSTANCE.getLevel()).stacksTo(1));
+        super(3.0f, -3.0f, (IItemTier) PaxelItemTier.INSTANCE, (Set) Collections.emptySet(), new Item.Properties().tab(ModItems.VAULT_MOD_GROUP).addToolType(VaultPaxelItem.PAXEL_TOOL_TYPE, PaxelItemTier.INSTANCE.getLevel()).stacksTo(1));
         this.setRegistryName(id);
     }
-    
+
     public Multimap<Attribute, AttributeModifier> getAttributeModifiers(final EquipmentSlotType slot, final ItemStack stack) {
-        return (Multimap<Attribute, AttributeModifier>)super.getAttributeModifiers(slot, stack);
+        return (Multimap<Attribute, AttributeModifier>) super.getAttributeModifiers(slot, stack);
     }
-    
+
     public int getMaxDamage(final ItemStack itemStack) {
         final PaxelEnhancement enhancement = PaxelEnhancements.getEnhancement(itemStack);
         if (enhancement instanceof DurabilityEnhancement) {
-            return super.getMaxDamage(itemStack) + ((DurabilityEnhancement)enhancement).getExtraDurability();
+            return super.getMaxDamage(itemStack) + ((DurabilityEnhancement) enhancement).getExtraDurability();
         }
         return super.getMaxDamage(itemStack);
     }
-    
+
     public boolean canApplyAtEnchantingTable(final ItemStack stack, final Enchantment enchantment) {
-        return enchantment != Enchantments.MENDING && (enchantment.canEnchant(new ItemStack((IItemProvider)Items.DIAMOND_SWORD)) || enchantment.canEnchant(new ItemStack((IItemProvider)Items.DIAMOND_AXE)) || enchantment.canEnchant(new ItemStack((IItemProvider)Items.DIAMOND_SHOVEL)) || enchantment.canEnchant(new ItemStack((IItemProvider)Items.DIAMOND_HOE)));
+        return enchantment != Enchantments.MENDING && (enchantment.canEnchant(new ItemStack((IItemProvider) Items.DIAMOND_SWORD)) || enchantment.canEnchant(new ItemStack((IItemProvider) Items.DIAMOND_AXE)) || enchantment.canEnchant(new ItemStack((IItemProvider) Items.DIAMOND_SHOVEL)) || enchantment.canEnchant(new ItemStack((IItemProvider) Items.DIAMOND_HOE)));
     }
-    
+
     public boolean isBookEnchantable(final ItemStack stack, final ItemStack book) {
         if (EnchantmentHelper.getEnchantments(book).containsKey(Enchantments.MENDING)) {
             return false;
         }
         for (final Enchantment e : EnchantmentHelper.getEnchantments(book).keySet()) {
-            if (e.canEnchant(new ItemStack((IItemProvider)Items.DIAMOND_SWORD)) || e.canEnchant(new ItemStack((IItemProvider)Items.DIAMOND_AXE)) || e.canEnchant(new ItemStack((IItemProvider)Items.DIAMOND_SHOVEL)) || e.canEnchant(new ItemStack((IItemProvider)Items.DIAMOND_HOE))) {
+            if (e.canEnchant(new ItemStack((IItemProvider) Items.DIAMOND_SWORD)) || e.canEnchant(new ItemStack((IItemProvider) Items.DIAMOND_AXE)) || e.canEnchant(new ItemStack((IItemProvider) Items.DIAMOND_SHOVEL)) || e.canEnchant(new ItemStack((IItemProvider) Items.DIAMOND_HOE))) {
                 return true;
             }
         }
         return false;
     }
-    
+
     public int getHarvestLevel(final ItemStack stack, final ToolType tool, final PlayerEntity player, final BlockState blockState) {
         return this.getTier().getLevel();
     }
-    
+
     public boolean isCorrectToolForDrops(final BlockState state) {
         final ToolType harvestTool = state.getHarvestTool();
         if ((harvestTool == ToolType.AXE || harvestTool == ToolType.PICKAXE || harvestTool == ToolType.SHOVEL) && this.getTier().getLevel() >= state.getHarvestLevel()) {
@@ -93,19 +87,19 @@ public class VaultPaxelItem extends ToolItem
         final Material material = state.getMaterial();
         return material == Material.STONE || material == Material.METAL || material == Material.HEAVY_METAL;
     }
-    
+
     public float getDestroySpeed(@Nonnull final ItemStack stack, final BlockState state) {
         return this.getTier().getSpeed();
     }
-    
+
     public boolean isValidRepairItem(final ItemStack toRepair, final ItemStack repair) {
         return false;
     }
-    
+
     public boolean isRepairable(final ItemStack stack) {
         return false;
     }
-    
+
     @Nonnull
     public ActionResultType useOn(final ItemUseContext context) {
         final World world = context.getLevel();
@@ -116,8 +110,7 @@ public class VaultPaxelItem extends ToolItem
         BlockState resultToSet = blockstate.getToolModifiedState(world, blockpos, player, stack, ToolType.AXE);
         if (resultToSet != null) {
             world.playSound(player, blockpos, SoundEvents.AXE_STRIP, SoundCategory.BLOCKS, 1.0f, 1.0f);
-        }
-        else {
+        } else {
             if (context.getClickedFace() == Direction.DOWN) {
                 return ActionResultType.PASS;
             }
@@ -125,12 +118,11 @@ public class VaultPaxelItem extends ToolItem
             if (foundResult != null && world.isEmptyBlock(blockpos.above())) {
                 world.playSound(player, blockpos, SoundEvents.SHOVEL_FLATTEN, SoundCategory.BLOCKS, 1.0f, 1.0f);
                 resultToSet = foundResult;
-            }
-            else if (blockstate.getBlock() instanceof CampfireBlock && (boolean)blockstate.getValue(CampfireBlock.LIT)) {
+            } else if (blockstate.getBlock() instanceof CampfireBlock && (boolean) blockstate.getValue(CampfireBlock.LIT)) {
                 if (!world.isClientSide) {
-                    world.levelEvent((PlayerEntity)null, 1009, blockpos, 0);
+                    world.levelEvent((PlayerEntity) null, 1009, blockpos, 0);
                 }
-                CampfireBlock.dowse((IWorld)world, blockpos, blockstate);
+                CampfireBlock.dowse((IWorld) world, blockpos, blockstate);
                 resultToSet = blockstate.setValue(CampfireBlock.LIT, false);
             }
         }
@@ -140,12 +132,12 @@ public class VaultPaxelItem extends ToolItem
         if (!world.isClientSide) {
             world.setBlock(blockpos, resultToSet, 11);
             if (player != null) {
-                stack.hurtAndBreak(1, (LivingEntity)player, onBroken -> onBroken.broadcastBreakEvent(context.getHand()));
+                stack.hurtAndBreak(1, (LivingEntity) player, onBroken -> onBroken.broadcastBreakEvent(context.getHand()));
             }
         }
         return ActionResultType.sidedSuccess(world.isClientSide);
     }
-    
+
     public void inventoryTick(@Nonnull final ItemStack itemStack, @Nonnull final World world, @Nonnull final Entity entity, final int itemSlot, final boolean isSelected) {
         super.inventoryTick(itemStack, world, entity, itemSlot, isSelected);
         if (!world.isClientSide && PaxelEnhancements.shouldEnhance(itemStack)) {
@@ -159,25 +151,25 @@ public class VaultPaxelItem extends ToolItem
             enhancement.inventoryTick(itemStack, world, entity, itemSlot, isSelected);
         }
     }
-    
+
     public void appendHoverText(@Nonnull final ItemStack itemStack, @Nullable final World world, final List<ITextComponent> tooltip, final ITooltipFlag flag) {
-        super.appendHoverText(itemStack, world, (List)tooltip, flag);
+        super.appendHoverText(itemStack, world, (List) tooltip, flag);
         final PaxelEnhancement enhancement = PaxelEnhancements.getEnhancement(itemStack);
         if (enhancement != null) {
             final IFormattableTextComponent label = new TranslationTextComponent("paxel_enhancement.name").append(": ");
-            tooltip.add((ITextComponent)label.append((ITextComponent)enhancement.getName().setStyle(Style.EMPTY.withColor(enhancement.getColor()).withBold(Boolean.valueOf(true)))));
-            tooltip.add((ITextComponent)enhancement.getDescription().setStyle(Style.EMPTY.withColor(enhancement.getColor())));
+            tooltip.add((ITextComponent) label.append((ITextComponent) enhancement.getName().setStyle(Style.EMPTY.withColor(enhancement.getColor()).withBold(Boolean.valueOf(true)))));
+            tooltip.add((ITextComponent) enhancement.getDescription().setStyle(Style.EMPTY.withColor(enhancement.getColor())));
         }
         if (PaxelEnhancements.shouldEnhance(itemStack)) {
             final IFormattableTextComponent label = new TranslationTextComponent("paxel_enhancement.name").append(": ");
-            tooltip.add((ITextComponent)label.append((ITextComponent)new StringTextComponent("???").withStyle(TextFormatting.GRAY)));
+            tooltip.add((ITextComponent) label.append((ITextComponent) new StringTextComponent("???").withStyle(TextFormatting.GRAY)));
         }
         final Map<Enchantment, Integer> enchantments = OverlevelEnchantHelper.getEnchantments(itemStack);
         if (enchantments.size() > 0) {
-            tooltip.add((ITextComponent)new StringTextComponent(""));
+            tooltip.add((ITextComponent) new StringTextComponent(""));
         }
     }
-    
+
     static {
         PAXEL_TOOL_TYPE = ToolType.get("paxel");
     }

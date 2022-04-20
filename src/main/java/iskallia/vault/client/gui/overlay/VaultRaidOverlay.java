@@ -1,7 +1,3 @@
-// 
-// Decompiled by Procyon v0.6.0
-// 
-
 package iskallia.vault.client.gui.overlay;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
@@ -24,11 +20,10 @@ import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 @OnlyIn(Dist.CLIENT)
-public class VaultRaidOverlay
-{
+public class VaultRaidOverlay {
     public static final ResourceLocation RESOURCE;
     public static final int PANIC_TICKS_THRESHOLD = 600;
-    
+
     @SubscribeEvent
     public static void onRender(final RenderGameOverlayEvent.Post event) {
         final VaultOverlayMessage.OverlayType type = ClientVaultRaidData.getOverlayType();
@@ -48,32 +43,30 @@ public class VaultRaidOverlay
             if (remainingTicks % 10 < 5) {
                 color = -65536;
             }
-        }
-        else if (canGetRecordTime) {
+        } else if (canGetRecordTime) {
             color = -17664;
         }
         final String timer = UIHelper.formatTimeString(remainingTicks);
-        FontHelper.drawStringWithBorder(matrixStack, timer, (float)(barWidth + 18), (float)(bottom - 12), color, -16777216);
+        FontHelper.drawStringWithBorder(matrixStack, timer, (float) (barWidth + 18), (float) (bottom - 12), color, -16777216);
         minecraft.getTextureManager().bind(VaultRaidOverlay.RESOURCE);
         RenderSystem.enableBlend();
         RenderSystem.disableDepthTest();
         matrixStack.pushPose();
-        matrixStack.translate((double)(barWidth + 30), (double)(bottom - 25), 0.0);
+        matrixStack.translate((double) (barWidth + 30), (double) (bottom - 25), 0.0);
         if (remainingTicks < 600) {
             matrixStack.mulPose(Vector3f.ZP.rotationDegrees(remainingTicks * 10.0f % 360.0f));
+        } else {
+            matrixStack.mulPose(Vector3f.ZP.rotationDegrees((float) (remainingTicks % 360)));
         }
-        else {
-            matrixStack.mulPose(Vector3f.ZP.rotationDegrees((float)(remainingTicks % 360)));
-        }
-        matrixStack.translate((double)(-hourglassWidth / 2.0f), (double)(-hourglassHeight / 2.0f), 0.0);
-        ScreenDrawHelper.drawQuad(buf -> ScreenDrawHelper.rect((IVertexBuilder)buf, matrixStack).dim((float)hourglassWidth, (float)hourglassHeight).texVanilla(1.0f, 36.0f, (float)hourglassWidth, (float)hourglassHeight).draw());
+        matrixStack.translate((double) (-hourglassWidth / 2.0f), (double) (-hourglassHeight / 2.0f), 0.0);
+        ScreenDrawHelper.drawQuad(buf -> ScreenDrawHelper.rect((IVertexBuilder) buf, matrixStack).dim((float) hourglassWidth, (float) hourglassHeight).texVanilla(1.0f, 36.0f, (float) hourglassWidth, (float) hourglassHeight).draw());
         matrixStack.popPose();
         if (type == VaultOverlayMessage.OverlayType.VAULT) {
             renderVaultModifiers(event);
         }
         minecraft.getTextureManager().bind(AbstractGui.GUI_ICONS_LOCATION);
     }
-    
+
     public static void renderVaultModifiers(final RenderGameOverlayEvent.Post event) {
         final Minecraft minecraft = Minecraft.getInstance();
         final MatrixStack matrixStack = event.getMatrixStack();
@@ -85,7 +78,7 @@ public class VaultRaidOverlay
         final int modifierGap = 2;
         modifiers.forEach((index, modifier) -> {
             if (!(!(modifier instanceof TexturedVaultModifier))) {
-                minecraft.getTextureManager().bind(((TexturedVaultModifier)modifier).getIcon());
+                minecraft.getTextureManager().bind(((TexturedVaultModifier) modifier).getIcon());
                 final int x = index % 4;
                 final int y = index / 4;
                 final int offsetX = modifierSize * x + modifierGap * Math.max(x - 1, 0);
@@ -94,7 +87,7 @@ public class VaultRaidOverlay
             }
         });
     }
-    
+
     static {
         RESOURCE = new ResourceLocation("the_vault", "textures/gui/vault-hud.png");
     }

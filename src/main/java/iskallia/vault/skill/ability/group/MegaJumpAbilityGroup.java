@@ -1,7 +1,3 @@
-// 
-// Decompiled by Procyon v0.6.0
-// 
-
 package iskallia.vault.skill.ability.group;
 
 import com.google.gson.annotations.Expose;
@@ -15,22 +11,21 @@ import iskallia.vault.skill.ability.effect.MegaJumpAbility;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MegaJumpAbilityGroup extends AbilityGroup<MegaJumpConfig, MegaJumpAbility<MegaJumpConfig>>
-{
+public class MegaJumpAbilityGroup extends AbilityGroup<MegaJumpConfig, MegaJumpAbility<MegaJumpConfig>> {
     @Expose
     private final List<MegaJumpKnockbackConfig> knockbackLevelConfiguration;
     @Expose
     private final List<MegaJumpDamageConfig> damageLevelConfiguration;
     @Expose
     private final List<MegaJumpBreakConfig> breakLevelConfiguration;
-    
+
     private MegaJumpAbilityGroup() {
         super("Mega Jump");
         this.knockbackLevelConfiguration = new ArrayList<MegaJumpKnockbackConfig>();
         this.damageLevelConfiguration = new ArrayList<MegaJumpDamageConfig>();
         this.breakLevelConfiguration = new ArrayList<MegaJumpBreakConfig>();
     }
-    
+
     @Override
     protected MegaJumpConfig getSubConfig(final String specialization, final int level) {
         switch (specialization) {
@@ -48,7 +43,7 @@ public class MegaJumpAbilityGroup extends AbilityGroup<MegaJumpConfig, MegaJumpA
             }
         }
     }
-    
+
     @Override
     public String getSpecializationName(final String specialization) {
         switch (specialization) {
@@ -66,7 +61,7 @@ public class MegaJumpAbilityGroup extends AbilityGroup<MegaJumpConfig, MegaJumpA
             }
         }
     }
-    
+
     public static MegaJumpAbilityGroup defaultConfig() {
         final MegaJumpAbilityGroup group = new MegaJumpAbilityGroup();
         group.addLevel(new MegaJumpConfig(1, 10));

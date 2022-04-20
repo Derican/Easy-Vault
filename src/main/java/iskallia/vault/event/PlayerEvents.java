@@ -1,7 +1,3 @@
-// 
-// Decompiled by Procyon v0.6.0
-// 
-
 package iskallia.vault.event;
 
 import iskallia.vault.Vault;
@@ -62,48 +58,47 @@ import java.util.List;
 import java.util.Random;
 
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.FORGE)
-public class PlayerEvents
-{
+public class PlayerEvents {
     @SubscribeEvent
     public static void onStartTracking(final PlayerEvent.StartTracking event) {
         final Entity target = event.getTarget();
         if (target.level.isClientSide) {
             return;
         }
-        final ServerPlayerEntity player = (ServerPlayerEntity)event.getPlayer();
+        final ServerPlayerEntity player = (ServerPlayerEntity) event.getPlayer();
         if (target instanceof FighterEntity) {
-            ModNetwork.CHANNEL.sendTo(new FighterSizeMessage(target, ((FighterEntity)target).sizeMultiplier), player.connection.connection, NetworkDirection.PLAY_TO_CLIENT);
+            ModNetwork.CHANNEL.sendTo(new FighterSizeMessage(target, ((FighterEntity) target).sizeMultiplier), player.connection.connection, NetworkDirection.PLAY_TO_CLIENT);
         }
         if (target instanceof EternalEntity) {
-            ModNetwork.CHANNEL.sendTo(new FighterSizeMessage(target, ((EternalEntity)target).sizeMultiplier), player.connection.connection, NetworkDirection.PLAY_TO_CLIENT);
+            ModNetwork.CHANNEL.sendTo(new FighterSizeMessage(target, ((EternalEntity) target).sizeMultiplier), player.connection.connection, NetworkDirection.PLAY_TO_CLIENT);
         }
     }
-    
+
     @SubscribeEvent
     public static void onAttack(final AttackEntityEvent event) {
         final PlayerEntity attacker = event.getPlayer();
         if (attacker.level.isClientSide()) {
             return;
         }
-        final int level = PlayerVaultStatsData.get((ServerWorld)attacker.level).getVaultStats(attacker).getVaultLevel();
+        final int level = PlayerVaultStatsData.get((ServerWorld) attacker.level).getVaultStats(attacker).getVaultLevel();
         final ItemStack stack = attacker.getMainHandItem();
         if (ModAttributes.MIN_VAULT_LEVEL.exists(stack) && level < ModAttributes.MIN_VAULT_LEVEL.get(stack).get().getValue(stack)) {
             event.setCanceled(true);
             return;
         }
         if (event.getTarget() instanceof LivingEntity) {
-            final LivingEntity target = (LivingEntity)event.getTarget();
-            EntityHelper.getNearby((IWorld)attacker.level, (Vector3i)attacker.blockPosition(), 9.0f, EternalEntity.class).forEach(eternal -> eternal.setTarget(target));
+            final LivingEntity target = (LivingEntity) event.getTarget();
+            EntityHelper.getNearby((IWorld) attacker.level, (Vector3i) attacker.blockPosition(), 9.0f, EternalEntity.class).forEach(eternal -> eternal.setTarget(target));
         }
     }
-    
+
     @SubscribeEvent
     public static void onPlayerDamage(final LivingHurtEvent event) {
         final Entity target = event.getEntity();
         if (!(target instanceof ServerPlayerEntity)) {
             return;
         }
-        final ServerPlayerEntity player = (ServerPlayerEntity)target;
+        final ServerPlayerEntity player = (ServerPlayerEntity) target;
         if (player.getLevel().dimension() != Vault.VAULT_KEY) {
             return;
         }
@@ -112,7 +107,7 @@ public class PlayerEvents
             event.setCanceled(true);
         }
     }
-    
+
     @SubscribeEvent
     public static void onPlayerTick2(final TickEvent.PlayerTickEvent event) {
         if (event.player.hasEffect(Effects.FIRE_RESISTANCE)) {
@@ -121,11 +116,11 @@ public class PlayerEvents
         if (event.player.getCommandSenderWorld().isClientSide() || !(event.player instanceof ServerPlayerEntity)) {
             return;
         }
-        final ServerPlayerEntity player = (ServerPlayerEntity)event.player;
+        final ServerPlayerEntity player = (ServerPlayerEntity) event.player;
         for (final EquipmentSlotType slot : EquipmentSlotType.values()) {
             if (slot.getType().equals(EquipmentSlotType.Group.ARMOR)) {
                 final ItemStack stack = player.getItemBySlot(slot);
-                final int level = PlayerVaultStatsData.get((ServerWorld)event.player.level).getVaultStats((PlayerEntity)player).getVaultLevel();
+                final int level = PlayerVaultStatsData.get((ServerWorld) event.player.level).getVaultStats((PlayerEntity) player).getVaultLevel();
                 if (ModAttributes.MIN_VAULT_LEVEL.exists(stack) && level < ModAttributes.MIN_VAULT_LEVEL.get(stack).get().getValue(stack)) {
                     player.drop(stack.copy(), false, false);
                     stack.setCount(0);
@@ -133,71 +128,67 @@ public class PlayerEvents
             }
         }
     }
-    
+
     @SubscribeEvent
     public static void onApplyPlayerSets(final TickEvent.PlayerTickEvent event) {
         if (event.player.getCommandSenderWorld().isClientSide() || !(event.player instanceof ServerPlayerEntity)) {
             return;
         }
-        final ServerPlayerEntity player = (ServerPlayerEntity)event.player;
-        final SetTree sets = PlayerSetsData.get(player.getLevel()).getSets((PlayerEntity)player);
-        if (PlayerSet.isActive(VaultGear.Set.DRAGON, (LivingEntity)player) && !PlayerDamageHelper.getMultiplier(player, DragonSet.MULTIPLIER_ID).isPresent()) {
+        final ServerPlayerEntity player = (ServerPlayerEntity) event.player;
+        final SetTree sets = PlayerSetsData.get(player.getLevel()).getSets((PlayerEntity) player);
+        if (PlayerSet.isActive(VaultGear.Set.DRAGON, (LivingEntity) player) && !PlayerDamageHelper.getMultiplier(player, DragonSet.MULTIPLIER_ID).isPresent()) {
             float multiplier = 1.0f;
             for (final SetNode<?> node : sets.getNodes()) {
                 if (!(node.getSet() instanceof DragonSet)) {
                     continue;
                 }
-                final DragonSet set = (DragonSet)node.getSet();
+                final DragonSet set = (DragonSet) node.getSet();
                 multiplier += set.getDamageMultiplier();
             }
-            PlayerDamageHelper.applyMultiplier(DragonSet.MULTIPLIER_ID, (ServerPlayerEntity)event.player, multiplier, PlayerDamageHelper.Operation.ADDITIVE_MULTIPLY, false);
-        }
-        else if (!PlayerSet.isActive(VaultGear.Set.DRAGON, (LivingEntity)player)) {
+            PlayerDamageHelper.applyMultiplier(DragonSet.MULTIPLIER_ID, (ServerPlayerEntity) event.player, multiplier, PlayerDamageHelper.Operation.ADDITIVE_MULTIPLY, false);
+        } else if (!PlayerSet.isActive(VaultGear.Set.DRAGON, (LivingEntity) player)) {
             PlayerDamageHelper.removeMultiplier(player, DragonSet.MULTIPLIER_ID);
         }
-        if (PlayerSet.isActive(VaultGear.Set.DREAM, (LivingEntity)player) && !PlayerDamageHelper.getMultiplier(player, DreamSet.MULTIPLIER_ID).isPresent()) {
+        if (PlayerSet.isActive(VaultGear.Set.DREAM, (LivingEntity) player) && !PlayerDamageHelper.getMultiplier(player, DreamSet.MULTIPLIER_ID).isPresent()) {
             float multiplier = 1.0f;
             for (final SetNode<?> node : sets.getNodes()) {
                 if (node.getSet() instanceof DreamSet) {
-                    final DreamSet set2 = (DreamSet)node.getSet();
+                    final DreamSet set2 = (DreamSet) node.getSet();
                     multiplier += set2.getIncreasedDamage();
                 }
             }
-            PlayerDamageHelper.applyMultiplier(DreamSet.MULTIPLIER_ID, (ServerPlayerEntity)event.player, multiplier, PlayerDamageHelper.Operation.ADDITIVE_MULTIPLY, false);
-        }
-        else if (!PlayerSet.isActive(VaultGear.Set.DREAM, (LivingEntity)player)) {
+            PlayerDamageHelper.applyMultiplier(DreamSet.MULTIPLIER_ID, (ServerPlayerEntity) event.player, multiplier, PlayerDamageHelper.Operation.ADDITIVE_MULTIPLY, false);
+        } else if (!PlayerSet.isActive(VaultGear.Set.DREAM, (LivingEntity) player)) {
             PlayerDamageHelper.removeMultiplier(player, DreamSet.MULTIPLIER_ID);
         }
-        if (PlayerSet.isActive(VaultGear.Set.DRYAD, (LivingEntity)player)) {
+        if (PlayerSet.isActive(VaultGear.Set.DRYAD, (LivingEntity) player)) {
             float health = 0.0f;
             for (final SetNode<?> node : sets.getNodes()) {
                 if (!(node.getSet() instanceof DryadSet)) {
                     continue;
                 }
-                final DryadSet set3 = (DryadSet)node.getSet();
+                final DryadSet set3 = (DryadSet) node.getSet();
                 health += set3.getExtraHealth();
             }
-            player.getAttribute(Attributes.MAX_HEALTH).addTransientModifier(new AttributeModifier(DryadSet.HEALTH_MODIFIER_ID, "Dryad Bonus Health", (double)health, AttributeModifier.Operation.ADDITION));
-        }
-        else {
+            player.getAttribute(Attributes.MAX_HEALTH).addTransientModifier(new AttributeModifier(DryadSet.HEALTH_MODIFIER_ID, "Dryad Bonus Health", (double) health, AttributeModifier.Operation.ADDITION));
+        } else {
             player.getAttribute(Attributes.MAX_HEALTH).removeModifier(DryadSet.HEALTH_MODIFIER_ID);
         }
-        if (PlayerSet.isActive(VaultGear.Set.BLOOD, (LivingEntity)player) && !PlayerDamageHelper.getMultiplier(player, BloodSet.MULTIPLIER_ID).isPresent()) {
+        if (PlayerSet.isActive(VaultGear.Set.BLOOD, (LivingEntity) player) && !PlayerDamageHelper.getMultiplier(player, BloodSet.MULTIPLIER_ID).isPresent()) {
             float multiplier = 0.0f;
             for (final SetNode<?> node : sets.getNodes()) {
                 if (!(node.getSet() instanceof BloodSet)) {
                     continue;
                 }
-                final BloodSet set4 = (BloodSet)node.getSet();
+                final BloodSet set4 = (BloodSet) node.getSet();
                 multiplier += set4.getDamageMultiplier();
             }
-            PlayerDamageHelper.applyMultiplier(BloodSet.MULTIPLIER_ID, (ServerPlayerEntity)event.player, multiplier, PlayerDamageHelper.Operation.ADDITIVE_MULTIPLY);
-        }
-        else if (!PlayerSet.isActive(VaultGear.Set.BLOOD, (LivingEntity)player)) {
+            PlayerDamageHelper.applyMultiplier(BloodSet.MULTIPLIER_ID, (ServerPlayerEntity) event.player, multiplier, PlayerDamageHelper.Operation.ADDITIVE_MULTIPLY);
+        } else if (!PlayerSet.isActive(VaultGear.Set.BLOOD, (LivingEntity) player)) {
             PlayerDamageHelper.removeMultiplier(player, BloodSet.MULTIPLIER_ID);
         }
     }
-    
+
     @SubscribeEvent
     public static void onBlockBreak(final BlockEvent.BreakEvent event) {
         if (event.getWorld().isClientSide() || !(event.getWorld() instanceof ServerWorld)) {
@@ -206,27 +197,24 @@ public class PlayerEvents
         final TileEntity tile = event.getWorld().getBlockEntity(event.getPos());
         if (tile instanceof LockableLootTileEntity) {
             if (tile instanceof VaultChestTileEntity) {
-                ((VaultChestTileEntity)tile).generateChestLoot(event.getPlayer(), true);
-            }
-            else {
-                ((LockableLootTileEntity)tile).unpackLootTable(event.getPlayer());
+                ((VaultChestTileEntity) tile).generateChestLoot(event.getPlayer(), true);
+            } else {
+                ((LockableLootTileEntity) tile).unpackLootTable(event.getPlayer());
             }
         }
         if (tile instanceof VaultChestTileEntity) {
             final Random rand = event.getWorld().getRandom();
-            final VaultRarity rarity = ((VaultChestTileEntity)tile).getRarity();
+            final VaultRarity rarity = ((VaultChestTileEntity) tile).getRarity();
             if (rarity == VaultRarity.EPIC) {
-                event.getWorld().playSound((PlayerEntity)null, event.getPos(), ModSounds.VAULT_CHEST_EPIC_OPEN, SoundCategory.BLOCKS, 0.5f, rand.nextFloat() * 0.1f + 0.9f);
-            }
-            else if (rarity == VaultRarity.OMEGA) {
-                event.getWorld().playSound((PlayerEntity)null, event.getPos(), ModSounds.VAULT_CHEST_OMEGA_OPEN, SoundCategory.BLOCKS, 0.5f, rand.nextFloat() * 0.1f + 0.9f);
-            }
-            else if (rarity == VaultRarity.RARE) {
-                event.getWorld().playSound((PlayerEntity)null, event.getPos(), ModSounds.VAULT_CHEST_RARE_OPEN, SoundCategory.BLOCKS, 0.5f, rand.nextFloat() * 0.1f + 0.9f);
+                event.getWorld().playSound((PlayerEntity) null, event.getPos(), ModSounds.VAULT_CHEST_EPIC_OPEN, SoundCategory.BLOCKS, 0.5f, rand.nextFloat() * 0.1f + 0.9f);
+            } else if (rarity == VaultRarity.OMEGA) {
+                event.getWorld().playSound((PlayerEntity) null, event.getPos(), ModSounds.VAULT_CHEST_OMEGA_OPEN, SoundCategory.BLOCKS, 0.5f, rand.nextFloat() * 0.1f + 0.9f);
+            } else if (rarity == VaultRarity.RARE) {
+                event.getWorld().playSound((PlayerEntity) null, event.getPos(), ModSounds.VAULT_CHEST_RARE_OPEN, SoundCategory.BLOCKS, 0.5f, rand.nextFloat() * 0.1f + 0.9f);
             }
         }
     }
-    
+
     @SubscribeEvent
     public static void onCraftVaultgear(final PlayerEvent.ItemCraftedEvent event) {
         final PlayerEntity player = event.getPlayer();
@@ -246,7 +234,7 @@ public class PlayerEvents
         }
         ModAttributes.GEAR_CRAFTED_BY.create(crafted, player.getName().getString());
     }
-    
+
     @OnlyIn(Dist.CLIENT)
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public static void onItemTooltip(final ItemTooltipEvent event) {
@@ -260,23 +248,23 @@ public class PlayerEvents
             }
         }
     }
-    
+
     @SubscribeEvent
     public static void onPlayerEnterVault(final PlayerEvent.PlayerChangedDimensionEvent event) {
         final PlayerEntity player = event.getPlayer();
         if (event.getTo() == Vault.VAULT_KEY && player instanceof ServerPlayerEntity) {
-            final ServerPlayerEntity serverPlayer = (ServerPlayerEntity)player;
+            final ServerPlayerEntity serverPlayer = (ServerPlayerEntity) player;
             AdvancementHelper.grantCriterion(serverPlayer, Vault.id("main/root"), "entered_vault");
             AdvancementHelper.grantCriterion(serverPlayer, Vault.id("armors/root"), "entered_vault");
         }
     }
-    
+
     @SubscribeEvent
     public static void onVaultCharmUse(final EntityItemPickupEvent event) {
         if (!(event.getPlayer() instanceof ServerPlayerEntity)) {
             return;
         }
-        final ServerPlayerEntity player = (ServerPlayerEntity)event.getPlayer();
+        final ServerPlayerEntity player = (ServerPlayerEntity) event.getPlayer();
         final ItemEntity itemEntity = event.getItem();
         final ItemStack stack = itemEntity.getItem();
         if (stack.isEmpty()) {
@@ -293,10 +281,10 @@ public class PlayerEvents
         if (whitelist.contains(stack.getItem().getRegistryName())) {
             event.setCanceled(true);
             itemEntity.remove();
-            world.playSound((PlayerEntity)null, player.blockPosition(), SoundEvents.ITEM_PICKUP, SoundCategory.PLAYERS, 0.2f, (world.random.nextFloat() - world.random.nextFloat()) * 1.4f + 2.0f);
+            world.playSound((PlayerEntity) null, player.blockPosition(), SoundEvents.ITEM_PICKUP, SoundCategory.PLAYERS, 0.2f, (world.random.nextFloat() - world.random.nextFloat()) * 1.4f + 2.0f);
         }
     }
-    
+
     private static boolean hasVaultCharm(final PlayerInventory inventory) {
         for (int slot = 0; slot < inventory.getContainerSize(); ++slot) {
             final ItemStack stack = inventory.getItem(slot);

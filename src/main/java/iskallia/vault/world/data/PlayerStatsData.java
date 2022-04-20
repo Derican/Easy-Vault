@@ -1,7 +1,3 @@
-// 
-// Decompiled by Procyon v0.6.0
-// 
-
 package iskallia.vault.world.data;
 
 import iskallia.vault.altar.RequiredItem;
@@ -25,104 +21,102 @@ import java.util.List;
 import java.util.UUID;
 import java.util.function.Supplier;
 
-public class PlayerStatsData extends WorldSavedData
-{
+public class PlayerStatsData extends WorldSavedData {
     protected static final String DATA_NAME = "the_vault_PlayerStats";
     protected VMapNBT<UUID, Stats> playerStats;
-    
+
     public PlayerStatsData() {
         this("the_vault_PlayerStats");
     }
-    
+
     public PlayerStatsData(final String name) {
         super(name);
         this.playerStats = VMapNBT.ofUUID(Stats::new);
     }
-    
+
     public Stats get(final PlayerEntity player) {
         return this.get(player.getUUID());
     }
-    
+
     public Stats get(final UUID playerId) {
         return this.playerStats.computeIfAbsent(playerId, uuid -> new Stats());
     }
-    
+
     public void onVaultFinished(final UUID playerId, final VaultRaid vault) {
         this.get(playerId).vaults.add(vault);
         this.setDirty();
     }
-    
+
     public void onCrystalCrafted(final UUID playerId, final List<RequiredItem> recipe, final CrystalData.Type type) {
         this.get(playerId).crystals.add(new CrystalStat(recipe, type));
         this.setDirty();
     }
-    
+
     public void onRaffleCompleted(final UUID playerId, final WeightedList<String> contributors, final String winner) {
         this.get(playerId).raffles.add(new RaffleStat(contributors, winner));
         this.setDirty();
     }
-    
+
     public void setRaidRewardReceived(final UUID playerId) {
         this.get(playerId).finishedRaidReward = true;
         this.setDirty();
     }
-    
+
     public void load(final CompoundNBT nbt) {
         this.playerStats.deserializeNBT(nbt.getList("Stats", 10));
     }
-    
+
     public CompoundNBT save(final CompoundNBT nbt) {
-        nbt.put("Stats", (INBT)this.playerStats.serializeNBT());
+        nbt.put("Stats", (INBT) this.playerStats.serializeNBT());
         return nbt;
     }
-    
+
     public static PlayerStatsData get(final ServerWorld world) {
         return get(world.getServer());
     }
-    
+
     public static PlayerStatsData get(final MinecraftServer srv) {
-        return (PlayerStatsData)srv.overworld().getDataStorage().computeIfAbsent((Supplier)PlayerStatsData::new, "the_vault_PlayerStats");
+        return (PlayerStatsData) srv.overworld().getDataStorage().computeIfAbsent((Supplier) PlayerStatsData::new, "the_vault_PlayerStats");
     }
-    
-    public static class Stats implements INBTSerializable<CompoundNBT>
-    {
+
+    public static class Stats implements INBTSerializable<CompoundNBT> {
         protected VListNBT<VaultRaid, CompoundNBT> vaults;
         protected VListNBT<CrystalStat, CompoundNBT> crystals;
         protected VListNBT<RaffleStat, CompoundNBT> raffles;
         private boolean finishedRaidReward;
-        
+
         public Stats() {
             this.vaults = VListNBT.of(VaultRaid::new);
             this.crystals = VListNBT.of(CrystalStat::new);
             this.raffles = VListNBT.of(RaffleStat::new);
             this.finishedRaidReward = false;
         }
-        
+
         public List<VaultRaid> getVaults() {
-            return Collections.unmodifiableList((List<? extends VaultRaid>)this.vaults);
+            return Collections.unmodifiableList((List<? extends VaultRaid>) this.vaults);
         }
-        
+
         public List<CrystalStat> getCrystals() {
-            return Collections.unmodifiableList((List<? extends CrystalStat>)this.crystals);
+            return Collections.unmodifiableList((List<? extends CrystalStat>) this.crystals);
         }
-        
+
         public List<RaffleStat> getRaffles() {
-            return Collections.unmodifiableList((List<? extends RaffleStat>)this.raffles);
+            return Collections.unmodifiableList((List<? extends RaffleStat>) this.raffles);
         }
-        
+
         public boolean hasFinishedRaidReward() {
             return this.finishedRaidReward;
         }
-        
+
         public CompoundNBT serializeNBT() {
             final CompoundNBT nbt = new CompoundNBT();
-            nbt.put("Vaults", (INBT)this.vaults.serializeNBT());
-            nbt.put("Crystals", (INBT)this.crystals.serializeNBT());
-            nbt.put("Raffles", (INBT)this.raffles.serializeNBT());
+            nbt.put("Vaults", (INBT) this.vaults.serializeNBT());
+            nbt.put("Crystals", (INBT) this.crystals.serializeNBT());
+            nbt.put("Raffles", (INBT) this.raffles.serializeNBT());
             nbt.putBoolean("finishedRaidReward", this.finishedRaidReward);
             return nbt;
         }
-        
+
         public void deserializeNBT(final CompoundNBT nbt) {
             this.vaults.deserializeNBT(nbt.getList("Vaults", 10));
             this.crystals.deserializeNBT(nbt.getList("Crystals", 10));

@@ -1,7 +1,3 @@
-// 
-// Decompiled by Procyon v0.6.0
-// 
-
 package iskallia.vault.block.item;
 
 import iskallia.vault.init.ModItems;
@@ -26,12 +22,11 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class VendingMachineBlockItem extends BlockItem
-{
+public class VendingMachineBlockItem extends BlockItem {
     public VendingMachineBlockItem(final Block block) {
         super(block, new Item.Properties().tab(ModItems.VAULT_MOD_GROUP).stacksTo(64));
     }
-    
+
     @OnlyIn(Dist.CLIENT)
     public void appendHoverText(final ItemStack stack, @Nullable final World worldIn, final List<ITextComponent> tooltip, final ITooltipFlag flagIn) {
         final CompoundNBT nbt = stack.getTag();
@@ -40,18 +35,17 @@ public class VendingMachineBlockItem extends BlockItem
             final ListNBT cores = blockEntityTag.getList("coresList", 10);
             for (final INBT tag : cores) {
                 try {
-                    final TraderCore core = NBTSerializer.deserialize(TraderCore.class, (CompoundNBT)tag);
+                    final TraderCore core = NBTSerializer.deserialize(TraderCore.class, (CompoundNBT) tag);
                     final StringTextComponent text = new StringTextComponent(" Vendor: " + core.getName());
                     text.setStyle(Style.EMPTY.withColor(Color.fromRgb(-26266)));
-                    tooltip.add((ITextComponent)text);
+                    tooltip.add((ITextComponent) text);
                     return;
-                }
-                catch (final Exception e) {
+                } catch (final Exception e) {
                     e.printStackTrace();
                     continue;
                 }
             }
         }
-        super.appendHoverText(stack, worldIn, (List)tooltip, flagIn);
+        super.appendHoverText(stack, worldIn, (List) tooltip, flagIn);
     }
 }

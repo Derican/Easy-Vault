@@ -1,7 +1,3 @@
-// 
-// Decompiled by Procyon v0.6.0
-// 
-
 package iskallia.vault.skill.ability.group;
 
 import com.google.gson.annotations.Expose;
@@ -17,8 +13,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class HunterAbilityGroup extends AbilityGroup<HunterConfig, HunterAbility<HunterConfig>>
-{
+public class HunterAbilityGroup extends AbilityGroup<HunterConfig, HunterAbility<HunterConfig>> {
     private static final Color HUNTER_ENTITY_COLOR;
     private static final Color HUNTER_SPAWNER_COLOR;
     private static final Color HUNTER_CHEST_COLOR;
@@ -29,14 +24,14 @@ public class HunterAbilityGroup extends AbilityGroup<HunterConfig, HunterAbility
     private final List<HunterChestsConfig> chestsLevelConfiguration;
     @Expose
     private final List<HunterObjectiveConfig> blocksLevelConfiguration;
-    
+
     private HunterAbilityGroup() {
         super("Hunter");
         this.spawnerLevelConfiguration = new ArrayList<HunterSpawnerConfig>();
         this.chestsLevelConfiguration = new ArrayList<HunterChestsConfig>();
         this.blocksLevelConfiguration = new ArrayList<HunterObjectiveConfig>();
     }
-    
+
     @Override
     protected HunterConfig getSubConfig(final String specialization, final int level) {
         switch (specialization) {
@@ -54,7 +49,7 @@ public class HunterAbilityGroup extends AbilityGroup<HunterConfig, HunterAbility
             }
         }
     }
-    
+
     @Override
     public String getSpecializationName(final String specialization) {
         switch (specialization) {
@@ -72,7 +67,7 @@ public class HunterAbilityGroup extends AbilityGroup<HunterConfig, HunterAbility
             }
         }
     }
-    
+
     public static HunterAbilityGroup defaultConfig() {
         final List<String> spawnerKeys = Arrays.asList("minecraft:mob_spawner");
         final List<String> chestKeys = Arrays.asList("minecraft:chest", "minecraft:trapped_chest", "the_vault:vault_chest_tile_entity");
@@ -84,7 +79,7 @@ public class HunterAbilityGroup extends AbilityGroup<HunterConfig, HunterAbility
         group.blocksLevelConfiguration.add(new HunterObjectiveConfig(1, 144.0, HunterAbilityGroup.HUNTER_BLOCK_COLOR.getRGB(), 100, objectiveKeys));
         return group;
     }
-    
+
     static {
         HUNTER_ENTITY_COLOR = new Color(9633792);
         HUNTER_SPAWNER_COLOR = new Color(4653195);

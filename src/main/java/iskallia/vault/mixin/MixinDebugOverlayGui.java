@@ -1,7 +1,3 @@
-// 
-// Decompiled by Procyon v0.6.0
-// 
-
 package iskallia.vault.mixin;
 
 import iskallia.vault.block.property.HiddenIntegerProperty;
@@ -14,10 +10,9 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.Map;
 
-@Mixin({ DebugOverlayGui.class })
-public class MixinDebugOverlayGui
-{
-    @Inject(method = { "getPropertyValueString" }, at = { @At("RETURN") }, cancellable = true)
+@Mixin({DebugOverlayGui.class})
+public class MixinDebugOverlayGui {
+    @Inject(method = {"getPropertyValueString"}, at = {@At("RETURN")}, cancellable = true)
     public void hidePropertyString(final Map.Entry<Property<?>, Comparable<?>> entryIn, final CallbackInfoReturnable<String> cir) {
         if (entryIn.getKey() instanceof HiddenIntegerProperty) {
             cir.setReturnValue((entryIn.getKey().getName() + ": unknown"));

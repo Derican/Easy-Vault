@@ -1,7 +1,3 @@
-// 
-// Decompiled by Procyon v0.6.0
-// 
-
 package iskallia.vault.world.vault.logic;
 
 import iskallia.vault.item.crystal.CrystalData;
@@ -26,8 +22,7 @@ import net.minecraft.world.server.ServerWorld;
 import java.text.DecimalFormat;
 import java.util.*;
 
-public class VaultInfluenceHandler
-{
+public class VaultInfluenceHandler {
     private static final float influenceChance = 0.66f;
     private static final UUID BENEVOLENT_HP_REDUCTION;
     private static final UUID OMNISCIENT_SPEED_REDUCTION;
@@ -37,7 +32,7 @@ public class VaultInfluenceHandler
     private static final UUID MALEVOLENCE_DAMAGE_INCREASE;
     private static final Random rand;
     private static final Map<PlayerFavourData.VaultGodType, InfluenceMessages> messages;
-    
+
     public static void initializeInfluences(final VaultRaid vault, final ServerWorld world) {
         final int vaultLvl = vault.getProperties().getBase(VaultRaid.LEVEL).orElse(0);
         if (vaultLvl < 50) {
@@ -80,35 +75,35 @@ public class VaultInfluenceHandler
         }
         positives.forEach((type1, favour1) -> {
             final Tuple<VaultInfluence, String> influenceResult = getPositiveInfluence(type1, Math.abs(favour1));
-            influences.addInfluence((VaultInfluence)influenceResult.getA(), vault, world);
+            influences.addInfluence((VaultInfluence) influenceResult.getA(), vault, world);
             final String message = VaultInfluenceHandler.messages.get(type1).getPositiveMessage();
             final IFormattableTextComponent vgName = new StringTextComponent(type1.getName()).withStyle(type1.getChatColor());
             vgName.withStyle(style -> style.withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, type1.getHoverChatComponent())));
-            final IFormattableTextComponent txt = (IFormattableTextComponent)new StringTextComponent("");
-            txt.append((ITextComponent)new StringTextComponent("[VG] ").withStyle(TextFormatting.DARK_PURPLE)).append((ITextComponent)vgName).append((ITextComponent)new StringTextComponent(": ").withStyle(TextFormatting.WHITE)).append((ITextComponent)new StringTextComponent(message));
-            final IFormattableTextComponent info = new StringTextComponent((String)influenceResult.getB()).withStyle(TextFormatting.DARK_GRAY);
+            final IFormattableTextComponent txt = (IFormattableTextComponent) new StringTextComponent("");
+            txt.append((ITextComponent) new StringTextComponent("[VG] ").withStyle(TextFormatting.DARK_PURPLE)).append((ITextComponent) vgName).append((ITextComponent) new StringTextComponent(": ").withStyle(TextFormatting.WHITE)).append((ITextComponent) new StringTextComponent(message));
+            final IFormattableTextComponent info = new StringTextComponent((String) influenceResult.getB()).withStyle(TextFormatting.DARK_GRAY);
             vault.getPlayers().forEach(vPlayer1 -> vPlayer1.runIfPresent(world.getServer(), sPlayer -> {
-                sPlayer.sendMessage((ITextComponent)txt, Util.NIL_UUID);
-                sPlayer.sendMessage((ITextComponent)info, Util.NIL_UUID);
+                sPlayer.sendMessage((ITextComponent) txt, Util.NIL_UUID);
+                sPlayer.sendMessage((ITextComponent) info, Util.NIL_UUID);
             }));
             return;
         });
         negatives.forEach((type2, favour2) -> {
             final Tuple<VaultInfluence, String> influenceResult2 = getNegativeInfluence(type2, Math.abs(favour2));
-            influences.addInfluence((VaultInfluence)influenceResult2.getA(), vault, world);
+            influences.addInfluence((VaultInfluence) influenceResult2.getA(), vault, world);
             final String message2 = VaultInfluenceHandler.messages.get(type2).getNegativeMessage();
             final IFormattableTextComponent vgName2 = new StringTextComponent(type2.getName()).withStyle(type2.getChatColor());
             vgName2.withStyle(style -> style.withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, type2.getHoverChatComponent())));
-            final IFormattableTextComponent txt2 = (IFormattableTextComponent)new StringTextComponent("");
-            txt2.append((ITextComponent)new StringTextComponent("[VG] ").withStyle(TextFormatting.DARK_PURPLE)).append((ITextComponent)vgName2).append((ITextComponent)new StringTextComponent(": ").withStyle(TextFormatting.WHITE)).append((ITextComponent)new StringTextComponent(message2));
-            final IFormattableTextComponent info2 = new StringTextComponent((String)influenceResult2.getB()).withStyle(TextFormatting.DARK_GRAY);
+            final IFormattableTextComponent txt2 = (IFormattableTextComponent) new StringTextComponent("");
+            txt2.append((ITextComponent) new StringTextComponent("[VG] ").withStyle(TextFormatting.DARK_PURPLE)).append((ITextComponent) vgName2).append((ITextComponent) new StringTextComponent(": ").withStyle(TextFormatting.WHITE)).append((ITextComponent) new StringTextComponent(message2));
+            final IFormattableTextComponent info2 = new StringTextComponent((String) influenceResult2.getB()).withStyle(TextFormatting.DARK_GRAY);
             vault.getPlayers().forEach(vPlayer2 -> vPlayer2.runIfPresent(world.getServer(), sPlayer -> {
-                sPlayer.sendMessage((ITextComponent)txt2, Util.NIL_UUID);
-                sPlayer.sendMessage((ITextComponent)info2, Util.NIL_UUID);
+                sPlayer.sendMessage((ITextComponent) txt2, Util.NIL_UUID);
+                sPlayer.sendMessage((ITextComponent) info2, Util.NIL_UUID);
             }));
         });
     }
-    
+
     private static Tuple<VaultInfluence, String> getPositiveInfluence(final PlayerFavourData.VaultGodType type, final int favour) {
         final DecimalFormat percentFormat = new DecimalFormat("0.##");
         switch (type) {
@@ -130,7 +125,7 @@ public class VaultInfluenceHandler
                         break;
                     }
                 }
-                return (Tuple<VaultInfluence, String>)new Tuple(influence, text);
+                return (Tuple<VaultInfluence, String>) new Tuple(influence, text);
             }
             case OMNISCIENT: {
                 VaultInfluence influence = null;
@@ -149,7 +144,7 @@ public class VaultInfluenceHandler
                         break;
                     }
                 }
-                return (Tuple<VaultInfluence, String>)new Tuple(influence, text);
+                return (Tuple<VaultInfluence, String>) new Tuple(influence, text);
             }
             case TIMEKEEPER: {
                 VaultInfluence influence = null;
@@ -168,7 +163,7 @@ public class VaultInfluenceHandler
                         break;
                     }
                 }
-                return (Tuple<VaultInfluence, String>)new Tuple(influence, text);
+                return (Tuple<VaultInfluence, String>) new Tuple(influence, text);
             }
             case MALEVOLENCE: {
                 VaultInfluence influence = null;
@@ -188,14 +183,14 @@ public class VaultInfluenceHandler
                         break;
                     }
                 }
-                return (Tuple<VaultInfluence, String>)new Tuple(influence, text);
+                return (Tuple<VaultInfluence, String>) new Tuple(influence, text);
             }
             default: {
                 throw new IllegalArgumentException("Unknown type: " + type.name());
             }
         }
     }
-    
+
     private static Tuple<VaultInfluence, String> getNegativeInfluence(final PlayerFavourData.VaultGodType type, final int favour) {
         switch (type) {
             case BENEVOLENT: {
@@ -215,7 +210,7 @@ public class VaultInfluenceHandler
                         break;
                     }
                 }
-                return (Tuple<VaultInfluence, String>)new Tuple(influence, text);
+                return (Tuple<VaultInfluence, String>) new Tuple(influence, text);
             }
             case OMNISCIENT: {
                 VaultInfluence influence = null;
@@ -234,7 +229,7 @@ public class VaultInfluenceHandler
                         break;
                     }
                 }
-                return (Tuple<VaultInfluence, String>)new Tuple(influence, text);
+                return (Tuple<VaultInfluence, String>) new Tuple(influence, text);
             }
             case TIMEKEEPER: {
                 VaultInfluence influence = null;
@@ -249,12 +244,12 @@ public class VaultInfluenceHandler
                     default: {
                         final int more2 = 10 + Math.round((favour - 4) * 3.333f);
                         final float perc = more2 / 100.0f;
-                        influence = new MobAttributeInfluence(Attributes.MOVEMENT_SPEED, new AttributeModifier(VaultInfluenceHandler.OMNISCIENT_SPEED_REDUCTION, "Favours", (double)perc, AttributeModifier.Operation.MULTIPLY_TOTAL));
+                        influence = new MobAttributeInfluence(Attributes.MOVEMENT_SPEED, new AttributeModifier(VaultInfluenceHandler.OMNISCIENT_SPEED_REDUCTION, "Favours", (double) perc, AttributeModifier.Operation.MULTIPLY_TOTAL));
                         text = "Monsters move " + more2 + "% faster";
                         break;
                     }
                 }
-                return (Tuple<VaultInfluence, String>)new Tuple(influence, text);
+                return (Tuple<VaultInfluence, String>) new Tuple(influence, text);
             }
             case MALEVOLENCE: {
                 VaultInfluence influence = null;
@@ -262,7 +257,7 @@ public class VaultInfluenceHandler
                 switch (VaultInfluenceHandler.rand.nextInt(2)) {
                     case 1: {
                         final int more = 20 + (favour - 4) * 15;
-                        influence = new MobAttributeInfluence(Attributes.MAX_HEALTH, new AttributeModifier(VaultInfluenceHandler.BENEVOLENT_HP_REDUCTION, "Favours", (double)(more / 100.0f), AttributeModifier.Operation.MULTIPLY_TOTAL));
+                        influence = new MobAttributeInfluence(Attributes.MAX_HEALTH, new AttributeModifier(VaultInfluenceHandler.BENEVOLENT_HP_REDUCTION, "Favours", (double) (more / 100.0f), AttributeModifier.Operation.MULTIPLY_TOTAL));
                         text = "Monsters have " + more + "% more Health";
                         break;
                     }
@@ -273,14 +268,14 @@ public class VaultInfluenceHandler
                         break;
                     }
                 }
-                return (Tuple<VaultInfluence, String>)new Tuple(influence, text);
+                return (Tuple<VaultInfluence, String>) new Tuple(influence, text);
             }
             default: {
                 throw new IllegalArgumentException("Unknown type: " + type.name());
             }
         }
     }
-    
+
     static {
         BENEVOLENT_HP_REDUCTION = UUID.fromString("bb3be804-44c2-474a-af69-b300f5d01bc7");
         OMNISCIENT_SPEED_REDUCTION = UUID.fromString("3d0402b6-4edc-49fc-ada6-23700a9737ac");
@@ -331,21 +326,20 @@ public class VaultInfluenceHandler
         malevolence.negativeMessages.add("Perish from your own ambition.");
         VaultInfluenceHandler.messages.put(PlayerFavourData.VaultGodType.MALEVOLENCE, malevolence);
     }
-    
-    private static class InfluenceMessages
-    {
+
+    private static class InfluenceMessages {
         private final List<String> positiveMessages;
         private final List<String> negativeMessages;
-        
+
         private InfluenceMessages() {
             this.positiveMessages = new ArrayList<String>();
             this.negativeMessages = new ArrayList<String>();
         }
-        
+
         private String getNegativeMessage() {
             return this.negativeMessages.get(VaultInfluenceHandler.rand.nextInt(this.negativeMessages.size()));
         }
-        
+
         private String getPositiveMessage() {
             return this.positiveMessages.get(VaultInfluenceHandler.rand.nextInt(this.positiveMessages.size()));
         }

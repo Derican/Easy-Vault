@@ -1,7 +1,3 @@
-// 
-// Decompiled by Procyon v0.6.0
-// 
-
 package iskallia.vault.container.slot;
 
 import iskallia.vault.block.entity.EtchingVendorControllerTileEntity;
@@ -17,21 +13,20 @@ import net.minecraftforge.items.SlotItemHandler;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-public class EtchingBuySlot extends SlotItemHandler
-{
+public class EtchingBuySlot extends SlotItemHandler {
     private final EtchingTradeContainer etchingTradeContainer;
     private final int tradeId;
-    
+
     public EtchingBuySlot(final EtchingTradeContainer etchingTradeContainer, final IItemHandler itemHandler, final int tradeId, final int index, final int xPosition, final int yPosition) {
         super(itemHandler, index, xPosition, yPosition);
         this.etchingTradeContainer = etchingTradeContainer;
         this.tradeId = tradeId;
     }
-    
+
     public boolean mayPlace(@Nonnull final ItemStack stack) {
         return false;
     }
-    
+
     public boolean mayPickup(final PlayerEntity player) {
         final EtchingVendorControllerTileEntity.EtchingTrade trade = this.getAssociatedTrade();
         if (trade == null) {
@@ -40,11 +35,11 @@ public class EtchingBuySlot extends SlotItemHandler
         final int count = this.getInputSlot().getItem().getCount();
         return trade.getRequiredPlatinum() <= count && !trade.isSold();
     }
-    
+
     public Slot getInputSlot() {
         return this.etchingTradeContainer.getSlot(36 + this.tradeId * 2);
     }
-    
+
     @Nullable
     public EtchingVendorControllerTileEntity.EtchingTrade getAssociatedTrade() {
         final EtchingVendorEntity vendor = this.etchingTradeContainer.getVendor();
@@ -57,7 +52,7 @@ public class EtchingBuySlot extends SlotItemHandler
         }
         return controllerTile.getTrade(this.tradeId);
     }
-    
+
     public ItemStack onTake(final PlayerEntity player, final ItemStack stack) {
         final EtchingVendorEntity vendor = this.etchingTradeContainer.getVendor();
         if (vendor == null) {

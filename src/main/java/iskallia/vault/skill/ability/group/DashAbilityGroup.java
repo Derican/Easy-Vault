@@ -1,7 +1,3 @@
-// 
-// Decompiled by Procyon v0.6.0
-// 
-
 package iskallia.vault.skill.ability.group;
 
 import com.google.gson.annotations.Expose;
@@ -15,22 +11,21 @@ import iskallia.vault.skill.ability.effect.DashAbility;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DashAbilityGroup extends AbilityGroup<DashConfig, DashAbility<DashConfig>>
-{
+public class DashAbilityGroup extends AbilityGroup<DashConfig, DashAbility<DashConfig>> {
     @Expose
     private final List<DashBuffConfig> buffLevelConfiguration;
     @Expose
     private final List<DashDamageConfig> damageLevelConfiguration;
     @Expose
     private final List<DashHealConfig> healLevelConfiguration;
-    
+
     private DashAbilityGroup() {
         super("Dash");
         this.buffLevelConfiguration = new ArrayList<DashBuffConfig>();
         this.damageLevelConfiguration = new ArrayList<DashDamageConfig>();
         this.healLevelConfiguration = new ArrayList<DashHealConfig>();
     }
-    
+
     @Override
     protected DashConfig getSubConfig(final String specialization, final int level) {
         switch (specialization) {
@@ -48,7 +43,7 @@ public class DashAbilityGroup extends AbilityGroup<DashConfig, DashAbility<DashC
             }
         }
     }
-    
+
     @Override
     public String getSpecializationName(final String specialization) {
         switch (specialization) {
@@ -66,7 +61,7 @@ public class DashAbilityGroup extends AbilityGroup<DashConfig, DashAbility<DashC
             }
         }
     }
-    
+
     public static DashAbilityGroup defaultConfig() {
         final DashAbilityGroup group = new DashAbilityGroup();
         group.addLevel(new DashConfig(2, 1));

@@ -1,7 +1,3 @@
-// 
-// Decompiled by Procyon v0.6.0
-// 
-
 package iskallia.vault.world.vault.gen.layout;
 
 import iskallia.vault.Vault;
@@ -14,18 +10,17 @@ import net.minecraft.world.gen.feature.jigsaw.JigsawPiece;
 
 import java.util.Random;
 
-public class DebugVaultLayout extends VaultRoomLayoutGenerator
-{
+public class DebugVaultLayout extends VaultRoomLayoutGenerator {
     public static final ResourceLocation ID;
-    
+
     public DebugVaultLayout() {
         super(DebugVaultLayout.ID);
     }
-    
+
     @Override
     public void setSize(final int size) {
     }
-    
+
     @Override
     public Layout generateLayout() {
         final Layout layout = new Layout();
@@ -48,7 +43,7 @@ public class DebugVaultLayout extends VaultRoomLayoutGenerator
         }
         return layout;
     }
-    
+
     static {
         ID = Vault.id("debug");
     }

@@ -1,7 +1,3 @@
-// 
-// Decompiled by Procyon v0.6.0
-// 
-
 package iskallia.vault.mixin;
 
 import iskallia.vault.item.gear.VaultGear;
@@ -12,12 +8,11 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-@Mixin({ Enchantment.class })
-public abstract class MixinEnchantment
-{
-    @Inject(method = { "canEnchant" }, at = { @At("HEAD") }, cancellable = true)
+@Mixin({Enchantment.class})
+public abstract class MixinEnchantment {
+    @Inject(method = {"canEnchant"}, at = {@At("HEAD")}, cancellable = true)
     private void canEnchant(final ItemStack stack, final CallbackInfoReturnable<Boolean> ci) {
-        if (stack.getItem() instanceof VaultGear && !((VaultGear)stack.getItem()).canApply(stack, (Enchantment)(Object)this)) {
+        if (stack.getItem() instanceof VaultGear && !((VaultGear) stack.getItem()).canApply(stack, (Enchantment) (Object) this)) {
             ci.setReturnValue(false);
         }
     }

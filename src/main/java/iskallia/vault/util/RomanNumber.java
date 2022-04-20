@@ -1,15 +1,10 @@
-// 
-// Decompiled by Procyon v0.6.0
-// 
-
 package iskallia.vault.util;
 
 import java.util.TreeMap;
 
-public class RomanNumber
-{
+public class RomanNumber {
     private static final TreeMap<Integer, String> LITERALS;
-    
+
     public static String toRoman(final int number) {
         if (number == 0) {
             return "";
@@ -20,7 +15,7 @@ public class RomanNumber
         }
         return RomanNumber.LITERALS.get(literal) + toRoman(number - literal);
     }
-    
+
     static {
         (LITERALS = new TreeMap<Integer, String>()).put(1000, "M");
         RomanNumber.LITERALS.put(900, "CM");

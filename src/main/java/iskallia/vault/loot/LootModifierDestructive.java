@@ -1,7 +1,3 @@
-// 
-// Decompiled by Procyon v0.6.0
-// 
-
 package iskallia.vault.loot;
 
 import com.google.gson.JsonObject;
@@ -20,30 +16,28 @@ import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LootModifierDestructive extends LootModifier
-{
+public class LootModifierDestructive extends LootModifier {
     private LootModifierDestructive(final ILootCondition[] conditionsIn) {
         super(conditionsIn);
     }
-    
+
     @Nonnull
     protected List<ItemStack> doApply(final List<ItemStack> generatedLoot, final LootContext context) {
         if (!LootUtils.doesContextFulfillSet(context, LootParameterSets.BLOCK)) {
             return generatedLoot;
         }
-        final ItemStack tool = (ItemStack)context.getParamOrNull(LootParameters.TOOL);
+        final ItemStack tool = (ItemStack) context.getParamOrNull(LootParameters.TOOL);
         if (PaxelEnhancements.getEnhancement(tool) != PaxelEnhancements.DESTRUCTIVE) {
             return generatedLoot;
         }
         return new ArrayList<ItemStack>();
     }
-    
-    public static class Serializer extends GlobalLootModifierSerializer<LootModifierDestructive>
-    {
+
+    public static class Serializer extends GlobalLootModifierSerializer<LootModifierDestructive> {
         public LootModifierDestructive read(final ResourceLocation location, final JsonObject object, final ILootCondition[] lootConditions) {
             return new LootModifierDestructive(lootConditions);
         }
-        
+
         public JsonObject write(final LootModifierDestructive instance) {
             return this.makeConditions(instance.conditions);
         }

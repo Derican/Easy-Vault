@@ -1,7 +1,3 @@
-// 
-// Decompiled by Procyon v0.6.0
-// 
-
 package iskallia.vault.config;
 
 import com.google.gson.annotations.Expose;
@@ -20,34 +16,33 @@ import java.util.Map;
 import java.util.Random;
 import java.util.function.Predicate;
 
-public class VaultCrystalCatalystConfig extends Config
-{
+public class VaultCrystalCatalystConfig extends Config {
     private static final Random rand;
     @Expose
     private final Map<String, TaggedPool> TAGGED_MODIFIER_POOLS;
     @Expose
     private final WeightedList<CompoundModifierOutcome> OUTCOMES;
-    
+
     public VaultCrystalCatalystConfig() {
         this.TAGGED_MODIFIER_POOLS = new HashMap<String, TaggedPool>();
         this.OUTCOMES = new WeightedList<CompoundModifierOutcome>();
     }
-    
+
     @Override
     public String getName() {
         return "vault_crystal_catalyst_modifiers";
     }
-    
+
     @Nullable
     public CompoundModifierOutcome getModifiers() {
         return this.OUTCOMES.getRandom(VaultCrystalCatalystConfig.rand);
     }
-    
+
     @Nullable
     public TaggedPool getPool(final String poolName) {
         return this.TAGGED_MODIFIER_POOLS.get(poolName);
     }
-    
+
     @Override
     protected void reset() {
         this.TAGGED_MODIFIER_POOLS.clear();
@@ -61,37 +56,36 @@ public class VaultCrystalCatalystConfig extends Config
         this.OUTCOMES.add(new CompoundModifierOutcome().addOutcome(new SingleModifierOutcome(ModifierRollType.ADD_SPECIFIC_MODIFIER, "GOOD")).addOutcome(new SingleModifierOutcome(ModifierRollType.ADD_RANDOM_MODIFIER, "BAD")), 1);
         this.OUTCOMES.add(new CompoundModifierOutcome().addOutcome(new SingleModifierOutcome(ModifierRollType.ADD_SPECIFIC_MODIFIER, "GOOD")).addOutcome(new SingleModifierOutcome(ModifierRollType.ADD_SPECIFIC_MODIFIER, "BAD")), 1);
     }
-    
+
     static {
         rand = new Random();
     }
-    
-    public static class TaggedPool
-    {
+
+    public static class TaggedPool {
         @Expose
         private final String displayName;
         @Expose
         private final int color;
         @Expose
         private final WeightedList<String> modifiers;
-        
+
         public TaggedPool(final String displayName, final int color, final WeightedList<String> modifiers) {
             this.displayName = displayName;
             this.color = color;
             this.modifiers = modifiers;
         }
-        
+
         public IFormattableTextComponent getDisplayName() {
             final StringTextComponent cmp = new StringTextComponent(this.displayName);
             cmp.setStyle(Style.EMPTY.withColor(Color.fromRgb(this.color)));
-            return (IFormattableTextComponent)cmp;
+            return (IFormattableTextComponent) cmp;
         }
-        
+
         @Nullable
         public String getModifier(final Random random) {
             return this.getModifier(random, mod -> false);
         }
-        
+
         @Nullable
         public String getModifier(final Random random, final Predicate<String> modifierFilter) {
             final WeightedList<String> filteredModifiers = this.modifiers.copy();

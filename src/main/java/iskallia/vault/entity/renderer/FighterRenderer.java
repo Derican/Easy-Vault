@@ -1,7 +1,3 @@
-// 
-// Decompiled by Procyon v0.6.0
-// 
-
 package iskallia.vault.entity.renderer;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
@@ -17,7 +13,6 @@ import net.minecraft.client.renderer.entity.IEntityRenderer;
 import net.minecraft.client.renderer.entity.LivingRenderer;
 import net.minecraft.client.renderer.entity.layers.*;
 import net.minecraft.client.renderer.entity.model.BipedModel;
-import net.minecraft.client.renderer.entity.model.EntityModel;
 import net.minecraft.client.renderer.model.IBakedModel;
 import net.minecraft.client.renderer.model.ItemCameraTransforms;
 import net.minecraft.client.renderer.model.ModelRenderer;
@@ -39,32 +34,31 @@ import net.minecraft.util.registry.Registry;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
 
-public class FighterRenderer extends LivingRenderer<FighterEntity, FighterModel>
-{
+public class FighterRenderer extends LivingRenderer<FighterEntity, FighterModel> {
     public FighterRenderer(final EntityRendererManager renderManager) {
         this(renderManager, false);
     }
-    
+
     public FighterRenderer(final EntityRendererManager renderManager, final boolean useSmallArms) {
         super(renderManager, new FighterModel(0.0f, useSmallArms), 0.5f);
-        this.addLayer((LayerRenderer)new BipedArmorLayer((IEntityRenderer)this, new BipedModel(0.5f), new BipedModel(1.0f)));
-        this.addLayer((LayerRenderer)new HeldItemLayer((IEntityRenderer)this));
-        this.addLayer((LayerRenderer)new ArrowLayer((LivingRenderer)this));
-        this.addLayer((LayerRenderer)new HeadLayer((IEntityRenderer)this));
-        this.addLayer((LayerRenderer)new ElytraLayer((IEntityRenderer)this));
-        this.addLayer((LayerRenderer)new BeeStingerLayer((LivingRenderer)this));
+        this.addLayer((LayerRenderer) new BipedArmorLayer((IEntityRenderer) this, new BipedModel(0.5f), new BipedModel(1.0f)));
+        this.addLayer((LayerRenderer) new HeldItemLayer((IEntityRenderer) this));
+        this.addLayer((LayerRenderer) new ArrowLayer((LivingRenderer) this));
+        this.addLayer((LayerRenderer) new HeadLayer((IEntityRenderer) this));
+        this.addLayer((LayerRenderer) new ElytraLayer((IEntityRenderer) this));
+        this.addLayer((LayerRenderer) new BeeStingerLayer((LivingRenderer) this));
     }
-    
+
     protected void preRenderCallback(final FighterEntity entity, final MatrixStack matrixStack, final float partialTickTime) {
         final float f = entity.sizeMultiplier;
         matrixStack.scale(f, f, f);
     }
-    
+
     public void render(final FighterEntity entity, final float entityYaw, final float partialTicks, final MatrixStack matrixStack, final IRenderTypeBuffer buffer, final int packedLightIn) {
         this.setModelVisibilities(entity);
         super.render(entity, entityYaw, partialTicks, matrixStack, buffer, packedLightIn);
     }
-    
+
     public void renderCrown(final FighterEntity entity, final MatrixStack matrixStack, final IRenderTypeBuffer buffer) {
         matrixStack.pushPose();
         final float sizeMultiplier = entity.getSizeMultiplier();
@@ -72,26 +66,25 @@ public class FighterRenderer extends LivingRenderer<FighterEntity, FighterModel>
         matrixStack.translate(0.0, 2.5, 0.0);
         final float scale = 2.5f;
         matrixStack.scale(scale, scale, scale);
-        matrixStack.mulPose(Vector3f.YP.rotationDegrees((float)entity.tickCount));
+        matrixStack.mulPose(Vector3f.YP.rotationDegrees((float) entity.tickCount));
         matrixStack.mulPose(Vector3f.ZP.rotationDegrees(20.0f));
-        final ItemStack itemStack = new ItemStack((IItemProvider)Registry.ITEM.get(Vault.id("mvp_crown")));
-        final IBakedModel ibakedmodel = Minecraft.getInstance().getItemRenderer().getModel(itemStack, (World)null, (LivingEntity)null);
+        final ItemStack itemStack = new ItemStack((IItemProvider) Registry.ITEM.get(Vault.id("mvp_crown")));
+        final IBakedModel ibakedmodel = Minecraft.getInstance().getItemRenderer().getModel(itemStack, (World) null, (LivingEntity) null);
         Minecraft.getInstance().getItemRenderer().render(itemStack, ItemCameraTransforms.TransformType.GROUND, true, matrixStack, buffer, 15728864, 655360, ibakedmodel);
         matrixStack.popPose();
     }
-    
+
     public Vector3d getRenderOffset(final FighterEntity entityIn, final float partialTicks) {
         return entityIn.isCrouching() ? new Vector3d(0.0, -0.125, 0.0) : super.getRenderOffset(entityIn, partialTicks);
     }
-    
+
     private void setModelVisibilities(final FighterEntity clientPlayer) {
-        final FighterModel playermodel = (FighterModel)this.getModel();
+        final FighterModel playermodel = (FighterModel) this.getModel();
         if (clientPlayer.isSpectator()) {
             playermodel.setAllVisible(false);
             playermodel.head.visible = true;
             playermodel.hat.visible = true;
-        }
-        else {
+        } else {
             playermodel.setAllVisible(true);
             playermodel.crouching = clientPlayer.isCrouching();
             final BipedModel.ArmPose bipedmodel$armpose = getArmPose(clientPlayer, Hand.MAIN_HAND);
@@ -102,14 +95,13 @@ public class FighterRenderer extends LivingRenderer<FighterEntity, FighterModel>
             if (clientPlayer.getMainArm() == HandSide.RIGHT) {
                 playermodel.rightArmPose = bipedmodel$armpose;
                 playermodel.leftArmPose = bipedmodel$armpose2;
-            }
-            else {
+            } else {
                 playermodel.rightArmPose = bipedmodel$armpose2;
                 playermodel.leftArmPose = bipedmodel$armpose;
             }
         }
     }
-    
+
     private static BipedModel.ArmPose getArmPose(final FighterEntity p_241741_0_, final Hand p_241741_1_) {
         final ItemStack itemstack = p_241741_0_.getItemInHand(p_241741_1_);
         if (itemstack.isEmpty()) {
@@ -129,39 +121,38 @@ public class FighterRenderer extends LivingRenderer<FighterEntity, FighterModel>
             if (useaction == UseAction.CROSSBOW && p_241741_1_ == p_241741_0_.getUsedItemHand()) {
                 return BipedModel.ArmPose.CROSSBOW_CHARGE;
             }
-        }
-        else if (!p_241741_0_.swinging && itemstack.getItem() == Items.CROSSBOW && CrossbowItem.isCharged(itemstack)) {
+        } else if (!p_241741_0_.swinging && itemstack.getItem() == Items.CROSSBOW && CrossbowItem.isCharged(itemstack)) {
             return BipedModel.ArmPose.CROSSBOW_HOLD;
         }
         return BipedModel.ArmPose.ITEM;
     }
-    
+
     public ResourceLocation getTextureLocation(final FighterEntity entity) {
         return entity.getLocationSkin();
     }
-    
+
     protected void preRenderCallback(final AbstractClientPlayerEntity entitylivingbaseIn, final MatrixStack matrixStackIn, final float partialTickTime) {
         final float f = 0.9375f;
         matrixStackIn.scale(0.9375f, 0.9375f, 0.9375f);
     }
-    
+
     protected void renderName(final FighterEntity entityIn, final ITextComponent displayNameIn, final MatrixStack matrixStackIn, final IRenderTypeBuffer bufferIn, final int packedLightIn) {
-        final double d0 = this.entityRenderDispatcher.distanceToSqr((Entity)entityIn);
+        final double d0 = this.entityRenderDispatcher.distanceToSqr((Entity) entityIn);
         matrixStackIn.pushPose();
         super.renderNameTag(entityIn, displayNameIn, matrixStackIn, bufferIn, packedLightIn);
         matrixStackIn.popPose();
     }
-    
+
     public void renderRightArm(final MatrixStack matrixStackIn, final IRenderTypeBuffer bufferIn, final int combinedLightIn, final FighterEntity playerIn) {
-        this.renderItem(matrixStackIn, bufferIn, combinedLightIn, playerIn, ((FighterModel)this.model).rightArm, ((FighterModel)this.model).rightSleeve);
+        this.renderItem(matrixStackIn, bufferIn, combinedLightIn, playerIn, ((FighterModel) this.model).rightArm, ((FighterModel) this.model).rightSleeve);
     }
-    
+
     public void renderLeftArm(final MatrixStack matrixStackIn, final IRenderTypeBuffer bufferIn, final int combinedLightIn, final FighterEntity playerIn) {
-        this.renderItem(matrixStackIn, bufferIn, combinedLightIn, playerIn, ((FighterModel)this.model).leftArm, ((FighterModel)this.model).leftSleeve);
+        this.renderItem(matrixStackIn, bufferIn, combinedLightIn, playerIn, ((FighterModel) this.model).leftArm, ((FighterModel) this.model).leftSleeve);
     }
-    
+
     private void renderItem(final MatrixStack matrixStackIn, final IRenderTypeBuffer buffer, final int combinedLight, final FighterEntity entity, final ModelRenderer rendererArm, final ModelRenderer rendererArmWear) {
-        final FighterModel playermodel = (FighterModel)this.getModel();
+        final FighterModel playermodel = (FighterModel) this.getModel();
         this.setModelVisibilities(entity);
         playermodel.attackTime = 0.0f;
         playermodel.crouching = false;
@@ -171,7 +162,7 @@ public class FighterRenderer extends LivingRenderer<FighterEntity, FighterModel>
         rendererArmWear.xRot = 0.0f;
         rendererArmWear.render(matrixStackIn, buffer.getBuffer(RenderType.entityTranslucent(this.getTextureLocation(entity))), combinedLight, OverlayTexture.NO_OVERLAY);
     }
-    
+
     protected void applyRotations(final FighterEntity entityLiving, final MatrixStack matrixStack, final float ageInTicks, final float rotationYaw, final float partialTicks) {
         final float f = entityLiving.getSwimAmount(partialTicks);
         if (entityLiving.isFallFlying()) {
@@ -188,10 +179,9 @@ public class FighterRenderer extends LivingRenderer<FighterEntity, FighterModel>
             if (d0 > 0.0 && d2 > 0.0) {
                 final double d3 = (vector3d2.x * vector3d.x + vector3d2.z * vector3d.z) / Math.sqrt(d0 * d2);
                 final double d4 = vector3d2.x * vector3d.z - vector3d2.z * vector3d.x;
-                matrixStack.mulPose(Vector3f.YP.rotation((float)(Math.signum(d4) * Math.acos(d3))));
+                matrixStack.mulPose(Vector3f.YP.rotation((float) (Math.signum(d4) * Math.acos(d3))));
             }
-        }
-        else if (f > 0.0f) {
+        } else if (f > 0.0f) {
             super.setupRotations(entityLiving, matrixStack, ageInTicks, rotationYaw, partialTicks);
             final float f4 = entityLiving.isInWater() ? (-90.0f - entityLiving.xRot) : -90.0f;
             final float f5 = MathHelper.lerp(f, 0.0f, f4);
@@ -199,8 +189,7 @@ public class FighterRenderer extends LivingRenderer<FighterEntity, FighterModel>
             if (entityLiving.isVisuallySwimming()) {
                 matrixStack.translate(0.0, -1.0, 0.30000001192092896);
             }
-        }
-        else {
+        } else {
             super.setupRotations(entityLiving, matrixStack, ageInTicks, rotationYaw, partialTicks);
         }
     }

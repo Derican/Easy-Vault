@@ -1,7 +1,3 @@
-// 
-// Decompiled by Procyon v0.6.0
-// 
-
 package iskallia.vault.skill.ability.effect.sub;
 
 import iskallia.vault.init.ModEffects;
@@ -22,8 +18,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import java.util.Collections;
 import java.util.List;
 
-public class CleanseImmuneAbility extends CleanseAbility<CleanseImmuneConfig>
-{
+public class CleanseImmuneAbility extends CleanseAbility<CleanseImmuneConfig> {
     @Override
     protected void removeEffects(final CleanseImmuneConfig config, final ServerPlayerEntity player, final List<EffectInstance> effects) {
         if (effects.isEmpty()) {
@@ -32,10 +27,10 @@ public class CleanseImmuneAbility extends CleanseAbility<CleanseImmuneConfig>
         if (!(player.getCommandSenderWorld() instanceof ServerWorld)) {
             return;
         }
-        final ServerWorld world = (ServerWorld)player.getCommandSenderWorld();
+        final ServerWorld world = (ServerWorld) player.getCommandSenderWorld();
         final PlayerImmunityData data = PlayerImmunityData.get(world);
         Collections.shuffle(effects);
-        data.addEffect((PlayerEntity)player, effects.get(0));
+        data.addEffect((PlayerEntity) player, effects.get(0));
         effects.forEach(effect -> player.removeEffect(effect.getEffect()));
         final EffectInstance activeEffect = player.getEffect(ModEffects.IMMUNITY);
         final EffectInstance newEffect = new EffectInstance(ModEffects.IMMUNITY, config.getImmunityDuration(), 0, false, false, true);
@@ -43,13 +38,13 @@ public class CleanseImmuneAbility extends CleanseAbility<CleanseImmuneConfig>
             player.addEffect(newEffect);
         }
     }
-    
+
     @SubscribeEvent
     public void onEffect(final PotionEvent.PotionApplicableEvent event) {
         if (!(event.getEntityLiving() instanceof PlayerEntity)) {
             return;
         }
-        final PlayerEntity player = (PlayerEntity)event.getEntityLiving();
+        final PlayerEntity player = (PlayerEntity) event.getEntityLiving();
         final EffectInstance immunity = player.getEffect(ModEffects.IMMUNITY);
         if (immunity == null) {
             return;
@@ -61,7 +56,7 @@ public class CleanseImmuneAbility extends CleanseAbility<CleanseImmuneConfig>
         if (!(player.getCommandSenderWorld() instanceof ServerWorld)) {
             return;
         }
-        final ServerWorld world = (ServerWorld)player.getCommandSenderWorld();
+        final ServerWorld world = (ServerWorld) player.getCommandSenderWorld();
         final PlayerAbilitiesData data = PlayerAbilitiesData.get(world);
         final AbilityTree abilities = data.getAbilities(player);
         final AbilityNode<?, ?> node = abilities.getNodeByName("Cleanse");
@@ -72,17 +67,17 @@ public class CleanseImmuneAbility extends CleanseAbility<CleanseImmuneConfig>
             }
         }
     }
-    
+
     @SubscribeEvent
     public void onImmunityRemoved(final PotionEvent.PotionExpiryEvent event) {
         if (!(event.getEntityLiving() instanceof PlayerEntity)) {
             return;
         }
-        final PlayerEntity player = (PlayerEntity)event.getEntityLiving();
+        final PlayerEntity player = (PlayerEntity) event.getEntityLiving();
         if (!(player.getCommandSenderWorld() instanceof ServerWorld)) {
             return;
         }
-        final ServerWorld world = (ServerWorld)player.getCommandSenderWorld();
+        final ServerWorld world = (ServerWorld) player.getCommandSenderWorld();
         if (event.getPotionEffect() == null || event.getPotionEffect().getEffect() != ModEffects.IMMUNITY) {
             return;
         }

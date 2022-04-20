@@ -1,7 +1,3 @@
-// 
-// Decompiled by Procyon v0.6.0
-// 
-
 package iskallia.vault.network.message;
 
 import iskallia.vault.init.ModConfigs;
@@ -20,43 +16,39 @@ import net.minecraftforge.fml.network.NetworkEvent;
 
 import java.util.function.Supplier;
 
-public class AbilityUpgradeMessage
-{
+public class AbilityUpgradeMessage {
     private final String abilityName;
-    
+
     public AbilityUpgradeMessage(final String abilityName) {
         this.abilityName = abilityName;
     }
-    
+
     public static void encode(final AbilityUpgradeMessage message, final PacketBuffer buffer) {
         buffer.writeUtf(message.abilityName, 32767);
     }
-    
+
     public static AbilityUpgradeMessage decode(final PacketBuffer buffer) {
         return new AbilityUpgradeMessage(buffer.readUtf(32767));
     }
-    
+
     public static void handle(final AbilityUpgradeMessage message, final Supplier<NetworkEvent.Context> contextSupplier) {
         final NetworkEvent.Context context = contextSupplier.get();
         context.enqueueWork(() -> {
             final ServerPlayerEntity sender = context.getSender();
             if (sender == null) {
                 return;
-            }
-            else {
+            } else {
                 final AbilityGroup<?, ?> abilityGroup = ModConfigs.ABILITIES.getAbilityGroupByName(message.abilityName);
-                final PlayerVaultStatsData statsData = PlayerVaultStatsData.get((ServerWorld)sender.level);
-                final PlayerAbilitiesData abilitiesData = PlayerAbilitiesData.get((ServerWorld)sender.level);
-                final AbilityTree abilityTree = abilitiesData.getAbilities((PlayerEntity)sender);
+                final PlayerVaultStatsData statsData = PlayerVaultStatsData.get((ServerWorld) sender.level);
+                final PlayerAbilitiesData abilitiesData = PlayerAbilitiesData.get((ServerWorld) sender.level);
+                final AbilityTree abilityTree = abilitiesData.getAbilities((PlayerEntity) sender);
                 final AbilityNode<?, ?> abilityNode = abilityTree.getNodeByName(message.abilityName);
-                final PlayerVaultStats stats = statsData.getVaultStats((PlayerEntity)sender);
-                if (stats.getVaultLevel() < ((AbilityConfig)abilityNode.getAbilityConfig()).getLevelRequirement()) {
+                final PlayerVaultStats stats = statsData.getVaultStats((PlayerEntity) sender);
+                if (stats.getVaultLevel() < ((AbilityConfig) abilityNode.getAbilityConfig()).getLevelRequirement()) {
                     return;
-                }
-                else if (abilityNode.getLevel() >= abilityGroup.getMaxLevel()) {
+                } else if (abilityNode.getLevel() >= abilityGroup.getMaxLevel()) {
                     return;
-                }
-                else {
+                } else {
                     final int requiredSkillPts = abilityGroup.levelUpCost(abilityNode.getSpecialization(), abilityNode.getLevel() + 1);
                     if (stats.getUnspentSkillPts() >= requiredSkillPts) {
                         abilitiesData.upgradeAbility(sender, abilityNode);

@@ -1,7 +1,3 @@
-// 
-// Decompiled by Procyon v0.6.0
-// 
-
 package iskallia.vault.skill.ability.effect.sub;
 
 import iskallia.vault.entity.EternalEntity;
@@ -24,8 +20,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 import java.util.List;
 
-public class TankSlowAbility extends TankAbility<TankSlowConfig>
-{
+public class TankSlowAbility extends TankAbility<TankSlowConfig> {
     @SubscribeEvent
     public void onWorldTick(final TickEvent.PlayerTickEvent event) {
         if (event.phase == TickEvent.Phase.END) {
@@ -36,15 +31,15 @@ public class TankSlowAbility extends TankAbility<TankSlowConfig>
             return;
         }
         if (event.player.getCommandSenderWorld() instanceof ServerWorld) {
-            final ServerWorld sWorld = (ServerWorld)event.player.getCommandSenderWorld();
+            final ServerWorld sWorld = (ServerWorld) event.player.getCommandSenderWorld();
             if (sWorld.getServer().getTickCount() % 20 != 0) {
                 return;
             }
             final AbilityTree abilities = PlayerAbilitiesData.get(sWorld).getAbilities(event.player);
             final AbilityNode<?, ?> tankNode = abilities.getNodeByName("Tank");
             if (tankNode.getAbility() == this && tankNode.isLearned()) {
-                final TankSlowConfig config = (TankSlowConfig)tankNode.getAbilityConfig();
-                final List<LivingEntity> entities = EntityHelper.getNearby((IWorld)sWorld, (Vector3i)event.player.blockPosition(), config.getSlowAreaRadius(), LivingEntity.class);
+                final TankSlowConfig config = (TankSlowConfig) tankNode.getAbilityConfig();
+                final List<LivingEntity> entities = EntityHelper.getNearby((IWorld) sWorld, (Vector3i) event.player.blockPosition(), config.getSlowAreaRadius(), LivingEntity.class);
                 entities.removeIf(e -> e instanceof PlayerEntity || e instanceof EternalEntity);
                 for (final LivingEntity entity : entities) {
                     entity.addEffect(new EffectInstance(Effects.MOVEMENT_SLOWDOWN, 80, config.getSlownessAmplifier(), false, false, false));

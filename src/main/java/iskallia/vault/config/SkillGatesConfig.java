@@ -1,27 +1,22 @@
-// 
-// Decompiled by Procyon v0.6.0
-// 
-
 package iskallia.vault.config;
 
 import com.google.gson.annotations.Expose;
 import iskallia.vault.init.ModConfigs;
 import iskallia.vault.skill.SkillGates;
 
-public class SkillGatesConfig extends Config
-{
+public class SkillGatesConfig extends Config {
     @Expose
     private SkillGates SKILL_GATES;
-    
+
     @Override
     public String getName() {
         return "skill_gates";
     }
-    
+
     public SkillGates getGates() {
         return this.SKILL_GATES;
     }
-    
+
     @Override
     protected void reset() {
         this.SKILL_GATES = new SkillGates();

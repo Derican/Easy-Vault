@@ -1,7 +1,3 @@
-// 
-// Decompiled by Procyon v0.6.0
-// 
-
 package iskallia.vault.dump;
 
 import com.google.gson.JsonArray;
@@ -14,16 +10,14 @@ import iskallia.vault.item.gear.VaultGear;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
-public class GearAttributeDump extends JsonDump
-{
+public class GearAttributeDump extends JsonDump {
     @Override
     public String fileName() {
         return "gear_attributes.json";
     }
-    
+
     @Override
     public JsonObject dumpToJSON() {
         final JsonObject jsonObject = new JsonObject();
@@ -57,11 +51,11 @@ public class GearAttributeDump extends JsonDump
         this.addTooltip(modifiers, ModAttributes.EFFECT_IMMUNITY, PossibleValues.enumType("Poison", "Wither", "Hunger", "Mining Fatigue", "Slowness", "Weakness"), TooltipFragment.of("+${value} Immunity").color(10801083));
         this.addTooltip(modifiers, ModAttributes.EFFECT_CLOUD, PossibleValues.enumType("Poison", "Wither", "Hunger", "Mining Fatigue", "Slowness", "Weakness"), TooltipFragment.of("+${value} Cloud").color(15007916));
         this.addTooltip(modifiers, ModAttributes.SOULBOUND, PossibleValues.noneType(), TooltipFragment.of("Soulbound").color(9856253));
-        jsonObject.add("attributes", (JsonElement)attributes);
-        jsonObject.add("modifiers", (JsonElement)modifiers);
+        jsonObject.add("attributes", (JsonElement) attributes);
+        jsonObject.add("modifiers", (JsonElement) modifiers);
         return jsonObject;
     }
-    
+
     private void addTooltip(final JsonObject json, final VAttribute<?, ?> attribute, final PossibleValues possibleValues, final TooltipFragment... fragments) {
         final JsonObject tooltipJson = new JsonObject();
         final String attributeName = Arrays.stream(attribute.getId().getPath().replaceAll("_", " ").split("\\s+")).map(word -> word.substring(0, 1).toUpperCase() + word.substring(1).toLowerCase()).collect(Collectors.joining(" "));
@@ -70,7 +64,7 @@ public class GearAttributeDump extends JsonDump
         for (final TooltipFragment fragment : fragments) {
             final JsonObject fragmentJson = new JsonObject();
             fragmentJson.addProperty("text", fragment.text);
-            fragmentJson.addProperty("color", (Number)fragment.color);
+            fragmentJson.addProperty("color", (Number) fragment.color);
             if (fragment.bold) {
                 fragmentJson.addProperty("bold", Boolean.valueOf(true));
             }
@@ -80,101 +74,99 @@ public class GearAttributeDump extends JsonDump
             if (fragment.underline) {
                 fragmentJson.addProperty("underline", Boolean.valueOf(true));
             }
-            format.add((JsonElement)fragmentJson);
+            format.add((JsonElement) fragmentJson);
         }
-        tooltipJson.add("format", (JsonElement)format);
+        tooltipJson.add("format", (JsonElement) format);
         final JsonObject possibleValuesJson = new JsonObject();
         possibleValuesJson.addProperty("type", possibleValues.type);
         if (possibleValues.values != null) {
-            possibleValuesJson.add("values", (JsonElement)possibleValues.valuesAsJson());
+            possibleValuesJson.add("values", (JsonElement) possibleValues.valuesAsJson());
         }
-        tooltipJson.add("possibleValues", (JsonElement)possibleValuesJson);
-        json.add(attribute.getId().getPath(), (JsonElement)tooltipJson);
+        tooltipJson.add("possibleValues", (JsonElement) possibleValuesJson);
+        json.add(attribute.getId().getPath(), (JsonElement) tooltipJson);
     }
-    
-    public static class TooltipFragment
-    {
+
+    public static class TooltipFragment {
         String text;
         int color;
         boolean bold;
         boolean italic;
         boolean underline;
-        
+
         public static TooltipFragment of(final String text) {
             final TooltipFragment fragment = new TooltipFragment();
             fragment.text = text;
             fragment.color = 16777215;
             return fragment;
         }
-        
+
         public TooltipFragment color(final int color) {
             this.color = color;
             return this;
         }
-        
+
         public TooltipFragment bold() {
             this.bold = true;
             return this;
         }
-        
+
         public TooltipFragment italic() {
             this.italic = true;
             return this;
         }
-        
+
         public TooltipFragment underline() {
             this.underline = true;
             return this;
         }
     }
-    
-    public static class PossibleValues
-    {
+
+    public static class PossibleValues {
         String type;
         Object[] values;
-        
+
         private static PossibleValues type(final String type) {
             final PossibleValues possibleValues = new PossibleValues();
             possibleValues.type = type;
             return possibleValues;
         }
-        
+
         private static PossibleValues noneType() {
             return type("none");
         }
-        
+
         private static PossibleValues stringType() {
             return type("string");
         }
-        
+
         private static PossibleValues integerType() {
             return type("integer");
         }
-        
+
         private static PossibleValues numberType() {
             return type("number");
         }
-        
+
         private static PossibleValues booleanType() {
             return type("boolean");
         }
-        
+
         public static <T extends Enum<?>> PossibleValues enumType(final Class<T> enumClass) {
             return enumType(enumNames(enumClass));
         }
-        
+
         public static PossibleValues enumType(final Object... values) {
             final PossibleValues possibleValues = new PossibleValues();
             possibleValues.type = "enum";
             possibleValues.values = values;
             return possibleValues;
         }
-        
+
         public PossibleValues values(final Object... values) {
             this.values = values;
             return this;
         }
-        
+
         public JsonArray valuesAsJson() {
             final JsonArray valuesJson = new JsonArray();
             for (final Object value : this.values) {
@@ -182,7 +174,7 @@ public class GearAttributeDump extends JsonDump
             }
             return valuesJson;
         }
-        
+
         private static <T extends Enum<?>> Object[] enumNames(final Class<T> enumClass) {
             final Enum<?>[] enumConstants = enumClass.getEnumConstants();
             final List<String> names = new LinkedList<String>();

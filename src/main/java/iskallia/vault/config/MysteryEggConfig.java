@@ -1,7 +1,3 @@
-// 
-// Decompiled by Procyon v0.6.0
-// 
-
 package iskallia.vault.config;
 
 import com.google.gson.annotations.Expose;
@@ -16,31 +12,30 @@ import net.minecraft.nbt.CompoundNBT;
 import java.util.NoSuchElementException;
 import java.util.stream.StreamSupport;
 
-public class MysteryEggConfig extends Config
-{
+public class MysteryEggConfig extends Config {
     @Expose
     public WeightedList<ProductEntry> POOL;
-    
+
     public MysteryEggConfig() {
         this.POOL = new WeightedList<ProductEntry>();
     }
-    
+
     @Override
     public String getName() {
         return "mystery_egg";
     }
-    
+
     @Override
     protected void reset() {
-        this.POOL.add(new ProductEntry(this.getEgg((EntityType<?>)EntityType.COW)), 3);
-        this.POOL.add(new ProductEntry(this.getEgg((EntityType<?>)EntityType.PIG)), 1);
+        this.POOL.add(new ProductEntry(this.getEgg((EntityType<?>) EntityType.COW)), 3);
+        this.POOL.add(new ProductEntry(this.getEgg((EntityType<?>) EntityType.PIG)), 1);
     }
-    
+
     private Item getEgg(final EntityType<?> type) {
-        Item item=Items.AIR;
+        Item item = Items.AIR;
         try {
             item = StreamSupport.stream(SpawnEggItem.eggs().spliterator(), false).filter(eggItem -> type.equals(eggItem.getType((CompoundNBT) null))).findAny().get();
-        }catch (NoSuchElementException e){
+        } catch (NoSuchElementException e) {
 
         }
         return item;

@@ -1,22 +1,17 @@
-// 
-// Decompiled by Procyon v0.6.0
-// 
-
 package iskallia.vault.attribute;
 
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.INBT;
 import net.minecraft.util.math.MutableBoundingBox;
 
-public class BoundingBoxAttribute extends VAttribute.Instance<MutableBoundingBox>
-{
+public class BoundingBoxAttribute extends VAttribute.Instance<MutableBoundingBox> {
     @Override
     public void write(final CompoundNBT nbt) {
         if (this.getBaseValue() != null) {
-            nbt.put("BaseValue", (INBT)this.getBaseValue().createTag());
+            nbt.put("BaseValue", (INBT) this.getBaseValue().createTag());
         }
     }
-    
+
     @Override
     public void read(final CompoundNBT nbt) {
         if (nbt.contains("BaseValue", 11)) {

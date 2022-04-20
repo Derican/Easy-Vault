@@ -1,7 +1,3 @@
-// 
-// Decompiled by Procyon v0.6.0
-// 
-
 package iskallia.vault.mixin;
 
 import iskallia.vault.item.gear.VaultGear;
@@ -17,14 +13,13 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-@Mixin({ ElytraLayer.class })
-public abstract class MixinElytraLayer<T extends LivingEntity, M extends EntityModel<T>> extends LayerRenderer<T, M>
-{
+@Mixin({ElytraLayer.class})
+public abstract class MixinElytraLayer<T extends LivingEntity, M extends EntityModel<T>> extends LayerRenderer<T, M> {
     public MixinElytraLayer(final IEntityRenderer<T, M> renderer) {
-        super((IEntityRenderer)renderer);
+        super((IEntityRenderer) renderer);
     }
-    
-    @Inject(method = { "shouldRender" }, at = { @At("HEAD") }, cancellable = true, remap = false)
+
+    @Inject(method = {"shouldRender"}, at = {@At("HEAD")}, cancellable = true, remap = false)
     public void shouldRender(final ItemStack stack, final T entity, final CallbackInfoReturnable<Boolean> ci) {
         if (PlayerSet.isActive(VaultGear.Set.DRAGON, entity)) {
             ci.setReturnValue(true);

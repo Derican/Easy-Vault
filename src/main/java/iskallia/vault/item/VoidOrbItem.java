@@ -1,7 +1,3 @@
-// 
-// Decompiled by Procyon v0.6.0
-// 
-
 package iskallia.vault.item;
 
 import com.mojang.datafixers.util.Pair;
@@ -30,36 +26,35 @@ import org.apache.commons.lang3.StringUtils;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class VoidOrbItem extends BasicItem
-{
+public class VoidOrbItem extends BasicItem {
     public VoidOrbItem(final ResourceLocation id, final Item.Properties properties) {
         super(id, properties);
     }
-    
+
     public Rarity getRarity(final ItemStack stack) {
         return Rarity.RARE;
     }
-    
+
     @OnlyIn(Dist.CLIENT)
     @Override
     public void appendHoverText(final ItemStack stack, @Nullable final World worldIn, final List<ITextComponent> tooltip, final ITooltipFlag flagIn) {
         tooltip.add(StringTextComponent.EMPTY);
-        tooltip.add((ITextComponent)new StringTextComponent("Removes a modifier at random from").withStyle(TextFormatting.GRAY));
-        tooltip.add((ITextComponent)new StringTextComponent("a vault gear item when combined").withStyle(TextFormatting.GRAY));
-        tooltip.add((ITextComponent)new StringTextComponent("in an anvil.").withStyle(TextFormatting.GRAY));
+        tooltip.add((ITextComponent) new StringTextComponent("Removes a modifier at random from").withStyle(TextFormatting.GRAY));
+        tooltip.add((ITextComponent) new StringTextComponent("a vault gear item when combined").withStyle(TextFormatting.GRAY));
+        tooltip.add((ITextComponent) new StringTextComponent("in an anvil.").withStyle(TextFormatting.GRAY));
         final Pair<EquipmentSlotType, VAttribute<?, ?>> gearModifier = getPredefinedRemoval(stack);
         if (gearModifier != null) {
-            final String slotName = StringUtils.capitalize(((EquipmentSlotType)gearModifier.getFirst()).getName());
-            final ITextComponent attributeTxt = VaultGearHelper.getDisplayName((VAttribute<?, ?>)gearModifier.getSecond());
+            final String slotName = StringUtils.capitalize(((EquipmentSlotType) gearModifier.getFirst()).getName());
+            final ITextComponent attributeTxt = VaultGearHelper.getDisplayName((VAttribute<?, ?>) gearModifier.getSecond());
             tooltip.add(StringTextComponent.EMPTY);
-            tooltip.add((ITextComponent)new StringTextComponent("Only for: ").withStyle(TextFormatting.GRAY).append((ITextComponent)new StringTextComponent(slotName).withStyle(TextFormatting.AQUA)));
-            tooltip.add((ITextComponent)new StringTextComponent("Removes: ").withStyle(TextFormatting.GRAY).append(attributeTxt));
+            tooltip.add((ITextComponent) new StringTextComponent("Only for: ").withStyle(TextFormatting.GRAY).append((ITextComponent) new StringTextComponent(slotName).withStyle(TextFormatting.AQUA)));
+            tooltip.add((ITextComponent) new StringTextComponent("Removes: ").withStyle(TextFormatting.GRAY).append(attributeTxt));
         }
     }
-    
+
     public void inventoryTick(final ItemStack stack, final World world, final Entity entity, final int itemSlot, final boolean isSelected) {
         if (world instanceof ServerWorld && entity instanceof ServerPlayerEntity) {
-            final ServerPlayerEntity player = (ServerPlayerEntity)entity;
+            final ServerPlayerEntity player = (ServerPlayerEntity) entity;
             if (stack.getCount() > 1) {
                 while (stack.getCount() > 1) {
                     stack.shrink(1);
@@ -70,7 +65,7 @@ public class VoidOrbItem extends BasicItem
             }
         }
     }
-    
+
     @Nullable
     public static Pair<EquipmentSlotType, VAttribute<?, ?>> getPredefinedRemoval(final ItemStack stack) {
         if (stack.isEmpty() || !(stack.getItem() instanceof VoidOrbItem)) {
@@ -85,9 +80,9 @@ public class VoidOrbItem extends BasicItem
         if (attribute == null) {
             return null;
         }
-        return (Pair<EquipmentSlotType, VAttribute<?, ?>>)new Pair(slotType, attribute);
+        return (Pair<EquipmentSlotType, VAttribute<?, ?>>) new Pair(slotType, attribute);
     }
-    
+
     public static void setPredefinedRemoval(final ItemStack stack, final EquipmentSlotType slotType, final VAttribute<?, ?> attribute) {
         if (stack.isEmpty() || !(stack.getItem() instanceof VoidOrbItem)) {
             return;

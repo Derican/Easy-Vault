@@ -1,7 +1,3 @@
-// 
-// Decompiled by Procyon v0.6.0
-// 
-
 package iskallia.vault.client.vault.goal;
 
 import iskallia.vault.client.gui.overlay.goal.ActiveRaidOverlay;
@@ -15,8 +11,7 @@ import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ActiveRaidGoalData extends VaultGoalData
-{
+public class ActiveRaidGoalData extends VaultGoalData {
     private int wave;
     private int totalWaves;
     private int aliveMobs;
@@ -25,50 +20,50 @@ public class ActiveRaidGoalData extends VaultGoalData
     private int raidsCompleted;
     private List<ITextComponent> positives;
     private List<ITextComponent> negatives;
-    
+
     public ActiveRaidGoalData() {
         this.positives = new ArrayList<ITextComponent>();
         this.negatives = new ArrayList<ITextComponent>();
     }
-    
+
     @Nullable
     @Override
     public BossBarOverlay getBossBarOverlay() {
         return new ActiveRaidOverlay(this);
     }
-    
+
     public int getWave() {
         return this.wave;
     }
-    
+
     public int getTotalWaves() {
         return this.totalWaves;
     }
-    
+
     public int getAliveMobs() {
         return this.aliveMobs;
     }
-    
+
     public int getTotalMobs() {
         return this.totalMobs;
     }
-    
+
     public int getTickWaveDelay() {
         return this.tickWaveDelay;
     }
-    
+
     public int getRaidsCompleted() {
         return this.raidsCompleted;
     }
-    
+
     public List<ITextComponent> getPositives() {
         return this.positives;
     }
-    
+
     public List<ITextComponent> getNegatives() {
         return this.negatives;
     }
-    
+
     @Override
     public void receive(final VaultGoalMessage pkt) {
         final CompoundNBT tag = pkt.payload;
@@ -81,12 +76,12 @@ public class ActiveRaidGoalData extends VaultGoalData
         final ListNBT positives = tag.getList("positives", 8);
         this.positives = new ArrayList<ITextComponent>();
         for (int i = 0; i < positives.size(); ++i) {
-            this.positives.add((ITextComponent)ITextComponent.Serializer.fromJson(positives.getString(i)));
+            this.positives.add((ITextComponent) ITextComponent.Serializer.fromJson(positives.getString(i)));
         }
         final ListNBT negatives = tag.getList("negatives", 8);
         this.negatives = new ArrayList<ITextComponent>();
         for (int j = 0; j < negatives.size(); ++j) {
-            this.negatives.add((ITextComponent)ITextComponent.Serializer.fromJson(negatives.getString(j)));
+            this.negatives.add((ITextComponent) ITextComponent.Serializer.fromJson(negatives.getString(j)));
         }
     }
 }

@@ -1,7 +1,3 @@
-// 
-// Decompiled by Procyon v0.6.0
-// 
-
 package iskallia.vault.skill.ability.group;
 
 import com.google.gson.annotations.Expose;
@@ -16,8 +12,7 @@ import iskallia.vault.skill.ability.effect.VeinMinerAbility;
 import java.util.ArrayList;
 import java.util.List;
 
-public class VeinMinerAbilityGroup extends AbilityGroup<VeinMinerConfig, VeinMinerAbility<VeinMinerConfig>>
-{
+public class VeinMinerAbilityGroup extends AbilityGroup<VeinMinerConfig, VeinMinerAbility<VeinMinerConfig>> {
     @Expose
     private final List<VeinMinerDurabilityConfig> durabilityLevelConfiguration;
     @Expose
@@ -26,7 +21,7 @@ public class VeinMinerAbilityGroup extends AbilityGroup<VeinMinerConfig, VeinMin
     private final List<VeinMinerSizeDurabilityConfig> sizeLevelConfiguration;
     @Expose
     private final List<VeinMinerVoidConfig> voidLevelConfigruation;
-    
+
     private VeinMinerAbilityGroup() {
         super("Vein Miner");
         this.durabilityLevelConfiguration = new ArrayList<VeinMinerDurabilityConfig>();
@@ -34,7 +29,7 @@ public class VeinMinerAbilityGroup extends AbilityGroup<VeinMinerConfig, VeinMin
         this.sizeLevelConfiguration = new ArrayList<VeinMinerSizeDurabilityConfig>();
         this.voidLevelConfigruation = new ArrayList<VeinMinerVoidConfig>();
     }
-    
+
     @Override
     protected VeinMinerConfig getSubConfig(final String specialization, final int level) {
         switch (specialization) {
@@ -55,7 +50,7 @@ public class VeinMinerAbilityGroup extends AbilityGroup<VeinMinerConfig, VeinMin
             }
         }
     }
-    
+
     @Override
     public String getSpecializationName(final String specialization) {
         switch (specialization) {
@@ -76,7 +71,7 @@ public class VeinMinerAbilityGroup extends AbilityGroup<VeinMinerConfig, VeinMin
             }
         }
     }
-    
+
     public static VeinMinerAbilityGroup defaultConfig() {
         final VeinMinerAbilityGroup group = new VeinMinerAbilityGroup();
         group.addLevel(new VeinMinerConfig(1, 4));

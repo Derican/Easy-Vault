@@ -1,7 +1,3 @@
-// 
-// Decompiled by Procyon v0.6.0
-// 
-
 package iskallia.vault.container;
 
 import iskallia.vault.init.ModContainers;
@@ -28,8 +24,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 import javax.annotation.Nonnull;
 import java.util.List;
 
-public class VaultCharmControllerContainer extends Container
-{
+public class VaultCharmControllerContainer extends Container {
     public IInventory visibleItems;
     private final int inventorySize;
     private final List<ResourceLocation> whitelist;
@@ -38,9 +33,9 @@ public class VaultCharmControllerContainer extends Container
     private int currentStart;
     private int currentEnd;
     private float scrollDelta;
-    
+
     public VaultCharmControllerContainer(final int windowId, final PlayerInventory playerInventory, final CompoundNBT data) {
-        super((ContainerType)ModContainers.VAULT_CHARM_CONTROLLER_CONTAINER, windowId);
+        super((ContainerType) ModContainers.VAULT_CHARM_CONTROLLER_CONTAINER, windowId);
         this.currentStart = 0;
         this.currentEnd = 53;
         this.scrollDelta = 0.0f;
@@ -53,39 +48,39 @@ public class VaultCharmControllerContainer extends Container
         this.invStartIndex = 36;
         this.invEndIndex = 36 + Math.min(54, this.inventorySize);
     }
-    
+
     private void initVisibleItems() {
-        this.visibleItems = (IInventory)new Inventory(this.inventorySize);
+        this.visibleItems = (IInventory) new Inventory(this.inventorySize);
         int index = 0;
         for (final ResourceLocation id : this.whitelist) {
-            this.visibleItems.setItem(index, new ItemStack((IItemProvider)ForgeRegistries.ITEMS.getValue(id)));
+            this.visibleItems.setItem(index, new ItemStack((IItemProvider) ForgeRegistries.ITEMS.getValue(id)));
             ++index;
         }
     }
-    
+
     private void initPlayerInventorySlots(final PlayerInventory playerInventory) {
         for (int row = 0; row < 3; ++row) {
             for (int column = 0; column < 9; ++column) {
-                this.addSlot(new Slot((IInventory)playerInventory, column + row * 9 + 9, 9 + column * 18, 140 + row * 18));
+                this.addSlot(new Slot((IInventory) playerInventory, column + row * 9 + 9, 9 + column * 18, 140 + row * 18));
             }
         }
         for (int hotbarSlot = 0; hotbarSlot < 9; ++hotbarSlot) {
-            this.addSlot(new Slot((IInventory)playerInventory, hotbarSlot, 9 + hotbarSlot * 18, 198));
+            this.addSlot(new Slot((IInventory) playerInventory, hotbarSlot, 9 + hotbarSlot * 18, 198));
         }
     }
-    
+
     private void initCharmControllerSlots() {
         for (int rows = Math.min(6, this.inventorySize / 9), row = 0; row < rows; ++row) {
             for (int column = 0; column < 9; ++column) {
-                this.addSlot((Slot)new VaultCharmControllerSlot(this.visibleItems, column + row * 9, 9 + column * 18, 18 + row * 18));
+                this.addSlot((Slot) new VaultCharmControllerSlot(this.visibleItems, column + row * 9, 9 + column * 18, 18 + row * 18));
             }
         }
     }
-    
+
     public boolean canScroll() {
         return this.inventorySize > 54;
     }
-    
+
     public void scrollTo(final float scroll) {
         if (scroll >= 1.0f && this.scrollDelta >= 1.0f) {
             return;
@@ -94,38 +89,36 @@ public class VaultCharmControllerContainer extends Container
         this.updateVisibleItems();
         this.scrollDelta = scroll;
     }
-    
+
     private void shiftInventoryIndexes(final boolean ascending) {
         if (ascending) {
             this.currentStart = Math.min(this.inventorySize - 54, this.currentStart + 9);
             this.currentEnd = Math.min(this.currentStart + 54, this.inventorySize);
-        }
-        else {
+        } else {
             this.currentStart = Math.max(0, this.currentStart - 9);
             this.currentEnd = Math.max(54, this.currentEnd - 9);
         }
     }
-    
+
     private void updateVisibleItems() {
         for (int i = 0; i < this.getInventorySize() && i < 54; ++i) {
             final int whitelistIndex = this.currentStart + i;
             if (whitelistIndex >= this.whitelist.size()) {
                 this.visibleItems.setItem(i, ItemStack.EMPTY);
 //                this.lastSlots.set(i, ItemStack.EMPTY);
-            }
-            else {
+            } else {
                 final ResourceLocation id = this.whitelist.get(whitelistIndex);
-                final ItemStack stack = new ItemStack((IItemProvider)ForgeRegistries.ITEMS.getValue(id));
+                final ItemStack stack = new ItemStack((IItemProvider) ForgeRegistries.ITEMS.getValue(id));
                 this.visibleItems.setItem(i, stack);
 //                this.lastSlots.add(i, stack);
             }
         }
     }
-    
+
     public boolean stillValid(final PlayerEntity playerIn) {
         return true;
     }
-    
+
     public ItemStack quickMoveStack(final PlayerEntity playerIn, final int index) {
         ItemStack stack = ItemStack.EMPTY;
         final Slot slot = this.getSlot(index);
@@ -143,7 +136,7 @@ public class VaultCharmControllerContainer extends Container
         if (this.whitelist.size() < this.inventorySize && !this.whitelist.contains(stack.getItem().getRegistryName())) {
             this.whitelist.add(stack.getItem().getRegistryName());
             final float pitch = MathUtilities.randomFloat(0.9f, 1.1f);
-            playerIn.level.playSound((PlayerEntity)null, playerIn.blockPosition(), SoundEvents.FUNGUS_BREAK, SoundCategory.PLAYERS, 0.7f, pitch);
+            playerIn.level.playSound((PlayerEntity) null, playerIn.blockPosition(), SoundEvents.FUNGUS_BREAK, SoundCategory.PLAYERS, 0.7f, pitch);
             this.updateVisibleItems();
             return ItemStack.EMPTY;
         }
@@ -151,19 +144,16 @@ public class VaultCharmControllerContainer extends Container
             if (!this.moveItemStackTo(slotStack, 27, 36, false)) {
                 return ItemStack.EMPTY;
             }
-        }
-        else if (index >= 27 && index < 36) {
+        } else if (index >= 27 && index < 36) {
             if (!this.moveItemStackTo(slotStack, 0, 27, false)) {
                 return ItemStack.EMPTY;
             }
-        }
-        else if (!this.moveItemStackTo(slotStack, 0, 36, false)) {
+        } else if (!this.moveItemStackTo(slotStack, 0, 36, false)) {
             return ItemStack.EMPTY;
         }
         if (slotStack.getCount() == 0) {
             slot.set(ItemStack.EMPTY);
-        }
-        else {
+        } else {
             slot.setChanged();
         }
         if (slotStack.getCount() == stack.getCount()) {
@@ -173,7 +163,7 @@ public class VaultCharmControllerContainer extends Container
         this.updateVisibleItems();
         return stack;
     }
-    
+
     public ItemStack clicked(final int slotId, final int dragType, final ClickType clickTypeIn, final PlayerEntity player) {
         final Slot slot = (slotId >= 0) ? this.getSlot(slotId) : null;
         if (slot instanceof VaultCharmControllerSlot) {
@@ -194,37 +184,36 @@ public class VaultCharmControllerContainer extends Container
         }
         return super.clicked(slotId, dragType, clickTypeIn, player);
     }
-    
+
     public boolean canTakeItemForPickAll(final ItemStack stack, final Slot slot) {
         return slot.index < this.invStartIndex && super.canTakeItemForPickAll(stack, slot);
     }
-    
+
     public void removed(final PlayerEntity player) {
         if (player instanceof ServerPlayerEntity) {
-            final ServerPlayerEntity sPlayer = (ServerPlayerEntity)player;
+            final ServerPlayerEntity sPlayer = (ServerPlayerEntity) player;
             VaultCharmData.get(sPlayer.getLevel()).updateWhitelist(sPlayer, this.whitelist);
         }
         super.removed(player);
     }
-    
+
     public int getInventorySize() {
         return this.inventorySize;
     }
-    
+
     public List<ResourceLocation> getWhitelist() {
         return this.whitelist;
     }
-    
+
     public int getCurrentAmountWhitelisted() {
         return this.whitelist.size();
     }
-    
-    public class VaultCharmControllerSlot extends Slot
-    {
+
+    public class VaultCharmControllerSlot extends Slot {
         public VaultCharmControllerSlot(final IInventory inventory, final int index, final int xPosition, final int yPosition) {
             super(inventory, index, xPosition, yPosition);
         }
-        
+
         public boolean mayPlace(@Nonnull final ItemStack stack) {
             if (this.hasItem()) {
                 return false;
@@ -235,7 +224,7 @@ public class VaultCharmControllerContainer extends Container
             final ResourceLocation id = stack.getItem().getRegistryName();
             return !VaultCharmControllerContainer.this.whitelist.contains(id);
         }
-        
+
         public int getMaxStackSize() {
             return 1;
         }

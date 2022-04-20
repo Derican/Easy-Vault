@@ -1,18 +1,13 @@
-// 
-// Decompiled by Procyon v0.6.0
-// 
-
 package iskallia.vault.world.vault.gen.layout;
 
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.vector.Vector3i;
 
-public abstract class ConnectedRoomGenerator extends VaultRoomLayoutGenerator
-{
+public abstract class ConnectedRoomGenerator extends VaultRoomLayoutGenerator {
     protected ConnectedRoomGenerator(final ResourceLocation id) {
         super(id);
     }
-    
+
     public void connectRooms(final Layout layout, final int size) {
         for (int halfSize = size / 2, xx = -halfSize; xx <= halfSize; ++xx) {
             for (int zz = -halfSize; zz <= halfSize; ++zz) {

@@ -1,7 +1,3 @@
-// 
-// Decompiled by Procyon v0.6.0
-// 
-
 package iskallia.vault.block.render;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
@@ -27,7 +23,6 @@ import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.inventory.container.PlayerContainer;
-import net.minecraft.state.Property;
 import net.minecraft.state.properties.DoubleBlockHalf;
 import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
@@ -43,8 +38,7 @@ import org.lwjgl.opengl.ARBShaderObjects;
 
 import java.awt.*;
 
-public class CryoChamberRenderer extends TileEntityRenderer<CryoChamberTileEntity>
-{
+public class CryoChamberRenderer extends TileEntityRenderer<CryoChamberTileEntity> {
     public static final Minecraft mc;
     public static final ResourceLocation INFUSED_PLAYER_SKIN;
     public static final StatuePlayerModel<PlayerEntity> PLAYER_MODEL;
@@ -56,10 +50,10 @@ public class CryoChamberRenderer extends TileEntityRenderer<CryoChamberTileEntit
     private float currentGreen;
     private float currentBlue;
     private final float colorChangeDelay = 3.0f;
-    
+
     public CryoChamberRenderer(final TileEntityRendererDispatcher rendererDispatcherIn) {
         super(rendererDispatcherIn);
-        this.colors = new Color[] { Color.WHITE, Color.YELLOW, Color.MAGENTA, Color.GREEN };
+        this.colors = new Color[]{Color.WHITE, Color.YELLOW, Color.MAGENTA, Color.GREEN};
         this.index = 0;
         this.wait = false;
         this.currentColor = Color.WHITE;
@@ -67,33 +61,31 @@ public class CryoChamberRenderer extends TileEntityRenderer<CryoChamberTileEntit
         this.currentGreen = 1.0f;
         this.currentBlue = 1.0f;
     }
-    
+
     public IVertexBuilder getPlayerVertexBuilder(final ResourceLocation skinTexture, final IRenderTypeBuffer buffer) {
         final RenderType renderType = CryoChamberRenderer.PLAYER_MODEL.renderType(skinTexture);
         return buffer.getBuffer(renderType);
     }
-    
+
     public void render(final CryoChamberTileEntity tileEntity, final float partialTicks, final MatrixStack matrixStack, final IRenderTypeBuffer buffer, final int combinedLight, final int combinedOverlay) {
         if (tileEntity.isInfusing()) {
-            final float maxTime = (float)ModConfigs.CRYO_CHAMBER.getInfusionTime();
+            final float maxTime = (float) ModConfigs.CRYO_CHAMBER.getInfusionTime();
             final float scale = Math.min(tileEntity.getInfusionTimeRemaining() / maxTime, 0.85f);
             tileEntity.updateSkin();
             final ResourceLocation skinTexture = tileEntity.getSkin().getLocationSkin();
             final IVertexBuilder vertexBuilder = this.getPlayerVertexBuilder(skinTexture, buffer);
             this.renderPlayerModel(matrixStack, tileEntity, scale, 0.5f, vertexBuilder, combinedLight, combinedOverlay);
-        }
-        else if (tileEntity.isGrowingEternal()) {
-            final float maxTime = (float)ModConfigs.CRYO_CHAMBER.getGrowEternalTime();
+        } else if (tileEntity.isGrowingEternal()) {
+            final float maxTime = (float) ModConfigs.CRYO_CHAMBER.getGrowEternalTime();
             final float scale = Math.min(1.0f - tileEntity.getGrowEternalTimeRemaining() / maxTime, 0.85f);
             final IVertexBuilder vertexBuilder2 = this.getPlayerVertexBuilder(CryoChamberRenderer.INFUSED_PLAYER_SKIN, buffer);
             this.renderPlayerModel(matrixStack, tileEntity, scale, 0.5f, vertexBuilder2, combinedLight, combinedOverlay);
-        }
-        else if (tileEntity.getEternalId() != null) {
+        } else if (tileEntity.getEternalId() != null) {
             final EternalDataSnapshot snapshot = ClientEternalData.getSnapshot(tileEntity.getEternalId());
             if (snapshot != null && snapshot.getName() != null) {
                 tileEntity.updateSkin();
                 if (buffer instanceof IRenderTypeBuffer.Impl) {
-                    ((IRenderTypeBuffer.Impl)buffer).endBatch();
+                    ((IRenderTypeBuffer.Impl) buffer).endBatch();
                 }
                 if (!snapshot.isAlive()) {
                     ShaderUtil.useShader(ShaderUtil.GRAYSCALE_SHADER, () -> {
@@ -109,20 +101,19 @@ public class CryoChamberRenderer extends TileEntityRenderer<CryoChamberTileEntit
                 final IVertexBuilder vertexBuilder2 = this.getPlayerVertexBuilder(skinTexture2, buffer);
                 this.renderPlayerModel(matrixStack, tileEntity, 0.85f, 1.0f, vertexBuilder2, combinedLight, combinedOverlay);
                 if (buffer instanceof IRenderTypeBuffer.Impl) {
-                    ((IRenderTypeBuffer.Impl)buffer).endBatch();
+                    ((IRenderTypeBuffer.Impl) buffer).endBatch();
                 }
                 if (!snapshot.isAlive()) {
                     ShaderUtil.releaseShader();
                 }
             }
-        }
-        else if (tileEntity instanceof AncientCryoChamberTileEntity) {
+        } else if (tileEntity instanceof AncientCryoChamberTileEntity) {
             tileEntity.updateSkin();
             final ResourceLocation skinTexture3 = tileEntity.getSkin().getLocationSkin();
             final IVertexBuilder vertexBuilder3 = this.getPlayerVertexBuilder(skinTexture3, buffer);
             this.renderPlayerModel(matrixStack, tileEntity, 0.85f, 1.0f, vertexBuilder3, combinedLight, combinedOverlay);
             if (buffer instanceof IRenderTypeBuffer.Impl) {
-                ((IRenderTypeBuffer.Impl)buffer).endBatch();
+                ((IRenderTypeBuffer.Impl) buffer).endBatch();
             }
         }
         this.renderLiquid(matrixStack, tileEntity, buffer, partialTicks);
@@ -133,33 +124,33 @@ public class CryoChamberRenderer extends TileEntityRenderer<CryoChamberTileEntit
                 eternalName = snapshot2.getName();
             }
             if (tileEntity instanceof AncientCryoChamberTileEntity) {
-                eternalName = ((AncientCryoChamberTileEntity)tileEntity).getEternalName();
+                eternalName = ((AncientCryoChamberTileEntity) tileEntity).getEternalName();
             }
             if (eternalName != null) {
-                final BlockRayTraceResult result = (BlockRayTraceResult)CryoChamberRenderer.mc.hitResult;
+                final BlockRayTraceResult result = (BlockRayTraceResult) CryoChamberRenderer.mc.hitResult;
                 if (tileEntity.getBlockPos().equals(result.getBlockPos()) || tileEntity.getBlockPos().above().equals(result.getBlockPos())) {
                     this.renderLabel(matrixStack, buffer, combinedLight, new StringTextComponent(eternalName), -1, tileEntity.getLevel().getBlockState(result.getBlockPos()).getValue(CryoChamberBlock.HALF) == DoubleBlockHalf.UPPER);
                 }
             }
         }
     }
-    
+
     private void renderLabel(final MatrixStack matrixStack, final IRenderTypeBuffer buffer, final int lightLevel, final StringTextComponent text, final int color, final boolean topBlock) {
         final FontRenderer fontRenderer = CryoChamberRenderer.mc.font;
         matrixStack.pushPose();
         final float scale = 0.02f;
         final int opacity = 1711276032;
-        final float offset = (float)(-fontRenderer.width((ITextProperties)text) / 2);
+        final float offset = (float) (-fontRenderer.width((ITextProperties) text) / 2);
         final Matrix4f matrix4f = matrixStack.last().pose();
         matrixStack.translate(0.5, 2.299999952316284, 0.5);
         matrixStack.scale(scale, scale, scale);
         matrixStack.mulPose(CryoChamberRenderer.mc.getEntityRenderDispatcher().cameraOrientation());
         matrixStack.mulPose(Vector3f.ZP.rotationDegrees(180.0f));
-        fontRenderer.drawInBatch((ITextComponent)text, offset, 0.0f, color, false, matrix4f, buffer, true, opacity, lightLevel);
-        fontRenderer.drawInBatch((ITextComponent)text, offset, 0.0f, -1, false, matrix4f, buffer, false, 0, lightLevel);
+        fontRenderer.drawInBatch((ITextComponent) text, offset, 0.0f, color, false, matrix4f, buffer, true, opacity, lightLevel);
+        fontRenderer.drawInBatch((ITextComponent) text, offset, 0.0f, -1, false, matrix4f, buffer, false, 0, lightLevel);
         matrixStack.popPose();
     }
-    
+
     public void renderPlayerModel(final MatrixStack matrixStack, final CryoChamberTileEntity tileEntity, final float scale, final float alpha, final IVertexBuilder vertexBuilder, final int combinedLight, final int combinedOverlay) {
         final BlockState blockState = tileEntity.getBlockState();
         final Direction direction = blockState.getValue(CryoChamberBlock.FACING);
@@ -185,9 +176,9 @@ public class CryoChamberRenderer extends TileEntityRenderer<CryoChamberTileEntit
         CryoChamberRenderer.PLAYER_MODEL.head.render(matrixStack, vertexBuilder, combinedLight, combinedOverlay, 1.0f, 1.0f, 1.0f, alpha);
         matrixStack.popPose();
     }
-    
+
     private Quaternion getRotationFromDirection(final Direction direction) {
-        switch(direction)  {
+        switch (direction) {
             case NORTH:
             case SOUTH: {
                 return Vector3f.YP.rotationDegrees(direction.getOpposite().toYRot());
@@ -197,24 +188,24 @@ public class CryoChamberRenderer extends TileEntityRenderer<CryoChamberTileEntit
             }
         }
     }
-    
+
     private double[] getRootTranslation(final Direction direction) {
         switch (direction) {
             case SOUTH: {
-                return new double[] { -1.0, 0.0, -1.0 };
+                return new double[]{-1.0, 0.0, -1.0};
             }
             case WEST: {
-                return new double[] { -1.0, 0.0, 0.0 };
+                return new double[]{-1.0, 0.0, 0.0};
             }
             case EAST: {
-                return new double[] { 0.0, 0.0, -1.0 };
+                return new double[]{0.0, 0.0, -1.0};
             }
             default: {
-                return new double[] { 0.0, 0.0, 0.0 };
+                return new double[]{0.0, 0.0, 0.0};
             }
         }
     }
-    
+
     private void renderLiquid(final MatrixStack matrixStack, final CryoChamberTileEntity tileEntity, final IRenderTypeBuffer buffer, final float partialTicks) {
         if (tileEntity.getMaxCores() == 0) {
             return;
@@ -223,7 +214,7 @@ public class CryoChamberRenderer extends TileEntityRenderer<CryoChamberTileEntit
         final TextureAtlasSprite sprite = Minecraft.getInstance().getTextureAtlas(PlayerContainer.BLOCK_ATLAS).apply(Fluids.WATER.getAttributes().getStillTexture());
         final BlockState blockState = tileEntity.getBlockState();
         final Direction direction = blockState.getValue(CryoChamberBlock.FACING);
-        final float max = (float)tileEntity.getMaxCores();
+        final float max = (float) tileEntity.getMaxCores();
         final float difference = tileEntity.getCoreCount() - tileEntity.lastCoreCount;
         tileEntity.lastCoreCount += difference * 0.02f;
         final float scale = tileEntity.lastCoreCount / max;
@@ -244,7 +235,7 @@ public class CryoChamberRenderer extends TileEntityRenderer<CryoChamberTileEntit
         this.renderTop(matrixStack, builder, scale, r, g, b, sprite.getU0(), sprite.getU1(), sprite.getV0(), sprite.getV1(), bottomHeight, topHeight);
         matrixStack.popPose();
     }
-    
+
     private void renderTop(final MatrixStack matrixStack, final IVertexBuilder builder, final float scale, final float r, final float g, final float b, final float minU, final float maxU, final float minV, final float maxV, final float bottomHeight, final float topHeight) {
         this.addVertex(builder, matrixStack, this.p2f(1), (scale < 0.5f) ? bottomHeight : topHeight, this.p2f(1), minU, minV, r, g, b, 1.0f);
         this.addVertex(builder, matrixStack, this.p2f(1), (scale < 0.5f) ? bottomHeight : topHeight, this.p2f(9), maxU, minV, r, g, b, 1.0f);
@@ -255,7 +246,7 @@ public class CryoChamberRenderer extends TileEntityRenderer<CryoChamberTileEntit
         this.addVertex(builder, matrixStack, this.p2f(12), (scale < 0.5f) ? bottomHeight : topHeight, this.p2f(15), maxU, maxV, r, g, b, 1.0f);
         this.addVertex(builder, matrixStack, this.p2f(15), (scale < 0.5f) ? bottomHeight : topHeight, this.p2f(9), minU, maxV, r, g, b, 1.0f);
     }
-    
+
     private void renderSides(final MatrixStack matrixStack, final IVertexBuilder builder, final float scale, final float r, final float g, final float b, final float minU, final float maxU, final float minV, final float maxVBottom, final float maxVTop, final float bottomHeight, final float topHeight, final Direction direction) {
         final double[] translation = this.getRootTranslation(direction);
         matrixStack.mulPose(this.getRotationFromDirection(direction));
@@ -304,15 +295,15 @@ public class CryoChamberRenderer extends TileEntityRenderer<CryoChamberTileEntit
         this.addVertex(builder, matrixStack, this.p2f(15), topHeight, this.p2f(1), maxU, maxVTop, r, g, b, 1.0f);
         this.addVertex(builder, matrixStack, this.p2f(15), topHeight, this.p2f(9), minU, maxVTop, r, g, b, 1.0f);
     }
-    
+
     private void addVertex(final IVertexBuilder renderer, final MatrixStack stack, final float x, final float y, final float z, final float u, final float v, final float r, final float g, final float b, final float a) {
         renderer.vertex(stack.last().pose(), x, y, z).color(r, g, b, 0.5f).uv(u, v).uv2(0, 240).normal(1.0f, 0.0f, 0.0f).endVertex();
     }
-    
+
     private float p2f(final int pixel) {
         return 0.0625f * pixel;
     }
-    
+
     private void updateIndex(final int ticksExisted) {
         if (ticksExisted % 60.0f == 0.0f) {
             if (this.wait) {
@@ -322,17 +313,15 @@ public class CryoChamberRenderer extends TileEntityRenderer<CryoChamberTileEntit
             if (this.index++ == this.colors.length - 1) {
                 this.index = 0;
             }
-        }
-        else {
+        } else {
             this.wait = false;
         }
     }
-    
+
     private void updateColor(final float partialTicks, final CryoChamberTileEntity tileEntity) {
         if (tileEntity.getBlockState().getValue(CryoChamberBlock.CHAMBER_STATE) == CryoChamberBlock.ChamberState.RUSTY) {
             this.currentColor = new Color(139, 69, 19);
-        }
-        else {
+        } else {
             int nextIndex = this.index + 1;
             if (nextIndex == this.colors.length) {
                 nextIndex = 0;
@@ -340,7 +329,7 @@ public class CryoChamberRenderer extends TileEntityRenderer<CryoChamberTileEntit
             this.currentColor = this.getBlendedColor(this.colors[this.index], this.colors[nextIndex], partialTicks);
         }
     }
-    
+
     private Color getBlendedColor(final Color prev, final Color next, final float partialTicks) {
         final float prevRed = prev.getRed() / 255.0f;
         final float prevGreen = prev.getGreen() / 255.0f;
@@ -361,11 +350,11 @@ public class CryoChamberRenderer extends TileEntityRenderer<CryoChamberTileEntit
         this.currentBlue = this.ensureRange(this.currentBlue);
         return new Color(this.currentRed, this.currentGreen, this.currentBlue);
     }
-    
+
     private float ensureRange(final float value) {
         return Math.min(Math.max(value, 0.0f), 1.0f);
     }
-    
+
     static {
         mc = Minecraft.getInstance();
         INFUSED_PLAYER_SKIN = Vault.id("textures/entity/infusion_skin_white.png");

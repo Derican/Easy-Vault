@@ -1,7 +1,3 @@
-// 
-// Decompiled by Procyon v0.6.0
-// 
-
 package iskallia.vault.client.gui.overlay;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
@@ -25,16 +21,15 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import java.text.DecimalFormat;
 
 @OnlyIn(Dist.CLIENT)
-public class PlayerDamageOverlay
-{
+public class PlayerDamageOverlay {
     private static final ResourceLocation STRENGTH_ICON;
-    
+
     @SubscribeEvent(priority = EventPriority.LOW)
     public static void setupHealthTexture(final RenderGameOverlayEvent.Post event) {
         if (event.getType() != RenderGameOverlayEvent.ElementType.FOOD) {
             return;
         }
-        final PlayerEntity player = (PlayerEntity)Minecraft.getInstance().player;
+        final PlayerEntity player = (PlayerEntity) Minecraft.getInstance().player;
         if (player == null) {
             return;
         }
@@ -54,21 +49,21 @@ public class PlayerDamageOverlay
         }
         displayStr += "%";
         final TextFormatting color = (value < 0.0f) ? TextFormatting.RED : TextFormatting.DARK_GREEN;
-        final ITextComponent display = (ITextComponent)new StringTextComponent(displayStr).withStyle(color);
+        final ITextComponent display = (ITextComponent) new StringTextComponent(displayStr).withStyle(color);
         ForgeIngameGui.left_height += 6;
         final int left = mc.getWindow().getGuiScaledWidth() / 2 - 91;
         final int top = mc.getWindow().getGuiScaledHeight() - ForgeIngameGui.left_height;
         final MatrixStack matrixStack = event.getMatrixStack();
         mc.getTextureManager().bind(PlayerDamageOverlay.STRENGTH_ICON);
         matrixStack.pushPose();
-        matrixStack.translate((double)left, (double)top, 0.0);
-        ScreenDrawHelper.drawQuad(buf -> ScreenDrawHelper.rect((IVertexBuilder)buf, matrixStack).dim(16.0f, 16.0f).draw());
+        matrixStack.translate((double) left, (double) top, 0.0);
+        ScreenDrawHelper.drawQuad(buf -> ScreenDrawHelper.rect((IVertexBuilder) buf, matrixStack).dim(16.0f, 16.0f).draw());
         matrixStack.translate(16.0, 4.0, 0.0);
         mc.font.drawShadow(matrixStack, display, 0.0f, 0.0f, 16777215);
         matrixStack.popPose();
         mc.getTextureManager().bind(AbstractGui.GUI_ICONS_LOCATION);
     }
-    
+
     static {
         STRENGTH_ICON = new ResourceLocation("minecraft", "textures/mob_effect/strength.png");
     }

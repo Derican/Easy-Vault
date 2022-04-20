@@ -1,7 +1,3 @@
-// 
-// Decompiled by Procyon v0.6.0
-// 
-
 package iskallia.vault.block.entity;
 
 import iskallia.vault.block.SoulAltarBlock;
@@ -38,24 +34,21 @@ import net.minecraftforge.fml.common.Mod;
 import java.awt.*;
 import java.util.Optional;
 import java.util.Random;
-import java.util.UUID;
-import java.util.function.Function;
 
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.FORGE)
-public class SoulAltarTileEntity extends FillableAltarTileEntity
-{
+public class SoulAltarTileEntity extends FillableAltarTileEntity {
     private static final Random rand;
     private static final float range = 8.0f;
     private static final AxisAlignedBB SEARCH_BOX;
     public static final String SOUL_ALTAR_TAG = "the_vault_SoulAltar";
     public static final String SOUL_ALTAR_REF = "the_vault_SoulAltarPos";
     private int ticksExisted;
-    
+
     public SoulAltarTileEntity() {
         super(ModBlocks.SOUL_ALTAR_TILE_ENTITY);
         this.ticksExisted = 0;
     }
-    
+
     @Override
     public void tick() {
         super.tick();
@@ -66,12 +59,12 @@ public class SoulAltarTileEntity extends FillableAltarTileEntity
             }
             this.getLevel().getLoadedEntitiesOfClass(LivingEntity.class, SoulAltarTileEntity.SEARCH_BOX.move(this.getBlockPos()), entity -> entity.isAlive() && !entity.isSpectator() && !entity.isInvulnerable() && entity.getType().getCategory() == EntityClassification.MONSTER).forEach(entity -> {
                 if (entity.addTag("the_vault_SoulAltar")) {
-                    CodecUtils.writeNBT((com.mojang.serialization.Codec<BlockPos>)BlockPos.CODEC, this.getBlockPos(), entity.getPersistentData(), "the_vault_SoulAltarPos");
+                    CodecUtils.writeNBT((com.mojang.serialization.Codec<BlockPos>) BlockPos.CODEC, this.getBlockPos(), entity.getPersistentData(), "the_vault_SoulAltarPos");
                 }
             });
         }
     }
-    
+
     @SubscribeEvent
     public static void onLivingUpdate(final LivingEvent.LivingUpdateEvent event) {
         final LivingEntity entity = event.getEntityLiving();
@@ -86,7 +79,7 @@ public class SoulAltarTileEntity extends FillableAltarTileEntity
         if (!tag.contains("the_vault_SoulAltarPos")) {
             return;
         }
-        final BlockPos altarRef = CodecUtils.readNBT((com.mojang.serialization.Codec<BlockPos>)BlockPos.CODEC, tag.get("the_vault_SoulAltarPos"), null);
+        final BlockPos altarRef = CodecUtils.readNBT((com.mojang.serialization.Codec<BlockPos>) BlockPos.CODEC, tag.get("the_vault_SoulAltarPos"), null);
         if (altarRef == null || !world.hasChunkAt(altarRef)) {
             return;
         }
@@ -95,12 +88,12 @@ public class SoulAltarTileEntity extends FillableAltarTileEntity
         if (!(te instanceof SoulAltarTileEntity) || !(state.getBlock() instanceof SoulAltarBlock)) {
             return;
         }
-        final IParticleData particle = ((SoulAltarBlock)state.getBlock()).getFlameParticle();
+        final IParticleData particle = ((SoulAltarBlock) state.getBlock()).getFlameParticle();
         final Vector3d at = MiscUtils.getRandomOffset(entity.getBoundingBox().inflate(0.20000000298023224), SoulAltarTileEntity.rand);
-        final ServerWorld sWorld = (ServerWorld)world;
+        final ServerWorld sWorld = (ServerWorld) world;
         sWorld.sendParticles(particle, at.x, at.y, at.z, 1, 0.0, 0.0, 0.0, 0.0);
     }
-    
+
     @SubscribeEvent
     public static void onEntityDead(final LivingDeathEvent event) {
         final LivingEntity deadEntity = event.getEntityLiving();
@@ -111,12 +104,12 @@ public class SoulAltarTileEntity extends FillableAltarTileEntity
         final DamageSource src = event.getSource();
         Entity sourceEntity = src.getEntity();
         if (sourceEntity instanceof EternalEntity) {
-            sourceEntity = ((EternalEntity)sourceEntity).getOwner().right().orElse(null);
+            sourceEntity = ((EternalEntity) sourceEntity).getOwner().right().orElse(null);
         }
         if (!(sourceEntity instanceof ServerPlayerEntity)) {
             return;
         }
-        final ServerPlayerEntity killer = (ServerPlayerEntity)sourceEntity;
+        final ServerPlayerEntity killer = (ServerPlayerEntity) sourceEntity;
         if (!deadEntity.getTags().contains("the_vault_SoulAltar")) {
             return;
         }
@@ -124,20 +117,20 @@ public class SoulAltarTileEntity extends FillableAltarTileEntity
         if (!tag.contains("the_vault_SoulAltarPos")) {
             return;
         }
-        final BlockPos altarRef = CodecUtils.readNBT((com.mojang.serialization.Codec<BlockPos>)BlockPos.CODEC, tag.get("the_vault_SoulAltarPos"), null);
+        final BlockPos altarRef = CodecUtils.readNBT((com.mojang.serialization.Codec<BlockPos>) BlockPos.CODEC, tag.get("the_vault_SoulAltarPos"), null);
         if (altarRef == null || !world.hasChunkAt(altarRef)) {
             return;
         }
         final TileEntity te = world.getBlockEntity(altarRef);
-        if (!(te instanceof SoulAltarTileEntity) || !((SoulAltarTileEntity)te).initialized() || ((SoulAltarTileEntity)te).isMaxedOut()) {
+        if (!(te instanceof SoulAltarTileEntity) || !((SoulAltarTileEntity) te).initialized() || ((SoulAltarTileEntity) te).isMaxedOut()) {
             return;
         }
-        ((SoulAltarTileEntity)te).makeProgress(killer, 1, sPlayer -> {
+        ((SoulAltarTileEntity) te).makeProgress(killer, 1, sPlayer -> {
             final PlayerFavourData data = PlayerFavourData.get(sPlayer.getLevel());
-            if (SoulAltarTileEntity.rand.nextFloat() < FillableAltarBlock.getFavourChance((PlayerEntity)sPlayer, PlayerFavourData.VaultGodType.MALEVOLENCE)) {
+            if (SoulAltarTileEntity.rand.nextFloat() < FillableAltarBlock.getFavourChance((PlayerEntity) sPlayer, PlayerFavourData.VaultGodType.MALEVOLENCE)) {
                 final PlayerFavourData.VaultGodType vg = PlayerFavourData.VaultGodType.MALEVOLENCE;
-                if (data.addFavour((PlayerEntity)sPlayer, vg, 1)) {
-                    data.addFavour((PlayerEntity)sPlayer, vg.getOther(SoulAltarTileEntity.rand), -1);
+                if (data.addFavour((PlayerEntity) sPlayer, vg, 1)) {
+                    data.addFavour((PlayerEntity) sPlayer, vg.getOther(SoulAltarTileEntity.rand), -1);
                     FillableAltarBlock.playFavourInfo(sPlayer);
                 }
             }
@@ -145,27 +138,27 @@ public class SoulAltarTileEntity extends FillableAltarTileEntity
         });
         te.setChanged();
     }
-    
+
     @Override
     public ITextComponent getRequirementName() {
-        return (ITextComponent)new StringTextComponent("Monster Soul");
+        return (ITextComponent) new StringTextComponent("Monster Soul");
     }
-    
+
     @Override
     public PlayerFavourData.VaultGodType getAssociatedVaultGod() {
         return PlayerFavourData.VaultGodType.MALEVOLENCE;
     }
-    
+
     @Override
     public ITextComponent getRequirementUnit() {
-        return (ITextComponent)new StringTextComponent("kills");
+        return (ITextComponent) new StringTextComponent("kills");
     }
-    
+
     @Override
     public Color getFillColor() {
         return new Color(-2158319);
     }
-    
+
     @Override
     protected Optional<Integer> calcMaxProgress(final VaultRaid vault) {
         return vault.getProperties().getBase(VaultRaid.LEVEL).map(vaultLevel -> {
@@ -174,7 +167,7 @@ public class SoulAltarTileEntity extends FillableAltarTileEntity
             return Integer.valueOf(Math.round(progress * multiplier));
         });
     }
-    
+
     static {
         rand = new Random();
         SEARCH_BOX = new AxisAlignedBB(-8.0, -8.0, -8.0, 8.0, 8.0, 8.0);

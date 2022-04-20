@@ -1,7 +1,3 @@
-// 
-// Decompiled by Procyon v0.6.0
-// 
-
 package iskallia.vault.attribute;
 
 import com.google.gson.annotations.Expose;
@@ -15,30 +11,27 @@ import java.util.List;
 import java.util.Random;
 import java.util.function.Consumer;
 import java.util.function.ToIntBiFunction;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-public abstract class PooledAttribute<T> extends VAttribute.Instance<T>
-{
+public abstract class PooledAttribute<T> extends VAttribute.Instance<T> {
     protected PooledAttribute() {
     }
-    
+
     protected PooledAttribute(final VAttribute.Modifier<T> modifier) {
         super(modifier);
     }
-    
-    public abstract static class Generator<T, O extends Generator.Operator<T>> implements VAttribute.Instance.Generator<T>
-    {
+
+    public abstract static class Generator<T, O extends Generator.Operator<T>> implements VAttribute.Instance.Generator<T> {
         @Expose
         public List<Pool<T, O>> pools;
         @Expose
         public O collector;
-        
+
         public Generator() {
             this.pools = new ArrayList<Pool<T, O>>();
         }
-        
+
         public Generator<T, O> add(final T base, final Rolls rolls, final Consumer<Pool<T, O>> pool) {
             if (this.pools == null) {
                 this.pools = new ArrayList<Pool<T, O>>();
@@ -48,33 +41,31 @@ public abstract class PooledAttribute<T> extends VAttribute.Instance<T>
             pool.accept(generated);
             return this;
         }
-        
+
         public Generator<T, O> collect(final O collector) {
             this.collector = collector;
             return this;
         }
-        
+
         public abstract T getDefaultValue(final Random p0);
-        
+
         @Override
         public T generate(final ItemStack stack, final Random random) {
             if (this.pools.size() == 0) {
                 return this.getDefaultValue(random);
             }
-            T value = (T)this.pools.get(0).generate(random);
+            T value = (T) this.pools.get(0).generate(random);
             for (int i = 1; i < this.pools.size(); ++i) {
-                value = this.collector.apply(value, (T)this.pools.get(i).generate(random));
+                value = this.collector.apply(value, (T) this.pools.get(i).generate(random));
             }
             return value;
         }
-        
-        public abstract static class Operator<T> extends Pool.Operator<T>
-        {
+
+        public abstract static class Operator<T> extends Pool.Operator<T> {
         }
     }
-    
-    public static class Pool<T, O extends Generator.Operator<T>>
-    {
+
+    public static class Pool<T, O extends Generator.Operator<T>> {
         @Expose
         public T base;
         @Expose
@@ -82,13 +73,13 @@ public abstract class PooledAttribute<T> extends VAttribute.Instance<T>
         @Expose
         public List<Entry<T, O>> entries;
         private int totalWeight;
-        
+
         public Pool(final T base, final Rolls rolls) {
             this.entries = new ArrayList<Entry<T, O>>();
             this.base = base;
             this.rolls = rolls;
         }
-        
+
         public Pool<T, O> add(final T value, final O operator, final int weight) {
             if (this.entries == null) {
                 this.entries = new ArrayList<Entry<T, O>>();
@@ -97,7 +88,7 @@ public abstract class PooledAttribute<T> extends VAttribute.Instance<T>
             this.entries.add(entry);
             return this;
         }
-        
+
         public T generate(final Random random) {
             if (this.entries.isEmpty() || this.rolls.type.equals(Rolls.Type.EMPTY.name)) {
                 return this.base;
@@ -110,14 +101,14 @@ public abstract class PooledAttribute<T> extends VAttribute.Instance<T>
             }
             return value;
         }
-        
+
         public Entry<T, O> getRandom(final Random random) {
             if (this.entries.size() == 0) {
                 return null;
             }
             return this.getWeightedAt(random.nextInt(this.getTotalWeight()));
         }
-        
+
         public Entry<T, O> getWeightedAt(int index) {
             Entry<T, O> current = null;
             final Iterator<Entry<T, O>> iterator = this.entries.iterator();
@@ -130,7 +121,7 @@ public abstract class PooledAttribute<T> extends VAttribute.Instance<T>
             }
             return current;
         }
-        
+
         private int getTotalWeight() {
             if (this.totalWeight == 0) {
                 this.entries.forEach(entry -> this.totalWeight += entry.weight);
@@ -143,31 +134,28 @@ public abstract class PooledAttribute<T> extends VAttribute.Instance<T>
                     .map(entry -> entry.value)
                     .collect(Collectors.toList());
         }
-        
-        public static class Entry<T, O extends Operator<T>>
-        {
+
+        public static class Entry<T, O extends Operator<T>> {
             @Expose
             public final T value;
             @Expose
             public final O operator;
             @Expose
             public final int weight;
-            
+
             public Entry(final T value, final O operator, final int weight) {
                 this.value = value;
                 this.operator = operator;
                 this.weight = weight;
             }
         }
-        
-        public abstract static class Operator<T>
-        {
+
+        public abstract static class Operator<T> {
             public abstract T apply(final T p0, final T p1);
         }
     }
-    
-    public static class Rolls
-    {
+
+    public static class Rolls {
         @Expose
         public String type;
         @Expose
@@ -188,20 +176,20 @@ public abstract class PooledAttribute<T> extends VAttribute.Instance<T>
         @Expose
         @JsonAdapter(IgnoreEmpty.DoubleAdapter.class)
         public double probability;
-        
+
         public static Rolls ofEmpty() {
             final Rolls rolls = new Rolls();
             rolls.type = Type.EMPTY.name;
             return rolls;
         }
-        
+
         public static Rolls ofConstant(final int value) {
             final Rolls rolls = new Rolls();
             rolls.type = Type.CONSTANT.name;
             rolls.value = value;
             return rolls;
         }
-        
+
         public static Rolls ofUniform(final int min, final int max) {
             final Rolls rolls = new Rolls();
             rolls.type = Type.UNIFORM.name;
@@ -209,7 +197,7 @@ public abstract class PooledAttribute<T> extends VAttribute.Instance<T>
             rolls.max = max;
             return rolls;
         }
-        
+
         public static Rolls ofChance(final double chance, final int value) {
             final Rolls rolls = new Rolls();
             rolls.type = Type.CHANCE.name;
@@ -217,7 +205,7 @@ public abstract class PooledAttribute<T> extends VAttribute.Instance<T>
             rolls.chance = chance;
             return rolls;
         }
-        
+
         public static Rolls ofBinomial(final int trials, final double probability) {
             final Rolls rolls = new Rolls();
             rolls.type = Type.BINOMIAL.name;
@@ -225,7 +213,7 @@ public abstract class PooledAttribute<T> extends VAttribute.Instance<T>
             rolls.probability = probability;
             return rolls;
         }
-        
+
         public int getRolls(final Random random) {
             final Type type = Type.getByName(this.type);
             if (type == null) {
@@ -233,23 +221,22 @@ public abstract class PooledAttribute<T> extends VAttribute.Instance<T>
             }
             return type.function.applyAsInt(this, random);
         }
-        
-        public enum Type
-        {
-            EMPTY("empty", (rolls, random) -> 0), 
-            CONSTANT("constant", (rolls, random) -> rolls.value), 
-            UNIFORM("uniform", (rolls, random) -> random.nextInt(rolls.max - rolls.min + 1) + rolls.min), 
-            CHANCE("chance", (rolls, random) -> (random.nextDouble() < rolls.chance) ? rolls.value : 0), 
-            BINOMIAL("binomial", (rolls, random) -> (int)IntStream.range(0, rolls.trials).filter(i -> random.nextDouble() < rolls.probability).count());
-            
+
+        public enum Type {
+            EMPTY("empty", (rolls, random) -> 0),
+            CONSTANT("constant", (rolls, random) -> rolls.value),
+            UNIFORM("uniform", (rolls, random) -> random.nextInt(rolls.max - rolls.min + 1) + rolls.min),
+            CHANCE("chance", (rolls, random) -> (random.nextDouble() < rolls.chance) ? rolls.value : 0),
+            BINOMIAL("binomial", (rolls, random) -> (int) IntStream.range(0, rolls.trials).filter(i -> random.nextDouble() < rolls.probability).count());
+
             public final String name;
             private final ToIntBiFunction<Rolls, Random> function;
-            
+
             private Type(final String name, final ToIntBiFunction<Rolls, Random> function) {
                 this.name = name;
                 this.function = function;
             }
-            
+
             public static Type getByName(final String name) {
                 for (final Type value : values()) {
                     if (value.name.equals(name)) {

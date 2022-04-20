@@ -1,7 +1,3 @@
-// 
-// Decompiled by Procyon v0.6.0
-// 
-
 package iskallia.vault.block.entity;
 
 import com.mojang.authlib.GameProfile;
@@ -57,10 +53,8 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.UUID;
-import java.util.function.Predicate;
 
-public class CryoChamberTileEntity extends TileEntity implements ITickableTileEntity, INamedContainerProvider
-{
+public class CryoChamberTileEntity extends TileEntity implements ITickableTileEntity, INamedContainerProvider {
     protected SkinProfile skin;
     private UUID owner;
     public List<String> coreNames;
@@ -73,9 +67,9 @@ public class CryoChamberTileEntity extends TileEntity implements ITickableTileEn
     public float lastCoreCount;
     private final ItemStackHandler itemHandler;
     private final LazyOptional<IItemHandler> handler;
-    
+
     protected CryoChamberTileEntity(final TileEntityType<?> tileEntityType) {
-        super((TileEntityType)tileEntityType);
+        super((TileEntityType) tileEntityType);
         this.coreNames = new ArrayList<String>();
         this.maxCores = 0;
         this.infusing = false;
@@ -90,7 +84,7 @@ public class CryoChamberTileEntity extends TileEntity implements ITickableTileEn
                 }
                 CryoChamberTileEntity.this.sendUpdates();
             }
-            
+
             public boolean isItemValid(final int slot, final ItemStack stack) {
                 return stack.getItem() == ModItems.TRADER_CORE && !CryoChamberTileEntity.this.isFull() && !CryoChamberTileEntity.this.isInfusing();
             }
@@ -98,55 +92,55 @@ public class CryoChamberTileEntity extends TileEntity implements ITickableTileEn
         this.handler = LazyOptional.of(() -> this.itemHandler);
         this.skin = new SkinProfile();
     }
-    
+
     public CryoChamberTileEntity() {
         this(ModBlocks.CRYO_CHAMBER_TILE_ENTITY);
     }
-    
+
     public UUID getOwner() {
         return this.owner;
     }
-    
+
     public void setOwner(final UUID owner) {
         this.owner = owner;
     }
-    
+
     public int getMaxCores() {
         return this.maxCores;
     }
-    
+
     public void setMaxCores(final int maxCores) {
         this.maxCores = maxCores;
     }
-    
+
     public boolean isInfusing() {
         return this.infusing;
     }
-    
+
     public int getInfusionTimeRemaining() {
         return this.infusionTimeRemaining;
     }
-    
+
     public boolean isGrowingEternal() {
         return this.growingEternal;
     }
-    
+
     public int getGrowEternalTimeRemaining() {
         return this.growEternalTimeRemaining;
     }
-    
+
     public SkinProfile getSkin() {
         return this.skin;
     }
-    
+
     public int getCoreCount() {
         return this.coreNames.size();
     }
-    
+
     public List<String> getCoreNames() {
         return this.coreNames;
     }
-    
+
     public boolean addTraderCore(final TraderCore core) {
         if (this.isFull() || this.isInfusing() || this.getOwner() == null) {
             return false;
@@ -154,8 +148,8 @@ public class CryoChamberTileEntity extends TileEntity implements ITickableTileEn
         if (!(this.level instanceof ServerWorld)) {
             return false;
         }
-        final ServerWorld sWorld = (ServerWorld)this.level;
-        sWorld.playSound((PlayerEntity)null, (double)this.worldPosition.getX(), (double)this.worldPosition.getY(), (double)this.worldPosition.getZ(), SoundEvents.SOUL_ESCAPE, SoundCategory.PLAYERS, 1.0f, 1.0f);
+        final ServerWorld sWorld = (ServerWorld) this.level;
+        sWorld.playSound((PlayerEntity) null, (double) this.worldPosition.getX(), (double) this.worldPosition.getY(), (double) this.worldPosition.getZ(), SoundEvents.SOUL_ESCAPE, SoundCategory.PLAYERS, 1.0f, 1.0f);
         final GameProfile knownProfile = sWorld.getServer().getProfileCache().get(this.getOwner());
         if (knownProfile == null) {
             return false;
@@ -169,12 +163,11 @@ public class CryoChamberTileEntity extends TileEntity implements ITickableTileEn
         }
         this.coreNames.add(core.getName());
         if (core.getTrade() != null && !core.getTrade().wasTradeUsed() && sWorld.random.nextFloat() < ModConfigs.CRYO_CHAMBER.getUnusedTraderRewardChance()) {
-            final PlayerEntity player = sWorld.getNearestPlayer((double)this.worldPosition.getX(), (double)this.worldPosition.getY(), (double)this.worldPosition.getZ(), 3.0, false);
+            final PlayerEntity player = sWorld.getNearestPlayer((double) this.worldPosition.getX(), (double) this.worldPosition.getY(), (double) this.worldPosition.getZ(), 3.0, false);
             if (player instanceof ServerPlayerEntity) {
-                MiscUtils.giveItem((ServerPlayerEntity)player, new ItemStack((IItemProvider)ModItems.PANDORAS_BOX));
-            }
-            else {
-                BlockPos.findClosestMatch(this.getBlockPos(), 7, 2, sWorld::isEmptyBlock).ifPresent(airPos -> Block.popResource((World)sWorld, (BlockPos) airPos, new ItemStack((IItemProvider)ModItems.PANDORAS_BOX)));
+                MiscUtils.giveItem((ServerPlayerEntity) player, new ItemStack((IItemProvider) ModItems.PANDORAS_BOX));
+            } else {
+                BlockPos.findClosestMatch(this.getBlockPos(), 7, 2, sWorld::isEmptyBlock).ifPresent(airPos -> Block.popResource((World) sWorld, (BlockPos) airPos, new ItemStack((IItemProvider) ModItems.PANDORAS_BOX)));
             }
         }
         this.infusing = true;
@@ -182,7 +175,7 @@ public class CryoChamberTileEntity extends TileEntity implements ITickableTileEn
         this.sendUpdates();
         return true;
     }
-    
+
     @OnlyIn(Dist.CLIENT)
     public void updateSkin() {
         if (this.infusing && !this.coreNames.isEmpty()) {
@@ -195,13 +188,13 @@ public class CryoChamberTileEntity extends TileEntity implements ITickableTileEn
         }
         this.skin.updateSkin(snapshot.getName());
     }
-    
+
     public void sendUpdates() {
         this.level.sendBlockUpdated(this.worldPosition, this.getBlockState(), this.getBlockState(), 3);
         this.level.updateNeighborsAt(this.worldPosition, this.getBlockState().getBlock());
         this.setChanged();
     }
-    
+
     @Nullable
     public EternalData getEternal() {
         if (this.getLevel() == null) {
@@ -213,17 +206,17 @@ public class CryoChamberTileEntity extends TileEntity implements ITickableTileEn
         if (this.eternalId == null) {
             return null;
         }
-        return EternalsData.get((ServerWorld)this.getLevel()).getEternals(this.owner).get(this.eternalId);
+        return EternalsData.get((ServerWorld) this.getLevel()).getEternals(this.owner).get(this.eternalId);
     }
-    
+
     public UUID getEternalId() {
         return this.eternalId;
     }
-    
+
     protected boolean isFull() {
         return !this.coreNames.isEmpty() && this.coreNames.size() >= this.maxCores;
     }
-    
+
     public void tick() {
         if (this.level == null || this.level.isClientSide || this.owner == null) {
             return;
@@ -233,7 +226,7 @@ public class CryoChamberTileEntity extends TileEntity implements ITickableTileEn
             this.growEternalTimeRemaining = ModConfigs.CRYO_CHAMBER.getGrowEternalTime();
         }
         if (this.isFull() && !this.growingEternal && this.level.getGameTime() % 40L == 0L) {
-            this.level.playSound((PlayerEntity)null, (double)this.worldPosition.getX(), (double)this.worldPosition.getY(), (double)this.worldPosition.getZ(), SoundEvents.CONDUIT_AMBIENT, SoundCategory.PLAYERS, 0.25f, 1.0f);
+            this.level.playSound((PlayerEntity) null, (double) this.worldPosition.getX(), (double) this.worldPosition.getY(), (double) this.worldPosition.getZ(), SoundEvents.CONDUIT_AMBIENT, SoundCategory.PLAYERS, 0.25f, 1.0f);
         }
         if (this.infusing) {
             if (this.infusionTimeRemaining-- <= 0) {
@@ -241,8 +234,7 @@ public class CryoChamberTileEntity extends TileEntity implements ITickableTileEn
                 this.infusing = false;
             }
             this.sendUpdates();
-        }
-        else if (this.growingEternal) {
+        } else if (this.growingEternal) {
             if (this.growEternalTimeRemaining-- <= 0) {
                 this.growEternalTimeRemaining = 0;
                 this.growingEternal = false;
@@ -251,26 +243,26 @@ public class CryoChamberTileEntity extends TileEntity implements ITickableTileEn
             this.sendUpdates();
         }
     }
-    
+
     private void createEternal() {
-        final EternalsData.EternalGroup eternals = EternalsData.get((ServerWorld)this.getLevel()).getEternals(this.owner);
+        final EternalsData.EternalGroup eternals = EternalsData.get((ServerWorld) this.getLevel()).getEternals(this.owner);
         int attempts = 100;
         String name;
         do {
             --attempts;
             name = this.coreNames.get(this.getLevel().getRandom().nextInt(this.coreNames.size()));
         } while (attempts > 0 && eternals.containsEternal(name));
-        this.eternalId = EternalsData.get((ServerWorld)this.getLevel()).add(this.owner, name, false);
+        this.eternalId = EternalsData.get((ServerWorld) this.getLevel()).add(this.owner, name, false);
     }
-    
+
     public ITextComponent getDisplayName() {
         final EternalData eternal = this.getEternal();
         if (eternal != null) {
-            return (ITextComponent)new StringTextComponent(eternal.getName());
+            return (ITextComponent) new StringTextComponent(eternal.getName());
         }
-        return (ITextComponent)new StringTextComponent("Cryo Chamber");
+        return (ITextComponent) new StringTextComponent("Cryo Chamber");
     }
-    
+
     @Nullable
     public Container createMenu(final int windowId, final PlayerInventory playerInventory, final PlayerEntity player) {
         if (this.getLevel() == null) {
@@ -278,7 +270,7 @@ public class CryoChamberTileEntity extends TileEntity implements ITickableTileEn
         }
         return new CryochamberContainer(windowId, this.getLevel(), this.getBlockPos(), playerInventory);
     }
-    
+
     public CompoundNBT save(final CompoundNBT nbt) {
         super.save(nbt);
         if (this.owner != null) {
@@ -295,17 +287,17 @@ public class CryoChamberTileEntity extends TileEntity implements ITickableTileEn
                 nameNbt.putString("name" + i, name);
                 list.add(nameNbt);
             }
-            nbt.put("CoresList", (INBT)list);
+            nbt.put("CoresList", (INBT) list);
         }
         nbt.putInt("MaxCoreCount", this.maxCores);
         nbt.putBoolean("Infusing", this.infusing);
         nbt.putInt("InfusionTimeRemaining", this.infusionTimeRemaining);
         nbt.putBoolean("GrowingEternal", this.growingEternal);
         nbt.putInt("GrowEternalTimeRemaining", this.growEternalTimeRemaining);
-        nbt.put("Inventory", (INBT)this.itemHandler.serializeNBT());
+        nbt.put("Inventory", (INBT) this.itemHandler.serializeNBT());
         return nbt;
     }
-    
+
     public void load(final BlockState state, final CompoundNBT nbt) {
         super.load(state, nbt);
         if (nbt.contains("Owner")) {
@@ -329,40 +321,40 @@ public class CryoChamberTileEntity extends TileEntity implements ITickableTileEn
         this.growEternalTimeRemaining = nbt.getInt("GrowEternalTimeRemaining");
         this.itemHandler.deserializeNBT(nbt.getCompound("Inventory"));
     }
-    
+
     @Nonnull
     public <T> LazyOptional<T> getCapability(@Nonnull final Capability<T> cap, @Nullable final Direction side) {
-        return (LazyOptional<T>)((cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) ? this.handler.cast() : super.getCapability((Capability)cap, side));
+        return (LazyOptional<T>) ((cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) ? this.handler.cast() : super.getCapability((Capability) cap, side));
     }
-    
+
     public CompoundNBT getUpdateTag() {
         return this.save(new CompoundNBT());
     }
-    
+
     public void handleUpdateTag(final BlockState state, final CompoundNBT tag) {
         this.load(state, tag);
     }
-    
+
     public SUpdateTileEntityPacket getUpdatePacket() {
         return new SUpdateTileEntityPacket(this.worldPosition, 1, this.getUpdateTag());
     }
-    
+
     public void onDataPacket(final NetworkManager net, final SUpdateTileEntityPacket pkt) {
         final CompoundNBT nbt = pkt.getTag();
         this.handleUpdateTag(this.getBlockState(), nbt);
     }
-    
+
     public CompoundNBT getRenameNBT() {
         final CompoundNBT nbt = new CompoundNBT();
         final EternalData eternal = this.getEternal();
         if (eternal == null) {
             return nbt;
         }
-        nbt.put("BlockPos", (INBT)NBTUtil.writeBlockPos(this.getBlockPos()));
+        nbt.put("BlockPos", (INBT) NBTUtil.writeBlockPos(this.getBlockPos()));
         nbt.putString("EternalName", eternal.getName());
         return nbt;
     }
-    
+
     public void renameEternal(final String name) {
         if (this.getEternal() != null) {
             this.getEternal().setName(name);

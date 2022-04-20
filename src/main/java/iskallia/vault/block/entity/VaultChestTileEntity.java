@@ -1,7 +1,3 @@
-// 
-// Decompiled by Procyon v0.6.0
-// 
-
 package iskallia.vault.block.entity;
 
 import com.google.common.base.Enums;
@@ -70,45 +66,43 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.function.Function;
 
-public class VaultChestTileEntity extends ChestTileEntity
-{
+public class VaultChestTileEntity extends ChestTileEntity {
     private VaultRarity rarity;
     private boolean generated;
     private BlockState renderState;
     private final VMapNBT<VaultRarity, Integer> rarityPool;
     private int ticksSinceSync;
-    
+
     protected VaultChestTileEntity(final TileEntityType<?> typeIn) {
-        super((TileEntityType)typeIn);
-        this.rarityPool = new VMapNBT<VaultRarity, Integer>((nbt, rarity1) -> nbt.putInt("Rarity", rarity1.ordinal()), (nbt, weight) -> nbt.putInt("Weight", (int)weight), nbt -> VaultRarity.values()[nbt.getInt("Rarity")], nbt -> nbt.getInt("Weight"));
+        super((TileEntityType) typeIn);
+        this.rarityPool = new VMapNBT<VaultRarity, Integer>((nbt, rarity1) -> nbt.putInt("Rarity", rarity1.ordinal()), (nbt, weight) -> nbt.putInt("Weight", (int) weight), nbt -> VaultRarity.values()[nbt.getInt("Rarity")], nbt -> nbt.getInt("Weight"));
     }
-    
+
     public VaultChestTileEntity() {
         this(ModBlocks.VAULT_CHEST_TILE_ENTITY);
     }
-    
+
     public Map<VaultRarity, Integer> getRarityPool() {
         return this.rarityPool;
     }
-    
+
     @Nullable
     public VaultRarity getRarity() {
         return this.rarity;
     }
-    
+
     @OnlyIn(Dist.CLIENT)
     public void setRenderState(final BlockState renderState) {
         this.renderState = renderState;
     }
-    
+
     public void tick() {
         final int i = this.worldPosition.getX();
         final int j = this.worldPosition.getY();
         final int k = this.worldPosition.getZ();
         ++this.ticksSinceSync;
-        this.openCount = getOpenCount(this.level, (LockableTileEntity)this, this.ticksSinceSync, i, j, k, this.openCount);
+        this.openCount = getOpenCount(this.level, (LockableTileEntity) this, this.ticksSinceSync, i, j, k, this.openCount);
         this.oOpenness = this.openness;
         final float f = 0.1f;
         if (this.openCount > 0 && this.openness == 0.0f) {
@@ -118,8 +112,7 @@ public class VaultChestTileEntity extends ChestTileEntity
             final float f2 = this.openness;
             if (this.openCount > 0) {
                 this.openness += 0.1f;
-            }
-            else {
+            } else {
                 this.openness -= 0.1f;
             }
             if (this.openness > 1.0f) {
@@ -136,7 +129,7 @@ public class VaultChestTileEntity extends ChestTileEntity
             this.addParticles();
         }
     }
-    
+
     private void playVaultChestSound(final boolean open) {
         if (this.level == null) {
             return;
@@ -145,29 +138,28 @@ public class VaultChestTileEntity extends ChestTileEntity
         final double y = this.worldPosition.getY() + 0.5;
         final double z = this.worldPosition.getZ() + 0.5;
         if (open) {
-            this.level.playSound((PlayerEntity)null, x, y, z, SoundEvents.CHEST_OPEN, SoundCategory.BLOCKS, 0.5f, this.level.random.nextFloat() * 0.1f + 0.9f);
+            this.level.playSound((PlayerEntity) null, x, y, z, SoundEvents.CHEST_OPEN, SoundCategory.BLOCKS, 0.5f, this.level.random.nextFloat() * 0.1f + 0.9f);
             if (this.rarity != null) {
                 switch (this.rarity) {
                     case RARE: {
-                        this.level.playSound((PlayerEntity)null, x, y, z, ModSounds.VAULT_CHEST_RARE_OPEN, SoundCategory.BLOCKS, 0.2f, this.level.random.nextFloat() * 0.1f + 0.9f);
+                        this.level.playSound((PlayerEntity) null, x, y, z, ModSounds.VAULT_CHEST_RARE_OPEN, SoundCategory.BLOCKS, 0.2f, this.level.random.nextFloat() * 0.1f + 0.9f);
                         break;
                     }
                     case EPIC: {
-                        this.level.playSound((PlayerEntity)null, x, y, z, ModSounds.VAULT_CHEST_EPIC_OPEN, SoundCategory.BLOCKS, 0.2f, this.level.random.nextFloat() * 0.1f + 0.9f);
+                        this.level.playSound((PlayerEntity) null, x, y, z, ModSounds.VAULT_CHEST_EPIC_OPEN, SoundCategory.BLOCKS, 0.2f, this.level.random.nextFloat() * 0.1f + 0.9f);
                         break;
                     }
                     case OMEGA: {
-                        this.level.playSound((PlayerEntity)null, x, y, z, ModSounds.VAULT_CHEST_OMEGA_OPEN, SoundCategory.BLOCKS, 0.2f, this.level.random.nextFloat() * 0.1f + 0.9f);
+                        this.level.playSound((PlayerEntity) null, x, y, z, ModSounds.VAULT_CHEST_OMEGA_OPEN, SoundCategory.BLOCKS, 0.2f, this.level.random.nextFloat() * 0.1f + 0.9f);
                         break;
                     }
                 }
             }
-        }
-        else {
-            this.level.playSound((PlayerEntity)null, x, y, z, SoundEvents.CHEST_CLOSE, SoundCategory.BLOCKS, 0.5f, this.level.random.nextFloat() * 0.1f + 0.9f);
+        } else {
+            this.level.playSound((PlayerEntity) null, x, y, z, SoundEvents.CHEST_CLOSE, SoundCategory.BLOCKS, 0.5f, this.level.random.nextFloat() * 0.1f + 0.9f);
         }
     }
-    
+
     private void addParticles() {
         if (this.level == null) {
             return;
@@ -186,19 +178,19 @@ public class VaultChestTileEntity extends ChestTileEntity
         final float red = (this.rarity == VaultRarity.EPIC) ? 1.0f : 0.0f;
         final float green = (this.rarity == VaultRarity.OMEGA) ? 1.0f : 0.0f;
         final float blue = (this.rarity == VaultRarity.EPIC) ? 1.0f : 0.0f;
-        this.level.addParticle((IParticleData)new RedstoneParticleData(red, green, blue, 1.0f), x, y, z, xSpeed, ySpeed, zSpeed);
+        this.level.addParticle((IParticleData) new RedstoneParticleData(red, green, blue, 1.0f), x, y, z, xSpeed, ySpeed, zSpeed);
     }
-    
+
     public void unpackLootTable(final PlayerEntity player) {
         this.generateChestLoot(player, false);
     }
-    
+
     public void generateChestLoot(final PlayerEntity player, final boolean compressLoot) {
         if (this.getLevel() == null || this.getLevel().isClientSide() || !(player instanceof ServerPlayerEntity) || this.generated) {
             return;
         }
-        final ServerWorld world = (ServerWorld)this.getLevel();
-        final ServerPlayerEntity sPlayer = (ServerPlayerEntity)player;
+        final ServerWorld world = (ServerWorld) this.getLevel();
+        final ServerPlayerEntity sPlayer = (ServerPlayerEntity) player;
         if (MiscUtils.isPlayerFakeMP(sPlayer) || player.isSpectator()) {
             this.generated = true;
             this.setChanged();
@@ -230,20 +222,17 @@ public class VaultChestTileEntity extends ChestTileEntity
                 ModConfigs.VAULT_CHEST.RARITY_POOL.forEach((rarity, weight) -> {
                     if (!rarity.equalsIgnoreCase(VaultRarity.COMMON.name())) {
                         chestRarityList.add(rarity, weight.floatValue() * (1.0f + incChestRarity));
-                    }
-                    else {
+                    } else {
                         chestRarityList.add(rarity, weight.floatValue());
                     }
                     return;
                 });
-            }
-            else {
+            } else {
                 this.rarityPool.forEach((rarity, weight) -> {
                     if (!rarity.equals(VaultRarity.COMMON)) {
                         chestRarityList.add(rarity.name(), weight * (1.0f + incChestRarity));
-                    }
-                    else {
-                        chestRarityList.add(rarity.name(), (float)weight);
+                    } else {
+                        chestRarityList.add(rarity.name(), (float) weight);
                     }
                     return;
                 });
@@ -254,17 +243,13 @@ public class VaultChestTileEntity extends ChestTileEntity
             if (config != null) {
                 if (state.getBlock() == ModBlocks.VAULT_CHEST) {
                     this.lootTable = config.getChest(this.rarity);
-                }
-                else if (state.getBlock() == ModBlocks.VAULT_TREASURE_CHEST) {
+                } else if (state.getBlock() == ModBlocks.VAULT_TREASURE_CHEST) {
                     this.lootTable = config.getTreasureChest(this.rarity);
-                }
-                else if (state.getBlock() == ModBlocks.VAULT_ALTAR_CHEST) {
+                } else if (state.getBlock() == ModBlocks.VAULT_ALTAR_CHEST) {
                     this.lootTable = config.getAltarChest(this.rarity);
-                }
-                else if (state.getBlock() == ModBlocks.VAULT_COOP_CHEST) {
+                } else if (state.getBlock() == ModBlocks.VAULT_COOP_CHEST) {
                     this.lootTable = config.getCoopChest(this.rarity);
-                }
-                else if (state.getBlock() == ModBlocks.VAULT_BONUS_CHEST) {
+                } else if (state.getBlock() == ModBlocks.VAULT_BONUS_CHEST) {
                     this.lootTable = config.getBonusChest(this.rarity);
                 }
             }
@@ -275,7 +260,7 @@ public class VaultChestTileEntity extends ChestTileEntity
         this.getLevel().sendBlockUpdated(this.getBlockPos(), this.getBlockState(), this.getBlockState(), 3);
         this.generated = true;
     }
-    
+
     private List<ItemStack> generateSpecialLoot(final VaultRaid vault, final ServerWorld sWorld, final ServerPlayerEntity player, final BlockState thisState) {
         final List<ItemStack> loot = new ArrayList<ItemStack>();
         if (vault.getActiveObjectives().stream().noneMatch(VaultObjective::preventsCatalystFragments)) {
@@ -283,14 +268,14 @@ public class VaultChestTileEntity extends ChestTileEntity
                 if (!crystalData.preventsRandomModifiers()) {
                     final float chance = ModConfigs.VAULT_CHEST_META.getCatalystChance(thisState.getBlock().getRegistryName(), this.rarity);
                     float incModifier = 0.0f;
-                    Iterator iterator =vault.getActiveModifiersFor(PlayerFilter.any(), CatalystChanceModifier.class).iterator();
+                    Iterator iterator = vault.getActiveModifiersFor(PlayerFilter.any(), CatalystChanceModifier.class).iterator();
                     while (iterator.hasNext()) {
                         final CatalystChanceModifier modifier = (CatalystChanceModifier) iterator.next();
                         incModifier += modifier.getCatalystChanceIncrease();
                     }
                     final float chance2 = chance * (1.0f + incModifier);
                     if (sWorld.getRandom().nextFloat() < chance2) {
-                        loot.add(new ItemStack((IItemProvider)ModItems.VAULT_CATALYST_FRAGMENT));
+                        loot.add(new ItemStack((IItemProvider) ModItems.VAULT_CATALYST_FRAGMENT));
                     }
                 }
                 if (crystalData.getGuaranteedRoomFilters().isEmpty()) {
@@ -300,7 +285,7 @@ public class VaultChestTileEntity extends ChestTileEntity
                         final int vaultLevel = vault.getProperties().getBase(VaultRaid.LEVEL).orElse(0);
                         final int minLevel = ModConfigs.VAULT_RUNE.getMinimumLevel(rune).orElse(0);
                         if (vaultLevel >= minLevel) {
-                            loot.add(new ItemStack((IItemProvider)rune));
+                            loot.add(new ItemStack((IItemProvider) rune));
                         }
                     }
                 }
@@ -309,17 +294,17 @@ public class VaultChestTileEntity extends ChestTileEntity
         }
         vault.getProperties().getBase(VaultRaid.LEVEL).ifPresent(level -> {
             for (int traders = ModConfigs.SCALING_CHEST_REWARDS.traderCount(thisState.getBlock().getRegistryName(), this.rarity, level), i = 0; i < traders; ++i) {
-                final int slot = MiscUtils.getRandomEmptySlot((IInventory)this);
+                final int slot = MiscUtils.getRandomEmptySlot((IInventory) this);
                 if (slot != -1) {
-                    this.setItem(slot, new ItemStack((IItemProvider)ModItems.TRADER_CORE));
+                    this.setItem(slot, new ItemStack((IItemProvider) ModItems.TRADER_CORE));
                 }
             }
             for (int statues = ModConfigs.SCALING_CHEST_REWARDS.statueCount(thisState.getBlock().getRegistryName(), this.rarity, level), j = 0; j < statues; ++j) {
-                final int slot2 = MiscUtils.getRandomEmptySlot((IInventory)this);
+                final int slot2 = MiscUtils.getRandomEmptySlot((IInventory) this);
                 if (slot2 != -1) {
-                    ItemStack statue = new ItemStack((IItemProvider)ModBlocks.GIFT_NORMAL_STATUE);
+                    ItemStack statue = new ItemStack((IItemProvider) ModBlocks.GIFT_NORMAL_STATUE);
                     if (ModConfigs.SCALING_CHEST_REWARDS.isMegaStatue()) {
-                        statue = new ItemStack((IItemProvider)ModBlocks.GIFT_MEGA_STATUE);
+                        statue = new ItemStack((IItemProvider) ModBlocks.GIFT_MEGA_STATUE);
                     }
                     this.setItem(slot2, statue);
                 }
@@ -335,7 +320,7 @@ public class VaultChestTileEntity extends ChestTileEntity
         })));
         return loot;
     }
-    
+
     private boolean shouldDoChestTrapEffect(final VaultRaid vault, final ServerWorld sWorld, final ServerPlayerEntity player, final BlockState thisState) {
         return !vault.getAllObjectives().stream().anyMatch(VaultObjective::preventsTrappedChests) && vault.getPlayer(player.getUUID()).map(vPlayer -> {
             final int level = vPlayer.getProperties().getBase(VaultRaid.LEVEL).orElse(0);
@@ -343,17 +328,13 @@ public class VaultChestTileEntity extends ChestTileEntity
             VaultChestConfig config = null;
             if (thisState.getBlock() == ModBlocks.VAULT_CHEST) {
                 config = ModConfigs.VAULT_CHEST;
-            }
-            else if (thisState.getBlock() == ModBlocks.VAULT_TREASURE_CHEST) {
+            } else if (thisState.getBlock() == ModBlocks.VAULT_TREASURE_CHEST) {
                 config = ModConfigs.VAULT_TREASURE_CHEST;
-            }
-            else if (thisState.getBlock() == ModBlocks.VAULT_ALTAR_CHEST) {
+            } else if (thisState.getBlock() == ModBlocks.VAULT_ALTAR_CHEST) {
                 config = ModConfigs.VAULT_ALTAR_CHEST;
-            }
-            else if (thisState.getBlock() == ModBlocks.VAULT_COOP_CHEST) {
+            } else if (thisState.getBlock() == ModBlocks.VAULT_COOP_CHEST) {
                 config = ModConfigs.VAULT_COOP_CHEST;
-            }
-            else if (thisState.getBlock() == ModBlocks.VAULT_BONUS_CHEST) {
+            } else if (thisState.getBlock() == ModBlocks.VAULT_BONUS_CHEST) {
                 config = ModConfigs.VAULT_BONUS_CHEST;
             }
             if (config != null) {
@@ -375,7 +356,7 @@ public class VaultChestTileEntity extends ChestTileEntity
             return false;
         }).orElse(false);
     }
-    
+
     private boolean shouldPreventCheatyAccess(final VaultRaid vault, final ServerWorld sWorld, final BlockState thisState) {
         if (vault.getActiveObjective(ArchitectObjective.class).isPresent()) {
             return false;
@@ -384,8 +365,8 @@ public class VaultChestTileEntity extends ChestTileEntity
             boolean isValidPosition = false;
             for (final VaultPiece piece : vault.getGenerator().getPiecesAt(this.getBlockPos())) {
                 if (piece instanceof VaultTreasure) {
-                    final VaultTreasure treasurePiece = (VaultTreasure)piece;
-                    if (!treasurePiece.isDoorOpen((World)sWorld)) {
+                    final VaultTreasure treasurePiece = (VaultTreasure) piece;
+                    if (!treasurePiece.isDoorOpen((World) sWorld)) {
                         continue;
                     }
                     isValidPosition = true;
@@ -401,63 +382,63 @@ public class VaultChestTileEntity extends ChestTileEntity
         }
         return false;
     }
-    
+
     private void fillFromLootTable(@Nullable final PlayerEntity player, final List<ItemStack> customLoot, final boolean compressLoot) {
         if (this.lootTable != null && this.level.getServer() != null) {
             final LootTable loottable = this.level.getServer().getLootTables().get(this.lootTable);
             if (player instanceof ServerPlayerEntity) {
-                CriteriaTriggers.GENERATE_LOOT.trigger((ServerPlayerEntity)player, this.lootTable);
+                CriteriaTriggers.GENERATE_LOOT.trigger((ServerPlayerEntity) player, this.lootTable);
             }
             this.lootTable = null;
-            final LootContext.Builder ctxBuilder = new LootContext.Builder((ServerWorld)this.level).withParameter(LootParameters.ORIGIN, Vector3d.atCenterOf((Vector3i)this.worldPosition)).withOptionalRandomSeed(this.lootTableSeed);
+            final LootContext.Builder ctxBuilder = new LootContext.Builder((ServerWorld) this.level).withParameter(LootParameters.ORIGIN, Vector3d.atCenterOf((Vector3i) this.worldPosition)).withOptionalRandomSeed(this.lootTableSeed);
             if (player != null) {
                 ctxBuilder.withLuck(player.getLuck()).withParameter(LootParameters.THIS_ENTITY, player);
             }
             this.fillFromLootTable(loottable, ctxBuilder.create(LootParameterSets.CHEST), customLoot, compressLoot);
         }
     }
-    
+
     private void fillFromLootTable(final LootTable lootTable, final LootContext context, final List<ItemStack> customLoot, final boolean compressLoot) {
         if (!compressLoot) {
             customLoot.forEach(stack -> {
-                final int slot = MiscUtils.getRandomEmptySlot((IInventory)this);
+                final int slot = MiscUtils.getRandomEmptySlot((IInventory) this);
                 if (slot != -1) {
                     this.setItem(slot, stack);
                 }
                 return;
             });
-            lootTable.fill((IInventory)this, context);
+            lootTable.fill((IInventory) this, context);
             return;
         }
         final List<ItemStack> mergedLoot = MiscUtils.splitAndLimitStackSize(MiscUtils.mergeItemStacks(lootTable.getRandomItems(context)));
         mergedLoot.addAll(customLoot);
-        mergedLoot.forEach(stack -> MiscUtils.addItemStack((IInventory)this, stack));
+        mergedLoot.forEach(stack -> MiscUtils.addItemStack((IInventory) this, stack));
     }
-    
+
     public void setItem(final int index, final ItemStack stack) {
         super.setItem(index, stack);
         this.getLevel().sendBlockUpdated(this.getBlockPos(), this.getBlockState(), this.getBlockState(), 3);
     }
-    
+
     public ItemStack removeItem(final int index, final int count) {
         final ItemStack stack = super.removeItem(index, count);
         this.getLevel().sendBlockUpdated(this.getBlockPos(), this.getBlockState(), this.getBlockState(), 3);
         return stack;
     }
-    
+
     public ItemStack removeItemNoUpdate(final int index) {
         final ItemStack stack = super.removeItemNoUpdate(index);
         this.getLevel().sendBlockUpdated(this.getBlockPos(), this.getBlockState(), this.getBlockState(), 3);
         return stack;
     }
-    
+
     public BlockState getBlockState() {
         if (this.renderState != null) {
             return this.renderState;
         }
         return super.getBlockState();
     }
-    
+
     public void load(final BlockState state, final CompoundNBT nbt) {
         super.load(state, nbt);
         if (nbt.contains("Rarity", 3)) {
@@ -466,49 +447,49 @@ public class VaultChestTileEntity extends ChestTileEntity
         this.rarityPool.deserializeNBT(nbt.getList("RarityPool", 10));
         this.generated = nbt.getBoolean("Generated");
     }
-    
+
     public CompoundNBT save(final CompoundNBT compound) {
         final CompoundNBT nbt = super.save(compound);
         if (this.rarity != null) {
             nbt.putInt("Rarity", this.rarity.ordinal());
         }
-        nbt.put("RarityPool", (INBT)this.rarityPool.serializeNBT());
+        nbt.put("RarityPool", (INBT) this.rarityPool.serializeNBT());
         nbt.putBoolean("Generated", this.generated);
         return nbt;
     }
-    
+
     public ITextComponent getDisplayName() {
         if (this.rarity != null) {
             final String rarity = StringUtils.capitalize(this.rarity.name().toLowerCase());
             final BlockState state = this.getBlockState();
             if (state.getBlock() == ModBlocks.VAULT_CHEST || state.getBlock() == ModBlocks.VAULT_COOP_CHEST || state.getBlock() == ModBlocks.VAULT_BONUS_CHEST) {
-                return (ITextComponent)new StringTextComponent(rarity + " Chest");
+                return (ITextComponent) new StringTextComponent(rarity + " Chest");
             }
             if (state.getBlock() == ModBlocks.VAULT_TREASURE_CHEST) {
-                return (ITextComponent)new StringTextComponent(rarity + " Treasure Chest");
+                return (ITextComponent) new StringTextComponent(rarity + " Treasure Chest");
             }
             if (state.getBlock() == ModBlocks.VAULT_ALTAR_CHEST) {
-                return (ITextComponent)new StringTextComponent(rarity + " Altar Chest");
+                return (ITextComponent) new StringTextComponent(rarity + " Altar Chest");
             }
         }
         return super.getDisplayName();
     }
-    
+
     public CompoundNBT getUpdateTag() {
         final CompoundNBT nbt = new CompoundNBT();
         this.save(nbt);
         return nbt;
     }
-    
+
     public void handleUpdateTag(final BlockState state, final CompoundNBT tag) {
         this.load(state, tag);
     }
-    
+
     @Nullable
     public SUpdateTileEntityPacket getUpdatePacket() {
         return new SUpdateTileEntityPacket(this.worldPosition, 1, this.getUpdateTag());
     }
-    
+
     public void onDataPacket(final NetworkManager net, final SUpdateTileEntityPacket pkt) {
         final CompoundNBT tag = pkt.getTag();
         this.handleUpdateTag(this.getBlockState(), tag);

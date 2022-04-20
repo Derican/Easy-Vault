@@ -1,7 +1,3 @@
-// 
-// Decompiled by Procyon v0.6.0
-// 
-
 package iskallia.vault.mixin;
 
 import iskallia.vault.Vault;
@@ -75,7 +71,7 @@ public class MixinPlayerInventory implements InventorySnapshotData.InventoryAcce
         if (this.player.containerMenu instanceof ShardPouchContainer) {
             return;
         }
-        final PlayerInventory thisInventory = (PlayerInventory) (Object)this;
+        final PlayerInventory thisInventory = (PlayerInventory) (Object) this;
         ItemStack pouchStack = ItemStack.EMPTY;
         for (int slot = 0; slot < thisInventory.getContainerSize(); ++slot) {
             final ItemStack invStack = thisInventory.getItem(slot);

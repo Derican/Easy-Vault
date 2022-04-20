@@ -1,7 +1,3 @@
-// 
-// Decompiled by Procyon v0.6.0
-// 
-
 package iskallia.vault.item.paxel.enhancement;
 
 import iskallia.vault.event.ActiveFlags;
@@ -31,69 +27,64 @@ import java.util.LinkedList;
 import java.util.List;
 
 @Mod.EventBusSubscriber
-public class HammerEnhancement extends PaxelEnhancement
-{
+public class HammerEnhancement extends PaxelEnhancement {
     @Override
     public Color getColor() {
         return Color.fromRgb(-10042064);
     }
-    
+
     @SubscribeEvent(priority = EventPriority.LOW)
     public static void onBlockMined(final BlockEvent.BreakEvent event) {
-        final ServerPlayerEntity player = (ServerPlayerEntity)event.getPlayer();
+        final ServerPlayerEntity player = (ServerPlayerEntity) event.getPlayer();
         final ItemStack heldStack = player.getMainHandItem();
         if (!(PaxelEnhancements.getEnhancement(heldStack) instanceof HammerEnhancement)) {
             return;
         }
-        final ServerWorld world = (ServerWorld)event.getWorld();
+        final ServerWorld world = (ServerWorld) event.getWorld();
         final BlockPos centerPos = event.getPos();
         final Direction.Axis axis = calcBreakAxis(player, centerPos);
         final List<BlockPos> sidePoses = breakPoses(centerPos, axis);
         final BlockState centerState = world.getBlockState(centerPos);
-        final float centerHardness = centerState.getDestroySpeed((IBlockReader)world, centerPos);
+        final float centerHardness = centerState.getDestroySpeed((IBlockReader) world, centerPos);
         ActiveFlags.IS_AOE_MINING.runIfNotSet(() -> {
 
-            final Iterator<BlockPos> iterator=sidePoses.iterator();
+            final Iterator<BlockPos> iterator = sidePoses.iterator();
             while (iterator.hasNext()) {
                 final BlockPos sidePos = iterator.next();
                 final BlockState state = world.getBlockState(sidePos);
-                if (state.getBlock().isAir(state, (IBlockReader)world, sidePos)) {
+                if (state.getBlock().isAir(state, (IBlockReader) world, sidePos)) {
                     continue;
-                }
-                else {
-                    final float sideHardness = state.getDestroySpeed((IBlockReader)world, sidePos);
+                } else {
+                    final float sideHardness = state.getDestroySpeed((IBlockReader) world, sidePos);
                     if (sideHardness <= centerHardness) {
                         if (sideHardness == -1.0f) {
                             continue;
-                        }
-                        else {
+                        } else {
                             BlockDropCaptureHelper.startCapturing();
                             try {
                                 BlockHelper.breakBlock(world, player, sidePos, true, true);
                                 BlockHelper.damageMiningItem(heldStack, player, 1);
-                            }
-                            finally {
-                                BlockDropCaptureHelper.getCapturedStacksAndStop().forEach(entity -> Block.popResource((World)world, entity.blockPosition(), entity.getItem()));
+                            } finally {
+                                BlockDropCaptureHelper.getCapturedStacksAndStop().forEach(entity -> Block.popResource((World) world, entity.blockPosition(), entity.getItem()));
                             }
                         }
-                    }
-                    else {
+                    } else {
                         continue;
                     }
                 }
             }
         });
     }
-    
+
     public static Direction.Axis calcBreakAxis(final ServerPlayerEntity player, final BlockPos blockPos) {
         final Vector3d eyePosition = player.getEyePosition(1.0f);
         final Vector3d look = player.getViewVector(1.0f);
         final Vector3d endPos = eyePosition.add(look.x * 5.0, look.y * 5.0, look.z * 5.0);
-        final RayTraceContext rayTraceContext = new RayTraceContext(player.getEyePosition(1.0f), endPos, RayTraceContext.BlockMode.OUTLINE, RayTraceContext.FluidMode.NONE, (Entity)player);
+        final RayTraceContext rayTraceContext = new RayTraceContext(player.getEyePosition(1.0f), endPos, RayTraceContext.BlockMode.OUTLINE, RayTraceContext.FluidMode.NONE, (Entity) player);
         final BlockRayTraceResult result = player.level.clip(rayTraceContext);
         return result.getDirection().getAxis();
     }
-    
+
     public static List<BlockPos> breakPoses(final BlockPos blockPos, final Direction.Axis axis) {
         final List<BlockPos> poses = new LinkedList<BlockPos>();
         if (axis == Direction.Axis.Y) {
@@ -105,8 +96,7 @@ public class HammerEnhancement extends PaxelEnhancement
             poses.add(blockPos.east().south());
             poses.add(blockPos.north());
             poses.add(blockPos.south());
-        }
-        else if (axis == Direction.Axis.X) {
+        } else if (axis == Direction.Axis.X) {
             poses.add(blockPos.above());
             poses.add(blockPos.above().north());
             poses.add(blockPos.above().south());
@@ -115,8 +105,7 @@ public class HammerEnhancement extends PaxelEnhancement
             poses.add(blockPos.below().south());
             poses.add(blockPos.north());
             poses.add(blockPos.south());
-        }
-        else if (axis == Direction.Axis.Z) {
+        } else if (axis == Direction.Axis.Z) {
             poses.add(blockPos.above());
             poses.add(blockPos.above().west());
             poses.add(blockPos.above().east());

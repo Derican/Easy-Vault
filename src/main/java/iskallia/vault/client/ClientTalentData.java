@@ -1,7 +1,3 @@
-// 
-// Decompiled by Procyon v0.6.0
-// 
-
 package iskallia.vault.client;
 
 import iskallia.vault.network.message.KnownTalentsMessage;
@@ -15,34 +11,33 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class ClientTalentData
-{
+public class ClientTalentData {
     private static List<TalentNode<?>> learnedTalents;
-    
+
     @Nonnull
     public static List<TalentNode<?>> getLearnedTalentNodes() {
-        return Collections.unmodifiableList((List<? extends TalentNode<?>>)ClientTalentData.learnedTalents);
+        return Collections.unmodifiableList((List<? extends TalentNode<?>>) ClientTalentData.learnedTalents);
     }
-    
+
     @Nullable
     public static <T extends PlayerTalent> TalentNode<T> getLearnedTalentNode(final TalentGroup<T> talent) {
         return getLearnedTalentNode(talent.getParentName());
     }
-    
+
     @Nullable
     public static <T extends PlayerTalent> TalentNode<T> getLearnedTalentNode(final String talentName) {
         for (final TalentNode<?> node : getLearnedTalentNodes()) {
             if (node.getGroup().getParentName().equals(talentName)) {
-                return (TalentNode<T>)node;
+                return (TalentNode<T>) node;
             }
         }
         return null;
     }
-    
+
     public static void updateTalents(final KnownTalentsMessage pkt) {
         ClientTalentData.learnedTalents = pkt.getLearnedTalents();
     }
-    
+
     static {
         ClientTalentData.learnedTalents = new ArrayList<TalentNode<?>>();
     }

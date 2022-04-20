@@ -1,7 +1,3 @@
-// 
-// Decompiled by Procyon v0.6.0
-// 
-
 package iskallia.vault.init;
 
 import iskallia.vault.Vault;
@@ -9,10 +5,8 @@ import iskallia.vault.util.LazySoundType;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraftforge.event.RegistryEvent;
-import net.minecraftforge.registries.IForgeRegistryEntry;
 
-public class ModSounds
-{
+public class ModSounds {
     public static SoundEvent GRASSHOPPER_BRRR;
     public static SoundEvent RAFFLE_SFX;
     public static SoundEvent VAULT_AMBIENT_LOOP;
@@ -62,7 +56,7 @@ public class ModSounds
     public static SoundEvent WITCHSKALL_IDLE;
     public static SoundEvent FAVOUR_UP;
     public static LazySoundType VAULT_GEM;
-    
+
     public static void registerSounds(final RegistryEvent.Register<SoundEvent> event) {
         ModSounds.GRASSHOPPER_BRRR = registerSound(event, "grasshopper_brrr");
         ModSounds.RAFFLE_SFX = registerSound(event, "raffle");
@@ -113,11 +107,11 @@ public class ModSounds
         ModSounds.WITCHSKALL_IDLE = registerSound(event, "witchskall_idle");
         ModSounds.FAVOUR_UP = registerSound(event, "favour_up");
     }
-    
+
     public static void registerSoundTypes() {
         ModSounds.VAULT_GEM.initialize(0.25f, 1.0f, ModSounds.VAULT_GEM_BREAK, null, null, ModSounds.VAULT_GEM_HIT, null);
     }
-    
+
     private static SoundEvent registerSound(final RegistryEvent.Register<SoundEvent> event, final String soundName) {
         final ResourceLocation location = Vault.id(soundName);
         final SoundEvent soundEvent = new SoundEvent(location);
@@ -125,7 +119,7 @@ public class ModSounds
         event.getRegistry().register(soundEvent);
         return soundEvent;
     }
-    
+
     static {
         ModSounds.VAULT_GEM = new LazySoundType();
     }

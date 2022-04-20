@@ -1,7 +1,3 @@
-// 
-// Decompiled by Procyon v0.6.0
-// 
-
 package iskallia.vault.client.gui.overlay;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
@@ -22,11 +18,10 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import java.util.List;
 
 @OnlyIn(Dist.CLIENT)
-public class AbilitiesOverlay
-{
+public class AbilitiesOverlay {
     public static final ResourceLocation HUD_RESOURCE;
     private static final ResourceLocation ABILITIES_RESOURCE;
-    
+
     @SubscribeEvent
     public static void onPostRender(final RenderGameOverlayEvent.Post event) {
         if (event.getType() != RenderGameOverlayEvent.ElementType.HOTBAR) {
@@ -66,7 +61,7 @@ public class AbilitiesOverlay
         minecraft.getProfiler().push("abilityBar");
         matrixStack.pushPose();
         RenderSystem.enableBlend();
-        matrixStack.translate(10.0, (double)(bottom - barHeight), 0.0);
+        matrixStack.translate(10.0, (double) (bottom - barHeight), 0.0);
         minecraft.getTextureManager().bind(AbilitiesOverlay.HUD_RESOURCE);
         minecraft.gui.blit(matrixStack, 0, 0, 1, 13, barWidth, barHeight);
         minecraft.getTextureManager().bind(AbilitiesOverlay.ABILITIES_RESOURCE);
@@ -77,8 +72,8 @@ public class AbilitiesOverlay
         RenderSystem.color4f(1.0f, 1.0f, 1.0f, (selectedCooldown > 0) ? 0.4f : 1.0f);
         minecraft.gui.blit(matrixStack, 23, 3, focusedStyle.u, focusedStyle.v, 16, 16);
         if (selectedCooldown > 0) {
-            final float cooldownPercent = selectedCooldown / (float)Math.max(1, selectedMaxCooldown);
-            final int cooldownHeight = (int)(16.0f * cooldownPercent);
+            final float cooldownPercent = selectedCooldown / (float) Math.max(1, selectedMaxCooldown);
+            final int cooldownHeight = (int) (16.0f * cooldownPercent);
             AbstractGui.fill(matrixStack, 23, 3 + (16 - cooldownHeight), 39, 19, -1711276033);
             RenderSystem.enableBlend();
         }
@@ -86,8 +81,8 @@ public class AbilitiesOverlay
         final int previousMaxCooldown = ClientAbilityData.getMaxCooldown(previousAbility.getGroup());
         RenderSystem.color4f(0.7f, 0.7f, 0.7f, 0.5f);
         if (previousCooldown > 0) {
-            final float cooldownPercent2 = previousCooldown / (float)Math.max(1, previousMaxCooldown);
-            final int cooldownHeight2 = (int)(16.0f * cooldownPercent2);
+            final float cooldownPercent2 = previousCooldown / (float) Math.max(1, previousMaxCooldown);
+            final int cooldownHeight2 = (int) (16.0f * cooldownPercent2);
             AbstractGui.fill(matrixStack, 43, 3 + (16 - cooldownHeight2), 59, 19, -1711276033);
             RenderSystem.enableBlend();
         }
@@ -97,8 +92,8 @@ public class AbilitiesOverlay
         final int nextCooldown = ClientAbilityData.getCooldown(nextAbility.getGroup());
         final int nextMaxCooldown = ClientAbilityData.getMaxCooldown(nextAbility.getGroup());
         if (nextCooldown > 0) {
-            final float cooldownPercent3 = nextCooldown / (float)Math.max(1, nextMaxCooldown);
-            final int cooldownHeight3 = (int)(16.0f * cooldownPercent3);
+            final float cooldownPercent3 = nextCooldown / (float) Math.max(1, nextMaxCooldown);
+            final int cooldownHeight3 = (int) (16.0f * cooldownPercent3);
             AbstractGui.fill(matrixStack, 3, 3 + (16 - cooldownHeight3), 19, 19, -1711276033);
             RenderSystem.enableBlend();
         }
@@ -111,7 +106,7 @@ public class AbilitiesOverlay
         matrixStack.popPose();
         minecraft.getProfiler().pop();
     }
-    
+
     static {
         HUD_RESOURCE = new ResourceLocation("the_vault", "textures/gui/vault-hud.png");
         ABILITIES_RESOURCE = new ResourceLocation("the_vault", "textures/gui/abilities.png");

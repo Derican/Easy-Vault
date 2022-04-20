@@ -1,7 +1,3 @@
-// 
-// Decompiled by Procyon v0.6.0
-// 
-
 package iskallia.vault.mixin;
 
 import net.minecraft.inventory.EquipmentSlotType;
@@ -11,29 +7,29 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-@Mixin({ ArmorMaterial.class })
-public class MixinArmorMaterial
-{
-    @Inject(method = { "getToughness" }, at = { @At("HEAD") }, cancellable = true)
+@Mixin({ArmorMaterial.class})
+public class MixinArmorMaterial {
+    @Inject(method = {"getToughness"}, at = {@At("HEAD")}, cancellable = true)
     public void getToughness(final CallbackInfoReturnable<Float> ci) {
-        final ArmorMaterial material = (ArmorMaterial)(Object)this;
+        final ArmorMaterial material = (ArmorMaterial) (Object) this;
         if (material == ArmorMaterial.LEATHER || material == ArmorMaterial.CHAIN || material == ArmorMaterial.GOLD || material == ArmorMaterial.IRON || material == ArmorMaterial.DIAMOND || material == ArmorMaterial.NETHERITE) {
             ci.setReturnValue(0.0f);
         }
     }
-    
-    @Inject(method = { "getKnockbackResistance" }, at = { @At("HEAD") }, cancellable = true)
+
+    @Inject(method = {"getKnockbackResistance"}, at = {@At("HEAD")}, cancellable = true)
     public void getKockbackResistance(final CallbackInfoReturnable<Float> ci) {
-        final ArmorMaterial material = (ArmorMaterial)(Object)this;
+        final ArmorMaterial material = (ArmorMaterial) (Object) this;
         if (material == ArmorMaterial.LEATHER || material == ArmorMaterial.CHAIN || material == ArmorMaterial.GOLD || material == ArmorMaterial.IRON || material == ArmorMaterial.DIAMOND || material == ArmorMaterial.NETHERITE) {
             ci.setReturnValue(0.0f);
         }
     }
-    
-    @Inject(method = { "getDefenseForSlot" }, at = { @At("HEAD") }, cancellable = true)
+
+    @Inject(method = {"getDefenseForSlot"}, at = {@At("HEAD")}, cancellable = true)
     public void getDefenseForSlot(final EquipmentSlotType slot, final CallbackInfoReturnable<Integer> ci) {
-        Label_0549: {
-            switch ((ArmorMaterial)(Object)this) {
+        Label_0549:
+        {
+            switch ((ArmorMaterial) (Object) this) {
                 case LEATHER: {
                     switch (slot) {
                         case HEAD: {

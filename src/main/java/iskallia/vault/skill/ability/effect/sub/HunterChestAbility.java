@@ -1,7 +1,3 @@
-// 
-// Decompiled by Procyon v0.6.0
-// 
-
 package iskallia.vault.skill.ability.effect.sub;
 
 import iskallia.vault.skill.ability.config.sub.HunterChestsConfig;
@@ -15,8 +11,7 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HunterChestAbility extends HunterAbility<HunterChestsConfig>
-{
+public class HunterChestAbility extends HunterAbility<HunterChestsConfig> {
     @Override
     protected List<Tuple<BlockPos, Color>> selectPositions(final HunterChestsConfig config, final World world, final PlayerEntity player) {
         final List<Tuple<BlockPos, Color>> entityPositions = new ArrayList<Tuple<BlockPos, Color>>();

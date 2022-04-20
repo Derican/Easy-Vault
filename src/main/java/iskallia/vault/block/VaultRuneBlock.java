@@ -1,7 +1,3 @@
-// 
-// Decompiled by Procyon v0.6.0
-// 
-
 package iskallia.vault.block;
 
 import iskallia.vault.block.entity.VaultRuneTileEntity;
@@ -45,43 +41,42 @@ import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class VaultRuneBlock extends Block
-{
+public class VaultRuneBlock extends Block {
     public static final PortalPlacer PORTAL_PLACER;
     public static final DirectionProperty FACING;
     public static final BooleanProperty RUNE_PLACED;
-    
+
     public VaultRuneBlock() {
         super(AbstractBlock.Properties.of(Material.STONE, MaterialColor.STONE).strength(Float.MAX_VALUE, Float.MAX_VALUE).noOcclusion());
         this.registerDefaultState(((this.stateDefinition.any()).setValue(VaultRuneBlock.FACING, Direction.SOUTH)).setValue(VaultRuneBlock.RUNE_PLACED, false));
     }
-    
+
     @Nullable
     public BlockState getStateForPlacement(final BlockItemUseContext context) {
         return (this.defaultBlockState().setValue(VaultRuneBlock.FACING, context.getHorizontalDirection())).setValue(VaultRuneBlock.RUNE_PLACED, false);
     }
-    
+
     protected void createBlockStateDefinition(final StateContainer.Builder<Block, BlockState> builder) {
-        builder.add(new Property[] { VaultRuneBlock.FACING });
-        builder.add(new Property[] { VaultRuneBlock.RUNE_PLACED });
+        builder.add(new Property[]{VaultRuneBlock.FACING});
+        builder.add(new Property[]{VaultRuneBlock.RUNE_PLACED});
     }
-    
+
     public boolean hasTileEntity(final BlockState state) {
         return true;
     }
-    
+
     @Nullable
     public TileEntity createTileEntity(final BlockState state, final IBlockReader world) {
         return ModBlocks.VAULT_RUNE_TILE_ENTITY.create();
     }
-    
+
     public ActionResultType use(final BlockState state, final World world, final BlockPos pos, final PlayerEntity player, final Hand hand, final BlockRayTraceResult hit) {
         if (world.isClientSide) {
             return super.use(state, world, pos, player, hand, hit);
         }
         final TileEntity tileEntity = world.getBlockEntity(pos);
         if (tileEntity instanceof VaultRuneTileEntity) {
-            final VaultRuneTileEntity vaultRuneTE = (VaultRuneTileEntity)tileEntity;
+            final VaultRuneTileEntity vaultRuneTE = (VaultRuneTileEntity) tileEntity;
             final String playerNick = player.getDisplayName().getString();
             if (vaultRuneTE.getBelongsTo().equals(playerNick)) {
                 final ItemStack heldStack = player.getItemInHand(hand);
@@ -89,19 +84,18 @@ public class VaultRuneBlock extends Block
                     final BlockState blockState = world.getBlockState(pos);
                     world.setBlock(pos, blockState.setValue(VaultRuneBlock.RUNE_PLACED, true), 3);
                     heldStack.shrink(1);
-                    world.playSound((PlayerEntity)null, (double)pos.getX(), (double)pos.getY(), (double)pos.getZ(), SoundEvents.END_PORTAL_FRAME_FILL, SoundCategory.BLOCKS, 1.0f, 1.0f);
+                    world.playSound((PlayerEntity) null, (double) pos.getX(), (double) pos.getY(), (double) pos.getZ(), SoundEvents.END_PORTAL_FRAME_FILL, SoundCategory.BLOCKS, 1.0f, 1.0f);
                     this.createPortalFromRune(world, pos);
                 }
-            }
-            else {
+            } else {
                 final StringTextComponent text = new StringTextComponent(vaultRuneTE.getBelongsTo() + " is responsible with this block.");
                 text.setStyle(Style.EMPTY.withColor(Color.fromRgb(-26266)));
-                player.displayClientMessage((ITextComponent)text, true);
+                player.displayClientMessage((ITextComponent) text, true);
             }
         }
         return ActionResultType.SUCCESS;
     }
-    
+
     private void createPortalFromRune(final World world, final BlockPos pos) {
         Direction axis = null;
         for (int i = 1; i < 48; ++i) {
@@ -138,9 +132,9 @@ public class VaultRuneBlock extends Block
             if (!(tileEntity instanceof VaultRuneTileEntity)) {
                 continue;
             }
-            final VaultRuneTileEntity vaultRuneTE = (VaultRuneTileEntity)tileEntity;
+            final VaultRuneTileEntity vaultRuneTE = (VaultRuneTileEntity) tileEntity;
             final BlockState state = world.getBlockState(position);
-            if (!vaultRuneTE.getBelongsTo().isEmpty() && !(boolean)state.getValue(VaultRuneBlock.RUNE_PLACED)) {
+            if (!vaultRuneTE.getBelongsTo().isEmpty() && !(boolean) state.getValue(VaultRuneBlock.RUNE_PLACED)) {
                 return;
             }
         }
@@ -148,23 +142,23 @@ public class VaultRuneBlock extends Block
         final BlockPos high = positions.get(positions.size() - 1);
         final BlockPos portalPos = low.above().relative(axis, -1);
         final int width = axis.getAxis().choose(high.getX(), high.getY(), high.getZ()) - axis.getAxis().choose(low.getX(), low.getY(), low.getZ()) + 3;
-        VaultRuneBlock.PORTAL_PLACER.place((IWorld)world, portalPos, axis, width, 28);
+        VaultRuneBlock.PORTAL_PLACER.place((IWorld) world, portalPos, axis, width, 28);
         if (!world.isClientSide) {
-            final ServerWorld sWorld = (ServerWorld)world;
+            final ServerWorld sWorld = (ServerWorld) world;
             sWorld.setWeatherParameters(0, 1000000, true, true);
             for (int l = 0; l < 10; ++l) {
                 BlockPos pos2 = pos.offset(world.random.nextInt(100) - 50, 0, world.random.nextInt(100) - 50);
                 pos2 = world.getHeightmapPos(Heightmap.Type.MOTION_BLOCKING, pos2);
-                final LightningBoltEntity lightningboltentity = (LightningBoltEntity)EntityType.LIGHTNING_BOLT.create((World)sWorld);
-                lightningboltentity.moveTo(Vector3d.atBottomCenterOf((Vector3i)pos2));
-                sWorld.addFreshEntity((Entity)lightningboltentity);
+                final LightningBoltEntity lightningboltentity = (LightningBoltEntity) EntityType.LIGHTNING_BOLT.create((World) sWorld);
+                lightningboltentity.moveTo(Vector3d.atBottomCenterOf((Vector3i) pos2));
+                sWorld.addFreshEntity((Entity) lightningboltentity);
             }
         }
     }
-    
+
     static {
         PORTAL_PLACER = new PortalPlacer((pos, random, facing) -> ModBlocks.FINAL_VAULT_PORTAL.defaultBlockState().setValue(VaultPortalBlock.AXIS, facing.getAxis()), (pos, random, facing) -> {
-            final Block[] blocks = { Blocks.BLACKSTONE, Blocks.BLACKSTONE, Blocks.POLISHED_BLACKSTONE, Blocks.POLISHED_BLACKSTONE_BRICKS, Blocks.CRACKED_POLISHED_BLACKSTONE_BRICKS };
+            final Block[] blocks = {Blocks.BLACKSTONE, Blocks.BLACKSTONE, Blocks.POLISHED_BLACKSTONE, Blocks.POLISHED_BLACKSTONE_BRICKS, Blocks.CRACKED_POLISHED_BLACKSTONE_BRICKS};
             return blocks[random.nextInt(blocks.length)].defaultBlockState();
         });
         FACING = BlockStateProperties.HORIZONTAL_FACING;

@@ -1,7 +1,3 @@
-// 
-// Decompiled by Procyon v0.6.0
-// 
-
 package iskallia.vault.config;
 
 import com.google.gson.annotations.Expose;
@@ -17,22 +13,21 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
-public class ConsumablesConfig extends Config
-{
+public class ConsumablesConfig extends Config {
     @Expose
     private List<ConsumableEntry> itemEffects;
     @Expose
     private HashMap<String, List<String>> descriptions;
-    
+
     public ConsumablesConfig() {
         this.descriptions = new HashMap<String, List<String>>();
     }
-    
+
     @Override
     public String getName() {
         return "consumables";
     }
-    
+
     @Override
     protected void reset() {
         final ConsumableEntry jadeAppleEntry = new ConsumableEntry("the_vault:jade_apple", true, 4.0f, ConsumableType.BASIC).addEffect(new ConsumableEffect("minecraft:haste", 3, 6000).showIcon());
@@ -74,15 +69,15 @@ public class ConsumablesConfig extends Config
         this.descriptions.put("the_vault:sweet_apple", this.createStringList(this.newLine(), new StringTextComponent(TextFormatting.RESET + "Add " + TextFormatting.RED + "+2 Speed").getText(), new StringTextComponent(TextFormatting.RESET + "for 2 minutes.").getText()));
         this.descriptions.put("the_vault:hearty_apple", this.createStringList(this.newLine(), new StringTextComponent(TextFormatting.RESET + "Add " + TextFormatting.RED + "1 Extra Heart").getText(), new StringTextComponent(TextFormatting.RESET + "temporarily...").getText()));
     }
-    
+
     private String newLine() {
         return " ";
     }
-    
+
     private List<String> createStringList(final String... lines) {
         return new ArrayList<String>(Arrays.asList(lines));
     }
-    
+
     public ConsumableEntry get(final String id) {
         for (final ConsumableEntry setting : this.itemEffects) {
             if (setting.getItemId().equalsIgnoreCase(id)) {
@@ -91,11 +86,11 @@ public class ConsumablesConfig extends Config
         }
         return null;
     }
-    
+
     public List<String> getDescriptionFor(final String item) {
         return this.descriptions.get(item);
     }
-    
+
     public float getParryChance() {
         final ConsumableEntry entry = this.get("the_vault:ghost_apple");
         if (entry != null) {

@@ -1,7 +1,3 @@
-// 
-// Decompiled by Procyon v0.6.0
-// 
-
 package iskallia.vault.world.vault.builder;
 
 import iskallia.vault.item.crystal.CrystalData;
@@ -11,17 +7,16 @@ import iskallia.vault.world.vault.player.VaultPlayerType;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.world.server.ServerWorld;
 
-public class RaffleVaultBuilder extends VaultRaidBuilder
-{
+public class RaffleVaultBuilder extends VaultRaidBuilder {
     private static final RaffleVaultBuilder INSTANCE;
-    
+
     private RaffleVaultBuilder() {
     }
-    
+
     public static RaffleVaultBuilder getInstance() {
         return RaffleVaultBuilder.INSTANCE;
     }
-    
+
     @Override
     public VaultRaid.Builder initializeBuilder(final ServerWorld world, final ServerPlayerEntity player, final CrystalData crystal) {
         final VaultRaid.Builder builder = this.getDefaultBuilder(crystal, world, player).set(VaultRaid.IS_RAFFLE, true);
@@ -31,7 +26,7 @@ public class RaffleVaultBuilder extends VaultRaidBuilder
         builder.set(VaultRaid.HOST, player.getUUID());
         return builder;
     }
-    
+
     static {
         INSTANCE = new RaffleVaultBuilder();
     }

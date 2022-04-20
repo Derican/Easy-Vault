@@ -1,7 +1,3 @@
-// 
-// Decompiled by Procyon v0.6.0
-// 
-
 package iskallia.vault.world.vault.gen;
 
 import iskallia.vault.block.VaultPortalBlock;
@@ -15,12 +11,10 @@ import iskallia.vault.world.vault.VaultRaid;
 import iskallia.vault.world.vault.gen.piece.VaultPiece;
 import iskallia.vault.world.vault.logic.objective.VaultObjective;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.INBT;
 import net.minecraft.nbt.StringNBT;
-import net.minecraft.state.Property;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
@@ -35,32 +29,29 @@ import net.minecraft.world.server.ServerWorld;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.function.Predicate;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
-public class ClassicGenerator extends VaultGenerator
-{
+public class ClassicGenerator extends VaultGenerator {
     public static final int REGION_SIZE = 4096;
     protected VListNBT<Block, StringNBT> frameBlocks;
     protected int depth;
-    
+
     public ClassicGenerator(final ResourceLocation id) {
         super(id);
         this.frameBlocks = new VListNBT<Block, StringNBT>(block -> StringNBT.valueOf(block.getRegistryName().toString()), nbt -> Registry.BLOCK.getOptional(new ResourceLocation(nbt.getAsString())).orElse(Blocks.AIR));
         this.depth = -1;
         this.frameBlocks.addAll(Arrays.asList(Blocks.BLACKSTONE, Blocks.BLACKSTONE, Blocks.POLISHED_BLACKSTONE, Blocks.POLISHED_BLACKSTONE_BRICKS, Blocks.CRACKED_POLISHED_BLACKSTONE_BRICKS));
     }
-    
+
     public PortalPlacer getPortalPlacer() {
         return new PortalPlacer((pos, random, facing) -> ModBlocks.VAULT_PORTAL.defaultBlockState().setValue(VaultPortalBlock.AXIS, facing.getAxis()), (pos, random, facing) -> this.frameBlocks.get(random.nextInt(this.frameBlocks.size())).defaultBlockState());
     }
-    
+
     public ClassicGenerator setDepth(final int depth) {
         this.depth = depth;
         return this;
     }
-    
+
     @Override
     public boolean generate(final ServerWorld world, final VaultRaid vault, final BlockPos.Mutable pos) {
         final MutableBoundingBox box = vault.getProperties().getBase(VaultRaid.BOUNDING_BOX).orElseGet(() -> {
@@ -81,27 +72,26 @@ public class ClassicGenerator extends VaultGenerator
             for (int i = maxObjectives; i < obeliskPieces.size(); ++i) {
                 jigsaw.getGeneratedPieces().remove(obeliskPieces.get(i));
             }
-            world.getChunk(chunkPos.x, chunkPos.z, ChunkStatus.EMPTY, true).setStartForFeature((Structure)ModStructures.VAULT_STAR, (StructureStart)start);
+            world.getChunk(chunkPos.x, chunkPos.z, ChunkStatus.EMPTY, true).setStartForFeature((Structure) ModStructures.VAULT_STAR, (StructureStart) start);
             this.tick(world, vault);
             if (!vault.getProperties().exists(VaultRaid.START_POS) || !vault.getProperties().exists(VaultRaid.START_FACING)) {
                 return this.findStartPosition(world, vault, chunkPos, this::getPortalPlacer);
             }
-        }
-        catch (final Exception e) {
+        } catch (final Exception e) {
             e.printStackTrace();
             return false;
         }
         return true;
     }
-    
+
     @Override
     public CompoundNBT serializeNBT() {
         final CompoundNBT nbt = super.serializeNBT();
-        nbt.put("FrameBlocks", (INBT)this.frameBlocks.serializeNBT());
+        nbt.put("FrameBlocks", (INBT) this.frameBlocks.serializeNBT());
         nbt.putInt("Depth", this.depth);
         return nbt;
     }
-    
+
     @Override
     public void deserializeNBT(final CompoundNBT nbt) {
         super.deserializeNBT(nbt);

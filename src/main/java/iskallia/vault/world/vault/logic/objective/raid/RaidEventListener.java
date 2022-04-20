@@ -1,7 +1,3 @@
-// 
-// Decompiled by Procyon v0.6.0
-// 
-
 package iskallia.vault.world.vault.logic.objective.raid;
 
 import iskallia.vault.block.VaultRaidControllerBlock;
@@ -32,8 +28,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 @Mod.EventBusSubscriber
-public class RaidEventListener
-{
+public class RaidEventListener {
     @SubscribeEvent
     public static void onPlayerDamage(final LivingHurtEvent event) {
         final LivingEntity entity = event.getEntityLiving();
@@ -42,25 +37,25 @@ public class RaidEventListener
             return;
         }
         if (entity instanceof ServerPlayerEntity) {
-            final ServerPlayerEntity sPlayer = (ServerPlayerEntity)entity;
+            final ServerPlayerEntity sPlayer = (ServerPlayerEntity) entity;
             final VaultRaid vault = VaultRaidData.get(sPlayer.getLevel()).getAt(sPlayer.getLevel(), sPlayer.blockPosition());
             if (vault != null) {
                 final ActiveRaid raid = vault.getActiveRaid();
-                if (raid != null && raid.isPlayerInRaid((PlayerEntity)sPlayer)) {
+                if (raid != null && raid.isPlayerInRaid((PlayerEntity) sPlayer)) {
                     float dmg = event.getAmount();
-                    dmg *= (float)(1.0 + vault.getActiveObjective(RaidChallengeObjective.class).map(raidObjective -> raidObjective.getModifiersOfType(DamageTakenModifier.class).values().stream().mapToDouble(Float::doubleValue).sum()).orElse(0.0));
+                    dmg *= (float) (1.0 + vault.getActiveObjective(RaidChallengeObjective.class).map(raidObjective -> raidObjective.getModifiersOfType(DamageTakenModifier.class).values().stream().mapToDouble(Float::doubleValue).sum()).orElse(0.0));
                     event.setAmount(dmg);
                 }
             }
         }
     }
-    
+
     @SubscribeEvent(priority = EventPriority.LOW)
     public static void onDeath(final LivingDeathEvent event) {
         final LivingEntity died = event.getEntityLiving();
         final World world = died.getCommandSenderWorld();
         final BlockPos at = died.blockPosition();
-        final ActiveRaid raid = getRaidAt((IWorld)world, at);
+        final ActiveRaid raid = getRaidAt((IWorld) world, at);
         if (raid == null) {
             return;
         }
@@ -69,35 +64,35 @@ public class RaidEventListener
             raid.setStartDelay(100);
         }
     }
-    
+
     @SubscribeEvent
     public static void onSpawn(final ZombieEvent.SummonAidEvent event) {
-        if (isInLockedRaidRoom((IWorld)event.getWorld(), event.getSummoner().blockPosition())) {
+        if (isInLockedRaidRoom((IWorld) event.getWorld(), event.getSummoner().blockPosition())) {
             event.setResult(Event.Result.DENY);
         }
     }
-    
+
     @SubscribeEvent
     public static void onBreak(final BlockEvent.BreakEvent event) {
         if (isInLockedRaidRoom(event.getWorld(), event.getPos())) {
             event.setCanceled(true);
         }
     }
-    
+
     @SubscribeEvent
     public static void onPlace(final BlockEvent.EntityPlaceEvent event) {
         if (isInLockedRaidRoom(event.getWorld(), event.getPos())) {
             event.setCanceled(true);
         }
     }
-    
+
     @SubscribeEvent
     public static void onFluidPlace(final BlockEvent.FluidPlaceBlockEvent event) {
         if (isInLockedRaidRoom(event.getWorld(), event.getPos())) {
             event.setCanceled(true);
         }
     }
-    
+
     @SubscribeEvent
     public static void onInteract(final PlayerInteractEvent event) {
         if (event instanceof PlayerInteractEvent.RightClickBlock) {
@@ -116,12 +111,12 @@ public class RaidEventListener
                 return;
             }
         }
-        if (isInLockedRaidRoom((IWorld)event.getWorld(), event.getPos())) {
+        if (isInLockedRaidRoom((IWorld) event.getWorld(), event.getPos())) {
             event.setCanceled(true);
             event.setCancellationResult(ActionResultType.FAIL);
         }
     }
-    
+
     private static boolean isWhitelistedItem(final ItemStack interacted) {
         if (interacted.isEmpty()) {
             return false;
@@ -129,12 +124,12 @@ public class RaidEventListener
         final ResourceLocation key = interacted.getItem().getRegistryName();
         return (key.getNamespace().equals("dankstorage") && key.getPath().startsWith("dank_")) || (key.toString().equals("minecraft:netherite_pickaxe") || key.toString().equals("quark:flamerang")) || key.getNamespace().equals("simplybackpacks");
     }
-    
+
     private static boolean isInLockedRaidRoom(final IWorld world, final BlockPos pos) {
         if (world.isClientSide() || !(world instanceof ServerWorld)) {
             return false;
         }
-        final ServerWorld sWorld = (ServerWorld)world;
+        final ServerWorld sWorld = (ServerWorld) world;
         final VaultRaid vault = VaultRaidData.get(sWorld).getAt(sWorld, pos);
         if (vault == null) {
             return false;
@@ -142,12 +137,12 @@ public class RaidEventListener
         final VaultRaidRoom room = (VaultRaidRoom) vault.getGenerator().getPiecesAt(pos, VaultRaidRoom.class).stream().findFirst().orElse(null);
         return room != null && !room.isRaidFinished();
     }
-    
+
     private static ActiveRaid getRaidAt(final IWorld world, final BlockPos pos) {
         if (world.isClientSide() || !(world instanceof ServerWorld)) {
             return null;
         }
-        final ServerWorld sWorld = (ServerWorld)world;
+        final ServerWorld sWorld = (ServerWorld) world;
         final VaultRaid vault = VaultRaidData.get(sWorld).getAt(sWorld, pos);
         if (vault == null) {
             return null;

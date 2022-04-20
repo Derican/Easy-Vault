@@ -1,7 +1,3 @@
-// 
-// Decompiled by Procyon v0.6.0
-// 
-
 package iskallia.vault.block.base;
 
 import iskallia.vault.world.data.PlayerFavourData;
@@ -25,38 +21,37 @@ import java.util.Random;
 import java.util.UUID;
 import java.util.function.Consumer;
 
-public abstract class FillableAltarTileEntity extends TileEntity implements ITickableTileEntity
-{
+public abstract class FillableAltarTileEntity extends TileEntity implements ITickableTileEntity {
     protected static final Random rand;
     private int currentProgress;
     private int maxProgress;
-    
+
     public FillableAltarTileEntity(final TileEntityType<?> tileEntityTypeIn) {
-        super((TileEntityType)tileEntityTypeIn);
+        super((TileEntityType) tileEntityTypeIn);
         this.currentProgress = 0;
         this.maxProgress = 0;
     }
-    
+
     public boolean initialized() {
         return this.getMaxProgress() > 0;
     }
-    
+
     public int getCurrentProgress() {
         return this.currentProgress;
     }
-    
+
     public int getMaxProgress() {
         return this.maxProgress;
     }
-    
+
     public boolean isMaxedOut() {
         return this.currentProgress >= this.getMaxProgress();
     }
-    
+
     public float progressPercentage() {
-        return Math.min(this.getCurrentProgress() / (float)this.getMaxProgress(), 1.0f);
+        return Math.min(this.getCurrentProgress() / (float) this.getMaxProgress(), 1.0f);
     }
-    
+
     public void makeProgress(final ServerPlayerEntity sPlayer, final int deltaProgress, final Consumer<ServerPlayerEntity> onComplete) {
         if (!this.initialized()) {
             return;
@@ -67,7 +62,7 @@ public abstract class FillableAltarTileEntity extends TileEntity implements ITic
             onComplete.accept(sPlayer);
         }
     }
-    
+
     public void tick() {
         if (this.initialized()) {
             return;
@@ -79,66 +74,66 @@ public abstract class FillableAltarTileEntity extends TileEntity implements ITic
             });
         }
     }
-    
+
     private Optional<VaultRaid> getCurrentVault() {
-        final ServerWorld sWorld = (ServerWorld)this.getLevel();
+        final ServerWorld sWorld = (ServerWorld) this.getLevel();
         return Optional.ofNullable(VaultRaidData.get(sWorld).getAt(sWorld, this.getBlockPos()));
     }
-    
+
     protected float getMaxProgressMultiplier(final UUID playerUUID) {
         if (!(this.getLevel() instanceof ServerWorld)) {
             return 1.0f;
         }
-        final ServerWorld sWorld = (ServerWorld)this.getLevel();
+        final ServerWorld sWorld = (ServerWorld) this.getLevel();
         final int favour = PlayerFavourData.get(sWorld).getFavour(playerUUID, this.getAssociatedVaultGod());
         if (favour < 0) {
             return 1.0f + 0.2f * (Math.abs(favour) / 6.0f);
         }
-        return 1.0f - 0.75f * (Math.min((float)favour, 8.0f) / 8.0f);
+        return 1.0f - 0.75f * (Math.min((float) favour, 8.0f) / 8.0f);
     }
-    
+
     public abstract ITextComponent getRequirementName();
-    
+
     public abstract PlayerFavourData.VaultGodType getAssociatedVaultGod();
-    
+
     public abstract ITextComponent getRequirementUnit();
-    
+
     public abstract Color getFillColor();
-    
+
     protected abstract Optional<Integer> calcMaxProgress(final VaultRaid p0);
-    
+
     public CompoundNBT save(final CompoundNBT nbt) {
         nbt.putInt("CurrentProgress", this.currentProgress);
         nbt.putInt("CalculatedMaxProgress", this.maxProgress);
         return super.save(nbt);
     }
-    
+
     public void load(final BlockState state, final CompoundNBT nbt) {
         this.currentProgress = nbt.getInt("CurrentProgress");
         this.maxProgress = (nbt.contains("CalculatedMaxProgress") ? nbt.getInt("CalculatedMaxProgress") : -1);
         super.load(state, nbt);
     }
-    
+
     public CompoundNBT getUpdateTag() {
         final CompoundNBT nbt = super.getUpdateTag();
         this.save(nbt);
         return nbt;
     }
-    
+
     public void handleUpdateTag(final BlockState state, final CompoundNBT nbt) {
         this.load(state, nbt);
     }
-    
+
     @Nullable
     public SUpdateTileEntityPacket getUpdatePacket() {
         return new SUpdateTileEntityPacket(this.worldPosition, 1, this.getUpdateTag());
     }
-    
+
     public void onDataPacket(final NetworkManager net, final SUpdateTileEntityPacket pkt) {
         final CompoundNBT nbt = pkt.getTag();
         this.handleUpdateTag(this.getBlockState(), nbt);
     }
-    
+
     public void sendUpdates() {
         if (this.level != null) {
             this.level.sendBlockUpdated(this.worldPosition, this.getBlockState(), this.getBlockState(), 3);
@@ -146,7 +141,7 @@ public abstract class FillableAltarTileEntity extends TileEntity implements ITic
             this.setChanged();
         }
     }
-    
+
     static {
         rand = new Random();
     }

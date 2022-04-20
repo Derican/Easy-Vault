@@ -1,7 +1,3 @@
-// 
-// Decompiled by Procyon v0.6.0
-// 
-
 package iskallia.vault.skill.ability.effect;
 
 import iskallia.vault.init.ModSounds;
@@ -12,13 +8,12 @@ import net.minecraft.particles.ParticleTypes;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.world.server.ServerWorld;
 
-public class MegaJumpAbility<C extends MegaJumpConfig> extends AbilityEffect<C>
-{
+public class MegaJumpAbility<C extends MegaJumpConfig> extends AbilityEffect<C> {
     @Override
     public String getAbilityGroupName() {
         return "Mega Jump";
     }
-    
+
     @Override
     public boolean onAction(final C config, final ServerPlayerEntity player, final boolean active) {
         final double magnitude = config.getHeight() * 0.15;
@@ -27,7 +22,7 @@ public class MegaJumpAbility<C extends MegaJumpConfig> extends AbilityEffect<C>
         player.startFallFlying();
         player.hurtMarked = true;
         player.playNotifySound(ModSounds.MEGA_JUMP_SFX, SoundCategory.MASTER, 0.3f, 1.0f);
-        ((ServerWorld)player.level).sendParticles((IParticleData)ParticleTypes.POOF, player.getX(), player.getY(), player.getZ(), 50, 1.0, 0.5, 1.0, 0.0);
+        ((ServerWorld) player.level).sendParticles((IParticleData) ParticleTypes.POOF, player.getX(), player.getY(), player.getZ(), 50, 1.0, 0.5, 1.0, 0.0);
         return true;
     }
 }

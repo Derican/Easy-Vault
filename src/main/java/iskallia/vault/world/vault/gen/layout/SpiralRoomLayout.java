@@ -1,7 +1,3 @@
-// 
-// Decompiled by Procyon v0.6.0
-// 
-
 package iskallia.vault.world.vault.gen.layout;
 
 import iskallia.vault.Vault;
@@ -9,25 +5,24 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.vector.Vector3i;
 
-public class SpiralRoomLayout extends VaultRoomLayoutGenerator
-{
+public class SpiralRoomLayout extends VaultRoomLayoutGenerator {
     public static final ResourceLocation ID;
     private int size;
-    
+
     public SpiralRoomLayout() {
         this(11);
     }
-    
+
     public SpiralRoomLayout(final int size) {
         super(SpiralRoomLayout.ID);
         this.size = size;
     }
-    
+
     @Override
     public void setSize(final int size) {
         this.size = size;
     }
-    
+
     @Override
     public Layout generateLayout() {
         final Layout layout = new Layout();
@@ -55,7 +50,7 @@ public class SpiralRoomLayout extends VaultRoomLayoutGenerator
         }
         return layout;
     }
-    
+
     @Override
     protected void deserialize(final CompoundNBT tag) {
         super.deserialize(tag);
@@ -63,14 +58,14 @@ public class SpiralRoomLayout extends VaultRoomLayoutGenerator
             this.size = tag.getInt("size");
         }
     }
-    
+
     @Override
     protected CompoundNBT serialize() {
         final CompoundNBT tag = super.serialize();
         tag.putInt("size", this.size);
         return tag;
     }
-    
+
     static {
         ID = Vault.id("spiral");
     }

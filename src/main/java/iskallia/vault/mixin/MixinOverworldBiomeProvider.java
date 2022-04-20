@@ -1,7 +1,3 @@
-// 
-// Decompiled by Procyon v0.6.0
-// 
-
 package iskallia.vault.mixin;
 
 import iskallia.vault.util.IBiomeAccessor;
@@ -13,9 +9,8 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Mutable;
 import org.spongepowered.asm.mixin.Shadow;
 
-@Mixin({ OverworldBiomeProvider.class })
-public class MixinOverworldBiomeProvider implements IBiomeAccessor
-{
+@Mixin({OverworldBiomeProvider.class})
+public class MixinOverworldBiomeProvider implements IBiomeAccessor {
     @Shadow
     @Final
     @Mutable
@@ -32,35 +27,35 @@ public class MixinOverworldBiomeProvider implements IBiomeAccessor
     @Final
     @Mutable
     private Layer noiseBiomeLayer;
-    
+
     @Override
     public void setSeed(final long seed) {
         this.seed = seed;
         this.noiseBiomeLayer = LayerUtil.getDefaultLayer(this.seed, this.legacyBiomeInitLayer, this.largeBiomes ? 6 : 4, 4);
     }
-    
+
     @Override
     public void setLegacyBiomes(final boolean legacyBiomes) {
         this.legacyBiomeInitLayer = legacyBiomes;
         this.noiseBiomeLayer = LayerUtil.getDefaultLayer(this.seed, this.legacyBiomeInitLayer, this.largeBiomes ? 6 : 4, 4);
     }
-    
+
     @Override
     public void setLargeBiomes(final boolean largeBiomes) {
         this.largeBiomes = largeBiomes;
         this.noiseBiomeLayer = LayerUtil.getDefaultLayer(this.seed, this.legacyBiomeInitLayer, this.largeBiomes ? 6 : 4, 4);
     }
-    
+
     @Override
     public long getSeed() {
         return this.seed;
     }
-    
+
     @Override
     public boolean getLegacyBiomes() {
         return this.legacyBiomeInitLayer;
     }
-    
+
     @Override
     public boolean getLargeBiomes() {
         return this.largeBiomes;

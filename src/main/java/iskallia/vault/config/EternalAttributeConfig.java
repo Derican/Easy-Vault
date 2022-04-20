@@ -1,7 +1,3 @@
-// 
-// Decompiled by Procyon v0.6.0
-// 
-
 package iskallia.vault.config;
 
 import com.google.gson.annotations.Expose;
@@ -14,8 +10,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 import java.util.HashMap;
 import java.util.Map;
 
-public class EternalAttributeConfig extends Config
-{
+public class EternalAttributeConfig extends Config {
     @Expose
     private final Map<String, FloatRangeEntry> initialAttributes;
     @Expose
@@ -24,20 +19,20 @@ public class EternalAttributeConfig extends Config
     private FloatRangeEntry damagePerLevel;
     @Expose
     private FloatRangeEntry moveSpeedPerLevel;
-    
+
     public EternalAttributeConfig() {
         this.initialAttributes = new HashMap<String, FloatRangeEntry>();
     }
-    
+
     @Override
     public String getName() {
         return "eternal_attributes";
     }
-    
+
     public Map<Attribute, Float> createAttributes() {
         final Map<Attribute, Float> selectedAttributes = new HashMap<Attribute, Float>();
         this.initialAttributes.forEach((attrKey, valueRange) -> {
-            final Attribute attribute = (Attribute)ForgeRegistries.ATTRIBUTES.getValue(new ResourceLocation(attrKey));
+            final Attribute attribute = (Attribute) ForgeRegistries.ATTRIBUTES.getValue(new ResourceLocation(attrKey));
             if (attribute != null) {
                 selectedAttributes.put(attribute, valueRange.getRandom());
             }
@@ -45,19 +40,19 @@ public class EternalAttributeConfig extends Config
         });
         return selectedAttributes;
     }
-    
+
     public FloatRangeEntry getHealthRollRange() {
         return this.healthPerLevel;
     }
-    
+
     public FloatRangeEntry getDamageRollRange() {
         return this.damagePerLevel;
     }
-    
+
     public FloatRangeEntry getMoveSpeedRollRange() {
         return this.moveSpeedPerLevel;
     }
-    
+
     @Override
     protected void reset() {
         this.initialAttributes.clear();

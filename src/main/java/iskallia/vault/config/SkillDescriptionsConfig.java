@@ -1,7 +1,3 @@
-// 
-// Decompiled by Procyon v0.6.0
-// 
-
 package iskallia.vault.config;
 
 import com.google.gson.JsonElement;
@@ -11,16 +7,15 @@ import net.minecraft.util.text.ITextComponent;
 
 import java.util.HashMap;
 
-public class SkillDescriptionsConfig extends Config
-{
+public class SkillDescriptionsConfig extends Config {
     @Expose
     private HashMap<String, JsonElement> descriptions;
-    
+
     @Override
     public String getName() {
         return "skill_descriptions";
     }
-    
+
     public IFormattableTextComponent getDescriptionFor(final String skillName) {
         final JsonElement element = this.descriptions.get(skillName);
         if (element == null) {
@@ -28,7 +23,7 @@ public class SkillDescriptionsConfig extends Config
         }
         return ITextComponent.Serializer.fromJson(element);
     }
-    
+
     @Override
     protected void reset() {
         this.descriptions = new HashMap<String, JsonElement>();

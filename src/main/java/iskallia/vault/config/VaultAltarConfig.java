@@ -1,7 +1,3 @@
-// 
-// Decompiled by Procyon v0.6.0
-// 
-
 package iskallia.vault.config;
 
 import com.google.gson.annotations.Expose;
@@ -33,10 +29,8 @@ import net.minecraft.world.server.ServerWorld;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.function.Consumer;
 
-public class VaultAltarConfig extends Config
-{
+public class VaultAltarConfig extends Config {
     @Expose
     public List<AltarConfigItem> ITEMS;
     @Expose
@@ -49,16 +43,16 @@ public class VaultAltarConfig extends Config
     public int INFUSION_TIME;
     @Expose
     public float LUCKY_ALTAR_CHANCE;
-    
+
     public VaultAltarConfig() {
         this.ITEMS = new ArrayList<AltarConfigItem>();
     }
-    
+
     @Override
     public String getName() {
         return "vault_altar";
     }
-    
+
     @Override
     protected void reset() {
         this.ITEMS.add(new AltarConfigItem("minecraft:cobblestone", 1000, 6000));
@@ -96,22 +90,22 @@ public class VaultAltarConfig extends Config
         this.INFUSION_TIME = 5;
         this.LUCKY_ALTAR_CHANCE = 0.1f;
     }
-    
+
     public List<RequiredItem> getRequiredItemsFromConfig(final ServerWorld world, final BlockPos pos, final ServerPlayerEntity player) {
         final LootContext ctx = new LootContext.Builder(world).withParameter(LootParameters.THIS_ENTITY, player).withRandom(world.random).withLuck(player.getLuck()).create(LootParameterSets.PIGLIN_BARTER);
-        final int vaultLevel = PlayerVaultStatsData.get(world).getVaultStats((PlayerEntity)player).getVaultLevel();
+        final int vaultLevel = PlayerVaultStatsData.get(world).getVaultStats((PlayerEntity) player).getVaultLevel();
         final int altarLevel = PlayerStatsData.get(world).get(player.getUUID()).getCrystals().size();
         float amtMultiplier = 1.0f;
         float luckyAltarChance = this.LUCKY_ALTAR_CHANCE;
         final GlobalDifficultyData.Difficulty difficulty = GlobalDifficultyData.get(world).getCrystalCost();
-        amtMultiplier *= (float)difficulty.getMultiplier();
-        final TalentTree talents = PlayerTalentsData.get(world).getTalents((PlayerEntity)player);
+        amtMultiplier *= (float) difficulty.getMultiplier();
+        final TalentTree talents = PlayerTalentsData.get(world).getTalents((PlayerEntity) player);
         for (final Object talent : talents.getTalents(LuckyAltarTalent.class)) {
-            luckyAltarChance += ((LuckyAltarTalent)talent).getLuckyAltarChance();
+            luckyAltarChance += ((LuckyAltarTalent) talent).getLuckyAltarChance();
         }
         if (VaultAltarConfig.rand.nextFloat() < luckyAltarChance) {
             amtMultiplier = 0.1f;
-            this.spawnLuckyEffects((World)world, pos);
+            this.spawnLuckyEffects((World) world, pos);
         }
         final LootTable lootTable = world.getServer().getLootTables().get(ModConfigs.LOOT_TABLES.getForLevel(vaultLevel).getAltar());
         final RequiredItem resource = new RequiredItem(ItemStack.EMPTY, 0, 0);
@@ -125,9 +119,9 @@ public class VaultAltarConfig extends Config
         final double m1 = 800.0 * Math.atan(altarLevel / 250.0) / 3.141592653589793 + 1.0;
         final double m2 = 200.0 / (1.0 + Math.exp((-altarLevel + 260.0) / 50.0));
         final double m3 = 400.0 / (1.0 + Math.exp((-altarLevel + 200.0) / 40.0));
-        resource.setAmountRequired((int)Math.round(resource.getItem().getCount() * m1 * amtMultiplier));
-        richity.setAmountRequired((int)Math.round(richity.getItem().getCount() * m2 * amtMultiplier));
-        farmable.setAmountRequired((int)Math.round(farmable.getItem().getCount() * m3 * amtMultiplier));
+        resource.setAmountRequired((int) Math.round(resource.getItem().getCount() * m1 * amtMultiplier));
+        richity.setAmountRequired((int) Math.round(richity.getItem().getCount() * m2 * amtMultiplier));
+        farmable.setAmountRequired((int) Math.round(farmable.getItem().getCount() * m3 * amtMultiplier));
         misc.setAmountRequired(misc.getItem().getCount());
         resource.getItem().setCount(1);
         richity.getItem().setCount(1);
@@ -135,24 +129,23 @@ public class VaultAltarConfig extends Config
         misc.getItem().setCount(1);
         return Arrays.asList(resource, richity, farmable, misc);
     }
-    
+
     private void spawnLuckyEffects(final World world, final BlockPos pos) {
         for (int i = 0; i < 30; ++i) {
             final Vector3d offset = MiscUtils.getRandomOffset(pos, VaultAltarConfig.rand, 2.0f);
-            ((ServerWorld)world).sendParticles((IParticleData)ParticleTypes.HAPPY_VILLAGER, offset.x, offset.y, offset.z, 3, 0.0, 0.0, 0.0, 1.0);
+            ((ServerWorld) world).sendParticles((IParticleData) ParticleTypes.HAPPY_VILLAGER, offset.x, offset.y, offset.z, 3, 0.0, 0.0, 0.0, 1.0);
         }
-        world.playSound((PlayerEntity)null, pos, SoundEvents.PLAYER_LEVELUP, SoundCategory.BLOCKS, 1.0f, 1.0f);
+        world.playSound((PlayerEntity) null, pos, SoundEvents.PLAYER_LEVELUP, SoundCategory.BLOCKS, 1.0f, 1.0f);
     }
-    
-    public class AltarConfigItem
-    {
+
+    public class AltarConfigItem {
         @Expose
         public String ITEM_ID;
         @Expose
         public int MIN;
         @Expose
         public int MAX;
-        
+
         public AltarConfigItem(final String item, final int min, final int max) {
             this.ITEM_ID = item;
             this.MIN = min;

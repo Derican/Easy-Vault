@@ -1,7 +1,3 @@
-// 
-// Decompiled by Procyon v0.6.0
-// 
-
 package iskallia.vault.network.message;
 
 import iskallia.vault.world.data.GlobalDifficultyData;
@@ -13,28 +9,26 @@ import net.minecraftforge.fml.network.NetworkEvent;
 
 import java.util.function.Supplier;
 
-public class GlobalDifficultyMessage
-{
+public class GlobalDifficultyMessage {
     public CompoundNBT data;
-    
+
     public static void encode(final GlobalDifficultyMessage message, final PacketBuffer buffer) {
         buffer.writeNbt(message.data);
     }
-    
+
     public static GlobalDifficultyMessage decode(final PacketBuffer buffer) {
         final GlobalDifficultyMessage message = new GlobalDifficultyMessage();
         message.data = buffer.readNbt();
         return message;
     }
-    
+
     public static void handle(final GlobalDifficultyMessage message, final Supplier<NetworkEvent.Context> contextSupplier) {
         final NetworkEvent.Context context = contextSupplier.get();
         context.enqueueWork(() -> {
             final ServerPlayerEntity player = context.getSender();
             if (player == null) {
                 return;
-            }
-            else {
+            } else {
                 final CompoundNBT data = message.data;
                 final GlobalDifficultyData.Difficulty vaultDifficulty = GlobalDifficultyData.Difficulty.values()[data.getInt("VaultDifficulty")];
                 final GlobalDifficultyData.Difficulty crystalCost = GlobalDifficultyData.Difficulty.values()[data.getInt("CrystalCost")];
@@ -49,7 +43,7 @@ public class GlobalDifficultyMessage
         });
         context.setPacketHandled(true);
     }
-    
+
     public static GlobalDifficultyMessage setGlobalDifficultyOptions(final CompoundNBT data) {
         final GlobalDifficultyMessage message = new GlobalDifficultyMessage();
         message.data = data;

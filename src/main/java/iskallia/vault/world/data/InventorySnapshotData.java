@@ -1,7 +1,3 @@
-// 
-// Decompiled by Procyon v0.6.0
-// 
-
 package iskallia.vault.world.data;
 
 import iskallia.vault.integration.IntegrationCurios;
@@ -22,29 +18,28 @@ import java.util.*;
 import java.util.function.BiConsumer;
 import java.util.function.BiPredicate;
 
-public abstract class InventorySnapshotData extends WorldSavedData
-{
+public abstract class InventorySnapshotData extends WorldSavedData {
     public VMapNBT<UUID, InventorySnapshot> snapshotData;
-    
+
     protected InventorySnapshotData(final String name) {
         super(name);
         this.snapshotData = VMapNBT.ofUUID(() -> new InventorySnapshot());
     }
-    
+
     protected abstract boolean shouldSnapshotItem(final PlayerEntity p0, final ItemStack p1);
-    
+
     protected Builder makeSnapshotBuilder(final PlayerEntity player) {
         return new Builder(player).setStackFilter(this::shouldSnapshotItem).removeSnapshotItems();
     }
-    
+
     public boolean hasSnapshot(final PlayerEntity player) {
         return this.hasSnapshot(player.getUUID());
     }
-    
+
     public boolean hasSnapshot(final UUID playerUUID) {
         return this.snapshotData.containsKey(playerUUID);
     }
-    
+
     public void createSnapshot(final PlayerEntity player) {
         if (this.snapshotData.containsKey(player.getUUID())) {
             this.restoreSnapshot(player);
@@ -52,11 +47,11 @@ public abstract class InventorySnapshotData extends WorldSavedData
         this.snapshotData.put(player.getUUID(), this.makeSnapshotBuilder(player).createSnapshot());
         this.setDirty();
     }
-    
+
     public boolean removeSnapshot(final PlayerEntity player) {
         return this.removeSnapshot(player.getUUID());
     }
-    
+
     public boolean removeSnapshot(final UUID playerUUID) {
         if (this.snapshotData.remove(playerUUID) != null) {
             this.setDirty();
@@ -64,7 +59,7 @@ public abstract class InventorySnapshotData extends WorldSavedData
         }
         return false;
     }
-    
+
     public boolean restoreSnapshot(final PlayerEntity player) {
         final InventorySnapshot snapshot = this.snapshotData.remove(player.getUUID());
         if (snapshot != null) {
@@ -73,24 +68,23 @@ public abstract class InventorySnapshotData extends WorldSavedData
         }
         return false;
     }
-    
+
     public void load(final CompoundNBT nbt) {
         this.snapshotData.deserializeNBT(nbt.getList("Players", 10));
     }
-    
+
     public CompoundNBT save(final CompoundNBT compound) {
-        compound.put("Players", (INBT)this.snapshotData.serializeNBT());
+        compound.put("Players", (INBT) this.snapshotData.serializeNBT());
         return compound;
     }
-    
-    public static class InventorySnapshot implements INBTSerializable<CompoundNBT>
-    {
+
+    public static class InventorySnapshot implements INBTSerializable<CompoundNBT> {
         private final VListNBT<Integer, IntNBT> invIds;
         private final VListNBT<ItemStack, CompoundNBT> items;
         private final Map<String, CompoundNBT> customInventoryData;
         private boolean removeSnapshotItems;
         private boolean replaceExisting;
-        
+
         private InventorySnapshot() {
             this.invIds = new VListNBT<Integer, IntNBT>(IntNBT::valueOf, IntNBT::getAsInt);
             this.items = new VListNBT<ItemStack, CompoundNBT>(IForgeItemStack::serializeNBT, ItemStack::of);
@@ -98,7 +92,7 @@ public abstract class InventorySnapshotData extends WorldSavedData
             this.removeSnapshotItems = false;
             this.replaceExisting = false;
         }
-        
+
         private InventorySnapshot(final boolean removeSnapshotItems, final boolean replaceExisting) {
             this.invIds = new VListNBT<Integer, IntNBT>(IntNBT::valueOf, IntNBT::getAsInt);
             this.items = new VListNBT<ItemStack, CompoundNBT>(IForgeItemStack::serializeNBT, ItemStack::of);
@@ -108,9 +102,9 @@ public abstract class InventorySnapshotData extends WorldSavedData
             this.removeSnapshotItems = removeSnapshotItems;
             this.replaceExisting = replaceExisting;
         }
-        
+
         private void createSnapshot(final PlayerEntity player, final BiPredicate<PlayerEntity, ItemStack> stackFilter) {
-            for (int slot = 0; slot < ((InventoryAccessor)player.inventory).getSize(); ++slot) {
+            for (int slot = 0; slot < ((InventoryAccessor) player.inventory).getSize(); ++slot) {
                 final ItemStack stack = player.inventory.getItem(slot);
                 if (stackFilter.test(player, stack)) {
                     this.addItemStack(slot, stack);
@@ -124,12 +118,12 @@ public abstract class InventorySnapshotData extends WorldSavedData
                 this.customInventoryData.put("curios", curiosData);
             }
         }
-        
+
         private void addItemStack(final int slot, final ItemStack stack) {
             this.invIds.add(slot);
             this.items.add(stack.copy());
         }
-        
+
         private boolean apply(final PlayerEntity player) {
             if (!player.isAlive()) {
                 return false;
@@ -140,8 +134,7 @@ public abstract class InventorySnapshotData extends WorldSavedData
                 final int slot = this.invIds.get(index);
                 if (this.replaceExisting || player.inventory.getItem(slot).isEmpty()) {
                     player.inventory.setItem(slot, toAdd);
-                }
-                else {
+                } else {
                     addLater.add(toAdd);
                 }
             }
@@ -161,19 +154,19 @@ public abstract class InventorySnapshotData extends WorldSavedData
             }
             return true;
         }
-        
+
         public CompoundNBT serializeNBT() {
             final CompoundNBT nbt = new CompoundNBT();
-            nbt.put("InvIds", (INBT)this.invIds.serializeNBT());
-            nbt.put("Items", (INBT)this.items.serializeNBT());
+            nbt.put("InvIds", (INBT) this.invIds.serializeNBT());
+            nbt.put("Items", (INBT) this.items.serializeNBT());
             final CompoundNBT customData = new CompoundNBT();
-            this.customInventoryData.forEach((BiConsumer<? super String, ? super CompoundNBT>)customData::put);
-            nbt.put("customData", (INBT)customData);
+            this.customInventoryData.forEach((BiConsumer<? super String, ? super CompoundNBT>) customData::put);
+            nbt.put("customData", (INBT) customData);
             nbt.putBoolean("removeSnapshotItems", this.removeSnapshotItems);
             nbt.putBoolean("replaceExisting", this.replaceExisting);
             return nbt;
         }
-        
+
         public void deserializeNBT(final CompoundNBT nbt) {
             this.invIds.deserializeNBT(nbt.getList("InvIds", 3));
             this.items.deserializeNBT(nbt.getList("Items", 10));
@@ -188,45 +181,43 @@ public abstract class InventorySnapshotData extends WorldSavedData
             this.replaceExisting = nbt.getBoolean("replaceExisting");
         }
     }
-    
-    public static class Builder
-    {
+
+    public static class Builder {
         private final PlayerEntity player;
         private boolean removeSnapshotItems;
         private boolean replaceExisting;
         private BiPredicate<PlayerEntity, ItemStack> stackFilter;
-        
+
         public Builder(final PlayerEntity player) {
             this.removeSnapshotItems = false;
             this.replaceExisting = false;
             this.stackFilter = ((player1, stack) -> true);
             this.player = player;
         }
-        
+
         public Builder removeSnapshotItems() {
             this.removeSnapshotItems = true;
             return this;
         }
-        
+
         public Builder replaceExisting() {
             this.replaceExisting = true;
             return this;
         }
-        
+
         public Builder setStackFilter(final BiPredicate<PlayerEntity, ItemStack> stackFilter) {
             this.stackFilter = stackFilter;
             return this;
         }
-        
+
         public InventorySnapshot createSnapshot() {
             final InventorySnapshot snapshot = new InventorySnapshot(this.removeSnapshotItems, this.replaceExisting);
             snapshot.createSnapshot(this.player, this.stackFilter);
             return snapshot;
         }
     }
-    
-    public interface InventoryAccessor
-    {
+
+    public interface InventoryAccessor {
         int getSize();
     }
 }

@@ -1,7 +1,3 @@
-// 
-// Decompiled by Procyon v0.6.0
-// 
-
 package iskallia.vault.world.data;
 
 import iskallia.vault.container.GlobalDifficultyContainer;
@@ -22,50 +18,49 @@ import org.apache.commons.lang3.StringUtils;
 import javax.annotation.Nullable;
 import java.util.function.Supplier;
 
-public class GlobalDifficultyData extends WorldSavedData
-{
+public class GlobalDifficultyData extends WorldSavedData {
     protected static final String DATA_NAME = "the_vault_GlobalDifficulty";
     private Difficulty crystalCost;
     private Difficulty vaultDifficulty;
-    
+
     public GlobalDifficultyData() {
         this("the_vault_GlobalDifficulty");
     }
-    
+
     public GlobalDifficultyData(final String name) {
         super(name);
         this.crystalCost = null;
         this.vaultDifficulty = null;
     }
-    
+
     public Difficulty getCrystalCost() {
         return this.crystalCost;
     }
-    
+
     public void setCrystalCost(final Difficulty crystalCost) {
         this.crystalCost = crystalCost;
         this.setDirty();
     }
-    
+
     public Difficulty getVaultDifficulty() {
         return this.vaultDifficulty;
     }
-    
+
     public void setVaultDifficulty(final Difficulty vaultDifficulty) {
         this.vaultDifficulty = vaultDifficulty;
         this.setDirty();
     }
-    
+
     public void openDifficultySelection(final ServerPlayerEntity sPlayer) {
         if (ServerLifecycleHooks.getCurrentServer() != null && (!ServerLifecycleHooks.getCurrentServer().isDedicatedServer() || sPlayer.hasPermissions(sPlayer.getServer().getOperatorUserPermissionLevel())) && (this.getVaultDifficulty() == null || this.getCrystalCost() == null)) {
             final CompoundNBT data = new CompoundNBT();
             data.putInt("VaultDifficulty", Difficulty.STANDARD.ordinal());
             data.putInt("CrystalCost", Difficulty.STANDARD.ordinal());
-            NetworkHooks.openGui(sPlayer, (INamedContainerProvider)new INamedContainerProvider() {
+            NetworkHooks.openGui(sPlayer, (INamedContainerProvider) new INamedContainerProvider() {
                 public ITextComponent getDisplayName() {
-                    return (ITextComponent)new StringTextComponent("Welcome Vault Hunter!");
+                    return (ITextComponent) new StringTextComponent("Welcome Vault Hunter!");
                 }
-                
+
                 @Nullable
                 public Container createMenu(final int windowId, final PlayerInventory playerInventory, final PlayerEntity playerEntity) {
                     return new GlobalDifficultyContainer(windowId, data);
@@ -73,7 +68,7 @@ public class GlobalDifficultyData extends WorldSavedData
             }, buffer -> buffer.writeNbt(data));
         }
     }
-    
+
     public void load(final CompoundNBT nbt) {
         if (nbt.contains("CrystalCost")) {
             this.crystalCost = Difficulty.values()[nbt.getInt("CrystalCost")];
@@ -82,7 +77,7 @@ public class GlobalDifficultyData extends WorldSavedData
             this.vaultDifficulty = Difficulty.values()[nbt.getInt("VaultDifficulty")];
         }
     }
-    
+
     public CompoundNBT save(final CompoundNBT nbt) {
         if (this.crystalCost != null) {
             nbt.putInt("CrystalCost", this.crystalCost.ordinal());
@@ -92,34 +87,33 @@ public class GlobalDifficultyData extends WorldSavedData
         }
         return nbt;
     }
-    
+
     public static GlobalDifficultyData get(final ServerWorld world) {
-        return (GlobalDifficultyData)world.getServer().overworld().getDataStorage().computeIfAbsent((Supplier)GlobalDifficultyData::new, "the_vault_GlobalDifficulty");
+        return (GlobalDifficultyData) world.getServer().overworld().getDataStorage().computeIfAbsent((Supplier) GlobalDifficultyData::new, "the_vault_GlobalDifficulty");
     }
-    
-    public enum Difficulty
-    {
-        TRIVIAL(0.5), 
-        CASUAL(0.75), 
-        STANDARD(1.0), 
-        HARD(1.25), 
+
+    public enum Difficulty {
+        TRIVIAL(0.5),
+        CASUAL(0.75),
+        STANDARD(1.0),
+        HARD(1.25),
         EXTREME(1.5);
-        
+
         double multiplier;
-        
+
         private Difficulty(final double multiplier) {
             this.multiplier = multiplier;
         }
-        
+
         public double getMultiplier() {
             return this.multiplier;
         }
-        
+
         @Override
         public String toString() {
             return StringUtils.capitalize(this.name().toLowerCase());
         }
-        
+
         public Difficulty getNext() {
             int index = this.ordinal() + 1;
             if (index >= values().length) {

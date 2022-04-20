@@ -1,7 +1,3 @@
-// 
-// Decompiled by Procyon v0.6.0
-// 
-
 package iskallia.vault.skill.ability.effect.sub;
 
 import iskallia.vault.skill.ability.config.sub.HunterSpawnerConfig;
@@ -14,8 +10,7 @@ import net.minecraft.world.World;
 import java.awt.*;
 import java.util.List;
 
-public class HunterSpawnerAbility extends HunterAbility<HunterSpawnerConfig>
-{
+public class HunterSpawnerAbility extends HunterAbility<HunterSpawnerConfig> {
     @Override
     protected List<Tuple<BlockPos, Color>> selectPositions(final HunterSpawnerConfig config, final World world, final PlayerEntity player) {
         final List<Tuple<BlockPos, Color>> entityPositions = super.selectPositions(config, world, player);

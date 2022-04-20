@@ -1,7 +1,3 @@
-// 
-// Decompiled by Procyon v0.6.0
-// 
-
 package iskallia.vault.block;
 
 import com.google.common.collect.Lists;
@@ -40,29 +36,28 @@ import net.minecraft.world.server.ServerWorld;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class ObeliskBlock extends Block
-{
+public class ObeliskBlock extends Block {
     public static final EnumProperty<DoubleBlockHalf> HALF;
     public static final IntegerProperty COMPLETION;
     private static final VoxelShape SHAPE;
     private static final VoxelShape SHAPE_TOP;
-    
+
     public ObeliskBlock() {
         super(AbstractBlock.Properties.of(Material.STONE).sound(SoundType.METAL).strength(-1.0f, 3600000.0f).noDrops());
         this.registerDefaultState(((this.stateDefinition.any()).setValue(ObeliskBlock.HALF, DoubleBlockHalf.LOWER)).setValue(ObeliskBlock.COMPLETION, 0));
     }
-    
+
     public VoxelShape getShape(final BlockState state, final IBlockReader worldIn, final BlockPos pos, final ISelectionContext context) {
         if (state.getValue(ObeliskBlock.HALF) == DoubleBlockHalf.UPPER) {
             return ObeliskBlock.SHAPE_TOP;
         }
         return ObeliskBlock.SHAPE;
     }
-    
+
     public boolean hasTileEntity(final BlockState state) {
         return state.getValue(ObeliskBlock.HALF) == DoubleBlockHalf.LOWER;
     }
-    
+
     @Nullable
     public TileEntity createTileEntity(final BlockState state, final IBlockReader world) {
         if (this.hasTileEntity(state)) {
@@ -70,10 +65,10 @@ public class ObeliskBlock extends Block
         }
         return null;
     }
-    
+
     public ActionResultType use(final BlockState state, final World world, final BlockPos pos, final PlayerEntity player, final Hand hand, final BlockRayTraceResult hit) {
         if (state.getValue(ObeliskBlock.HALF) != DoubleBlockHalf.UPPER) {
-            if ((int)state.getValue(ObeliskBlock.COMPLETION) != 4 && this.newBlockActivated(state, world, pos, player, hand, hit)) {
+            if ((int) state.getValue(ObeliskBlock.COMPLETION) != 4 && this.newBlockActivated(state, world, pos, player, hand, hit)) {
                 final BlockState newState = state.setValue(ObeliskBlock.COMPLETION, 4);
                 world.setBlockAndUpdate(pos, newState);
                 this.spawnParticles(world, pos);
@@ -86,12 +81,12 @@ public class ObeliskBlock extends Block
         }
         return this.use(downState, world, pos.below(), player, hand, hit);
     }
-    
+
     private boolean newBlockActivated(final BlockState state, final World world, final BlockPos pos, final PlayerEntity player, final Hand hand, final BlockRayTraceResult hit) {
         if (world.isClientSide) {
             return false;
         }
-        final VaultRaid vault = VaultRaidData.get((ServerWorld)world).getAt((ServerWorld)world, pos);
+        final VaultRaid vault = VaultRaidData.get((ServerWorld) world).getAt((ServerWorld) world, pos);
         if (vault == null) {
             return false;
         }
@@ -104,26 +99,26 @@ public class ObeliskBlock extends Block
         }
         objective.addObelisk();
         if (objective.allObelisksClicked()) {
-            final LivingEntity boss = VaultBossSpawner.spawnBoss(vault, (ServerWorld)world, pos);
+            final LivingEntity boss = VaultBossSpawner.spawnBoss(vault, (ServerWorld) world, pos);
             objective.setBoss(boss);
         }
         return true;
     }
-    
+
     private void spawnParticles(final World world, final BlockPos pos) {
         for (int i = 0; i < 20; ++i) {
             final double d0 = world.random.nextGaussian() * 0.02;
             final double d2 = world.random.nextGaussian() * 0.02;
             final double d3 = world.random.nextGaussian() * 0.02;
-            ((ServerWorld)world).sendParticles((IParticleData)ParticleTypes.POOF, pos.getX() + world.random.nextDouble() - d0, pos.getY() + world.random.nextDouble() - d2, pos.getZ() + world.random.nextDouble() - d3, 10, d0, d2, d3, 1.0);
+            ((ServerWorld) world).sendParticles((IParticleData) ParticleTypes.POOF, pos.getX() + world.random.nextDouble() - d0, pos.getY() + world.random.nextDouble() - d2, pos.getZ() + world.random.nextDouble() - d3, 10, d0, d2, d3, 1.0);
         }
-        world.playSound((PlayerEntity)null, pos, SoundEvents.CONDUIT_ACTIVATE, SoundCategory.BLOCKS, 1.0f, 1.0f);
+        world.playSound((PlayerEntity) null, pos, SoundEvents.CONDUIT_ACTIVATE, SoundCategory.BLOCKS, 1.0f, 1.0f);
     }
-    
+
     protected void createBlockStateDefinition(final StateContainer.Builder<Block, BlockState> builder) {
-        builder.add(new Property[] { ObeliskBlock.HALF }).add(new Property[] { ObeliskBlock.COMPLETION });
+        builder.add(new Property[]{ObeliskBlock.HALF}).add(new Property[]{ObeliskBlock.COMPLETION});
     }
-    
+
     public void onRemove(final BlockState state, final World world, final BlockPos pos, final BlockState newState, final boolean isMoving) {
         super.onRemove(state, world, pos, newState, isMoving);
         if (!state.is(newState.getBlock())) {
@@ -132,8 +127,7 @@ public class ObeliskBlock extends Block
                 if (otherState.is(state.getBlock())) {
                     world.removeBlock(pos.below(), isMoving);
                 }
-            }
-            else {
+            } else {
                 final BlockState otherState = world.getBlockState(pos.above());
                 if (otherState.is(state.getBlock())) {
                     world.removeBlock(pos.above(), isMoving);
@@ -141,15 +135,15 @@ public class ObeliskBlock extends Block
             }
         }
     }
-    
+
     public List<ItemStack> getDrops(final BlockState state, final LootContext.Builder builder) {
         return Lists.newArrayList();
     }
-    
+
     public BlockRenderType getRenderShape(final BlockState state) {
         return BlockRenderType.MODEL;
     }
-    
+
     static {
         HALF = BlockStateProperties.DOUBLE_BLOCK_HALF;
         COMPLETION = IntegerProperty.create("completion", 0, 4);

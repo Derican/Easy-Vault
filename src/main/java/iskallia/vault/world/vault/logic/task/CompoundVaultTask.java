@@ -1,7 +1,3 @@
-// 
-// Decompiled by Procyon v0.6.0
-// 
-
 package iskallia.vault.world.vault.logic.task;
 
 import net.minecraft.nbt.CompoundNBT;
@@ -13,20 +9,19 @@ import java.util.Stack;
 import java.util.function.Consumer;
 import java.util.regex.Pattern;
 
-public class CompoundVaultTask extends VaultTask
-{
+public class CompoundVaultTask extends VaultTask {
     private List<String> postfix;
-    
+
     protected CompoundVaultTask() {
         this.postfix = new ArrayList<String>();
     }
-    
+
     protected CompoundVaultTask(final IVaultTask task, final List<String> postfix, final Consumer<List<String>> action) {
         super(null, task);
         (this.postfix = new ArrayList<String>()).addAll(postfix);
         action.accept(this.postfix);
     }
-    
+
     public CompoundVaultTask(final VaultTask a, final VaultTask b, final String operator, final IVaultTask result) {
         super(null, result);
         this.postfix = new ArrayList<String>();
@@ -35,34 +30,32 @@ public class CompoundVaultTask extends VaultTask
         }
         this.postfix.add(a.getId().toString());
         if (b instanceof CompoundVaultTask) {
-            this.postfix.addAll(((CompoundVaultTask)b).postfix);
-        }
-        else if (b != null) {
+            this.postfix.addAll(((CompoundVaultTask) b).postfix);
+        } else if (b != null) {
             this.postfix.add(b.getId().toString());
         }
         this.postfix.add(operator);
     }
-    
+
     @Override
     public VaultTask then(final VaultTask other) {
         return new CompoundVaultTask(this.task.then(other), this.postfix, postfix -> {
             if (other instanceof CompoundVaultTask) {
-                postfix.addAll(((CompoundVaultTask)other).postfix);
-            }
-            else {
+                postfix.addAll(((CompoundVaultTask) other).postfix);
+            } else {
                 postfix.add(other.getId().toString());
             }
             postfix.add(">");
         });
     }
-    
+
     @Override
     public CompoundNBT serializeNBT() {
         final CompoundNBT nbt = new CompoundNBT();
         nbt.putString("Postfix", String.join(" ", this.postfix));
         return nbt;
     }
-    
+
     @Override
     public void deserializeNBT(final CompoundNBT nbt) {
         final Stack<Object> stack = new Stack<Object>();
@@ -89,7 +82,7 @@ public class CompoundVaultTask extends VaultTask
         }
         this.task = (IVaultTask) stack.pop();
     }
-    
+
     public static CompoundVaultTask fromNBT(final CompoundNBT nbt) {
         final CompoundVaultTask condition = new CompoundVaultTask();
         condition.deserializeNBT(nbt);

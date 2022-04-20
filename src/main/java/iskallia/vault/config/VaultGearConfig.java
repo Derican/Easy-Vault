@@ -1,7 +1,3 @@
-// 
-// Decompiled by Procyon v0.6.0
-// 
-
 package iskallia.vault.config;
 
 import com.google.gson.annotations.Expose;
@@ -1392,37 +1388,37 @@ public abstract class VaultGearConfig extends Config {
             LEGGINGS.ADD_MIN_VAULT_LEVEL = new WeightedList.Entry<IntegerAttribute.Generator>((IntegerAttribute.Generator) IntegerAttribute.generator().add(-5, PooledAttribute.Rolls.ofEmpty(), pool -> {
             }).collect(IntegerAttribute.of(NumberAttribute.Type.SET)), 1);
             LEGGINGS.ADD_REGEN_CLOUD = new WeightedList.Entry<EffectCloudAttribute.Generator>((EffectCloudAttribute.Generator) EffectCloudAttribute.generator().add(new ArrayList<EffectCloudEntity.Config>(), PooledAttribute.Rolls.ofConstant(1), pool -> {
-                final EffectCloudEntity.Config config46=new EffectCloudEntity.Config("Rejuvenate I", Potions.EMPTY, Arrays.asList(new EffectCloudEntity.Config.CloudEffect(Effects.REGENERATION, 20, 0, false, true)), 20, 2.0f, -1, true, 0.5f);
+                final EffectCloudEntity.Config config46 = new EffectCloudEntity.Config("Rejuvenate I", Potions.EMPTY, Arrays.asList(new EffectCloudEntity.Config.CloudEffect(Effects.REGENERATION, 20, 0, false, true)), 20, 2.0f, -1, true, 0.5f);
 
                 pool.add(Collections.singletonList(config46), EffectCloudAttribute.of(EffectCloudAttribute.Type.SET), 1);
-                final EffectCloudEntity.Config config47=new EffectCloudEntity.Config("Rejuvenate II", Potions.EMPTY, Arrays.asList(new EffectCloudEntity.Config.CloudEffect(Effects.REGENERATION, 20, 1, false, true)), 40, 3.0f, -1, true, 0.5f);
+                final EffectCloudEntity.Config config47 = new EffectCloudEntity.Config("Rejuvenate II", Potions.EMPTY, Arrays.asList(new EffectCloudEntity.Config.CloudEffect(Effects.REGENERATION, 20, 1, false, true)), 40, 3.0f, -1, true, 0.5f);
 
                 pool.add(Collections.singletonList(config47), EffectCloudAttribute.of(EffectCloudAttribute.Type.SET), 1);
-                final EffectCloudEntity.Config config48=new EffectCloudEntity.Config("Rejuvenate III", Potions.EMPTY, Arrays.asList(new EffectCloudEntity.Config.CloudEffect(Effects.REGENERATION, 20, 2, false, true)), 60, 4.0f, -1, true, 0.5f);
+                final EffectCloudEntity.Config config48 = new EffectCloudEntity.Config("Rejuvenate III", Potions.EMPTY, Arrays.asList(new EffectCloudEntity.Config.CloudEffect(Effects.REGENERATION, 20, 2, false, true)), 60, 4.0f, -1, true, 0.5f);
 
                 pool.add(Collections.singletonList(config48), EffectCloudAttribute.of(EffectCloudAttribute.Type.SET), 1);
                 return;
             }).collect(EffectCloudAttribute.of(EffectCloudAttribute.Type.MERGE)), 1);
             LEGGINGS.ADD_WEAKENING_CLOUD = new WeightedList.Entry<EffectCloudAttribute.Generator>((EffectCloudAttribute.Generator) EffectCloudAttribute.generator().add(new ArrayList<EffectCloudEntity.Config>(), PooledAttribute.Rolls.ofConstant(1), pool -> {
-                final EffectCloudEntity.Config config49=new EffectCloudEntity.Config("Weakening I", Potions.EMPTY, Arrays.asList(new EffectCloudEntity.Config.CloudEffect(Effects.WEAKNESS, 20, 0, false, true)), 20, 2.0f, -1, false, 0.5f);
+                final EffectCloudEntity.Config config49 = new EffectCloudEntity.Config("Weakening I", Potions.EMPTY, Arrays.asList(new EffectCloudEntity.Config.CloudEffect(Effects.WEAKNESS, 20, 0, false, true)), 20, 2.0f, -1, false, 0.5f);
 
                 pool.add(Collections.singletonList(config49), EffectCloudAttribute.of(EffectCloudAttribute.Type.SET), 1);
-                final EffectCloudEntity.Config config50=new EffectCloudEntity.Config("Weakening II", Potions.EMPTY, Arrays.asList(new EffectCloudEntity.Config.CloudEffect(Effects.WEAKNESS, 20, 1, false, true)), 40, 3.0f, -1, false, 0.5f);
+                final EffectCloudEntity.Config config50 = new EffectCloudEntity.Config("Weakening II", Potions.EMPTY, Arrays.asList(new EffectCloudEntity.Config.CloudEffect(Effects.WEAKNESS, 20, 1, false, true)), 40, 3.0f, -1, false, 0.5f);
 
                 pool.add(Collections.singletonList(config50), EffectCloudAttribute.of(EffectCloudAttribute.Type.SET), 1);
-                final EffectCloudEntity.Config config51=new EffectCloudEntity.Config("Weakening III", Potions.EMPTY, Arrays.asList(new EffectCloudEntity.Config.CloudEffect(Effects.WEAKNESS, 20, 2, false, true)), 60, 4.0f, -1, false, 0.5f);
+                final EffectCloudEntity.Config config51 = new EffectCloudEntity.Config("Weakening III", Potions.EMPTY, Arrays.asList(new EffectCloudEntity.Config.CloudEffect(Effects.WEAKNESS, 20, 2, false, true)), 60, 4.0f, -1, false, 0.5f);
 
                 pool.add(Collections.singletonList(config51), EffectCloudAttribute.of(EffectCloudAttribute.Type.SET), 1);
                 return;
             }).collect(EffectCloudAttribute.of(EffectCloudAttribute.Type.MERGE)), 1);
             LEGGINGS.ADD_WITHER_CLOUD = new WeightedList.Entry<EffectCloudAttribute.Generator>((EffectCloudAttribute.Generator) EffectCloudAttribute.generator().add(new ArrayList<EffectCloudEntity.Config>(), PooledAttribute.Rolls.ofConstant(1), pool -> {
-                final EffectCloudEntity.Config config52=new EffectCloudEntity.Config("Withering I", Potions.EMPTY, Arrays.asList(new EffectCloudEntity.Config.CloudEffect(Effects.WITHER, 20, 0, false, true)), 20, 2.0f, -1, false, 0.5f);
+                final EffectCloudEntity.Config config52 = new EffectCloudEntity.Config("Withering I", Potions.EMPTY, Arrays.asList(new EffectCloudEntity.Config.CloudEffect(Effects.WITHER, 20, 0, false, true)), 20, 2.0f, -1, false, 0.5f);
 
                 pool.add(Collections.singletonList(config52), EffectCloudAttribute.of(EffectCloudAttribute.Type.SET), 1);
-                final EffectCloudEntity.Config config53=new EffectCloudEntity.Config("Withering II", Potions.EMPTY, Arrays.asList(new EffectCloudEntity.Config.CloudEffect(Effects.WITHER, 20, 1, false, true)), 40, 3.0f, -1, false, 0.5f);
+                final EffectCloudEntity.Config config53 = new EffectCloudEntity.Config("Withering II", Potions.EMPTY, Arrays.asList(new EffectCloudEntity.Config.CloudEffect(Effects.WITHER, 20, 1, false, true)), 40, 3.0f, -1, false, 0.5f);
 
                 pool.add(Collections.singletonList(config53), EffectCloudAttribute.of(EffectCloudAttribute.Type.SET), 1);
-                final EffectCloudEntity.Config config54=new EffectCloudEntity.Config("Withering III", Potions.EMPTY, Arrays.asList(new EffectCloudEntity.Config.CloudEffect(Effects.WITHER, 20, 2, false, true)), 60, 4.0f, -1, false, 0.5f);
+                final EffectCloudEntity.Config config54 = new EffectCloudEntity.Config("Withering III", Potions.EMPTY, Arrays.asList(new EffectCloudEntity.Config.CloudEffect(Effects.WITHER, 20, 2, false, true)), 60, 4.0f, -1, false, 0.5f);
 
                 pool.add(Collections.singletonList(config54), EffectCloudAttribute.of(EffectCloudAttribute.Type.SET), 1);
                 return;
@@ -1475,37 +1471,37 @@ public abstract class VaultGearConfig extends Config {
             BOOTS.ADD_MIN_VAULT_LEVEL = new WeightedList.Entry<IntegerAttribute.Generator>((IntegerAttribute.Generator) IntegerAttribute.generator().add(-5, PooledAttribute.Rolls.ofEmpty(), pool -> {
             }).collect(IntegerAttribute.of(NumberAttribute.Type.SET)), 1);
             BOOTS.ADD_REGEN_CLOUD = new WeightedList.Entry<EffectCloudAttribute.Generator>((EffectCloudAttribute.Generator) EffectCloudAttribute.generator().add(new ArrayList<EffectCloudEntity.Config>(), PooledAttribute.Rolls.ofConstant(1), pool -> {
-                final EffectCloudEntity.Config config55=new EffectCloudEntity.Config("Rejuvenate I", Potions.EMPTY, Arrays.asList(new EffectCloudEntity.Config.CloudEffect(Effects.REGENERATION, 20, 0, false, true)), 20, 2.0f, -1, true, 0.5f);
+                final EffectCloudEntity.Config config55 = new EffectCloudEntity.Config("Rejuvenate I", Potions.EMPTY, Arrays.asList(new EffectCloudEntity.Config.CloudEffect(Effects.REGENERATION, 20, 0, false, true)), 20, 2.0f, -1, true, 0.5f);
 
                 pool.add(Collections.singletonList(config55), EffectCloudAttribute.of(EffectCloudAttribute.Type.SET), 1);
-                final EffectCloudEntity.Config config56=new EffectCloudEntity.Config("Rejuvenate II", Potions.EMPTY, Arrays.asList(new EffectCloudEntity.Config.CloudEffect(Effects.REGENERATION, 20, 1, false, true)), 40, 3.0f, -1, true, 0.5f);
+                final EffectCloudEntity.Config config56 = new EffectCloudEntity.Config("Rejuvenate II", Potions.EMPTY, Arrays.asList(new EffectCloudEntity.Config.CloudEffect(Effects.REGENERATION, 20, 1, false, true)), 40, 3.0f, -1, true, 0.5f);
 
                 pool.add(Collections.singletonList(config56), EffectCloudAttribute.of(EffectCloudAttribute.Type.SET), 1);
-                final EffectCloudEntity.Config config57=new EffectCloudEntity.Config("Rejuvenate III", Potions.EMPTY, Arrays.asList(new EffectCloudEntity.Config.CloudEffect(Effects.REGENERATION, 20, 2, false, true)), 60, 4.0f, -1, true, 0.5f);
+                final EffectCloudEntity.Config config57 = new EffectCloudEntity.Config("Rejuvenate III", Potions.EMPTY, Arrays.asList(new EffectCloudEntity.Config.CloudEffect(Effects.REGENERATION, 20, 2, false, true)), 60, 4.0f, -1, true, 0.5f);
 
                 pool.add(Collections.singletonList(config57), EffectCloudAttribute.of(EffectCloudAttribute.Type.SET), 1);
                 return;
             }).collect(EffectCloudAttribute.of(EffectCloudAttribute.Type.MERGE)), 1);
             BOOTS.ADD_WEAKENING_CLOUD = new WeightedList.Entry<EffectCloudAttribute.Generator>((EffectCloudAttribute.Generator) EffectCloudAttribute.generator().add(new ArrayList<EffectCloudEntity.Config>(), PooledAttribute.Rolls.ofConstant(1), pool -> {
-                final EffectCloudEntity.Config config58=new EffectCloudEntity.Config("Weakening I", Potions.EMPTY, Arrays.asList(new EffectCloudEntity.Config.CloudEffect(Effects.WEAKNESS, 20, 0, false, true)), 20, 2.0f, -1, false, 0.5f);
+                final EffectCloudEntity.Config config58 = new EffectCloudEntity.Config("Weakening I", Potions.EMPTY, Arrays.asList(new EffectCloudEntity.Config.CloudEffect(Effects.WEAKNESS, 20, 0, false, true)), 20, 2.0f, -1, false, 0.5f);
 
                 pool.add(Collections.singletonList(config58), EffectCloudAttribute.of(EffectCloudAttribute.Type.SET), 1);
-                final EffectCloudEntity.Config config59=new EffectCloudEntity.Config("Weakening II", Potions.EMPTY, Arrays.asList(new EffectCloudEntity.Config.CloudEffect(Effects.WEAKNESS, 20, 1, false, true)), 40, 3.0f, -1, false, 0.5f);
+                final EffectCloudEntity.Config config59 = new EffectCloudEntity.Config("Weakening II", Potions.EMPTY, Arrays.asList(new EffectCloudEntity.Config.CloudEffect(Effects.WEAKNESS, 20, 1, false, true)), 40, 3.0f, -1, false, 0.5f);
 
                 pool.add(Collections.singletonList(config59), EffectCloudAttribute.of(EffectCloudAttribute.Type.SET), 1);
-                final EffectCloudEntity.Config config60=new EffectCloudEntity.Config("Weakening III", Potions.EMPTY, Arrays.asList(new EffectCloudEntity.Config.CloudEffect(Effects.WEAKNESS, 20, 2, false, true)), 60, 4.0f, -1, false, 0.5f);
+                final EffectCloudEntity.Config config60 = new EffectCloudEntity.Config("Weakening III", Potions.EMPTY, Arrays.asList(new EffectCloudEntity.Config.CloudEffect(Effects.WEAKNESS, 20, 2, false, true)), 60, 4.0f, -1, false, 0.5f);
 
                 pool.add(Collections.singletonList(config60), EffectCloudAttribute.of(EffectCloudAttribute.Type.SET), 1);
                 return;
             }).collect(EffectCloudAttribute.of(EffectCloudAttribute.Type.MERGE)), 1);
             BOOTS.ADD_WITHER_CLOUD = new WeightedList.Entry<EffectCloudAttribute.Generator>((EffectCloudAttribute.Generator) EffectCloudAttribute.generator().add(new ArrayList<EffectCloudEntity.Config>(), PooledAttribute.Rolls.ofConstant(1), pool -> {
-                final EffectCloudEntity.Config config61=new EffectCloudEntity.Config("Withering I", Potions.EMPTY, Arrays.asList(new EffectCloudEntity.Config.CloudEffect(Effects.WITHER, 20, 0, false, true)), 20, 2.0f, -1, false, 0.5f);
+                final EffectCloudEntity.Config config61 = new EffectCloudEntity.Config("Withering I", Potions.EMPTY, Arrays.asList(new EffectCloudEntity.Config.CloudEffect(Effects.WITHER, 20, 0, false, true)), 20, 2.0f, -1, false, 0.5f);
 
                 pool.add(Collections.singletonList(config61), EffectCloudAttribute.of(EffectCloudAttribute.Type.SET), 1);
-                final EffectCloudEntity.Config config62=new EffectCloudEntity.Config("Withering II", Potions.EMPTY, Arrays.asList(new EffectCloudEntity.Config.CloudEffect(Effects.WITHER, 20, 1, false, true)), 40, 3.0f, -1, false, 0.5f);
+                final EffectCloudEntity.Config config62 = new EffectCloudEntity.Config("Withering II", Potions.EMPTY, Arrays.asList(new EffectCloudEntity.Config.CloudEffect(Effects.WITHER, 20, 1, false, true)), 40, 3.0f, -1, false, 0.5f);
 
                 pool.add(Collections.singletonList(config62), EffectCloudAttribute.of(EffectCloudAttribute.Type.SET), 1);
-                final EffectCloudEntity.Config config63=new EffectCloudEntity.Config("Withering III", Potions.EMPTY, Arrays.asList(new EffectCloudEntity.Config.CloudEffect(Effects.WITHER, 20, 2, false, true)), 60, 4.0f, -1, false, 0.5f);
+                final EffectCloudEntity.Config config63 = new EffectCloudEntity.Config("Withering III", Potions.EMPTY, Arrays.asList(new EffectCloudEntity.Config.CloudEffect(Effects.WITHER, 20, 2, false, true)), 60, 4.0f, -1, false, 0.5f);
 
                 pool.add(Collections.singletonList(config63), EffectCloudAttribute.of(EffectCloudAttribute.Type.SET), 1);
                 return;
@@ -1519,25 +1515,25 @@ public abstract class VaultGearConfig extends Config {
             ALL_IDOLS.ADD_DURABILITY = new WeightedList.Entry<IntegerAttribute.Generator>((IntegerAttribute.Generator) IntegerAttribute.generator().add(200, PooledAttribute.Rolls.ofBinomial(5, 0.5), pool -> pool.add(50, IntegerAttribute.of(NumberAttribute.Type.ADD), 1)).collect(IntegerAttribute.of(NumberAttribute.Type.SET)), 20);
             ALL_IDOLS.ADD_DURABILITY_2 = new WeightedList.Entry<IntegerAttribute.Generator>((IntegerAttribute.Generator) IntegerAttribute.generator().add(200, PooledAttribute.Rolls.ofBinomial(5, 0.5), pool -> pool.add(50, IntegerAttribute.of(NumberAttribute.Type.ADD), 1)).collect(IntegerAttribute.of(NumberAttribute.Type.SET)), 20);
             ALL_IDOLS.ADD_WEAKENING_CLOUD = new WeightedList.Entry<EffectCloudAttribute.Generator>((EffectCloudAttribute.Generator) EffectCloudAttribute.generator().add(new ArrayList<EffectCloudEntity.Config>(), PooledAttribute.Rolls.ofConstant(1), pool -> {
-                final EffectCloudEntity.Config config64=new EffectCloudEntity.Config("Weakening I", Potions.EMPTY, Arrays.asList(new EffectCloudEntity.Config.CloudEffect(Effects.WEAKNESS, 40, 0, false, true)), 40, 2.0f, 2824704, false, 0.04f);
+                final EffectCloudEntity.Config config64 = new EffectCloudEntity.Config("Weakening I", Potions.EMPTY, Arrays.asList(new EffectCloudEntity.Config.CloudEffect(Effects.WEAKNESS, 40, 0, false, true)), 40, 2.0f, 2824704, false, 0.04f);
 
                 pool.add(Collections.singletonList(config64), EffectCloudAttribute.of(EffectCloudAttribute.Type.SET), 6);
-                final EffectCloudEntity.Config config65=new EffectCloudEntity.Config("Weakening II", Potions.EMPTY, Arrays.asList(new EffectCloudEntity.Config.CloudEffect(Effects.WEAKNESS, 40, 0, false, true)), 40, 3.0f, 2824704, false, 0.05f);
+                final EffectCloudEntity.Config config65 = new EffectCloudEntity.Config("Weakening II", Potions.EMPTY, Arrays.asList(new EffectCloudEntity.Config.CloudEffect(Effects.WEAKNESS, 40, 0, false, true)), 40, 3.0f, 2824704, false, 0.05f);
 
                 pool.add(Collections.singletonList(config65), EffectCloudAttribute.of(EffectCloudAttribute.Type.SET), 3);
-                final EffectCloudEntity.Config config66=new EffectCloudEntity.Config("Weakening III", Potions.EMPTY, Arrays.asList(new EffectCloudEntity.Config.CloudEffect(Effects.WEAKNESS, 60, 0, false, true)), 40, 4.0f, 2824704, false, 0.06f);
+                final EffectCloudEntity.Config config66 = new EffectCloudEntity.Config("Weakening III", Potions.EMPTY, Arrays.asList(new EffectCloudEntity.Config.CloudEffect(Effects.WEAKNESS, 60, 0, false, true)), 40, 4.0f, 2824704, false, 0.06f);
 
                 pool.add(Collections.singletonList(config66), EffectCloudAttribute.of(EffectCloudAttribute.Type.SET), 1);
                 return;
             }).collect(EffectCloudAttribute.of(EffectCloudAttribute.Type.MERGE)), 20);
             ALL_IDOLS.ADD_WITHER_CLOUD = new WeightedList.Entry<EffectCloudAttribute.Generator>((EffectCloudAttribute.Generator) EffectCloudAttribute.generator().add(new ArrayList<EffectCloudEntity.Config>(), PooledAttribute.Rolls.ofConstant(1), pool -> {
-                final EffectCloudEntity.Config config67=new EffectCloudEntity.Config("Withering I", Potions.EMPTY, Arrays.asList(new EffectCloudEntity.Config.CloudEffect(Effects.WITHER, 60, 0, false, true)), 40, 2.0f, 0, false, 0.05f);
+                final EffectCloudEntity.Config config67 = new EffectCloudEntity.Config("Withering I", Potions.EMPTY, Arrays.asList(new EffectCloudEntity.Config.CloudEffect(Effects.WITHER, 60, 0, false, true)), 40, 2.0f, 0, false, 0.05f);
 
                 pool.add(Collections.singletonList(config67), EffectCloudAttribute.of(EffectCloudAttribute.Type.SET), 6);
-                final EffectCloudEntity.Config config68=new EffectCloudEntity.Config("Withering II", Potions.EMPTY, Arrays.asList(new EffectCloudEntity.Config.CloudEffect(Effects.WITHER, 60, 1, false, true)), 60, 3.0f, 0, false, 0.075f);
+                final EffectCloudEntity.Config config68 = new EffectCloudEntity.Config("Withering II", Potions.EMPTY, Arrays.asList(new EffectCloudEntity.Config.CloudEffect(Effects.WITHER, 60, 1, false, true)), 60, 3.0f, 0, false, 0.075f);
 
                 pool.add(Collections.singletonList(config68), EffectCloudAttribute.of(EffectCloudAttribute.Type.SET), 3);
-                final EffectCloudEntity.Config config69=new EffectCloudEntity.Config("Withering III", Potions.EMPTY, Arrays.asList(new EffectCloudEntity.Config.CloudEffect(Effects.WITHER, 60, 2, false, true)), 60, 4.0f, 0, false, 0.1f);
+                final EffectCloudEntity.Config config69 = new EffectCloudEntity.Config("Withering III", Potions.EMPTY, Arrays.asList(new EffectCloudEntity.Config.CloudEffect(Effects.WITHER, 60, 2, false, true)), 60, 4.0f, 0, false, 0.1f);
 
                 pool.add(Collections.singletonList(config69), EffectCloudAttribute.of(EffectCloudAttribute.Type.SET), 1);
                 return;
@@ -1550,13 +1546,13 @@ public abstract class VaultGearConfig extends Config {
             IDOL_BENEVOLENT.EXTRA_HEALTH = new WeightedList.Entry<FloatAttribute.Generator>((FloatAttribute.Generator) FloatAttribute.generator().add(1.0f, PooledAttribute.Rolls.ofBinomial(3, 0.5), pool -> pool.add(1.0f, FloatAttribute.of(NumberAttribute.Type.ADD), 1)).collect(FloatAttribute.of(NumberAttribute.Type.SET)), 20);
             IDOL_BENEVOLENT.ADD_EXTRA_HEALTH = new WeightedList.Entry<FloatAttribute.Generator>((FloatAttribute.Generator) FloatAttribute.generator().add(1.0f, PooledAttribute.Rolls.ofBinomial(3, 0.5), pool -> pool.add(1.0f, FloatAttribute.of(NumberAttribute.Type.ADD), 1)).collect(FloatAttribute.of(NumberAttribute.Type.SET)), 20);
             IDOL_BENEVOLENT.ADD_REGEN_CLOUD = new WeightedList.Entry<EffectCloudAttribute.Generator>((EffectCloudAttribute.Generator) EffectCloudAttribute.generator().add(new ArrayList<EffectCloudEntity.Config>(), PooledAttribute.Rolls.ofConstant(1), pool -> {
-                final EffectCloudEntity.Config config70=new EffectCloudEntity.Config("Rejuvenate I", Potions.EMPTY, Arrays.asList(new EffectCloudEntity.Config.CloudEffect(Effects.HEAL, 60, 0, false, true)), 60, 2.0f, 16711772, true, 0.04f);
+                final EffectCloudEntity.Config config70 = new EffectCloudEntity.Config("Rejuvenate I", Potions.EMPTY, Arrays.asList(new EffectCloudEntity.Config.CloudEffect(Effects.HEAL, 60, 0, false, true)), 60, 2.0f, 16711772, true, 0.04f);
 
                 pool.add(Collections.singletonList(config70), EffectCloudAttribute.of(EffectCloudAttribute.Type.SET), 6);
-                final EffectCloudEntity.Config config71=new EffectCloudEntity.Config("Rejuvenate II", Potions.EMPTY, Arrays.asList(new EffectCloudEntity.Config.CloudEffect(Effects.HEAL, 60, 1, false, true)), 40, 3.0f, -1, true, 0.04f);
+                final EffectCloudEntity.Config config71 = new EffectCloudEntity.Config("Rejuvenate II", Potions.EMPTY, Arrays.asList(new EffectCloudEntity.Config.CloudEffect(Effects.HEAL, 60, 1, false, true)), 40, 3.0f, -1, true, 0.04f);
 
                 pool.add(Collections.singletonList(config71), EffectCloudAttribute.of(EffectCloudAttribute.Type.SET), 3);
-                final EffectCloudEntity.Config config72=new EffectCloudEntity.Config("Rejuvenate III", Potions.EMPTY, Arrays.asList(new EffectCloudEntity.Config.CloudEffect(Effects.HEAL, 60, 2, false, true)), 60, 3.0f, -1, true, 0.04f);
+                final EffectCloudEntity.Config config72 = new EffectCloudEntity.Config("Rejuvenate III", Potions.EMPTY, Arrays.asList(new EffectCloudEntity.Config.CloudEffect(Effects.HEAL, 60, 2, false, true)), 60, 3.0f, -1, true, 0.04f);
 
                 pool.add(Collections.singletonList(config72), EffectCloudAttribute.of(EffectCloudAttribute.Type.SET), 1);
                 return;

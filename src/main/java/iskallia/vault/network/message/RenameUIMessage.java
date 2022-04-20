@@ -1,7 +1,3 @@
-// 
-// Decompiled by Procyon v0.6.0
-// 
-
 package iskallia.vault.network.message;
 
 import iskallia.vault.block.entity.CryoChamberTileEntity;
@@ -18,23 +14,22 @@ import net.minecraftforge.fml.network.NetworkEvent;
 
 import java.util.function.Supplier;
 
-public class RenameUIMessage
-{
+public class RenameUIMessage {
     public RenameType renameType;
     public CompoundNBT payload;
-    
+
     public static void encode(final RenameUIMessage message, final PacketBuffer buffer) {
         buffer.writeInt(message.renameType.ordinal());
         buffer.writeNbt(message.payload);
     }
-    
+
     public static RenameUIMessage decode(final PacketBuffer buffer) {
         final RenameUIMessage message = new RenameUIMessage();
         message.renameType = RenameType.values()[buffer.readInt()];
         message.payload = buffer.readNbt();
         return message;
     }
-    
+
     public static void handle(final RenameUIMessage message, final Supplier<NetworkEvent.Context> contextSupplier) {
         final NetworkEvent.Context context = contextSupplier.get();
         context.enqueueWork(() -> {
@@ -45,12 +40,11 @@ public class RenameUIMessage
                     final BlockPos statuePos = new BlockPos(data.getInt("x"), data.getInt("y"), data.getInt("z"));
                     final TileEntity te = sender.getCommandSenderWorld().getBlockEntity(statuePos);
                     if (te instanceof LootStatueTileEntity) {
-                        final LootStatueTileEntity statue = (LootStatueTileEntity)te;
+                        final LootStatueTileEntity statue = (LootStatueTileEntity) te;
                         statue.getSkin().updateSkin(data.getString("PlayerNickname"));
                         statue.sendUpdates();
                         break;
-                    }
-                    else {
+                    } else {
                         break;
                     }
                 }
@@ -64,13 +58,12 @@ public class RenameUIMessage
                     final String name = data.getString("EternalName");
                     final TileEntity te2 = sender.getCommandSenderWorld().getBlockEntity(pos);
                     if (te2 instanceof CryoChamberTileEntity) {
-                        final CryoChamberTileEntity chamber = (CryoChamberTileEntity)te2;
+                        final CryoChamberTileEntity chamber = (CryoChamberTileEntity) te2;
                         chamber.renameEternal(name);
                         chamber.getSkin().updateSkin(name);
                         chamber.sendUpdates();
                         break;
-                    }
-                    else {
+                    } else {
                         break;
                     }
                 }
@@ -79,7 +72,7 @@ public class RenameUIMessage
         });
         context.setPacketHandled(true);
     }
-    
+
     public static RenameUIMessage updateName(final RenameType type, final CompoundNBT nbt) {
         final RenameUIMessage message = new RenameUIMessage();
         message.renameType = type;

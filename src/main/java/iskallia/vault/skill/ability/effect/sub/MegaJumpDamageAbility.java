@@ -1,7 +1,3 @@
-// 
-// Decompiled by Procyon v0.6.0
-// 
-
 package iskallia.vault.skill.ability.effect.sub;
 
 import iskallia.vault.event.ActiveFlags;
@@ -20,15 +16,14 @@ import net.minecraft.world.IWorld;
 
 import java.util.List;
 
-public class MegaJumpDamageAbility extends MegaJumpAbility<MegaJumpDamageConfig>
-{
+public class MegaJumpDamageAbility extends MegaJumpAbility<MegaJumpDamageConfig> {
     @Override
     public boolean onAction(final MegaJumpDamageConfig config, final ServerPlayerEntity player, final boolean active) {
         if (super.onAction(config, player, active)) {
-            final List<LivingEntity> entities = EntityHelper.getNearby((IWorld)player.getCommandSenderWorld(), (Vector3i)player.blockPosition(), config.getRadius(), LivingEntity.class);
+            final List<LivingEntity> entities = EntityHelper.getNearby((IWorld) player.getCommandSenderWorld(), (Vector3i) player.blockPosition(), config.getRadius(), LivingEntity.class);
             entities.removeIf(e -> e instanceof PlayerEntity);
-            final float atk = (float)player.getAttributeValue(Attributes.ATTACK_DAMAGE) * config.getPercentAttackDamageDealt();
-            final DamageSource src = DamageSource.playerAttack((PlayerEntity)player);
+            final float atk = (float) player.getAttributeValue(Attributes.ATTACK_DAMAGE) * config.getPercentAttackDamageDealt();
+            final DamageSource src = DamageSource.playerAttack((PlayerEntity) player);
             for (final LivingEntity entity : entities) {
                 ActiveFlags.IS_AOE_ATTACKING.runIfNotSet(() -> {
                     if (entity.hurt(src, atk)) {

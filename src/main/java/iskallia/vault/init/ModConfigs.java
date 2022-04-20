@@ -1,14 +1,9 @@
-// 
-// Decompiled by Procyon v0.6.0
-// 
-
 package iskallia.vault.init;
 
 import iskallia.vault.Vault;
 import iskallia.vault.config.*;
 
-public class ModConfigs
-{
+public class ModConfigs {
     public static AbilitiesConfig ABILITIES;
     public static AbilitiesGUIConfig ABILITIES_GUI;
     public static TalentsConfig TALENTS;
@@ -86,10 +81,10 @@ public class ModConfigs
     public static VaultRuneConfig VAULT_RUNE;
     public static OtherSideConfig OTHER_SIDE;
     public static TooltipConfig TOOLTIP;
-    
+
     public static void registerCompressionConfigs() {
     }
-    
+
     public static void register() {
         ModConfigs.ABILITIES = new AbilitiesConfig().readConfig();
         ModConfigs.ABILITIES_GUI = new AbilitiesGUIConfig().readConfig();

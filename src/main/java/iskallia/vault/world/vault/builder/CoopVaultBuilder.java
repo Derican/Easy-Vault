@@ -1,7 +1,3 @@
-// 
-// Decompiled by Procyon v0.6.0
-// 
-
 package iskallia.vault.world.vault.builder;
 
 import iskallia.vault.item.crystal.CrystalData;
@@ -16,17 +12,16 @@ import net.minecraft.world.server.ServerWorld;
 import java.util.Optional;
 import java.util.UUID;
 
-public class CoopVaultBuilder extends VaultRaidBuilder
-{
+public class CoopVaultBuilder extends VaultRaidBuilder {
     private static final CoopVaultBuilder INSTANCE;
-    
+
     private CoopVaultBuilder() {
     }
-    
+
     public static CoopVaultBuilder getInstance() {
         return CoopVaultBuilder.INSTANCE;
     }
-    
+
     @Override
     public VaultRaid.Builder initializeBuilder(final ServerWorld world, final ServerPlayerEntity player, final CrystalData crystal) {
         final VaultRaid.Builder builder = this.getDefaultBuilder(crystal, world, player);
@@ -42,15 +37,14 @@ public class CoopVaultBuilder extends VaultRaidBuilder
                 }
                 return;
             });
-        }
-        else {
+        } else {
             builder.addPlayer(VaultPlayerType.RUNNER, player);
             builder.set(VaultRaid.HOST, player.getUUID());
         }
         builder.setLevelInitializer(VaultRaid.INIT_LEVEL_COOP);
         return builder;
     }
-    
+
     @Override
     protected int getVaultLevelForObjective(final ServerWorld world, final ServerPlayerEntity player) {
         return VaultPartyData.get(world).getParty(player.getUUID()).map(party -> {
@@ -58,7 +52,7 @@ public class CoopVaultBuilder extends VaultRaidBuilder
             return PlayerVaultStatsData.get(world).getVaultStats(leader).getVaultLevel();
         }).orElse(super.getVaultLevelForObjective(world, player));
     }
-    
+
     static {
         INSTANCE = new CoopVaultBuilder();
     }

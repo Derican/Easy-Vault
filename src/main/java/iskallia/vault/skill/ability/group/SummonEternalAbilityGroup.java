@@ -1,7 +1,3 @@
-// 
-// Decompiled by Procyon v0.6.0
-// 
-
 package iskallia.vault.skill.ability.group;
 
 import com.google.gson.annotations.Expose;
@@ -15,22 +11,21 @@ import iskallia.vault.skill.ability.effect.SummonEternalAbility;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SummonEternalAbilityGroup extends AbilityGroup<SummonEternalConfig, SummonEternalAbility<SummonEternalConfig>>
-{
+public class SummonEternalAbilityGroup extends AbilityGroup<SummonEternalConfig, SummonEternalAbility<SummonEternalConfig>> {
     @Expose
     private final List<SummonEternalCountConfig> countLevelConfiguration;
     @Expose
     private final List<SummonEternalDamageConfig> damageLevelConfiguration;
     @Expose
     private final List<SummonEternalDebuffConfig> debuffLevelConfiguration;
-    
+
     private SummonEternalAbilityGroup() {
         super("Summon Eternal");
         this.countLevelConfiguration = new ArrayList<SummonEternalCountConfig>();
         this.damageLevelConfiguration = new ArrayList<SummonEternalDamageConfig>();
         this.debuffLevelConfiguration = new ArrayList<SummonEternalDebuffConfig>();
     }
-    
+
     @Override
     protected SummonEternalConfig getSubConfig(final String specialization, final int level) {
         switch (specialization) {
@@ -48,7 +43,7 @@ public class SummonEternalAbilityGroup extends AbilityGroup<SummonEternalConfig,
             }
         }
     }
-    
+
     @Override
     public String getSpecializationName(final String specialization) {
         switch (specialization) {
@@ -66,7 +61,7 @@ public class SummonEternalAbilityGroup extends AbilityGroup<SummonEternalConfig,
             }
         }
     }
-    
+
     public static SummonEternalAbilityGroup defaultConfig() {
         final SummonEternalAbilityGroup group = new SummonEternalAbilityGroup();
         group.addLevel(new SummonEternalConfig(1, 12000, 1, 12000, 0.2f, true));

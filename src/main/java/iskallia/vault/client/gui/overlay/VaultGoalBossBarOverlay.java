@@ -1,7 +1,3 @@
-// 
-// Decompiled by Procyon v0.6.0
-// 
-
 package iskallia.vault.client.gui.overlay;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
@@ -15,8 +11,7 @@ import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 @OnlyIn(Dist.CLIENT)
-public class VaultGoalBossBarOverlay
-{
+public class VaultGoalBossBarOverlay {
     @SubscribeEvent
     public static void onBossBarRender(final RenderGameOverlayEvent.Pre event) {
         final VaultOverlayMessage.OverlayType type = ClientVaultRaidData.getOverlayType();

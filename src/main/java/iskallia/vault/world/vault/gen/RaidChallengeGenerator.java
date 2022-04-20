@@ -1,7 +1,3 @@
-// 
-// Decompiled by Procyon v0.6.0
-// 
-
 package iskallia.vault.world.vault.gen;
 
 import iskallia.vault.block.VaultPortalBlock;
@@ -12,9 +8,7 @@ import iskallia.vault.world.gen.PortalPlacer;
 import iskallia.vault.world.gen.structure.JigsawGenerator;
 import iskallia.vault.world.vault.VaultRaid;
 import iskallia.vault.world.vault.gen.piece.VaultPiece;
-import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
-import net.minecraft.state.Property;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
@@ -24,18 +18,17 @@ import net.minecraft.world.gen.feature.structure.Structure;
 import net.minecraft.world.gen.feature.structure.StructureStart;
 import net.minecraft.world.server.ServerWorld;
 
-public class RaidChallengeGenerator extends VaultGenerator
-{
+public class RaidChallengeGenerator extends VaultGenerator {
     public static final int REGION_SIZE = 8192;
-    
+
     public RaidChallengeGenerator(final ResourceLocation id) {
         super(id);
     }
-    
+
     public PortalPlacer getPortalPlacer() {
         return new PortalPlacer((pos, random, facing) -> ModBlocks.VAULT_PORTAL.defaultBlockState().setValue(VaultPortalBlock.AXIS, facing.getAxis()), (pos, random, facing) -> Blocks.POLISHED_BLACKSTONE_BRICKS.defaultBlockState());
     }
-    
+
     @Override
     public boolean generate(final ServerWorld world, final VaultRaid vault, final BlockPos.Mutable pos) {
         final MutableBoundingBox box = vault.getProperties().getBase(VaultRaid.BOUNDING_BOX).orElseGet(() -> {
@@ -50,13 +43,12 @@ public class RaidChallengeGenerator extends VaultGenerator
             this.startChunk = new ChunkPos(jigsaw.getStartPos().getX() >> 4, jigsaw.getStartPos().getZ() >> 4);
             final StructureStart<?> start = ModFeatures.RAID_CHALLENGE_FEATURE.generate(jigsaw, world.registryAccess(), world.getChunkSource().generator, world.getStructureManager(), 0, world.getSeed());
             jigsaw.getGeneratedPieces().stream().flatMap(piece -> VaultPiece.of(piece).stream()).forEach(this.pieces::add);
-            world.getChunk(chunkPos.x, chunkPos.z, ChunkStatus.EMPTY, true).setStartForFeature((Structure)ModStructures.RAID_CHALLENGE, (StructureStart)start);
+            world.getChunk(chunkPos.x, chunkPos.z, ChunkStatus.EMPTY, true).setStartForFeature((Structure) ModStructures.RAID_CHALLENGE, (StructureStart) start);
             this.tick(world, vault);
             if (!vault.getProperties().exists(VaultRaid.START_POS) || !vault.getProperties().exists(VaultRaid.START_FACING)) {
                 return this.findStartPosition(world, vault, chunkPos, this::getPortalPlacer);
             }
-        }
-        catch (final Exception exc) {
+        } catch (final Exception exc) {
             exc.printStackTrace();
             return false;
         }

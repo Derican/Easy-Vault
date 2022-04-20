@@ -1,7 +1,3 @@
-// 
-// Decompiled by Procyon v0.6.0
-// 
-
 package iskallia.vault.world.gen;
 
 import net.minecraft.block.BlockState;
@@ -12,16 +8,15 @@ import net.minecraft.world.IWorld;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PortalPlacer
-{
+public class PortalPlacer {
     private final BlockPlacer portalPlacer;
     private final BlockPlacer framePlacer;
-    
+
     public PortalPlacer(final BlockPlacer portal, final BlockPlacer frame) {
         this.portalPlacer = portal;
         this.framePlacer = frame;
     }
-    
+
     public List<BlockPos> place(final IWorld world, BlockPos pos, final Direction facing, final int width, final int height) {
         pos = pos.relative(Direction.DOWN).relative(facing.getOpposite());
         final List<BlockPos> portalPlacements = new ArrayList<BlockPos>();
@@ -31,8 +26,7 @@ public class PortalPlacer
             for (int x = 1; x < width + 1; ++x) {
                 if (y == 0 || y == height + 1) {
                     this.place(world, pos.relative(facing, x).above(y), facing, this.framePlacer);
-                }
-                else {
+                } else {
                     final BlockPos placePos = pos.relative(facing, x).above(y);
                     if (this.place(world, placePos, facing, this.portalPlacer)) {
                         portalPlacements.add(placePos);
@@ -42,11 +36,11 @@ public class PortalPlacer
         }
         return portalPlacements;
     }
-    
+
     protected boolean place(final IWorld world, final BlockPos pos, final Direction direction, final BlockPlacer provider) {
         return this.place(world, pos, provider.getState(pos, world.getRandom(), direction));
     }
-    
+
     protected boolean place(final IWorld world, final BlockPos pos, final BlockState state) {
         return state != null && world.setBlock(pos, state, 3);
     }

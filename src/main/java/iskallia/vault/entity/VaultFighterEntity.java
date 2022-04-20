@@ -1,7 +1,3 @@
-// 
-// Decompiled by Procyon v0.6.0
-// 
-
 package iskallia.vault.entity;
 
 import com.google.common.base.Strings;
@@ -29,15 +25,14 @@ import net.minecraft.world.IServerWorld;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 
-public class VaultFighterEntity extends FighterEntity
-{
+public class VaultFighterEntity extends FighterEntity {
     public VaultFighterEntity(final EntityType<? extends ZombieEntity> type, final World world) {
         super(type, world);
     }
-    
+
     @Override
     protected void dropFromLootTable(final DamageSource source, final boolean attackedRecently) {
-        final ServerWorld world = (ServerWorld)this.level;
+        final ServerWorld world = (ServerWorld) this.level;
         final VaultRaid vault = VaultRaidData.get(world).getAt(world, this.blockPosition());
         if (vault != null) {
             vault.getProperties().getBase(VaultRaid.HOST).flatMap(vault::getPlayer).ifPresent(player -> {
@@ -52,19 +47,19 @@ public class VaultFighterEntity extends FighterEntity
         }
         super.dropFromLootTable(source, attackedRecently);
     }
-    
+
     @Override
     public ILivingEntityData finalizeSpawn(final IServerWorld world, final DifficultyInstance difficulty, final SpawnReason reason, final ILivingEntityData spawnData, final CompoundNBT dataTag) {
         final ILivingEntityData livingData = super.finalizeSpawn(world, difficulty, reason, spawnData, dataTag);
-        final ServerWorld sWorld = (ServerWorld)this.level;
+        final ServerWorld sWorld = (ServerWorld) this.level;
         if (!this.level.isClientSide()) {
             final VaultRaid vault = VaultRaidData.get(sWorld).getAt(sWorld, this.blockPosition());
             if (vault != null) {
                 final String name = NameProviderPublic.getRandomName();
                 final String star = String.valueOf('\u2726');
                 final int count = Math.max(ModEntities.VAULT_FIGHTER_TYPES.indexOf(this.getType()), 0);
-                final IFormattableTextComponent customName = new StringTextComponent("").append((ITextComponent)new StringTextComponent(Strings.repeat(star, count)).withStyle(TextFormatting.GOLD)).append(" ").append((ITextComponent)new StringTextComponent(name));
-                this.setCustomName((ITextComponent)customName);
+                final IFormattableTextComponent customName = new StringTextComponent("").append((ITextComponent) new StringTextComponent(Strings.repeat(star, count)).withStyle(TextFormatting.GOLD)).append(" ").append((ITextComponent) new StringTextComponent(name));
+                this.setCustomName((ITextComponent) customName);
                 this.getPersistentData().putString("VaultPlayerName", name);
             }
         }

@@ -1,7 +1,3 @@
-// 
-// Decompiled by Procyon v0.6.0
-// 
-
 package iskallia.vault.recipe;
 
 import iskallia.vault.init.ModItems;
@@ -15,12 +11,11 @@ import net.minecraft.util.IItemProvider;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 
-public class UnidentifiedRelicRecipe extends SpecialRecipe
-{
+public class UnidentifiedRelicRecipe extends SpecialRecipe {
     public UnidentifiedRelicRecipe(final ResourceLocation id) {
         super(id);
     }
-    
+
     public boolean matches(final CraftingInventory inv, final World world) {
         RelicPartItem relic = null;
         int diamondCount = 0;
@@ -30,29 +25,28 @@ public class UnidentifiedRelicRecipe extends SpecialRecipe
                 if (diamondCount++ == 8) {
                     return false;
                 }
-            }
-            else {
+            } else {
                 if (!(stack.getItem() instanceof RelicPartItem)) {
                     return false;
                 }
                 if (relic != null) {
                     return false;
                 }
-                relic = (RelicPartItem)stack.getItem();
+                relic = (RelicPartItem) stack.getItem();
             }
         }
         return true;
     }
-    
+
     public ItemStack assemble(final CraftingInventory inv) {
-        return new ItemStack((IItemProvider)ModItems.UNIDENTIFIED_RELIC);
+        return new ItemStack((IItemProvider) ModItems.UNIDENTIFIED_RELIC);
     }
-    
+
     public boolean canCraftInDimensions(final int width, final int height) {
         return width * height >= 9;
     }
-    
+
     public IRecipeSerializer<?> getSerializer() {
-        return (IRecipeSerializer<?>)ModRecipes.Serializer.CRAFTING_SPECIAL_UNIDENTIFIED_RELIC;
+        return (IRecipeSerializer<?>) ModRecipes.Serializer.CRAFTING_SPECIAL_UNIDENTIFIED_RELIC;
     }
 }

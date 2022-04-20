@@ -1,7 +1,3 @@
-// 
-// Decompiled by Procyon v0.6.0
-// 
-
 package iskallia.vault.item;
 
 import iskallia.vault.Vault;
@@ -20,25 +16,24 @@ import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
-public class BasicScavengerItem extends BasicTooltipItem
-{
+public class BasicScavengerItem extends BasicTooltipItem {
     private static final ITextComponent SCAVENGER_ITEM_HINT;
-    
+
     public BasicScavengerItem(final String id) {
         super(Vault.id("scavenger_" + id), new Item.Properties().tab(ModItems.SCAVENGER_GROUP), Collections.singletonList(BasicScavengerItem.SCAVENGER_ITEM_HINT));
     }
-    
+
     public BasicScavengerItem(final ResourceLocation id, final Item.Properties properties, final List<ITextComponent> components) {
         super(id, properties, MiscUtils.concat(components, BasicScavengerItem.SCAVENGER_ITEM_HINT));
     }
-    
+
     public static void setVaultIdentifier(final ItemStack stack, final UUID identifier) {
         if (!(stack.getItem() instanceof BasicScavengerItem)) {
             return;
         }
         stack.getOrCreateTag().putUUID("vault_id", identifier);
     }
-    
+
     @Nullable
     public static UUID getVaultIdentifier(final ItemStack stack) {
         if (!(stack.getItem() instanceof BasicScavengerItem)) {
@@ -50,8 +45,8 @@ public class BasicScavengerItem extends BasicTooltipItem
         }
         return stack.getOrCreateTag().getUUID("vault_id");
     }
-    
+
     static {
-        SCAVENGER_ITEM_HINT = (ITextComponent)new TranslationTextComponent("tooltip.the_vault.scavenger_item").withStyle(TextFormatting.GOLD);
+        SCAVENGER_ITEM_HINT = (ITextComponent) new TranslationTextComponent("tooltip.the_vault.scavenger_item").withStyle(TextFormatting.GOLD);
     }
 }

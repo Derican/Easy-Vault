@@ -1,7 +1,3 @@
-// 
-// Decompiled by Procyon v0.6.0
-// 
-
 package iskallia.vault.skill.ability.group;
 
 import com.google.gson.annotations.Expose;
@@ -15,22 +11,21 @@ import iskallia.vault.skill.ability.effect.GhostWalkAbility;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GhostWalkAbilityGroup extends AbilityGroup<GhostWalkConfig, GhostWalkAbility<GhostWalkConfig>>
-{
+public class GhostWalkAbilityGroup extends AbilityGroup<GhostWalkConfig, GhostWalkAbility<GhostWalkConfig>> {
     @Expose
     private final List<GhostWalkDamageConfig> damageLevelConfiguration;
     @Expose
     private final List<GhostWalkParryConfig> parryLevelConfiguration;
     @Expose
     private final List<GhostWalkRegenerationConfig> regenerationLevelConfiguration;
-    
+
     private GhostWalkAbilityGroup() {
         super("Ghost Walk");
         this.damageLevelConfiguration = new ArrayList<GhostWalkDamageConfig>();
         this.parryLevelConfiguration = new ArrayList<GhostWalkParryConfig>();
         this.regenerationLevelConfiguration = new ArrayList<GhostWalkRegenerationConfig>();
     }
-    
+
     @Override
     protected GhostWalkConfig getSubConfig(final String specialization, final int level) {
         switch (specialization) {
@@ -48,7 +43,7 @@ public class GhostWalkAbilityGroup extends AbilityGroup<GhostWalkConfig, GhostWa
             }
         }
     }
-    
+
     @Override
     public String getSpecializationName(final String specialization) {
         switch (specialization) {
@@ -66,7 +61,7 @@ public class GhostWalkAbilityGroup extends AbilityGroup<GhostWalkConfig, GhostWa
             }
         }
     }
-    
+
     public static GhostWalkAbilityGroup defaultConfig() {
         final GhostWalkAbilityGroup group = new GhostWalkAbilityGroup();
         group.addLevel(new GhostWalkConfig(1, 0, 100));

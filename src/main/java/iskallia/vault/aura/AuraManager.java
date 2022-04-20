@@ -1,7 +1,3 @@
-// 
-// Decompiled by Procyon v0.6.0
-// 
-
 package iskallia.vault.aura;
 
 import net.minecraft.entity.Entity;
@@ -13,23 +9,21 @@ import net.minecraftforge.fml.common.Mod;
 
 import javax.annotation.Nonnull;
 import java.util.*;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 @Mod.EventBusSubscriber
-public class AuraManager
-{
+public class AuraManager {
     private static final AuraManager INSTANCE;
     private final Map<RegistryKey<World>, Set<ActiveAura>> activeAuras;
-    
+
     private AuraManager() {
         this.activeAuras = new HashMap<RegistryKey<World>, Set<ActiveAura>>();
     }
-    
+
     public static AuraManager getInstance() {
         return AuraManager.INSTANCE;
     }
-    
+
     @SubscribeEvent
     public static void onTick(final TickEvent.WorldTickEvent event) {
         if (event.world.isClientSide() || event.phase != TickEvent.Phase.START) {
@@ -43,11 +37,11 @@ public class AuraManager
         auras.forEach(ActiveAura::updateFromProvider);
         auras.forEach(aura -> aura.getAura().onTick(event.world, aura));
     }
-    
+
     public void provideAura(final AuraProvider provider) {
         this.activeAuras.computeIfAbsent(provider.getWorld(), key -> new HashSet()).add(new ActiveAura(provider));
     }
-    
+
     @Nonnull
     public Collection<ActiveAura> getAurasAffecting(final Entity entity) {
         final Collection<ActiveAura> worldAuras = this.activeAuras.getOrDefault(entity.getCommandSenderWorld().dimension(), Collections.emptySet());
@@ -56,7 +50,7 @@ public class AuraManager
         }
         return worldAuras.stream().filter(aura -> aura.isAffected(entity)).collect(Collectors.toSet());
     }
-    
+
     static {
         INSTANCE = new AuraManager();
     }

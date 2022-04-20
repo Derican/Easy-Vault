@@ -1,7 +1,3 @@
-// 
-// Decompiled by Procyon v0.6.0
-// 
-
 package iskallia.vault.client.gui.screen;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
@@ -13,27 +9,25 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
 import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.container.Container;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 
-public class TransmogTableScreen extends ContainerScreen<TransmogTableContainer>
-{
+public class TransmogTableScreen extends ContainerScreen<TransmogTableContainer> {
     private static final ResourceLocation GUI_RESOURCE;
-    
+
     public TransmogTableScreen(final TransmogTableContainer screenContainer, final PlayerInventory inv, final ITextComponent titleIn) {
         super(screenContainer, inv, titleIn);
     }
-    
+
     protected void renderBg(final MatrixStack matrixStack, final float partialTicks, final int x, final int y) {
     }
-    
+
     protected void renderLabels(final MatrixStack matrixStack, final int x, final int y) {
-        this.font.draw(matrixStack, (ITextComponent)new StringTextComponent(""), (float)this.titleLabelX, (float)this.titleLabelY, 4210752);
+        this.font.draw(matrixStack, (ITextComponent) new StringTextComponent(""), (float) this.titleLabelX, (float) this.titleLabelY, 4210752);
     }
-    
+
     public void render(final MatrixStack matrixStack, final int mouseX, final int mouseY, final float partialTicks) {
         this.renderBackground(matrixStack);
         final float midX = this.width / 2.0f;
@@ -42,11 +36,11 @@ public class TransmogTableScreen extends ContainerScreen<TransmogTableContainer>
         final int containerWidth = 176;
         final int containerHeight = 166;
         minecraft.getTextureManager().bind(TransmogTableScreen.GUI_RESOURCE);
-        this.blit(matrixStack, (int)(midX - containerWidth / 2), (int)(midY - containerHeight / 2), 0, 0, containerWidth, containerHeight);
-        final TransmogTableInventory transmogInventory = ((TransmogTableContainer)this.menu).getInternalInventory();
+        this.blit(matrixStack, (int) (midX - containerWidth / 2), (int) (midY - containerHeight / 2), 0, 0, containerWidth, containerHeight);
+        final TransmogTableInventory transmogInventory = ((TransmogTableContainer) this.menu).getInternalInventory();
         final ItemStack armorStack = transmogInventory.getItem(0);
         if (transmogInventory.isIngredientSlotsFilled() && !transmogInventory.recipeFulfilled()) {
-            this.blit(matrixStack, (int)(midX + 15.0f), (int)(midY - 33.0f), 176, 0, 28, 21);
+            this.blit(matrixStack, (int) (midX + 15.0f), (int) (midY - 33.0f), 176, 0, 28, 21);
         }
         final FontRenderer fontRenderer = minecraft.font;
         final String title = "Transmogrification";
@@ -63,7 +57,7 @@ public class TransmogTableScreen extends ContainerScreen<TransmogTableContainer>
         super.render(matrixStack, mouseX, mouseY, partialTicks);
         this.renderTooltip(matrixStack, mouseX, mouseY);
     }
-    
+
     static {
         GUI_RESOURCE = Vault.id("textures/gui/transmog-table.png");
     }

@@ -1,7 +1,3 @@
-// 
-// Decompiled by Procyon v0.6.0
-// 
-
 package iskallia.vault.network.message;
 
 import iskallia.vault.entity.eternal.EternalDataAccess;
@@ -15,45 +11,44 @@ import net.minecraftforge.fml.network.NetworkEvent;
 
 import java.util.function.Supplier;
 
-public class EternalInteractionMessage
-{
+public class EternalInteractionMessage {
     private final Action action;
     private CompoundNBT extraData;
-    
+
     private EternalInteractionMessage(final Action action) {
         this.extraData = new CompoundNBT();
         this.action = action;
     }
-    
+
     public static EternalInteractionMessage feedItem(final ItemStack stack) {
         final EternalInteractionMessage pkt = new EternalInteractionMessage(Action.FEED_SELECTED);
-        pkt.extraData.put("stack", (INBT)stack.serializeNBT());
+        pkt.extraData.put("stack", (INBT) stack.serializeNBT());
         return pkt;
     }
-    
+
     public static EternalInteractionMessage levelUp(final String attribute) {
         final EternalInteractionMessage pkt = new EternalInteractionMessage(Action.LEVEL_UP);
         pkt.extraData.putString("attribute", attribute);
         return pkt;
     }
-    
+
     public static EternalInteractionMessage selectEffect(final String effectName) {
         final EternalInteractionMessage pkt = new EternalInteractionMessage(Action.SELECT_EFFECT);
         pkt.extraData.putString("effectName", effectName);
         return pkt;
     }
-    
+
     public static void encode(final EternalInteractionMessage pkt, final PacketBuffer buffer) {
-        buffer.writeEnum((Enum)pkt.action);
+        buffer.writeEnum((Enum) pkt.action);
         buffer.writeNbt(pkt.extraData);
     }
-    
+
     public static EternalInteractionMessage decode(final PacketBuffer buffer) {
-        final EternalInteractionMessage pkt = new EternalInteractionMessage((Action)buffer.readEnum((Class)Action.class));
+        final EternalInteractionMessage pkt = new EternalInteractionMessage((Action) buffer.readEnum((Class) Action.class));
         pkt.extraData = buffer.readNbt();
         return pkt;
     }
-    
+
     public static void handle(final EternalInteractionMessage pkt, final Supplier<NetworkEvent.Context> contextSupplier) {
         // 
         // This method could not be decompiled.
@@ -100,15 +95,14 @@ public class EternalInteractionMessage
         // 
         throw new IllegalStateException("An error occurred while decompiling this method.");
     }
-    
+
     public static boolean canBeFed(final EternalDataAccess eternal, final ItemStack stack) {
         return !stack.isEmpty() && ((!eternal.isAlive() && stack.getItem().equals(ModItems.LIFE_SCROLL)) || stack.getItem().equals(ModItems.AURA_SCROLL) || (eternal.getLevel() < eternal.getMaxLevel() && ModConfigs.ETERNAL.getFoodExp(stack.getItem()).isPresent()));
     }
-    
-    public enum Action
-    {
-        FEED_SELECTED, 
-        LEVEL_UP, 
+
+    public enum Action {
+        FEED_SELECTED,
+        LEVEL_UP,
         SELECT_EFFECT;
     }
 }

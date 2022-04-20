@@ -1,7 +1,3 @@
-// 
-// Decompiled by Procyon v0.6.0
-// 
-
 package iskallia.vault.event;
 
 import iskallia.vault.Vault;
@@ -15,8 +11,7 @@ import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLDedicatedServerSetupEvent;
 
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
-public class SetupEvents
-{
+public class SetupEvents {
     @SubscribeEvent
     public static void setupClient(final FMLClientSetupEvent event) {
         Vault.LOGGER.info("setupClient()");
@@ -28,7 +23,7 @@ public class SetupEvents
         ModBlocks.registerTileEntityRenderers();
         event.enqueueWork(ShaderUtil::initShaders);
     }
-    
+
     @SubscribeEvent
     public static void setupCommon(final FMLCommonSetupEvent event) {
         Vault.LOGGER.info("setupCommon()");
@@ -36,7 +31,7 @@ public class SetupEvents
         ModNetwork.initialize();
         ModRecipes.initialize();
     }
-    
+
     @SubscribeEvent
     public static void setupDedicatedServer(final FMLDedicatedServerSetupEvent event) {
         Vault.LOGGER.info("setupDedicatedServer()");

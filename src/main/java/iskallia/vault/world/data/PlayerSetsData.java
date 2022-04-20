@@ -1,7 +1,3 @@
-// 
-// Decompiled by Procyon v0.6.0
-// 
-
 package iskallia.vault.world.data;
 
 import iskallia.vault.skill.set.PlayerSet;
@@ -27,47 +23,46 @@ import java.util.UUID;
 import java.util.function.Supplier;
 
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.FORGE)
-public class PlayerSetsData extends WorldSavedData
-{
+public class PlayerSetsData extends WorldSavedData {
     protected static final String DATA_NAME = "the_vault_PlayerSets";
     private final Map<UUID, SetTree> playerMap;
-    
+
     public PlayerSetsData() {
         this("the_vault_PlayerSets");
     }
-    
+
     public PlayerSetsData(final String name) {
         super(name);
         this.playerMap = new HashMap<UUID, SetTree>();
     }
-    
+
     public SetTree getSets(final PlayerEntity player) {
         return this.getSets(player.getUUID());
     }
-    
+
     public SetTree getSets(final UUID uuid) {
         return this.playerMap.computeIfAbsent(uuid, SetTree::new);
     }
-    
+
     public PlayerSetsData add(final ServerPlayerEntity player, final SetNode<?>... nodes) {
-        this.getSets((PlayerEntity)player).add(player.getServer(), nodes);
+        this.getSets((PlayerEntity) player).add(player.getServer(), nodes);
         this.setDirty();
         return this;
     }
-    
+
     public PlayerSetsData remove(final ServerPlayerEntity player, final SetNode<?>... nodes) {
-        this.getSets((PlayerEntity)player).remove(player.getServer(), nodes);
+        this.getSets((PlayerEntity) player).remove(player.getServer(), nodes);
         this.setDirty();
         return this;
     }
-    
+
     public PlayerSetsData resetSetTree(final ServerPlayerEntity player) {
         final UUID uniqueID = player.getUUID();
         final SetTree oldTalentTree = this.playerMap.get(uniqueID);
         if (oldTalentTree != null) {
             for (final SetNode<?> node : oldTalentTree.getNodes()) {
                 if (node.isActive()) {
-                    ((PlayerSet)node.getSet()).onRemoved((PlayerEntity)player);
+                    ((PlayerSet) node.getSet()).onRemoved((PlayerEntity) player);
                 }
             }
         }
@@ -76,26 +71,26 @@ public class PlayerSetsData extends WorldSavedData
         this.setDirty();
         return this;
     }
-    
+
     public PlayerSetsData tick(final MinecraftServer server) {
         this.playerMap.values().forEach(setTree -> setTree.tick(server));
         return this;
     }
-    
+
     @SubscribeEvent
     public static void onTick(final TickEvent.WorldTickEvent event) {
         if (event.side == LogicalSide.SERVER) {
-            get((ServerWorld)event.world).tick(((ServerWorld)event.world).getServer());
+            get((ServerWorld) event.world).tick(((ServerWorld) event.world).getServer());
         }
     }
-    
+
     @SubscribeEvent
     public static void onTick(final TickEvent.PlayerTickEvent event) {
         if (event.side == LogicalSide.SERVER) {
-            get((ServerWorld)event.player.level).getSets(event.player);
+            get((ServerWorld) event.player.level).getSets(event.player);
         }
     }
-    
+
     public void load(final CompoundNBT nbt) {
         final ListNBT playerList = nbt.getList("PlayerEntries", 8);
         final ListNBT talentList = nbt.getList("SetEntries", 10);
@@ -107,7 +102,7 @@ public class PlayerSetsData extends WorldSavedData
             this.getSets(playerUUID).deserializeNBT(talentList.getCompound(i));
         }
     }
-    
+
     public CompoundNBT save(final CompoundNBT nbt) {
         final ListNBT playerList = new ListNBT();
         final ListNBT talentList = new ListNBT();
@@ -116,12 +111,12 @@ public class PlayerSetsData extends WorldSavedData
             talentList.add(abilityTree.serializeNBT());
             return;
         });
-        nbt.put("PlayerEntries", (INBT)playerList);
-        nbt.put("SetEntries", (INBT)talentList);
+        nbt.put("PlayerEntries", (INBT) playerList);
+        nbt.put("SetEntries", (INBT) talentList);
         return nbt;
     }
-    
+
     public static PlayerSetsData get(final ServerWorld world) {
-        return (PlayerSetsData)world.getServer().overworld().getDataStorage().computeIfAbsent((Supplier)PlayerSetsData::new, "the_vault_PlayerSets");
+        return (PlayerSetsData) world.getServer().overworld().getDataStorage().computeIfAbsent((Supplier) PlayerSetsData::new, "the_vault_PlayerSets");
     }
 }

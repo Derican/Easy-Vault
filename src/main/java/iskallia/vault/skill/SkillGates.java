@@ -1,7 +1,3 @@
-// 
-// Decompiled by Procyon v0.6.0
-// 
-
 package iskallia.vault.skill;
 
 import com.google.gson.annotations.Expose;
@@ -13,19 +9,18 @@ import iskallia.vault.skill.talent.TalentTree;
 
 import java.util.*;
 
-public class SkillGates
-{
+public class SkillGates {
     @Expose
     private final Map<String, Entry> entries;
-    
+
     public SkillGates() {
         this.entries = new HashMap<String, Entry>();
     }
-    
+
     public void addEntry(final String skillName, final Entry entry) {
         this.entries.put(skillName, entry);
     }
-    
+
     public List<AbilityGroup<?, ?>> getDependencyAbilities(final String abilityName) {
         final List<AbilityGroup<?, ?>> abilities = new LinkedList<AbilityGroup<?, ?>>();
         final Entry entry = this.entries.get(abilityName);
@@ -39,7 +34,7 @@ public class SkillGates
         });
         return abilities;
     }
-    
+
     public List<AbilityGroup<?, ?>> getLockedByAbilities(final String abilityName) {
         final List<AbilityGroup<?, ?>> abilities = new LinkedList<AbilityGroup<?, ?>>();
         final Entry entry = this.entries.get(abilityName);
@@ -53,7 +48,7 @@ public class SkillGates
         });
         return abilities;
     }
-    
+
     public List<AbilityGroup<?, ?>> getAbilitiesDependingOn(final String abilityName) {
         final List<AbilityGroup<?, ?>> abilities = new LinkedList<AbilityGroup<?, ?>>();
         final AbilityGroup<?, ?> ability = ModConfigs.ABILITIES.getAbilityGroupByName(abilityName);
@@ -65,7 +60,7 @@ public class SkillGates
         }
         return abilities;
     }
-    
+
     public List<TalentGroup<?>> getDependencyTalents(final String talentName) {
         final List<TalentGroup<?>> talents = new LinkedList<TalentGroup<?>>();
         final Entry entry = this.entries.get(talentName);
@@ -79,7 +74,7 @@ public class SkillGates
         });
         return talents;
     }
-    
+
     public List<TalentGroup<?>> getLockedByTalents(final String talentName) {
         final List<TalentGroup<?>> talents = new LinkedList<TalentGroup<?>>();
         final Entry entry = this.entries.get(talentName);
@@ -93,7 +88,7 @@ public class SkillGates
         });
         return talents;
     }
-    
+
     public List<TalentGroup<?>> getTalentsDependingOn(final String talentName) {
         final List<TalentGroup<?>> talents = new LinkedList<TalentGroup<?>>();
         final TalentGroup<?> talent = ModConfigs.TALENTS.getByName(talentName);
@@ -106,7 +101,7 @@ public class SkillGates
         return talents;
     }
 
-    
+
     public boolean isLocked(final TalentGroup<?> talent, final TalentTree talentTree) {
         final SkillGates gates = ModConfigs.SKILL_GATES.getGates();
         if (talent instanceof ArchetypeTalentGroup && talentTree.getLearnedNodes().stream().filter(other -> !other.getGroup().getParentName().equals(talent.getParentName())).anyMatch(t -> t.getGroup() instanceof ArchetypeTalentGroup)) {
@@ -124,23 +119,22 @@ public class SkillGates
         }
         return false;
     }
-    
-    public static class Entry
-    {
+
+    public static class Entry {
         @Expose
         private List<String> dependsOn;
         @Expose
         private List<String> lockedBy;
-        
+
         public Entry() {
             this.dependsOn = new LinkedList<String>();
             this.lockedBy = new LinkedList<String>();
         }
-        
+
         public void setDependsOn(final String... skills) {
             this.dependsOn.addAll(Arrays.asList(skills));
         }
-        
+
         public void setLockedBy(final String... skills) {
             this.lockedBy.addAll(Arrays.asList(skills));
         }

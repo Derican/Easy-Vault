@@ -1,7 +1,3 @@
-// 
-// Decompiled by Procyon v0.6.0
-// 
-
 package iskallia.vault.network.message;
 
 import iskallia.vault.client.gui.overlay.VaultBarOverlay;
@@ -13,17 +9,16 @@ import net.minecraftforge.fml.network.NetworkEvent;
 
 import java.util.function.Supplier;
 
-public class VaultLevelMessage
-{
+public class VaultLevelMessage {
     public int vaultLevel;
     public int vaultExp;
     public int tnl;
     public int unspentSkillPoints;
     public int unspentKnowledgePoints;
-    
+
     public VaultLevelMessage() {
     }
-    
+
     public VaultLevelMessage(final int vaultLevel, final int vaultExp, final int tnl, final int unspentSkillPoints, final int unspentKnowledgePoints) {
         this.vaultLevel = vaultLevel;
         this.vaultExp = vaultExp;
@@ -31,7 +26,7 @@ public class VaultLevelMessage
         this.unspentSkillPoints = unspentSkillPoints;
         this.unspentKnowledgePoints = unspentKnowledgePoints;
     }
-    
+
     public static void encode(final VaultLevelMessage message, final PacketBuffer buffer) {
         buffer.writeInt(message.vaultLevel);
         buffer.writeInt(message.vaultExp);
@@ -39,7 +34,7 @@ public class VaultLevelMessage
         buffer.writeInt(message.unspentSkillPoints);
         buffer.writeInt(message.unspentKnowledgePoints);
     }
-    
+
     public static VaultLevelMessage decode(final PacketBuffer buffer) {
         final VaultLevelMessage message = new VaultLevelMessage();
         message.vaultLevel = buffer.readInt();
@@ -49,7 +44,7 @@ public class VaultLevelMessage
         message.unspentKnowledgePoints = buffer.readInt();
         return message;
     }
-    
+
     public static void handle(final VaultLevelMessage message, final Supplier<NetworkEvent.Context> contextSupplier) {
         final NetworkEvent.Context context = contextSupplier.get();
         context.enqueueWork(() -> {
@@ -62,7 +57,7 @@ public class VaultLevelMessage
             VaultBarOverlay.expGainedAnimation.play();
             final Screen currentScreen = Minecraft.getInstance().screen;
             if (currentScreen instanceof SkillTreeScreen) {
-                final SkillTreeScreen skillTreeScreen = (SkillTreeScreen)currentScreen;
+                final SkillTreeScreen skillTreeScreen = (SkillTreeScreen) currentScreen;
                 skillTreeScreen.refreshWidgets();
             }
             return;

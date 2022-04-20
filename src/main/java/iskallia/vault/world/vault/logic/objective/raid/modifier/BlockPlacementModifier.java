@@ -1,7 +1,3 @@
-// 
-// Decompiled by Procyon v0.6.0
-// 
-
 package iskallia.vault.world.vault.logic.objective.raid.modifier;
 
 import com.google.gson.annotations.Expose;
@@ -23,30 +19,29 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.server.ServerWorld;
 
-public class BlockPlacementModifier extends RaidModifier
-{
+public class BlockPlacementModifier extends RaidModifier {
     @Expose
     private final String block;
     @Expose
     private final int blocksToSpawn;
     @Expose
     private final String blockDescription;
-    
+
     public BlockPlacementModifier(final String name, final Block block, final int blocksToSpawn, final String blockDescription) {
         this(name, block.getRegistryName().toString(), blocksToSpawn, blockDescription);
     }
-    
+
     public BlockPlacementModifier(final String name, final String block, final int blocksToSpawn, final String blockDescription) {
         super(false, true, name);
         this.block = block;
         this.blocksToSpawn = blocksToSpawn;
         this.blockDescription = blockDescription;
     }
-    
+
     @Override
     public void affectRaidMob(final MobEntity mob, final float value) {
     }
-    
+
     @Override
     public void onVaultRaidFinish(final VaultRaid vault, final ServerWorld world, final BlockPos controller, final ActiveRaid raid, final float value) {
         final BlockState placementState = Registry.BLOCK.getOptional(new ResourceLocation(this.block)).orElse(Blocks.AIR).defaultBlockState();
@@ -56,15 +51,15 @@ public class BlockPlacementModifier extends RaidModifier
             BlockPos at;
             do {
                 at = MiscUtils.getRandomPos(placementBox, BlockPlacementModifier.rand);
-            } while (!world.isEmptyBlock(at) || !world.getBlockState(at.below()).isFaceSturdy((IBlockReader)world, at, Direction.UP));
+            } while (!world.isEmptyBlock(at) || !world.getBlockState(at.below()).isFaceSturdy((IBlockReader) world, at, Direction.UP));
             world.setBlock(at, placementState, 2);
         }
     }
-    
+
     @Override
     public ITextComponent getDisplay(final float value) {
         final int sets = Math.round(value);
         final String set = (sets > 1) ? "sets" : "set";
-        return (ITextComponent)new StringTextComponent("+" + sets + " " + set + " of " + this.blockDescription).withStyle(TextFormatting.GREEN);
+        return (ITextComponent) new StringTextComponent("+" + sets + " " + set + " of " + this.blockDescription).withStyle(TextFormatting.GREEN);
     }
 }

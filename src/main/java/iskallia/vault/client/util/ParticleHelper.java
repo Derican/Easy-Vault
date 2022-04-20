@@ -1,7 +1,3 @@
-// 
-// Decompiled by Procyon v0.6.0
-// 
-
 package iskallia.vault.client.util;
 
 import iskallia.vault.network.message.EffectMessage;
@@ -17,8 +13,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import java.awt.*;
 
 @OnlyIn(Dist.CLIENT)
-public class ParticleHelper
-{
+public class ParticleHelper {
     public static void spawnParticle(final EffectMessage pkt) {
         final EffectMessage.Type type = pkt.getEffectType();
         switch (type) {
@@ -28,12 +23,13 @@ public class ParticleHelper
             }
         }
     }
-    
+
     private static void spawnColoredFirework(final Vector3d pos, final int color) {
         final ParticleManager mgr = Minecraft.getInstance().particleEngine;
-        final SimpleAnimatedParticle fwParticle = (SimpleAnimatedParticle)mgr.createParticle((IParticleData)ParticleTypes.FIREWORK, pos.x(), pos.y(), pos.z(), 0.0, 0.0, 0.0);
+        final SimpleAnimatedParticle fwParticle = (SimpleAnimatedParticle) mgr.createParticle((IParticleData) ParticleTypes.FIREWORK, pos.x(), pos.y(), pos.z(), 0.0, 0.0, 0.0);
         final Color c = new Color(color);
         fwParticle.setColor(c.getRed() / 255.0f, c.getGreen() / 255.0f, c.getBlue() / 255.0f);
+//        TODO: check if the omit is acceptable
 //        fwParticle.baseGravity = 0.0f;
     }
 }

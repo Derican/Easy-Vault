@@ -1,7 +1,3 @@
-// 
-// Decompiled by Procyon v0.6.0
-// 
-
 package iskallia.vault.config;
 
 import com.google.gson.annotations.Expose;
@@ -12,16 +8,15 @@ import net.minecraft.item.ItemStack;
 
 import java.util.Random;
 
-public class UnidentifiedTreasureKeyConfig extends Config
-{
+public class UnidentifiedTreasureKeyConfig extends Config {
     @Expose
     private WeightedList<ProductEntry> treasureKeys;
-    
+
     @Override
     public String getName() {
         return "unidentified_treasure_key";
     }
-    
+
     public ItemStack getRandomKey(final Random random) {
         final ProductEntry product = this.treasureKeys.getRandom(random);
         if (product == null) {
@@ -29,7 +24,7 @@ public class UnidentifiedTreasureKeyConfig extends Config
         }
         return product.generateItemStack();
     }
-    
+
     @Override
     protected void reset() {
         (this.treasureKeys = new WeightedList<ProductEntry>()).add(new ProductEntry(ModItems.ISKALLIUM_KEY, 1, null), 1);

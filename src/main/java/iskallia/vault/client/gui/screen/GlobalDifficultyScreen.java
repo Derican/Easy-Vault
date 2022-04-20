@@ -1,7 +1,3 @@
-// 
-// Decompiled by Procyon v0.6.0
-// 
-
 package iskallia.vault.client.gui.screen;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
@@ -17,15 +13,13 @@ import net.minecraft.client.gui.screen.inventory.ContainerScreen;
 import net.minecraft.client.gui.widget.Widget;
 import net.minecraft.client.gui.widget.button.Button;
 import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.container.Container;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 
 import javax.annotation.Nonnull;
 
-public class GlobalDifficultyScreen extends ContainerScreen<GlobalDifficultyContainer>
-{
+public class GlobalDifficultyScreen extends ContainerScreen<GlobalDifficultyContainer> {
     private static final ResourceLocation TEXTURE;
     private DifficultyButton vaultDifficultyButton;
     private DifficultyButton crystalCostButton;
@@ -35,7 +29,7 @@ public class GlobalDifficultyScreen extends ContainerScreen<GlobalDifficultyCont
     private final int buttonPadding = 5;
     private int buttonStartX;
     private int buttonStartY;
-    
+
     public GlobalDifficultyScreen(final GlobalDifficultyContainer container, final PlayerInventory inventory, final ITextComponent title) {
         super(container, inventory, title);
         this.font = Minecraft.getInstance().font;
@@ -44,7 +38,7 @@ public class GlobalDifficultyScreen extends ContainerScreen<GlobalDifficultyCont
         this.titleLabelX = this.imageWidth / 2;
         this.titleLabelY = 7;
     }
-    
+
     protected void init() {
         super.init();
         final int centerX = this.leftPos + this.imageWidth / 2;
@@ -53,26 +47,26 @@ public class GlobalDifficultyScreen extends ContainerScreen<GlobalDifficultyCont
         this.buttonStartY = guiBottom - 75 - 8;
         this.initializeFields();
     }
-    
+
     public void render(@Nonnull final MatrixStack matrixStack, final int mouseX, final int mouseY, final float partialTicks) {
         this.renderBackground(matrixStack);
         Minecraft.getInstance().getTextureManager().bind(GlobalDifficultyScreen.TEXTURE);
         final float midX = this.width / 2.0f;
         final float midY = this.height / 2.0f;
-        blit(matrixStack, (int)(midX - this.imageWidth / 2), (int)(midY - this.imageHeight / 2), 0.0f, 0.0f, this.imageWidth, this.imageHeight, 256, 256);
+        blit(matrixStack, (int) (midX - this.imageWidth / 2), (int) (midY - this.imageHeight / 2), 0.0f, 0.0f, this.imageWidth, this.imageHeight, 256, 256);
         this.vaultDifficultyButton.render(matrixStack, mouseX, mouseY, partialTicks);
         this.crystalCostButton.render(matrixStack, mouseX, mouseY, partialTicks);
         this.confirmButton.render(matrixStack, mouseX, mouseY, partialTicks);
         matrixStack.pushPose();
-        matrixStack.translate((double)(this.leftPos + 5), (double)(this.topPos + 27), 0.0);
-        UIHelper.renderWrappedText(matrixStack, (ITextComponent)ModConfigs.DIFFICULTY_DESCRIPTION.getDescription(), this.imageWidth - 10, 5);
+        matrixStack.translate((double) (this.leftPos + 5), (double) (this.topPos + 27), 0.0);
+        UIHelper.renderWrappedText(matrixStack, (ITextComponent) ModConfigs.DIFFICULTY_DESCRIPTION.getDescription(), this.imageWidth - 10, 5);
         matrixStack.popPose();
         this.renderTitle(matrixStack);
     }
-    
+
     protected void renderBg(@Nonnull final MatrixStack matrixStack, final float partialTicks, final int x, final int y) {
     }
-    
+
     protected void renderLabels(final MatrixStack matrixStack, final int mouseX, final int mouseY) {
         this.buttons.forEach(button -> {
             if (button.isHovered()) {
@@ -80,54 +74,53 @@ public class GlobalDifficultyScreen extends ContainerScreen<GlobalDifficultyCont
             }
         });
     }
-    
+
     public boolean keyPressed(final int keyCode, final int scanCode, final int modifiers) {
         return false;
     }
-    
+
     public boolean isPauseScreen() {
         return true;
     }
-    
+
     public boolean mouseClicked(final double mouseX, final double mouseY, final int mouseButton) {
         return !this.hasClickedOutside(mouseX, mouseY, this.leftPos, this.topPos, mouseButton) && super.mouseClicked(mouseX, mouseY, mouseButton);
     }
-    
+
     private void initializeFields() {
-        final GlobalDifficultyData.Difficulty vaultDifficulty = GlobalDifficultyData.Difficulty.values()[((GlobalDifficultyContainer)this.menu).getData().getInt("VaultDifficulty")];
-        this.vaultDifficultyButton = new DifficultyButton("Vault Mob Difficulty", "VaultDifficulty", this.buttonStartX, this.buttonStartY, 168, 20, (ITextComponent)new StringTextComponent("Vault Mob Difficulty: " + vaultDifficulty.toString()), this::buttonPressed);
-        final GlobalDifficultyData.Difficulty crystalCost = GlobalDifficultyData.Difficulty.values()[((GlobalDifficultyContainer)this.menu).getData().getInt("CrystalCost")];
-        this.crystalCostButton = new DifficultyButton("Crystal Cost Multiplier", "CrystalCost", this.buttonStartX, this.vaultDifficultyButton.y + 20 + 5, 168, 20, (ITextComponent)new StringTextComponent("Crystal Cost Multiplier: " + crystalCost.toString()), this::buttonPressed);
-        this.confirmButton = new Button(this.buttonStartX, this.crystalCostButton.y + 20 + 5, 168, 20, (ITextComponent)new StringTextComponent("Confirm"), this::buttonPressed);
-        this.addButton((Widget)this.vaultDifficultyButton);
-        this.addButton((Widget)this.crystalCostButton);
-        this.addButton((Widget)this.confirmButton);
+        final GlobalDifficultyData.Difficulty vaultDifficulty = GlobalDifficultyData.Difficulty.values()[((GlobalDifficultyContainer) this.menu).getData().getInt("VaultDifficulty")];
+        this.vaultDifficultyButton = new DifficultyButton("Vault Mob Difficulty", "VaultDifficulty", this.buttonStartX, this.buttonStartY, 168, 20, (ITextComponent) new StringTextComponent("Vault Mob Difficulty: " + vaultDifficulty.toString()), this::buttonPressed);
+        final GlobalDifficultyData.Difficulty crystalCost = GlobalDifficultyData.Difficulty.values()[((GlobalDifficultyContainer) this.menu).getData().getInt("CrystalCost")];
+        this.crystalCostButton = new DifficultyButton("Crystal Cost Multiplier", "CrystalCost", this.buttonStartX, this.vaultDifficultyButton.y + 20 + 5, 168, 20, (ITextComponent) new StringTextComponent("Crystal Cost Multiplier: " + crystalCost.toString()), this::buttonPressed);
+        this.confirmButton = new Button(this.buttonStartX, this.crystalCostButton.y + 20 + 5, 168, 20, (ITextComponent) new StringTextComponent("Confirm"), this::buttonPressed);
+        this.addButton((Widget) this.vaultDifficultyButton);
+        this.addButton((Widget) this.crystalCostButton);
+        this.addButton((Widget) this.confirmButton);
     }
-    
+
     private void buttonPressed(final Button button) {
         if (button instanceof DifficultyButton) {
-            final DifficultyButton difficultyButton = (DifficultyButton)button;
+            final DifficultyButton difficultyButton = (DifficultyButton) button;
             difficultyButton.getNextOption();
             this.selectDifficulty(difficultyButton.getKey(), difficultyButton.getCurrentOption());
-        }
-        else {
-            ModNetwork.CHANNEL.sendToServer(GlobalDifficultyMessage.setGlobalDifficultyOptions(((GlobalDifficultyContainer)this.menu).getData()));
+        } else {
+            ModNetwork.CHANNEL.sendToServer(GlobalDifficultyMessage.setGlobalDifficultyOptions(((GlobalDifficultyContainer) this.menu).getData()));
             this.onClose();
         }
     }
-    
+
     public void selectDifficulty(final String key, final GlobalDifficultyData.Difficulty selected) {
-        ((GlobalDifficultyContainer)this.menu).getData().putInt(key, selected.ordinal());
+        ((GlobalDifficultyContainer) this.menu).getData().putInt(key, selected.ordinal());
     }
-    
+
     private void renderTitle(final MatrixStack matrixStack) {
         final int i = (this.width - this.imageWidth) / 2;
         final int j = (this.height - this.imageHeight) / 2;
         final float startX = i + this.titleLabelX - this.font.width(this.title.getString()) / 2.0f;
-        final float startY = j + (float)this.titleLabelY;
+        final float startY = j + (float) this.titleLabelY;
         this.font.draw(matrixStack, this.title, startX, startY, 4210752);
     }
-    
+
     static {
         TEXTURE = new ResourceLocation("the_vault", "textures/gui/global_difficulty_screen.png");
     }

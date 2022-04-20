@@ -1,7 +1,3 @@
-// 
-// Decompiled by Procyon v0.6.0
-// 
-
 package iskallia.vault.skill.ability.effect.sub;
 
 import iskallia.vault.skill.ability.config.sub.DashBuffConfig;
@@ -16,10 +12,9 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
-public class DashBuffAbility extends DashAbility<DashBuffConfig>
-{
+public class DashBuffAbility extends DashAbility<DashBuffConfig> {
     private static final Set<UUID> dashingPlayers;
-    
+
     @Override
     public boolean onAction(final DashBuffConfig config, final ServerPlayerEntity player, final boolean active) {
         final World world = player.getCommandSenderWorld();
@@ -34,7 +29,7 @@ public class DashBuffAbility extends DashAbility<DashBuffConfig>
         }
         return false;
     }
-    
+
     static {
         dashingPlayers = new HashSet<UUID>();
     }

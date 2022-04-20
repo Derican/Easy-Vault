@@ -1,7 +1,3 @@
-// 
-// Decompiled by Procyon v0.6.0
-// 
-
 package iskallia.vault.entity.eternal;
 
 import iskallia.vault.init.ModConfigs;
@@ -19,8 +15,7 @@ import net.minecraftforge.common.util.INBTSerializable;
 import javax.annotation.Nullable;
 import java.util.*;
 
-public class EternalData implements INBTSerializable<CompoundNBT>, EternalDataAccess
-{
+public class EternalData implements INBTSerializable<CompoundNBT>, EternalDataAccess {
     private UUID uuid;
     private String name;
     private String originalName;
@@ -34,7 +29,7 @@ public class EternalData implements INBTSerializable<CompoundNBT>, EternalDataAc
     private boolean alive;
     private boolean ancient;
     private final EternalsData dataDelegate;
-    
+
     private EternalData(final EternalsData dataDelegate, final String name, final boolean isAncient) {
         this.uuid = UUID.randomUUID();
         this.eternalSeed = 3274487651937260739L;
@@ -52,7 +47,7 @@ public class EternalData implements INBTSerializable<CompoundNBT>, EternalDataAc
         this.ancient = isAncient;
         this.attributes.initializeAttributes();
     }
-    
+
     private EternalData(final EternalsData dataDelegate, final CompoundNBT nbt) {
         this.uuid = UUID.randomUUID();
         this.eternalSeed = 3274487651937260739L;
@@ -67,45 +62,45 @@ public class EternalData implements INBTSerializable<CompoundNBT>, EternalDataAc
         this.dataDelegate = dataDelegate;
         this.deserializeNBT(nbt);
     }
-    
+
     public static EternalData createEternal(final EternalsData data, final String name, final boolean isAncient) {
         return new EternalData(data, name, isAncient);
     }
-    
+
     public static EternalData fromNBT(final EternalsData data, final CompoundNBT nbt) {
         return new EternalData(data, nbt);
     }
-    
+
     public UUID getId() {
         return this.uuid;
     }
-    
+
     public long getSeed() {
         return this.eternalSeed;
     }
-    
+
     public void shuffleSeed() {
         this.eternalSeed = new Random().nextLong();
         this.dataDelegate.setDirty();
     }
-    
+
     public void setName(final String name) {
         this.name = name;
         this.dataDelegate.setDirty();
     }
-    
+
     public String getName() {
         return this.name;
     }
-    
+
     public String getOriginalName() {
         return this.originalName;
     }
-    
+
     public EternalAttributes getAttributes() {
         return this.attributes;
     }
-    
+
     public void addAttributeValue(final Attribute attribute, final float value) {
         if (this.usedLevels >= this.level) {
             return;
@@ -114,19 +109,19 @@ public class EternalData implements INBTSerializable<CompoundNBT>, EternalDataAc
         this.attributes.addAttributeValue(attribute, value);
         this.dataDelegate.setDirty();
     }
-    
+
     public int getLevel() {
         return this.level;
     }
-    
+
     public void setLevel(final int level) {
         this.level = level;
     }
-    
+
     public int getUsedLevels() {
         return this.usedLevels;
     }
-    
+
     public int getMaxLevel() {
         final UUID playerId = this.dataDelegate.getOwnerOf(this.getId());
         if (playerId == null) {
@@ -134,30 +129,30 @@ public class EternalData implements INBTSerializable<CompoundNBT>, EternalDataAc
         }
         return this.dataDelegate.getEternals(playerId).getNonAncientEternalCount() + (this.isAncient() ? 5 : 0);
     }
-    
+
     public float getLevelPercent() {
         final int expNeeded = ModConfigs.ETERNAL.getExpForLevel(this.getLevel() + 1);
-        return this.levelExp / (float)expNeeded;
+        return this.levelExp / (float) expNeeded;
     }
-    
+
     public boolean isAlive() {
         return this.alive;
     }
-    
+
     public void setAlive(final boolean alive) {
         this.alive = alive;
         this.dataDelegate.setDirty();
     }
-    
+
     public boolean isAncient() {
         return this.ancient;
     }
-    
+
     public void setAncient(final boolean ancient) {
         this.ancient = ancient;
         this.dataDelegate.setDirty();
     }
-    
+
     public boolean addExp(final int xp) {
         if (this.level >= this.getMaxLevel()) {
             return false;
@@ -171,48 +166,47 @@ public class EternalData implements INBTSerializable<CompoundNBT>, EternalDataAc
         this.dataDelegate.setDirty();
         return true;
     }
-    
+
     @Nullable
     public EternalAura getAura() {
         return this.ability;
     }
-    
+
     public void setAura(@Nullable final String auraName) {
         if (auraName == null) {
             this.ability = null;
-        }
-        else {
+        } else {
             this.ability = new EternalAura(auraName);
         }
         this.dataDelegate.setDirty();
     }
-    
+
     @Nullable
     public String getAbilityName() {
         return (this.ability == null) ? null : this.ability.getAuraName();
     }
-    
+
     public Map<EquipmentSlotType, ItemStack> getEquipment() {
-        return Collections.unmodifiableMap((Map<? extends EquipmentSlotType, ? extends ItemStack>)this.equipment);
+        return Collections.unmodifiableMap((Map<? extends EquipmentSlotType, ? extends ItemStack>) this.equipment);
     }
-    
+
     public ItemStack getStack(final EquipmentSlotType slot) {
         return this.equipment.getOrDefault(slot, ItemStack.EMPTY);
     }
-    
+
     public void setStack(final EquipmentSlotType slot, final ItemStack stack) {
         this.equipment.put(slot, stack);
         this.dataDelegate.setDirty();
     }
-    
+
     public Map<Attribute, Float> getEntityAttributes() {
-        return Collections.unmodifiableMap((Map<? extends Attribute, ? extends Float>)this.attributes.getAttributes());
+        return Collections.unmodifiableMap((Map<? extends Attribute, ? extends Float>) this.attributes.getAttributes());
     }
-    
+
     public EquipmentInventory getEquipmentInventory(final Runnable onChange) {
         return new EquipmentInventory(this, onChange);
     }
-    
+
     public CompoundNBT serializeNBT() {
         final CompoundNBT nbt = new CompoundNBT();
         nbt.putUUID("Id", this.getId());
@@ -220,20 +214,20 @@ public class EternalData implements INBTSerializable<CompoundNBT>, EternalDataAc
         nbt.putString("originalName", this.getOriginalName());
         nbt.putLong("eternalSeed", this.getSeed());
         final CompoundNBT tag = new CompoundNBT();
-        this.equipment.forEach((slot, stack) -> tag.put(slot.getName(), (INBT)stack.serializeNBT()));
-        nbt.put("equipment", (INBT)tag);
+        this.equipment.forEach((slot, stack) -> tag.put(slot.getName(), (INBT) stack.serializeNBT()));
+        nbt.put("equipment", (INBT) tag);
         if (this.getAura() != null) {
-            nbt.put("ability", (INBT)this.getAura().serializeNBT());
+            nbt.put("ability", (INBT) this.getAura().serializeNBT());
         }
         nbt.putInt("level", this.level);
         nbt.putInt("usedLevels", this.usedLevels);
         nbt.putInt("levelExp", this.levelExp);
         nbt.putBoolean("alive", this.alive);
         nbt.putBoolean("ancient", this.ancient);
-        nbt.put("attributes", (INBT)this.attributes.serializeNBT());
+        nbt.put("attributes", (INBT) this.attributes.serializeNBT());
         return nbt;
     }
-    
+
     public void deserializeNBT(final CompoundNBT nbt) {
         this.uuid = nbt.getUUID("Id");
         this.name = nbt.getString("Name");
@@ -249,8 +243,7 @@ public class EternalData implements INBTSerializable<CompoundNBT>, EternalDataAc
         }
         if (nbt.contains("ability", 10)) {
             this.ability = new EternalAura(nbt.getCompound("ability"));
-        }
-        else {
+        } else {
             this.ability = null;
         }
         this.level = (nbt.contains("level", 3) ? nbt.getInt("level") : 0);
@@ -260,8 +253,7 @@ public class EternalData implements INBTSerializable<CompoundNBT>, EternalDataAc
         this.ancient = (nbt.contains("ancient", 1) && nbt.getBoolean("ancient"));
         if (!nbt.contains("attributes", 10)) {
             (this.attributes = new EternalAttributes()).initializeAttributes();
-        }
-        else {
+        } else {
             this.attributes = EternalAttributes.fromNBT(nbt.getCompound("attributes"));
         }
         if (nbt.contains("MainSlots")) {
@@ -274,7 +266,7 @@ public class EternalData implements INBTSerializable<CompoundNBT>, EternalDataAc
             }
         }
     }
-    
+
     @Override
     public boolean equals(final Object o) {
         if (this == o) {
@@ -283,37 +275,36 @@ public class EternalData implements INBTSerializable<CompoundNBT>, EternalDataAc
         if (!(o instanceof EternalData)) {
             return false;
         }
-        final EternalData other = (EternalData)o;
+        final EternalData other = (EternalData) o;
         return this.uuid.equals(other.uuid);
     }
-    
+
     @Override
     public int hashCode() {
         return this.uuid.hashCode();
     }
-    
-    public static class EquipmentInventory implements IInventory
-    {
+
+    public static class EquipmentInventory implements IInventory {
         private final EternalData eternal;
         private final Runnable onChange;
-        
+
         public EquipmentInventory(final EternalData eternal, final Runnable onChange) {
             this.eternal = eternal;
             this.onChange = onChange;
         }
-        
+
         public int getContainerSize() {
             return 5;
         }
-        
+
         public boolean isEmpty() {
             return this.eternal.getEquipment().entrySet().stream().anyMatch(entry -> !entry.getValue().isEmpty());
         }
-        
+
         public ItemStack getItem(final int index) {
             return this.eternal.getStack(this.getSlotFromIndex(index));
         }
-        
+
         public ItemStack removeItem(final int index, final int count) {
             final ItemStack stack = this.getItem(index);
             if (!stack.isEmpty() && count > 0) {
@@ -326,7 +317,7 @@ public class EternalData implements INBTSerializable<CompoundNBT>, EternalDataAc
             }
             return ItemStack.EMPTY;
         }
-        
+
         public ItemStack removeItemNoUpdate(final int index) {
             final EquipmentSlotType slotType = this.getSlotFromIndex(index);
             final ItemStack equipment = this.eternal.getStack(slotType);
@@ -334,28 +325,28 @@ public class EternalData implements INBTSerializable<CompoundNBT>, EternalDataAc
             this.setChanged();
             return equipment;
         }
-        
+
         public void setItem(final int index, final ItemStack stack) {
             this.eternal.setStack(this.getSlotFromIndex(index), stack.copy());
             this.setChanged();
         }
-        
+
         public void setChanged() {
             this.onChange.run();
             this.eternal.dataDelegate.setDirty();
         }
-        
+
         public boolean stillValid(final PlayerEntity player) {
             return true;
         }
-        
+
         public void clearContent() {
             for (final EquipmentSlotType slotType : EquipmentSlotType.values()) {
                 this.eternal.setStack(slotType, ItemStack.EMPTY);
             }
             this.setChanged();
         }
-        
+
         private EquipmentSlotType getSlotFromIndex(final int index) {
             if (index == 0) {
                 return EquipmentSlotType.MAINHAND;

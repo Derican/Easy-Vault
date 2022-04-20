@@ -1,7 +1,3 @@
-// 
-// Decompiled by Procyon v0.6.0
-// 
-
 package iskallia.vault.entity;
 
 import iskallia.vault.entity.ai.*;
@@ -19,38 +15,36 @@ import net.minecraft.world.BossInfo;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerBossInfo;
 
-public class AggressiveCowBossEntity extends AggressiveCowEntity implements VaultBoss
-{
+public class AggressiveCowBossEntity extends AggressiveCowEntity implements VaultBoss {
     public TeleportRandomly<AggressiveCowBossEntity> teleportTask;
     public final ServerBossInfo bossInfo;
     public final RegenAfterAWhile<AggressiveCowBossEntity> regenAfterAWhile;
-    
+
     public AggressiveCowBossEntity(final EntityType<? extends AggressiveCowEntity> type, final World worldIn) {
         super(type, worldIn);
-        this.teleportTask = new TeleportRandomly<AggressiveCowBossEntity>(this, (TeleportRandomly.Condition<AggressiveCowBossEntity>[])new TeleportRandomly.Condition[] { (entity, source, amount) -> {
-                if (!(source.getEntity() instanceof LivingEntity)) {
-                    return 0.2;
-                }
-                else {
-                    return 0.0;
-                }
-            } });
+        this.teleportTask = new TeleportRandomly<AggressiveCowBossEntity>(this, (TeleportRandomly.Condition<AggressiveCowBossEntity>[]) new TeleportRandomly.Condition[]{(entity, source, amount) -> {
+            if (!(source.getEntity() instanceof LivingEntity)) {
+                return 0.2;
+            } else {
+                return 0.0;
+            }
+        }});
         this.bossInfo = new ServerBossInfo(this.getDisplayName(), BossInfo.Color.RED, BossInfo.Overlay.PROGRESS);
         this.regenAfterAWhile = new RegenAfterAWhile<AggressiveCowBossEntity>(this);
     }
-    
+
     @Override
     protected void registerGoals() {
-        this.goalSelector.addGoal(8, (Goal)new WaterAvoidingRandomWalkingGoal((CreatureEntity)this, 1.5));
-        this.goalSelector.addGoal(8, (Goal)new LookAtGoal((MobEntity)this, (Class)PlayerEntity.class, 16.0f));
-        this.goalSelector.addGoal(0, (Goal)new CowDashAttackGoal(this, 0.2f));
-        this.goalSelector.addGoal(1, (Goal)new MobAttackGoal((CreatureEntity)this, 1.5, true));
-        this.goalSelector.addGoal(1, (Goal)TeleportGoal.builder(this).start(entity -> entity.getTarget() != null && entity.tickCount % 60 == 0).to(entity -> entity.getTarget().position().add((entity.random.nextDouble() - 0.5) * 8.0, (double)(entity.random.nextInt(16) - 8), (entity.random.nextDouble() - 0.5) * 8.0)).then(entity -> entity.playSound(ModSounds.BOSS_TP_SFX, 1.0f, 1.0f)).build());
-        this.goalSelector.addGoal(1, (Goal)new ThrowProjectilesGoal(this, 96, 10, FighterEntity.SNOWBALLS));
-        this.goalSelector.addGoal(1, (Goal)new AOEGoal(this, e -> !(e instanceof VaultBoss)));
-        this.targetSelector.addGoal(1, (Goal)new NearestAttackableTargetGoal((MobEntity)this, (Class)PlayerEntity.class, false));
+        this.goalSelector.addGoal(8, (Goal) new WaterAvoidingRandomWalkingGoal((CreatureEntity) this, 1.5));
+        this.goalSelector.addGoal(8, (Goal) new LookAtGoal((MobEntity) this, (Class) PlayerEntity.class, 16.0f));
+        this.goalSelector.addGoal(0, (Goal) new CowDashAttackGoal(this, 0.2f));
+        this.goalSelector.addGoal(1, (Goal) new MobAttackGoal((CreatureEntity) this, 1.5, true));
+        this.goalSelector.addGoal(1, (Goal) TeleportGoal.builder(this).start(entity -> entity.getTarget() != null && entity.tickCount % 60 == 0).to(entity -> entity.getTarget().position().add((entity.random.nextDouble() - 0.5) * 8.0, (double) (entity.random.nextInt(16) - 8), (entity.random.nextDouble() - 0.5) * 8.0)).then(entity -> entity.playSound(ModSounds.BOSS_TP_SFX, 1.0f, 1.0f)).build());
+        this.goalSelector.addGoal(1, (Goal) new ThrowProjectilesGoal(this, 96, 10, FighterEntity.SNOWBALLS));
+        this.goalSelector.addGoal(1, (Goal) new AOEGoal(this, e -> !(e instanceof VaultBoss)));
+        this.targetSelector.addGoal(1, (Goal) new NearestAttackableTargetGoal((MobEntity) this, (Class) PlayerEntity.class, false));
     }
-    
+
     public boolean hurt(final DamageSource source, final float amount) {
         final Entity trueSource = source.getEntity();
         if (!(source instanceof RampageDotAbility.PlayerDamageOverTimeSource) && !(source.getEntity() instanceof PlayerEntity) && !(trueSource instanceof EternalEntity) && source != DamageSource.OUT_OF_WORLD) {
@@ -65,18 +59,18 @@ public class AggressiveCowBossEntity extends AggressiveCowEntity implements Vaul
         this.regenAfterAWhile.onDamageTaken();
         return super.hurt(source, amount);
     }
-    
+
     @Override
     public ServerBossInfo getServerBossInfo() {
         return this.bossInfo;
     }
-    
+
     @Override
     public void onDash() {
         super.onDash();
         this.dashCooldown /= 2;
     }
-    
+
     public void tick() {
         super.tick();
         if (!this.level.isClientSide) {
@@ -84,12 +78,12 @@ public class AggressiveCowBossEntity extends AggressiveCowEntity implements Vaul
             this.regenAfterAWhile.tick();
         }
     }
-    
+
     public void startSeenByPlayer(final ServerPlayerEntity player) {
         super.startSeenByPlayer(player);
         this.bossInfo.addPlayer(player);
     }
-    
+
     public void stopSeenByPlayer(final ServerPlayerEntity player) {
         super.stopSeenByPlayer(player);
         this.bossInfo.removePlayer(player);

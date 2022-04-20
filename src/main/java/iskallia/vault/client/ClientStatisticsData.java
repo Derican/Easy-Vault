@@ -1,7 +1,3 @@
-// 
-// Decompiled by Procyon v0.6.0
-// 
-
 package iskallia.vault.client;
 
 import iskallia.vault.util.calc.PlayerStatisticsCollector;
@@ -11,12 +7,11 @@ import net.minecraft.nbt.ListNBT;
 
 import java.util.*;
 
-public class ClientStatisticsData
-{
+public class ClientStatisticsData {
     private static final List<PlayerStatisticsCollector.AttributeSnapshot> attributeValues;
     private static final Map<PlayerFavourData.VaultGodType, Integer> favourStats;
     private static CompoundNBT serializedVaultStats;
-    
+
     public static void receiveUpdate(final CompoundNBT statisticsData) {
         ClientStatisticsData.attributeValues.clear();
         ClientStatisticsData.favourStats.clear();
@@ -30,19 +25,19 @@ public class ClientStatisticsData
         }
         ClientStatisticsData.serializedVaultStats = statisticsData.getCompound("vaultStats");
     }
-    
+
     public static List<PlayerStatisticsCollector.AttributeSnapshot> getPlayerAttributeSnapshots() {
-        return Collections.unmodifiableList((List<? extends PlayerStatisticsCollector.AttributeSnapshot>)ClientStatisticsData.attributeValues);
+        return Collections.unmodifiableList((List<? extends PlayerStatisticsCollector.AttributeSnapshot>) ClientStatisticsData.attributeValues);
     }
-    
+
     public static int getFavour(final PlayerFavourData.VaultGodType type) {
         return ClientStatisticsData.favourStats.getOrDefault(type, 0);
     }
-    
+
     public static CompoundNBT getSerializedVaultStats() {
         return ClientStatisticsData.serializedVaultStats;
     }
-    
+
     static {
         attributeValues = new ArrayList<PlayerStatisticsCollector.AttributeSnapshot>();
         favourStats = new HashMap<PlayerFavourData.VaultGodType, Integer>();

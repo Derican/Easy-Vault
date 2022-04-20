@@ -1,7 +1,3 @@
-// 
-// Decompiled by Procyon v0.6.0
-// 
-
 package iskallia.vault.container.inventory;
 
 import iskallia.vault.attribute.IntegerAttribute;
@@ -17,16 +13,15 @@ import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.MathHelper;
 
-public class TransmogTableInventory extends RecipeInventory
-{
+public class TransmogTableInventory extends RecipeInventory {
     public static final int GEAR_SLOT = 0;
     public static final int APPEARANCE_SLOT = 1;
     public static final int BRONZE_SLOT = 2;
-    
+
     public TransmogTableInventory() {
         super(3);
     }
-    
+
     public int requiredVaultBronze() {
         final ItemStack gearStack = this.getItem(0);
         if (gearStack.isEmpty()) {
@@ -36,7 +31,7 @@ public class TransmogTableInventory extends RecipeInventory
         final int gearLevel = levelAttr.getValue(gearStack);
         return MathHelper.clamp(gearLevel, 1, 64);
     }
-    
+
     @Override
     public boolean recipeFulfilled() {
         final ItemStack gearStack = this.getItem(0);
@@ -47,7 +42,7 @@ public class TransmogTableInventory extends RecipeInventory
         }
         return gearStack.getItem() instanceof VaultSwordItem && appearanceStack.getItem() instanceof VaultSwordItem && this.swordRecipeFulfilled(gearStack, appearanceStack, bronzeStack);
     }
-    
+
     private boolean armorRecipeFulfilled(final ItemStack armorStack, final ItemStack appearanceStack, final ItemStack bronzeStack) {
         final VaultGear.Rarity armorRarity = ModAttributes.GEAR_RARITY.getBase(armorStack).orElse(VaultGear.Rarity.SCRAPPY);
         final VaultGear.Rarity appearanceRarity = ModAttributes.GEAR_RARITY.getBase(appearanceStack).orElse(VaultGear.Rarity.SCRAPPY);
@@ -75,7 +70,7 @@ public class TransmogTableInventory extends RecipeInventory
         }
         return bronzeStack.getItem() == ModItems.VAULT_BRONZE && bronzeStack.getCount() >= this.requiredVaultBronze();
     }
-    
+
     private boolean swordRecipeFulfilled(final ItemStack swordStack, final ItemStack appearanceStack, final ItemStack bronzeStack) {
         final VaultGear.Rarity swordRarity = ModAttributes.GEAR_RARITY.getBase(swordStack).orElse(VaultGear.Rarity.SCRAPPY);
         final VaultGear.Rarity appearanceRarity = ModAttributes.GEAR_RARITY.getBase(appearanceStack).orElse(VaultGear.Rarity.SCRAPPY);
@@ -98,7 +93,7 @@ public class TransmogTableInventory extends RecipeInventory
         }
         return bronzeStack.getItem() == ModItems.VAULT_BRONZE && bronzeStack.getCount() >= this.requiredVaultBronze();
     }
-    
+
     @Override
     public ItemStack resultingItemStack() {
         final ItemStack gearStack = this.getItem(0);
@@ -114,7 +109,7 @@ public class TransmogTableInventory extends RecipeInventory
         }
         return resultingStack;
     }
-    
+
     @Override
     public void consumeIngredients() {
         this.removeItem(2, this.requiredVaultBronze());

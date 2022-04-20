@@ -1,7 +1,3 @@
-// 
-// Decompiled by Procyon v0.6.0
-// 
-
 package iskallia.vault.client.gui.overlay;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
@@ -18,14 +14,13 @@ import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 @OnlyIn(Dist.CLIENT)
-public class PlayerArmorOverlay
-{
+public class PlayerArmorOverlay {
     @SubscribeEvent(priority = EventPriority.LOW)
     public static void setupHealthTexture(final RenderGameOverlayEvent.Pre event) {
         if (event.getType() != RenderGameOverlayEvent.ElementType.ARMOR) {
             return;
         }
-        final PlayerEntity player = (PlayerEntity)Minecraft.getInstance().player;
+        final PlayerEntity player = (PlayerEntity) Minecraft.getInstance().player;
         if (player == null) {
             return;
         }
@@ -46,7 +41,7 @@ public class PlayerArmorOverlay
             AbstractGui.blit(matrixStack, left, top, 0, 34.0f, 9.0f, 9, 9, 256, 256);
             left += 8;
         }
-        FontHelper.drawStringWithBorder(matrixStack, String.valueOf(armor), (float)(left + 2), (float)(top + 1), -4671036, -16777216);
+        FontHelper.drawStringWithBorder(matrixStack, String.valueOf(armor), (float) (left + 2), (float) (top + 1), -4671036, -16777216);
         ForgeIngameGui.left_height += 10;
         RenderSystem.disableBlend();
         mc.getTextureManager().bind(AbstractGui.GUI_ICONS_LOCATION);

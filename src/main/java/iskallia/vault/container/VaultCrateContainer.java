@@ -1,7 +1,3 @@
-// 
-// Decompiled by Procyon v0.6.0
-// 
-
 package iskallia.vault.container;
 
 import iskallia.vault.block.entity.VaultCrateTileEntity;
@@ -23,17 +19,16 @@ import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
 import net.minecraftforge.items.wrapper.InvWrapper;
 
-public class VaultCrateContainer extends Container
-{
+public class VaultCrateContainer extends Container {
     public IItemHandler crateInventory;
     private PlayerEntity playerEntity;
     private IItemHandler playerInventory;
     private BlockPos tilePos;
-    
+
     public VaultCrateContainer(final int windowId, final World world, final BlockPos pos, final PlayerInventory playerInventory, final PlayerEntity player) {
-        super((ContainerType)ModContainers.VAULT_CRATE_CONTAINER, windowId);
+        super((ContainerType) ModContainers.VAULT_CRATE_CONTAINER, windowId);
         this.playerEntity = player;
-        this.playerInventory = (IItemHandler)new InvWrapper((IInventory)playerInventory);
+        this.playerInventory = (IItemHandler) new InvWrapper((IInventory) playerInventory);
         this.tilePos = pos;
         final TileEntity tileEntity = world.getBlockEntity(pos);
         if (tileEntity != null) {
@@ -42,25 +37,25 @@ public class VaultCrateContainer extends Container
                 final int i = 36;
                 for (int j = 0; j < 6; ++j) {
                     for (int k = 0; k < 9; ++k) {
-                        this.addSlot((Slot)new SlotItemHandler(h, k + j * 9, 8 + k * 18, 18 + j * 18));
+                        this.addSlot((Slot) new SlotItemHandler(h, k + j * 9, 8 + k * 18, 18 + j * 18));
                     }
                 }
                 for (int l = 0; l < 3; ++l) {
                     for (int j2 = 0; j2 < 9; ++j2) {
-                        this.addSlot(new Slot((IInventory)playerInventory, j2 + l * 9 + 9, 8 + j2 * 18, 103 + l * 18 + i));
+                        this.addSlot(new Slot((IInventory) playerInventory, j2 + l * 9 + 9, 8 + j2 * 18, 103 + l * 18 + i));
                     }
                 }
                 for (int i2 = 0; i2 < 9; ++i2) {
-                    this.addSlot(new Slot((IInventory)playerInventory, i2, 8 + i2 * 18, 161 + i));
+                    this.addSlot(new Slot((IInventory) playerInventory, i2, 8 + i2 * 18, 161 + i));
                 }
             });
         }
     }
-    
+
     public BlockPos getTilePos() {
         return this.tilePos;
     }
-    
+
     public ItemStack quickMoveStack(final PlayerEntity playerIn, final int index) {
         ItemStack stack = ItemStack.EMPTY;
         final Slot slot = this.slots.get(index);
@@ -71,25 +66,23 @@ public class VaultCrateContainer extends Container
                 if (!this.moveItemStackTo(stackInSlot, this.crateInventory.getSlots(), this.slots.size(), true)) {
                     return ItemStack.EMPTY;
                 }
-            }
-            else if (!this.moveItemStackTo(stackInSlot, 0, this.crateInventory.getSlots(), false)) {
+            } else if (!this.moveItemStackTo(stackInSlot, 0, this.crateInventory.getSlots(), false)) {
                 return ItemStack.EMPTY;
             }
             if (stackInSlot.isEmpty()) {
                 slot.set(ItemStack.EMPTY);
-            }
-            else {
+            } else {
                 slot.setChanged();
             }
         }
         return stack;
     }
-    
+
     public boolean stillValid(final PlayerEntity player) {
         final World world = player.getCommandSenderWorld();
         return world.getBlockEntity(this.tilePos) instanceof VaultCrateTileEntity && player.distanceToSqr(this.tilePos.getX() + 0.5, this.tilePos.getY() + 0.5, this.tilePos.getZ() + 0.5) <= 64.0;
     }
-    
+
     private int addSlotBox(final IItemHandler handler, int index, final int x, int y, final int horAmount, final int dx, final int verAmount, final int dy) {
         for (int j = 0; j < verAmount; ++j) {
             index = this.addSlotRange(handler, index, x, y, horAmount, dx);
@@ -97,18 +90,18 @@ public class VaultCrateContainer extends Container
         }
         return index;
     }
-    
+
     private int addSlotRange(final IItemHandler handler, int index, int x, final int y, final int amount, final int dx) {
         for (int i = 0; i < amount; ++i) {
-            this.addSlot((Slot)new SlotItemHandler(handler, index, x, y));
+            this.addSlot((Slot) new SlotItemHandler(handler, index, x, y));
             x += dx;
             ++index;
         }
         return index;
     }
-    
+
     public void removed(final PlayerEntity player) {
         super.removed(player);
-        player.level.playSound((PlayerEntity)null, player.getX(), player.getY(), player.getZ(), SoundEvents.BARREL_CLOSE, SoundCategory.BLOCKS, 1.0f, 1.0f);
+        player.level.playSound((PlayerEntity) null, player.getX(), player.getY(), player.getZ(), SoundEvents.BARREL_CLOSE, SoundCategory.BLOCKS, 1.0f, 1.0f);
     }
 }

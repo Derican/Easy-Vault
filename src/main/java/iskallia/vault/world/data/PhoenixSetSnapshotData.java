@@ -1,7 +1,3 @@
-// 
-// Decompiled by Procyon v0.6.0
-// 
-
 package iskallia.vault.world.data;
 
 import iskallia.vault.init.ModAttributes;
@@ -22,25 +18,24 @@ import net.minecraftforge.fml.common.Mod;
 import java.util.function.Supplier;
 
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.FORGE)
-public class PhoenixSetSnapshotData extends InventorySnapshotData
-{
+public class PhoenixSetSnapshotData extends InventorySnapshotData {
     private static final String RESTORE_FLAG = "the_vault_restore_phoenixset";
     protected static final String DATA_NAME = "the_vault_PhoenixSet";
-    
+
     public PhoenixSetSnapshotData() {
         super("the_vault_PhoenixSet");
     }
-    
+
     @Override
     protected boolean shouldSnapshotItem(final PlayerEntity player, final ItemStack stack) {
         return !stack.isEmpty() && !ModAttributes.SOULBOUND.getOrDefault(stack, false).getValue(stack);
     }
-    
+
     @Override
     protected Builder makeSnapshotBuilder(final PlayerEntity player) {
         return new Builder(player).setStackFilter(this::shouldSnapshotItem);
     }
-    
+
     @SubscribeEvent
     public static void onTick(final TickEvent.PlayerTickEvent event) {
         final PlayerEntity player = event.player;
@@ -50,34 +45,34 @@ public class PhoenixSetSnapshotData extends InventorySnapshotData
         if (!player.getTags().contains("the_vault_restore_phoenixset")) {
             return;
         }
-        final ServerWorld world = (ServerWorld)event.player.level;
+        final ServerWorld world = (ServerWorld) event.player.level;
         final PhoenixSetSnapshotData data = get(world);
         if (data.hasSnapshot(player)) {
             data.restoreSnapshot(player);
         }
         player.removeTag("the_vault_restore_phoenixset");
     }
-    
+
     @SubscribeEvent(priority = EventPriority.HIGHEST)
     public static void onDeath(final LivingDeathEvent event) {
         if (!(event.getEntity() instanceof ServerPlayerEntity) || !(event.getEntity().level instanceof ServerWorld)) {
             return;
         }
-        final ServerPlayerEntity player = (ServerPlayerEntity)event.getEntity();
-        final ServerWorld world = (ServerWorld)player.level;
-        if (PlayerSet.isActive(VaultGear.Set.PHOENIX, (LivingEntity)player)) {
+        final ServerPlayerEntity player = (ServerPlayerEntity) event.getEntity();
+        final ServerWorld world = (ServerWorld) player.level;
+        if (PlayerSet.isActive(VaultGear.Set.PHOENIX, (LivingEntity) player)) {
             final PhoenixSetSnapshotData data = get(world);
-            if (data.hasSnapshot((PlayerEntity)player)) {
+            if (data.hasSnapshot((PlayerEntity) player)) {
                 player.addTag("the_vault_restore_phoenixset");
             }
         }
     }
-    
+
     public static PhoenixSetSnapshotData get(final ServerWorld world) {
         return get(world.getServer());
     }
-    
+
     public static PhoenixSetSnapshotData get(final MinecraftServer srv) {
-        return (PhoenixSetSnapshotData)srv.overworld().getDataStorage().computeIfAbsent((Supplier)PhoenixSetSnapshotData::new, "the_vault_PhoenixSet");
+        return (PhoenixSetSnapshotData) srv.overworld().getDataStorage().computeIfAbsent((Supplier) PhoenixSetSnapshotData::new, "the_vault_PhoenixSet");
     }
 }

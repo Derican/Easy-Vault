@@ -1,7 +1,3 @@
-// 
-// Decompiled by Procyon v0.6.0
-// 
-
 package iskallia.vault.attribute;
 
 import com.google.gson.annotations.Expose;
@@ -31,7 +27,7 @@ public class EffectCloudAttribute extends PooledAttribute<List<EffectCloudEntity
         }
         final CompoundNBT tag = new CompoundNBT();
         final ListNBT effectsList = new ListNBT();
-        getBaseValue().forEach(effect -> effectsList.add( effect.serializeNBT()));
+        getBaseValue().forEach(effect -> effectsList.add(effect.serializeNBT()));
         tag.put("EffectClouds", (INBT) effectsList);
         nbt.put("BaseValue", (INBT) tag);
     }

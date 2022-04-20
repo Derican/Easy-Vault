@@ -1,25 +1,20 @@
-// 
-// Decompiled by Procyon v0.6.0
-// 
-
 package iskallia.vault.world.vault.gen.layout;
 
 import iskallia.vault.Vault;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.vector.Vector3i;
 
-public class DenseSquareRoomLayout extends DenseVaultLayout
-{
+public class DenseSquareRoomLayout extends DenseVaultLayout {
     public static final ResourceLocation ID;
-    
+
     public DenseSquareRoomLayout() {
         this(11);
     }
-    
+
     public DenseSquareRoomLayout(final int size) {
         super(DenseSquareRoomLayout.ID, size);
     }
-    
+
     @Override
     protected void generateLayoutRooms(final Layout layout, final int size) {
         for (int halfSize = size / 2, x = -halfSize; x <= halfSize; ++x) {
@@ -30,7 +25,7 @@ public class DenseSquareRoomLayout extends DenseVaultLayout
             }
         }
     }
-    
+
     static {
         ID = Vault.id("dense_square");
     }

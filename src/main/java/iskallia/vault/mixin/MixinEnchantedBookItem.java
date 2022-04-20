@@ -1,7 +1,3 @@
-// 
-// Decompiled by Procyon v0.6.0
-// 
-
 package iskallia.vault.mixin;
 
 import iskallia.vault.util.OverlevelEnchantHelper;
@@ -21,15 +17,14 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.List;
 
-@Mixin({ EnchantedBookItem.class })
-public class MixinEnchantedBookItem
-{
-    @Inject(method = { "appendHoverText" }, at = { @At("TAIL") })
+@Mixin({EnchantedBookItem.class})
+public class MixinEnchantedBookItem {
+    @Inject(method = {"appendHoverText"}, at = {@At("TAIL")})
     public void appendOverlevelBookExplanation(final ItemStack stack, final World world, final List<ITextComponent> tooltip, final ITooltipFlag flag, final CallbackInfo ci) {
         if (stack.getItem() == Items.ENCHANTED_BOOK && OverlevelEnchantHelper.getOverlevels(stack) != -1) {
-            tooltip.add((ITextComponent)new StringTextComponent(""));
-            tooltip.add((ITextComponent)new StringTextComponent("Upgrades an equipment's EXISTING").setStyle(Style.EMPTY.withColor(Color.parseColor("#FFFFFF")).withItalic(Boolean.valueOf(true))));
-            tooltip.add((ITextComponent)new StringTextComponent("enchantment level when used on Anvil.").setStyle(Style.EMPTY.withColor(Color.parseColor("#FFFFFF")).withItalic(Boolean.valueOf(true))));
+            tooltip.add((ITextComponent) new StringTextComponent(""));
+            tooltip.add((ITextComponent) new StringTextComponent("Upgrades an equipment's EXISTING").setStyle(Style.EMPTY.withColor(Color.parseColor("#FFFFFF")).withItalic(Boolean.valueOf(true))));
+            tooltip.add((ITextComponent) new StringTextComponent("enchantment level when used on Anvil.").setStyle(Style.EMPTY.withColor(Color.parseColor("#FFFFFF")).withItalic(Boolean.valueOf(true))));
         }
     }
 }

@@ -1,7 +1,3 @@
-// 
-// Decompiled by Procyon v0.6.0
-// 
-
 package iskallia.vault.block.entity;
 
 import iskallia.vault.Vault;
@@ -34,17 +30,16 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class EtchingVendorControllerTileEntity extends TileEntity implements ITickableTileEntity
-{
+public class EtchingVendorControllerTileEntity extends TileEntity implements ITickableTileEntity {
     private int monitoredEntityId;
     private final List<EtchingTrade> trades;
-    
+
     public EtchingVendorControllerTileEntity() {
-        super((TileEntityType)ModBlocks.ETCHING_CONTROLLER_TILE_ENTITY);
+        super((TileEntityType) ModBlocks.ETCHING_CONTROLLER_TILE_ENTITY);
         this.monitoredEntityId = -1;
         this.trades = new ArrayList<EtchingTrade>();
     }
-    
+
     public void tick() {
         if (this.getLevel().isClientSide() || !(this.getLevel() instanceof ServerWorld)) {
             return;
@@ -59,22 +54,21 @@ public class EtchingVendorControllerTileEntity extends TileEntity implements ITi
         Entity monitoredEntity;
         if (this.monitoredEntityId == -1) {
             monitoredEntity = this.createVendor();
-        }
-        else if ((monitoredEntity = this.level.getEntity(this.monitoredEntityId)) == null) {
+        } else if ((monitoredEntity = this.level.getEntity(this.monitoredEntityId)) == null) {
             monitoredEntity = this.createVendor();
         }
-        monitoredEntity.setPos(this.worldPosition.getX() + 0.5, (double)this.worldPosition.getY(), this.worldPosition.getZ() + 0.5);
+        monitoredEntity.setPos(this.worldPosition.getX() + 0.5, (double) this.worldPosition.getY(), this.worldPosition.getZ() + 0.5);
     }
-    
+
     private Entity createVendor() {
-        final ServerWorld sWorld = (ServerWorld)this.getLevel();
-        final EtchingVendorEntity vendor = (EtchingVendorEntity)ModEntities.ETCHING_VENDOR.create(sWorld, (CompoundNBT)null, (ITextComponent)null, (PlayerEntity)null, this.getBlockPos(), SpawnReason.STRUCTURE, false, false);
+        final ServerWorld sWorld = (ServerWorld) this.getLevel();
+        final EtchingVendorEntity vendor = (EtchingVendorEntity) ModEntities.ETCHING_VENDOR.create(sWorld, (CompoundNBT) null, (ITextComponent) null, (PlayerEntity) null, this.getBlockPos(), SpawnReason.STRUCTURE, false, false);
         vendor.setVendorPos(this.getBlockPos());
-        sWorld.addFreshEntity((Entity)vendor);
+        sWorld.addFreshEntity((Entity) vendor);
         this.monitoredEntityId = vendor.getId();
-        return (Entity)vendor;
+        return (Entity) vendor;
     }
-    
+
     private void generateTrades() {
         final Random r = new Random();
         for (int i = 0; i < 3; ++i) {
@@ -85,17 +79,17 @@ public class EtchingVendorControllerTileEntity extends TileEntity implements ITi
             this.trades.add(new EtchingTrade(etchingStack, amount, false));
         }
     }
-    
+
     public int getMonitoredEntityId() {
         return this.monitoredEntityId;
     }
-    
+
     public void setMonitoredEntityId(final int id) {
         if (this.monitoredEntityId == -1) {
             this.monitoredEntityId = id;
         }
     }
-    
+
     @Nullable
     public EtchingTrade getTrade(final int id) {
         if (id < 0 || id >= this.trades.size()) {
@@ -103,7 +97,7 @@ public class EtchingVendorControllerTileEntity extends TileEntity implements ITi
         }
         return this.trades.get(id);
     }
-    
+
     public void load(final BlockState state, final CompoundNBT nbt) {
         super.load(state, nbt);
         final ListNBT trades = nbt.getList("trades", 10);
@@ -112,77 +106,76 @@ public class EtchingVendorControllerTileEntity extends TileEntity implements ITi
             this.trades.add(EtchingTrade.deserialize(tradeTag));
         }
     }
-    
+
     public CompoundNBT save(final CompoundNBT compound) {
         final CompoundNBT tag = super.save(compound);
         final ListNBT trades = new ListNBT();
         for (final EtchingTrade trade : this.trades) {
             trades.add(trade.serialize());
         }
-        compound.put("trades", (INBT)trades);
+        compound.put("trades", (INBT) trades);
         return tag;
     }
-    
+
     public CompoundNBT getUpdateTag() {
         return this.save(new CompoundNBT());
     }
-    
+
     public void handleUpdateTag(final BlockState state, final CompoundNBT tag) {
         this.load(state, tag);
     }
-    
+
     @Nullable
     public SUpdateTileEntityPacket getUpdatePacket() {
         return new SUpdateTileEntityPacket(this.worldPosition, 1, this.getUpdateTag());
     }
-    
+
     public void onDataPacket(final NetworkManager net, final SUpdateTileEntityPacket pkt) {
         final CompoundNBT tag = pkt.getTag();
         this.handleUpdateTag(this.getBlockState(), tag);
     }
-    
+
     public void sendUpdates() {
         this.level.sendBlockUpdated(this.worldPosition, this.getBlockState(), this.getBlockState(), 11);
         this.level.updateNeighborsAt(this.worldPosition, this.getBlockState().getBlock());
         this.setChanged();
     }
-    
-    public static class EtchingTrade
-    {
+
+    public static class EtchingTrade {
         private final ItemStack soldEtching;
         private final int requiredPlatinum;
         private boolean sold;
-        
+
         public EtchingTrade(final ItemStack soldEtching, final int requiredPlatinum, final boolean sold) {
             this.soldEtching = soldEtching;
             this.requiredPlatinum = requiredPlatinum;
             this.sold = sold;
         }
-        
+
         public ItemStack getSoldEtching() {
             return this.soldEtching;
         }
-        
+
         public int getRequiredPlatinum() {
             return this.requiredPlatinum;
         }
-        
+
         public void setSold(final boolean sold) {
             this.sold = sold;
         }
-        
+
         public boolean isSold() {
             return this.sold;
         }
-        
+
         public CompoundNBT serialize() {
             final CompoundNBT nbt = new CompoundNBT();
-            nbt.put("stack", (INBT)this.soldEtching.serializeNBT());
+            nbt.put("stack", (INBT) this.soldEtching.serializeNBT());
             nbt.putInt("amount", this.requiredPlatinum);
             nbt.putBoolean("sold", this.sold);
             return nbt;
         }
-        
+
         public static EtchingTrade deserialize(final CompoundNBT nbt) {
             final ItemStack stack = ItemStack.of(nbt.getCompound("stack"));
             final int amount = nbt.getInt("amount");

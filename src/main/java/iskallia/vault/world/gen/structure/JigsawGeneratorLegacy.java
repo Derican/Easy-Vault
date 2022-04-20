@@ -1,7 +1,3 @@
-// 
-// Decompiled by Procyon v0.6.0
-// 
-
 package iskallia.vault.world.gen.structure;
 
 import com.google.common.collect.Lists;
@@ -33,11 +29,10 @@ import org.apache.commons.lang3.mutable.MutableObject;
 
 import java.util.*;
 
-public class JigsawGeneratorLegacy
-{
+public class JigsawGeneratorLegacy {
     public static void addPieces(final DynamicRegistries p_242837_0_, final VillageConfig p_242837_1_, final JigsawManager.IPieceFactory p_242837_2_, final ChunkGenerator p_242837_3_, final TemplateManager p_242837_4_, final BlockPos p_242837_5_, final List<? super AbstractVillagePiece> p_242837_6_, final Random p_242837_7_, final boolean p_242837_8_, final boolean p_242837_9_) {
         Structure.bootstrap();
-        final MutableRegistry<JigsawPattern> mutableregistry = (MutableRegistry<JigsawPattern>)p_242837_0_.registryOrThrow(Registry.TEMPLATE_POOL_REGISTRY);
+        final MutableRegistry<JigsawPattern> mutableregistry = (MutableRegistry<JigsawPattern>) p_242837_0_.registryOrThrow(Registry.TEMPLATE_POOL_REGISTRY);
         final Rotation rotation = Rotation.getRandom(p_242837_7_);
         final JigsawPattern jigsawpattern = p_242837_1_.startPool().get();
         final JigsawPiece jigsawpiece = jigsawpattern.getRandomTemplate(p_242837_7_);
@@ -48,8 +43,7 @@ public class JigsawGeneratorLegacy
         int k;
         if (p_242837_9_) {
             k = p_242837_5_.getY() + p_242837_3_.getFirstFreeHeight(i, j, Heightmap.Type.WORLD_SURFACE_WG);
-        }
-        else {
+        } else {
             k = p_242837_5_.getY();
         }
         final int l = mutableboundingbox.y0 + abstractvillagepiece.getGroundLevelDelta();
@@ -57,8 +51,8 @@ public class JigsawGeneratorLegacy
         p_242837_6_.add(abstractvillagepiece);
         if (p_242837_1_.maxDepth() > 0) {
             final int maxRange = 1073741823;
-            final AxisAlignedBB axisalignedbb = new AxisAlignedBB((double)(i - maxRange), (double)(k - maxRange), (double)(j - maxRange), (double)(i + maxRange + 1), (double)(k + maxRange + 1), (double)(j + maxRange + 1));
-            final Assembler jigsawmanager$assembler = new Assembler((Registry)mutableregistry, p_242837_1_.maxDepth(), p_242837_2_, p_242837_3_, p_242837_4_, (List)p_242837_6_, p_242837_7_);
+            final AxisAlignedBB axisalignedbb = new AxisAlignedBB((double) (i - maxRange), (double) (k - maxRange), (double) (j - maxRange), (double) (i + maxRange + 1), (double) (k + maxRange + 1), (double) (j + maxRange + 1));
+            final Assembler jigsawmanager$assembler = new Assembler((Registry) mutableregistry, p_242837_1_.maxDepth(), p_242837_2_, p_242837_3_, p_242837_4_, (List) p_242837_6_, p_242837_7_);
             jigsawmanager$assembler.availablePieces.addLast(new Entry(abstractvillagepiece, new MutableObject(VoxelShapes.join(VoxelShapes.create(axisalignedbb), VoxelShapes.create(AxisAlignedBB.of(mutableboundingbox)), IBooleanFunction.ONLY_FIRST)), k + maxRange, 0));
             while (!jigsawmanager$assembler.availablePieces.isEmpty()) {
                 final Entry jigsawmanager$entry = jigsawmanager$assembler.availablePieces.removeFirst();
@@ -66,9 +60,8 @@ public class JigsawGeneratorLegacy
             }
         }
     }
-    
-    static final class Assembler
-    {
+
+    static final class Assembler {
         private final Registry<JigsawPattern> pools;
         private final int maxDepth;
         private final JigsawManager.IPieceFactory pieceFactory;
@@ -77,7 +70,7 @@ public class JigsawGeneratorLegacy
         private final List<? super AbstractVillagePiece> structurePieces;
         private final Random rand;
         private final Deque<Entry> availablePieces;
-        
+
         private Assembler(final Registry<JigsawPattern> p_i242005_1_, final int p_i242005_2_, final JigsawManager.IPieceFactory p_i242005_3_, final ChunkGenerator p_i242005_4_, final TemplateManager p_i242005_5_, final List<? super AbstractVillagePiece> p_i242005_6_, final Random p_i242005_7_) {
             this.availablePieces = Queues.newArrayDeque();
             this.pools = p_i242005_1_;
@@ -88,17 +81,17 @@ public class JigsawGeneratorLegacy
             this.structurePieces = p_i242005_6_;
             this.rand = p_i242005_7_;
         }
-        
+
         private void tryPlacingChildren(final AbstractVillagePiece p_236831_1_, final MutableObject<VoxelShape> p_236831_2_, final int p_236831_3_, final int currentDepth, final boolean p_236831_5_) {
             final JigsawPiece jigsawpiece = p_236831_1_.getElement();
             final BlockPos blockpos = p_236831_1_.getPosition();
             final Rotation rotation = p_236831_1_.getRotation();
             final JigsawPattern.PlacementBehaviour jigsawpattern$placementbehaviour = jigsawpiece.getProjection();
             final boolean flag = jigsawpattern$placementbehaviour == JigsawPattern.PlacementBehaviour.RIGID;
-            final MutableObject<VoxelShape> mutableobject = (MutableObject<VoxelShape>)new MutableObject();
+            final MutableObject<VoxelShape> mutableobject = (MutableObject<VoxelShape>) new MutableObject();
             final MutableBoundingBox mutableboundingbox = p_236831_1_.getBoundingBox();
             final int i = mutableboundingbox.y0;
-        Label_0086:
+            Label_0086:
             while (true) {
                 for (final Template.BlockInfo template$blockinfo : jigsawpiece.getShuffledJigsawBlocks(this.templateManager, blockpos, rotation, this.rand)) {
                     final Direction direction = JigsawBlock.getFrontFacing(template$blockinfo.state);
@@ -112,7 +105,7 @@ public class JigsawGeneratorLegacy
                         final ResourceLocation resourcelocation2 = mainJigsawPattern.get().getFallback();
                         final Optional<JigsawPattern> fallbackJigsawPattern = this.pools.getOptional(resourcelocation2);
                         if (fallbackJigsawPattern.isPresent() && (fallbackJigsawPattern.get().size() != 0 || Objects.equals(resourcelocation2, JigsawPatternRegistry.EMPTY.location()))) {
-                            final boolean flag2 = mutableboundingbox.isInside((Vector3i)blockpos3);
+                            final boolean flag2 = mutableboundingbox.isInside((Vector3i) blockpos3);
                             MutableObject<VoxelShape> mutableobject2;
                             int l;
                             if (flag2) {
@@ -121,8 +114,7 @@ public class JigsawGeneratorLegacy
                                 if (mutableobject.getValue() == null) {
                                     mutableobject.setValue(VoxelShapes.create(AxisAlignedBB.of(mutableboundingbox)));
                                 }
-                            }
-                            else {
+                            } else {
                                 mutableobject2 = p_236831_2_;
                                 l = p_236831_3_;
                             }
@@ -130,8 +122,7 @@ public class JigsawGeneratorLegacy
                             if (currentDepth != this.maxDepth) {
                                 list.addAll(mainJigsawPattern.get().getShuffledTemplates(this.rand));
                                 list.addAll(fallbackJigsawPattern.get().getShuffledTemplates(this.rand));
-                            }
-                            else {
+                            } else {
                                 list.addAll(fallbackJigsawPattern.get().getShuffledTemplates(this.rand));
                             }
                             for (final JigsawPiece jigsawpiece2 : list) {
@@ -144,10 +135,9 @@ public class JigsawGeneratorLegacy
                                     int i2;
                                     if (p_236831_5_ && mutableboundingbox2.getYSpan() <= 16) {
                                         i2 = list2.stream().mapToInt(p_242841_2_ -> {
-                                            if (!mutableboundingbox2.isInside((Vector3i)p_242841_2_.pos.relative(JigsawBlock.getFrontFacing(p_242841_2_.state)))) {
+                                            if (!mutableboundingbox2.isInside((Vector3i) p_242841_2_.pos.relative(JigsawBlock.getFrontFacing(p_242841_2_.state)))) {
                                                 return 0;
-                                            }
-                                            else {
+                                            } else {
                                                 final ResourceLocation resourcelocation3 = new ResourceLocation(p_242841_2_.nbt.getString("pool"));
                                                 final Optional<JigsawPattern> optional2 = this.pools.getOptional(resourcelocation3);
                                                 final Optional<JigsawPattern> optional3 = optional2.flatMap(p_242843_1_ -> this.pools.getOptional(p_242843_1_.getFallback()));
@@ -156,8 +146,7 @@ public class JigsawGeneratorLegacy
                                                 return Math.max(k4, l4);
                                             }
                                         }).max().orElse(0);
-                                    }
-                                    else {
+                                    } else {
                                         i2 = 0;
                                     }
                                     for (final Template.BlockInfo template$blockinfo2 : list2) {
@@ -173,8 +162,7 @@ public class JigsawGeneratorLegacy
                                             int i3;
                                             if (flag && flag3) {
                                                 i3 = i + l2;
-                                            }
-                                            else {
+                                            } else {
                                                 if (k == -1) {
                                                     k = this.chunkGenerator.getFirstFreeHeight(blockpos2.getX(), blockpos2.getZ(), Heightmap.Type.WORLD_SURFACE_WG);
                                                 }
@@ -187,27 +175,24 @@ public class JigsawGeneratorLegacy
                                                 final int k3 = Math.max(i2 + 1, mutableboundingbox4.y1 - mutableboundingbox4.y0);
                                                 mutableboundingbox4.y1 = mutableboundingbox4.y0 + k3;
                                             }
-                                            if (VoxelShapes.joinIsNotEmpty((VoxelShape)mutableobject2.getValue(), VoxelShapes.create(AxisAlignedBB.of(mutableboundingbox4).deflate(0.25)), IBooleanFunction.ONLY_SECOND)) {
+                                            if (VoxelShapes.joinIsNotEmpty((VoxelShape) mutableobject2.getValue(), VoxelShapes.create(AxisAlignedBB.of(mutableboundingbox4).deflate(0.25)), IBooleanFunction.ONLY_SECOND)) {
                                                 continue;
                                             }
-                                            mutableobject2.setValue(VoxelShapes.joinUnoptimized((VoxelShape)mutableobject2.getValue(), VoxelShapes.create(AxisAlignedBB.of(mutableboundingbox4)), IBooleanFunction.ONLY_FIRST));
+                                            mutableobject2.setValue(VoxelShapes.joinUnoptimized((VoxelShape) mutableobject2.getValue(), VoxelShapes.create(AxisAlignedBB.of(mutableboundingbox4)), IBooleanFunction.ONLY_FIRST));
                                             final int j4 = p_236831_1_.getGroundLevelDelta();
                                             int l3;
                                             if (flag3) {
                                                 l3 = j4 - l2;
-                                            }
-                                            else {
+                                            } else {
                                                 l3 = jigsawpiece2.getGroundLevelDelta();
                                             }
                                             final AbstractVillagePiece abstractvillagepiece = this.pieceFactory.create(this.templateManager, jigsawpiece2, blockpos6, l3, rotation2, mutableboundingbox4);
                                             int i4;
                                             if (flag) {
                                                 i4 = i + j;
-                                            }
-                                            else if (flag3) {
+                                            } else if (flag3) {
                                                 i4 = i3 + k2;
-                                            }
-                                            else {
+                                            } else {
                                                 if (k == -1) {
                                                     k = this.chunkGenerator.getFirstFreeHeight(blockpos2.getX(), blockpos2.getZ(), Heightmap.Type.WORLD_SURFACE_WG);
                                                 }
@@ -220,7 +205,7 @@ public class JigsawGeneratorLegacy
                                             }
                                             this.structurePieces.add(abstractvillagepiece);
                                             if (currentDepth + 1 <= this.maxDepth) {
-                                                this.availablePieces.addLast(new Entry(abstractvillagepiece, (MutableObject)mutableobject2, l, currentDepth + 1));
+                                                this.availablePieces.addLast(new Entry(abstractvillagepiece, (MutableObject) mutableobject2, l, currentDepth + 1));
                                                 continue Label_0086;
                                             }
                                             continue Label_0086;
@@ -228,12 +213,10 @@ public class JigsawGeneratorLegacy
                                     }
                                 }
                             }
-                        }
-                        else {
+                        } else {
                             Vault.LOGGER.warn("Empty or none existent fallback pool: {}", resourcelocation2);
                         }
-                    }
-                    else {
+                    } else {
                         Vault.LOGGER.warn("Empty or none existent pool: {}", resourcelocation);
                     }
                 }
@@ -241,14 +224,13 @@ public class JigsawGeneratorLegacy
             }
         }
     }
-    
-    static final class Entry
-    {
+
+    static final class Entry {
         private final AbstractVillagePiece villagePiece;
         private final MutableObject<VoxelShape> free;
         private final int boundsTop;
         private final int depth;
-        
+
         private Entry(final AbstractVillagePiece p_i232042_1_, final MutableObject<VoxelShape> p_i232042_2_, final int p_i232042_3_, final int p_i232042_4_) {
             this.villagePiece = p_i232042_1_;
             this.free = p_i232042_2_;

@@ -1,7 +1,3 @@
-// 
-// Decompiled by Procyon v0.6.0
-// 
-
 package iskallia.vault.client.gui.widget;
 
 import com.mojang.blaze3d.matrix.MatrixStack;

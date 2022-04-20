@@ -1,7 +1,3 @@
-// 
-// Decompiled by Procyon v0.6.0
-// 
-
 package iskallia.vault.world.gen.structure;
 
 import iskallia.vault.Vault;
@@ -110,7 +106,7 @@ public class VaultJigsawHelper {
     }
 
     private static Rotation getTunnelRotation(final Direction direction) {
-        switch(direction)  {
+        switch (direction) {
             case SOUTH: {
                 return Rotation.CLOCKWISE_180;
             }

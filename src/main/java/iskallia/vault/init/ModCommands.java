@@ -1,7 +1,3 @@
-// 
-// Decompiled by Procyon v0.6.0
-// 
-
 package iskallia.vault.init;
 
 import com.mojang.brigadier.CommandDispatcher;
@@ -16,8 +12,7 @@ import net.minecraft.command.arguments.IArgumentSerializer;
 
 import java.util.function.Supplier;
 
-public class ModCommands
-{
+public class ModCommands {
     public static ReloadConfigsCommand RELOAD_CONFIGS;
     public static VaultLevelCommand VAULT_LEVEL;
     public static InternalCommand INTERNAL;
@@ -29,7 +24,7 @@ public class ModCommands
     public static EternalCommand ETERNAL;
     public static GearCommand GEAR;
     public static PartyCommand PARTY;
-    
+
     public static void registerCommands(final CommandDispatcher<CommandSource> dispatcher, final Commands.EnvironmentType env) {
         ModCommands.RELOAD_CONFIGS = registerCommand(ReloadConfigsCommand::new, dispatcher, env);
         ModCommands.VAULT_LEVEL = registerCommand(VaultLevelCommand::new, dispatcher, env);
@@ -44,12 +39,12 @@ public class ModCommands
         ModCommands.PARTY = registerCommand(PartyCommand::new, dispatcher, env);
         ArchitectDirectionCommands.register(dispatcher);
     }
-    
+
     public static void registerArgumentTypes() {
-        ArgumentTypes.register(Vault.id("backup_list_player").toString(), (Class)BackupListArgument.Player.class, (IArgumentSerializer)new ArgumentSerializer((Supplier)BackupListArgument.Player::new));
-        ArgumentTypes.register(Vault.id("backup_list_uuid").toString(), (Class)BackupListArgument.UUIDRef.class, (IArgumentSerializer)new ArgumentSerializer((Supplier)BackupListArgument.UUIDRef::new));
+        ArgumentTypes.register(Vault.id("backup_list_player").toString(), (Class) BackupListArgument.Player.class, (IArgumentSerializer) new ArgumentSerializer((Supplier) BackupListArgument.Player::new));
+        ArgumentTypes.register(Vault.id("backup_list_uuid").toString(), (Class) BackupListArgument.UUIDRef.class, (IArgumentSerializer) new ArgumentSerializer((Supplier) BackupListArgument.UUIDRef::new));
     }
-    
+
     public static <T extends Command> T registerCommand(final Supplier<T> supplier, final CommandDispatcher<CommandSource> dispatcher, final Commands.EnvironmentType env) {
         final T command = supplier.get();
         if (!command.isDedicatedServerOnly() || env == Commands.EnvironmentType.DEDICATED || env == Commands.EnvironmentType.ALL) {

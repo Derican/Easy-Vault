@@ -1,7 +1,3 @@
-// 
-// Decompiled by Procyon v0.6.0
-// 
-
 package iskallia.vault.skill.ability.group;
 
 import com.google.gson.annotations.Expose;
@@ -15,19 +11,18 @@ import iskallia.vault.skill.ability.effect.ExecuteAbility;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ExecuteAbilityGroup extends AbilityGroup<ExecuteConfig, ExecuteAbility<ExecuteConfig>>
-{
+public class ExecuteAbilityGroup extends AbilityGroup<ExecuteConfig, ExecuteAbility<ExecuteConfig>> {
     @Expose
     private final List<ExecuteBuffConfig> buffLevelConfiguration;
     @Expose
     private final List<ExecuteDamageConfig> damageLevelConfiguration;
-    
+
     private ExecuteAbilityGroup() {
         super("Execute");
         this.buffLevelConfiguration = new ArrayList<ExecuteBuffConfig>();
         this.damageLevelConfiguration = new ArrayList<ExecuteDamageConfig>();
     }
-    
+
     @Override
     protected ExecuteConfig getSubConfig(final String specialization, final int level) {
         switch (specialization) {
@@ -42,7 +37,7 @@ public class ExecuteAbilityGroup extends AbilityGroup<ExecuteConfig, ExecuteAbil
             }
         }
     }
-    
+
     @Override
     public String getSpecializationName(final String specialization) {
         switch (specialization) {
@@ -57,7 +52,7 @@ public class ExecuteAbilityGroup extends AbilityGroup<ExecuteConfig, ExecuteAbil
             }
         }
     }
-    
+
     public static ExecuteAbilityGroup defaultConfig() {
         final ExecuteAbilityGroup group = new ExecuteAbilityGroup();
         group.addLevel(new ExecuteConfig(1, AbilityConfig.Behavior.RELEASE_TO_PERFORM, 0.05f, 100));

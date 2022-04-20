@@ -1,7 +1,3 @@
-// 
-// Decompiled by Procyon v0.6.0
-// 
-
 package iskallia.vault.util;
 
 import com.google.common.collect.Lists;
@@ -19,30 +15,29 @@ import net.minecraftforge.fml.common.thread.SidedThreadGroups;
 
 import java.util.List;
 
-public class SidedHelper
-{
+public class SidedHelper {
     public static int getVaultLevel(final PlayerEntity player) {
         if (player instanceof ServerPlayerEntity) {
-            return PlayerVaultStatsData.get(((ServerPlayerEntity)player).getLevel()).getVaultStats(player).getVaultLevel();
+            return PlayerVaultStatsData.get(((ServerPlayerEntity) player).getLevel()).getVaultStats(player).getVaultLevel();
         }
         return getClientVaultLevel();
     }
-    
+
     @OnlyIn(Dist.CLIENT)
     private static int getClientVaultLevel() {
         return VaultBarOverlay.vaultLevel;
     }
-    
+
     public static List<? extends PlayerEntity> getSidedPlayers() {
         if (Thread.currentThread().getThreadGroup() == SidedThreadGroups.SERVER) {
-            final MinecraftServer srv = (MinecraftServer)LogicalSidedProvider.INSTANCE.get(LogicalSide.SERVER);
+            final MinecraftServer srv = (MinecraftServer) LogicalSidedProvider.INSTANCE.get(LogicalSide.SERVER);
             return srv.getPlayerList().getPlayers();
         }
         return getClientSidePlayers();
     }
-    
+
     @OnlyIn(Dist.CLIENT)
     private static List<PlayerEntity> getClientSidePlayers() {
-        return Lists.newArrayList(new PlayerEntity[] { Minecraft.getInstance().player });
+        return Lists.newArrayList(new PlayerEntity[]{Minecraft.getInstance().player});
     }
 }

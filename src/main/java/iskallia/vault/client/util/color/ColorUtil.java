@@ -1,16 +1,11 @@
-// 
-// Decompiled by Procyon v0.6.0
-// 
-
 package iskallia.vault.client.util.color;
 
 import java.awt.*;
 
-public class ColorUtil
-{
+public class ColorUtil {
     private ColorUtil() {
     }
-    
+
     public static double fastPerceptualColorDistanceSquared(final int[] color1, final int[] color2) {
         final int red1 = color1[0];
         final int red2 = color2[0];
@@ -20,7 +15,7 @@ public class ColorUtil
         final int b = color1[2] - color2[2];
         return ((512 + redMean) * r * r >> 8) + 4 * g * g + ((767 - redMean) * b * b >> 8);
     }
-    
+
     public static double slowPerceptualColorDistanceSquared(final int[] color1, final int[] color2) {
         final double colorDistance = fastPerceptualColorDistanceSquared(color1, color2);
         final double grey1 = (color1[0] + color1[1] + color1[2]) / 3;
@@ -30,10 +25,10 @@ public class ColorUtil
         final double greyDistance3 = greyDistance1 - greyDistance2;
         return colorDistance + greyDistance3 * greyDistance3 / 10.0;
     }
-    
+
     public static double slowPerceptualColorDistanceSquared(final Color color1, final Color color2) {
-        final int[] colorInts1 = { color1.getRed(), color1.getGreen(), color1.getBlue() };
-        final int[] colorInts2 = { color2.getRed(), color2.getGreen(), color2.getBlue() };
+        final int[] colorInts1 = {color1.getRed(), color1.getGreen(), color1.getBlue()};
+        final int[] colorInts2 = {color2.getRed(), color2.getGreen(), color2.getBlue()};
         return slowPerceptualColorDistanceSquared(colorInts1, colorInts2);
     }
 }
