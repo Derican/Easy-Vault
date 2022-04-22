@@ -36,7 +36,8 @@ public class ItemKnowledgeStar extends Item {
         world.playSound((PlayerEntity) null, player.getX(), player.getY(), player.getZ(), SoundEvents.PLAYER_LEVELUP, SoundCategory.NEUTRAL, 0.5f, 0.4f / (ItemKnowledgeStar.random.nextFloat() * 0.4f + 0.8f));
         if (!world.isClientSide) {
             final PlayerVaultStatsData statsData = PlayerVaultStatsData.get((ServerWorld) world);
-            statsData.addKnowledgePoints((ServerPlayerEntity) player, 1);
+//            statsData.addKnowledgePoints((ServerPlayerEntity) player, 1);
+            statsData.addSkillPoint((ServerPlayerEntity) player, 3);
         }
         player.awardStat(Stats.ITEM_USED.get(this));
         if (!player.abilities.instabuild) {
