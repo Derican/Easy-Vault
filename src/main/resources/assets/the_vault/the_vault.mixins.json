@@ -35,8 +35,7 @@
       "MixinSingleJigsawPiece",
       "MixinSlot",
       "MixinStructureBlockTileEntity",
-      "MixinStructureProcessor",
-      "MixinWitchEntity"
+      "MixinStructureProcessor"
     ],
     "client": [
         "MixinAnvilScreen",
@@ -47,8 +46,7 @@
         "MixinEnchantedBookItem",
         "MixinItem",
         "MixinItemStackClient",
-        "MixinLivingRenderer",
-        "MixinWitchRenderer"
+        "MixinLivingRenderer"
     ],
     "server": [],
     "injectors": {

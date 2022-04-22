@@ -118,23 +118,6 @@
       "the_vault:treasure_goblin/idle_3"
     ]
   },
-  "witchskall_idle": {
-    "category": "neutral",
-    "sounds": [
-      {
-        "name": "the_vault:witchskall/idle",
-        "pitch": 1.00
-      },
-      {
-        "name": "the_vault:witchskall/idle",
-        "pitch": 0.95
-      },
-      {
-        "name": "the_vault:witchskall/idle",
-        "pitch": 1.05
-      }
-    ]
-  },
   "puzzle_completion_major": {
     "category": "master",
     "sounds": [

@@ -171,6 +171,8 @@ public class VaultJigsawHelper {
         final JigsawPattern roomPool = getPool(key);
         final WeightedList<JigsawPiece> pool = new WeightedList<JigsawPiece>();
 //        roomPool.rawTemplates.forEach(weightedPiece -> pool.add(weightedPiece.getFirst(), (int) weightedPiece.getSecond()));
+//        TODO: check if the following overwrite is runnable
+        roomPool.getShuffledTemplates(rand).forEach(pool::addOne);
         return pool;
     }
 

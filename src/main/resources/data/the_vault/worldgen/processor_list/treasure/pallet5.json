@@ -88,19 +88,6 @@
         },
         {
           "output_state": {
-            "Name": "byg:black_chiseled_sandstone"
-          },
-          "input_predicate": {
-            "predicate_type": "minecraft:random_block_match",
-            "block": "minecraft:chiseled_stone_bricks",
-            "probability": 1.0
-          },
-          "location_predicate": {
-            "predicate_type": "minecraft:always_true"
-          }
-        },
-        {
-          "output_state": {
             "Name": "minecraft:polished_diorite"
           },
           "input_predicate": {

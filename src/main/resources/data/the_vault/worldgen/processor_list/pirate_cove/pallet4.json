@@ -277,22 +277,6 @@
           "location_predicate": {
             "predicate_type": "minecraft:always_true"
           }
-        },
-        {
-          "output_state": {
-            "Name": "byg:stripped_palm_wood",
-            "Properties": {
-              "axis": "y"
-            }
-          },
-          "input_predicate": {
-            "predicate_type": "minecraft:random_block_match",
-            "block": "minecraft:stripped_oak_wood",
-            "probability": 1.0
-          },
-          "location_predicate": {
-            "predicate_type": "minecraft:always_true"
-          }
         }
       ],
       "processor_type": "minecraft:rule"

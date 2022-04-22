@@ -4,6 +4,7 @@ import com.google.gson.annotations.Expose;
 
 import javax.annotation.Nullable;
 import java.util.*;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.BiConsumer;
 import java.util.function.Predicate;
 
@@ -22,6 +23,19 @@ public class WeightedList<T> extends AbstractList<WeightedList.Entry<T>> impleme
 
     public WeightedList<T> add(final T value, final int weight) {
         this.add(new Entry<T>(value, weight));
+        return this;
+    }
+
+    public WeightedList<T> addOne(T value){
+        AtomicBoolean flag= new AtomicBoolean(false);
+        this.entries.forEach(tEntry -> {
+            if(tEntry.value==value) {
+                tEntry.weight += 1;
+                flag.set(true);
+            }
+        });
+        if(!flag.get())
+            this.add(new Entry<>(value,1));
         return this;
     }
 
