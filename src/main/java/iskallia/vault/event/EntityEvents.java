@@ -449,7 +449,7 @@ public class EntityEvents {
         }
         final PlayerEntity player = (PlayerEntity) damaged;
         final Entity trueSrc = event.getSource().getEntity();
-        if (trueSrc instanceof LivingEntity) {
+        if (trueSrc instanceof LivingEntity && ((LivingEntity) trueSrc).getAttributes().hasAttribute(ModAttributes.BREAK_ARMOR_CHANCE)) {
             double chance = ((LivingEntity) trueSrc).getAttributeValue(ModAttributes.BREAK_ARMOR_CHANCE);
             while (chance > 0.0) {
                 if (EntityEvents.rand.nextFloat() > chance) {

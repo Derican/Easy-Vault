@@ -65,9 +65,15 @@ public abstract class MixinLivingEntity extends Entity {
     @Shadow
     public abstract EntitySize getDimensions(final Pose p0);
 
-    @Redirect(method = {"createLivingAttributes"}, at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/ai/attributes/AttributeModifierMap;builder()Lnet/minecraft/entity/ai/attributes/AttributeModifierMap$MutableAttribute;"))
-    private static AttributeModifierMap.MutableAttribute registerAttributes() {
-        return AttributeModifierMap.builder().add(Attributes.MAX_HEALTH).add(Attributes.KNOCKBACK_RESISTANCE).add(Attributes.MOVEMENT_SPEED).add(Attributes.ARMOR).add(Attributes.ARMOR_TOUGHNESS).add((Attribute) ForgeMod.SWIM_SPEED.get()).add((Attribute) ForgeMod.NAMETAG_DISTANCE.get()).add((Attribute) ForgeMod.ENTITY_GRAVITY.get()).add(ModAttributes.CRIT_CHANCE).add(ModAttributes.CRIT_MULTIPLIER).add(ModAttributes.TP_CHANCE).add(ModAttributes.TP_INDIRECT_CHANCE).add(ModAttributes.TP_RANGE).add(ModAttributes.POTION_RESISTANCE).add(ModAttributes.SIZE_SCALE).add(ModAttributes.BREAK_ARMOR_CHANCE);
+//    @Redirect(method = {"createLivingAttributes"}, at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/ai/attributes/AttributeModifierMap;builder()Lnet/minecraft/entity/ai/attributes/AttributeModifierMap$MutableAttribute;"))
+//    private static AttributeModifierMap.MutableAttribute registerAttributes() {
+//        return AttributeModifierMap.builder().add(Attributes.MAX_HEALTH).add(Attributes.KNOCKBACK_RESISTANCE).add(Attributes.MOVEMENT_SPEED).add(Attributes.ARMOR).add(Attributes.ARMOR_TOUGHNESS).add((Attribute) ForgeMod.SWIM_SPEED.get()).add((Attribute) ForgeMod.NAMETAG_DISTANCE.get()).add((Attribute) ForgeMod.ENTITY_GRAVITY.get()).add(ModAttributes.CRIT_CHANCE).add(ModAttributes.CRIT_MULTIPLIER).add(ModAttributes.TP_CHANCE).add(ModAttributes.TP_INDIRECT_CHANCE).add(ModAttributes.TP_RANGE).add(ModAttributes.POTION_RESISTANCE).add(ModAttributes.SIZE_SCALE).add(ModAttributes.BREAK_ARMOR_CHANCE);
+//    }
+
+    @Inject(method = "createLivingAttributes",at = @At("RETURN"))
+    private static void registerAttributes(CallbackInfoReturnable<AttributeModifierMap.MutableAttribute> builder)
+    {
+        builder.getReturnValue().add(ModAttributes.CRIT_CHANCE).add(ModAttributes.CRIT_MULTIPLIER).add(ModAttributes.TP_CHANCE).add(ModAttributes.TP_INDIRECT_CHANCE).add(ModAttributes.TP_RANGE).add(ModAttributes.POTION_RESISTANCE).add(ModAttributes.SIZE_SCALE).add(ModAttributes.BREAK_ARMOR_CHANCE);
     }
 
     @Redirect(method = {"getDamageAfterMagicAbsorb"}, at = @At(value = "INVOKE", target = "Ljava/lang/Math;max(FF)F"))
