@@ -1,5 +1,5 @@
 varying vec2 v_texCoord;
-attribute vec4 gl_MultiTexCoord0;
+// attribute vec4 gl_MultiTexCoord0;
 
 void main()
 {

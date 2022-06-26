@@ -4,6 +4,7 @@ This project is taken from [iskallia's Vault Hunters](https://github.com/Iskalli
 
 ## Changelog
 
+- 26 Jun,2022 Fix greyscale vert
 - 25 Jun,2022 Fix InventoryAccessor
 - 23 Jun,2022 Fix BREAK_ARMOR_CHANCE not found
 - 21 Jun,2022 Add skill descriptions
@@ -14,4 +15,4 @@ This project is taken from [iskallia's Vault Hunters](https://github.com/Iskalli
 
 ## Known Issues
 
-- Missing Textures in boss chests
+- Missing Textures in several chests (conflicts with other mods)
