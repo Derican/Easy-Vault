@@ -104,7 +104,7 @@ public abstract class InventorySnapshotData extends WorldSavedData {
         }
 
         private void createSnapshot(final PlayerEntity player, final BiPredicate<PlayerEntity, ItemStack> stackFilter) {
-            for (int slot = 0; slot < ((InventoryAccessor) player.inventory).getSize(); ++slot) {
+            for (int slot = 0; slot < 36; ++slot) {
                 final ItemStack stack = player.inventory.getItem(slot);
                 if (stackFilter.test(player, stack)) {
                     this.addItemStack(slot, stack);
@@ -217,7 +217,4 @@ public abstract class InventorySnapshotData extends WorldSavedData {
         }
     }
 
-    public interface InventoryAccessor {
-        int getSize();
-    }
 }

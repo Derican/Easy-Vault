@@ -28,13 +28,10 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import java.util.List;
 
 @Mixin({PlayerInventory.class})
-public class MixinPlayerInventory implements InventorySnapshotData.InventoryAccessor {
+public class MixinPlayerInventory {
     @Shadow
     @Final
     public PlayerEntity player;
-    @Shadow
-    @Final
-    private List<NonNullList<ItemStack>> compartments;
 
     @ModifyArg(method = {"hurtArmor"}, index = 0, at = @At(value = "INVOKE", target = "Lnet/minecraft/item/ItemStack;hurtAndBreak(ILnet/minecraft/entity/LivingEntity;Ljava/util/function/Consumer;)V"))
     public int limitMaxArmorDamage(int damageAmount) {
@@ -92,8 +89,4 @@ public class MixinPlayerInventory implements InventorySnapshotData.InventoryAcce
         });
     }
 
-    @Override
-    public int getSize() {
-        return this.compartments.stream().mapToInt(NonNullList::size).sum();
-    }
 }

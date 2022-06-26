@@ -4,6 +4,7 @@ This project is taken from [iskallia's Vault Hunters](https://github.com/Iskalli
 
 ## Changelog
 
+- 25 Jun,2022 Fix InventoryAccessor
 - 23 Jun,2022 Fix BREAK_ARMOR_CHANCE not found
 - 21 Jun,2022 Add skill descriptions
 - 25 Apr,2022 Remove mod blocks in nbt
