@@ -4,7 +4,7 @@
       "rules": [
         {
           "output_state": {
-            "Name": "minecraft:polished_granite"
+            "Name": "minecraft:cyan_stained_glass"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -17,7 +17,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:granite"
+            "Name": "minecraft:brown_stained_glass"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -30,7 +30,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:blackstone"
+            "Name": "minecraft:orange_stained_glass"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -43,7 +43,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:warped_planks",
+            "Name": "minecraft:black_stained_glass",
             "Properties": {
               "snowy": "false"
             }
@@ -85,7 +85,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:stripped_birch_wood",
+            "Name": "minecraft:blue_wool",
             "Properties": {
               "axis": "y"
             }
@@ -101,7 +101,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:blackstone_stairs",
+            "Name": "minecraft:glowstone",
             "Properties": {
               "facing": "north",
               "half": "bottom",
@@ -120,7 +120,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:stone_brick_stairs",
+            "Name": "minecraft:purple_stained_glass",
             "Properties": {
               "facing": "north",
               "half": "bottom",
@@ -139,7 +139,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:diorite_wall",
+            "Name": "minecraft:magenta_stained_glass",
             "Properties": {
               "east": "none",
               "north": "none",
@@ -160,7 +160,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:cobblestone_slab",
+            "Name": "minecraft:orange_stained_glass",
             "Properties": {
               "type": "bottom",
               "waterlogged": "false"

@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "half=lower": {
+      "model": "the_vault:block/multilayer/hourglass"
+    },
+    "half=upper": {
+      "model": "the_vault:block/hourglass_none"
+    }
+  }
+}

@@ -4,7 +4,7 @@
       "rules": [
         {
           "output_state": {
-            "Name": "minecraft:stone"
+            "Name": "minecraft:gray_wool"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -17,7 +17,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:andesite"
+            "Name": "minecraft:glowstone"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -30,7 +30,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:polished_granite"
+            "Name": "minecraft:green_stained_glass"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -43,7 +43,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:red_concrete"
+            "Name": "minecraft:lime_wool"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -56,7 +56,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:redstone_block"
+            "Name": "minecraft:brown_wool"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",

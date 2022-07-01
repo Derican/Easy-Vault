@@ -17,7 +17,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:stone_bricks"
+            "Name": "minecraft:cyan_stained_glass"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -30,7 +30,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:polished_diorite"
+            "Name": "minecraft:purple_stained_glass"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -43,7 +43,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:cobblestone"
+            "Name": "minecraft:green_stained_glass"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -72,7 +72,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:smooth_sandstone"
+            "Name": "minecraft:red_wool"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -85,7 +85,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:mushroom_stem",
+            "Name": "minecraft:magenta_wool",
             "Properties": {
               "down": "true",
               "east": "true",
@@ -106,7 +106,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:dirt"
+            "Name": "minecraft:green_wool"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -156,7 +156,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:dark_oak_fence",
+            "Name": "minecraft:cyan_wool",
             "Properties": {
               "east": "false",
               "north": "false",
@@ -176,7 +176,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:cobblestone_wall",
+            "Name": "minecraft:glowstone",
             "Properties": {
               "east": "none",
               "north": "none",

@@ -1,0 +1,78 @@
+{
+    "name": "the_vault:raid/rooms",
+    "fallback": "minecraft:empty",
+    "elements": [
+      {
+          "weight": 1,
+          "element": {
+            "processors": [
+                "minecraft:empty"
+            ],
+            "element_type": "the_vault:paletted_list_pool_element",
+            "projection": "rigid",
+            "elements": [
+                {
+                    "location": "the_vault:raid/enigma/rooms/raid/layer0/big1",
+                    "projection": "rigid",
+                    "element_type": "the_vault:paletted_single_pool_element",
+                    "processors": "minecraft:empty"
+                }
+            ]
+          }
+        },
+        {
+            "weight": 1,
+            "element": {
+              "processors": [
+                  "minecraft:empty"
+              ],
+              "element_type": "the_vault:paletted_list_pool_element",
+              "projection": "rigid",
+              "elements": [
+                  {
+                      "location": "the_vault:raid/enigma/rooms/raid/layer0/big2",
+                      "projection": "rigid",
+                      "element_type": "the_vault:paletted_single_pool_element",
+                      "processors": "minecraft:empty"
+                  }
+              ]
+            }
+          },
+          {
+            "weight": 1,
+            "element": {
+              "processors": [
+                  "minecraft:empty"
+              ],
+              "element_type": "the_vault:paletted_list_pool_element",
+              "projection": "rigid",
+              "elements": [
+                  {
+                      "location": "the_vault:raid/enigma/rooms/raid/layer0/big3",
+                      "projection": "rigid",
+                      "element_type": "the_vault:paletted_single_pool_element",
+                      "processors": "minecraft:empty"
+                  }
+              ]
+            }
+          },
+          {
+            "weight": 1,
+            "element": {
+              "processors": [
+                  "minecraft:empty"
+              ],
+              "element_type": "the_vault:paletted_list_pool_element",
+              "projection": "rigid",
+              "elements": [
+                  {
+                      "location": "the_vault:raid/enigma/rooms/raid/layer0/big4",
+                      "projection": "rigid",
+                      "element_type": "the_vault:paletted_single_pool_element",
+                      "processors": "minecraft:empty"
+                  }
+              ]
+            }
+          }
+    ]
+  }

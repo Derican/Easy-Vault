@@ -483,7 +483,7 @@
         {
           "type": "minecraft:item",
           "weight": 3,
-          "name": "minecraft:gold_block",
+          "name": "minecraft:glistering_melon_slice",
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -555,7 +555,7 @@
         {
           "type": "minecraft:item",
           "weight": 4,
-          "name": "minecraft:nether_star",
+          "name": "minecraft:nautilus_shell",
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -699,7 +699,7 @@
         { "_name": "Heart of Diamond",
           "type": "minecraft:item",
           "weight": 1,
-          "name": "minecraft:heart_of_the_sea",
+          "name": "minecraft:glistering_melon_slice",
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -713,7 +713,7 @@
         { "_name": "Overgrown Seed",
           "type": "minecraft:item",
           "weight": 1,
-          "name": "minecraft:gold_block",
+          "name": "minecraft:nether_star",
           "functions": [
             {
               "function": "minecraft:set_count",

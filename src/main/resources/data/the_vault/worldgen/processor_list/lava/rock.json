@@ -17,7 +17,7 @@
         },
 		{
           "output_state": {
-            "Name": "minecraft:polished_granite"
+            "Name": "minecraft:black_stained_glass"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -62,7 +62,7 @@
         },
 		{
           "output_state": {
-            "Name": "minecraft:quartz_block"
+            "Name": "minecraft:cyan_stained_glass"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",

@@ -17,7 +17,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:stripped_birch_wood",
+            "Name": "minecraft:lime_wool",
             "Properties": {
               "axis": "y"
             }
@@ -62,7 +62,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:blackstone",
+            "Name": "minecraft:lime_stained_glass",
             "Properties": {
               "snowy": "false"
             }
@@ -78,7 +78,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:red_wool"
+            "Name": "minecraft:orange_wool"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -139,7 +139,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:polished_blackstone_brick_stairs",
+            "Name": "minecraft:magenta_stained_glass",
             "Properties": {
               "facing": "north",
               "half": "bottom",
@@ -196,7 +196,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:dark_prismarine",
+            "Name": "minecraft:brown_stained_glass",
             "Properties": {
               "axis": "y"
             }

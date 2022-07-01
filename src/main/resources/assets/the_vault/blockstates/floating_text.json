@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "the_vault:block/floating_text",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "the_vault:block/floating_text"
+    },
+    "facing=south": {
+      "model": "the_vault:block/floating_text",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "the_vault:block/floating_text",
+      "y": 270
+    }
+  }
+}

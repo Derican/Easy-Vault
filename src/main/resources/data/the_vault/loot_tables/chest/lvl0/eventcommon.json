@@ -1261,7 +1261,7 @@
         {
           "type": "minecraft:item",
           "weight": 3,
-          "name": "minecraft:gold_block",
+          "name": "minecraft:glistering_melon_slice",
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -1333,7 +1333,7 @@
         {
           "type": "minecraft:item",
           "weight": 4,
-          "name": "minecraft:nether_star",
+          "name": "minecraft:nautilus_shell",
           "functions": [
             {
               "function": "minecraft:set_count",

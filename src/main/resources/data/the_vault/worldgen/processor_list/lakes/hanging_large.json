@@ -2,6 +2,19 @@
   "processors": [
 	{
 	  "rules": [
+        {
+          "output_state": {
+            "Name": "minecraft:dead_bush"
+          },
+          "input_predicate": {
+            "predicate_type": "minecraft:random_block_match",
+            "block": "minecraft:light_blue_stained_glass",
+			"probability": 0.5
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          }
+        },
 		{
           "output_state": {
             "Name": "minecraft:light_gray_terracotta"
@@ -17,7 +30,7 @@
         },
 		{
           "output_state": {
-            "Name": "minecraft:light_gray_terracotta"
+            "Name": "minecraft:yellow_stained_glass"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -30,7 +43,7 @@
         },
 		{
           "output_state": {
-            "Name": "minecraft:light_gray_terracotta"
+            "Name": "minecraft:lime_wool"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",

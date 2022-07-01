@@ -75,7 +75,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:cyan_wool",
+            "Name": "minecraft:cyan_stained_glass",
             "Properties": {
               "snowy": "false"
             }
@@ -91,7 +91,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:green_concrete",
+            "Name": "minecraft:lime_wool",
             "Properties": {
               "axis": "y"
             }
@@ -107,7 +107,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:warped_planks"
+            "Name": "minecraft:magenta_wool"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -120,7 +120,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:oak_leaves",
+            "Name": "minecraft:black_wool",
             "Properties": {
               "distance": "7",
               "persistent": "false"
@@ -137,7 +137,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:oak_leaves",
+            "Name": "minecraft:purple_wool",
             "Properties": {
               "distance": "7",
               "persistent": "false"
@@ -154,7 +154,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:birch_leaves",
+            "Name": "minecraft:pink_wool",
             "Properties": {
               "distance": "7",
               "persistent": "false"
@@ -197,7 +197,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:blue_orchid"
+            "Name": "minecraft:green_wool"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -210,7 +210,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:grass"
+            "Name": "minecraft:red_stained_glass"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -223,7 +223,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:grass"
+            "Name": "minecraft:cyan_stained_glass"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -236,7 +236,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:grass",
+            "Name": "minecraft:magenta_stained_glass",
             "Properties": {
               "half": "lower"
             }
@@ -256,7 +256,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:grass",
+            "Name": "minecraft:magenta_wool",
             "Properties": {
               "half": "upper"
             }
@@ -276,7 +276,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:prismarine_brick_slab",
+            "Name": "minecraft:brown_stained_glass",
             "Properties": {
               "type": "bottom",
               "waterlogged": "false"

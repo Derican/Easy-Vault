@@ -2,17 +2,17 @@
   "processors": [
     {
       "rules": [
-		{
+        {
           "output_state": {
             "Name": "minecraft:water",
-			"Properties": {
-				"level": "0"
-			}
+            "Properties": {
+              "level": "0"
+            }
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
-            "block": "minecraft:mob_spawner",
-			"probability": 0.6
+            "block": "minecraft:spawner",
+            "probability": 0.6
           },
           "location_predicate": {
             "predicate_type": "minecraft:always_true"

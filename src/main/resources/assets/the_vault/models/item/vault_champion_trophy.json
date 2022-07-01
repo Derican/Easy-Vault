@@ -1,0 +1,29 @@
+{
+  "parent": "the_vault:block/vault_champion_trophy",
+  "overrides": [
+    {
+      "predicate": {
+        "custom_model_data": 0
+      },
+      "model": "the_vault:block/final_trophy/silver"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 1
+      },
+      "model": "the_vault:block/final_trophy/blue_silver"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 2
+      },
+      "model": "the_vault:block/final_trophy/golden"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 3
+      },
+      "model": "the_vault:block/final_trophy/platinum"
+    }
+  ]
+}

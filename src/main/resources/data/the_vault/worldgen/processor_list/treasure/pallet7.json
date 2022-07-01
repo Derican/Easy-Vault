@@ -117,7 +117,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:andesite_stairs",
+            "Name": "minecraft:blue_wool",
             "Properties": {
               "facing": "north",
               "half": "bottom",
@@ -210,7 +210,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:quartz_pillar",
+            "Name": "minecraft:blue_wool",
             "Properties": {
               "axis": "y"
             }

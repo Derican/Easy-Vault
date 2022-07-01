@@ -1,0 +1,16 @@
+{
+    "variants": {
+        "facing=north": {
+            "model": "the_vault:block/stabilizer_compass_north"
+        },
+        "facing=south": {
+            "model": "the_vault:block/stabilizer_compass_south"
+        },
+        "facing=east": {
+            "model": "the_vault:block/stabilizer_compass_east"
+        },
+        "facing=west": {
+            "model": "the_vault:block/stabilizer_compass_west"
+        }
+    }
+}

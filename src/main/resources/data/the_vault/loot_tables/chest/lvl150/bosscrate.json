@@ -691,7 +691,7 @@
         {
           "type": "minecraft:item",
           "weight": 5,
-          "name": "minecraft:netherite_block",
+          "name": "minecraft:glistering_melon_slice",
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -1060,7 +1060,7 @@
         {
           "type": "minecraft:item",
           "weight": 2,
-          "name": "minecraft:trident",
+          "name": "minecraft:dragon_breath",
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -1084,7 +1084,7 @@
         {
           "type": "minecraft:item",
           "weight": 2,
-          "name": "minecraft:coal_block",
+          "name": "minecraft:nether_star",
           "functions": [
             {
               "function": "minecraft:set_count",

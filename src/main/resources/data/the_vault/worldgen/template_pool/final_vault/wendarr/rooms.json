@@ -1,0 +1,78 @@
+{
+    "name": "the_vault:final_vault/wendarr/rooms",
+    "fallback": "the_vault:final_vault/wendarr/rooms",
+    "elements": [
+      {
+          "weight": 1,
+          "element": {
+            "processors": [
+                "minecraft:empty"
+            ],
+            "element_type": "the_vault:paletted_list_pool_element",
+            "projection": "rigid",
+            "elements": [
+                {
+                    "location": "the_vault:final_vault/wendarr/rooms/room1",
+                    "projection": "rigid",
+                    "element_type": "the_vault:paletted_single_pool_element",
+                    "processors": "minecraft:empty"
+                }
+            ]
+          }
+        },
+        {
+            "weight": 1,
+            "element": {
+              "processors": [
+                  "minecraft:empty"
+              ],
+              "element_type": "the_vault:paletted_list_pool_element",
+              "projection": "rigid",
+              "elements": [
+                  {
+                      "location": "the_vault:final_vault/wendarr/rooms/room2",
+                      "projection": "rigid",
+                      "element_type": "the_vault:paletted_single_pool_element",
+                      "processors": "minecraft:empty"
+                  }
+              ]
+            }
+          },
+          {
+            "weight": 1,
+            "element": {
+              "processors": [
+                  "minecraft:empty"
+              ],
+              "element_type": "the_vault:paletted_list_pool_element",
+              "projection": "rigid",
+              "elements": [
+                  {
+                      "location": "the_vault:final_vault/wendarr/rooms/room3",
+                      "projection": "rigid",
+                      "element_type": "the_vault:paletted_single_pool_element",
+                      "processors": "minecraft:empty"
+                  }
+              ]
+            }
+          },
+          {
+            "weight": 1,
+            "element": {
+              "processors": [
+                  "minecraft:empty"
+              ],
+              "element_type": "the_vault:paletted_list_pool_element",
+              "projection": "rigid",
+              "elements": [
+                  {
+                      "location": "the_vault:final_vault/wendarr/rooms/room4",
+                      "projection": "rigid",
+                      "element_type": "the_vault:paletted_single_pool_element",
+                      "processors": "minecraft:empty"
+                  }
+              ]
+            }
+          }
+    ]
+  }

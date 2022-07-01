@@ -1353,7 +1353,7 @@
 		    {
           "type": "minecraft:item",
           "weight": 4,
-          "name": "minecraft:nether_star",
+          "name": "minecraft:nautilus_shell",
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -1451,7 +1451,7 @@
 		    {
           "type": "minecraft:item",
           "weight": 6,
-          "name": "minecraft:cocoa_beans",
+          "name": "minecraft:emerald_block",
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -1465,7 +1465,7 @@
 		    {
           "type": "minecraft:item",
           "weight": 1,
-          "name": "minecraft:heart_of_the_sea",
+          "name": "minecraft:enchanted_golden_apple",
           "functions": [
             {
               "function": "minecraft:set_count",

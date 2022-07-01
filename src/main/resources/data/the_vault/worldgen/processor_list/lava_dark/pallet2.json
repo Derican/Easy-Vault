@@ -4,7 +4,7 @@
       "rules": [
         {
           "output_state": {
-            "Name": "minecraft:polished_diorite"
+            "Name": "minecraft:white_stained_glass"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -17,7 +17,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:granite"
+            "Name": "minecraft:purple_wool"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -62,7 +62,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:blackstone"
+            "Name": "minecraft:yellow_stained_glass"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -114,7 +114,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:cobblestone",
+            "Name": "minecraft:gray_stained_glass",
             "Properties": {
               "axis": "y"
             }
@@ -130,7 +130,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:polished_diorite_slab",
+            "Name": "minecraft:gray_wool",
             "Properties": {
               "waterlogged": "false",
               "type": "top"
@@ -152,7 +152,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:polished_diorite_slab",
+            "Name": "minecraft:purple_stained_glass",
             "Properties": {
               "waterlogged": "false",
               "type": "bottom"
@@ -187,7 +187,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:magma_block"
+            "Name": "minecraft:magenta_stained_glass"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -200,7 +200,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:stone_stairs",
+            "Name": "minecraft:brown_stained_glass",
             "Properties": {
               "facing": "north",
               "half": "bottom",
@@ -219,7 +219,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:stone_stairs",
+            "Name": "minecraft:magenta_stained_glass",
             "Properties": {
               "facing": "north",
               "half": "bottom",
@@ -276,7 +276,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:nether_bricks"
+            "Name": "minecraft:yellow_stained_glass"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -302,7 +302,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:cobblestone",
+            "Name": "minecraft:gray_wool",
             "Properties": {
               "axis": "y"
             }
@@ -318,7 +318,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:cobblestone_slab",
+            "Name": "minecraft:brown_wool",
             "Properties": {
               "type": "bottom",
               "waterlogged": "false"
@@ -335,7 +335,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:cobblestone_slab",
+            "Name": "minecraft:white_wool",
             "Properties": {
               "type": "top",
               "waterlogged": "false"

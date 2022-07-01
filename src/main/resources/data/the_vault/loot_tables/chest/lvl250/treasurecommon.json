@@ -950,7 +950,7 @@
         {
           "type": "minecraft:item",
           "weight": 1,
-          "name": "minecraft:beacon",
+          "name": "minecraft:glistering_melon_slice",
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -1070,7 +1070,7 @@
         {
           "type": "minecraft:item",
           "weight": 4,
-          "name": "minecraft:shulker_box",
+          "name": "the_vault:mod_box",
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -1174,270 +1174,6 @@
         {
           "type": "minecraft:item",
           "weight": 3,
-          "name": "minecraft:gold_block",
-          "functions": [
-            {
-              "function": "minecraft:set_count",
-              "count": {
-                "min": 1,
-                "max": 1
-              }
-            },
-            {
-              "function": "minecraft:set_count",
-              "count": 0,
-              "conditions": [
-                {
-                  "condition": "minecraft:random_chance",
-                  "chance": 0.11
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "type": "minecraft:item",
-          "weight": 7,
-          "name": "minecraft:music_disc_mall",
-          "functions": [
-            {
-              "function": "minecraft:set_count",
-              "count": {
-                "min": 1,
-                "max": 1
-              }
-            },
-            {
-              "function": "minecraft:set_count",
-              "count": 0,
-              "conditions": [
-                {
-                  "condition": "minecraft:random_chance",
-                  "chance": 0.11
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "type": "minecraft:item",
-          "weight": 3,
-          "name": "minecraft:music_disc_strad",
-          "functions": [
-            {
-              "function": "minecraft:set_count",
-              "count": {
-                "min": 1,
-                "max": 1
-              }
-            },
-            {
-              "function": "minecraft:set_count",
-              "count": 0,
-              "conditions": [
-                {
-                  "condition": "minecraft:random_chance",
-                  "chance": 0.11
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "type": "minecraft:item",
-          "weight": 12,
-          "name": "minecraft:music_disc_stal",
-          "functions": [
-            {
-              "function": "minecraft:set_count",
-              "count": {
-                "min": 4,
-                "max": 16
-              }
-            },
-            {
-              "function": "minecraft:set_count",
-              "count": 0,
-              "conditions": [
-                {
-                  "condition": "minecraft:random_chance",
-                  "chance": 0.11
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "type": "minecraft:item",
-          "weight": 1,
-          "name": "minecraft:music_disc_ward",
-          "functions": [
-            {
-              "function": "minecraft:set_count",
-              "count": {
-                "min": 1,
-                "max": 1
-              }
-            },
-            {
-              "function": "minecraft:set_count",
-              "count": 0,
-              "conditions": [
-                {
-                  "condition": "minecraft:random_chance",
-                  "chance": 0.4
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "type": "minecraft:item",
-          "weight": 1,
-          "name": "minecraft:music_disc_chirp",
-          "functions": [
-            {
-              "function": "minecraft:set_count",
-              "count": {
-                "min": 1,
-                "max": 1
-              }
-            },
-            {
-              "function": "minecraft:set_count",
-              "count": 0,
-              "conditions": [
-                {
-                  "condition": "minecraft:random_chance",
-                  "chance": 0.4
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "type": "minecraft:item",
-          "weight": 5,
-          "name": "minecraft:trident",
-          "functions": [
-            {
-              "function": "minecraft:set_count",
-              "count": {
-                "min": 2,
-                "max": 5
-              }
-            },
-            {
-              "function": "minecraft:set_count",
-              "count": 0,
-              "conditions": [
-                {
-                  "condition": "minecraft:random_chance",
-                  "chance": 0.45
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "type": "minecraft:item",
-          "weight": 1,
-          "name": "minecraft:trident",
-          "functions": [
-            {
-              "function": "minecraft:set_count",
-              "count": {
-                "min": 1,
-                "max": 1
-              }
-            },
-            {
-              "function": "minecraft:set_count",
-              "count": 0,
-              "conditions": [
-                {
-                  "condition": "minecraft:random_chance",
-                  "chance": 0.255
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "type": "minecraft:item",
-          "weight": 1,
-          "name": "minecraft:gold_block",
-          "functions": [
-            {
-              "function": "minecraft:set_count",
-              "count": {
-                "min": 1,
-                "max": 1
-              }
-            },
-            {
-              "function": "minecraft:set_count",
-              "count": 0,
-              "conditions": [
-                {
-                  "condition": "minecraft:random_chance",
-                  "chance": 0.4
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "type": "minecraft:item",
-          "weight": 3,
-          "name": "minecraft:lapis_block",
-          "functions": [
-            {
-              "function": "minecraft:set_count",
-              "count": {
-                "min": 1,
-                "max": 1
-              }
-            },
-            {
-              "function": "minecraft:set_count",
-              "count": 0,
-              "conditions": [
-                {
-                  "condition": "minecraft:random_chance",
-                  "chance": 0.3
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "type": "minecraft:item",
-          "weight": 1,
-          "name": "minecraft:trident",
-          "functions": [
-            {
-              "function": "minecraft:set_count",
-              "count": {
-                "min": 1,
-                "max": 1
-              }
-            },
-            {
-              "function": "minecraft:set_count",
-              "count": 0,
-              "conditions": [
-                {
-                  "condition": "minecraft:random_chance",
-                  "chance": 0.255
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "type": "minecraft:item",
-          "weight": 5,
           "name": "minecraft:netherite_block",
           "functions": [
             {
@@ -1462,55 +1198,7 @@
         {
           "type": "minecraft:item",
           "weight": 7,
-          "name": "minecraft:diamond_block",
-          "functions": [
-            {
-              "function": "minecraft:set_count",
-              "count": {
-                "min": 1,
-                "max": 1
-              }
-            },
-            {
-              "function": "minecraft:set_count",
-              "count": 0,
-              "conditions": [
-                {
-                  "condition": "minecraft:random_chance",
-                  "chance": 0.11
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "type": "minecraft:item",
-          "weight": 5,
-          "name": "minecraft:gold_block",
-          "functions": [
-            {
-              "function": "minecraft:set_count",
-              "count": {
-                "min": 1,
-                "max": 1
-              }
-            },
-            {
-              "function": "minecraft:set_count",
-              "count": 0,
-              "conditions": [
-                {
-                  "condition": "minecraft:random_chance",
-                  "chance": 0.11
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "type": "minecraft:item",
-          "weight": 6,
-          "name": "minecraft:gold_block",
+          "name": "minecraft:nautilus_shell",
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -1534,7 +1222,7 @@
         {
           "type": "minecraft:item",
           "weight": 3,
-          "name": "minecraft:iron_block",
+          "name": "minecraft:dragon_breath",
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -1557,14 +1245,14 @@
         },
         {
           "type": "minecraft:item",
-          "weight": 4,
-          "name": "minecraft:iron_block",
+          "weight": 12,
+          "name": "minecraft:nautilus_shell",
           "functions": [
             {
               "function": "minecraft:set_count",
               "count": {
-                "min": 1,
-                "max": 1
+                "min": 4,
+                "max": 16
               }
             },
             {
@@ -1581,8 +1269,8 @@
         },
         {
           "type": "minecraft:item",
-          "weight": 4,
-          "name": "minecraft:iron_block",
+          "weight": 1,
+          "name": "minecraft:glistering_melon_slice",
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -1597,7 +1285,7 @@
               "conditions": [
                 {
                   "condition": "minecraft:random_chance",
-                  "chance": 0.11
+                  "chance": 0.4
                 }
               ]
             }
@@ -1605,8 +1293,8 @@
         },
         {
           "type": "minecraft:item",
-          "weight": 4,
-          "name": "minecraft:diamond_block",
+          "weight": 1,
+          "name": "minecraft:dragon_breath",
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -1621,7 +1309,7 @@
               "conditions": [
                 {
                   "condition": "minecraft:random_chance",
-                  "chance": 0.11
+                  "chance": 0.4
                 }
               ]
             }
@@ -1629,8 +1317,32 @@
         },
         {
           "type": "minecraft:item",
-          "weight": 4,
-          "name": "minecraft:diamond_block",
+          "weight": 5,
+          "name": "minecraft:enchanted_golden_apple",
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 2,
+                "max": 5
+              }
+            },
+            {
+              "function": "minecraft:set_count",
+              "count": 0,
+              "conditions": [
+                {
+                  "condition": "minecraft:random_chance",
+                  "chance": 0.45
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 1,
+          "name": "minecraft:enchanted_golden_apple",
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -1645,7 +1357,7 @@
               "conditions": [
                 {
                   "condition": "minecraft:random_chance",
-                  "chance": 0.11
+                  "chance": 0.255
                 }
               ]
             }
@@ -1653,8 +1365,8 @@
         },
         {
           "type": "minecraft:item",
-          "weight": 4,
-          "name": "minecraft:coal_block",
+          "weight": 1,
+          "name": "minecraft:nautilus_shell",
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -1669,7 +1381,7 @@
               "conditions": [
                 {
                   "condition": "minecraft:random_chance",
-                  "chance": 0.11
+                  "chance": 0.4
                 }
               ]
             }
@@ -1677,8 +1389,56 @@
         },
         {
           "type": "minecraft:item",
-          "weight": 4,
-          "name": "minecraft:gold_block",
+          "weight": 3,
+          "name": "minecraft:glistering_melon_slice",
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 1,
+                "max": 1
+              }
+            },
+            {
+              "function": "minecraft:set_count",
+              "count": 0,
+              "conditions": [
+                {
+                  "condition": "minecraft:random_chance",
+                  "chance": 0.3
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 1,
+          "name": "minecraft:dragon_egg",
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 1,
+                "max": 1
+              }
+            },
+            {
+              "function": "minecraft:set_count",
+              "count": 0,
+              "conditions": [
+                {
+                  "condition": "minecraft:random_chance",
+                  "chance": 0.255
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 5,
+          "name": "minecraft:nether_star",
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -1702,7 +1462,247 @@
         {
           "type": "minecraft:item",
           "weight": 7,
-          "name": "minecraft:diamond_block",
+          "name": "minecraft:dragon_breath",
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 1,
+                "max": 1
+              }
+            },
+            {
+              "function": "minecraft:set_count",
+              "count": 0,
+              "conditions": [
+                {
+                  "condition": "minecraft:random_chance",
+                  "chance": 0.11
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 5,
+          "name": "minecraft:glistering_melon_slice",
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 1,
+                "max": 1
+              }
+            },
+            {
+              "function": "minecraft:set_count",
+              "count": 0,
+              "conditions": [
+                {
+                  "condition": "minecraft:random_chance",
+                  "chance": 0.11
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 6,
+          "name": "minecraft:dragon_breath",
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 1,
+                "max": 1
+              }
+            },
+            {
+              "function": "minecraft:set_count",
+              "count": 0,
+              "conditions": [
+                {
+                  "condition": "minecraft:random_chance",
+                  "chance": 0.11
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 3,
+          "name": "minecraft:nether_star",
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 1,
+                "max": 1
+              }
+            },
+            {
+              "function": "minecraft:set_count",
+              "count": 0,
+              "conditions": [
+                {
+                  "condition": "minecraft:random_chance",
+                  "chance": 0.11
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 4,
+          "name": "minecraft:netherite_block",
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 1,
+                "max": 1
+              }
+            },
+            {
+              "function": "minecraft:set_count",
+              "count": 0,
+              "conditions": [
+                {
+                  "condition": "minecraft:random_chance",
+                  "chance": 0.11
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 4,
+          "name": "minecraft:dragon_breath",
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 1,
+                "max": 1
+              }
+            },
+            {
+              "function": "minecraft:set_count",
+              "count": 0,
+              "conditions": [
+                {
+                  "condition": "minecraft:random_chance",
+                  "chance": 0.11
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 4,
+          "name": "minecraft:dragon_egg",
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 1,
+                "max": 1
+              }
+            },
+            {
+              "function": "minecraft:set_count",
+              "count": 0,
+              "conditions": [
+                {
+                  "condition": "minecraft:random_chance",
+                  "chance": 0.11
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 4,
+          "name": "minecraft:emerald_block",
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 1,
+                "max": 1
+              }
+            },
+            {
+              "function": "minecraft:set_count",
+              "count": 0,
+              "conditions": [
+                {
+                  "condition": "minecraft:random_chance",
+                  "chance": 0.11
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 4,
+          "name": "minecraft:sponge",
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 1,
+                "max": 1
+              }
+            },
+            {
+              "function": "minecraft:set_count",
+              "count": 0,
+              "conditions": [
+                {
+                  "condition": "minecraft:random_chance",
+                  "chance": 0.11
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 4,
+          "name": "minecraft:glistering_melon_slice",
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 1,
+                "max": 1
+              }
+            },
+            {
+              "function": "minecraft:set_count",
+              "count": 0,
+              "conditions": [
+                {
+                  "condition": "minecraft:random_chance",
+                  "chance": 0.11
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 7,
+          "name": "minecraft:nautilus_shell",
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -1726,7 +1726,7 @@
         {
           "type": "minecraft:item",
           "weight": 9,
-          "name": "minecraft:iron_block",
+          "name": "minecraft:sponge",
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -1750,7 +1750,7 @@
         {
           "type": "minecraft:item",
           "weight": 7,
-          "name": "minecraft:gold_block",
+          "name": "minecraft:emerald_block",
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -1774,13 +1774,109 @@
         {
           "type": "minecraft:item",
           "weight": 4,
-          "name": "minecraft:diamond_block",
+          "name": "minecraft:dragon_egg",
           "functions": [
             {
               "function": "minecraft:set_count",
               "count": {
                 "min": 1,
                 "max": 1
+              }
+            },
+            {
+              "function": "minecraft:set_count",
+              "count": 0,
+              "conditions": [
+                {
+                  "condition": "minecraft:random_chance",
+                  "chance": 0.11
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 3,
+          "name": "minecraft:enchanted_golden_apple",
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 1,
+                "max": 1
+              }
+            },
+            {
+              "function": "minecraft:set_count",
+              "count": 0,
+              "conditions": [
+                {
+                  "condition": "minecraft:random_chance",
+                  "chance": 0.11
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 7,
+          "name": "minecraft:dragon_breath",
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 1,
+                "max": 1
+              }
+            },
+            {
+              "function": "minecraft:set_count",
+              "count": 0,
+              "conditions": [
+                {
+                  "condition": "minecraft:random_chance",
+                  "chance": 0.11
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 3,
+          "name": "minecraft:nether_star",
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 1,
+                "max": 1
+              }
+            },
+            {
+              "function": "minecraft:set_count",
+              "count": 0,
+              "conditions": [
+                {
+                  "condition": "minecraft:random_chance",
+                  "chance": 0.11
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 12,
+          "name": "minecraft:netherite_block",
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 4,
+                "max": 16
               }
             },
             {
@@ -1821,176 +1917,8 @@
         },
         {
           "type": "minecraft:item",
-          "weight": 7,
-          "name": "minecraft:iron_block",
-          "functions": [
-            {
-              "function": "minecraft:set_count",
-              "count": {
-                "min": 1,
-                "max": 1
-              }
-            },
-            {
-              "function": "minecraft:set_count",
-              "count": 0,
-              "conditions": [
-                {
-                  "condition": "minecraft:random_chance",
-                  "chance": 0.11
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "type": "minecraft:item",
-          "weight": 3,
-          "name": "minecraft:diamond_block",
-          "functions": [
-            {
-              "function": "minecraft:set_count",
-              "count": {
-                "min": 1,
-                "max": 1
-              }
-            },
-            {
-              "function": "minecraft:set_count",
-              "count": 0,
-              "conditions": [
-                {
-                  "condition": "minecraft:random_chance",
-                  "chance": 0.11
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "type": "minecraft:item",
-          "weight": 12,
-          "name": "minecraft:iron_block",
-          "functions": [
-            {
-              "function": "minecraft:set_count",
-              "count": {
-                "min": 4,
-                "max": 16
-              }
-            },
-            {
-              "function": "minecraft:set_count",
-              "count": 0,
-              "conditions": [
-                {
-                  "condition": "minecraft:random_chance",
-                  "chance": 0.11
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "type": "minecraft:item",
-          "weight": 3,
-          "name": "minecraft:diamond_block",
-          "functions": [
-            {
-              "function": "minecraft:set_count",
-              "count": {
-                "min": 1,
-                "max": 1
-              }
-            },
-            {
-              "function": "minecraft:set_count",
-              "count": 0,
-              "conditions": [
-                {
-                  "condition": "minecraft:random_chance",
-                  "chance": 0.11
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "type": "minecraft:item",
           "weight": 1,
-          "name": "minecraft:diamond_block",
-          "functions": [
-            {
-              "function": "minecraft:set_count",
-              "count": {
-                "min": 1,
-                "max": 1
-              }
-            },
-            {
-              "function": "minecraft:set_count",
-              "count": 0,
-              "conditions": [
-                {
-                  "condition": "minecraft:random_chance",
-                  "chance": 0.45
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "type": "minecraft:item",
-          "weight": 4,
-          "name": "minecraft:bookshelf",
-          "functions": [
-            {
-              "function": "minecraft:set_count",
-              "count": {
-                "min": 1,
-                "max": 1
-              }
-            },
-            {
-              "function": "minecraft:set_count",
-              "count": 0,
-              "conditions": [
-                {
-                  "condition": "minecraft:random_chance",
-                  "chance": 0.45
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "type": "minecraft:item",
-          "weight": 4,
-          "name": "minecraft:dragon_breath",
-          "functions": [
-            {
-              "function": "minecraft:set_count",
-              "count": {
-                "min": 1,
-                "max": 1
-              }
-            },
-            {
-              "function": "minecraft:set_count",
-              "count": 0,
-              "conditions": [
-                {
-                  "condition": "minecraft:random_chance",
-                  "chance": 0.45
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "type": "minecraft:item",
-          "weight": 4,
-          "name": "minecraft:end_crystal",
+          "name": "minecraft:nautilus_shell",
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -2038,7 +1966,7 @@
         {
           "type": "minecraft:item",
           "weight": 4,
-          "name": "minecraft:bone_block",
+          "name": "minecraft:enchanted_golden_apple",
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -2062,7 +1990,79 @@
         {
           "type": "minecraft:item",
           "weight": 4,
-          "name": "minecraft:nether_wart_block",
+          "name": "minecraft:glistering_melon_slice",
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 1,
+                "max": 1
+              }
+            },
+            {
+              "function": "minecraft:set_count",
+              "count": 0,
+              "conditions": [
+                {
+                  "condition": "minecraft:random_chance",
+                  "chance": 0.45
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 4,
+          "name": "minecraft:emerald_block",
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 1,
+                "max": 1
+              }
+            },
+            {
+              "function": "minecraft:set_count",
+              "count": 0,
+              "conditions": [
+                {
+                  "condition": "minecraft:random_chance",
+                  "chance": 0.45
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 4,
+          "name": "minecraft:enchanted_golden_apple",
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 1,
+                "max": 1
+              }
+            },
+            {
+              "function": "minecraft:set_count",
+              "count": 0,
+              "conditions": [
+                {
+                  "condition": "minecraft:random_chance",
+                  "chance": 0.45
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 4,
+          "name": "minecraft:netherite_block",
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -2086,7 +2086,7 @@
         {
           "type": "minecraft:item",
           "weight": 3,
-          "name": "minecraft:lapis_block",
+          "name": "minecraft:dragon_breath",
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -2110,7 +2110,7 @@
         {
           "type": "minecraft:item",
           "weight": 3,
-          "name": "minecraft:slime_block",
+          "name": "minecraft:sponge",
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -2134,7 +2134,7 @@
         {
           "type": "minecraft:item",
           "weight": 3,
-          "name": "minecraft:iron_block",
+          "name": "minecraft:glistering_melon_slice",
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -2158,7 +2158,7 @@
         {
           "type": "minecraft:item",
           "weight": 3,
-          "name": "minecraft:netherite_block",
+          "name": "minecraft:dragon_breath",
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -2182,7 +2182,7 @@
         {
           "type": "minecraft:item",
           "weight": 2,
-          "name": "minecraft:hay_block",
+          "name": "minecraft:nautilus_shell",
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -2206,7 +2206,7 @@
         {
           "type": "minecraft:item",
           "weight": 3,
-          "name": "minecraft:hay_block",
+          "name": "minecraft:sponge",
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -2230,7 +2230,7 @@
         {
           "type": "minecraft:item",
           "weight": 1,
-          "name": "minecraft:iron_block",
+          "name": "minecraft:dragon_egg",
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -2254,7 +2254,7 @@
         {
           "type": "minecraft:item",
           "weight": 4,
-          "name": "minecraft:netherite_block",
+          "name": "minecraft:nautilus_shell",
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -2302,7 +2302,7 @@
         {
           "type": "minecraft:item",
           "weight": 3,
-          "name": "minecraft:iron_block",
+          "name": "minecraft:netherite_block",
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -2326,7 +2326,7 @@
         {
           "type": "minecraft:item",
           "weight": 3,
-          "name": "minecraft:dragon_egg",
+          "name": "minecraft:sponge",
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -2350,7 +2350,7 @@
         {
           "type": "minecraft:item",
           "weight": 2,
-          "name": "minecraft:dragon_egg",
+          "name": "minecraft:enchanted_golden_apple",
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -3510,7 +3510,7 @@
         { "_name": "Dank5",
           "type": "minecraft:item",
           "weight": 4,
-          "name": "minecraft:dragon_egg",
+          "name": "minecraft:nether_star",
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -3534,7 +3534,7 @@
         { "_name": "Dank6",
           "type": "minecraft:item",
           "weight": 3,
-          "name": "minecraft:dragon_egg",
+          "name": "minecraft:enchanted_golden_apple",
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -3558,7 +3558,7 @@
         { "_name": "Dank7",
           "type": "minecraft:item",
           "weight": 1,
-          "name": "minecraft:dragon_egg",
+          "name": "minecraft:dragon_breath",
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -3630,7 +3630,7 @@
         { "_name": "Blue Backpack",
           "type": "minecraft:item",
           "weight": 6,
-          "name": "minecraft:diamond_block",
+          "name": "minecraft:glistering_melon_slice",
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -3654,7 +3654,7 @@
         { "_name": "Purple Backpack",
           "type": "minecraft:item",
           "weight": 2,
-          "name": "minecraft:emerald_block",
+          "name": "minecraft:nautilus_shell",
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -3678,7 +3678,7 @@
         { "_name": "RS64k",
           "type": "minecraft:item",
           "weight": 6,
-          "name": "minecraft:music_disc_mellohi",
+          "name": "minecraft:nether_star",
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -3702,7 +3702,7 @@
         { "_name": "AE64k",
           "type": "minecraft:item",
           "weight": 6,
-          "name": "minecraft:diamond_block",
+          "name": "minecraft:glistering_melon_slice",
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -3726,7 +3726,7 @@
         { "_name": "MEKTIME",
           "type": "minecraft:item",
           "weight": 6,
-          "name": "minecraft:diamond_block",
+          "name": "minecraft:emerald_block",
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -3750,7 +3750,7 @@
         { "_name": "MEKSUPER",
           "type": "minecraft:item",
           "weight": 1,
-          "name": "minecraft:diamond_block",
+          "name": "minecraft:glistering_melon_slice",
           "functions": [
             {
               "function": "minecraft:set_count",

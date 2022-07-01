@@ -213,7 +213,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:andesite_stairs",
+            "Name": "minecraft:brown_stained_glass",
             "Properties": {
               "facing": "north",
               "half": "bottom",

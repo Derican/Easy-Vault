@@ -17,6 +17,22 @@
         },
         {
           "output_state": {
+            "Name": "minecraft:purple_stained_glass",
+            "Properties": {
+              "axis": "y"
+            }
+          },
+          "input_predicate": {
+            "predicate_type": "minecraft:random_block_match",
+            "block": "minecraft:stone",
+            "probability": 0.5
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          }
+        },
+        {
+          "output_state": {
             "Name": "minecraft:crimson_hyphae",
             "Properties": {
               "axis": "y"
@@ -59,7 +75,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:blackstone",
+            "Name": "minecraft:pink_stained_glass",
             "Properties": {
               "snowy": "false"
             }
@@ -75,7 +91,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:red_wool"
+            "Name": "minecraft:red_stained_glass"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -197,7 +213,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:polished_blackstone_brick_stairs",
+            "Name": "minecraft:gray_stained_glass",
             "Properties": {
               "facing": "north",
               "half": "bottom",
@@ -275,7 +291,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:nether_brick_slab",
+            "Name": "minecraft:red_stained_glass",
             "Properties": {
               "type": "bottom",
               "waterlogged": "false"
@@ -329,7 +345,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:crimson_roots",
+            "Name": "minecraft:pink_stained_glass",
             "Properties": {
               "half": "lower"
             }
@@ -349,7 +365,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:crimson_roots",
+            "Name": "minecraft:lime_stained_glass",
             "Properties": {
               "half": "upper"
             }

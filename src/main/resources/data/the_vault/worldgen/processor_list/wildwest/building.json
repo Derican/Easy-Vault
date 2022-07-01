@@ -20,27 +20,27 @@
           },
           {
             "output_state": {
-              "Name": "minecraft:blue_concrete"
+              "Name": "minecraft:purple_wool"
             },
             "input_predicate": {
               "predicate_type": "minecraft:always_true"
             },
             "location_predicate": {
                 "predicate_type": "minecraft:random_block_match",
-                "block": "minecraft:blue_concrete",
+                "block": "minecraft:purple_wool",
                 "probability": 1.0
             }
           },
           {
             "output_state": {
-              "Name": "minecraft:blue_wool"
+              "Name": "minecraft:green_wool"
             },
             "input_predicate": {
               "predicate_type": "minecraft:always_true"
             },
             "location_predicate": {
                 "predicate_type": "minecraft:random_block_match",
-                "block": "minecraft:blue_wool",
+                "block": "minecraft:magenta_stained_glass",
                 "probability": 1.0
             }
           }

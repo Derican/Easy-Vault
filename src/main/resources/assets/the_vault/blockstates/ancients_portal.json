@@ -1,0 +1,11 @@
+{
+  "variants": {
+    "axis=x": {
+      "model": "the_vault:block/ancients_portal"
+    },
+    "axis=z": {
+      "model": "the_vault:block/ancients_portal",
+      "y": 90
+    }
+  }
+}

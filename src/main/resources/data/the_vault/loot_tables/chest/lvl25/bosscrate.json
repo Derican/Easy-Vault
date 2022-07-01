@@ -1482,7 +1482,7 @@
             }
           ]
         },
-        { "name": "minecraft:nether_star",
+        { "name": "minecraft:nautilus_shell",
           "type": "minecraft:item",
           "weight": 4,
           

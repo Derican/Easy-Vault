@@ -30,7 +30,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:nether_bricks"
+            "Name": "minecraft:black_wool"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -127,7 +127,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:nether_brick_stairs",
+            "Name": "minecraft:lime_stained_glass",
             "Properties": {
               "facing": "north",
               "half": "bottom",
@@ -165,7 +165,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:nether_brick_wall",
+            "Name": "minecraft:lime_stained_glass",
             "Properties": {
               "east": "none",
               "north": "none",
@@ -257,7 +257,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:polished_diorite",
+            "Name": "minecraft:magenta_wool",
             "Properties": {
               "axis": "y"
             }

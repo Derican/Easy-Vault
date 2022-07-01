@@ -1060,7 +1060,7 @@
         {
           "type": "minecraft:item",
           "weight": 2,
-          "name": "minecraft:trident",
+          "name": "minecraft:nautilus_shell",
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -1084,7 +1084,7 @@
         {
           "type": "minecraft:item",
           "weight": 2,
-          "name": "minecraft:coal_block",
+          "name": "minecraft:glistering_melon_slice",
           "functions": [
             {
               "function": "minecraft:set_count",

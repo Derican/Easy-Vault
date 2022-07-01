@@ -20,14 +20,14 @@
           },
           {
             "output_state": {
-              "Name": "minecraft:blue_concrete"
+              "Name": "minecraft:black_stained_glass"
             },
             "input_predicate": {
               "predicate_type": "minecraft:always_true"
             },
             "location_predicate": {
                 "predicate_type": "minecraft:random_block_match",
-                "block": "minecraft:blue_concrete",
+                "block": "minecraft:brown_wool",
                 "probability": 1.0
             }
           },

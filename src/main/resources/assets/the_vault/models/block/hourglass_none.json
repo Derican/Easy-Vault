@@ -1,0 +1,6 @@
+{
+    "parent": "the_vault:block/base/nothing",
+    "textures": {
+        "particle": "the_vault:block/hourglass_bottom"
+    }
+}

@@ -63,7 +63,7 @@
         { "_name": "modbox",
           "type": "minecraft:item",
           "weight": 1,
-          "name": "minecraft:shulker_box",
+          "name": "the_vault:mod_box",
           "functions": [
             {
               "function": "minecraft:set_count",

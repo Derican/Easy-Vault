@@ -4,7 +4,7 @@
       "rules": [
         {
           "output_state": {
-            "Name": "minecraft:chain",
+            "Name": "minecraft:red_stained_glass",
 			"Properties": {
 				"axis": "y",
 				"waterlogged": "false"

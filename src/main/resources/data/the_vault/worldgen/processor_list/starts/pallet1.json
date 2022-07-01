@@ -4,7 +4,7 @@
       "rules": [
         {
           "output_state": {
-            "Name": "minecraft:diorite"
+            "Name": "minecraft:lime_wool"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -17,7 +17,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:polished_diorite"
+            "Name": "minecraft:magenta_stained_glass"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -30,7 +30,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:polished_diorite"
+            "Name": "minecraft:white_wool"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -43,7 +43,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:soul_sand"
+            "Name": "minecraft:magenta_wool"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -56,7 +56,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:soul_sandstone"
+            "Name": "minecraft:lime_stained_glass"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -69,7 +69,67 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:smooth_quartz"
+            "Name": "minecraft:light_blue_wool",
+            "Properties": {
+              "axis": "x"
+            }
+          },
+          "input_predicate": {
+            "block_state": {
+              "Name": "minecraft:white_wool",
+              "Properties": {
+                "axis": "x"
+              }
+            },
+            "predicate_type": "minecraft:blockstate_match"
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          }
+        },
+        {
+          "output_state": {
+            "Name": "minecraft:light_gray_wool",
+            "Properties": {
+              "axis": "y"
+            }
+          },
+          "input_predicate": {
+            "block_state": {
+              "Name": "minecraft:light_blue_stained_glass",
+              "Properties": {
+                "axis": "y"
+              }
+            },
+            "predicate_type": "minecraft:blockstate_match"
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          }
+        },
+        {
+          "output_state": {
+            "Name": "minecraft:light_blue_wool",
+            "Properties": {
+              "axis": "z"
+            }
+          },
+          "input_predicate": {
+            "block_state": {
+              "Name": "minecraft:black_stained_glass",
+              "Properties": {
+                "axis": "z"
+              }
+            },
+            "predicate_type": "minecraft:blockstate_match"
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          }
+        },
+        {
+          "output_state": {
+            "Name": "minecraft:green_wool"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -82,7 +142,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:quartz_bricks"
+            "Name": "minecraft:blue_wool"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -95,7 +155,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:polished_diorite_slab",
+            "Name": "minecraft:gray_wool",
             "Properties": {
               "type": "bottom",
               "waterlogged": "false"
@@ -112,7 +172,24 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:quartz_stairs",
+            "Name": "minecraft:blue_wool",
+            "Properties": {
+              "lit": "true",
+              "waterlogged": "false"
+            }
+          },
+          "input_predicate": {
+            "predicate_type": "minecraft:random_block_match",
+            "block": "minecraft:yellow_stained_glass",
+            "probability": 1.0
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          }
+        },
+        {
+          "output_state": {
+            "Name": "minecraft:white_stained_glass",
             "Properties": {
               "facing": "south",
               "half": "bottom",
@@ -138,7 +215,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:quartz_stairs",
+            "Name": "minecraft:light_blue_stained_glass",
             "Properties": {
               "facing": "north",
               "half": "bottom",
@@ -164,7 +241,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:quartz_stairs",
+            "Name": "minecraft:cyan_wool",
             "Properties": {
               "facing": "west",
               "half": "bottom",
@@ -190,7 +267,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:quartz_stairs",
+            "Name": "minecraft:pink_wool",
             "Properties": {
               "facing": "east",
               "half": "bottom",
@@ -216,7 +293,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:quartz_stairs",
+            "Name": "minecraft:light_gray_wool",
             "Properties": {
               "facing": "south",
               "half": "top",
@@ -242,7 +319,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:quartz_stairs",
+            "Name": "minecraft:glowstone",
             "Properties": {
               "facing": "north",
               "half": "top",
@@ -268,7 +345,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:quartz_stairs",
+            "Name": "minecraft:black_stained_glass",
             "Properties": {
               "facing": "west",
               "half": "top",
@@ -294,7 +371,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:quartz_stairs",
+            "Name": "minecraft:black_stained_glass",
             "Properties": {
               "facing": "east",
               "half": "top",
@@ -346,7 +423,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:mushroom_stem",
+            "Name": "minecraft:red_stained_glass",
             "Properties": {
               "down": "true",
               "east": "true",
@@ -358,7 +435,7 @@
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
-            "block": "minecraft:brown_mushroom_block",
+            "block": "minecraft:blue_wool",
             "probability": 1.0
           },
           "location_predicate": {

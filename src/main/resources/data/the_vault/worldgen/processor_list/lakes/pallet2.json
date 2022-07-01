@@ -4,7 +4,7 @@
       "rules": [
         {
           "output_state": {
-            "Name": "minecraft:deepslate_tiles"
+            "Name": "minecraft:purple_wool"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -17,7 +17,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:cracked_deepslate_bricks"
+            "Name": "minecraft:orange_wool"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -30,7 +30,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:chiseled_deepslate"
+            "Name": "minecraft:blue_wool"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -56,7 +56,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:diorite"
+            "Name": "minecraft:orange_wool"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -69,7 +69,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:polished_diorite"
+            "Name": "minecraft:green_stained_glass"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -95,7 +95,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:oak_leaves",
+            "Name": "minecraft:purple_stained_glass",
             "Properties": {
               "distance": "7",
               "persistent": "false"
@@ -112,7 +112,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:diorite_slab",
+            "Name": "minecraft:white_stained_glass",
             "Properties": {
               "type": "bottom",
               "waterlogged": "false"
@@ -129,7 +129,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:deepslate_tile_slab",
+            "Name": "minecraft:gray_stained_glass",
             "Properties": {
               "type": "bottom",
               "waterlogged": "false"
@@ -146,7 +146,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:grass"
+            "Name": "minecraft:pink_wool"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -159,7 +159,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:grass",
+            "Name": "minecraft:light_gray_stained_glass",
             "Properties": {
               "half": "lower"
             }
@@ -179,7 +179,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:grass",
+            "Name": "minecraft:yellow_stained_glass",
             "Properties": {
               "half": "upper"
             }
@@ -199,7 +199,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:cornflower"
+            "Name": "minecraft:cyan_stained_glass"
           },
           "input_predicate": {
             "block_state": {
@@ -275,7 +275,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:mossy_cobblestone"
+            "Name": "minecraft:lime_wool"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -288,7 +288,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:cobblestone"
+            "Name": "minecraft:brown_wool"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -301,7 +301,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:mossy_cobblestone"
+            "Name": "minecraft:green_wool"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -327,7 +327,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:diorite_slab",
+            "Name": "minecraft:cyan_stained_glass",
             "Properties": {
               "type": "bottom",
               "waterlogged": "false"
@@ -344,7 +344,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:deepslate_tile_slab",
+            "Name": "minecraft:blue_wool",
             "Properties": {
               "type": "bottom",
               "waterlogged": "false"

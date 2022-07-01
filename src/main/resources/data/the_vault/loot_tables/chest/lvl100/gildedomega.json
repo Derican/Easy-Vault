@@ -132,6 +132,30 @@
             }
           ]
         },
+        { "_name": "crystalburger",
+          "type": "minecraft:item",
+          "weight": 2,
+          "name": "the_vault:crystal_burger",
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 1,
+                "max": 1
+              }
+            },
+            {
+              "function": "minecraft:set_count",
+              "count": 0,
+              "conditions": [
+                {
+                  "condition": "minecraft:random_chance",
+                  "chance": 0.0
+                }
+              ]
+            }
+          ]
+        },
         { "_name": "staressence",
           "type": "minecraft:item",
           "weight": 2,

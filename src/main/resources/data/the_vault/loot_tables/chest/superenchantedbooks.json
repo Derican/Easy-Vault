@@ -1,0 +1,91 @@
+{
+    "pools": [
+      {
+        "name": "EnchantedBooks",
+        "rolls": {
+          "min": 1,
+          "max": 1
+        },
+        "entries": [
+          { "_name": "EMPTY",
+            "type": "minecraft:empty",
+            "weight": 4
+          },  
+          { "_name": "sharpness7",
+              "type": "minecraft:item",
+              "weight": 4,
+              "name": "minecraft:enchanted_book",
+              "functions": [
+                {
+                  "function": "minecraft:set_count",
+                  "count": {
+                    "min": 1,
+                    "max": 1
+                  }
+                },
+                {
+                  "function": "set_nbt",
+                  "tag": "{StoredEnchantments:[{id:sharpness,lvl:7}]}"
+                }
+              ]
+            },
+            { "_name": "prot5",
+                "type": "minecraft:item",
+                "weight": 4,
+                "name": "minecraft:enchanted_book",
+                "functions": [
+                  {
+                    "function": "minecraft:set_count",
+                    "count": {
+                      "min": 1,
+                      "max": 1
+                    }
+                  },
+                  {
+                    "function": "set_nbt",
+                    "tag": "{StoredEnchantments:[{id:protection,lvl:5}]}"
+                  }
+                ]
+            },
+            { "_name": "smite7",
+              "type": "minecraft:item",
+              "weight": 4,
+              "name": "minecraft:enchanted_book",
+              "functions": [
+                {
+                  "function": "minecraft:set_count",
+                  "count": {
+                    "min": 1,
+                    "max": 1
+                  }
+                },
+                {
+                  "function": "set_nbt",
+                  "tag": "{StoredEnchantments:[{id:smite,lvl:7}]}"
+                }
+              ]
+            },
+            { "_name": "unbr5",
+                "type": "minecraft:item",
+                "weight": 4,
+                "name": "minecraft:enchanted_book",
+                "functions": [
+                  {
+                    "function": "minecraft:set_count",
+                    "count": {
+                      "min": 1,
+                      "max": 1
+                    }
+                  },
+                  {
+                    "function": "set_nbt",
+                    "tag": "{StoredEnchantments:[{id:unbreaking,lvl:5}]}"
+                  }
+                ]
+            }
+
+
+        ]
+      }
+    ]
+}

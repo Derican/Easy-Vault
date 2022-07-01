@@ -4,7 +4,7 @@
       "rules": [
         {
           "output_state": {
-            "Name": "minecraft:granite"
+            "Name": "minecraft:blue_wool"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -17,7 +17,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:diorite"
+            "Name": "minecraft:blue_stained_glass"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -30,7 +30,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:polished_granite"
+            "Name": "minecraft:green_wool"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -43,7 +43,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:blackstone"
+            "Name": "minecraft:gray_stained_glass"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -56,7 +56,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:soul_sand"
+            "Name": "minecraft:purple_wool"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -69,7 +69,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:gray_terracotta"
+            "Name": "minecraft:pink_stained_glass"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -121,7 +121,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:blue_concrete"
+            "Name": "minecraft:green_wool"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -134,7 +134,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:purpur_block"
+            "Name": "minecraft:white_wool"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -147,7 +147,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:magma_block"
+            "Name": "minecraft:magenta_wool"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -160,7 +160,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:black_stained_glass"
+            "Name": "minecraft:white_wool"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -186,7 +186,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:white_stained_glass"
+            "Name": "minecraft:light_blue_wool"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -229,7 +229,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:stone_slab",
+            "Name": "minecraft:purple_wool",
             "Properties": {
               "type": "bottom",
               "waterlogged": "false"
@@ -310,7 +310,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:gray_candle",
+            "Name": "minecraft:pink_stained_glass",
             "Properties": {
               "half": "lower"
             }
@@ -330,7 +330,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:gray_candle",
+            "Name": "minecraft:yellow_stained_glass",
             "Properties": {
               "half": "upper"
             }
@@ -350,7 +350,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:light_gray_candle",
+            "Name": "minecraft:light_gray_stained_glass",
             "Properties": {
               "half": "lower"
             }
@@ -370,7 +370,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:light_gray_candle",
+            "Name": "minecraft:lime_wool",
             "Properties": {
               "half": "upper"
             }

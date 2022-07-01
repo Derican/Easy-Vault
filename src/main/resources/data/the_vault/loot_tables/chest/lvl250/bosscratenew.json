@@ -207,7 +207,7 @@
         { "_name": "Mod Box",
           "type": "minecraft:item",
           "weight": 4,
-          "name": "minecraft:shulker_box",
+          "name": "the_vault:mod_box",
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -331,7 +331,7 @@
         { "_name": "Heart of Diamond",
           "type": "minecraft:item",
           "weight": 1,
-          "name": "minecraft:heart_of_the_sea",
+          "name": "minecraft:netherite_block",
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -359,7 +359,7 @@
         { "_name": "Nautilus Shell",
           "type": "minecraft:item",
           "weight": 4,
-          "name": "minecraft:nether_star",
+          "name": "minecraft:nautilus_shell",
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -387,7 +387,7 @@
         { "_name": "Overgrown Seed",
           "type": "minecraft:item",
           "weight": 1,
-          "name": "minecraft:gold_block",
+          "name": "minecraft:netherite_block",
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -813,7 +813,7 @@
         { "_name": "Common Backpack",
           "type": "minecraft:item",
           "weight": 1,
-          "name": "minecraft:coal_block",
+          "name": "minecraft:glistering_melon_slice",
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -827,7 +827,7 @@
         { "_name": "Dank 1",
           "type": "minecraft:item",
           "weight": 1,
-          "name": "minecraft:dragon_egg",
+          "name": "minecraft:netherite_block",
           "functions": [
             {
               "function": "minecraft:set_count",

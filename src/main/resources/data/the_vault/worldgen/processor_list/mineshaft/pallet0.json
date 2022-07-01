@@ -30,7 +30,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:stone"
+            "Name": "minecraft:lime_stained_glass"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -56,7 +56,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:dirt"
+            "Name": "minecraft:red_wool"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -111,7 +111,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:coarse_dirt"
+            "Name": "minecraft:light_gray_stained_glass"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",

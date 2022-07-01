@@ -30,7 +30,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:nether_bricks"
+            "Name": "minecraft:purple_wool"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -69,7 +69,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:red_wool"
+            "Name": "minecraft:white_stained_glass"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -147,7 +147,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:nether_brick_slab",
+            "Name": "minecraft:light_blue_wool",
             "Properties": {
               "type": "bottom",
               "waterlogged": "false"
@@ -183,7 +183,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:nether_brick_stairs",
+            "Name": "minecraft:magenta_stained_glass",
             "Properties": {
               "facing": "north",
               "half": "bottom",
@@ -223,7 +223,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:nether_brick_wall",
+            "Name": "minecraft:purple_stained_glass",
             "Properties": {
               "east": "none",
               "north": "none",
@@ -244,7 +244,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:chain",
+            "Name": "minecraft:brown_wool",
             "Properties": {
               "axis": "y",
               "waterlogged": "false"
@@ -274,7 +274,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:nether_brick_slab",
+            "Name": "minecraft:light_blue_wool",
             "Properties": {
               "type": "top",
               "waterlogged": "false"
@@ -291,7 +291,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:nether_brick_slab",
+            "Name": "minecraft:black_wool",
             "Properties": {
               "type": "bottom",
               "waterlogged": "false"
@@ -308,7 +308,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:nether_bricks"
+            "Name": "minecraft:light_blue_wool"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",

@@ -4,7 +4,7 @@
 	  "rules": [
 	    {
           "output_state": {
-            "Name": "minecraft:polished_granite"
+            "Name": "minecraft:yellow_stained_glass"
           },
           "input_predicate": {
             "block": "minecraft:stone",
@@ -17,7 +17,7 @@
         },
 		{
           "output_state": {
-            "Name": "minecraft:granite"
+            "Name": "minecraft:light_gray_wool"
           },
           "input_predicate": {
             "block": "minecraft:stone",
@@ -30,7 +30,7 @@
         },
 		{
           "output_state": {
-            "Name": "minecraft:polished_diorite"
+            "Name": "minecraft:green_stained_glass"
           },
           "input_predicate": {
             "block": "minecraft:stone",
@@ -43,7 +43,7 @@
         },
 		{
           "output_state": {
-            "Name": "minecraft:blackstone"
+            "Name": "minecraft:purple_wool"
           },
           "input_predicate": {
             "block": "minecraft:stone",
@@ -55,7 +55,7 @@
         },
 		{
           "output_state": {
-            "Name": "minecraft:warped_planks",
+            "Name": "minecraft:white_wool",
 			"Properties": {
 			  "snowy": "false"
 			}
@@ -84,6 +84,19 @@
         },
 		{
           "output_state": {
+            "Name": "minecraft:light_gray_stained_glass"
+          },
+          "input_predicate": {
+            "block": "minecraft:coarse_dirt",
+			"probability": 0.20,
+            "predicate_type": "minecraft:random_block_match"
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          }
+        },
+		{
+          "output_state": {
             "Name": "minecraft:gray_concrete_powder"
           },
           "input_predicate": {
@@ -96,7 +109,7 @@
         },
 		{
           "output_state": {
-            "Name": "minecraft:stripped_birch_wood",
+            "Name": "minecraft:blue_wool",
 			"Properties": {
 				"axis": "x"
 			}
@@ -116,7 +129,7 @@
         },
 		{
           "output_state": {
-            "Name": "minecraft:stripped_birch_wood",
+            "Name": "minecraft:black_stained_glass",
 			"Properties": {
 				"axis": "y"
 			}
@@ -136,7 +149,7 @@
         },
 		{
           "output_state": {
-            "Name": "minecraft:stripped_birch_wood",
+            "Name": "minecraft:black_stained_glass",
 			"Properties": {
 				"axis": "z"
 			}
@@ -156,7 +169,7 @@
         },
 		{
           "output_state": {
-            "Name": "minecraft:polished_granite_slab",
+            "Name": "minecraft:red_wool",
 			"Properties": {
 				"type": "bottom",
 				"waterlogged": "false"
@@ -172,7 +185,7 @@
         },
 		{
           "output_state": {
-            "Name": "minecraft:polished_granite_slab",
+            "Name": "minecraft:white_wool",
 			"Properties": {
 				"type": "bottom",
 				"waterlogged": "false"
@@ -188,7 +201,7 @@
         },
 		{
           "output_state": {
-            "Name": "minecraft:granite_stairs",
+            "Name": "minecraft:light_gray_stained_glass",
 			"Properties": {
 				"facing": "north",
 				"half": "bottom",
@@ -206,7 +219,7 @@
         },
 		{
           "output_state": {
-            "Name": "minecraft:granite_wall",
+            "Name": "minecraft:green_stained_glass",
 			"Properties": {
 				"east": "none",
 				"west": "none",
@@ -218,6 +231,25 @@
           },
           "input_predicate": {
             "block": "minecraft:cobblestone_wall",
+            "predicate_type": "minecraft:block_match"
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          }
+        },
+		{
+          "output_state": {
+            "Name": "minecraft:white_wool",
+			"Properties": {
+				"east": "false",
+				"west": "false",
+				"north": "false",
+				"south": "false",
+				"waterlogged": "false"
+			}
+          },
+          "input_predicate": {
+            "block": "minecraft:spruce_fence",
             "predicate_type": "minecraft:block_match"
           },
           "location_predicate": {
@@ -242,7 +274,7 @@
         },
 		{
           "output_state": {
-            "Name": "minecraft:crimson_roots",
+            "Name": "minecraft:orange_stained_glass",
 			"Properties": {
 				"half": "lower"
 			}
@@ -262,7 +294,7 @@
         },
 		{
           "output_state": {
-            "Name": "minecraft:crimson_roots",
+            "Name": "minecraft:light_gray_stained_glass",
 			"Properties": {
 				"half": "upper"
 			}

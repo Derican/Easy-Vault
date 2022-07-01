@@ -34,7 +34,7 @@
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
-            "block": "minecraft:cut_sandstone",
+            "block": "minecraft:brown_stained_glass",
             "probability": 1.0
           },
           "location_predicate": {
@@ -56,6 +56,22 @@
         },
         {
           "output_state": {
+            "Name": "minecraft:stripped_acacia_wood",
+            "Properties": {
+              "axis": "y"
+            }
+          },
+          "input_predicate": {
+            "predicate_type": "minecraft:random_block_match",
+            "block": "minecraft:orange_stained_glass",
+            "probability": 1.0
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          }
+        },
+        {
+          "output_state": {
             "Name": "minecraft:smooth_red_sandstone_slab",
             "Properties": {
               "type": "bottom",
@@ -342,6 +358,39 @@
                 "half": "top",
                 "shape": "straight",
                 "waterlogged": "false"
+              }
+            },
+            "predicate_type": "minecraft:blockstate_match"
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          }
+        },
+        {
+          "output_state": {
+            "Name": "minecraft:acacia_planks"
+          },
+          "input_predicate": {
+            "predicate_type": "minecraft:random_block_match",
+            "block": "minecraft:yellow_stained_glass",
+            "probability": 1.0
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          }
+        },
+        {
+          "output_state": {
+            "Name": "minecraft:acacia_pressure_plate",
+            "Properties": {
+              "powered": "false"
+            }
+          },
+          "input_predicate": {
+            "block_state": {
+              "Name": "minecraft:blue_stained_glass",
+              "Properties": {
+                "powered": "false"
               }
             },
             "predicate_type": "minecraft:blockstate_match"

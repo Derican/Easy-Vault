@@ -43,7 +43,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:chiseled_stone_bricks"
+            "Name": "minecraft:light_gray_wool"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -56,7 +56,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:diorite"
+            "Name": "minecraft:orange_wool"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -69,7 +69,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:cobblestone_cobblestone"
+            "Name": "minecraft:cyan_wool"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -82,7 +82,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:diorite_stairs",
+            "Name": "minecraft:green_wool",
             "Properties": {
               "facing": "north",
               "half": "bottom",
@@ -120,7 +120,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:polished_diorite_stairs",
+            "Name": "minecraft:lime_wool",
             "Properties": {
               "facing": "north",
               "half": "bottom",
@@ -139,7 +139,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:polished_diorite_stairs",
+            "Name": "minecraft:yellow_stained_glass",
             "Properties": {
               "facing": "north",
               "half": "bottom",
@@ -179,7 +179,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:diorite_wall",
+            "Name": "minecraft:brown_stained_glass",
             "Properties": {
               "east": "none",
               "north": "none",
@@ -233,7 +233,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:diorite_slab",
+            "Name": "minecraft:light_gray_wool",
             "Properties": {
               "type": "bottom",
               "waterlogged": "false"
@@ -250,7 +250,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:cobblestone_cobblestone_slab",
+            "Name": "minecraft:pink_stained_glass",
             "Properties": {
               "type": "bottom",
               "waterlogged": "false"
@@ -267,7 +267,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:polished_diorite",
+            "Name": "minecraft:cyan_wool",
             "Properties": {
               "axis": "y"
             }

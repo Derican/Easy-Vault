@@ -118,6 +118,23 @@
       "the_vault:treasure_goblin/idle_3"
     ]
   },
+  "witchskall_idle": {
+    "category": "neutral",
+    "sounds": [
+      {
+        "name": "the_vault:witchskall/idle",
+        "pitch": 1.00
+      },
+      {
+        "name": "the_vault:witchskall/idle",
+        "pitch": 0.95
+      },
+      {
+        "name": "the_vault:witchskall/idle",
+        "pitch": 1.05
+      }
+    ]
+  },
   "puzzle_completion_major": {
     "category": "master",
     "sounds": [
@@ -238,19 +255,40 @@
   "booster_pack": {
     "category": "master",
     "sounds": [
-      "the_vault:booster_pack"
+      {
+        "name": "the_vault:booster_pack",
+        "volume": 0.5
+      }
     ]
   },
   "booster_pack_fail": {
     "category": "master",
     "sounds": [
-      "the_vault:booster_pack_fail"
+      {
+        "name": "the_vault:booster_pack_fail",
+        "volume": 0.5
+      }
+    ]
+  },
+  "sub_bomb_gain": {
+    "category": "master",
+    "sounds": [
+      "the_vault:sub_bomb_gain"
+    ]
+  },
+  "sub_bomb_gain_mega": {
+    "category": "master",
+    "sounds": [
+      "the_vault:sub_bomb_gain_mega"
     ]
   },
   "vault_portal_open": {
     "category": "master",
     "sounds": [
-      "the_vault:vault_portal_open"
+      {
+        "name": "the_vault:vault_portal_open",
+        "volume": 0.5
+      }
     ]
   },
   "vault_portal_leave": {
@@ -313,6 +351,12 @@
     "category": "player",
     "sounds": [
       "the_vault:favour_up"
+    ]
+  },
+  "eyesore_grawl": {
+    "category": "hostile",
+    "sounds": [
+      "the_vault:eyesore/grawl"
     ]
   }
 }

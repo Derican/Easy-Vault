@@ -88,7 +88,20 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:polished_diorite"
+            "Name": "minecraft:blue_stained_glass"
+          },
+          "input_predicate": {
+            "predicate_type": "minecraft:random_block_match",
+            "block": "minecraft:chiseled_stone_bricks",
+            "probability": 1.0
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          }
+        },
+        {
+          "output_state": {
+            "Name": "minecraft:cyan_stained_glass"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -120,7 +133,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:diorite_wall",
+            "Name": "minecraft:brown_stained_glass",
             "Properties": {
               "east": "none",
               "north": "none",

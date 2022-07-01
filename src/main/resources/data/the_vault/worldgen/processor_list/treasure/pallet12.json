@@ -4,7 +4,7 @@
       "rules": [
         {
           "output_state": {
-            "Name": "minecraft:gray_wool"
+            "Name": "minecraft:red_wool"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -17,7 +17,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:cobblestone"
+            "Name": "minecraft:brown_wool"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -30,7 +30,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:cobblestone"
+            "Name": "minecraft:green_wool"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -43,7 +43,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:stripped_oak_log",
+            "Name": "minecraft:light_gray_wool",
             "Properties": {
               "axis": "y"
             }
@@ -59,7 +59,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:purple_concrete_powder"
+            "Name": "minecraft:orange_stained_glass"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -72,7 +72,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:purpur_block"
+            "Name": "minecraft:pink_stained_glass"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -85,7 +85,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:pink_wool"
+            "Name": "minecraft:gray_wool"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -98,7 +98,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:green_wool",
+            "Name": "minecraft:lime_stained_glass",
             "Properties": {
               "axis": "y"
             }
@@ -114,7 +114,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:cobblestone_stairs",
+            "Name": "minecraft:cyan_wool",
             "Properties": {
               "facing": "north",
               "half": "bottom",
@@ -133,7 +133,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:stone_stairs",
+            "Name": "minecraft:light_blue_wool",
             "Properties": {
               "facing": "north",
               "half": "bottom",
@@ -172,7 +172,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:purpur_slab",
+            "Name": "minecraft:purple_stained_glass",
             "Properties": {
               "type": "bottom",
               "waterlogged": "false"
@@ -189,7 +189,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:purpur_slab",
+            "Name": "minecraft:orange_wool",
             "Properties": {
               "type": "bottom",
               "waterlogged": "false"

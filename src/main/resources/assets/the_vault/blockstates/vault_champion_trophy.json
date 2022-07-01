@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "variant=golden": {
+      "model": "the_vault:block/final_trophy/golden"
+    },
+    "variant=blue_silver": {
+      "model": "the_vault:block/final_trophy/blue_silver"
+    },
+    "variant=platinum": {
+      "model": "the_vault:block/final_trophy/platinum"
+    },
+    "variant=silver": {
+      "model": "the_vault:block/final_trophy/silver"
+    }
+  }
+}

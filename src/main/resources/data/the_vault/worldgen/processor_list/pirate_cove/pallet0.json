@@ -140,7 +140,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:dark_oak_leaves",
+            "Name": "minecraft:magenta_wool",
             "Properties": {
               "distance": "7",
               "persistent": "false"
@@ -157,7 +157,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:dark_oak_leaves",
+            "Name": "minecraft:light_blue_wool",
             "Properties": {
               "distance": "7",
               "persistent": "false"
@@ -190,7 +190,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:orange_wool"
+            "Name": "minecraft:green_stained_glass"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -216,7 +216,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:granite_slab",
+            "Name": "minecraft:gray_wool",
             "Properties": {
               "type": "bottom",
               "waterlogged": "false"
@@ -292,7 +292,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:cobbled_deepslate_slab",
+            "Name": "minecraft:lime_wool",
             "Properties": {
               "type": "bottom",
               "waterlogged": "false"
@@ -314,7 +314,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:cobbled_deepslate_slab",
+            "Name": "minecraft:glowstone",
             "Properties": {
               "type": "top",
               "waterlogged": "false"
@@ -336,7 +336,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:stripped_dark_oak_log",
+            "Name": "minecraft:red_wool",
             "Properties": {
               "axis": "y"
             }

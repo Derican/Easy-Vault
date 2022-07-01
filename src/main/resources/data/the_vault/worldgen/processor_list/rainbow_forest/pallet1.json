@@ -4,7 +4,7 @@
       "rules": [
         {
           "output_state": {
-            "Name": "minecraft:light_blue_wool"
+            "Name": "minecraft:pink_stained_glass"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -30,7 +30,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:warped_planks"
+            "Name": "minecraft:light_blue_wool"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -82,7 +82,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:oak_leaves",
+            "Name": "minecraft:white_stained_glass",
             "Properties": {
               "distance": "7",
               "persistent": "false"
@@ -99,7 +99,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:oak_leaves",
+            "Name": "minecraft:cyan_wool",
             "Properties": {
               "distance": "7",
               "persistent": "false"
@@ -116,7 +116,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:oak_leaves",
+            "Name": "minecraft:white_stained_glass",
             "Properties": {
               "distance": "7",
               "persistent": "false"
@@ -137,7 +137,7 @@
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
-            "block": "minecraft:blue_concrete",
+            "block": "minecraft:cyan_wool",
             "probability": 0.5
           },
           "location_predicate": {
@@ -150,8 +150,34 @@
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
-            "block": "minecraft:blue_concrete",
+            "block": "minecraft:brown_wool",
             "probability": 1.0
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          }
+        },
+        {
+          "output_state": {
+            "Name": "minecraft:green_wool"
+          },
+          "input_predicate": {
+            "predicate_type": "minecraft:random_block_match",
+            "block": "minecraft:grass",
+            "probability": 0.14
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          }
+        },
+        {
+          "output_state": {
+            "Name": "minecraft:magenta_wool"
+          },
+          "input_predicate": {
+            "predicate_type": "minecraft:random_block_match",
+            "block": "minecraft:grass",
+            "probability": 0.17
           },
           "location_predicate": {
             "predicate_type": "minecraft:always_true"
@@ -172,7 +198,36 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:pink_tulip"
+            "Name": "minecraft:green_stained_glass",
+            "Properties": {
+              "stage": "0"
+            }
+          },
+          "input_predicate": {
+            "predicate_type": "minecraft:random_block_match",
+            "block": "minecraft:grass",
+            "probability": 0.25
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          }
+        },
+        {
+          "output_state": {
+            "Name": "minecraft:lime_stained_glass"
+          },
+          "input_predicate": {
+            "predicate_type": "minecraft:random_block_match",
+            "block": "minecraft:grass",
+            "probability": 0.33
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          }
+        },
+        {
+          "output_state": {
+            "Name": "minecraft:magenta_wool"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -198,7 +253,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:tall_grass",
+            "Name": "minecraft:lime_stained_glass",
             "Properties": {
               "half": "lower"
             }
@@ -218,7 +273,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:tall_grass",
+            "Name": "minecraft:light_blue_stained_glass",
             "Properties": {
               "half": "upper"
             }
@@ -238,7 +293,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:warped_fence",
+            "Name": "minecraft:light_gray_wool",
             "Properties": {
               "east": "false",
               "north": "false",
@@ -249,7 +304,7 @@
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
-            "block": "minecraft:warped_fence",
+            "block": "minecraft:light_gray_stained_glass",
             "probability": 1.0
           },
           "location_predicate": {
@@ -266,7 +321,7 @@
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
-            "block": "minecraft:lantern",
+            "block": "minecraft:gray_wool",
             "probability": 1.0
           },
           "location_predicate": {
@@ -275,7 +330,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:polished_granite_slab",
+            "Name": "minecraft:gray_stained_glass",
             "Properties": {
               "type": "bottom",
               "waterlogged": "false"

@@ -30,7 +30,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:black_wool"
+            "Name": "minecraft:pink_stained_glass"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -57,7 +57,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:black_wool"
+            "Name": "minecraft:orange_stained_glass"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -84,7 +84,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:gray_wool"
+            "Name": "minecraft:blue_wool"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -97,7 +97,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:cyan_wool"
+            "Name": "minecraft:gray_stained_glass"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -110,7 +110,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:cyan_wool"
+            "Name": "minecraft:orange_stained_glass"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -123,7 +123,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:iron_block"
+            "Name": "minecraft:light_blue_stained_glass"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -136,7 +136,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:iron_block"
+            "Name": "minecraft:cyan_stained_glass"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -188,7 +188,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:green_stained_glass"
+            "Name": "minecraft:magenta_stained_glass"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -214,7 +214,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:lime_wool"
+            "Name": "minecraft:light_blue_wool"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -227,7 +227,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:stone_slab",
+            "Name": "minecraft:orange_stained_glass",
             "Properties": {
               "type": "bottom",
               "waterlogged": "false"
@@ -244,7 +244,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:stone_slab",
+            "Name": "minecraft:brown_stained_glass",
             "Properties": {
               "type": "bottom",
               "waterlogged": "false"
@@ -288,7 +288,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:granite_stairs",
+            "Name": "minecraft:glowstone",
             "Properties": {
               "facing": "north",
               "half": "bottom",
@@ -307,7 +307,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:diorite_stairs",
+            "Name": "minecraft:light_blue_wool",
             "Properties": {
               "facing": "north",
               "half": "bottom",
@@ -326,7 +326,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:cobblestone_wall",
+            "Name": "minecraft:purple_stained_glass",
             "Properties": {
               "east": "none",
               "north": "none",
@@ -360,7 +360,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:chain",
+            "Name": "minecraft:brown_stained_glass",
             "Properties": { 
 				"axis": "y",
 				"waterlogged": "false"
@@ -377,7 +377,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:yellow_wool"
+            "Name": "minecraft:light_gray_wool"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -390,7 +390,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:gray_wool"
+            "Name": "minecraft:gray_stained_glass"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -403,7 +403,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:yellow_wool"
+            "Name": "minecraft:gray_stained_glass"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",

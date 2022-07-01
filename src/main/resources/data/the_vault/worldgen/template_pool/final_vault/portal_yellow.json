@@ -1,0 +1,24 @@
+{
+    "name": "the_vault:final_vault/portal_yellow",
+    "fallback": "the_vault:final_vault/portal_yellow",
+    "elements": [
+      {
+          "weight": 1,
+          "element": {
+            "processors": [
+                "minecraft:empty"
+            ],
+            "element_type": "the_vault:paletted_list_pool_element",
+            "projection": "rigid",
+            "elements": [
+                {
+                    "location": "the_vault:final_vault/portals/portal_yellow",
+                    "projection": "rigid",
+                    "element_type": "the_vault:paletted_single_pool_element",
+                    "processors": "minecraft:empty"
+                }
+            ]
+          }
+        }
+    ]
+  }

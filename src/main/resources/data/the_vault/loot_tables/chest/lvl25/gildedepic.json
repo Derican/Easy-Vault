@@ -278,7 +278,7 @@
         },
         { "_name": "vaultdiamond",
           "type": "minecraft:item",
-          "weight": 2,
+          "weight": 4,
           "name": "the_vault:vault_diamond",
           "functions": [
             {
@@ -294,7 +294,7 @@
               "conditions": [
                 {
                   "condition": "minecraft:random_chance",
-                  "chance": 0.25
+                  "chance": 0.1
                 }
               ]
             }
@@ -753,7 +753,7 @@
       "entries": [
         {
           "type": "minecraft:empty",
-          "weight": 36
+          "weight": 24
         },
         {
           "type": "minecraft:item",

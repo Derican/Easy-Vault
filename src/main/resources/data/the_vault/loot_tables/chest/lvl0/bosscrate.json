@@ -855,7 +855,7 @@
             }
           ]
         },
-        { "name": "minecraft:netherite_pickaxe",
+        { "name": "minecraft:enchanted_golden_apple",
           "type": "minecraft:item",
           "weight": 1,
           "functions": [
@@ -1390,7 +1390,7 @@
             }
           ]
         },
-        { "name": "minecraft:nether_star",
+        { "name": "minecraft:nautilus_shell",
           "type": "minecraft:item",
           "weight": 4,
           

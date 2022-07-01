@@ -4,7 +4,7 @@
       "rules": [
         {
           "output_state": {
-            "Name": "minecraft:polished_andesite"
+            "Name": "minecraft:light_blue_stained_glass"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -17,7 +17,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:andesite"
+            "Name": "minecraft:lime_wool"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -30,7 +30,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:andesite"
+            "Name": "minecraft:white_wool"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -43,7 +43,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:polished_andesite"
+            "Name": "minecraft:black_wool"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -56,7 +56,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:polished_andesite"
+            "Name": "minecraft:gray_stained_glass"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -69,7 +69,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:polished_diorite"
+            "Name": "minecraft:pink_stained_glass"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -82,7 +82,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:polished_andesite"
+            "Name": "minecraft:brown_wool"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -95,7 +95,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:soul_sand"
+            "Name": "minecraft:light_gray_wool"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -121,7 +121,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:polished_andesite_slab",
+            "Name": "minecraft:blue_wool",
             "Properties": {
               "type": "bottom",
               "waterlogged": "false"
@@ -143,7 +143,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:polished_andesite_slab",
+            "Name": "minecraft:yellow_wool",
             "Properties": {
               "type": "top",
               "waterlogged": "false"
@@ -165,7 +165,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:andesite_slab",
+            "Name": "minecraft:glowstone",
             "Properties": {
               "type": "bottom",
               "waterlogged": "false"
@@ -187,7 +187,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:andesite_slab",
+            "Name": "minecraft:blue_stained_glass",
             "Properties": {
               "type": "top",
               "waterlogged": "false"
@@ -209,7 +209,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:polished_andesite_slab",
+            "Name": "minecraft:magenta_stained_glass",
             "Properties": {
               "type": "bottom",
               "waterlogged": "false"
@@ -231,7 +231,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:polished_andesite_slab",
+            "Name": "minecraft:red_wool",
             "Properties": {
               "type": "top",
               "waterlogged": "false"
@@ -253,7 +253,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:andesite_wall",
+            "Name": "minecraft:orange_wool",
             "Properties": {
               "east": "none",
               "north": "none",
@@ -274,7 +274,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:polished_andesite_stairs",
+            "Name": "minecraft:yellow_wool",
             "Properties": {
               "facing": "south",
               "half": "bottom",
@@ -300,7 +300,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:polished_andesite_stairs",
+            "Name": "minecraft:light_gray_wool",
             "Properties": {
               "facing": "north",
               "half": "bottom",
@@ -326,7 +326,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:polished_andesite_stairs",
+            "Name": "minecraft:glowstone",
             "Properties": {
               "facing": "west",
               "half": "bottom",
@@ -352,7 +352,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:polished_andesite_stairs",
+            "Name": "minecraft:magenta_wool",
             "Properties": {
               "facing": "east",
               "half": "bottom",
@@ -378,7 +378,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:polished_andesite_stairs",
+            "Name": "minecraft:magenta_wool",
             "Properties": {
               "facing": "south",
               "half": "top",
@@ -404,7 +404,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:polished_andesite_stairs",
+            "Name": "minecraft:red_wool",
             "Properties": {
               "facing": "north",
               "half": "top",
@@ -430,7 +430,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:polished_andesite_stairs",
+            "Name": "minecraft:white_wool",
             "Properties": {
               "facing": "west",
               "half": "top",
@@ -456,7 +456,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:polished_andesite_stairs",
+            "Name": "minecraft:cyan_stained_glass",
             "Properties": {
               "facing": "east",
               "half": "top",
@@ -482,7 +482,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:andesite_stairs",
+            "Name": "minecraft:yellow_wool",
             "Properties": {
               "facing": "south",
               "half": "bottom",
@@ -508,7 +508,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:andesite_stairs",
+            "Name": "minecraft:pink_wool",
             "Properties": {
               "facing": "north",
               "half": "bottom",
@@ -534,7 +534,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:andesite_stairs",
+            "Name": "minecraft:yellow_stained_glass",
             "Properties": {
               "facing": "west",
               "half": "bottom",
@@ -560,7 +560,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:andesite_stairs",
+            "Name": "minecraft:brown_wool",
             "Properties": {
               "facing": "east",
               "half": "bottom",
@@ -586,7 +586,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:andesite_stairs",
+            "Name": "minecraft:brown_wool",
             "Properties": {
               "facing": "south",
               "half": "top",
@@ -612,7 +612,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:andesite_stairs",
+            "Name": "minecraft:lime_wool",
             "Properties": {
               "facing": "north",
               "half": "top",
@@ -638,7 +638,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:andesite_stairs",
+            "Name": "minecraft:light_blue_stained_glass",
             "Properties": {
               "facing": "west",
               "half": "top",
@@ -664,7 +664,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:andesite_stairs",
+            "Name": "minecraft:orange_stained_glass",
             "Properties": {
               "facing": "east",
               "half": "top",

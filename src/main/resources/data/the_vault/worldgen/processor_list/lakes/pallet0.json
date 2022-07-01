@@ -188,7 +188,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:mossy_cobblestone"
+            "Name": "minecraft:green_stained_glass"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -201,7 +201,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:cobblestone"
+            "Name": "minecraft:magenta_wool"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -214,7 +214,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:mossy_cobblestone"
+            "Name": "minecraft:glowstone"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -257,7 +257,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:cobblestone_slab",
+            "Name": "minecraft:black_wool",
             "Properties": {
               "type": "bottom",
               "waterlogged": "false"

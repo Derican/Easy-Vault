@@ -1,10 +1,50 @@
 {
   "variants": {
-    "axis=x": {
-      "model": "the_vault:block/vault_portal"
+    "style=rainbow,axis=x": {
+      "model": "the_vault:block/portal/rainbow"
     },
-    "axis=z": {
-      "model": "the_vault:block/vault_portal",
+    "style=rainbow,axis=z": {
+      "model": "the_vault:block/portal/rainbow",
+      "y": 90
+    },
+
+    "style=final,axis=x": {
+      "model": "the_vault:block/portal/final"
+    },
+    "style=final,axis=z": {
+      "model": "the_vault:block/portal/final",
+      "y": 90
+    },
+
+    "style=velara,axis=x": {
+      "model": "the_vault:block/portal/velara"
+    },
+    "style=velara,axis=z": {
+      "model": "the_vault:block/portal/velara",
+      "y": 90
+    },
+
+    "style=tenos,axis=x": {
+      "model": "the_vault:block/portal/tenos"
+    },
+    "style=tenos,axis=z": {
+      "model": "the_vault:block/portal/tenos",
+      "y": 90
+    },
+
+    "style=wendarr,axis=x": {
+      "model": "the_vault:block/portal/wendarr"
+    },
+    "style=wendarr,axis=z": {
+      "model": "the_vault:block/portal/wendarr",
+      "y": 90
+    },
+
+    "style=idona,axis=x": {
+      "model": "the_vault:block/portal/idona"
+    },
+    "style=idona,axis=z": {
+      "model": "the_vault:block/portal/idona",
       "y": 90
     }
   }

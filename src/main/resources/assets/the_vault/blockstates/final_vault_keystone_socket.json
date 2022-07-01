@@ -1,0 +1,28 @@
+{
+  "variants": {
+    "associated_god=idona,activated=false": {
+      "model": "the_vault:block/final_keystone_socket/idona_empty"
+    },
+    "associated_god=idona,activated=true": {
+      "model": "the_vault:block/final_keystone_socket/idona_filled"
+    },
+    "associated_god=tenos,activated=false": {
+      "model": "the_vault:block/final_keystone_socket/tenos_empty"
+    },
+    "associated_god=tenos,activated=true": {
+      "model": "the_vault:block/final_keystone_socket/tenos_filled"
+    },
+    "associated_god=velara,activated=false": {
+      "model": "the_vault:block/final_keystone_socket/velara_empty"
+    },
+    "associated_god=velara,activated=true": {
+      "model": "the_vault:block/final_keystone_socket/velara_filled"
+    },
+    "associated_god=wendarr,activated=false": {
+      "model": "the_vault:block/final_keystone_socket/wendarr_empty"
+    },
+    "associated_god=wendarr,activated=true": {
+      "model": "the_vault:block/final_keystone_socket/wendarr_filled"
+    }
+  }
+}

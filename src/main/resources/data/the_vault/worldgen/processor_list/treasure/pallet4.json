@@ -4,7 +4,7 @@
       "rules": [
         {
           "output_state": {
-            "Name": "minecraft:polished_granite"
+            "Name": "minecraft:green_stained_glass"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -17,7 +17,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:polished_diorite"
+            "Name": "minecraft:brown_stained_glass"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -30,7 +30,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:granite"
+            "Name": "minecraft:yellow_wool"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -43,7 +43,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:warped_planks",
+            "Name": "minecraft:purple_stained_glass",
             "Properties": {
               "snowy": "false"
             }
@@ -85,7 +85,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:stripped_birch_wood",
+            "Name": "minecraft:cyan_wool",
             "Properties": {
               "axis": "y"
             }
@@ -101,7 +101,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:warped_wart_block"
+            "Name": "minecraft:brown_wool"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -114,7 +114,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:cobblestone_stairs",
+            "Name": "minecraft:lime_stained_glass",
             "Properties": {
               "facing": "north",
               "half": "bottom",
@@ -133,7 +133,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:smooth_quartz_stairs",
+            "Name": "minecraft:purple_wool",
             "Properties": {
               "facing": "north",
               "half": "bottom",
@@ -144,6 +144,27 @@
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
             "block": "minecraft:stone_brick_stairs",
+            "probability": 1.0
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          }
+        },
+        {
+          "output_state": {
+            "Name": "minecraft:yellow_wool",
+            "Properties": {
+              "east": "none",
+              "north": "none",
+              "south": "none",
+              "up": "true",
+              "waterlogged": "false",
+              "west": "none"
+            }
+          },
+          "input_predicate": {
+            "predicate_type": "minecraft:random_block_match",
+            "block": "minecraft:cobblestone_wall",
             "probability": 1.0
           },
           "location_predicate": {
@@ -168,7 +189,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:smooth_quartz_slab",
+            "Name": "minecraft:lime_wool",
             "Properties": {
               "type": "bottom",
               "waterlogged": "false"
@@ -185,7 +206,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:quartz_bricks",
+            "Name": "minecraft:lime_stained_glass",
             "Properties": {
               "axis": "y"
             }

@@ -98,7 +98,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:birch_leaves",
+            "Name": "minecraft:gray_stained_glass",
             "Properties": {
               "distance": "7",
               "persistent": "false"
@@ -115,7 +115,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:birch_leaves",
+            "Name": "minecraft:pink_wool",
             "Properties": {
               "distance": "7",
               "persistent": "false"
@@ -132,7 +132,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:mossy_cobblestone_slab",
+            "Name": "minecraft:light_blue_wool",
             "Properties": {
               "type": "bottom",
               "waterlogged": "false"

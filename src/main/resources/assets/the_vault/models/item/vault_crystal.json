@@ -7,6 +7,12 @@
     { "predicate": { "type": 0 }, "model": "the_vault:item/vault_crystal" },
     { "predicate": { "type": 1 }, "model": "the_vault:item/vault_crystal" },
     { "predicate": { "type": 2 }, "model": "the_vault:item/vault_crystal" },
-    { "predicate": { "type": 3 }, "model": "the_vault:item/vault_crystal_trove" }
+    { "predicate": { "type": 3 }, "model": "the_vault:item/vault_crystal_trove" },
+    { "predicate": { "type": 4 }, "model": "the_vault:item/vault_crystal_boss_benevolent" },
+    { "predicate": { "type": 5 }, "model": "the_vault:item/vault_crystal_boss_benevolent" },
+    { "predicate": { "type": 6 }, "model": "the_vault:item/vault_crystal_boss_omniscient" },
+    { "predicate": { "type": 7 }, "model": "the_vault:item/vault_crystal_boss_timekeeper" },
+    { "predicate": { "type": 8 }, "model": "the_vault:item/vault_crystal_boss_malevolence" },
+    { "predicate": { "type": 9 }, "model": "the_vault:item/vault_crystal_final" }
   ]
 }

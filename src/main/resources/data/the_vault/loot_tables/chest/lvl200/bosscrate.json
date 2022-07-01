@@ -1060,7 +1060,7 @@
         {
           "type": "minecraft:item",
           "weight": 2,
-          "name": "minecraft:trident",
+          "name": "minecraft:netherite_block",
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -1084,7 +1084,7 @@
         {
           "type": "minecraft:item",
           "weight": 2,
-          "name": "minecraft:coal_block",
+          "name": "minecraft:emerald_block",
           "functions": [
             {
               "function": "minecraft:set_count",

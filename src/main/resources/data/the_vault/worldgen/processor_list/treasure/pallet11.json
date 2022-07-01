@@ -4,7 +4,7 @@
       "rules": [
         {
           "output_state": {
-            "Name": "minecraft:cobblestone"
+            "Name": "minecraft:blue_wool"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -30,7 +30,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:prismarine_bricks"
+            "Name": "minecraft:red_stained_glass"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -43,7 +43,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:purpur_block"
+            "Name": "minecraft:green_stained_glass"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -69,7 +69,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:purple_concrete_powder"
+            "Name": "minecraft:gray_wool"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -82,7 +82,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:dark_prismarine"
+            "Name": "minecraft:purple_wool"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -95,7 +95,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:soul_soil"
+            "Name": "minecraft:purple_wool"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -108,7 +108,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:purpur_stairs",
+            "Name": "minecraft:brown_wool",
             "Properties": {
               "facing": "north",
               "half": "bottom",
@@ -127,7 +127,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:purpur_stairs",
+            "Name": "minecraft:purple_wool",
             "Properties": {
               "facing": "north",
               "half": "bottom",
@@ -183,7 +183,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:purpur_slab",
+            "Name": "minecraft:orange_wool",
             "Properties": {
               "type": "bottom",
               "waterlogged": "false"
@@ -200,7 +200,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:dark_prismarine",
+            "Name": "minecraft:blue_stained_glass",
             "Properties": {
               "axis": "y"
             }

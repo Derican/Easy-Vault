@@ -2,32 +2,32 @@
   "processors": [
     {
       "rules": [
-		{
+        {
           "output_state": {
             "Name": "minecraft:air"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
-            "block": "minecraft:mob_spawner",
-			"probability": 0.6
+            "block": "minecraft:spawner",
+            "probability": 0.6
           },
           "location_predicate": {
             "predicate_type": "minecraft:always_true"
           }
         },
         {
-            "output_state": {
-              "Name": "minecraft:air"
-            },
-            "input_predicate": {
-              "predicate_type": "minecraft:random_block_match",
-              "block": "the_vault:vault_bonus_chest",
-              "probability": 0.5
-            },
-            "location_predicate": {
-              "predicate_type": "minecraft:always_true"
-            }
+          "output_state": {
+            "Name": "minecraft:air"
+          },
+          "input_predicate": {
+            "predicate_type": "minecraft:random_block_match",
+            "block": "the_vault:vault_bonus_chest",
+            "probability": 0.5
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
           }
+        }
       ],
       "processor_type": "minecraft:rule"
     }

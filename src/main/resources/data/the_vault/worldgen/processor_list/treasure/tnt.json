@@ -5,9 +5,9 @@
         {
           "output_state": {
             "Name": "minecraft:tnt",
-			"Properties": {
-				"unstable": "true"
-			}
+            "Properties": {
+              "unstable": "true"
+            }
           },
           "input_predicate": {
             "predicate_type": "minecraft:tag_match",
@@ -17,17 +17,17 @@
             "predicate_type": "minecraft:always_true"
           }
         },
-		{
+        {
           "output_state": {
             "Name": "minecraft:tnt",
-			"Properties": {
-				"unstable": "true"
-			}
+            "Properties": {
+              "unstable": "true"
+            }
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
-            "block": "minecraft:mob_spawner",
-			"probability": 0.5
+            "block": "minecraft:spawner",
+            "probability": 0.5
           },
           "location_predicate": {
             "predicate_type": "minecraft:always_true"

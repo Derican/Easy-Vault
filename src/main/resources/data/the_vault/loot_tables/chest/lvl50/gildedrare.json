@@ -230,7 +230,7 @@
         },
         { "_name": "vaultdiamond",
           "type": "minecraft:item",
-          "weight": 1,
+          "weight": 3,
           "name": "the_vault:vault_diamond",
           "functions": [
             {

@@ -69,7 +69,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:cut_sandstone"
+            "Name": "minecraft:yellow_stained_glass"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",

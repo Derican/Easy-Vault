@@ -5,10 +5,10 @@
         {
           "output_state": {
             "Name": "minecraft:barrel",
-			"Properties": {
-				"facing": "up",
-				"open": "false"
-			}
+            "Properties": {
+              "facing": "up",
+              "open": "false"
+            }
           },
           "input_predicate": {
             "predicate_type": "minecraft:tag_match",
@@ -18,18 +18,18 @@
             "predicate_type": "minecraft:always_true"
           }
         },
-		{
+        {
           "output_state": {
             "Name": "minecraft:barrel",
-			"Properties": {
-				"facing": "up",
-				"open": "false"
-			}
+            "Properties": {
+              "facing": "up",
+              "open": "false"
+            }
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
-            "block": "minecraft:mob_spawner",
-			"probability": 0.5
+            "block": "minecraft:spawner",
+            "probability": 0.5
           },
           "location_predicate": {
             "predicate_type": "minecraft:always_true"

@@ -4,7 +4,7 @@
       "rules": [
         {
           "output_state": {
-            "Name": "minecraft:cobblestone"
+            "Name": "minecraft:lime_wool"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -30,7 +30,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:prismarine_bricks"
+            "Name": "minecraft:pink_stained_glass"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -43,7 +43,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:dark_prismarine"
+            "Name": "minecraft:pink_stained_glass"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -56,7 +56,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:purpur_block"
+            "Name": "minecraft:white_wool"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -82,7 +82,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:purple_concrete_powder"
+            "Name": "minecraft:black_wool"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
@@ -95,7 +95,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:dark_prismarine",
+            "Name": "minecraft:cyan_stained_glass",
             "Properties": {
               "axis": "y"
             }
@@ -111,7 +111,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:oak_slab",
+            "Name": "minecraft:orange_stained_glass",
             "Properties": {
               "type": "bottom",
               "waterlogged": "false"
@@ -128,7 +128,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:mossy_cobblestone_slab",
+            "Name": "minecraft:light_blue_wool",
             "Properties": {
               "type": "bottom",
               "waterlogged": "false"
@@ -145,7 +145,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:purpur_stairs",
+            "Name": "minecraft:lime_wool",
             "Properties": {
               "facing": "north",
               "half": "bottom",
@@ -183,7 +183,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:purpur_stairs",
+            "Name": "minecraft:red_wool",
             "Properties": {
               "facing": "north",
               "half": "bottom",
@@ -202,7 +202,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:cobblestone_wall",
+            "Name": "minecraft:white_wool",
             "Properties": {
               "east": "none",
               "north": "none",
@@ -223,7 +223,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:purpur_slab",
+            "Name": "minecraft:cyan_wool",
             "Properties": {
               "type": "bottom",
               "waterlogged": "false"
@@ -257,7 +257,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:purpur_slab",
+            "Name": "minecraft:green_wool",
             "Properties": {
               "type": "bottom",
               "waterlogged": "false"
@@ -294,7 +294,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:soul_lantern",
+            "Name": "minecraft:light_gray_wool",
             "Properties": {
               "hanging": "false",
               "waterlogged": "false"
@@ -311,7 +311,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:tall_grass",
+            "Name": "minecraft:purple_wool",
             "Properties": {
               "half": "lower"
             }
@@ -331,7 +331,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:tall_grass",
+            "Name": "minecraft:blue_stained_glass",
             "Properties": {
               "half": "upper"
             }
