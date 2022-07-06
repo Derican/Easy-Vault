@@ -4,6 +4,7 @@ This project is taken from [iskallia's Vault Hunters](https://github.com/Iskalli
 
 ## Changelog
 
+- 5 Jul,2022 Update to 1.13.4
 - 26 Jun,2022 Fix greyscale vert
 - 25 Jun,2022 Fix InventoryAccessor
 - 23 Jun,2022 Fix BREAK_ARMOR_CHANCE not found
@@ -15,4 +16,8 @@ This project is taken from [iskallia's Vault Hunters](https://github.com/Iskalli
 
 ## Known Issues
 
-- Missing Textures in several chests (conflicts with other mods)
+- Missing Textures in several chests
+- Unhandled base gravity setter
+- Unhandled last slots setter
+- Lack in global trader configs
+- Missing Witch skull

@@ -17,6 +17,7 @@ import iskallia.vault.util.StatueType;
 import iskallia.vault.util.WeekKey;
 import iskallia.vault.world.data.PlayerVaultStatsData;
 import iskallia.vault.world.data.VaultRaidData;
+import iskallia.vault.world.data.generated.ChallengeCrystalArchive;
 import net.minecraft.command.CommandSource;
 import net.minecraft.command.Commands;
 import net.minecraft.entity.player.PlayerEntity;
@@ -63,6 +64,14 @@ public class GiveLootCommand extends Command {
         builder.then(Commands.literal("raid_reward_crate").executes(ctx -> this.giveRaidRewardCrate((CommandContext<CommandSource>) ctx, ((CommandSource) ctx.getSource()).getPlayerOrException())));
         builder.then(Commands.literal("record_trophy").then(Commands.argument("year", (ArgumentType) IntegerArgumentType.integer()).then(Commands.argument("week", (ArgumentType) IntegerArgumentType.integer()).executes(this::giveTrophy))));
         builder.then(Commands.literal("record_box").executes(this::giveTrophyBox));
+        builder.then(Commands.literal("challenge_crystal").then(Commands.argument("index", (ArgumentType)IntegerArgumentType.integer()).executes(this::giveChallengeCrystal)));
+    }
+
+    public int giveChallengeCrystal(final CommandContext<CommandSource> context) throws CommandSyntaxException {
+        final ServerPlayerEntity sPlayer = ((CommandSource)context.getSource()).getPlayerOrException();
+        final int index = IntegerArgumentType.getInteger((CommandContext)context, "index");
+        sPlayer.addItem(ChallengeCrystalArchive.get(index));
+        return 0;
     }
 
     public int giveTrophyBox(final CommandContext<CommandSource> context) throws CommandSyntaxException {

@@ -1,79 +1,121 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.world.vault.logic.objective.architect;
 
-import com.google.common.collect.Iterables;
-import iskallia.vault.block.VaultCrateBlock;
-import iskallia.vault.config.LootTablesConfig;
-import iskallia.vault.init.ModBlocks;
-import iskallia.vault.init.ModConfigs;
-import iskallia.vault.init.ModItems;
-import iskallia.vault.init.ModNetwork;
-import iskallia.vault.nbt.VListNBT;
-import iskallia.vault.network.message.VaultGoalMessage;
-import iskallia.vault.util.MiscUtils;
-import iskallia.vault.util.PlayerFilter;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import iskallia.vault.util.nbt.NBTHelper;
-import iskallia.vault.world.data.VaultRaidData;
-import iskallia.vault.world.gen.decorator.BreadcrumbFeature;
-import iskallia.vault.world.gen.structure.VaultJigsawHelper;
-import iskallia.vault.world.vault.VaultRaid;
-import iskallia.vault.world.vault.gen.VaultGenerator;
-import iskallia.vault.world.vault.gen.piece.VaultPiece;
-import iskallia.vault.world.vault.gen.piece.VaultRoom;
-import iskallia.vault.world.vault.logic.VaultBossSpawner;
-import iskallia.vault.world.vault.logic.objective.VaultObjective;
-import iskallia.vault.world.vault.logic.objective.architect.modifier.RandomVoteModifier;
-import iskallia.vault.world.vault.logic.objective.architect.modifier.VoteModifier;
-import iskallia.vault.world.vault.logic.objective.architect.processor.VaultPieceProcessor;
-import iskallia.vault.world.vault.logic.task.VaultTask;
-import iskallia.vault.world.vault.player.VaultPlayer;
-import iskallia.vault.world.vault.player.VaultRunner;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.item.ItemEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.loot.LootContext;
-import net.minecraft.loot.LootParameterSets;
-import net.minecraft.loot.LootParameters;
-import net.minecraft.loot.LootTable;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.nbt.INBT;
 import net.minecraft.nbt.ListNBT;
-import net.minecraft.network.IPacket;
-import net.minecraft.network.play.server.STitlePacket;
-import net.minecraft.server.MinecraftServer;
-import net.minecraft.util.*;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.util.math.vector.Vector3i;
-import net.minecraft.util.text.*;
-import net.minecraft.world.World;
-import net.minecraft.world.gen.feature.jigsaw.JigsawPiece;
-import net.minecraft.world.server.ServerWorld;
-import net.minecraftforge.event.entity.living.LivingDeathEvent;
-import net.minecraftforge.eventbus.api.EventPriority;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.network.NetworkDirection;
+import net.minecraft.nbt.INBT;
+import iskallia.vault.world.vault.gen.VaultGenerator;
+
+import java.util.function.Supplier;
+
+import iskallia.vault.config.LootTablesConfig;
+import net.minecraft.loot.LootTable;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import java.util.*;
+
+import net.minecraft.block.BlockState;
+import net.minecraft.util.math.MathHelper;
+import net.minecraft.world.World;
+import net.minecraft.entity.item.ItemEntity;
+import iskallia.vault.block.VaultCrateBlock;
+import iskallia.vault.init.ModBlocks;
+import net.minecraft.util.text.Color;
+import net.minecraft.util.text.Style;
+import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.IItemProvider;
+import iskallia.vault.init.ModItems;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.NonNullList;
+import net.minecraft.loot.LootParameterSets;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.util.math.vector.Vector3i;
+import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.loot.LootParameters;
+import net.minecraft.loot.LootContext;
+import iskallia.vault.world.vault.player.VaultRunner;
+import iskallia.vault.world.vault.player.VaultPlayer;
+import net.minecraft.entity.Entity;
+import net.minecraft.util.DamageSource;
+import net.minecraftforge.eventbus.api.EventPriority;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+
 import java.util.function.Function;
-import java.util.function.Predicate;
-import java.util.function.Supplier;
+import java.util.Optional;
+
+import net.minecraftforge.event.entity.living.LivingDeathEvent;
+import net.minecraft.entity.LivingEntity;
+import iskallia.vault.world.vault.logic.VaultBossSpawner;
+import iskallia.vault.world.gen.decorator.BreadcrumbFeature;
+import iskallia.vault.world.vault.gen.piece.VaultPiece;
+import net.minecraft.network.IPacket;
+import net.minecraft.network.play.server.STitlePacket;
+
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
+
+import iskallia.vault.world.vault.logic.objective.architect.processor.VaultPieceProcessor;
+
+import java.util.function.Predicate;
+import java.util.Objects;
+
+import net.minecraft.world.gen.feature.jigsaw.JigsawPiece;
+import iskallia.vault.world.vault.logic.objective.architect.modifier.RandomVoteModifier;
+import net.minecraftforge.fml.network.NetworkDirection;
+import iskallia.vault.init.ModNetwork;
+import iskallia.vault.network.message.VaultGoalMessage;
+import iskallia.vault.util.PlayerFilter;
+import net.minecraft.server.MinecraftServer;
+
+import javax.annotation.Nullable;
+
+import net.minecraft.util.text.IFormattableTextComponent;
+import iskallia.vault.world.vault.logic.objective.architect.modifier.VoteModifier;
+
+import java.util.Iterator;
+
+import iskallia.vault.world.vault.VaultRaid;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.Util;
+import net.minecraft.util.text.StringTextComponent;
+
+import java.util.Collection;
+
+import iskallia.vault.util.MiscUtils;
+import iskallia.vault.world.gen.structure.VaultJigsawHelper;
+import net.minecraft.util.Direction;
+import com.google.common.collect.Iterables;
+import iskallia.vault.world.vault.gen.piece.VaultRoom;
+import iskallia.vault.world.data.VaultRaidData;
+import net.minecraft.world.server.ServerWorld;
+import iskallia.vault.init.ModConfigs;
+import com.mojang.serialization.Codec;
+
+import java.util.ArrayList;
+
+import iskallia.vault.world.vault.logic.task.VaultTask;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.util.math.BlockPos;
+import iskallia.vault.nbt.VListNBT;
+
+import java.util.UUID;
+import java.util.List;
+
+import net.minecraftforge.fml.common.Mod;
+import iskallia.vault.world.vault.logic.objective.VaultObjective;
 
 @Mod.EventBusSubscriber(modid = "the_vault", bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class ArchitectObjective extends VaultObjective {
-    private final List<VotingSession> completedSessions;
-    private VotingSession activeSession;
+    protected final List<VotingSession> completedSessions;
+    protected VotingSession activeSession;
     private boolean votingLocked;
-    private int totalRequiredVotes;
-    private int voteDowntimeTicks;
-    private int ticksUntilNextVote;
+    protected int totalRequiredVotes;
+    protected int voteDowntimeTicks;
+    protected int ticksUntilNextVote;
     private UUID bossId;
     private boolean isBossDead;
     private final VListNBT<BlockPos, CompoundNBT> exitPortalLocations;
@@ -93,17 +135,21 @@ public class ArchitectObjective extends VaultObjective {
         this.totalRequiredVotes = ModConfigs.ARCHITECT_EVENT.getRandomTotalRequiredPolls();
     }
 
-    public boolean createVotingSession(final VaultRaid vault, final ServerWorld world, final BlockPos origin) {
+    public boolean createVotingSession(final ServerWorld world, final BlockPos origin) {
         if (this.activeSession != null || this.ticksUntilNextVote > 0 || this.isVotingLocked()) {
             return false;
         }
-        final VaultRoom room = (VaultRoom) Iterables.getFirst((Iterable) vault.getGenerator().getPiecesAt(origin, VaultRoom.class), null);
+        final VaultRaid thisRaid = VaultRaidData.get(world).getAt(world, origin);
+        if (thisRaid == null) {
+            return false;
+        }
+        final VaultRoom room = (VaultRoom) Iterables.getFirst((Iterable) thisRaid.getGenerator().getPiecesAt(origin, VaultRoom.class), null);
         if (room == null) {
             return false;
         }
         final List<Direction> availableDirections = new ArrayList<Direction>();
         for (final Direction dir : Direction.values()) {
-            if (dir.getAxis().isHorizontal() && VaultJigsawHelper.canExpand(vault, room, dir)) {
+            if (dir.getAxis().isHorizontal() && VaultJigsawHelper.canExpand(thisRaid, room, dir)) {
                 availableDirections.add(dir);
             }
         }
@@ -139,7 +185,7 @@ public class ArchitectObjective extends VaultObjective {
                 display.append(choice2.getDirectionDisplay("/"));
             }
             display.append("!");
-            vault.getPlayers().forEach(vPlayer -> vPlayer.runIfPresent(world.getServer(), sPlayer -> sPlayer.sendMessage((ITextComponent) display, Util.NIL_UUID)));
+            thisRaid.getPlayers().forEach(vPlayer -> vPlayer.runIfPresent(world.getServer(), sPlayer -> sPlayer.sendMessage((ITextComponent) display, Util.NIL_UUID)));
         }
         return true;
     }
@@ -200,10 +246,10 @@ public class ArchitectObjective extends VaultObjective {
         }
     }
 
-    private void finishVote(final VaultRaid vault, final VotingSession session, final ServerWorld world) {
+    protected void finishVote(final VaultRaid vault, final VotingSession session, final ServerWorld world) {
         vault.getGenerator().getPiecesAt(session.getStabilizerPos(), VaultRoom.class).stream().findFirst().ifPresent(room -> {
             final DirectionChoice choice = session.getVotedDirection();
-            final ArrayList<Object> modifiers = new ArrayList<Object>();
+            final ArrayList<VoteModifier> modifiers = new ArrayList<>();
             choice.getModifiers().forEach(modifier -> {
                 if (modifier instanceof RandomVoteModifier) {
                     modifiers.add(((RandomVoteModifier) modifier).rollModifier());
@@ -212,12 +258,11 @@ public class ArchitectObjective extends VaultObjective {
                 }
                 return;
             });
-            final JigsawPiece roomPiece = modifiers.stream().map(modifier -> ((VoteModifier) modifier).getSpecialRoom(this, vault)).filter((Predicate<? super JigsawPiece>) Objects::nonNull).findFirst().orElse(null);
-            final List<VaultPiece> generatedPieces = VaultJigsawHelper.expandVault(vault, world, (VaultRoom) room, choice.getDirection(), roomPiece);
-            BreadcrumbFeature.generateVaultBreadcrumb(vault, world, generatedPieces);
-            final List<VaultPieceProcessor> postProcessors = modifiers.stream().map(modifier -> ((VoteModifier) modifier).getPostProcessor(this, vault)).filter(Objects::nonNull).collect(Collectors.toList());
+            final JigsawPiece roomPiece = modifiers.stream().map(modifier -> modifier.getSpecialRoom(this, vault)).filter(Objects::nonNull).findFirst().orElse(null);
+            modifiers.forEach(modifier -> modifier.onApply(this, vault, world));
+            final List<VaultPiece> generatedPieces = this.expandVault(vault, world, (VaultRoom) room, session, choice.getDirection(), roomPiece, null);
+            final List<VaultPieceProcessor> postProcessors = modifiers.stream().map(modifier -> modifier.getPostProcessor(this, vault)).filter(Objects::nonNull).collect(Collectors.toList());
             generatedPieces.forEach(piece -> postProcessors.forEach(processor -> processor.postProcess(vault, world, piece, choice.getDirection())));
-            modifiers.forEach(modifier -> ((VoteModifier) modifier).onApply(this, vault, world));
             choice.getModifiers().forEach(modifier -> this.voteDowntimeTicks += modifier.getVoteLockDurationChangeSeconds() * 20);
             this.voteDowntimeTicks = Math.max(0, this.voteDowntimeTicks);
             final STitlePacket titlePacket = new STitlePacket(STitlePacket.Type.TITLE, choice.getDirectionDisplay());
@@ -235,6 +280,12 @@ public class ArchitectObjective extends VaultObjective {
                 }
             }));
         });
+    }
+
+    protected List<VaultPiece> expandVault(final VaultRaid vault, final ServerWorld world, final VaultRoom room, final VotingSession session, final Direction direction, @Nullable final JigsawPiece roomToGenerate, @Nullable final JigsawPiece tunnelToGenerate) {
+        final List<VaultPiece> generatedPieces = VaultJigsawHelper.expandVault(vault, world, room, direction, roomToGenerate, tunnelToGenerate);
+        BreadcrumbFeature.generateVaultBreadcrumb(vault, world, generatedPieces);
+        return generatedPieces;
     }
 
     public void buildPortal(final List<BlockPos> portalLocations) {
@@ -368,7 +419,7 @@ public class ArchitectObjective extends VaultObjective {
 
     @Nonnull
     @Override
-    public BlockState getObjectiveRelevantBlock() {
+    public BlockState getObjectiveRelevantBlock(final VaultRaid vault, final ServerWorld world, final BlockPos pos) {
         return ModBlocks.STABILIZER.defaultBlockState();
     }
 
@@ -422,14 +473,14 @@ public class ArchitectObjective extends VaultObjective {
     public void deserializeNBT(final CompoundNBT tag) {
         super.deserializeNBT(tag);
         if (tag.contains("activeSession", 10)) {
-            this.activeSession = new VotingSession(tag.getCompound("activeSession"));
+            this.activeSession = VotingSession.deserialize(tag.getCompound("activeSession"));
         } else {
             this.activeSession = null;
         }
         this.completedSessions.clear();
         final ListNBT sessions = tag.getList("completedSessions", 10);
         for (int i = 0; i < sessions.size(); ++i) {
-            this.completedSessions.add(new VotingSession(sessions.getCompound(i)));
+            this.completedSessions.add(VotingSession.deserialize(sessions.getCompound(i)));
         }
         this.totalRequiredVotes = tag.getInt("totalRequiredVotes");
         this.voteDowntimeTicks = tag.getInt("voteDowntimeTicks");

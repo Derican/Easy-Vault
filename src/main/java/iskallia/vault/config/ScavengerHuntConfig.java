@@ -14,10 +14,7 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import javax.annotation.Nullable;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -70,6 +67,19 @@ public class ScavengerHuntConfig extends Config {
             }
         }
         return SourceType.MOB;
+    }
+
+    @Nullable
+    public ResourceLocation getRequirementMobType(final ItemStack stack) {
+        final Item requiredItem = stack.getItem();
+        for (final Map.Entry<String, ItemPool> mobDropEntry : this.mobDropItems.entrySet()) {
+            for (final WeightedList.Entry<ItemEntry> entry : mobDropEntry.getValue().getPool()) {
+                if (requiredItem.equals(entry.value.getItem())) {
+                    return new ResourceLocation((String)mobDropEntry.getKey());
+                }
+            }
+        }
+        return null;
     }
 
     @Override
@@ -222,6 +232,10 @@ public class ScavengerHuntConfig extends Config {
             this.pool = new WeightedList<ItemEntry>();
             this.min = min;
             this.max = max;
+        }
+
+        public List<WeightedList.Entry<ItemEntry>> getPool() {
+            return Collections.unmodifiableList(this.pool);
         }
 
         public ItemEntry getRandomEntry(final Predicate<ItemEntry> dropFilter) {

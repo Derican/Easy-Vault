@@ -7,6 +7,7 @@ import iskallia.vault.world.vault.VaultRaid;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.INBT;
 import net.minecraft.util.IItemProvider;
+import net.minecraft.util.math.MathHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,8 +16,16 @@ import java.util.Random;
 public class ChallengeCrystalArchive {
     private static final List<ItemStack> generatedCrystals;
 
+    public static ItemStack get(final int index) {
+        if (ChallengeCrystalArchive.generatedCrystals.isEmpty()) {
+            initialize();
+        }
+        return ChallengeCrystalArchive.generatedCrystals.get(MathHelper.clamp(index, 0, ChallengeCrystalArchive.generatedCrystals.size() - 1)).copy();
+    }
+
     public static ItemStack getRandom() {
-        return getRandom(new Random());
+        final ItemStack stack = getRandom(new Random());
+        return (stack == null) ? null : stack.copy();
     }
 
     public static ItemStack getRandom(final Random rand) {
@@ -63,7 +72,7 @@ public class ChallengeCrystalArchive {
         miner.setType(CrystalData.Type.CLASSIC);
         miner.setSelectedObjective(VaultRaid.SUMMON_AND_KILL_BOSS.get().getId());
         miner.setTargetObjectiveCount(6);
-        gambler.addGuaranteedRoom("mineshaft", 10);
+        miner.addGuaranteedRoom("mineshaft", 10);
         miner.addModifier("Copious");
         miner.addModifier("Copious");
         miner.addModifier("Copious");
@@ -98,6 +107,7 @@ public class ChallengeCrystalArchive {
         trap.addModifier("Super Lucky");
         ChallengeCrystalArchive.generatedCrystals.add(make(trap));
         final CrystalData dream = new CrystalData();
+        dream.setChallenge(true);
         dream.setModifiable(false);
         dream.setCanTriggerInfluences(false);
         dream.setCanGenerateTreasureRooms(false);
@@ -145,16 +155,16 @@ public class ChallengeCrystalArchive {
         puzzle.setSelectedObjective(VaultRaid.SUMMON_AND_KILL_BOSS.get().getId());
         puzzle.setTargetObjectiveCount(5);
         puzzle.addGuaranteedRoom("puzzle_cube", 500);
-        village.addModifier("Rush");
-        village.addModifier("Rotten");
-        village.addModifier("Trapped");
-        village.addModifier("Trapped");
+        puzzle.addModifier("Rush");
+        puzzle.addModifier("Rotten");
+        puzzle.addModifier("Trapped");
+        puzzle.addModifier("Trapped");
         ChallengeCrystalArchive.generatedCrystals.add(make(puzzle));
         final CrystalData frenzied = baseData();
         frenzied.setType(CrystalData.Type.CLASSIC);
         frenzied.setSelectedObjective(VaultRaid.SUMMON_AND_KILL_BOSS.get().getId());
         frenzied.setTargetObjectiveCount(5);
-        gambler.addGuaranteedRoom("digsite", 500);
+        frenzied.addGuaranteedRoom("digsite", 500);
         frenzied.addModifier("Frenzy");
         frenzied.addModifier("Impossible");
         frenzied.addModifier("Impossible");
@@ -176,6 +186,7 @@ public class ChallengeCrystalArchive {
         data.setCanTriggerInfluences(false);
         data.setCanGenerateTreasureRooms(false);
         data.setPreventsRandomModifiers(true);
+        data.setChallenge(true);
         return data;
     }
 

@@ -124,7 +124,7 @@ public abstract class InventorySnapshotData extends WorldSavedData {
             this.items.add(stack.copy());
         }
 
-        private boolean apply(final PlayerEntity player) {
+        public boolean apply(final PlayerEntity player) {
             if (!player.isAlive()) {
                 return false;
             }

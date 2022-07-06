@@ -89,11 +89,12 @@ public abstract class VaultGenerator implements INBTSerializable<CompoundNBT> {
     }
 
     protected boolean findStartPosition(final ServerWorld world, final VaultRaid vault, final ChunkPos startChunk, final Supplier<PortalPlacer> portalPlacer) {
-        Label_0251:
-        for (int x = -48; x < 48; ++x) {
-            for (int z = -48; z < 48; ++z) {
+        final BlockPos start = startChunk.getWorldPosition();
+        Label_0255:
+        for (int x = -96; x < 96; ++x) {
+            for (int z = -96; z < 96; ++z) {
                 for (int y = 0; y < 48; ++y) {
-                    final BlockPos pos = startChunk.getWorldPosition().offset(x, 19 + y, z);
+                    final BlockPos pos = start.offset(x, 19 + y, z);
                     if (world.getBlockState(pos).getBlock() == Blocks.CRIMSON_PRESSURE_PLATE) {
                         world.setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
                         vault.getProperties().create(VaultRaid.START_POS, pos);
@@ -106,10 +107,10 @@ public abstract class VaultGenerator implements INBTSerializable<CompoundNBT> {
                                 final PortalPlacer placer = portalPlacer.get();
                                 if (placer != null) {
                                     vault.getProperties().create(VaultRaid.START_FACING, direction);
-                                    placer.place((IWorld) world, pos, direction, count, count + 1);
+                                    placer.place((IWorld)world, pos, direction, count, count + 1);
                                     return true;
                                 }
-                                break Label_0251;
+                                break Label_0255;
                             }
                         }
                     }

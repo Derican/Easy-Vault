@@ -12,6 +12,11 @@ public class ParryAuraConfig extends EternalAuraConfig.AuraConfig {
         this.additionalParryChance = additionalParryChance;
     }
 
+    public ParryAuraConfig(final String name, final String displayName, final String description, final String iconPath, final float radius, final float additionalParryChance) {
+        super(name, displayName, description, iconPath, radius);
+        this.additionalParryChance = additionalParryChance;
+    }
+
     public float getAdditionalParryChance() {
         return this.additionalParryChance;
     }

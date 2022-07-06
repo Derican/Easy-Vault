@@ -71,6 +71,9 @@ public class IdolItem extends BasicItem implements VaultGear<IdolItem> {
         return ImmutableMultimap.of();
     }
 
+    public boolean isRepairable(final ItemStack stack) {
+        return false;
+    }
     public boolean isDamageable(final ItemStack stack) {
         return this.isDamageable(this, stack);
     }
@@ -111,7 +114,7 @@ public class IdolItem extends BasicItem implements VaultGear<IdolItem> {
     }
 
     static {
-        ATTACK_DAMAGE_MODIFIER = UUID.fromString("CB3F55D3-645C-4F38-A497-2C13A33DB5CF");
-        ATTACK_SPEED_MODIFIER = UUID.fromString("FA233E1C-4180-4865-B01B-4CCE9785ACA3");
+        ATTACK_DAMAGE_MODIFIER = UUID.fromString("CB3F55D3-645C-4F38-A497-2C13A33D1234");
+        ATTACK_SPEED_MODIFIER = UUID.fromString("FA233E1C-4180-4865-B01B-4CCE97851234");
     }
 }

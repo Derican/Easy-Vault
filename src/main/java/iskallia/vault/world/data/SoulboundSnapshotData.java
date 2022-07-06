@@ -1,6 +1,7 @@
 package iskallia.vault.world.data;
 
 import iskallia.vault.init.ModAttributes;
+import iskallia.vault.world.vault.VaultRaid;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.server.ServerWorld;
@@ -45,6 +46,10 @@ public class SoulboundSnapshotData extends InventorySnapshotData {
         }
         final PlayerEntity player = (PlayerEntity) event.getEntity();
         final ServerWorld world = (ServerWorld) player.level;
+        final VaultRaid vault = VaultRaidData.get(world).getAt(world, player.blockPosition());
+        if (vault != null && vault.getProperties().exists(VaultRaid.PARENT)) {
+            return;
+        }
         final SoulboundSnapshotData data = get(world);
         if (!data.hasSnapshot(player)) {
             data.createSnapshot(player);

@@ -1,43 +1,56 @@
 package iskallia.vault.block;
 
-import iskallia.vault.Vault;
-import iskallia.vault.block.entity.OtherSidePortalTileEntity;
-import iskallia.vault.init.ModBlocks;
+import java.util.Arrays;
+
 import iskallia.vault.init.ModConfigs;
-import iskallia.vault.item.BurntCrystalItem;
-import iskallia.vault.item.OtherSideData;
-import iskallia.vault.world.vault.VaultUtils;
-import net.minecraft.block.*;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.particles.IParticleData;
-import net.minecraft.particles.ParticleTypes;
-import net.minecraft.state.StateContainer;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.Direction;
-import net.minecraft.util.RegistryKey;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.shapes.IBooleanFunction;
-import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.util.math.shapes.VoxelShapes;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.IWorld;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraft.particles.IParticleData;
+import net.minecraft.particles.ParticleTypes;
+import iskallia.vault.item.OtherSideData;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.math.shapes.VoxelShape;
+import iskallia.vault.world.vault.VaultUtils;
+import net.minecraft.util.math.vector.Vector3d;
+import iskallia.vault.item.BurntCrystalItem;
+import iskallia.vault.init.ModBlocks;
+import iskallia.vault.block.entity.OtherSidePortalTileEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.util.RegistryKey;
+import iskallia.vault.Vault;
+import net.minecraft.world.IWorld;
+import net.minecraft.util.math.shapes.IBooleanFunction;
+import net.minecraft.world.IBlockReader;
+import net.minecraft.util.math.shapes.VoxelShapes;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.Entity;
+import net.minecraft.world.World;
 
-import java.util.Arrays;
 import java.util.Random;
+
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.server.ServerWorld;
+import net.minecraft.block.Block;
+import net.minecraft.state.StateContainer;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.NonNullList;
+import net.minecraft.item.ItemGroup;
+import net.minecraft.state.Property;
+import net.minecraft.util.Direction;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
+import net.minecraft.block.AbstractBlock;
+import net.minecraft.block.NetherPortalBlock;
 
 public class OtherSidePortalBlock extends NetherPortalBlock {
     public static final AbstractBlock.IPositionPredicate FRAME;
 
     public OtherSidePortalBlock() {
         super(AbstractBlock.Properties.copy((AbstractBlock) Blocks.NETHER_PORTAL));
-        this.registerDefaultState((this.stateDefinition.any()).setValue(OtherSidePortalBlock.AXIS, Direction.Axis.X));
+        this.registerDefaultState((BlockState) ((BlockState) this.stateDefinition.any()).setValue((Property) OtherSidePortalBlock.AXIS, (Comparable) Direction.Axis.X));
+    }
+
+    public void fillItemCategory(final ItemGroup group, final NonNullList<ItemStack> items) {
     }
 
     protected void createBlockStateDefinition(final StateContainer.Builder<Block, BlockState> builder) {
@@ -58,7 +71,7 @@ public class OtherSidePortalBlock extends NetherPortalBlock {
         if (!VoxelShapes.joinIsNotEmpty(playerVoxel, state.getShape((IBlockReader) world, pos), IBooleanFunction.AND)) {
             return;
         }
-        final VaultPortalSize current = new VaultPortalSize((IWorld) world, pos, (Direction.Axis) state.getValue(OtherSidePortalBlock.AXIS), OtherSidePortalBlock.FRAME);
+        final VaultPortalSize current = new VaultPortalSize((IWorld) world, pos, (Direction.Axis) state.getValue((Property) OtherSidePortalBlock.AXIS), OtherSidePortalBlock.FRAME);
         if (!current.validatePortal()) {
             return;
         }
@@ -103,7 +116,7 @@ public class OtherSidePortalBlock extends NetherPortalBlock {
             return state;
         }
         final Direction.Axis facingAxis = facing.getAxis();
-        final Direction.Axis portalAxis = (Direction.Axis) state.getValue(OtherSidePortalBlock.AXIS);
+        final Direction.Axis portalAxis = (Direction.Axis) state.getValue((Property) OtherSidePortalBlock.AXIS);
         final boolean flag = portalAxis != facingAxis && facingAxis.isHorizontal();
         return (flag || facingState.is((Block) this) || new VaultPortalSize(iworld, currentPos, portalAxis, OtherSidePortalBlock.FRAME).validatePortal()) ? super.updateShape(state, facing, facingState, iworld, currentPos, facingPos) : Blocks.AIR.defaultBlockState();
     }

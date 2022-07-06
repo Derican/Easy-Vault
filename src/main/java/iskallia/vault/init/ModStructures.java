@@ -2,10 +2,7 @@ package iskallia.vault.init;
 
 import com.mojang.serialization.Codec;
 import iskallia.vault.Vault;
-import iskallia.vault.world.gen.structure.ArchitectEventStructure;
-import iskallia.vault.world.gen.structure.RaidChallengeStructure;
-import iskallia.vault.world.gen.structure.VaultStructure;
-import iskallia.vault.world.gen.structure.VaultTroveStructure;
+import iskallia.vault.world.gen.structure.*;
 import iskallia.vault.world.gen.structure.pool.PalettedListPoolElement;
 import iskallia.vault.world.gen.structure.pool.PalettedSinglePoolElement;
 import net.minecraft.util.registry.Registry;
@@ -20,12 +17,16 @@ public class ModStructures {
     public static Structure<ArchitectEventStructure.Config> ARCHITECT_EVENT;
     public static Structure<RaidChallengeStructure.Config> RAID_CHALLENGE;
     public static Structure<VaultTroveStructure.Config> VAULT_TROVE;
+    public static Structure<FinalVaultLobbyStructure.Config> FINAL_VAULT_LOBBY;
+    public static Structure<FinalVaultBossStructure.Config> FINAL_VAULT_BOSS;
 
     public static void register(final RegistryEvent.Register<Structure<?>> event) {
-        ModStructures.VAULT_STAR = register((IForgeRegistry<Structure<?>>) event.getRegistry(), "vault_star", new VaultStructure(VaultStructure.Config.CODEC));
-        ModStructures.ARCHITECT_EVENT = register((IForgeRegistry<Structure<?>>) event.getRegistry(), "architect_event", new ArchitectEventStructure(ArchitectEventStructure.Config.CODEC));
-        ModStructures.RAID_CHALLENGE = register((IForgeRegistry<Structure<?>>) event.getRegistry(), "raid_challenge", new RaidChallengeStructure(RaidChallengeStructure.Config.CODEC));
-        ModStructures.VAULT_TROVE = register((IForgeRegistry<Structure<?>>) event.getRegistry(), "trove", new VaultTroveStructure(VaultTroveStructure.Config.CODEC));
+        ModStructures.VAULT_STAR = register(event.getRegistry(), "vault_star", new VaultStructure(VaultStructure.Config.CODEC));
+        ModStructures.ARCHITECT_EVENT = register(event.getRegistry(), "architect_event", new ArchitectEventStructure(ArchitectEventStructure.Config.CODEC));
+        ModStructures.RAID_CHALLENGE = register(event.getRegistry(), "raid_challenge", new RaidChallengeStructure(RaidChallengeStructure.Config.CODEC));
+        ModStructures.VAULT_TROVE = register(event.getRegistry(), "trove", new VaultTroveStructure(VaultTroveStructure.Config.CODEC));
+        ModStructures.FINAL_VAULT_LOBBY = register(event.getRegistry(), "final_vault_lobby", new FinalVaultLobbyStructure(FinalVaultLobbyStructure.Config.CODEC));
+        ModStructures.FINAL_VAULT_BOSS = register(event.getRegistry(), "final_vault_boss", new FinalVaultBossStructure(FinalVaultBossStructure.Config.CODEC));
         PoolElements.register(event);
     }
 

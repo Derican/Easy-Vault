@@ -12,6 +12,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.IInventory;
+import net.minecraft.inventory.container.ClickType;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.inventory.container.Slot;
@@ -128,5 +129,11 @@ public class AdvancedVendingContainer extends Container {
         if (!buy.isEmpty()) {
             EntityHelper.giveItem(player, buy);
         }
+    }
+    public ItemStack clicked(final int slotId, final int dragType, final ClickType clickType, final PlayerEntity player) {
+        if (clickType == ClickType.SWAP && slotId == 1) {
+            return ItemStack.EMPTY;
+        }
+        return super.clicked(slotId, dragType, clickType, player);
     }
 }

@@ -96,8 +96,8 @@ public class JigsawPieceResolver {
         synchronized (JigsawPieceResolver.templateLoadLock) {
             thisPieceBlocks = jigsawpiece.getShuffledJigsawBlocks(templateMgr, pos, rotation, JigsawPieceResolver.rand);
         }
-        Label_0086:
         while (true) {
+        Label_0086:
             for (final Template.BlockInfo blockInfo : thisPieceBlocks) {
                 final Direction connectingDirection = JigsawBlock.getFrontFacing(blockInfo.state);
                 final BlockPos jigsawConnectorPos = blockInfo.pos;
@@ -123,11 +123,13 @@ public class JigsawPieceResolver {
                             nextGenerationBox = generationBox;
                         }
                         final WeightedList<JigsawPiece> weightedPieces = new WeightedList<JigsawPiece>();
-                        if (this.filter.test(connectorPool)) {
+                        if (!connectorPool.equals(new ResourceLocation("empty")) && this.filter.test(connectorPool)) {
 //                            mainJigsawPattern.get().rawTemplates.forEach(weightedPiece -> weightedPieces.add(weightedPiece.getFirst(), (int)weightedPiece.getSecond()));
+                            mainJigsawPattern.get().getShuffledTemplates(JigsawPieceResolver.rand).forEach(weightedPieces::addOne);
                         }
-                        if (this.filter.test(fallbackConnectorPool)) {
+                        if (!fallbackConnectorPool.equals(new ResourceLocation("empty")) && this.filter.test(fallbackConnectorPool)) {
 //                            fallbackJigsawPattern.get().rawTemplates.forEach(weightedPiece -> weightedPieces.add(weightedPiece.getFirst(), (int)weightedPiece.getSecond()));
+                            fallbackJigsawPattern.get().getShuffledTemplates(JigsawPieceResolver.rand).forEach(weightedPieces::addOne);
                         }
                         while (!weightedPieces.isEmpty()) {
                             final JigsawPiece nextPiece = weightedPieces.removeRandom(JigsawPieceResolver.rand);
@@ -146,7 +148,10 @@ public class JigsawPieceResolver {
                                     if (!JigsawBlock.canAttach(blockInfo, nextPieceBlockInfo)) {
                                         continue;
                                     }
-                                    final BlockPos nextPiecePos = nextPieceBlockInfo.pos;
+                                    BlockPos nextPiecePos = nextPieceBlockInfo.pos;
+                                    if (connectorPool.equals((Object)Vault.id("final_vault/tenos/obelisk"))) {
+                                        nextPiecePos = nextPiecePos.above();
+                                    }
                                     final BlockPos pieceDiff = new BlockPos(expectedConnectionPos.getX() - nextPiecePos.getX(), expectedConnectionPos.getY() - nextPiecePos.getY(), expectedConnectionPos.getZ() - nextPiecePos.getZ());
                                     final MutableBoundingBox nextPieceBox = nextPiece.getBoundingBox(templateMgr, pieceDiff, nextPieceRotation);
                                     final boolean isNextPieceRigid = nextPiece.getProjection() == JigsawPattern.PlacementBehaviour.RIGID;

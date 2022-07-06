@@ -18,9 +18,7 @@ public class ClientActiveEternalData {
         ClientActiveEternalData.activeEternals.removeIf(activeEternal -> {
             ActiveEternalData.ActiveEternal updated = null;
 
-            final Iterator iterator = updatedEternals.iterator();
-            while (iterator.hasNext()) {
-                final ActiveEternalData.ActiveEternal eternal = (ActiveEternalData.ActiveEternal) iterator.next();
+            for (ActiveEternalData.ActiveEternal eternal : updatedEternals) {
                 if (eternal.equals(activeEternal)) {
                     updated = eternal;
                     break;

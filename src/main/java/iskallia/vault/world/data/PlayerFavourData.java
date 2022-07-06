@@ -3,6 +3,7 @@ package iskallia.vault.world.data;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.INBT;
+import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.text.IFormattableTextComponent;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
@@ -11,6 +12,7 @@ import net.minecraft.util.text.event.HoverEvent;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraft.world.storage.WorldSavedData;
 
+import javax.annotation.Nonnull;
 import java.util.*;
 import java.util.function.Supplier;
 
@@ -78,7 +80,7 @@ public class PlayerFavourData extends WorldSavedData {
         return (PlayerFavourData) world.getServer().overworld().getDataStorage().computeIfAbsent((Supplier) PlayerFavourData::new, "the_vault_PlayerFavour");
     }
 
-    public enum VaultGodType {
+    public enum VaultGodType implements IStringSerializable {
         BENEVOLENT("Velara", "The Benevolent", TextFormatting.GREEN),
         OMNISCIENT("Tenos", "The Omniscient", TextFormatting.AQUA),
         TIMEKEEPER("Wendarr", "The Timekeeper", TextFormatting.GOLD),
@@ -94,6 +96,15 @@ public class PlayerFavourData extends WorldSavedData {
             this.color = color;
         }
 
+        public static VaultGodType fromName(final String name) {
+            for (final VaultGodType type : values()) {
+                if (name.equalsIgnoreCase(type.getName())) {
+                    return type;
+                }
+            }
+            return null;
+        }
+
         public String getName() {
             return this.name;
         }
@@ -104,6 +115,11 @@ public class PlayerFavourData extends WorldSavedData {
 
         public TextFormatting getChatColor() {
             return this.color;
+        }
+
+        @Nonnull
+        public String getSerializedName() {
+            return this.getName().toLowerCase();
         }
 
         public ITextComponent getHoverChatComponent() {

@@ -214,7 +214,7 @@ public class CryochamberScreen extends ContainerScreen<CryochamberContainer> {
         }
         final String parryPercent = CryochamberScreen.PERCENT_FORMAT.format(snapshot.getParry() * 100.0f) + "%";
         final String resistPercent = CryochamberScreen.PERCENT_FORMAT.format(snapshot.getResistance() * 100.0f) + "%";
-        final String armorAmount = CryochamberScreen.PERCENT_FORMAT.format(EternalHelper.getEternalGearModifierAdjustments(snapshot, Attributes.ARMOR, 0.0f));
+        final String armorAmount = CryochamberScreen.PERCENT_FORMAT.format(snapshot.getArmor());
         this.minecraft.getTextureManager().bind(CryochamberScreen.TEXTURE);
         this.blit(matrixStack, 8, 72, 216, 0, 16, 16);
         matrixStack.pushPose();

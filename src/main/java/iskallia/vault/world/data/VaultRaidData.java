@@ -1,46 +1,75 @@
+// 
+// Decompiled by Procyon v0.6.0
+// 
+
 package iskallia.vault.world.data;
 
-import iskallia.vault.backup.BackupManager;
-import iskallia.vault.init.ModItems;
-import iskallia.vault.item.crystal.CrystalData;
-import iskallia.vault.item.gear.VaultGear;
-import iskallia.vault.nbt.VMapNBT;
-import iskallia.vault.skill.set.PlayerSet;
-import iskallia.vault.util.calc.PlayerStatisticsCollector;
-import iskallia.vault.world.vault.VaultRaid;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.inventory.ItemStackHelper;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.nbt.INBT;
+import iskallia.vault.world.vault.player.VaultPlayer;
+
+import java.util.function.Supplier;
+
 import net.minecraft.nbt.ListNBT;
-import net.minecraft.server.MinecraftServer;
-import net.minecraft.util.IItemProvider;
-import net.minecraft.util.NonNullList;
-import net.minecraft.util.RegistryKey;
+
+import java.util.Map;
+
 import net.minecraft.util.Util;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MutableBoundingBox;
-import net.minecraft.util.math.vector.Vector3i;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
-import net.minecraft.world.storage.WorldSavedData;
-import net.minecraftforge.event.TickEvent;
+
+import java.util.HashMap;
+
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.LogicalSide;
-import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.event.TickEvent;
 
-import java.util.*;
-import java.util.function.Supplier;
+import java.util.Collection;
+import java.util.ArrayList;
+
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.LivingEntity;
+import iskallia.vault.skill.set.PlayerSet;
+import iskallia.vault.item.gear.VaultGear;
+import iskallia.vault.backup.BackupManager;
+import net.minecraft.world.World;
+
+import java.util.function.Consumer;
+
+import net.minecraft.inventory.ItemStackHelper;
+import net.minecraft.util.NonNullList;
+import iskallia.vault.world.vault.logic.objective.ScavengerHuntObjective;
+import net.minecraft.nbt.INBT;
+import iskallia.vault.init.ModItems;
+import iskallia.vault.world.vault.logic.objective.architect.ArchitectObjective;
+import iskallia.vault.item.crystal.CrystalData;
+import net.minecraft.util.IItemProvider;
+import net.minecraft.item.Items;
+import net.minecraft.item.ItemStack;
+import iskallia.vault.world.vault.player.VaultMember;
+import net.minecraft.util.RegistryKey;
+import net.minecraft.server.MinecraftServer;
+
+import java.util.Optional;
+
+import net.minecraft.util.math.vector.Vector3i;
+import net.minecraft.util.math.MutableBoundingBox;
+import net.minecraft.world.server.ServerWorld;
+import net.minecraft.entity.player.ServerPlayerEntity;
+
+import java.util.UUID;
+
+import iskallia.vault.nbt.VMapNBT;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.nbt.CompoundNBT;
+import iskallia.vault.world.vault.VaultRaid;
+import iskallia.vault.nbt.VListNBT;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraft.world.storage.WorldSavedData;
 
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class VaultRaidData extends WorldSavedData {
     protected static final String DATA_NAME = "the_vault_VaultRaid";
-    private final VMapNBT<UUID, VaultRaid> activeVaults;
+    private VListNBT<VaultRaid, CompoundNBT> vaults;
     private BlockPos.Mutable nextVaultPos;
+    @Deprecated
+    private VMapNBT<UUID, VaultRaid> activeVaults;
 
     public VaultRaidData() {
         this("the_vault_VaultRaid");
@@ -48,8 +77,16 @@ public class VaultRaidData extends WorldSavedData {
 
     public VaultRaidData(final String name) {
         super(name);
-        this.activeVaults = VMapNBT.ofUUID(VaultRaid::new);
+        this.vaults = VListNBT.of(VaultRaid::new);
         this.nextVaultPos = BlockPos.ZERO.mutable();
+        this.activeVaults = VMapNBT.ofUUID(VaultRaid::new);
+    }
+
+    public VaultRaid get(final UUID vaultId) {
+        if (vaultId == null) {
+            return null;
+        }
+        return this.vaults.stream().filter(vault -> vaultId.equals(vault.getProperties().getBaseOrDefault(VaultRaid.IDENTIFIER, (UUID) null))).findFirst().orElse(null);
     }
 
     public VaultRaid getActiveFor(final ServerPlayerEntity player) {
@@ -57,47 +94,38 @@ public class VaultRaidData extends WorldSavedData {
     }
 
     public VaultRaid getActiveFor(final UUID playerId) {
-        return this.activeVaults.get(playerId);
+        return this.vaults.stream().filter(vault -> vault.getPlayer(playerId).isPresent()).findFirst().orElse(null);
     }
 
     public VaultRaid getAt(final ServerWorld world, final BlockPos pos) {
-        synchronized (this.activeVaults) {
-            return this.activeVaults.values().stream().filter(vault -> world.dimension() == vault.getProperties().getValue(VaultRaid.DIMENSION)).filter(vault -> {
-                final Optional<MutableBoundingBox> box = vault.getProperties().getBase(VaultRaid.BOUNDING_BOX);
-                return box.isPresent() && box.get().isInside((Vector3i) pos);
-            }).findFirst().orElse(null);
-        }
+        return this.vaults.stream().filter(vault -> world.dimension() == vault.getProperties().getValue(VaultRaid.DIMENSION)).filter(vault -> {
+            final Optional<MutableBoundingBox> box = vault.getProperties().getBase(VaultRaid.BOUNDING_BOX);
+            return box.isPresent() && box.get().isInside((Vector3i) pos);
+        }).findFirst().orElse(null);
     }
 
-    public void remove(final MinecraftServer server, final UUID playerId) {
-        final VaultRaid vault;
-        synchronized (this.activeVaults) {
-            vault = this.activeVaults.remove(playerId);
-            if (vault == null) {
-                return;
-            }
+    public void remove(final UUID vaultId) {
+        this.vaults.removeIf(vault -> vault.getProperties().getValue(VaultRaid.IDENTIFIER).equals(vaultId));
+    }
+
+    public void remove(final MinecraftServer server, final UUID playerId, final VaultRaid vault) {
+        if (vault == null) {
+            return;
         }
         final ServerWorld world = server.getLevel((RegistryKey) vault.getProperties().getValue(VaultRaid.DIMENSION));
         vault.getPlayer(playerId).ifPresent(player -> {
-            if (player.hasExited()) {
+            if (player.hasExited() || player instanceof VaultMember) {
                 return;
             } else {
-                VaultRaid.REMOVE_SCAVENGER_ITEMS.then(VaultRaid.REMOVE_INVENTORY_RESTORE_SNAPSHOTS).then(VaultRaid.GRANT_EXP_COMPLETE).then(VaultRaid.EXIT_SAFELY).execute(vault, player, world);
+                VaultRaid.REMOVE_SCAVENGER_ITEMS.then(VaultRaid.REMOVE_INVENTORY_RESTORE_SNAPSHOTS).then(VaultRaid.EXIT_SAFELY).execute(vault, player, world);
                 return;
             }
         });
-        PlayerStatsData.get(server).onVaultFinished(playerId, vault);
-        if (!PlayerStatsData.get(server).get(playerId).hasFinishedRaidReward()) {
-            final int raids = PlayerStatisticsCollector.getFinishedRaids(server, playerId);
-            if (raids >= 5 && raids >= PlayerVaultStatsData.get(server).getVaultStats(playerId).getVaultLevel()) {
-                ScheduledItemDropData.get(server).addDrop(playerId, generateRaidRewardCrate());
-                PlayerStatsData.get(server).setRaidRewardReceived(playerId);
-            }
-        }
+        PlayerStatsData.get(world).onVaultFinished(playerId, vault);
     }
 
     public static ItemStack generateRaidRewardCrate() {
-        final ItemStack stack = new ItemStack((IItemProvider) Items.RED_SHULKER_BOX);
+        final ItemStack stack = new ItemStack(Items.RED_SHULKER_BOX);
         final CrystalData minerData = new CrystalData();
         minerData.setModifiable(false);
         minerData.setCanTriggerInfluences(false);
@@ -108,7 +136,7 @@ public class VaultRaidData extends WorldSavedData {
         minerData.addModifier("Rich");
         minerData.addModifier("Plentiful");
         minerData.addModifier("Endless");
-        final ItemStack miner = new ItemStack((IItemProvider) ModItems.VAULT_CRYSTAL);
+        final ItemStack miner = new ItemStack(ModItems.VAULT_CRYSTAL);
         miner.getOrCreateTag().put("CrystalData", (INBT) minerData.serializeNBT());
         final CrystalData digsiteData = new CrystalData();
         digsiteData.setModifiable(false);
@@ -129,44 +157,50 @@ public class VaultRaidData extends WorldSavedData {
         digsiteData.addModifier("Super Lucky");
         digsiteData.addModifier("Super Lucky");
         digsiteData.addModifier("Locked");
-        final ItemStack digsite = new ItemStack((IItemProvider) ModItems.VAULT_CRYSTAL);
+        final ItemStack digsite = new ItemStack(ModItems.VAULT_CRYSTAL);
         digsite.getOrCreateTag().put("CrystalData", (INBT) digsiteData.serializeNBT());
         final NonNullList<ItemStack> raidContents = NonNullList.create();
-        raidContents.add(new ItemStack((IItemProvider) ModItems.PANDORAS_BOX));
-        raidContents.add(new ItemStack((IItemProvider) ModItems.KNOWLEDGE_STAR));
-        raidContents.add(new ItemStack((IItemProvider) ModItems.KNOWLEDGE_STAR));
-        raidContents.add(new ItemStack((IItemProvider) ModItems.VAULT_PLATINUM));
-        raidContents.add(new ItemStack((IItemProvider) ModItems.VAULT_PLATINUM));
-        raidContents.add(new ItemStack((IItemProvider) ModItems.VAULT_PLATINUM));
-        raidContents.add(new ItemStack((IItemProvider) ModItems.PANDORAS_BOX));
-        raidContents.add(new ItemStack((IItemProvider) ModItems.PANDORAS_BOX));
-        raidContents.add(new ItemStack((IItemProvider) ModItems.PANDORAS_BOX));
-        raidContents.add(new ItemStack((IItemProvider) ModItems.PANDORAS_BOX));
-        raidContents.add(new ItemStack((IItemProvider) ModItems.UNIDENTIFIED_TREASURE_KEY));
-        raidContents.add(new ItemStack((IItemProvider) ModItems.LEGENDARY_TREASURE_OMEGA));
+        raidContents.add(new ItemStack(ModItems.PANDORAS_BOX));
+        raidContents.add(new ItemStack(ModItems.KNOWLEDGE_STAR));
+        raidContents.add(new ItemStack(ModItems.KNOWLEDGE_STAR));
+        raidContents.add(new ItemStack(ModItems.VAULT_PLATINUM));
+        raidContents.add(new ItemStack(ModItems.VAULT_PLATINUM));
+        raidContents.add(new ItemStack(ModItems.VAULT_PLATINUM));
+        raidContents.add(new ItemStack(ModItems.PANDORAS_BOX));
+        raidContents.add(new ItemStack(ModItems.PANDORAS_BOX));
+        raidContents.add(new ItemStack(ModItems.PANDORAS_BOX));
+        raidContents.add(new ItemStack(ModItems.PANDORAS_BOX));
+        raidContents.add(new ItemStack(ModItems.UNIDENTIFIED_TREASURE_KEY));
+        raidContents.add(new ItemStack(ModItems.LEGENDARY_TREASURE_OMEGA));
         raidContents.add(miner);
-        raidContents.add(new ItemStack((IItemProvider) ModItems.UNIDENTIFIED_ARTIFACT));
+        raidContents.add(new ItemStack(ModItems.UNIDENTIFIED_ARTIFACT));
         raidContents.add(digsite);
-        raidContents.add(new ItemStack((IItemProvider) ModItems.LEGENDARY_TREASURE_OMEGA));
-        raidContents.add(new ItemStack((IItemProvider) ModItems.UNIDENTIFIED_TREASURE_KEY));
-        raidContents.add(new ItemStack((IItemProvider) ModItems.PANDORAS_BOX));
-        raidContents.add(new ItemStack((IItemProvider) ModItems.PANDORAS_BOX));
-        raidContents.add(new ItemStack((IItemProvider) ModItems.PANDORAS_BOX));
-        raidContents.add(new ItemStack((IItemProvider) ModItems.PANDORAS_BOX));
-        raidContents.add(new ItemStack((IItemProvider) ModItems.VAULT_PLATINUM));
-        raidContents.add(new ItemStack((IItemProvider) ModItems.VAULT_PLATINUM));
-        raidContents.add(new ItemStack((IItemProvider) ModItems.VAULT_PLATINUM));
-        raidContents.add(new ItemStack((IItemProvider) ModItems.SKILL_ORB));
-        raidContents.add(new ItemStack((IItemProvider) ModItems.SKILL_ORB));
-        raidContents.add(new ItemStack((IItemProvider) ModItems.PANDORAS_BOX));
+        raidContents.add(new ItemStack(ModItems.LEGENDARY_TREASURE_OMEGA));
+        raidContents.add(new ItemStack(ModItems.UNIDENTIFIED_TREASURE_KEY));
+        raidContents.add(new ItemStack(ModItems.PANDORAS_BOX));
+        raidContents.add(new ItemStack(ModItems.PANDORAS_BOX));
+        raidContents.add(new ItemStack(ModItems.PANDORAS_BOX));
+        raidContents.add(new ItemStack(ModItems.PANDORAS_BOX));
+        raidContents.add(new ItemStack(ModItems.VAULT_PLATINUM));
+        raidContents.add(new ItemStack(ModItems.VAULT_PLATINUM));
+        raidContents.add(new ItemStack(ModItems.VAULT_PLATINUM));
+        raidContents.add(new ItemStack(ModItems.SKILL_ORB));
+        raidContents.add(new ItemStack(ModItems.SKILL_ORB));
+        raidContents.add(new ItemStack(ModItems.PANDORAS_BOX));
         stack.getOrCreateTag().put("BlockEntityTag", (INBT) new CompoundNBT());
         ItemStackHelper.saveAllItems(stack.getOrCreateTag().getCompound("BlockEntityTag"), (NonNullList) raidContents);
         return stack;
     }
 
-    public VaultRaid startVault(ServerWorld world, final VaultRaid.Builder builder) {
+    public VaultRaid startVault(final ServerWorld world, final VaultRaid.Builder builder) {
+        return this.startVault(world, builder, vault -> {
+        });
+    }
+
+    public VaultRaid startVault(ServerWorld world, final VaultRaid.Builder builder, final Consumer<VaultRaid> onBuild) {
         final MinecraftServer server = world.getServer();
         final VaultRaid vault = builder.build();
+        onBuild.accept(vault);
         builder.getLevelInitializer().executeForAllPlayers(vault, world);
         final Optional<RegistryKey<World>> dimension = vault.getProperties().getBase(VaultRaid.DIMENSION);
         if (dimension.isPresent()) {
@@ -189,31 +223,23 @@ public class VaultRaidData extends WorldSavedData {
                     }
                     return;
                 });
-                this.remove(server, player.getPlayerId());
-                synchronized (this.activeVaults) {
-                    this.activeVaults.put(player.getPlayerId(), vault);
-                }
                 vault.getInitializer().execute(vault, player, destination);
+                return;
             });
+            this.vaults.add(vault);
             return;
         });
         return vault;
     }
 
     public void tick(final ServerWorld world) {
-        final Set<VaultRaid> vaults;
-        synchronized (this.activeVaults) {
-            vaults = new HashSet<VaultRaid>(this.activeVaults.values());
-        }
-        vaults.stream().filter(vault -> vault.getProperties().getValue(VaultRaid.DIMENSION) == world.dimension()).forEach(vault -> vault.tick(world));
-        final Set<UUID> completed = new HashSet<UUID>();
-        vaults.forEach(vault -> {
+        new ArrayList<>(this.vaults).stream().filter(vault -> vault.getProperties().getValue(VaultRaid.DIMENSION) == world.dimension()).forEach(vault -> vault.tick(world));
+        this.vaults.removeIf(vault -> {
             if (vault.isFinished()) {
-                vault.getPlayers().forEach(player -> completed.add(player.getPlayerId()));
+                vault.getPlayers().forEach(player -> this.remove(world.getServer(), player.getPlayerId(), vault));
             }
-            return;
+            return vault.isFinished();
         });
-        completed.forEach(uuid -> this.remove(world.getServer(), uuid));
     }
 
     @SubscribeEvent
@@ -243,12 +269,14 @@ public class VaultRaidData extends WorldSavedData {
             }
             this.activeVaults.put(playerId, vault);
         }
+        this.vaults.deserializeNBT(nbt.getList("Vaults", 10));
+        this.vaults.addAll(this.activeVaults.values());
         final int[] pos = nbt.getIntArray("NextVaultPos");
         this.nextVaultPos = new BlockPos.Mutable(pos[0], pos[1], pos[2]);
     }
 
     public CompoundNBT save(final CompoundNBT nbt) {
-        nbt.put("ActiveVaults", (INBT) this.activeVaults.serializeNBT());
+        nbt.put("Vaults", (INBT) this.vaults.serializeNBT());
         nbt.putIntArray("NextVaultPos", new int[]{this.nextVaultPos.getX(), this.nextVaultPos.getY(), this.nextVaultPos.getZ()});
         return nbt;
     }

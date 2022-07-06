@@ -91,8 +91,8 @@ public class JigsawGeneratorLegacy {
             final MutableObject<VoxelShape> mutableobject = (MutableObject<VoxelShape>) new MutableObject();
             final MutableBoundingBox mutableboundingbox = p_236831_1_.getBoundingBox();
             final int i = mutableboundingbox.y0;
-            Label_0086:
             while (true) {
+            Label_0086:
                 for (final Template.BlockInfo template$blockinfo : jigsawpiece.getShuffledJigsawBlocks(this.templateManager, blockpos, rotation, this.rand)) {
                     final Direction direction = JigsawBlock.getFrontFacing(template$blockinfo.state);
                     final BlockPos blockpos2 = template$blockinfo.pos;

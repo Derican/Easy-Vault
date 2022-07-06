@@ -2,6 +2,7 @@ package iskallia.vault.mixin;
 
 import iskallia.vault.world.data.VaultRaidData;
 import iskallia.vault.world.vault.VaultRaid;
+import iskallia.vault.world.vault.player.VaultPlayer;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.FoodStats;
 import net.minecraft.world.server.ServerWorld;
@@ -16,7 +17,10 @@ public class MixinFoodStats {
         if (!player.level.isClientSide) {
             final VaultRaid vault = VaultRaidData.get((ServerWorld) player.level).getActiveFor(player.getUUID());
             if (vault != null) {
-                return false;
+                final VaultPlayer vPlayer = vault.getPlayer(player.getUUID()).orElse(null);
+                if (vPlayer != null && !vPlayer.getProperties().getBase(VaultRaid.CAN_HEAL).orElse(false)) {
+                    return false;
+                }
             }
         }
         return player.isHurt();

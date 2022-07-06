@@ -1,29 +1,45 @@
 package iskallia.vault.block;
 
-import iskallia.vault.init.ModAttributes;
-import iskallia.vault.init.ModBlocks;
 import iskallia.vault.item.ItemRelicBoosterPack;
-import iskallia.vault.item.PuzzleRuneItem;
-import net.minecraft.block.AbstractBlock;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.material.Material;
-import net.minecraft.block.material.MaterialColor;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.BlockItem;
-import net.minecraft.item.BlockItemUseContext;
-import net.minecraft.item.ItemStack;
+import iskallia.vault.init.ModBlocks;
 import net.minecraft.item.ItemUseContext;
-import net.minecraft.state.*;
+import net.minecraft.item.Item;
+import net.minecraft.item.BlockItem;
+
+import java.util.Locale;
+
+import net.minecraft.util.IStringSerializable;
 import net.minecraft.state.properties.BlockStateProperties;
-import net.minecraft.util.*;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.world.IBlockReader;
+import net.minecraft.util.SoundCategory;
+import net.minecraft.util.SoundEvents;
+import iskallia.vault.item.PuzzleRuneItem;
+import net.minecraft.util.ActionResultType;
+import net.minecraft.util.math.BlockRayTraceResult;
+import net.minecraft.util.Hand;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraft.state.StateContainer;
 
 import javax.annotation.Nullable;
-import java.util.Locale;
+
+import iskallia.vault.init.ModAttributes;
+import iskallia.vault.attribute.EnumAttribute;
+import net.minecraft.item.BlockItemUseContext;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.NonNullList;
+import net.minecraft.item.ItemGroup;
+import net.minecraft.state.Property;
+import net.minecraft.util.Direction;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.AbstractBlock;
+import net.minecraft.block.material.MaterialColor;
+import net.minecraft.block.material.Material;
+import net.minecraft.state.BooleanProperty;
+import net.minecraft.state.EnumProperty;
+import net.minecraft.state.DirectionProperty;
+import net.minecraft.block.Block;
 
 public class PuzzleRuneBlock extends Block {
     public static final DirectionProperty FACING;
@@ -32,16 +48,19 @@ public class PuzzleRuneBlock extends Block {
 
     public PuzzleRuneBlock() {
         super(AbstractBlock.Properties.of(Material.STONE, MaterialColor.STONE).strength(-1.0f, 3600000.0f).noOcclusion().noDrops());
-        this.registerDefaultState((((this.stateDefinition.any()).setValue(PuzzleRuneBlock.FACING, Direction.SOUTH)).setValue(PuzzleRuneBlock.COLOR, Color.YELLOW)).setValue(PuzzleRuneBlock.RUNE_PLACED, false));
+        this.registerDefaultState((BlockState) ((BlockState) ((BlockState) ((BlockState) this.stateDefinition.any()).setValue((Property) PuzzleRuneBlock.FACING, (Comparable) Direction.SOUTH)).setValue((Property) PuzzleRuneBlock.COLOR, (Comparable) Color.YELLOW)).setValue((Property) PuzzleRuneBlock.RUNE_PLACED, (Comparable) false));
+    }
+
+    public void fillItemCategory(final ItemGroup group, final NonNullList<ItemStack> items) {
     }
 
     @Nullable
     public BlockState getStateForPlacement(final BlockItemUseContext context) {
-        return ((this.defaultBlockState().setValue(PuzzleRuneBlock.FACING, context.getHorizontalDirection())).setValue(PuzzleRuneBlock.COLOR, ModAttributes.PUZZLE_COLOR.getOrDefault(context.getItemInHand(), Color.YELLOW).getValue(context.getItemInHand()))).setValue(PuzzleRuneBlock.RUNE_PLACED, false);
+        return (BlockState) ((BlockState) ((BlockState) this.defaultBlockState().setValue((Property) PuzzleRuneBlock.FACING, (Comparable) context.getHorizontalDirection())).setValue((Property) PuzzleRuneBlock.COLOR, (Comparable) ModAttributes.PUZZLE_COLOR.getOrDefault(context.getItemInHand(), Color.YELLOW).getValue(context.getItemInHand()))).setValue((Property) PuzzleRuneBlock.RUNE_PLACED, (Comparable) false);
     }
 
     protected void createBlockStateDefinition(final StateContainer.Builder<Block, BlockState> builder) {
-        builder.add(new Property[]{PuzzleRuneBlock.FACING}).add(new Property[]{PuzzleRuneBlock.COLOR}).add(new Property[]{PuzzleRuneBlock.RUNE_PLACED});
+        builder.add(new Property[]{(Property) PuzzleRuneBlock.FACING}).add(new Property[]{(Property) PuzzleRuneBlock.COLOR}).add(new Property[]{(Property) PuzzleRuneBlock.RUNE_PLACED});
     }
 
     public ActionResultType use(final BlockState state, final World world, final BlockPos pos, final PlayerEntity player, final Hand hand, final BlockRayTraceResult hit) {
@@ -50,7 +69,7 @@ public class PuzzleRuneBlock extends Block {
             if (heldStack.getItem() instanceof PuzzleRuneItem && this.isValidKey(heldStack, state)) {
                 heldStack.shrink(1);
                 final BlockState blockState = world.getBlockState(pos);
-                world.setBlock(pos, blockState.setValue(PuzzleRuneBlock.RUNE_PLACED, true), 3);
+                world.setBlock(pos, (BlockState) blockState.setValue((Property) PuzzleRuneBlock.RUNE_PLACED, (Comparable) true), 3);
                 world.playSound((PlayerEntity) null, (double) pos.getX(), (double) pos.getY(), (double) pos.getZ(), SoundEvents.END_PORTAL_FRAME_FILL, SoundCategory.BLOCKS, 1.0f, 1.0f);
             }
         }
@@ -62,7 +81,7 @@ public class PuzzleRuneBlock extends Block {
     }
 
     private boolean isValidKey(final ItemStack stack, final BlockState state) {
-        return !(boolean) state.getValue(PuzzleRuneBlock.RUNE_PLACED) && ModAttributes.PUZZLE_COLOR.get(stack).map(attribute -> attribute.getValue(stack)).filter(value -> value == state.getValue(PuzzleRuneBlock.COLOR)).isPresent();
+        return !(boolean) state.getValue((Property) PuzzleRuneBlock.RUNE_PLACED) && ModAttributes.PUZZLE_COLOR.get(stack).map(attribute -> attribute.getValue(stack)).filter(value -> value == state.getValue((Property) PuzzleRuneBlock.COLOR)).isPresent();
     }
 
     static {

@@ -111,9 +111,8 @@ public abstract class PooledAttribute<T> extends VAttribute.Instance<T> {
 
         public Entry<T, O> getWeightedAt(int index) {
             Entry<T, O> current = null;
-            final Iterator<Entry<T, O>> iterator = this.entries.iterator();
-            while (iterator.hasNext()) {
-                final Entry<T, O> entry = current = iterator.next();
+            for (Entry<T, O> toEntry : this.entries) {
+                final Entry<T, O> entry = current = toEntry;
                 index -= current.weight;
                 if (index < 0) {
                     break;

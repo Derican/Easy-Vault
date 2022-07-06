@@ -11,6 +11,8 @@ import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
 
 import javax.annotation.Nullable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
@@ -55,6 +57,72 @@ public class VaultPortalSize {
         }
         final Direction.Axis direction$axis = (axis == Direction.Axis.X) ? Direction.Axis.Z : Direction.Axis.X;
         return Optional.of(new VaultPortalSize(world, pos, direction$axis, positionPredicate)).filter(sizePredicate);
+    }
+
+    public static List<BlockPos> getFrame(final IWorld world, final BlockPos pos) {
+        final List<BlockPos> positions = new ArrayList<BlockPos>();
+        final Optional<VaultPortalSize> portalSize = findPortalSizeFromPortalBlock(world, pos);
+        if (portalSize.isPresent()) {
+            final VaultPortalSize size = portalSize.get();
+            final BlockPos current = (size.bottomLeft == null) ? null : size.bottomLeft.relative(size.rightDir.getOpposite()).below();
+            if (current != null) {
+                positions.add(current);
+                findAndAddPositions(world, positions, size, current);
+            }
+        }
+        return positions;
+    }
+
+    private static void findAndAddPositions(final IWorld world, final List<BlockPos> positions, final VaultPortalSize size, BlockPos current) {
+        for (int up = 0; up <= size.height; ++up) {
+            if (!VaultPortalBlock.FRAME.test(world.getBlockState(current.above()), (IBlockReader) world, current.above())) {
+                current = current.above();
+                positions.add(current);
+                break;
+            }
+            current = current.above();
+            positions.add(current);
+        }
+        for (int right = 0; right <= size.width; ++right) {
+            if (!VaultPortalBlock.FRAME.test(world.getBlockState(current.relative(size.rightDir)), (IBlockReader) world, current.relative(size.rightDir))) {
+                current = current.relative(size.rightDir);
+                positions.add(current);
+                break;
+            }
+            current = current.relative(size.rightDir);
+            positions.add(current);
+        }
+        for (int down = 0; down <= size.height; ++down) {
+            if (!VaultPortalBlock.FRAME.test(world.getBlockState(current.below()), (IBlockReader) world, current.below())) {
+                current = current.below();
+                positions.add(current);
+                break;
+            }
+            current = current.below();
+            positions.add(current);
+        }
+        for (int left = 0; left < size.width; ++left) {
+            if (!VaultPortalBlock.FRAME.test(world.getBlockState(current.relative(size.rightDir.getOpposite())), (IBlockReader) world, current.relative(size.rightDir.getOpposite()))) {
+                positions.add(current.above());
+                break;
+            }
+            current = current.relative(size.rightDir.getOpposite());
+            positions.add(current);
+        }
+    }
+
+    private static Optional<VaultPortalSize> findPortalSizeFromPortalBlock(final IWorld world, final BlockPos pos) {
+        Optional<VaultPortalSize> portalSize = getPortalSize(world, pos.north(), VaultPortalSize::isValid, Direction.Axis.Z, VaultPortalBlock.FRAME);
+        if (!portalSize.isPresent()) {
+            portalSize = getPortalSize(world, pos.south(), VaultPortalSize::isValid, Direction.Axis.Z, VaultPortalBlock.FRAME);
+        }
+        if (!portalSize.isPresent()) {
+            portalSize = getPortalSize(world, pos.east(), VaultPortalSize::isValid, Direction.Axis.X, VaultPortalBlock.FRAME);
+        }
+        if (!portalSize.isPresent()) {
+            portalSize = getPortalSize(world, pos.west(), VaultPortalSize::isValid, Direction.Axis.X, VaultPortalBlock.FRAME);
+        }
+        return portalSize;
     }
 
     private static boolean canConnect(final BlockState state) {

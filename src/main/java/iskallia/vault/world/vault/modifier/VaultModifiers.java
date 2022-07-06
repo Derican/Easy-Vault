@@ -2,6 +2,7 @@ package iskallia.vault.world.vault.modifier;
 
 import iskallia.vault.config.VaultModifiersConfig;
 import iskallia.vault.init.ModConfigs;
+import iskallia.vault.item.crystal.CrystalData;
 import iskallia.vault.util.PlayerFilter;
 import iskallia.vault.world.vault.VaultRaid;
 import iskallia.vault.world.vault.logic.objective.VaultObjective;
@@ -48,8 +49,17 @@ public class VaultModifiers implements INBTSerializable<CompoundNBT>, Iterable<V
     public void generateGlobal(final VaultRaid vault, final ServerWorld world, final Random random) {
         final int level = vault.getProperties().getValue(VaultRaid.LEVEL);
         VaultModifiersConfig.ModifierPoolType type = VaultModifiersConfig.ModifierPoolType.DEFAULT;
+        final CrystalData data = vault.getProperties().getBase(VaultRaid.CRYSTAL_DATA).orElse(null);
         if (vault.getProperties().getBase(VaultRaid.IS_RAFFLE).orElse(false)) {
             type = VaultModifiersConfig.ModifierPoolType.RAFFLE;
+        } else if (data != null && data.getType() == CrystalData.Type.FINAL_VELARA) {
+            type = VaultModifiersConfig.ModifierPoolType.FINAL_VELARA;
+        } else if (data != null && data.getType() == CrystalData.Type.FINAL_TENOS) {
+            type = VaultModifiersConfig.ModifierPoolType.FINAL_TENOS;
+        } else if (data != null && data.getType() == CrystalData.Type.FINAL_WENDARR) {
+            type = VaultModifiersConfig.ModifierPoolType.FINAL_WENDARR;
+        } else if (data != null && data.getType() == CrystalData.Type.FINAL_IDONA) {
+            type = VaultModifiersConfig.ModifierPoolType.FINAL_IDONA;
         } else if (vault.getActiveObjective(RaidChallengeObjective.class).isPresent()) {
             type = VaultModifiersConfig.ModifierPoolType.RAID;
         }

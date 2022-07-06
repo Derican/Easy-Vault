@@ -113,9 +113,7 @@ public class EtchingItem extends BasicItem {
                 tooltip.add(new StringTextComponent("Etching: ").append((ITextComponent) new StringTextComponent(value.name()).withStyle(Style.EMPTY.withColor(Color.fromRgb(etching.color)))));
                 tooltip.add(StringTextComponent.EMPTY);
 
-                final Iterator<TextComponent> iterator = this.split(etching.effectText).iterator();
-                while (iterator.hasNext()) {
-                    final TextComponent descriptionLine = iterator.next();
+                for (TextComponent descriptionLine : this.split(etching.effectText)) {
                     tooltip.add(descriptionLine.withStyle(TextFormatting.GRAY));
                 }
             }

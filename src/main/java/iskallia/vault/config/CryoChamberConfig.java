@@ -53,7 +53,13 @@ public class CryoChamberConfig extends Config {
         this.INFUSION_TIME = 2;
         this.GROW_ETERNAL_TIME = 10;
         this.UNUSED_TRADER_REWARD_CHANCE = 0.1f;
-        this.PLAYER_TRADER_REQ_MULTIPLIER.put("iskall85", 1.0f);
+        this.PLAYER_TRADER_REQ_MULTIPLIER.put("iskall85", 0.8f);
+        this.PLAYER_TRADER_REQ_MULTIPLIER.put("CaptainSparklez", 0.8f);
+        this.PLAYER_TRADER_REQ_MULTIPLIER.put("Hbomb94", 0.7f);
+        this.PLAYER_TRADER_REQ_MULTIPLIER.put("PeteZahHutt", 0.6f);
+        this.PLAYER_TRADER_REQ_MULTIPLIER.put("Seapeekay", 1.0f);
+        this.PLAYER_TRADER_REQ_MULTIPLIER.put("Stressmonster101", 0.5f);
+        this.PLAYER_TRADER_REQ_MULTIPLIER.put("AntonioAsh", 0.5f);
         this.TRADERS_REQ.add(20);
         this.TRADERS_REQ.add(40);
         this.TRADERS_REQ.add(60);

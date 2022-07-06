@@ -48,9 +48,7 @@ public class HammerEnhancement extends PaxelEnhancement {
         final float centerHardness = centerState.getDestroySpeed((IBlockReader) world, centerPos);
         ActiveFlags.IS_AOE_MINING.runIfNotSet(() -> {
 
-            final Iterator<BlockPos> iterator = sidePoses.iterator();
-            while (iterator.hasNext()) {
-                final BlockPos sidePos = iterator.next();
+            for (BlockPos sidePos : sidePoses) {
                 final BlockState state = world.getBlockState(sidePos);
                 if (state.getBlock().isAir(state, (IBlockReader) world, sidePos)) {
                     continue;

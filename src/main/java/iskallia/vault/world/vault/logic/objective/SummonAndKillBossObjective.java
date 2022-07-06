@@ -116,7 +116,7 @@ public class SummonAndKillBossObjective extends VaultObjective {
 
     @Nonnull
     @Override
-    public BlockState getObjectiveRelevantBlock() {
+    public BlockState getObjectiveRelevantBlock(final VaultRaid vault, final ServerWorld world, final BlockPos pos) {
         return ModBlocks.OBELISK.defaultBlockState();
     }
 
@@ -213,7 +213,7 @@ public class SummonAndKillBossObjective extends VaultObjective {
                 return;
             }
         });
-        final BlockPos dropPos = rewardPlayer.getServerPlayer(world.getServer()).map((Function<? super ServerPlayerEntity, ? extends BlockPos>) Entity::blockPosition).orElse(new BlockPos(this.getBossPos()));
+        final BlockPos dropPos = rewardPlayer.getServerPlayer(world.getServer()).map(Entity::blockPosition).orElse(new BlockPos(this.getBossPos()));
         final ItemStack crate = VaultCrateBlock.getCrateWithLoot(ModBlocks.VAULT_CRATE, stacks);
         final ItemEntity item = new ItemEntity((World) world, (double) dropPos.getX(), (double) dropPos.getY(), (double) dropPos.getZ(), crate);
         item.setDefaultPickUpDelay();

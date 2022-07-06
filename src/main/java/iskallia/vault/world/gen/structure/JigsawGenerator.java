@@ -157,8 +157,8 @@ public class JigsawGenerator implements VaultJigsawGenerator {
             final MutableObject<VoxelShape> mutableobject = (MutableObject<VoxelShape>) new MutableObject();
             final MutableBoundingBox mutableboundingbox = piece.getBoundingBox();
             final int i = mutableboundingbox.y0;
-            Label_0086:
             while (true) {
+            Label_0086:
                 for (final Template.BlockInfo template$blockinfo : jigsawpiece.getShuffledJigsawBlocks(this.templateManager, blockpos, rotation, this.rand)) {
                     final Direction direction = JigsawBlock.getFrontFacing(template$blockinfo.state);
                     final BlockPos blockpos2 = template$blockinfo.pos;
@@ -188,8 +188,11 @@ public class JigsawGenerator implements VaultJigsawGenerator {
                             if (currentDepth != this.maxDepth) {
 //                                mainJigsawPattern.get().rawTemplates.forEach(weightedPiece -> weightedPieces.add(weightedPiece.getFirst(), (int)weightedPiece.getSecond()));
 //                                fallbackJigsawPattern.get().rawTemplates.forEach(weightedPiece -> weightedPieces.add(weightedPiece.getFirst(), (int)weightedPiece.getSecond()));
+                                mainJigsawPattern.get().getShuffledTemplates(this.rand).forEach(weightedPieces::addOne);
+                                fallbackJigsawPattern.get().getShuffledTemplates(this.rand).forEach(weightedPieces::addOne);
                             } else {
 //                                fallbackJigsawPattern.get().rawTemplates.forEach(weightedPiece -> weightedPieces.add(weightedPiece.getFirst(), (int)weightedPiece.getSecond()));
+                                fallbackJigsawPattern.get().getShuffledTemplates(this.rand).forEach(weightedPieces::addOne);
                             }
                             while (!weightedPieces.isEmpty()) {
                                 final JigsawPiece jigsawpiece2 = weightedPieces.removeRandom(this.rand);

@@ -2,6 +2,7 @@ package iskallia.vault.config;
 
 import com.google.common.collect.Lists;
 import com.google.gson.annotations.Expose;
+import iskallia.vault.init.ModEntities;
 import iskallia.vault.util.data.WeightedList;
 import net.minecraft.entity.EntityType;
 
@@ -9,7 +10,7 @@ import javax.annotation.Nullable;
 import java.util.*;
 
 public class RaidConfig extends Config {
-    private static final Level DEFAULT;
+    public static final Level DEFAULT;
     @Expose
     private final Map<String, List<Level>> mobPools;
     @Expose
@@ -50,10 +51,39 @@ public class RaidConfig extends Config {
     protected void reset() {
         this.mobPools.clear();
         this.raidWaves.clear();
-        this.mobPools.put("ranged", Lists.newArrayList(new Level[]{new Level(0, new MobPool().add((EntityType<?>) EntityType.SKELETON, 1)), new Level(75, new MobPool().add((EntityType<?>) EntityType.SKELETON, 1).add((EntityType<?>) EntityType.STRAY, 1))}));
-        this.mobPools.put("melee", Lists.newArrayList(new Level[]{new Level(0, new MobPool().add((EntityType<?>) EntityType.ZOMBIE, 1)), new Level(50, new MobPool().add((EntityType<?>) EntityType.ZOMBIE, 2).add((EntityType<?>) EntityType.VINDICATOR, 1))}));
-        final WaveSetup waveSetup = new WaveSetup().addWave(new CompoundWave(new ConfiguredWave[]{new ConfiguredWave(2, 3, "ranged"), new ConfiguredWave(2, 3, "melee")})).addWave(new CompoundWave(new ConfiguredWave[]{new ConfiguredWave(4, 5, "ranged"), new ConfiguredWave(4, 6, "melee")})).addWave(new CompoundWave(new ConfiguredWave[]{new ConfiguredWave(6, 7, "ranged"), new ConfiguredWave(5, 8, "melee")}));
-        this.raidWaves.add(waveSetup, 1);
+        this.mobPools.put("fgroup1", Lists.newArrayList(new RaidConfig.Level(0, new RaidConfig.MobPool().add(EntityType.STRAY, 4).add(ModEntities.VAULT_FIGHTER_TYPES.get(0), 2))));
+        this.mobPools.put("fgroup2", Lists.newArrayList(new RaidConfig.Level(0, new RaidConfig.MobPool().add(EntityType.STRAY, 4).add(EntityType.VINDICATOR, 2))));
+        this.mobPools.put("fgroup3", Lists.newArrayList(new RaidConfig.Level(0, new RaidConfig.MobPool().add(EntityType.PILLAGER, 4).add(EntityType.VINDICATOR, 2))));
+        this.mobPools.put("fgroup4", Lists.newArrayList(new RaidConfig.Level(0, new RaidConfig.MobPool().add(EntityType.VEX, 2).add(EntityType.VINDICATOR, 4))));
+        this.mobPools.put("fgroup5", Lists.newArrayList(new RaidConfig.Level(0, new RaidConfig.MobPool().add(EntityType.STRAY, 2).add(EntityType.SPIDER, 4))));
+        this.mobPools.put("fgroup6", Lists.newArrayList(new RaidConfig.Level(0, new RaidConfig.MobPool().add(EntityType.VEX, 2).add(EntityType.SPIDER, 4))));
+        this.mobPools.put("fgroup7", Lists.newArrayList(new RaidConfig.Level(0, new RaidConfig.MobPool().add(EntityType.RAVAGER, 2))));
+        this.mobPools.put("fgroup8", Lists.newArrayList(new RaidConfig.Level(0, new RaidConfig.MobPool().add(EntityType.PILLAGER, 2).add(EntityType.SPIDER, 4))));
+        this.mobPools.put("fgroup9", Lists.newArrayList(new RaidConfig.Level(0, new RaidConfig.MobPool().add(ModEntities.VAULT_GUARDIAN, 2))));
+        this.mobPools.put("fgroup10", Lists.newArrayList(new RaidConfig.Level(0, new RaidConfig.MobPool().add(EntityType.RAVAGER, 1).add(EntityType.ZOMBIE, 6))));
+        this.mobPools.put("fgroup11", Lists.newArrayList(new RaidConfig.Level(0, new RaidConfig.MobPool().add(EntityType.RAVAGER, 1).add(ModEntities.VAULT_GUARDIAN, 6))));
+        this.mobPools.put("fgroup12", Lists.newArrayList(new RaidConfig.Level(0, new RaidConfig.MobPool().add(ModEntities.BOOGIEMAN, 1).add(ModEntities.BLUE_BLAZE, 3))));
+        this.mobPools.put("fgroup13", Lists.newArrayList(new RaidConfig.Level(0, new RaidConfig.MobPool().add(ModEntities.ROBOT, 1))));
+        this.mobPools.put("fgroup14", Lists.newArrayList(new RaidConfig.Level(0, new RaidConfig.MobPool().add(ModEntities.ARENA_BOSS, 1))));
+        this.mobPools.put("testgroup", Lists.newArrayList(new RaidConfig.Level(0, new RaidConfig.MobPool().add(EntityType.MAGMA_CUBE, 4))));
+        this.mobPools.put("wutax", Lists.newArrayList(new RaidConfig.Level(0, new RaidConfig.MobPool().add(EntityType.ZOMBIE, 4).add(EntityType.SPIDER, 1).add(ModEntities.VAULT_FIGHTER_TYPES.get(0), 1)), new RaidConfig.Level(50, new RaidConfig.MobPool().add(EntityType.ZOMBIE, 16).add(EntityType.HUSK, 8).add(EntityType.SPIDER, 1).add(ModEntities.VAULT_FIGHTER_TYPES.get(1), 1).add(ModEntities.VAULT_FIGHTER_TYPES.get(0), 8)), new RaidConfig.Level(75, new RaidConfig.MobPool().add(EntityType.ZOMBIE, 20).add(EntityType.HUSK, 20).add(EntityType.VINDICATOR, 1).add(EntityType.SPIDER, 10).add(ModEntities.VAULT_FIGHTER_TYPES.get(1), 4)), new RaidConfig.Level(150, new RaidConfig.MobPool().add(EntityType.HUSK, 1600).add(EntityType.ZOMBIE, 800).add(EntityType.SPIDER, 800).add(EntityType.CAVE_SPIDER, 100).add(EntityType.VINDICATOR, 100).add(EntityType.RAVAGER, 1).add(ModEntities.VAULT_FIGHTER_TYPES.get(0), 100).add(ModEntities.VAULT_FIGHTER_TYPES.get(1), 100).add(ModEntities.VAULT_FIGHTER_TYPES.get(2), 60).add(ModEntities.VAULT_FIGHTER_TYPES.get(3), 40)), new RaidConfig.Level(250, new RaidConfig.MobPool().add(EntityType.PIGLIN_BRUTE, 400).add(EntityType.HUSK, 800).add(EntityType.ZOMBIE, 600).add(EntityType.SPIDER, 600).add(EntityType.CAVE_SPIDER, 100).add(EntityType.VINDICATOR, 100).add(EntityType.RAVAGER, 1).add(ModEntities.VAULT_FIGHTER_TYPES.get(1), 100).add(ModEntities.VAULT_FIGHTER_TYPES.get(2), 80).add(ModEntities.VAULT_FIGHTER_TYPES.get(3), 60).add(ModEntities.VAULT_FIGHTER_TYPES.get(4), 40))));
+        this.mobPools.put("spiderbomb", Lists.newArrayList(new RaidConfig.Level(0, new RaidConfig.MobPool().add(EntityType.SPIDER, 1)), new RaidConfig.Level(175, new RaidConfig.MobPool().add(EntityType.SPIDER, 3).add(EntityType.CAVE_SPIDER, 1))));
+        this.mobPools.put("creepers", Lists.newArrayList(new RaidConfig.Level(0, new RaidConfig.MobPool().add(EntityType.CREEPER, 1))));
+        this.mobPools.put("troll", Lists.newArrayList(new RaidConfig.Level(0, new RaidConfig.MobPool().add(EntityType.PIG, 1).add(EntityType.RABBIT, 1))));
+        this.mobPools.put("silverfish", Lists.newArrayList(new RaidConfig.Level(0, new RaidConfig.MobPool().add(EntityType.SILVERFISH, 1))));
+        this.mobPools.put("guardians", Lists.newArrayList(new RaidConfig.Level(0, new RaidConfig.MobPool().add(EntityType.PIG, 1)), new RaidConfig.Level(250, new RaidConfig.MobPool().add(ModEntities.VAULT_GUARDIAN, 1))));
+        this.mobPools.put("goblins", Lists.newArrayList(new RaidConfig.Level(0, new RaidConfig.MobPool().add(ModEntities.TREASURE_GOBLIN, 1))));
+        this.mobPools.put("ravagerfest", Lists.newArrayList(new RaidConfig.Level(0, new RaidConfig.MobPool().add(EntityType.WITHER_SKELETON, 1)), new RaidConfig.Level(150, new RaidConfig.MobPool().add(EntityType.RAVAGER, 3))));
+        this.mobPools.put("vexes", Lists.newArrayList(new RaidConfig.Level(0, new RaidConfig.MobPool().add(EntityType.SKELETON, 1)), new RaidConfig.Level(115, new RaidConfig.MobPool().add(EntityType.STRAY, 3)), new RaidConfig.Level(150, new RaidConfig.MobPool().add(EntityType.VEX, 3))));
+        this.mobPools.put("vaultfighters", Lists.newArrayList(new RaidConfig.Level(0, new RaidConfig.MobPool().add(ModEntities.VAULT_FIGHTER_TYPES.get(0), 1)), new RaidConfig.Level(50, new RaidConfig.MobPool().add(ModEntities.VAULT_FIGHTER_TYPES.get(0), 8).add(ModEntities.VAULT_FIGHTER_TYPES.get(1), 1)), new RaidConfig.Level(100, new RaidConfig.MobPool().add(ModEntities.VAULT_FIGHTER_TYPES.get(0), 8).add(ModEntities.VAULT_FIGHTER_TYPES.get(1), 2).add(ModEntities.VAULT_FIGHTER_TYPES.get(2), 1)), new RaidConfig.Level(150, new RaidConfig.MobPool().add(ModEntities.VAULT_FIGHTER_TYPES.get(0), 8).add(ModEntities.VAULT_FIGHTER_TYPES.get(1), 6).add(ModEntities.VAULT_FIGHTER_TYPES.get(2), 2).add(ModEntities.VAULT_FIGHTER_TYPES.get(3), 1)), new RaidConfig.Level(250, new RaidConfig.MobPool().add(ModEntities.VAULT_FIGHTER_TYPES.get(0), 8).add(ModEntities.VAULT_FIGHTER_TYPES.get(1), 4).add(ModEntities.VAULT_FIGHTER_TYPES.get(2), 6).add(ModEntities.VAULT_FIGHTER_TYPES.get(3), 4).add(ModEntities.VAULT_FIGHTER_TYPES.get(4), 2))));
+        this.raidWaves.add(new RaidConfig.WaveSetup().addWave(new RaidConfig.CompoundWave(new RaidConfig.ConfiguredWave(2, 3, "fgroup1"))).addWave(new RaidConfig.CompoundWave(new RaidConfig.ConfiguredWave(3, 4, "fgroup2"))).addWave(new RaidConfig.CompoundWave(new RaidConfig.ConfiguredWave(3, 4, "fgroup3"))), 100);
+        this.raidWaves.add(new RaidConfig.WaveSetup().addWave(new RaidConfig.CompoundWave(new RaidConfig.ConfiguredWave(2, 3, "fgroup1"))).addWave(new RaidConfig.CompoundWave(new RaidConfig.ConfiguredWave(3, 4, "fgroup3"))).addWave(new RaidConfig.CompoundWave(new RaidConfig.ConfiguredWave(3, 4, "fgroup4"))), 100);
+        this.raidWaves.add(new RaidConfig.WaveSetup().addWave(new RaidConfig.CompoundWave(new RaidConfig.ConfiguredWave(2, 3, "fgroup5"))).addWave(new RaidConfig.CompoundWave(new RaidConfig.ConfiguredWave(3, 4, "fgroup2"))).addWave(new RaidConfig.CompoundWave(new RaidConfig.ConfiguredWave(3, 4, "fgroup6"))), 80);
+        this.raidWaves.add(new RaidConfig.WaveSetup().addWave(new RaidConfig.CompoundWave(new RaidConfig.ConfiguredWave(2, 3, "fgroup1"))).addWave(new RaidConfig.CompoundWave(new RaidConfig.ConfiguredWave(3, 4, "fgroup2"))).addWave(new RaidConfig.CompoundWave(new RaidConfig.ConfiguredWave(3, 4, "fgroup7"))), 80);
+        this.raidWaves.add(new RaidConfig.WaveSetup().addWave(new RaidConfig.CompoundWave(new RaidConfig.ConfiguredWave(2, 3, "fgroup2"))).addWave(new RaidConfig.CompoundWave(new RaidConfig.ConfiguredWave(3, 4, "fgroup8"))).addWave(new RaidConfig.CompoundWave(new RaidConfig.ConfiguredWave(3, 4, "fgroup9"))), 80);
+        this.raidWaves.add(new RaidConfig.WaveSetup().addWave(new RaidConfig.CompoundWave(new RaidConfig.ConfiguredWave(2, 3, "fgroup2"))).addWave(new RaidConfig.CompoundWave(new RaidConfig.ConfiguredWave(3, 4, "fgroup3"))).addWave(new RaidConfig.CompoundWave(new RaidConfig.ConfiguredWave(3, 4, "fgroup10"))), 80);
+        this.raidWaves.add(new RaidConfig.WaveSetup().addWave(new RaidConfig.CompoundWave(new RaidConfig.ConfiguredWave(2, 3, "fgroup9"))).addWave(new RaidConfig.CompoundWave(new RaidConfig.ConfiguredWave(3, 4, "fgroup9"))).addWave(new RaidConfig.CompoundWave(new RaidConfig.ConfiguredWave(3, 4, "fgroup11"))), 80);
+        this.raidWaves.add(new RaidConfig.WaveSetup().addWave(new RaidConfig.CompoundWave(new RaidConfig.ConfiguredWave(2, 3, "fgroup14"))).addWave(new RaidConfig.CompoundWave(new RaidConfig.ConfiguredWave(3, 4, "fgroup12"))).addWave(new RaidConfig.CompoundWave(new RaidConfig.ConfiguredWave(3, 4, "fgroup13"))), 80000);
         this.amountLevels.clear();
         this.amountLevels.add(new AmountLevel(0, 1.0f));
         this.amountLevels.add(new AmountLevel(50, 1.5f));
@@ -105,9 +135,9 @@ public class RaidConfig extends Config {
 
     public static class AmountLevel {
         @Expose
-        private final int level;
+        public final int level;
         @Expose
-        private final float mobAmountMultiplier;
+        public final float mobAmountMultiplier;
 
         public AmountLevel(final int level, final float mobAmountMultiplier) {
             this.level = level;
@@ -121,9 +151,9 @@ public class RaidConfig extends Config {
 
     public static class Level {
         @Expose
-        private final int level;
+        public final int level;
         @Expose
-        private final MobPool mobPool;
+        public final MobPool mobPool;
 
         public Level(final int level, final MobPool mobPool) {
             this.level = level;

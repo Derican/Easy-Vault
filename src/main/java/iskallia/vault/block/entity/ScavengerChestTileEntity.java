@@ -5,6 +5,7 @@ import iskallia.vault.init.ModBlocks;
 import iskallia.vault.world.data.VaultRaidData;
 import iskallia.vault.world.vault.VaultRaid;
 import iskallia.vault.world.vault.logic.objective.ScavengerHuntObjective;
+import iskallia.vault.world.vault.logic.objective.TreasureHuntObjective;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.ParticleManager;
 import net.minecraft.client.particle.SimpleAnimatedParticle;
@@ -74,6 +75,11 @@ public class ScavengerChestTileEntity extends ChestTileEntity {
                     final Container linkedCt = new ScavengerChestContainer(id, playerInventory, (IInventory) this, objective.getScavengerChestInventory());
                     linkedCt.addSlotListener((IContainerListener) objective.getChestWatcher());
                     return linkedCt;
+                }).orElse(ct);
+                ct = vault.getActiveObjective(TreasureHuntObjective.class).map(objective -> {
+                    final Container linkedCt2 = (Container)new ScavengerChestContainer(id, playerInventory, (IInventory)this, objective.getScavengerChestInventory());
+                    linkedCt2.addSlotListener((IContainerListener)objective.getChestWatcher());
+                    return linkedCt2;
                 }).orElse(ct);
             }
         }

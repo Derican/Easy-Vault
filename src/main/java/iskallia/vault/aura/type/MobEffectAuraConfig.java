@@ -27,6 +27,12 @@ public class MobEffectAuraConfig extends EternalAuraConfig.AuraConfig {
         this.amplifier = amplifier;
     }
 
+    public MobEffectAuraConfig(final String name, final String displayName, final String description, final String iconPath, final float radius, final Effect effect, final int amplifier) {
+        super(name, displayName, description, iconPath, radius);
+        this.effect = effect.getRegistryName().toString();
+        this.amplifier = amplifier;
+    }
+
     @Override
     public void onTick(final World world, final ActiveAura aura) {
         super.onTick(world, aura);

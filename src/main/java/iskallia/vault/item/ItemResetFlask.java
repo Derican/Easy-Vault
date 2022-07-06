@@ -242,9 +242,7 @@ public class ItemResetFlask extends Item {
                     if (node.getLevel() == 1) {
                         final List<AbilityGroup<?, ?>> dependentNodes = ModConfigs.SKILL_GATES.getGates().getAbilitiesDependingOn(node.getGroup().getParentName());
 
-                        final Iterator<AbilityGroup<?, ?>> iterator = dependentNodes.iterator();
-                        while (iterator.hasNext()) {
-                            final AbilityGroup<?, ?> dependent = iterator.next();
+                        for (AbilityGroup<?, ?> dependent : dependentNodes) {
                             if (abilityTree.getNodeOf(dependent).isLearned()) {
                                 return;
                             }
@@ -266,9 +264,7 @@ public class ItemResetFlask extends Item {
                     if (node2.getLevel() == 1) {
                         final List<TalentGroup<?>> dependentNodes2 = ModConfigs.SKILL_GATES.getGates().getTalentsDependingOn(node2.getGroup().getParentName());
 
-                        final Iterator<TalentGroup<?>> iterator2 = dependentNodes2.iterator();
-                        while (iterator2.hasNext()) {
-                            final TalentGroup<?> dependent2 = iterator2.next();
+                        for (TalentGroup<?> dependent2 : dependentNodes2) {
                             if (talentTree.getNodeOf(dependent2).isLearned()) {
                                 return;
                             }

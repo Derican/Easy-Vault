@@ -103,9 +103,7 @@ public class ScavengerHuntObjective extends VaultObjective {
         return entry -> {
             final Item generatedItem = entry.getItem();
 
-            final Iterator<ItemSubmission> iterator = submissions.iterator();
-            while (iterator.hasNext()) {
-                final ItemSubmission submission = iterator.next();
+            for (ItemSubmission submission : submissions) {
                 if (generatedItem.equals(submission.getRequiredItem())) {
                     return true;
                 }
@@ -147,7 +145,7 @@ public class ScavengerHuntObjective extends VaultObjective {
 
     @Nonnull
     @Override
-    public BlockState getObjectiveRelevantBlock() {
+    public BlockState getObjectiveRelevantBlock(final VaultRaid vault, final ServerWorld world, final BlockPos pos) {
         return ModBlocks.SCAVENGER_CHEST.defaultBlockState();
     }
 

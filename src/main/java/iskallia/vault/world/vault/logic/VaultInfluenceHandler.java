@@ -55,9 +55,8 @@ public class VaultInfluenceHandler {
         int favour = 0;
         for (int length = values.length, i = 0; i < length; ++i) {
             type = values[i];
-            final Iterator<VaultPlayer> iterator = vault.getPlayers().iterator();
-            while (iterator.hasNext()) {
-                vPlayer = iterator.next();
+            for (VaultPlayer vaultPlayer : vault.getPlayers()) {
+                vPlayer = vaultPlayer;
                 favour = favourData.getFavour(vPlayer.getPlayerId(), type);
                 if (Math.abs(favour) < 4) {
                     continue;

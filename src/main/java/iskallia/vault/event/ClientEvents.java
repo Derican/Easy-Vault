@@ -77,9 +77,7 @@ public class ClientEvents {
             if (!added.isEmpty()) {
                 tooltip.add(1, StringTextComponent.EMPTY);
 
-                final Iterator<String> iterator = added.iterator();
-                while (iterator.hasNext()) {
-                    final String newStr = iterator.next();
+                for (String newStr : added) {
                     tooltip.add(1, new StringTextComponent(newStr).withStyle(TextFormatting.GRAY));
                 }
             }

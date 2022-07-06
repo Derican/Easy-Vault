@@ -1,33 +1,45 @@
 package iskallia.vault.block;
 
-import net.minecraft.block.*;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.particles.IParticleData;
-import net.minecraft.particles.ParticleTypes;
 import net.minecraft.state.StateContainer;
-import net.minecraft.tags.BlockTags;
-import net.minecraft.tags.ITag;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.util.math.shapes.VoxelShapes;
-import net.minecraft.world.IWorld;
-import net.minecraft.world.World;
-import net.minecraft.world.biome.Biome;
-import net.minecraft.world.chunk.Chunk;
-import net.minecraft.world.gen.Heightmap;
-import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraft.particles.IParticleData;
+import net.minecraft.particles.ParticleTypes;
+import net.minecraft.block.Block;
+import net.minecraft.util.math.shapes.VoxelShape;
+import net.minecraft.util.math.shapes.VoxelShapes;
+import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.Entity;
+import net.minecraft.world.World;
+import net.minecraft.world.IWorld;
 
 import java.util.Random;
+
+import net.minecraft.world.chunk.Chunk;
+import net.minecraft.world.biome.Biome;
+import net.minecraft.world.gen.Heightmap;
+import net.minecraft.tags.ITag;
+import net.minecraft.tags.BlockTags;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.server.ServerWorld;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.NonNullList;
+import net.minecraft.item.ItemGroup;
+import net.minecraft.state.Property;
+import net.minecraft.util.Direction;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.AbstractBlock;
+import net.minecraft.block.Blocks;
+import net.minecraft.block.NetherPortalBlock;
 
 public class FinalVaultPortalBlock extends NetherPortalBlock {
     public FinalVaultPortalBlock() {
         super(AbstractBlock.Properties.copy((AbstractBlock) Blocks.NETHER_PORTAL));
-        this.registerDefaultState((this.stateDefinition.any()).setValue(FinalVaultPortalBlock.AXIS, Direction.Axis.X));
+        this.registerDefaultState((BlockState) ((BlockState) this.stateDefinition.any()).setValue((Property) FinalVaultPortalBlock.AXIS, (Comparable) Direction.Axis.X));
+    }
+
+    public void fillItemCategory(final ItemGroup group, final NonNullList<ItemStack> items) {
     }
 
     protected static BlockPos getSpawnPoint(final ServerWorld p_241092_0_, final int p_241092_1_, final int p_241092_2_, final boolean p_241092_3_) {
@@ -74,7 +86,7 @@ public class FinalVaultPortalBlock extends NetherPortalBlock {
         }
         if (world != null && world.dimension() == World.OVERWORLD) {
             final Direction.Axis direction$axis = facing.getAxis();
-            final Direction.Axis direction$axis2 = (Direction.Axis) stateIn.getValue(FinalVaultPortalBlock.AXIS);
+            final Direction.Axis direction$axis2 = (Direction.Axis) stateIn.getValue((Property) FinalVaultPortalBlock.AXIS);
             final boolean b = direction$axis2 != direction$axis && direction$axis.isHorizontal();
         }
         return stateIn;

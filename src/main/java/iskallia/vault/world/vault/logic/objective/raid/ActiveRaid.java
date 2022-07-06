@@ -60,7 +60,9 @@ public class ActiveRaid {
 
     @Nullable
     public static ActiveRaid create(final VaultRaid vault, final ServerWorld world, final BlockPos controller) {
-        final RaidPreset preset = RaidPreset.randomFromConfig();
+        final int raidIndex = vault.getProperties().getBaseOrDefault(VaultRaid.RAID_INDEX, 0);
+        final RaidPreset preset = vault.getProperties().exists(VaultRaid.PARENT) ? RaidPreset.randomFromFinalConfig(raidIndex) : RaidPreset.randomFromConfig();
+        vault.getProperties().create(VaultRaid.RAID_INDEX, raidIndex + 1);
         if (preset == null) {
             return null;
         }
@@ -129,11 +131,23 @@ public class ActiveRaid {
         final int scalingLevel = participantLevel;
         final int playerCount = this.participatingPlayers.size();
         wave.getWaveSpawns().forEach(spawn -> {
-            final RaidConfig.MobPool pool = ModConfigs.RAID_CONFIG.getPool(spawn.getMobPool(), scalingLevel);
+            RaidConfig.MobPool pool;
+            if (vault.getProperties().exists(VaultRaid.PARENT)) {
+                pool = ModConfigs.FINAL_RAID.getPool(spawn.getMobPool(), scalingLevel);
+            }
+            else {
+                pool = ModConfigs.RAID.getPool(spawn.getMobPool(), scalingLevel);
+            }
             if (pool == null) {
                 return;
-            } else {
-                for (int spawnCount = spawn.getMobCount(), spawnCount2 = (int) (spawnCount * ((1.0 + vault.getActiveObjective(RaidChallengeObjective.class).map(raidObjective -> raidObjective.getModifiersOfType(MonsterAmountModifier.class).values().stream().mapToDouble(Float::doubleValue).sum()).orElse(0.0)) * playerCount)), spawnCount3 = (int) (spawnCount2 * ModConfigs.RAID_CONFIG.getMobCountMultiplier(scalingLevel)), i = 0; i < spawnCount3; ++i) {
+            }
+            else {
+                final int spawnCount = spawn.getMobCount();
+                int spawnCount2 = (int)(spawnCount * ((1.0 + vault.getActiveObjective(RaidChallengeObjective.class).map(raidObjective -> raidObjective.getModifiersOfType(MonsterAmountModifier.class).values().stream().mapToDouble(Float::doubleValue).sum()).orElse(0.0)) * playerCount));
+                if (!vault.getProperties().exists(VaultRaid.PARENT)) {
+                    spawnCount2 *= (int)ModConfigs.RAID.getMobCountMultiplier(scalingLevel);
+                }
+                for (int i = 0; i < spawnCount2; ++i) {
                     final String mobType = pool.getRandomMob();
                     final EntityType type = (EntityType) ForgeRegistries.ENTITIES.getValue(new ResourceLocation(mobType));
                     if (type != null) {

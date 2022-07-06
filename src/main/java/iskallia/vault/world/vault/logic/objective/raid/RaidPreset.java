@@ -20,7 +20,23 @@ public class RaidPreset {
 
     @Nullable
     public static RaidPreset randomFromConfig() {
-        final RaidConfig.WaveSetup configSetup = ModConfigs.RAID_CONFIG.getRandomWaveSetup();
+        final RaidConfig.WaveSetup configSetup = ModConfigs.RAID.getRandomWaveSetup();
+        if (configSetup == null) {
+            return null;
+        }
+        final RaidPreset preset = new RaidPreset();
+        for (final RaidConfig.CompoundWave wave : configSetup.getWaves()) {
+            final CompoundWaveSpawn compoundWave = new CompoundWaveSpawn();
+            for (final RaidConfig.ConfiguredWave waveSpawnSet : wave.getWaveMobs()) {
+                compoundWave.waveSpawns.add(WaveSpawn.fromConfig(waveSpawnSet));
+            }
+            preset.waves.add(compoundWave);
+        }
+        return preset;
+    }
+
+    public static RaidPreset randomFromFinalConfig(final int index) {
+        final RaidConfig.WaveSetup configSetup = ModConfigs.FINAL_RAID.getWaveSetup(index);
         if (configSetup == null) {
             return null;
         }

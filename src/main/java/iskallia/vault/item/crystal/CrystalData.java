@@ -3,6 +3,7 @@ package iskallia.vault.item.crystal;
 import iskallia.vault.Vault;
 import iskallia.vault.init.ModConfigs;
 import iskallia.vault.util.MathUtilities;
+import iskallia.vault.world.data.PlayerFavourData;
 import iskallia.vault.world.vault.VaultRaid;
 import iskallia.vault.world.vault.builder.*;
 import iskallia.vault.world.vault.gen.VaultRoomNames;
@@ -45,6 +46,8 @@ public class CrystalData implements INBTSerializable<CompoundNBT> {
     protected boolean canGenerateTreasureRooms;
     protected List<String> guaranteedRoomFilters;
     protected EchoData echoData;
+    protected FrameData frameData;
+    protected boolean challenge;
 
     public CrystalData() {
         this.delegate = new CompoundNBT();
@@ -227,6 +230,14 @@ public class CrystalData implements INBTSerializable<CompoundNBT> {
         this.canGenerateTreasureRooms = canGenerateTreasureRooms;
         this.updateDelegate();
     }
+    public boolean isChallenge() {
+        return this.challenge;
+    }
+
+    public void setChallenge(final boolean challenge) {
+        this.challenge = challenge;
+        this.updateDelegate();
+    }
 
     public boolean canBeModified() {
         return this.canBeModified;
@@ -278,6 +289,9 @@ public class CrystalData implements INBTSerializable<CompoundNBT> {
         }
         return this.echoData;
     }
+    public FrameData getFrameData() {
+        return this.frameData;
+    }
 
     public int addEchoGems(final int amount) {
         final int remainder = this.getEchoData().addEchoGems(amount);
@@ -320,11 +334,10 @@ public class CrystalData implements INBTSerializable<CompoundNBT> {
             tooltip.add((ITextComponent) new StringTextComponent("Player Boss: ").append((ITextComponent) new StringTextComponent(this.getPlayerBossName()).withStyle(TextFormatting.GREEN)));
         }
         final Map<String, Integer> collapsedFilters = new HashMap<String, Integer>();
-        final Iterator<String> iterator = this.guaranteedRoomFilters.iterator();
         String roomFilter = null;
         int count = 0;
-        while (iterator.hasNext()) {
-            roomFilter = iterator.next();
+        for (String guaranteedRoomFilter : this.guaranteedRoomFilters) {
+            roomFilter = guaranteedRoomFilter;
             count = collapsedFilters.getOrDefault(roomFilter, 0);
             collapsedFilters.put(roomFilter, ++count);
         }
@@ -404,12 +417,19 @@ public class CrystalData implements INBTSerializable<CompoundNBT> {
         nbt.put("echoData", (INBT) this.getEchoData().toNBT());
         final ListNBT roomList = new ListNBT();
         this.guaranteedRoomFilters.forEach(roomKey -> roomList.add(StringNBT.valueOf(roomKey)));
+        if (this.frameData != null) {
+            nbt.put("Frame", (INBT)this.frameData.serializeNBT());
+        }
+        nbt.putBoolean("Challenge", this.challenge);
         nbt.put("rooms", (INBT) roomList);
         return nbt;
     }
 
     public void deserializeNBT(final CompoundNBT nbt) {
         this.type = (nbt.contains("Type", 8) ? Enum.valueOf(Type.class, nbt.getString("Type")) : Type.CLASSIC);
+        if (this.type == Type.COOP) {
+            this.type = Type.CLASSIC;
+        }
         this.playerBossName = nbt.getString("PlayerBossName");
         final ListNBT modifiersList = nbt.getList("Modifiers", 10);
         modifiersList.forEach(inbt -> this.modifiers.add(Modifier.fromNBT((CompoundNBT) inbt)));
@@ -428,6 +448,8 @@ public class CrystalData implements INBTSerializable<CompoundNBT> {
         }
         final ListNBT roomList = nbt.getList("rooms", 8);
         roomList.forEach(inbt -> this.guaranteedRoomFilters.add(this.migrateRoomName(inbt.getAsString())));
+        this.frameData = FrameData.fromNBT(nbt.getCompound("Frame"));
+        this.challenge = nbt.getBoolean("Challenge");
     }
 
     private void migrateModifiers(final List<Modifier> modifiers) {
@@ -446,10 +468,22 @@ public class CrystalData implements INBTSerializable<CompoundNBT> {
     }
 
     public enum Type {
-        CLASSIC("Normal"),
-        RAFFLE(VaultLogic.RAFFLE, (VaultRaidBuilder) RaffleVaultBuilder.getInstance(), "Raffle"),
-        COOP(VaultLogic.COOP, (VaultRaidBuilder) CoopVaultBuilder.getInstance(), "Cooperative"),
-        TROVE(VaultLogic.CLASSIC, (VaultRaidBuilder) TroveVaultBuilder.getInstance(), "Vault Trove", TextFormatting.GOLD);
+        CLASSIC(VaultLogic.COOP, (VaultRaidBuilder)CoopVaultBuilder.getInstance(), "Normal"),
+        RAFFLE(VaultLogic.RAFFLE, (VaultRaidBuilder)RaffleVaultBuilder.getInstance(), "Raffle"),
+        COOP(VaultLogic.COOP, (VaultRaidBuilder)CoopVaultBuilder.getInstance(), "Cooperative"),
+        TROVE(VaultLogic.CLASSIC, (VaultRaidBuilder)TroveVaultBuilder.getInstance(), "Vault Trove", TextFormatting.GOLD),
+        BOSS_BENEVOLENT_PREP("Velara's Sacrifice", PlayerFavourData.VaultGodType.BENEVOLENT.getChatColor()),
+        BOSS_BENEVOLENT("Velara's Demand", PlayerFavourData.VaultGodType.BENEVOLENT.getChatColor()),
+        BOSS_OMNISCIENT("Tenos' Oblivion", PlayerFavourData.VaultGodType.OMNISCIENT.getChatColor()),
+        BOSS_TIMEKEEPER("Wendarr's Transience", PlayerFavourData.VaultGodType.TIMEKEEPER.getChatColor()),
+        BOSS_MALEVOLENCE("Idona's Wrath", PlayerFavourData.VaultGodType.MALEVOLENCE.getChatColor()),
+        FINAL_LOBBY(VaultLogic.FINAL_LOBBY, (VaultRaidBuilder)FinalLobbyBuilder.getInstance(), "Final Vault", TextFormatting.DARK_PURPLE),
+        FINAL_BOSS(VaultLogic.FINAL_BOSS, (VaultRaidBuilder)FinalBossBuilder.getInstance(), "Final Vault - Boss", TextFormatting.DARK_PURPLE),
+        FINAL_VELARA(VaultLogic.COOP, (VaultRaidBuilder)CoopVaultBuilder.getInstance(), "Final Velara Challenge", TextFormatting.GREEN),
+        FINAL_TENOS(VaultLogic.COOP, (VaultRaidBuilder)CoopVaultBuilder.getInstance(), "Final Tenos Challenge", TextFormatting.AQUA),
+        FINAL_WENDARR(VaultLogic.COOP, (VaultRaidBuilder)CoopVaultBuilder.getInstance(), "Final Wendarr Challenge", TextFormatting.GOLD),
+        FINAL_IDONA(VaultLogic.COOP, (VaultRaidBuilder)CoopVaultBuilder.getInstance(), "Final Idona Challenge", TextFormatting.RED);
+
 
         private final VaultLogic logic;
         private final VaultRaidBuilder vaultBuilder;
@@ -476,31 +510,35 @@ public class CrystalData implements INBTSerializable<CompoundNBT> {
         }
 
         public boolean canCraft() {
-            return this == Type.CLASSIC || this == Type.COOP;
+            return this == Type.CLASSIC;
         }
 
         public boolean showTypePrefix() {
-            return this == Type.CLASSIC || this == Type.RAFFLE || this == Type.COOP;
+            return this == Type.CLASSIC || this == Type.RAFFLE;
         }
 
         public boolean showObjective() {
-            return this == Type.CLASSIC || this == Type.RAFFLE || this == Type.COOP;
+            return this == Type.CLASSIC || this == Type.RAFFLE;
         }
 
         public boolean visibleInCreative() {
-            return this == Type.CLASSIC || this == Type.RAFFLE || this == Type.COOP || this == Type.TROVE;
+            return this == Type.CLASSIC || this == Type.RAFFLE || this == Type.TROVE || this == Type.FINAL_LOBBY;
         }
 
         public boolean canBeCowVault() {
-            return this == Type.CLASSIC || this == Type.RAFFLE || this == Type.COOP;
+            return this == Type.CLASSIC || this == Type.RAFFLE;
         }
 
         public boolean canGenerateRandomModifiers() {
-            return this == Type.CLASSIC || this == Type.RAFFLE || this == Type.COOP;
+            return this == Type.CLASSIC || this == Type.RAFFLE || this == Type.COOP || this == Type.FINAL_VELARA || this == Type.FINAL_IDONA || this == Type.FINAL_WENDARR || this == Type.FINAL_TENOS;
+        }
+
+        public boolean isFinalType() {
+            return this == Type.FINAL_BOSS || this == Type.FINAL_IDONA || this == Type.FINAL_TENOS || this == Type.FINAL_WENDARR || this == Type.FINAL_VELARA;
         }
 
         public boolean canTriggerInfluences() {
-            return this == Type.CLASSIC || this == Type.COOP;
+            return this == Type.CLASSIC;
         }
 
         public VaultLogic getLogic() {

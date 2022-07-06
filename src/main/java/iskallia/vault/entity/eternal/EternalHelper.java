@@ -38,25 +38,32 @@ public class EternalHelper {
         return eternal;
     }
 
-    public static float getEternalGearModifierAdjustments(final EternalDataAccess dataAccess, final Attribute attribute, float value) {
+    public static float getEternalGearModifierAdjustments(final EternalDataAccess dataAccess, final Attribute attribute, final float value) {
+        return getEternalGearModifierAdjustments(dataAccess.getEquipment(), attribute, value);
+    }
+
+    public static float getEternalGearModifierAdjustments(final Map<EquipmentSlotType, ItemStack> equipments, final Attribute attribute, float value) {
         final Map<AttributeModifier.Operation, List<AttributeModifier>> modifiers = new HashMap<AttributeModifier.Operation, List<AttributeModifier>>();
-        for (final EquipmentSlotType slotType : EquipmentSlotType.values()) {
-            final ItemStack stack = dataAccess.getEquipment().getOrDefault(slotType, ItemStack.EMPTY);
-            if (!stack.isEmpty()) {
-                stack.getAttributeModifiers(slotType).get(attribute).forEach(modifier -> modifiers.computeIfAbsent(modifier.getOperation(), op -> new ArrayList()).add(modifier));
+        AttributeModifier modifier = null;
+        equipments.forEach((slotType, stack) -> {
+            if (stack.isEmpty()) {
+                return;
             }
-        }
-        final Iterator<AttributeModifier> iterator = modifiers.getOrDefault(AttributeModifier.Operation.ADDITION, Collections.emptyList()).iterator();
-        while (iterator.hasNext()) {
-            final AttributeModifier modifier = iterator.next();
+            else {
+                stack.getAttributeModifiers(slotType).get(attribute).forEach(modifier1 -> modifiers.computeIfAbsent(modifier1.getOperation(), op -> new ArrayList()).add(modifier1));
+                return;
+            }
+        });
+        for (AttributeModifier attributeModifier : modifiers.getOrDefault(AttributeModifier.Operation.ADDITION, Collections.emptyList())) {
+            modifier = attributeModifier;
             value += (float) modifier.getAmount();
         }
         float val = value;
         for (final AttributeModifier modifier2 : modifiers.getOrDefault(AttributeModifier.Operation.MULTIPLY_BASE, Collections.emptyList())) {
-            val += (float) (value * modifier2.getAmount());
+            val += (float)(value * modifier2.getAmount());
         }
         for (final AttributeModifier modifier2 : modifiers.getOrDefault(AttributeModifier.Operation.MULTIPLY_TOTAL, Collections.emptyList())) {
-            val *= (float) modifier2.getAmount();
+            val *= (float)modifier2.getAmount();
         }
         return val;
     }

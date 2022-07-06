@@ -1,23 +1,29 @@
 package iskallia.vault.client.util;
 
+import java.io.InputStream;
+import java.io.Reader;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
+
 import iskallia.vault.Vault;
+
+import java.util.HashMap;
+
 import org.lwjgl.opengl.ARBShaderObjects;
 
 import javax.annotation.Nullable;
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.nio.charset.StandardCharsets;
-import java.util.HashMap;
 import java.util.Map;
 
 public class ShaderUtil {
     private static final String PREFIX = "/assets/the_vault/shader/";
     public static int GRAYSCALE_SHADER;
+    public static int COLORIZE_SHADER;
     private static final Map<Integer, Map<String, Integer>> UNIFORM_CONSTANTS;
 
     public static void initShaders() {
         ShaderUtil.GRAYSCALE_SHADER = createProgram("grayscale.vert", "grayscale.frag");
+        ShaderUtil.COLORIZE_SHADER = createProgram("colorize.vert", "colorize.frag");
     }
 
     public static void useShader(final int shader) {
@@ -119,6 +125,7 @@ public class ShaderUtil {
 
     static {
         ShaderUtil.GRAYSCALE_SHADER = 0;
+        ShaderUtil.COLORIZE_SHADER = 0;
         UNIFORM_CONSTANTS = new HashMap<Integer, Map<String, Integer>>();
     }
 }

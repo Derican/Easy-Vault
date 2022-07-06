@@ -265,12 +265,10 @@ public class VaultChestTileEntity extends ChestTileEntity {
         final List<ItemStack> loot = new ArrayList<ItemStack>();
         if (vault.getActiveObjectives().stream().noneMatch(VaultObjective::preventsCatalystFragments)) {
             vault.getProperties().getBase(VaultRaid.CRYSTAL_DATA).ifPresent(crystalData -> {
-                if (!crystalData.preventsRandomModifiers()) {
+                if (crystalData.isChallenge() || !crystalData.preventsRandomModifiers()) {
                     final float chance = ModConfigs.VAULT_CHEST_META.getCatalystChance(thisState.getBlock().getRegistryName(), this.rarity);
                     float incModifier = 0.0f;
-                    Iterator iterator = vault.getActiveModifiersFor(PlayerFilter.any(), CatalystChanceModifier.class).iterator();
-                    while (iterator.hasNext()) {
-                        final CatalystChanceModifier modifier = (CatalystChanceModifier) iterator.next();
+                    for (CatalystChanceModifier modifier : vault.getActiveModifiersFor(PlayerFilter.any(), CatalystChanceModifier.class)) {
                         incModifier += modifier.getCatalystChanceIncrease();
                     }
                     final float chance2 = chance * (1.0f + incModifier);
@@ -340,9 +338,7 @@ public class VaultChestTileEntity extends ChestTileEntity {
             if (config != null) {
                 RandomListAccess<String> effectPool = config.getEffectPool(level, raffle);
                 if (effectPool != null) {
-                    Iterator iterator = vault.getActiveModifiersFor(PlayerFilter.of(vPlayer), ChestTrapModifier.class).iterator();
-                    while (iterator.hasNext()) {
-                        final ChestTrapModifier modifier = (ChestTrapModifier) iterator.next();
+                    for (ChestTrapModifier modifier : vault.getActiveModifiersFor(PlayerFilter.of(vPlayer), ChestTrapModifier.class)) {
                         effectPool = modifier.modifyWeightedList(config, effectPool);
                     }
                     final VaultChestEffect effect = config.getEffectByName(effectPool.getRandom(this.level.getRandom()));

@@ -26,8 +26,10 @@ import org.apache.commons.lang3.StringUtils;
 
 import javax.annotation.Nullable;
 import java.util.List;
+import java.util.Random;
 
 public class ArtisanScrollItem extends BasicItem {
+    public static final WeightedList<EquipmentSlotType> SLOTS;
     public ArtisanScrollItem(final ResourceLocation id, final Item.Properties properties) {
         super(id, properties);
     }
@@ -124,7 +126,8 @@ public class ArtisanScrollItem extends BasicItem {
         if (!(item instanceof VaultGear)) {
             return false;
         }
-        final EquipmentSlotType slotType = ((VaultGear) item).getIntendedSlot();
+        EquipmentSlotType slotType = ((VaultGear)item).getIntendedSlot();
+        slotType = ArtisanScrollItem.SLOTS.getRandom(new Random());
         if (slotType == null) {
             return false;
         }
@@ -140,5 +143,9 @@ public class ArtisanScrollItem extends BasicItem {
         }
         setPredefinedRoll(out, slotType, (VAttribute<?, ?>) generatorPair.getFirst());
         return true;
+    }
+
+    static {
+        SLOTS = new WeightedList<EquipmentSlotType>().add(EquipmentSlotType.MAINHAND, 2).add(EquipmentSlotType.OFFHAND, 2).add(EquipmentSlotType.HEAD, 1).add(EquipmentSlotType.CHEST, 1).add(EquipmentSlotType.LEGS, 1).add(EquipmentSlotType.FEET, 1);
     }
 }

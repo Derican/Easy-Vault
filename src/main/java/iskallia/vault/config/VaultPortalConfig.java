@@ -1,6 +1,7 @@
 package iskallia.vault.config;
 
 import com.google.gson.annotations.Expose;
+import iskallia.vault.init.ModBlocks;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.util.ResourceLocation;
@@ -17,7 +18,7 @@ public class VaultPortalConfig extends Config {
 
     @Override
     protected void reset() {
-        this.VALID_BLOCKS = new String[]{Blocks.BLACKSTONE.getRegistryName().toString(), Blocks.POLISHED_BLACKSTONE.getRegistryName().toString(), Blocks.POLISHED_BLACKSTONE_BRICKS.getRegistryName().toString(), Blocks.CRACKED_POLISHED_BLACKSTONE_BRICKS.getRegistryName().toString()};
+        this.VALID_BLOCKS = new String[] { Blocks.BLACKSTONE.getRegistryName().toString(), Blocks.POLISHED_BLACKSTONE.getRegistryName().toString(), Blocks.POLISHED_BLACKSTONE_BRICKS.getRegistryName().toString(), Blocks.CRACKED_POLISHED_BLACKSTONE_BRICKS.getRegistryName().toString(), ModBlocks.FINAL_VAULT_FRAME.getRegistryName().toString() };
     }
 
     public Block[] getValidFrameBlocks() {

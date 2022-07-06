@@ -32,6 +32,13 @@ public class VoteModifier {
         this.voteLockDurationChangeSeconds = voteLockDurationChangeSeconds;
     }
 
+    public VoteModifier(final String name, final String description, final String color, final int voteLockDurationChangeSeconds) {
+        this.name = name;
+        this.description = description;
+        this.color = color;
+        this.voteLockDurationChangeSeconds = voteLockDurationChangeSeconds;
+    }
+
     public String getName() {
         return this.name;
     }

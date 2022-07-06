@@ -1,22 +1,43 @@
 package iskallia.vault.world.vault.gen.layout;
 
-import iskallia.vault.world.gen.structure.JigsawPatternFilter;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.Rotation;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.vector.Vector3i;
-import net.minecraft.world.gen.feature.jigsaw.JigsawPattern;
+import java.util.Objects;
+
 import net.minecraft.world.gen.feature.jigsaw.JigsawPiece;
 
-import javax.annotation.Nullable;
-import java.util.*;
+import java.util.Random;
+
+import net.minecraft.world.gen.feature.jigsaw.JigsawPattern;
+import net.minecraft.util.Rotation;
+import net.minecraft.util.math.BlockPos;
+
 import java.util.function.Predicate;
+
+import iskallia.vault.world.gen.structure.JigsawPatternFilter;
+
+import java.util.Collection;
+import javax.annotation.Nullable;
+import java.util.HashSet;
+import java.util.HashMap;
+import java.util.Set;
+
+import net.minecraft.util.math.vector.Vector3i;
+
+import java.util.Map;
+
+import net.minecraft.nbt.CompoundNBT;
+import iskallia.vault.Vault;
+import net.minecraft.util.ResourceLocation;
 
 public abstract class VaultRoomLayoutGenerator implements JigsawPoolProvider {
     private final ResourceLocation id;
+    private ResourceLocation startRoomId;
+    private ResourceLocation roomId;
+    private ResourceLocation tunnelId;
 
     protected VaultRoomLayoutGenerator(final ResourceLocation id) {
+        this.startRoomId = Vault.id("vault/starts");
+        this.roomId = Vault.id("vault/rooms");
+        this.tunnelId = Vault.id("vault/tunnels");
         this.id = id;
     }
 
@@ -24,15 +45,55 @@ public abstract class VaultRoomLayoutGenerator implements JigsawPoolProvider {
         return this.id;
     }
 
+    @Override
+    public ResourceLocation getStartRoomId() {
+        return this.startRoomId;
+    }
+
+    @Override
+    public ResourceLocation getRoomId() {
+        return this.roomId;
+    }
+
+    @Override
+    public ResourceLocation getTunnelId() {
+        return this.tunnelId;
+    }
+
+    public void setStartRoomId(final ResourceLocation startRoomId) {
+        this.startRoomId = startRoomId;
+    }
+
+    public void setRoomId(final ResourceLocation roomId) {
+        this.roomId = roomId;
+    }
+
+    public void setTunnelId(final ResourceLocation tunnelId) {
+        this.tunnelId = tunnelId;
+    }
+
     public abstract void setSize(final int p0);
 
     public abstract Layout generateLayout();
 
     protected CompoundNBT serialize() {
-        return new CompoundNBT();
+        final CompoundNBT nbt = new CompoundNBT();
+        nbt.putString("startRoomId", this.startRoomId.toString());
+        nbt.putString("roomId", this.roomId.toString());
+        nbt.putString("tunnelId", this.tunnelId.toString());
+        return nbt;
     }
 
     protected void deserialize(final CompoundNBT tag) {
+        if (tag.contains("startRoomId", 8)) {
+            this.startRoomId = new ResourceLocation(tag.getString("startRoomId"));
+        }
+        if (tag.contains("roomId", 8)) {
+            this.roomId = new ResourceLocation(tag.getString("roomId"));
+        }
+        if (tag.contains("tunnelId", 8)) {
+            this.tunnelId = new ResourceLocation(tag.getString("tunnelId"));
+        }
     }
 
     public static class Layout {

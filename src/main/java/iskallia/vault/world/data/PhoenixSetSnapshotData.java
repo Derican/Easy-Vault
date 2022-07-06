@@ -1,8 +1,10 @@
 package iskallia.vault.world.data;
 
 import iskallia.vault.init.ModAttributes;
+import iskallia.vault.item.crystal.CrystalData;
 import iskallia.vault.item.gear.VaultGear;
 import iskallia.vault.skill.set.PlayerSet;
+import iskallia.vault.world.vault.VaultRaid;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
@@ -60,9 +62,14 @@ public class PhoenixSetSnapshotData extends InventorySnapshotData {
         }
         final ServerPlayerEntity player = (ServerPlayerEntity) event.getEntity();
         final ServerWorld world = (ServerWorld) player.level;
-        if (PlayerSet.isActive(VaultGear.Set.PHOENIX, (LivingEntity) player)) {
-            final PhoenixSetSnapshotData data = get(world);
-            if (data.hasSnapshot((PlayerEntity) player)) {
+        final VaultRaid vault = VaultRaidData.get(world).getAt(world, player.blockPosition());
+        if (vault != null && vault.getProperties().exists(VaultRaid.PARENT)) {
+            final CrystalData data = vault.getProperties().getBaseOrDefault(VaultRaid.CRYSTAL_DATA, CrystalData.EMPTY);
+            return;
+        }
+        if (PlayerSet.isActive(VaultGear.Set.PHOENIX, (LivingEntity)player)) {
+            final PhoenixSetSnapshotData data2 = get(world);
+            if (data2.hasSnapshot((PlayerEntity)player)) {
                 player.addTag("the_vault_restore_phoenixset");
             }
         }

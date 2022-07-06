@@ -11,8 +11,8 @@ public class SummonEternalDebuffConfig extends SummonEternalConfig {
     @Expose
     private final int debuffAmplifier;
 
-    public SummonEternalDebuffConfig(final int cost, final int cooldown, final int numberOfEternals, final int despawnTime, final boolean vaultOnly, final float ancientChance, final float applyDebuffChance, final int debuffDurationTicks, final int debuffAmplifier) {
-        super(cost, cooldown, numberOfEternals, despawnTime, ancientChance, vaultOnly);
+    public SummonEternalDebuffConfig(final int cost, final int cooldown, final int numberOfEternals, final int summonedEternalsCap, final int despawnTime, final boolean vaultOnly, final float ancientChance, final float applyDebuffChance, final int debuffDurationTicks, final int debuffAmplifier) {
+        super(cost, cooldown, numberOfEternals, summonedEternalsCap, despawnTime, ancientChance, vaultOnly);
         this.applyDebuffChance = applyDebuffChance;
         this.debuffDurationTicks = debuffDurationTicks;
         this.debuffAmplifier = debuffAmplifier;

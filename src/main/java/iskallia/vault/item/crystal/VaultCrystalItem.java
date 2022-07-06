@@ -107,8 +107,9 @@ public class VaultCrystalItem extends Item {
             context.getLevel().playSound((PlayerEntity) null, (double) pos.getX(), (double) pos.getY(), (double) pos.getZ(), ModSounds.VAULT_PORTAL_OPEN, SoundCategory.BLOCKS, 1.0f, 1.0f);
             final IFormattableTextComponent playerName = context.getPlayer().getDisplayName().copy();
             playerName.setStyle(Style.EMPTY.withColor(Color.fromRgb(9974168)));
-            final StringTextComponent suffix = new StringTextComponent(" opened a Vault!");
-            context.getLevel().getServer().getPlayerList().broadcastMessage((ITextComponent) new StringTextComponent("").append((ITextComponent) playerName).append((ITextComponent) suffix), ChatType.CHAT, context.getPlayer().getUUID());
+            final String suffix = (data.getType() == CrystalData.Type.FINAL_LOBBY) ? " opened the Final Vault!" : " opened a Vault!";
+            final StringTextComponent suffixComponent = new StringTextComponent(suffix);
+            context.getLevel().getServer().getPlayerList().broadcastMessage((ITextComponent)new StringTextComponent("").append((ITextComponent)playerName).append((ITextComponent)suffixComponent), ChatType.CHAT, context.getPlayer().getUUID());
             context.getItemInHand().shrink(1);
             return ActionResultType.SUCCESS;
         }
@@ -116,17 +117,30 @@ public class VaultCrystalItem extends Item {
     }
 
     private boolean tryCreatePortal(final World world, final BlockPos pos, final Direction facing, final CrystalData data) {
-        final Optional<VaultPortalSize> optional = VaultPortalSize.getPortalSize((IWorld) world, pos.relative(facing), Direction.Axis.X, VaultPortalBlock.FRAME);
+        final Optional<VaultPortalSize> optional = VaultPortalSize.getPortalSize((IWorld)world, pos.relative(facing), Direction.Axis.X, VaultPortalBlock.FRAME);
         if (optional.isPresent()) {
-            final BlockState state = ModBlocks.VAULT_PORTAL.defaultBlockState().setValue(VaultPortalBlock.AXIS, optional.get().getAxis());
-            optional.get().placePortalBlocks(blockPos -> {
+            final VaultPortalSize portal = optional.get();
+            final BlockState state = (BlockState)ModBlocks.VAULT_PORTAL.defaultBlockState().setValue(VaultPortalBlock.AXIS, portal.getAxis());
+            data.frameData = new FrameData();
+            for (int i = -1; i <= portal.getWidth(); ++i) {
+                for (int j = -1; j <= portal.getHeight(); ++j) {
+                    if (i == -1 || j == -1 || i == portal.getWidth() || j == portal.getHeight()) {
+                        final BlockPos p = portal.getBottomLeft().relative(portal.getRightDir(), i).above(j);
+                        final TileEntity te = world.getBlockEntity(p);
+                        data.frameData.tiles.add(new FrameData.Tile(world.getBlockState(p).getBlock(), (te == null) ? new CompoundNBT() : te.serializeNBT(), p));
+                    }
+                }
+            }
+            data.updateDelegate();
+            portal.placePortalBlocks(blockPos -> {
                 world.setBlock(blockPos, state, 3);
-                final TileEntity te = world.getBlockEntity(blockPos);
-                if (!(te instanceof VaultPortalTileEntity)) {
+                final TileEntity te2 = world.getBlockEntity(blockPos);
+                if (!(te2 instanceof VaultPortalTileEntity)) {
                     return;
-                } else {
-                    final VaultPortalTileEntity portal = (VaultPortalTileEntity) te;
-                    portal.setCrystalData(data);
+                }
+                else {
+                    final VaultPortalTileEntity portalTE = (VaultPortalTileEntity)te2;
+                    portalTE.setCrystalData(data);
                     return;
                 }
             });

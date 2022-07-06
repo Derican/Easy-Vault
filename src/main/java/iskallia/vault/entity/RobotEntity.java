@@ -3,6 +3,9 @@ package iskallia.vault.entity;
 import iskallia.vault.entity.ai.*;
 import iskallia.vault.init.ModSounds;
 import iskallia.vault.skill.ability.effect.sub.RampageDotAbility;
+import iskallia.vault.world.data.VaultRaidData;
+import iskallia.vault.world.vault.VaultRaid;
+import iskallia.vault.world.vault.logic.objective.raid.RaidChallengeObjective;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.MobEntity;
@@ -18,6 +21,7 @@ import net.minecraft.util.SoundEvent;
 import net.minecraft.world.BossInfo;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerBossInfo;
+import net.minecraft.world.server.ServerWorld;
 
 public class RobotEntity extends IronGolemEntity implements VaultBoss {
     public TeleportRandomly<RobotEntity> teleportTask;
@@ -73,6 +77,8 @@ public class RobotEntity extends IronGolemEntity implements VaultBoss {
         if (!this.level.isClientSide) {
             this.bossInfo.setPercent(this.getHealth() / this.getMaxHealth());
             this.regenAfterAWhile.tick();
+            final VaultRaid vault = VaultRaidData.get((ServerWorld) this.level).getAt((ServerWorld) this.level, this.blockPosition());
+            this.bossInfo.setVisible(vault == null || !vault.getActiveObjective(RaidChallengeObjective.class).isPresent());
         }
     }
 

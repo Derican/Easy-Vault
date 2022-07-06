@@ -27,8 +27,21 @@ public class MysteryHostileEggConfig extends Config {
 
     @Override
     protected void reset() {
-        this.POOL.add(new ProductEntry(this.getEgg((EntityType<?>) EntityType.ZOMBIE)), 3);
-        this.POOL.add(new ProductEntry(this.getEgg((EntityType<?>) EntityType.SKELETON)), 1);
+        this.POOL.add(new ProductEntry(this.getEgg(EntityType.ZOMBIE)), 8);
+        this.POOL.add(new ProductEntry(this.getEgg(EntityType.SKELETON)), 8);
+        this.POOL.add(new ProductEntry(this.getEgg(EntityType.BLAZE)), 6);
+        this.POOL.add(new ProductEntry(this.getEgg(EntityType.WITHER_SKELETON)), 6);
+        this.POOL.add(new ProductEntry(this.getEgg(EntityType.ENDERMAN)), 6);
+        this.POOL.add(new ProductEntry(this.getEgg(EntityType.DROWNED)), 6);
+        this.POOL.add(new ProductEntry(this.getEgg(EntityType.CREEPER)), 8);
+        this.POOL.add(new ProductEntry(this.getEgg(EntityType.RAVAGER)), 2);
+        this.POOL.add(new ProductEntry(this.getEgg(EntityType.SLIME)), 8);
+        this.POOL.add(new ProductEntry(this.getEgg(EntityType.SPIDER)), 8);
+        this.POOL.add(new ProductEntry(this.getEgg(EntityType.VINDICATOR)), 3);
+        this.POOL.add(new ProductEntry(this.getEgg(EntityType.WITCH)), 6);
+        this.POOL.add(new ProductEntry(this.getEgg(EntityType.ZOMBIFIED_PIGLIN)), 6);
+        this.POOL.add(new ProductEntry(this.getEgg(EntityType.GUARDIAN)), 6);
+        this.POOL.add(new ProductEntry(this.getEgg(EntityType.MAGMA_CUBE)), 6);
     }
 
     private Item getEgg(final EntityType<?> type) {

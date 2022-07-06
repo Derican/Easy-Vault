@@ -152,6 +152,12 @@ public class GearAnvilEvents {
     @SubscribeEvent
     public static void onApplyEtching(final AnvilUpdateEvent event) {
         if (event.getLeft().getItem() instanceof VaultArmorItem && event.getRight().getItem() == ModItems.ETCHING) {
+            if (ModAttributes.GEAR_STATE.getBase(event.getRight()).orElse(VaultGear.State.UNIDENTIFIED) == VaultGear.State.UNIDENTIFIED) {
+                return;
+            }
+            if (event.getRight().getOrCreateTag().contains("RollTicks")) {
+                return;
+            }
             final ItemStack output = event.getLeft().copy();
             if (ModAttributes.GEAR_SET.exists(output) && ModAttributes.GEAR_SET.getBase(output).orElse(VaultGear.Set.NONE) != VaultGear.Set.NONE) {
                 return;
@@ -351,11 +357,11 @@ public class GearAnvilEvents {
 
     @SubscribeEvent
     public static void onCreateVoidOrb(final AnvilUpdateEvent event) {
-        if (!(event.getLeft().getItem() instanceof ArtisanScrollItem) || !(event.getRight().getItem() instanceof VoidOrbItem)) {
+        if (!(event.getRight().getItem() instanceof ArtisanScrollItem) || !(event.getLeft().getItem() instanceof VoidOrbItem)) {
             return;
         }
-        final ItemStack scroll = event.getLeft();
-        final ItemStack orb = event.getRight();
+        final ItemStack scroll = event.getRight();
+        final ItemStack orb = event.getLeft();
         final Pair<EquipmentSlotType, VAttribute<?, ?>> predefinedRoll;
         if ((predefinedRoll = ArtisanScrollItem.getPredefinedRoll(scroll)) == null || VoidOrbItem.getPredefinedRemoval(orb) != null) {
             return;

@@ -546,7 +546,7 @@ public interface VaultGear<T extends Item & VaultGear<? extends Item>> extends I
             tooltip.add(stringTextComponent29.setStyle(Style.EMPTY.withColor(Color.fromRgb(63668))));
             return;
         });
-        ModAttributes.EXTRA_LEECH_RATIO.get(stack).map(attribute -> attribute.getValue(stack)).ifPresent(value -> {
+        ModAttributes.EXTRA_LEECH_RATIO.get(stack).map(VAttribute.Instance::getBaseValue).ifPresent(value -> {
             final StringTextComponent stringTextComponent30 = new StringTextComponent("+" + format(value * 100.0f, 5) + "% Leech");
 
             tooltip.add(stringTextComponent30.setStyle(Style.EMPTY.withColor(Color.fromRgb(16716820))));
@@ -570,7 +570,7 @@ public interface VaultGear<T extends Item & VaultGear<? extends Item>> extends I
             tooltip.add(stringTextComponent33.setStyle(Style.EMPTY.withColor(Color.fromRgb(12520704))));
             return;
         });
-        ModAttributes.EXTRA_HEALTH.get(stack).map(attribute -> attribute.getValue(stack)).ifPresent(value -> {
+        ModAttributes.EXTRA_HEALTH.get(stack).map(VAttribute.Instance::getBaseValue).ifPresent(value -> {
             final StringTextComponent stringTextComponent34 = new StringTextComponent("+" + format(value, 5) + " Health");
 
             tooltip.add(stringTextComponent34.setStyle(Style.EMPTY.withColor(Color.fromRgb(2293541))));
@@ -582,7 +582,7 @@ public interface VaultGear<T extends Item & VaultGear<? extends Item>> extends I
             tooltip.add(stringTextComponent35.setStyle(Style.EMPTY.withColor(Color.fromRgb(2293541))));
             return;
         });
-        ModAttributes.EXTRA_PARRY_CHANCE.get(stack).map(attribute -> attribute.getValue(stack)).ifPresent(value -> {
+        ModAttributes.EXTRA_PARRY_CHANCE.get(stack).map(VAttribute.Instance::getBaseValue).ifPresent(value -> {
             final StringTextComponent stringTextComponent36 = new StringTextComponent("+" + formatPercent(value * 100.0f) + "% Parry");
 
             tooltip.add(stringTextComponent36.setStyle(Style.EMPTY.withColor(Color.fromRgb(11534098))));
@@ -594,7 +594,7 @@ public interface VaultGear<T extends Item & VaultGear<? extends Item>> extends I
             tooltip.add(stringTextComponent37.setStyle(Style.EMPTY.withColor(Color.fromRgb(11534098))));
             return;
         });
-        ModAttributes.EXTRA_RESISTANCE.get(stack).map(attribute -> attribute.getValue(stack)).ifPresent(value -> {
+        ModAttributes.EXTRA_RESISTANCE.get(stack).map(VAttribute.Instance::getBaseValue).ifPresent(value -> {
             final StringTextComponent stringTextComponent38 = new StringTextComponent("+" + formatPercent(value * 100.0f) + "% Resistance");
 
             tooltip.add(stringTextComponent38.setStyle(Style.EMPTY.withColor(Color.fromRgb(16702720))));

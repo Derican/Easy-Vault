@@ -10,10 +10,7 @@ import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class DamageOverTimeHelper {
@@ -24,6 +21,25 @@ public class DamageOverTimeHelper {
             final DamageOverTimeEntry entry = new DamageOverTimeEntry(seconds * 20, damageSource, target.getId(), totalDamage / seconds);
             DamageOverTimeHelper.worldEntries.computeIfAbsent((RegistryKey<World>) target.getCommandSenderWorld().dimension(), key -> new ArrayList()).add(entry);
         });
+    }
+
+    public static void invalidateAll(final LivingEntity target) {
+        getDotEntries((Entity) target).forEach(rec$ -> ((DamageOverTimeEntry) rec$).invalidate());
+    }
+
+    public static List<DamageOverTimeEntry> getDotEntries(final Entity entity) {
+        final World entityWorld = entity.getCommandSenderWorld();
+        final List<DamageOverTimeEntry> allEntries = DamageOverTimeHelper.worldEntries.get(entityWorld.dimension());
+        final List<DamageOverTimeEntry> entries = new LinkedList<DamageOverTimeEntry>();
+        if (allEntries == null) {
+            return entries;
+        }
+        for (final DamageOverTimeEntry entry : allEntries) {
+            if (entry.entityId == entity.getId()) {
+                entries.add(entry);
+            }
+        }
+        return entries;
     }
 
     @SubscribeEvent
@@ -38,7 +54,7 @@ public class DamageOverTimeHelper {
         final List<DamageOverTimeEntry> entries = DamageOverTimeHelper.worldEntries.computeIfAbsent((RegistryKey<World>) world.dimension(), key -> new ArrayList());
         entries.forEach(rec$ -> ((DamageOverTimeEntry) rec$).decrement());
         ActiveFlags.IS_DOT_ATTACKING.runIfNotSet(() -> entries.forEach(entry -> {
-            if (entry.ticks % 20 == 0) {
+            if (entry.valid && entry.ticks % 20 == 0) {
                 final Entity e = world.getEntity(entry.entityId);
                 if (e instanceof LivingEntity && e.isAlive()) {
                     DamageUtil.shotgunAttack(e, entity -> entity.hurt(entry.source, entry.damagePerSecond));

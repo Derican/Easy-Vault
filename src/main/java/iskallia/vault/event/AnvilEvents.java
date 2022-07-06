@@ -125,9 +125,6 @@ public class AnvilEvents {
             if (!data.getModifiers().isEmpty() || data.getSelectedObjective() != null) {
                 return;
             }
-            if (event.getRight().getItem() == ModItems.CRYSTAL_SEAL_ANCIENTS && data.getType() == CrystalData.Type.COOP) {
-                return;
-            }
             VaultRaid.init();
             final ResourceLocation objectiveKey = ((ItemVaultCrystalSeal) event.getRight().getItem()).getObjectiveId();
             final VaultObjective objective = VaultObjective.getObjective(objectiveKey);
@@ -344,6 +341,9 @@ public class AnvilEvents {
         if (event.getLeft().getItem() instanceof VaultCrystalItem && event.getRight().getItem() == ModItems.SOUL_FLAME) {
             final ItemStack output = event.getLeft().copy();
             final CrystalData data = VaultCrystalItem.getData(output);
+            if (data.getType() == CrystalData.Type.FINAL_LOBBY) {
+                return;
+            }
             if (!data.getModifiers().isEmpty()) {
                 return;
             }

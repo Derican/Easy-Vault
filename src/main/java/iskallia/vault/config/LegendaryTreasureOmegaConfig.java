@@ -1,7 +1,9 @@
 package iskallia.vault.config;
 
 import com.google.gson.annotations.Expose;
+import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import iskallia.vault.config.entry.SingleItemEntry;
+import iskallia.vault.init.ModItems;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -33,12 +35,60 @@ public class LegendaryTreasureOmegaConfig extends Config {
 
     @Override
     protected void reset() {
-        final ItemStack fanciestApple = new ItemStack((IItemProvider) Items.ENCHANTED_GOLDEN_APPLE);
-        fanciestApple.setHoverName((ITextComponent) new StringTextComponent("Fanciest Apple"));
-        this.ITEMS.add(new SingleItemEntry(fanciestApple));
-        final ItemStack sword = new ItemStack((IItemProvider) Items.DIAMOND_SWORD);
-        sword.enchant(Enchantments.SHARPNESS, 10);
-        this.ITEMS.add(new SingleItemEntry(sword));
+        try {
+            {
+                ItemStack itemStack = new ItemStack(ModItems.HELMET);
+                itemStack.setTag(JsonToNBT.parseTag("{Vault:{Attributes:[{Id:\\\"the_vault:gear_roll_type\\\",BaseValue:\\\"Omega\\\"}]}}"));
+                this.ITEMS.add(new SingleItemEntry(itemStack));
+            }
+            {
+                ItemStack itemStack = new ItemStack(ModItems.CHESTPLATE);
+                itemStack.setTag(JsonToNBT.parseTag("{Vault:{Attributes:[{Id:\\\"the_vault:gear_roll_type\\\",BaseValue:\\\"Omega\\\"}]}}"));
+                this.ITEMS.add(new SingleItemEntry(itemStack));
+            }
+            {
+                ItemStack itemStack = new ItemStack(ModItems.LEGGINGS);
+                itemStack.setTag(JsonToNBT.parseTag("{Vault:{Attributes:[{Id:\\\"the_vault:gear_roll_type\\\",BaseValue:\\\"Omega\\\"}]}}"));
+                this.ITEMS.add(new SingleItemEntry(itemStack));
+            }
+            {
+                ItemStack itemStack = new ItemStack(ModItems.BOOTS);
+                itemStack.setTag(JsonToNBT.parseTag("{Vault:{Attributes:[{Id:\\\"the_vault:gear_roll_type\\\",BaseValue:\\\"Omega\\\"}]}}"));
+                this.ITEMS.add(new SingleItemEntry(itemStack));
+            }
+            {
+                ItemStack itemStack = new ItemStack(ModItems.SWORD);
+                itemStack.setTag(JsonToNBT.parseTag("{Vault:{Attributes:[{Id:\\\"the_vault:gear_roll_type\\\",BaseValue:\\\"Omega\\\"}]}}"));
+                this.ITEMS.add(new SingleItemEntry(itemStack));
+            }
+            {
+                ItemStack itemStack = new ItemStack(ModItems.AXE);
+                itemStack.setTag(JsonToNBT.parseTag("{Vault:{Attributes:[{Id:\\\"the_vault:gear_roll_type\\\",BaseValue:\\\"Omega\\\"}]}}"));
+                this.ITEMS.add(new SingleItemEntry(itemStack));
+            }
+            {
+                ItemStack itemStack = new ItemStack(ModItems.IDOL_BENEVOLENT);
+                itemStack.setTag(JsonToNBT.parseTag("{Vault:{Attributes:[{Id:\\\"the_vault:gear_roll_type\\\",BaseValue:\\\"Omega\\\"}]}}"));
+                this.ITEMS.add(new SingleItemEntry(itemStack));
+            }
+            {
+                ItemStack itemStack = new ItemStack(ModItems.IDOL_OMNISCIENT);
+                itemStack.setTag(JsonToNBT.parseTag("{Vault:{Attributes:[{Id:\\\"the_vault:gear_roll_type\\\",BaseValue:\\\"Omega\\\"}]}}"));
+                this.ITEMS.add(new SingleItemEntry(itemStack));
+            }
+            {
+                ItemStack itemStack = new ItemStack(ModItems.IDOL_TIMEKEEPER);
+                itemStack.setTag(JsonToNBT.parseTag("{Vault:{Attributes:[{Id:\\\"the_vault:gear_roll_type\\\",BaseValue:\\\"Omega\\\"}]}}"));
+                this.ITEMS.add(new SingleItemEntry(itemStack));
+            }
+            {
+                ItemStack itemStack = new ItemStack(ModItems.IDOL_MALEVOLENCE);
+                itemStack.setTag(JsonToNBT.parseTag("{Vault:{Attributes:[{Id:\\\"the_vault:gear_roll_type\\\",BaseValue:\\\"Omega\\\"}]}}"));
+                this.ITEMS.add(new SingleItemEntry(itemStack));
+            }
+        } catch (CommandSyntaxException e) {
+
+        }
     }
 
     public ItemStack getRandom() {

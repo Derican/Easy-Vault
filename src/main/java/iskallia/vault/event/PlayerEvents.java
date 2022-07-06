@@ -161,6 +161,7 @@ public class PlayerEvents {
         } else if (!PlayerSet.isActive(VaultGear.Set.DREAM, (LivingEntity) player)) {
             PlayerDamageHelper.removeMultiplier(player, DreamSet.MULTIPLIER_ID);
         }
+        player.getAttribute(Attributes.MAX_HEALTH).removeModifier(DryadSet.HEALTH_MODIFIER_ID);
         if (PlayerSet.isActive(VaultGear.Set.DRYAD, (LivingEntity) player)) {
             float health = 0.0f;
             for (final SetNode<?> node : sets.getNodes()) {
@@ -171,8 +172,6 @@ public class PlayerEvents {
                 health += set3.getExtraHealth();
             }
             player.getAttribute(Attributes.MAX_HEALTH).addTransientModifier(new AttributeModifier(DryadSet.HEALTH_MODIFIER_ID, "Dryad Bonus Health", (double) health, AttributeModifier.Operation.ADDITION));
-        } else {
-            player.getAttribute(Attributes.MAX_HEALTH).removeModifier(DryadSet.HEALTH_MODIFIER_ID);
         }
         if (PlayerSet.isActive(VaultGear.Set.BLOOD, (LivingEntity) player) && !PlayerDamageHelper.getMultiplier(player, BloodSet.MULTIPLIER_ID).isPresent()) {
             float multiplier = 0.0f;

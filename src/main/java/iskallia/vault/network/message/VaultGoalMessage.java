@@ -3,6 +3,7 @@ package iskallia.vault.network.message;
 import iskallia.vault.client.vault.goal.VaultGoalData;
 import iskallia.vault.network.message.base.OpcodeMessage;
 import iskallia.vault.world.vault.logic.objective.ScavengerHuntObjective;
+import iskallia.vault.world.vault.logic.objective.TreasureHuntObjective;
 import iskallia.vault.world.vault.logic.objective.architect.VotingSession;
 import net.minecraft.nbt.INBT;
 import net.minecraft.nbt.ListNBT;
@@ -56,9 +57,18 @@ public class VaultGoalMessage extends OpcodeMessage<VaultGoalMessage.VaultGoal> 
         return OpcodeMessage.composeMessage(new VaultGoalMessage(), VaultGoal.SCAVENGER_GOAL, payload -> {
             final ListNBT list = new ListNBT();
 
-            final Iterator iterator = activeSubmissions.iterator();
-            while (iterator.hasNext()) {
-                final ScavengerHuntObjective.ItemSubmission submission = (ScavengerHuntObjective.ItemSubmission) iterator.next();
+            for (ScavengerHuntObjective.ItemSubmission submission : activeSubmissions) {
+                list.add(submission.serialize());
+            }
+            payload.put("scavengerItems", (INBT) list);
+        });
+    }
+
+    public static VaultGoalMessage treasureHunt(final List<TreasureHuntObjective.ItemSubmission> activeSubmissions) {
+        return OpcodeMessage.composeMessage(new VaultGoalMessage(), VaultGoal.SCAVENGER_GOAL, payload -> {
+            final ListNBT list = new ListNBT();
+
+            for (TreasureHuntObjective.ItemSubmission submission : activeSubmissions) {
                 list.add(submission.serialize());
             }
             payload.put("scavengerItems", (INBT) list);
@@ -76,6 +86,25 @@ public class VaultGoalMessage extends OpcodeMessage<VaultGoalMessage.VaultGoal> 
         });
     }
 
+    public static VaultGoalMessage architectFinalEvent(final int killedBosses, final int totalBosses, final int knowledge, final int totalKnowledge, @Nullable final VotingSession activeVotingSession, final boolean killCurrentBoss) {
+        ITextComponent text;
+        if (killCurrentBoss) {
+            text = (ITextComponent) new StringTextComponent("Kill the Boss!").withStyle(TextFormatting.BOLD).withStyle(TextFormatting.RED);
+        } else {
+            text = (ITextComponent) new StringTextComponent("Gather Knowledge!").withStyle(TextFormatting.BOLD).withStyle(TextFormatting.AQUA);
+        }
+        return OpcodeMessage.composeMessage(new VaultGoalMessage(), VaultGoal.FINAL_ARCHITECT_GOAL, payload -> {
+            payload.putString("message", ITextComponent.Serializer.toJson(text));
+            payload.putInt("killedBosses", killedBosses);
+            payload.putInt("totalBosses", totalBosses);
+            payload.putInt("knowledge", knowledge);
+            payload.putInt("totalKnowledge", totalKnowledge);
+            if (activeVotingSession != null) {
+                payload.put("votingSession", (INBT) activeVotingSession.serialize());
+            }
+        });
+    }
+
     public static VaultGoalMessage ancientsHunt(final int totalAncients, final int foundAncients) {
         return OpcodeMessage.composeMessage(new VaultGoalMessage(), VaultGoal.ANCIENTS_GOAL, payload -> {
             payload.putInt("total", totalAncients);
@@ -83,7 +112,7 @@ public class VaultGoalMessage extends OpcodeMessage<VaultGoalMessage.VaultGoal> 
         });
     }
 
-    public static VaultGoalMessage raidChallenge(final int wave, final int totalWaves, final int aliveMobs, final int totalMobs, final int tickWaveDelay, final int completed, final List<ITextComponent> positiveModifiers, final List<ITextComponent> negativeModifiers) {
+    public static VaultGoalMessage raidChallenge(final int wave, final int totalWaves, final int aliveMobs, final int totalMobs, final int tickWaveDelay, final int completed, final int target, final List<ITextComponent> positiveModifiers, final List<ITextComponent> negativeModifiers) {
         return OpcodeMessage.composeMessage(new VaultGoalMessage(), VaultGoal.RAID_GOAL, payload -> {
             payload.putInt("wave", wave);
             payload.putInt("totalWaves", totalWaves);
@@ -91,6 +120,7 @@ public class VaultGoalMessage extends OpcodeMessage<VaultGoalMessage.VaultGoal> 
             payload.putInt("totalMobs", totalMobs);
             payload.putInt("tickWaveDelay", tickWaveDelay);
             payload.putInt("completedRaids", completed);
+            payload.putInt("targetRaids", target);
             final ListNBT positives = new ListNBT();
             positiveModifiers.forEach(modifier -> positives.add(StringNBT.valueOf(ITextComponent.Serializer.toJson(modifier))));
             payload.put("positives", (INBT) positives);
@@ -120,6 +150,7 @@ public class VaultGoalMessage extends OpcodeMessage<VaultGoalMessage.VaultGoal> 
         ANCIENTS_GOAL,
         RAID_GOAL,
         CAKE_HUNT_GOAL,
-        CLEAR;
+        CLEAR,
+        FINAL_ARCHITECT_GOAL;
     }
 }

@@ -1,9 +1,6 @@
 package iskallia.vault.init;
 
-import iskallia.vault.client.particles.AltarFlameParticle;
-import iskallia.vault.client.particles.DepthFireworkParticle;
-import iskallia.vault.client.particles.RaidCubeParticle;
-import iskallia.vault.client.particles.StabilizerCubeParticle;
+import iskallia.vault.client.particles.*;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.ParticleManager;
 import net.minecraft.particles.BasicParticleType;
@@ -26,17 +23,20 @@ public class ModParticles {
     public static final RegistryObject<BasicParticleType> DEPTH_FIREWORK;
     public static final RegistryObject<BasicParticleType> STABILIZER_CUBE;
     public static final RegistryObject<BasicParticleType> RAID_EFFECT_CUBE;
+    public static final RegistryObject<BasicParticleType> EYESORE_APPEARANCE;
 
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public static void registerParticles(final ParticleFactoryRegisterEvent event) {
         final ParticleManager particleManager = Minecraft.getInstance().particleEngine;
-        particleManager.register((ParticleType) ModParticles.GREEN_FLAME.get(), AltarFlameParticle.Factory::new);
-        particleManager.register((ParticleType) ModParticles.BLUE_FLAME.get(), AltarFlameParticle.Factory::new);
-        particleManager.register((ParticleType) ModParticles.RED_FLAME.get(), AltarFlameParticle.Factory::new);
-        particleManager.register((ParticleType) ModParticles.YELLOW_FLAME.get(), AltarFlameParticle.Factory::new);
-        particleManager.register((ParticleType) ModParticles.DEPTH_FIREWORK.get(), DepthFireworkParticle.Factory::new);
-        particleManager.register((ParticleType) ModParticles.STABILIZER_CUBE.get(), StabilizerCubeParticle.Factory::new);
-        particleManager.register((ParticleType) ModParticles.RAID_EFFECT_CUBE.get(), RaidCubeParticle.Factory::new);
+        particleManager.register(ModParticles.GREEN_FLAME.get(), AltarFlameParticle.Factory::new);
+        particleManager.register(ModParticles.BLUE_FLAME.get(), AltarFlameParticle.Factory::new);
+        particleManager.register(ModParticles.RED_FLAME.get(), AltarFlameParticle.Factory::new);
+        particleManager.register(ModParticles.YELLOW_FLAME.get(), AltarFlameParticle.Factory::new);
+        particleManager.register(ModParticles.DEPTH_FIREWORK.get(), DepthFireworkParticle.Factory::new);
+        particleManager.register(ModParticles.STABILIZER_CUBE.get(), StabilizerCubeParticle.Factory::new);
+        particleManager.register(ModParticles.RAID_EFFECT_CUBE.get(), RaidCubeParticle.Factory::new);
+        particleManager.register(ModParticles.EYESORE_APPEARANCE.get(), EyesoreAppearanceParticle.Factory::new);
+
     }
 
     static {
@@ -48,5 +48,6 @@ public class ModParticles {
         DEPTH_FIREWORK = ModParticles.REGISTRY.register("depth_ignoring_firework", () -> new BasicParticleType(true));
         STABILIZER_CUBE = ModParticles.REGISTRY.register("stabilizer_cube", () -> new BasicParticleType(true));
         RAID_EFFECT_CUBE = ModParticles.REGISTRY.register("raid_cube", () -> new BasicParticleType(true));
+        EYESORE_APPEARANCE = ModParticles.REGISTRY.register("eyesore_appearance", () -> new BasicParticleType(true));
     }
 }

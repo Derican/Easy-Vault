@@ -29,6 +29,10 @@ public abstract class VaultGoalData {
                 (VaultGoalData.CURRENT_DATA = new ArchitectGoalData()).receive(pkt);
                 break;
             }
+            case FINAL_ARCHITECT_GOAL: {
+                (VaultGoalData.CURRENT_DATA = new FinalArchitectGoalData()).receive(pkt);
+                break;
+            }
             case ANCIENTS_GOAL: {
                 (VaultGoalData.CURRENT_DATA = new AncientGoalData()).receive(pkt);
                 break;

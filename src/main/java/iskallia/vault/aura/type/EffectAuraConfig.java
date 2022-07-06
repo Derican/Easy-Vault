@@ -23,6 +23,11 @@ public class EffectAuraConfig extends EternalAuraConfig.AuraConfig {
         this.effect = effect;
     }
 
+    public EffectAuraConfig(final EffectTalent effect, final String name, final String displayName, final String description, final String icon, final float radius) {
+        super(name, displayName, description, icon, radius);
+        this.effect = effect;
+    }
+
     public EffectTalent getEffect() {
         return this.effect;
     }

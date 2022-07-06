@@ -30,6 +30,7 @@ public class SetupEvents {
         ModConfigs.register();
         ModNetwork.initialize();
         ModRecipes.initialize();
+        ModGameRules.initialize();
     }
 
     @SubscribeEvent

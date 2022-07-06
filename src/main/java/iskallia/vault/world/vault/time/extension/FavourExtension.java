@@ -14,6 +14,6 @@ public class FavourExtension extends TimeExtension {
     }
 
     static {
-        ID = Vault.id("relic_set");
+        ID = Vault.id("favour");
     }
 }

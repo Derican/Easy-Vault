@@ -1,7 +1,9 @@
 package iskallia.vault.config;
 
 import com.google.gson.annotations.Expose;
+import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import iskallia.vault.config.entry.SingleItemEntry;
+import iskallia.vault.init.ModItems;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -31,10 +33,40 @@ public class LegendaryTreasureNormalConfig extends Config {
 
     @Override
     protected void reset() {
-        this.ITEMS.add(new SingleItemEntry(new ItemStack((IItemProvider) Items.APPLE)));
-        final ItemStack sword = new ItemStack((IItemProvider) Items.WOODEN_SWORD);
-        sword.enchant(Enchantments.SHARPNESS, 1);
-        this.ITEMS.add(new SingleItemEntry(sword));
+        try {
+            {
+                ItemStack itemStack = new ItemStack(ModItems.HELMET);
+                itemStack.setTag(JsonToNBT.parseTag("{Vault:{Attributes:[{Id:\\\"the_vault:gear_roll_type\\\",BaseValue:\\\"Normal Treasure\\\"}]}}"));
+                this.ITEMS.add(new SingleItemEntry(itemStack));
+            }
+            {
+                ItemStack itemStack = new ItemStack(ModItems.CHESTPLATE);
+                itemStack.setTag(JsonToNBT.parseTag("{Vault:{Attributes:[{Id:\\\"the_vault:gear_roll_type\\\",BaseValue:\\\"Normal Treasure\\\"}]}}"));
+                this.ITEMS.add(new SingleItemEntry(itemStack));
+            }
+            {
+                ItemStack itemStack = new ItemStack(ModItems.LEGGINGS);
+                itemStack.setTag(JsonToNBT.parseTag("{Vault:{Attributes:[{Id:\\\"the_vault:gear_roll_type\\\",BaseValue:\\\"Normal Treasure\\\"}]}}"));
+                this.ITEMS.add(new SingleItemEntry(itemStack));
+            }
+            {
+                ItemStack itemStack = new ItemStack(ModItems.BOOTS);
+                itemStack.setTag(JsonToNBT.parseTag("{Vault:{Attributes:[{Id:\\\"the_vault:gear_roll_type\\\",BaseValue:\\\"Normal Treasure\\\"}]}}"));
+                this.ITEMS.add(new SingleItemEntry(itemStack));
+            }
+            {
+                ItemStack itemStack = new ItemStack(ModItems.SWORD);
+                itemStack.setTag(JsonToNBT.parseTag("{Vault:{Attributes:[{Id:\\\"the_vault:gear_roll_type\\\",BaseValue:\\\"Normal Treasure\\\"}]}}"));
+                this.ITEMS.add(new SingleItemEntry(itemStack));
+            }
+            {
+                ItemStack itemStack = new ItemStack(ModItems.AXE);
+                itemStack.setTag(JsonToNBT.parseTag("{Vault:{Attributes:[{Id:\\\"the_vault:gear_roll_type\\\",BaseValue:\\\"Normal Treasure\\\"}]}}"));
+                this.ITEMS.add(new SingleItemEntry(itemStack));
+            }
+        } catch (CommandSyntaxException e) {
+
+        }
     }
 
     public ItemStack getRandom() {

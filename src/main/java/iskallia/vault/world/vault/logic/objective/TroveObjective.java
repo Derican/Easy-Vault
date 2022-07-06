@@ -8,9 +8,11 @@ import net.minecraft.block.Blocks;
 import net.minecraft.loot.LootTable;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
+import net.minecraft.world.server.ServerWorld;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -24,7 +26,7 @@ public class TroveObjective extends VaultObjective {
 
     @Nonnull
     @Override
-    public BlockState getObjectiveRelevantBlock() {
+    public BlockState getObjectiveRelevantBlock(final VaultRaid vault, final ServerWorld world, final BlockPos pos) {
         return Blocks.AIR.defaultBlockState();
     }
 

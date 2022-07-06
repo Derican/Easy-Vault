@@ -5,10 +5,13 @@ import iskallia.vault.init.ModConfigs;
 import iskallia.vault.world.data.GlobalDifficultyData;
 import iskallia.vault.world.vault.VaultRaid;
 import iskallia.vault.world.vault.VaultUtils;
+import iskallia.vault.world.vault.logic.objective.architect.ArchitectSummonAndKillBossesObjective;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.MobEntity;
+import net.minecraft.entity.ai.attributes.AttributeModifier;
+import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
@@ -17,6 +20,7 @@ import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.event.entity.EntityEvent;
 
 import java.util.Random;
+import java.util.UUID;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 
@@ -59,6 +63,16 @@ public class EntityScaler {
         if (!isScaled((Entity) entity)) {
             VaultMobsConfig.Mob.scale(entity, vault, vaultDifficulty);
         }
+        vault.getActiveObjective(ArchitectSummonAndKillBossesObjective.class).ifPresent(objective -> {
+            if (entity.getAttributes().hasAttribute(Attributes.MAX_HEALTH)) {
+                UUID randomId;
+                do {
+                    randomId = UUID.randomUUID();
+                } while (entity.getAttributes().hasModifier(Attributes.MAX_HEALTH, randomId));
+                entity.getAttribute(Attributes.MAX_HEALTH).addPermanentModifier(new AttributeModifier(randomId, "Final Architect Health", (double)objective.getCombinedMobHealthMultiplier(), AttributeModifier.Operation.MULTIPLY_BASE));
+            }
+            entity.heal(1000000.0f);
+        });
         for (final EquipmentSlotType slot : EquipmentSlotType.values()) {
             if (slot.getType() != EquipmentSlotType.Group.HAND || entity.getItemBySlot(slot).isEmpty()) {
                 final ItemStack loot = type.loot.apply(overrides, slot);

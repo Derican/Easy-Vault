@@ -208,9 +208,7 @@ public class ArchitectGoalVoteOverlay extends BossBarOverlay {
             float drawX = (float) offsetX;
             DirectionChoice lastChoice = null;
             boolean drawStart = true;
-            Iterator iterator = barParts.keySet().iterator();
-            while (iterator.hasNext()) {
-                final DirectionChoice choice = (DirectionChoice) iterator.next();
+            for (DirectionChoice choice : barParts.keySet()) {
                 float part = barParts.get(choice) * barWidth;
                 final int vOffset = DirectionChoice.getVOffset(choice.getDirection());
                 lastChoice = choice;

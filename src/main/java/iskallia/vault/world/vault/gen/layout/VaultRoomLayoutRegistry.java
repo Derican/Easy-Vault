@@ -23,6 +23,8 @@ public class VaultRoomLayoutRegistry {
         VaultRoomLayoutRegistry.layoutRegistry.put(DebugVaultLayout.ID, (Supplier<VaultRoomLayoutGenerator>) DebugVaultLayout::new);
         VaultRoomLayoutRegistry.layoutRegistry.put(DenseDiamondRoomLayout.ID, (Supplier<VaultRoomLayoutGenerator>) DenseDiamondRoomLayout::new);
         VaultRoomLayoutRegistry.layoutRegistry.put(DenseSquareRoomLayout.ID, (Supplier<VaultRoomLayoutGenerator>) DenseSquareRoomLayout::new);
+        VaultRoomLayoutRegistry.layoutRegistry.put(EmptyVaultLayout.ID, (Supplier<VaultRoomLayoutGenerator>)EmptyVaultLayout::new);
+
     }
 
     @Nullable

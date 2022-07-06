@@ -1,14 +1,18 @@
 package iskallia.vault.client.vault.goal;
 
-import iskallia.vault.client.gui.overlay.goal.ActiveRaidOverlay;
-import iskallia.vault.client.gui.overlay.goal.BossBarOverlay;
-import iskallia.vault.network.message.VaultGoalMessage;
-import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.ListNBT;
-import net.minecraft.util.text.ITextComponent;
+import net.minecraft.nbt.CompoundNBT;
+import iskallia.vault.network.message.VaultGoalMessage;
 
 import javax.annotation.Nullable;
+
+import iskallia.vault.client.gui.overlay.goal.ActiveRaidOverlay;
+import iskallia.vault.client.gui.overlay.goal.BossBarOverlay;
+
 import java.util.ArrayList;
+
+import net.minecraft.util.text.ITextComponent;
+
 import java.util.List;
 
 public class ActiveRaidGoalData extends VaultGoalData {
@@ -18,6 +22,7 @@ public class ActiveRaidGoalData extends VaultGoalData {
     private int totalMobs;
     private int tickWaveDelay;
     private int raidsCompleted;
+    private int targetRaids;
     private List<ITextComponent> positives;
     private List<ITextComponent> negatives;
 
@@ -56,6 +61,10 @@ public class ActiveRaidGoalData extends VaultGoalData {
         return this.raidsCompleted;
     }
 
+    public int getTargetRaids() {
+        return this.targetRaids;
+    }
+
     public List<ITextComponent> getPositives() {
         return this.positives;
     }
@@ -73,6 +82,7 @@ public class ActiveRaidGoalData extends VaultGoalData {
         this.totalMobs = tag.getInt("totalMobs");
         this.tickWaveDelay = tag.getInt("tickWaveDelay");
         this.raidsCompleted = tag.getInt("completedRaids");
+        this.targetRaids = tag.getInt("targetRaids");
         final ListNBT positives = tag.getList("positives", 8);
         this.positives = new ArrayList<ITextComponent>();
         for (int i = 0; i < positives.size(); ++i) {

@@ -45,7 +45,9 @@ public class VaultRunner extends VaultPlayer {
                     earlyKill = (this.timer.getRunTime() < fastestVault.getTickCount());
                 }
             }
-            this.sendIfPresent(world.getServer(), VaultOverlayMessage.forVault(this.timer.getTimeLeft(), earlyKill));
+            final boolean showTimer = this.getProperties().getBaseOrDefault(VaultRaid.SHOW_TIMER, true);
+            this.sendIfPresent(world.getServer(), VaultOverlayMessage.forVault(showTimer ? this.timer.getTimeLeft() : 0, earlyKill, showTimer));
+
         });
     }
 

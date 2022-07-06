@@ -112,9 +112,8 @@ public class TwerkerTalent extends PlayerTalent {
                 final AxisAlignedBB searchBox = player.getBoundingBox().inflate((double) this.getXRange(), (double) this.getYRange(), (double) this.getZRange());
                 final List<AgeableEntity> entities = world.getLoadedEntitiesOfClass(AgeableEntity.class, searchBox, entity -> entity.isAlive() && !entity.isSpectator() && entity.isBaby());
                 AgeableEntity entity = null;
-                final Iterator<AgeableEntity> iterator = entities.iterator();
-                while (iterator.hasNext()) {
-                    entity = iterator.next();
+                for (AgeableEntity ageableEntity : entities) {
+                    entity = ageableEntity;
                     if (TwerkerTalent.rand.nextFloat() < 0.4f) {
                         world.sendParticles((IParticleData) ParticleTypes.HAPPY_VILLAGER, (double) pos.getX(), (double) pos.getY(), (double) pos.getZ(), 100, 1.0, 0.5, 1.0, 0.0);
                     }

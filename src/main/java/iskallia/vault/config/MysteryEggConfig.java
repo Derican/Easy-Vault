@@ -27,8 +27,16 @@ public class MysteryEggConfig extends Config {
 
     @Override
     protected void reset() {
-        this.POOL.add(new ProductEntry(this.getEgg((EntityType<?>) EntityType.COW)), 3);
-        this.POOL.add(new ProductEntry(this.getEgg((EntityType<?>) EntityType.PIG)), 1);
+        this.POOL.add(new ProductEntry(this.getEgg(EntityType.COW)), 4);
+        this.POOL.add(new ProductEntry(this.getEgg(EntityType.PIG)), 1);
+        this.POOL.add(new ProductEntry(this.getEgg(EntityType.CHICKEN)), 4);
+        this.POOL.add(new ProductEntry(this.getEgg(EntityType.MOOSHROOM)), 1);
+        this.POOL.add(new ProductEntry(this.getEgg(EntityType.POLAR_BEAR)), 1);
+        this.POOL.add(new ProductEntry(this.getEgg(EntityType.RABBIT)), 2);
+        this.POOL.add(new ProductEntry(this.getEgg(EntityType.SHEEP)), 4);
+        this.POOL.add(new ProductEntry(this.getEgg(EntityType.SQUID)), 4);
+        this.POOL.add(new ProductEntry(this.getEgg(EntityType.TURTLE)), 1);
+        this.POOL.add(new ProductEntry(this.getEgg(EntityType.STRIDER)), 2);
     }
 
     private Item getEgg(final EntityType<?> type) {

@@ -38,28 +38,30 @@ public class ModModels {
     }
 
     public static void setupRenderLayers() {
-        RenderTypeLookup.setRenderLayer((Block) ModBlocks.VAULT_PORTAL, RenderType.translucent());
-        RenderTypeLookup.setRenderLayer((Block) ModBlocks.ISKALLIUM_DOOR, RenderType.cutout());
-        RenderTypeLookup.setRenderLayer((Block) ModBlocks.GORGINITE_DOOR, RenderType.cutout());
-        RenderTypeLookup.setRenderLayer((Block) ModBlocks.SPARKLETINE_DOOR, RenderType.cutout());
-        RenderTypeLookup.setRenderLayer((Block) ModBlocks.ASHIUM_DOOR, RenderType.cutout());
-        RenderTypeLookup.setRenderLayer((Block) ModBlocks.BOMIGNITE_DOOR, RenderType.cutout());
-        RenderTypeLookup.setRenderLayer((Block) ModBlocks.FUNSOIDE_DOOR, RenderType.cutout());
-        RenderTypeLookup.setRenderLayer((Block) ModBlocks.TUBIUM_DOOR, RenderType.cutout());
-        RenderTypeLookup.setRenderLayer((Block) ModBlocks.UPALINE_DOOR, RenderType.cutout());
-        RenderTypeLookup.setRenderLayer((Block) ModBlocks.PUFFIUM_DOOR, RenderType.cutout());
-        RenderTypeLookup.setRenderLayer((Block) ModBlocks.VAULT_ALTAR, RenderType.cutout());
-        RenderTypeLookup.setRenderLayer((Block) ModBlocks.VAULT_ARTIFACT, RenderType.cutout());
-        RenderTypeLookup.setRenderLayer((Block) ModBlocks.KEY_PRESS, RenderType.cutout());
-        RenderTypeLookup.setRenderLayer((Block) ModBlocks.OMEGA_STATUE, RenderType.cutout());
-        RenderTypeLookup.setRenderLayer((Block) ModBlocks.XP_ALTAR, RenderType.translucent());
-        RenderTypeLookup.setRenderLayer((Block) ModBlocks.BLOOD_ALTAR, RenderType.translucent());
-        RenderTypeLookup.setRenderLayer((Block) ModBlocks.TIME_ALTAR, RenderType.translucent());
-        RenderTypeLookup.setRenderLayer((Block) ModBlocks.SOUL_ALTAR, RenderType.translucent());
-        RenderTypeLookup.setRenderLayer((Block) ModBlocks.VAULT_GLASS, RenderType.translucent());
+        RenderTypeLookup.setRenderLayer(ModBlocks.VAULT_PORTAL, RenderType.translucent());
+        RenderTypeLookup.setRenderLayer(ModBlocks.ISKALLIUM_DOOR, RenderType.cutout());
+        RenderTypeLookup.setRenderLayer(ModBlocks.GORGINITE_DOOR, RenderType.cutout());
+        RenderTypeLookup.setRenderLayer(ModBlocks.SPARKLETINE_DOOR, RenderType.cutout());
+        RenderTypeLookup.setRenderLayer(ModBlocks.ASHIUM_DOOR, RenderType.cutout());
+        RenderTypeLookup.setRenderLayer(ModBlocks.BOMIGNITE_DOOR, RenderType.cutout());
+        RenderTypeLookup.setRenderLayer(ModBlocks.FUNSOIDE_DOOR, RenderType.cutout());
+        RenderTypeLookup.setRenderLayer(ModBlocks.TUBIUM_DOOR, RenderType.cutout());
+        RenderTypeLookup.setRenderLayer(ModBlocks.UPALINE_DOOR, RenderType.cutout());
+        RenderTypeLookup.setRenderLayer(ModBlocks.PUFFIUM_DOOR, RenderType.cutout());
+        RenderTypeLookup.setRenderLayer(ModBlocks.VAULT_ALTAR, RenderType.cutout());
+        RenderTypeLookup.setRenderLayer(ModBlocks.VAULT_ARTIFACT, RenderType.cutout());
+        RenderTypeLookup.setRenderLayer(ModBlocks.KEY_PRESS, RenderType.cutout());
+        RenderTypeLookup.setRenderLayer(ModBlocks.OMEGA_STATUE, RenderType.cutout());
+        RenderTypeLookup.setRenderLayer(ModBlocks.XP_ALTAR, RenderType.translucent());
+        RenderTypeLookup.setRenderLayer(ModBlocks.BLOOD_ALTAR, RenderType.translucent());
+        RenderTypeLookup.setRenderLayer(ModBlocks.TIME_ALTAR, RenderType.translucent());
+        RenderTypeLookup.setRenderLayer(ModBlocks.SOUL_ALTAR, RenderType.translucent());
+        RenderTypeLookup.setRenderLayer(ModBlocks.VAULT_GLASS, RenderType.translucent());
+        RenderTypeLookup.setRenderLayer(ModBlocks.FINAL_VAULT_FRAME, RenderType.cutout());
         setRenderLayers(ModBlocks.VENDING_MACHINE, RenderType.cutout(), RenderType.translucent());
         setRenderLayers(ModBlocks.ADVANCED_VENDING_MACHINE, RenderType.cutout(), RenderType.translucent());
         setRenderLayers(ModBlocks.CRYO_CHAMBER, RenderType.solid(), RenderType.translucent());
+        setRenderLayers(ModBlocks.HOURGLASS, RenderType.solid(), RenderType.translucent());
         setRenderLayers(ModBlocks.VAULT_CRATE_SCAVENGER, RenderType.solid(), RenderType.translucent());
         setRenderLayers(ModBlocks.VAULT_CRATE_CAKE, RenderType.cutout());
         setRenderLayers(ModBlocks.STABILIZER, RenderType.solid(), RenderType.translucent());
@@ -152,7 +154,7 @@ public class ModModels {
             registerItemProperty(ModItems.PUZZLE_RUNE, "puzzle_color", ItemProperty.PUZZLE_COLOR);
             registerItemProperty((Item) ModBlocks.PUZZLE_RUNE_BLOCK_ITEM, "puzzle_color", ItemProperty.PUZZLE_COLOR);
             ItemModelsProperties.register((Item) ModItems.DRILL_ARROW, new ResourceLocation("tier"), (stack, world, entity) -> ItemDrillArrow.getArrowTier(stack).ordinal() / (float) ItemDrillArrow.ArrowTier.values().length);
-            ItemModelsProperties.register(Item.byBlock((Block) ModBlocks.CRYO_CHAMBER), new ResourceLocation("type"), (stack, world, entity) -> stack.getDamageValue() / (float) CryoChamberBlock.ChamberState.values().length);
+            ItemModelsProperties.register(Item.byBlock(ModBlocks.CRYO_CHAMBER), new ResourceLocation("type"), (stack, world, entity) -> stack.getDamageValue() / (float) CryoChamberBlock.ChamberState.values().length);
             ItemModelsProperties.register((Item) ModItems.VAULT_CRYSTAL, new ResourceLocation("type"), (stack, world, entity) -> (float) VaultCrystalItem.getData(stack).getType().ordinal());
         }
 

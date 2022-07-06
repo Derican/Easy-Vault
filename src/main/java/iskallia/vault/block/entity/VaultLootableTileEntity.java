@@ -46,7 +46,12 @@ public class VaultLootableTileEntity extends TileEntity implements ITickableTile
             if (vault == null) {
                 return;
             }
-            final VaultLootableBlock.GeneratedBlockState placingState = vault.getProperties().getBase(VaultRaid.HOST).map(hostUUID -> this.type.generateBlock(world, this.getBlockPos(), world.getRandom(), hostUUID)).orElse(new VaultLootableBlock.GeneratedBlockState(Blocks.AIR.defaultBlockState()));
+            VaultLootableBlock.GeneratedBlockState placingState;
+            if (this.type == VaultLootableBlock.Type.VAULT_OBJECTIVE) {
+                placingState = this.type.generateBlock(world, this.getBlockPos(), world.getRandom(), vault.getProperties().getBase(VaultRaid.HOST).orElse(null));
+            } else {
+                placingState = vault.getProperties().getBase(VaultRaid.HOST).map(hostUUID -> this.type.generateBlock(world, this.getBlockPos(), world.getRandom(), hostUUID)).orElse(new VaultLootableBlock.GeneratedBlockState(Blocks.AIR.defaultBlockState()));
+            }
             if (world.setBlock(this.getBlockPos(), placingState.getState(), 19)) {
                 placingState.getPostProcessor().accept(world, this.getBlockPos());
             }

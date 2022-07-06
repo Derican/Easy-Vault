@@ -1,46 +1,68 @@
 package iskallia.vault.block.entity;
 
-import iskallia.vault.block.StabilizerBlock;
-import iskallia.vault.block.VaultRaidControllerBlock;
-import iskallia.vault.init.ModBlocks;
-import iskallia.vault.init.ModConfigs;
-import iskallia.vault.init.ModParticles;
-import iskallia.vault.util.PlayerFilter;
-import iskallia.vault.world.data.VaultRaidData;
-import iskallia.vault.world.vault.VaultRaid;
-import iskallia.vault.world.vault.logic.objective.raid.RaidChallengeObjective;
-import iskallia.vault.world.vault.logic.objective.raid.modifier.ModifierDoublingModifier;
-import iskallia.vault.world.vault.logic.objective.raid.modifier.RaidModifier;
-import iskallia.vault.world.vault.modifier.InventoryRestoreModifier;
-import net.minecraft.block.BlockState;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.particle.Particle;
-import net.minecraft.client.particle.ParticleManager;
-import net.minecraft.client.particle.SimpleAnimatedParticle;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.nbt.INBT;
-import net.minecraft.nbt.ListNBT;
+import iskallia.vault.config.RaidModifierConfig;
+import iskallia.vault.config.FinalRaidModifierConfig;
+
+import java.util.Map;
+
 import net.minecraft.network.NetworkManager;
-import net.minecraft.network.play.server.SUpdateTileEntityPacket;
-import net.minecraft.particles.IParticleData;
-import net.minecraft.particles.ParticleTypes;
-import net.minecraft.state.properties.DoubleBlockHalf;
-import net.minecraft.tileentity.ITickableTileEntity;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.TileEntityType;
-import net.minecraft.util.Tuple;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.world.server.ServerWorld;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 
 import javax.annotation.Nullable;
-import java.awt.*;
-import java.util.List;
-import java.util.*;
+
+import net.minecraft.network.play.server.SUpdateTileEntityPacket;
+import net.minecraft.nbt.INBT;
+import net.minecraft.nbt.ListNBT;
+import net.minecraft.nbt.CompoundNBT;
+
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
+import java.util.function.Predicate;
+import java.util.Objects;
+
+import net.minecraft.util.Tuple;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraft.client.particle.ParticleManager;
+import net.minecraft.particles.ParticleTypes;
+import net.minecraft.client.particle.SimpleAnimatedParticle;
+import net.minecraft.util.math.vector.Vector3d;
+
+import java.awt.Color;
+
+import net.minecraft.client.particle.Particle;
+import iskallia.vault.init.ModParticles;
+import net.minecraft.particles.IParticleData;
+import net.minecraft.client.Minecraft;
+import iskallia.vault.world.vault.logic.objective.raid.modifier.ModifierDoublingModifier;
+import iskallia.vault.init.ModConfigs;
+import iskallia.vault.world.vault.logic.objective.raid.modifier.RaidModifier;
+import iskallia.vault.world.vault.modifier.InventoryRestoreModifier;
+import iskallia.vault.util.PlayerFilter;
+import iskallia.vault.world.vault.VaultRaid;
+import iskallia.vault.world.vault.logic.objective.raid.RaidChallengeObjective;
+import iskallia.vault.world.data.VaultRaidData;
+import net.minecraft.world.server.ServerWorld;
+import net.minecraft.state.Property;
+import net.minecraft.state.properties.DoubleBlockHalf;
+import iskallia.vault.block.StabilizerBlock;
+import net.minecraft.block.BlockState;
+import iskallia.vault.block.VaultRaidControllerBlock;
+
+import java.util.ArrayList;
+
+import net.minecraft.tileentity.TileEntityType;
+import iskallia.vault.init.ModBlocks;
+
+import java.util.List;
+import java.util.LinkedHashMap;
+
+import net.minecraft.util.math.AxisAlignedBB;
+
+import java.util.Random;
+
+import net.minecraft.tileentity.ITickableTileEntity;
+import net.minecraft.tileentity.TileEntity;
 
 public class VaultRaidControllerTileEntity extends TileEntity implements ITickableTileEntity {
     private static final Random rand;
@@ -66,7 +88,7 @@ public class VaultRaidControllerTileEntity extends TileEntity implements ITickab
         if (!this.getLevel().isClientSide()) {
             final BlockState up = this.getLevel().getBlockState(this.getBlockPos().above());
             if (!(up.getBlock() instanceof VaultRaidControllerBlock)) {
-                this.getLevel().setBlockAndUpdate(this.getBlockPos().above(), ModBlocks.RAID_CONTROLLER_BLOCK.defaultBlockState().setValue(StabilizerBlock.HALF, DoubleBlockHalf.UPPER));
+                this.getLevel().setBlockAndUpdate(this.getBlockPos().above(), (BlockState) ModBlocks.RAID_CONTROLLER_BLOCK.defaultBlockState().setValue((Property) StabilizerBlock.HALF, (Comparable) DoubleBlockHalf.UPPER));
             }
             if (this.activeTimeout > 0) {
                 --this.activeTimeout;
@@ -77,8 +99,8 @@ public class VaultRaidControllerTileEntity extends TileEntity implements ITickab
             if (this.getLevel() instanceof ServerWorld) {
                 final ServerWorld sWorld = (ServerWorld) this.getLevel();
                 final VaultRaid vault = VaultRaidData.get(sWorld).getAt(sWorld, this.getBlockPos());
-                if (vault != null) {
-                    if (vault.getActiveRaid() != null && vault.getActiveRaid().getController().equals(this.getBlockPos())) {
+                if (vault != null && vault.getPlayers().size() > 0) {
+                    if (vault.getActiveRaid() != null && vault.getActiveRaid().getController().equals((Object) this.getBlockPos())) {
                         final boolean needsUpdate = this.activeTimeout <= 0;
                         this.activeTimeout = 20;
                         if (needsUpdate) {
@@ -86,26 +108,12 @@ public class VaultRaidControllerTileEntity extends TileEntity implements ITickab
                         }
                     }
                     vault.getActiveObjective(RaidChallengeObjective.class).ifPresent(raidObjective -> {
-                        if (this.raidModifiers.isEmpty()) {
-                            final boolean cannotGetArtifact = vault.getActiveModifiersFor(PlayerFilter.any(), InventoryRestoreModifier.class).stream().anyMatch(InventoryRestoreModifier::preventsArtifact);
-                            final int level = vault.getProperties().getBase(VaultRaid.LEVEL).orElse(0);
-                            final RaidModifier addedModifier = ModConfigs.RAID_MODIFIER_CONFIG.getRandomModifier(level, true, cannotGetArtifact).map(modifier -> {
-                                final RaidModifier mod = modifier.getModifier();
-                                if (mod != null) {
-                                    this.raidModifiers.put(mod.getName(), modifier.getRandomValue());
-                                }
-                                return (RaidModifier) (RaidModifier) mod;
-                            }).orElse(null);
-                            if (addedModifier != null && !(addedModifier instanceof ModifierDoublingModifier)) {
-                                ModConfigs.RAID_MODIFIER_CONFIG.getRandomModifier(level, false, cannotGetArtifact).ifPresent(modifier -> {
-                                    final RaidModifier mod2 = modifier.getModifier();
-                                    if (mod2 != null) {
-                                        this.raidModifiers.put(mod2.getName(), modifier.getRandomValue());
-                                    }
-                                    return;
-                                });
+                        if (!(!this.raidModifiers.isEmpty())) {
+                            if (vault.getProperties().exists(VaultRaid.PARENT)) {
+                                this.generateModifiersFinal(vault);
+                            } else {
+                                this.generateModifiers(vault);
                             }
-                            this.markForUpdate();
                         }
                     });
                 }
@@ -113,6 +121,41 @@ public class VaultRaidControllerTileEntity extends TileEntity implements ITickab
         } else {
             this.setupParticles();
         }
+    }
+
+    private void generateModifiers(final VaultRaid vault) {
+        final boolean cannotGetArtifact = vault.getActiveModifiersFor(PlayerFilter.any(), InventoryRestoreModifier.class).stream().anyMatch(InventoryRestoreModifier::preventsArtifact);
+        final int level = vault.getProperties().getBase(VaultRaid.LEVEL).orElse(0);
+        final RaidModifier addedModifier = ModConfigs.RAID_MODIFIER_CONFIG.getRandomModifier(level, true, cannotGetArtifact).map(modifier -> {
+            final RaidModifier mod = modifier.getModifier();
+            if (mod != null) {
+                this.raidModifiers.put(mod.getName(), modifier.getRandomValue());
+            }
+            return mod;
+        }).orElse(null);
+        if (addedModifier != null && !(addedModifier instanceof ModifierDoublingModifier)) {
+            ModConfigs.RAID_MODIFIER_CONFIG.getRandomModifier(level, false, cannotGetArtifact).ifPresent(modifier -> {
+                final RaidModifier mod2 = modifier.getModifier();
+                if (mod2 != null) {
+                    this.raidModifiers.put(mod2.getName(), modifier.getRandomValue());
+                }
+                return;
+            });
+        }
+        this.markForUpdate();
+    }
+
+    private void generateModifiersFinal(final VaultRaid vault) {
+        final boolean cannotGetArtifact = vault.getActiveModifiersFor(PlayerFilter.any(), InventoryRestoreModifier.class).stream().anyMatch(InventoryRestoreModifier::preventsArtifact);
+        final int level = vault.getProperties().getBase(VaultRaid.LEVEL).orElse(0);
+        ModConfigs.FINAL_RAID_MODIFIER_CONFIG.getRandomModifier(level, cannotGetArtifact).ifPresent(modifier -> {
+            final RaidModifier mod = modifier.getModifier();
+            if (mod != null) {
+                this.raidModifiers.put(mod.getName(), modifier.getRandomValue());
+            }
+            return;
+        });
+        this.markForUpdate();
     }
 
     @OnlyIn(Dist.CLIENT)
@@ -172,7 +215,7 @@ public class VaultRaidControllerTileEntity extends TileEntity implements ITickab
             if (modifier == null) {
                 return null;
             } else {
-                return new Tuple(modifier, modifierEntry.getValue());
+                return new Tuple((Object) modifier, modifierEntry.getValue());
             }
         }).filter(Objects::nonNull).map(tpl -> ((RaidModifier) tpl.getA()).getDisplay((float) tpl.getB())).collect(Collectors.toList());
     }

@@ -21,6 +21,11 @@ public class TauntAuraConfig extends EternalAuraConfig.AuraConfig {
         this.tauntInterval = tauntInterval;
     }
 
+    public TauntAuraConfig(final String name, final String displayName, final String description, final String iconPath, final float radius, final int tauntInterval) {
+        super(name, displayName, description, iconPath, radius);
+        this.tauntInterval = tauntInterval;
+    }
+
     @Override
     public void onTick(final World world, final ActiveAura aura) {
         super.onTick(world, aura);

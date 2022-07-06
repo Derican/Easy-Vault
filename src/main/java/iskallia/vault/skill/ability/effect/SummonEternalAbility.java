@@ -30,6 +30,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class SummonEternalAbility<C extends SummonEternalConfig> extends AbilityEffect<C> {
     @Override
@@ -53,8 +54,13 @@ public class SummonEternalAbility<C extends SummonEternalConfig> extends Ability
             return false;
         }
         final List<EternalData> eternals = new ArrayList<EternalData>();
-        for (int count = this.getEternalCount(playerEternals, config), i = 0; i < count; ++i) {
-            EternalData eternal = null;
+        int count = this.getEternalCount(playerEternals, config);
+        EternalData eternal = null;
+        final List<EternalEntity> summonedEternals = player.getLevel().getEntities().filter(entity -> entity instanceof EternalEntity).map(entity -> (EternalEntity) entity).filter(eternal1 -> eternal1.getOwnerUUID().equals(player.getUUID())).collect(Collectors.toList());
+        final int maxToSummon = config.getSummonedEternalsCap() - summonedEternals.size();
+        count = Math.min(count, maxToSummon);
+        for (int i = 0; i < count; ++i) {
+            eternal = null;
             if (SummonEternalAbility.rand.nextFloat() < config.getAncientChance()) {
                 eternal = playerEternals.getRandomAliveAncient(SummonEternalAbility.rand, eternalData -> !eternals.contains(eternalData) && !ActiveEternalData.getInstance().isEternalActive(eternalData.getId()));
             }
@@ -67,15 +73,17 @@ public class SummonEternalAbility<C extends SummonEternalConfig> extends Ability
             }
         }
         if (eternals.isEmpty()) {
-            player.sendMessage((ITextComponent) new StringTextComponent("You have no (alive) eternals to summon.").withStyle(TextFormatting.RED), Util.NIL_UUID);
+            if (count > 0) {
+                player.sendMessage((ITextComponent) new StringTextComponent("You have no (alive) eternals to summon.").withStyle(TextFormatting.RED), Util.NIL_UUID);
+            } else {
+                player.sendMessage((ITextComponent) new StringTextComponent("You have reached the eternal cap.").withStyle(TextFormatting.RED), Util.NIL_UUID);
+            }
             return false;
         }
         final TalentTree talents = PlayerTalentsData.get(sWorld).getTalents((PlayerEntity) player);
         final double damageMultiplier = talents.getLearnedNodes(CommanderTalent.class).stream().mapToDouble(node -> ((CommanderTalent) node.getTalent()).getSummonEternalDamageDealtMultiplier()).max().orElse(1.0);
         final AttributeModifier modifier = new AttributeModifier(CommanderTalent.ETERNAL_DAMAGE_INCREASE_MODIFIER, "CommanderTalent", damageMultiplier, AttributeModifier.Operation.MULTIPLY_TOTAL);
-        final Iterator<EternalData> iterator = eternals.iterator();
-        while (iterator.hasNext()) {
-            final EternalData eternalData = iterator.next();
+        for (EternalData eternalData : eternals) {
             final EternalEntity eternal2 = EternalHelper.spawnEternal((World) sWorld, eternalData);
             eternal2.moveTo(player.getX(), player.getY(), player.getZ(), player.yRot, player.xRot);
             eternal2.setDespawnTime(sWorld.getServer().getTickCount() + config.getDespawnTime());

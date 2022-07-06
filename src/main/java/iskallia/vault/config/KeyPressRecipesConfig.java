@@ -55,7 +55,7 @@ public class KeyPressRecipesConfig extends Config {
             return ItemStack.EMPTY;
         }
         try {
-            final ItemStack resultStack = new ItemStack((IItemProvider) item, recipe.RESULT_ITEM.AMOUNT);
+            final ItemStack resultStack = new ItemStack(item, recipe.RESULT_ITEM.AMOUNT);
             if (recipe.RESULT_ITEM.NBT != null && !recipe.RESULT_ITEM.NBT.isEmpty()) {
                 resultStack.setTag(JsonToNBT.parseTag(recipe.RESULT_ITEM.NBT));
             }
@@ -69,11 +69,68 @@ public class KeyPressRecipesConfig extends Config {
     @Override
     protected void reset() {
         this.RECIPES = new ArrayList<Recipe>();
-        final Recipe recipe = new Recipe();
-        recipe.KEY_ITEM = new SingleItemEntry((IItemProvider) ModItems.BLANK_KEY);
-        recipe.CLUSTER_ITEM = new SingleItemEntry((IItemProvider) ModItems.SPARKLETINE_CLUSTER);
-        recipe.RESULT_ITEM = new ItemEntry(new ItemStack((IItemProvider) ModItems.SPARKLETINE_KEY));
-        this.RECIPES.add(recipe);
+        {
+            final Recipe recipe = new Recipe();
+            recipe.KEY_ITEM = new SingleItemEntry(ModItems.BLANK_KEY);
+            recipe.CLUSTER_ITEM = new SingleItemEntry(ModItems.SPARKLETINE_CLUSTER);
+            recipe.RESULT_ITEM = new ItemEntry(new ItemStack(ModItems.SPARKLETINE_KEY));
+            this.RECIPES.add(recipe);
+        }
+        {
+            final Recipe recipe = new Recipe();
+            recipe.KEY_ITEM = new SingleItemEntry(ModItems.BLANK_KEY);
+            recipe.CLUSTER_ITEM = new SingleItemEntry(ModItems.PUFFIUM_CLUSTER);
+            recipe.RESULT_ITEM = new ItemEntry(new ItemStack(ModItems.PUFFIUM_KEY));
+            this.RECIPES.add(recipe);
+        }
+        {
+            final Recipe recipe = new Recipe();
+            recipe.KEY_ITEM = new SingleItemEntry(ModItems.BLANK_KEY);
+            recipe.CLUSTER_ITEM = new SingleItemEntry(ModItems.UPALINE_CLUSTER);
+            recipe.RESULT_ITEM = new ItemEntry(new ItemStack(ModItems.UPALINE_KEY));
+            this.RECIPES.add(recipe);
+        }
+        {
+            final Recipe recipe = new Recipe();
+            recipe.KEY_ITEM = new SingleItemEntry(ModItems.BLANK_KEY);
+            recipe.CLUSTER_ITEM = new SingleItemEntry(ModItems.ISKALLIUM_CLUSTER);
+            recipe.RESULT_ITEM = new ItemEntry(new ItemStack(ModItems.ISKALLIUM_KEY));
+            this.RECIPES.add(recipe);
+        }
+        {
+            final Recipe recipe = new Recipe();
+            recipe.KEY_ITEM = new SingleItemEntry(ModItems.BLANK_KEY);
+            recipe.CLUSTER_ITEM = new SingleItemEntry(ModItems.TUBIUM_CLUSTER);
+            recipe.RESULT_ITEM = new ItemEntry(new ItemStack(ModItems.TUBIUM_KEY));
+            this.RECIPES.add(recipe);
+        }
+        {
+            final Recipe recipe = new Recipe();
+            recipe.KEY_ITEM = new SingleItemEntry(ModItems.BLANK_KEY);
+            recipe.CLUSTER_ITEM = new SingleItemEntry(ModItems.GORGINITE_CLUSTER);
+            recipe.RESULT_ITEM = new ItemEntry(new ItemStack(ModItems.GORGINITE_KEY));
+            this.RECIPES.add(recipe);
+        }
+        {
+            final Recipe recipe = new Recipe();
+            recipe.KEY_ITEM = new SingleItemEntry(ModItems.BLANK_KEY);
+            recipe.CLUSTER_ITEM = new SingleItemEntry(ModItems.FUNSOIDE_CLUSTER);
+            recipe.RESULT_ITEM = new ItemEntry(new ItemStack(ModItems.FUNSOIDE_KEY));
+            this.RECIPES.add(recipe);
+        }
+        {
+            final Recipe recipe = new Recipe();
+            recipe.KEY_ITEM = new SingleItemEntry(ModItems.BLANK_KEY);
+            recipe.CLUSTER_ITEM = new SingleItemEntry(ModItems.BOMIGNITE_CLUSTER);
+            recipe.RESULT_ITEM = new ItemEntry(new ItemStack(ModItems.BOMIGNITE_KEY));
+            this.RECIPES.add(recipe);
+        }{
+            final Recipe recipe = new Recipe();
+            recipe.KEY_ITEM = new SingleItemEntry(ModItems.BLANK_KEY);
+            recipe.CLUSTER_ITEM = new SingleItemEntry(ModItems.ASHIUM_CLUSTER);
+            recipe.RESULT_ITEM = new ItemEntry(new ItemStack(ModItems.ASHIUM_KEY));
+            this.RECIPES.add(recipe);
+        }
     }
 
     public static class Recipe {

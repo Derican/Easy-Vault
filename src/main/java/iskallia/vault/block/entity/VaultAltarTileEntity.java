@@ -1,49 +1,65 @@
 package iskallia.vault.block.entity;
 
-import iskallia.vault.altar.AltarInfusionRecipe;
-import iskallia.vault.altar.RequiredItem;
-import iskallia.vault.init.ModBlocks;
-import iskallia.vault.init.ModConfigs;
-import iskallia.vault.init.ModItems;
-import iskallia.vault.item.crystal.CrystalData;
-import iskallia.vault.util.VectorHelper;
-import iskallia.vault.world.data.PlayerStatsData;
-import iskallia.vault.world.data.PlayerVaultAltarData;
-import iskallia.vault.world.data.PlayerVaultStatsData;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.item.ItemEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.nbt.INBT;
-import net.minecraft.network.NetworkManager;
-import net.minecraft.network.play.server.SUpdateTileEntityPacket;
-import net.minecraft.particles.IParticleData;
-import net.minecraft.particles.ParticleTypes;
-import net.minecraft.particles.RedstoneParticleData;
-import net.minecraft.tileentity.ITickableTileEntity;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.TileEntityType;
-import net.minecraft.util.*;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.util.math.vector.Vector3i;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.CapabilityItemHandler;
-import net.minecraftforge.items.IItemHandler;
+import net.minecraft.util.Direction;
+import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.items.ItemHandlerHelper;
-import net.minecraftforge.items.ItemStackHandler;
 
 import javax.annotation.Nonnull;
+
+import net.minecraft.network.NetworkManager;
+
 import javax.annotation.Nullable;
+
+import net.minecraft.network.play.server.SUpdateTileEntityPacket;
+import net.minecraft.block.BlockState;
+import net.minecraft.nbt.INBT;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.vector.Vector3i;
+import net.minecraft.util.math.vector.Vector3d;
+import iskallia.vault.util.VectorHelper;
+import net.minecraft.particles.RedstoneParticleData;
+import net.minecraft.particles.IParticleData;
+import net.minecraft.particles.ParticleTypes;
+import iskallia.vault.world.data.PlayerStatsData;
+import iskallia.vault.world.data.PlayerVaultStatsData;
+import iskallia.vault.item.crystal.CrystalData;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.item.ItemEntity;
+import iskallia.vault.item.gear.VaultGear;
+import iskallia.vault.world.data.PlayerFavourData;
+import iskallia.vault.init.ModAttributes;
+import net.minecraft.util.IItemProvider;
+import iskallia.vault.init.ModItems;
+import iskallia.vault.altar.RequiredItem;
+
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.ActionResultType;
+import net.minecraft.item.ItemStack;
+import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.util.SoundCategory;
+import net.minecraft.util.SoundEvents;
+import net.minecraft.world.World;
+import iskallia.vault.init.ModConfigs;
+import iskallia.vault.world.data.PlayerVaultAltarData;
+import net.minecraft.world.server.ServerWorld;
+import net.minecraft.tileentity.TileEntityType;
+import iskallia.vault.init.ModBlocks;
+import net.minecraftforge.items.IItemHandler;
+import net.minecraftforge.common.util.LazyOptional;
+import net.minecraftforge.items.ItemStackHandler;
+import iskallia.vault.altar.AltarInfusionRecipe;
+
 import java.util.UUID;
+
+import net.minecraft.tileentity.ITickableTileEntity;
+import net.minecraft.tileentity.TileEntity;
 
 public class VaultAltarTileEntity extends TileEntity implements ITickableTileEntity {
     private UUID owner;
@@ -82,6 +98,10 @@ public class VaultAltarTileEntity extends TileEntity implements ITickableTileEnt
 
     public AltarState getAltarState() {
         return this.altarState;
+    }
+
+    public int getInfusionTimer() {
+        return this.infusionTimer;
     }
 
     public void sendUpdates() {
@@ -131,7 +151,7 @@ public class VaultAltarTileEntity extends TileEntity implements ITickableTileEnt
         }
         final ServerWorld serverWorld = (ServerWorld) this.level;
         PlayerVaultAltarData.get(serverWorld).getAltars(this.owner).forEach(altarPos -> {
-            if (!this.getBlockPos().equals(altarPos)) {
+            if (!this.getBlockPos().equals((Object) altarPos)) {
                 final TileEntity te = this.level.getBlockEntity(altarPos);
                 if (te instanceof VaultAltarTileEntity) {
                     final VaultAltarTileEntity altar = (VaultAltarTileEntity) te;
@@ -173,6 +193,58 @@ public class VaultAltarTileEntity extends TileEntity implements ITickableTileEnt
         return ActionResultType.SUCCESS;
     }
 
+    public ActionResultType onPogRightClick(final ServerPlayerEntity player, final ItemStack heldItem) {
+        if (this.level == null) {
+            return ActionResultType.FAIL;
+        }
+        final ServerWorld world = (ServerWorld) this.level;
+        if (this.recipe == null) {
+            return ActionResultType.SUCCESS;
+        }
+        final List<BlockPos> altarPositions = PlayerVaultAltarData.get(world).getAltars(player.getUUID());
+        for (final BlockPos altarPosition : altarPositions) {
+            final TileEntity te = world.getBlockEntity(altarPosition);
+            if (te instanceof VaultAltarTileEntity) {
+                final VaultAltarTileEntity altar = (VaultAltarTileEntity) te;
+                if (altar.altarState == AltarState.INFUSING) {
+                    return ActionResultType.FAIL;
+                }
+                continue;
+            }
+        }
+        final List<RequiredItem> idolRequirements = new ArrayList<RequiredItem>();
+        final ItemStack benevolent = new ItemStack((IItemProvider) ModItems.IDOL_BENEVOLENT);
+        final ItemStack malevolence = new ItemStack((IItemProvider) ModItems.IDOL_MALEVOLENCE);
+        final ItemStack omniscient = new ItemStack((IItemProvider) ModItems.IDOL_OMNISCIENT);
+        final ItemStack timekeeper = new ItemStack((IItemProvider) ModItems.IDOL_TIMEKEEPER);
+        ModAttributes.IDOL_TYPE.create(benevolent, PlayerFavourData.VaultGodType.BENEVOLENT);
+        ModAttributes.GEAR_STATE.create(benevolent, VaultGear.State.IDENTIFIED);
+        ModAttributes.GEAR_MODEL.create(benevolent, 0);
+        ModAttributes.IDOL_TYPE.create(malevolence, PlayerFavourData.VaultGodType.MALEVOLENCE);
+        ModAttributes.GEAR_STATE.create(malevolence, VaultGear.State.IDENTIFIED);
+        ModAttributes.GEAR_MODEL.create(malevolence, 0);
+        ModAttributes.IDOL_TYPE.create(omniscient, PlayerFavourData.VaultGodType.OMNISCIENT);
+        ModAttributes.GEAR_STATE.create(omniscient, VaultGear.State.IDENTIFIED);
+        ModAttributes.GEAR_MODEL.create(omniscient, 0);
+        ModAttributes.IDOL_TYPE.create(timekeeper, PlayerFavourData.VaultGodType.TIMEKEEPER);
+        ModAttributes.GEAR_STATE.create(timekeeper, VaultGear.State.IDENTIFIED);
+        ModAttributes.GEAR_MODEL.create(timekeeper, 0);
+        idolRequirements.add(new RequiredItem(benevolent, 0, 1));
+        idolRequirements.add(new RequiredItem(malevolence, 0, 1));
+        idolRequirements.add(new RequiredItem(omniscient, 0, 1));
+        idolRequirements.add(new RequiredItem(timekeeper, 0, 1));
+        System.out.println(benevolent.getTag());
+        this.recipe.cacheRequiredItems(idolRequirements);
+        this.recipe.setPogInfused(true);
+        PlayerVaultAltarData.get(world).setDirty();
+        if (!player.isCreative()) {
+            heldItem.shrink(1);
+        }
+        this.sendUpdates();
+        world.playSound((PlayerEntity) null, (double) this.getBlockPos().getX(), (double) this.getBlockPos().getY(), (double) this.getBlockPos().getZ(), SoundEvents.END_PORTAL_SPAWN, SoundCategory.BLOCKS, 1.0f, 2.0f);
+        return ActionResultType.SUCCESS;
+    }
+
     public ActionResultType onRemoveVaultRock() {
         this.setAltarState(AltarState.IDLE);
         this.recipe = null;
@@ -184,13 +256,29 @@ public class VaultAltarTileEntity extends TileEntity implements ITickableTileEnt
         return ActionResultType.SUCCESS;
     }
 
+    public ActionResultType onRemovePogInfusion() {
+        this.setAltarState(AltarState.ACCEPTING);
+        this.recipe.revertCache();
+        this.recipe.setPogInfused(false);
+        if (this.level != null) {
+            this.level.playSound((PlayerEntity) null, (double) this.getBlockPos().getX(), (double) this.getBlockPos().getY(), (double) this.getBlockPos().getZ(), SoundEvents.WITHER_DEATH, SoundCategory.BLOCKS, 0.7f, 1.5f);
+        }
+        this.sendUpdates();
+        return ActionResultType.SUCCESS;
+    }
+
     private void completeInfusion(final World world) {
         final ServerWorld serverWorld = (ServerWorld) world;
         final ItemStack crystal = new ItemStack((IItemProvider) ModItems.VAULT_CRYSTAL);
-        world.addFreshEntity((Entity) new ItemEntity(world, this.getBlockPos().getX() + 0.5, this.worldPosition.getY() + 1.5, this.worldPosition.getZ() + 0.5, crystal));
         final CrystalData data = new CrystalData(crystal);
-        final int level = PlayerVaultStatsData.get((ServerWorld) world).getVaultStats(this.owner).getVaultLevel();
-        data.setType(ModConfigs.LOOT_TABLES.getForLevel(level).CRYSTAL_TYPE.getRandom(world.getRandom()));
+        if (this.recipe.isPogInfused()) {
+            data.setType(CrystalData.Type.FINAL_LOBBY);
+            serverWorld.playSound((PlayerEntity) null, (double) this.getBlockPos().getX(), (double) this.getBlockPos().getY(), (double) this.getBlockPos().getZ(), SoundEvents.END_PORTAL_SPAWN, SoundCategory.BLOCKS, 1.0f, 0.8f);
+        } else {
+            final int level = PlayerVaultStatsData.get((ServerWorld) world).getVaultStats(this.owner).getVaultLevel();
+            data.setType(ModConfigs.LOOT_TABLES.getForLevel(level).CRYSTAL_TYPE.getRandom(world.getRandom()));
+        }
+        world.addFreshEntity((Entity) new ItemEntity(world, this.getBlockPos().getX() + 0.5, this.worldPosition.getY() + 1.5, this.worldPosition.getZ() + 0.5, crystal));
         PlayerStatsData.get((ServerWorld) world).onCrystalCrafted(this.owner, this.recipe.getRequiredItems(), data.getType());
         this.resetAltar((ServerWorld) world);
         this.playCompletionEffects(serverWorld);
@@ -216,10 +304,18 @@ public class VaultAltarTileEntity extends TileEntity implements ITickableTileEnt
     }
 
     private void resetAltar(final ServerWorld world) {
-        this.recipe = null;
         this.infusionTimer = -666;
-        PlayerVaultAltarData.get(world).removeRecipe(this.owner);
-        this.altarState = AltarState.IDLE;
+        if (this.recipe.isPogInfused()) {
+            this.recipe.revertCache();
+            this.recipe.setPogInfused(false);
+            PlayerVaultAltarData.get(world).setDirty();
+            this.altarState = AltarState.ACCEPTING;
+            this.sendUpdates();
+        } else {
+            this.recipe = null;
+            PlayerVaultAltarData.get(world).removeRecipe(this.owner);
+            this.altarState = AltarState.IDLE;
+        }
     }
 
     private void pullNearbyItems(final World world, final PlayerVaultAltarData data, final double x, final double y, final double z, final double range) {
@@ -285,7 +381,7 @@ public class VaultAltarTileEntity extends TileEntity implements ITickableTileEnt
             compound.putUUID("Owner", this.owner);
         }
         if (this.recipe != null) {
-            compound.put("Recipe", (INBT) AltarInfusionRecipe.serialize(this.recipe));
+            compound.put("Recipe", (INBT) this.recipe.serialize());
         }
         compound.putInt("InfusionTimer", this.infusionTimer);
         return super.save(compound);
@@ -323,7 +419,7 @@ public class VaultAltarTileEntity extends TileEntity implements ITickableTileEnt
             tag.putUUID("Owner", this.owner);
         }
         if (this.recipe != null) {
-            tag.put("Recipe", (INBT) AltarInfusionRecipe.serialize(this.recipe));
+            tag.put("Recipe", (INBT) this.recipe.serialize());
         }
         tag.putInt("InfusionTimer", this.infusionTimer);
         return tag;
@@ -364,8 +460,9 @@ public class VaultAltarTileEntity extends TileEntity implements ITickableTileEnt
             @Nonnull
             public ItemStack insertItem(final int slot, @Nonnull final ItemStack stack, final boolean simulate) {
                 final PlayerVaultAltarData data = PlayerVaultAltarData.get((ServerWorld) VaultAltarTileEntity.this.level);
-                if (data.getRecipe(VaultAltarTileEntity.this.owner) != null && !data.getRecipe(VaultAltarTileEntity.this.owner).isComplete()) {
-                    final List<RequiredItem> items = data.getRecipe(VaultAltarTileEntity.this.owner).getRequiredItems();
+                final AltarInfusionRecipe recipe = data.getRecipe(VaultAltarTileEntity.this.owner);
+                if (recipe != null && !recipe.isComplete()) {
+                    final List<RequiredItem> items = recipe.getRequiredItems();
                     for (final RequiredItem item : items) {
                         if (item.reachedAmountRequired()) {
                             continue;

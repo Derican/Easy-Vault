@@ -52,10 +52,31 @@ public class RaidEventConfig extends Config {
         this.soulShardTradeCost = 750;
         this.temporaryModifierMinutes = 6;
         this.viewerVoteChance = 0.2f;
-        (this.viewerModifiers = new WeightedList<String>()).add("Gilded", 1);
-        this.viewerModifiers.add("Plentiful", 1);
+        this.viewerModifiers = new WeightedList<String>();
+        this.viewerModifiers.add("Gilded", 6);
+        this.viewerModifiers.add("Hoard", 3);
+        this.viewerModifiers.add("Treasure", 1);
+        this.viewerModifiers.add("Lucky", 6);
+        this.viewerModifiers.add("Luckier", 3);
+        this.viewerModifiers.add("Super Lucky", 1);
+        this.viewerModifiers.add("Plentiful", 6);
+        this.viewerModifiers.add("Rich", 3);
+        this.viewerModifiers.add("Copious", 1);
+        this.viewerModifiers.add("Prismatic", 3);
+        this.viewerModifiers.add("Safe Zone", 6);
         this.viewerModifiers.add("Frail", 1);
-        this.viewerModifiers.add("Trapped", 1);
+        this.viewerModifiers.add("Fragile", 1);
+        this.viewerModifiers.add("Destructive", 1);
+        this.viewerModifiers.add("Trapped", 10);
+        this.viewerModifiers.add("Daycare", 10);
+        this.viewerModifiers.add("Unlucky", 10);
+        this.viewerModifiers.add("Super Unlucky", 4);
+        this.viewerModifiers.add("Hunger", 10);
+        this.viewerModifiers.add("Tired", 10);
+        this.viewerModifiers.add("Slowed", 10);
+        this.viewerModifiers.add("Freezing", 4);
+        this.viewerModifiers.add("Withering", 4);
+        this.viewerModifiers.add("Poisonous", 4);
     }
 
     static {

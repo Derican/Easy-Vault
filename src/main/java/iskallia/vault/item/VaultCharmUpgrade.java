@@ -14,6 +14,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -54,7 +55,8 @@ public class VaultCharmUpgrade extends BasicItem {
     public enum Tier {
         ONE("Tier 1", 1),
         TWO("Tier 2", 2),
-        THREE("Tier 3", 3);
+        THREE("Tier 3", 3),
+        FOUR("Tier 4", 4);
 
         private final String name;
         private final int tier;
@@ -81,20 +83,7 @@ public class VaultCharmUpgrade extends BasicItem {
         }
 
         public static Tier getByValue(final int value) {
-            switch (value) {
-                case 1: {
-                    return Tier.ONE;
-                }
-                case 2: {
-                    return Tier.TWO;
-                }
-                case 3: {
-                    return Tier.THREE;
-                }
-                default: {
-                    return null;
-                }
-            }
+            return Arrays.stream(values()).filter(tier -> tier.getTier() == value).findFirst().orElse(null);
         }
 
         public Tier getNext() {
@@ -104,6 +93,9 @@ public class VaultCharmUpgrade extends BasicItem {
                 }
                 case TWO: {
                     return Tier.THREE;
+                }
+                case THREE: {
+                    return Tier.FOUR;
                 }
                 default: {
                     return null;

@@ -64,6 +64,21 @@ public class VaultAltarRenderer extends TileEntityRenderer<VaultAltarTileEntity>
             this.renderItem(stack, translation, Vector3f.YP.rotationDegrees(this.getAngle(player, partialTicks) * 5.0f), matrixStack, buffer, partialTicks, combinedOverlay, lightLevel);
             this.renderLabel(requiredItem, matrixStack, buffer, lightLevel, translation, text, textColor);
         }
+        if (recipe.isPogInfused()) {
+            final boolean infusing = altar.getAltarState() == VaultAltarTileEntity.AltarState.INFUSING;
+            final ItemStack pogStack = new ItemStack((IItemProvider)ModItems.POG);
+            final IBakedModel ibakedmodel = this.mc.getItemRenderer().getModel(pogStack, (World)null, (LivingEntity)null);
+            for (int j = 0; j < 3; ++j) {
+                final double r = 1.0;
+                matrixStack.pushPose();
+                matrixStack.translate(0.5, 0.85, 0.5);
+                matrixStack.mulPose(Vector3f.YP.rotationDegrees(j * 120 + this.getAngle(player, partialTicks) * (infusing ? 25.0f : 15.0f)));
+                matrixStack.translate(r, Math.sin(this.getAngle(player, partialTicks) * 0.25 + j) * 0.2, 0.0);
+                matrixStack.mulPose(Vector3f.YP.rotationDegrees(this.getAngle(player, partialTicks) * 10.0f));
+                this.mc.getItemRenderer().render(pogStack, ItemCameraTransforms.TransformType.GROUND, true, matrixStack, buffer, lightLevel, combinedOverlay, ibakedmodel);
+                matrixStack.popPose();
+            }
+        }
     }
 
     private void renderItem(final ItemStack stack, final double[] translation, final Quaternion rotation, final MatrixStack matrixStack, final IRenderTypeBuffer buffer, final float partialTicks, final int combinedOverlay, final int lightLevel) {

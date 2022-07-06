@@ -70,7 +70,6 @@ public class ResistanceHelper {
                 resistancePercent += set2.getIncreasedResistance();
             }
         }
-        resistancePercent += getResistancePercent((LivingEntity) player);
         return resistancePercent;
     }
 

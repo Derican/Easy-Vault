@@ -5,6 +5,7 @@ import iskallia.vault.config.entry.vending.ProductEntry;
 import iskallia.vault.config.entry.vending.TradeEntry;
 import iskallia.vault.util.data.WeightedList;
 import net.minecraft.item.Items;
+import net.minecraft.nbt.CompoundNBT;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
@@ -27,10 +28,10 @@ public abstract class TraderCoreConfig extends Config {
         @Override
         protected void reset() {
             WeightedList<TradeEntry> options = new WeightedList<TradeEntry>();
-            options.add(new TradeEntry(new ProductEntry(Items.APPLE, 8, 8, null), new ProductEntry(Items.GOLDEN_APPLE, 1, 1, null), 3), 1);
+            options.add(new TradeEntry(new ProductEntry(Items.APPLE, 8, 8, (CompoundNBT) null), new ProductEntry(Items.GOLDEN_APPLE, 1, 1, (CompoundNBT) null), 3), 1);
             this.levels.add(new Level(0, options));
             options = new WeightedList<TradeEntry>();
-            options.add(new TradeEntry(new ProductEntry(Items.CARROT, 8, 8, null), new ProductEntry(Items.GOLDEN_CARROT, 1, 1, null), 3), 1);
+            options.add(new TradeEntry(new ProductEntry(Items.CARROT, 8, 8, (CompoundNBT) null), new ProductEntry(Items.GOLDEN_CARROT, 1, 1, (CompoundNBT) null), 3), 1);
             this.levels.add(new Level(25, options));
         }
 

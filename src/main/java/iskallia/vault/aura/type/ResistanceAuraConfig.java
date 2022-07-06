@@ -12,6 +12,11 @@ public class ResistanceAuraConfig extends EternalAuraConfig.AuraConfig {
         this.additionalResistance = additionalResistance;
     }
 
+    public ResistanceAuraConfig(final String name, final String displayName, final String description, final String iconPath, final float radius, final float additionalResistance) {
+        super(name, displayName, description, iconPath, radius);
+        this.additionalResistance = additionalResistance;
+    }
+
     public float getAdditionalResistance() {
         return this.additionalResistance;
     }

@@ -91,7 +91,7 @@ public class StabilizerBlock extends Block {
 
     private boolean startPoll(final ServerWorld world, final BlockPos pos) {
         final VaultRaid vault = VaultRaidData.get(world).getAt(world, pos);
-        return vault != null && (vault.getActiveObjective(ArchitectObjective.class).map(ArchitectObjective::getActiveSession).map(VotingSession::getStabilizerPos).map(stabilizer -> stabilizer.equals(pos)).orElse(false) || vault.getActiveObjective(ArchitectObjective.class).map(objective -> objective.createVotingSession(vault, world, pos)).orElse(false));
+        return vault != null && (vault.getActiveObjective(ArchitectObjective.class).map(ArchitectObjective::getActiveSession).map(VotingSession::getStabilizerPos).map(stabilizer -> stabilizer.equals((Object)pos)).orElse(false) || vault.getActiveObjective(ArchitectObjective.class).map(objective -> objective.createVotingSession(world, pos)).orElse(false));
     }
 
     public void onRemove(final BlockState state, final World world, final BlockPos pos, final BlockState newState, final boolean isMoving) {

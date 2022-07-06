@@ -13,6 +13,7 @@ import iskallia.vault.world.data.PlayerVaultStatsData;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.loot.LootContext;
 import net.minecraft.loot.LootParameterSets;
 import net.minecraft.loot.LootParameters;
@@ -108,10 +109,17 @@ public class VaultAltarConfig extends Config {
             this.spawnLuckyEffects((World) world, pos);
         }
         final LootTable lootTable = world.getServer().getLootTables().get(ModConfigs.LOOT_TABLES.getForLevel(vaultLevel).getAltar());
-        final RequiredItem resource = new RequiredItem(ItemStack.EMPTY, 0, 0);
-        final RequiredItem richity = new RequiredItem(ItemStack.EMPTY, 0, 0);
-        final RequiredItem farmable = new RequiredItem(ItemStack.EMPTY, 0, 0);
-        final RequiredItem misc = new RequiredItem(ItemStack.EMPTY, 0, 0);
+        final RequiredItem resource = new RequiredItem(Items.CLAY_BALL, 0, 0);
+        final RequiredItem richity = new RequiredItem(Items.DIAMOND, 0, 0);
+        final RequiredItem farmable = new RequiredItem(Items.APPLE, 0, 0);
+        final RequiredItem misc = new RequiredItem(Items.EGG, 0, 0);
+        try {
+            lootTable.getPool("Resource").addRandomItems(resource::setItem, ctx);
+            lootTable.getPool("Richity").addRandomItems(richity::setItem, ctx);
+            lootTable.getPool("Farmable").addRandomItems(farmable::setItem, ctx);
+            lootTable.getPool("Misc").addRandomItems(misc::setItem, ctx);
+        }
+        catch (final Exception ex) {}
         lootTable.getPool("Resource").addRandomItems(resource::setItem, ctx);
         lootTable.getPool("Richity").addRandomItems(richity::setItem, ctx);
         lootTable.getPool("Farmable").addRandomItems(farmable::setItem, ctx);

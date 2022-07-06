@@ -1,6 +1,7 @@
 package iskallia.vault.item.gear;
 
 import com.google.common.collect.Multimap;
+import net.minecraft.block.BlockState;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
@@ -36,6 +37,11 @@ public class VaultAxeItem extends AxeItem implements VaultGear<VaultAxeItem> {
     @Nullable
     public EquipmentSlotType getIntendedSlot() {
         return EquipmentSlotType.MAINHAND;
+    }
+
+    public float getDestroySpeed(final ItemStack stack, final BlockState state) {
+        final float destroySpeed = super.getDestroySpeed(stack, state);
+        return (destroySpeed > 0.0f) ? destroySpeed : 6.0f;
     }
 
     public Multimap<Attribute, AttributeModifier> getAttributeModifiers(final EquipmentSlotType slot, final ItemStack stack) {

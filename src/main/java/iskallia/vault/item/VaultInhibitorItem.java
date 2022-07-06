@@ -39,9 +39,7 @@ public class VaultInhibitorItem extends Item {
                 tooltip.add(StringTextComponent.EMPTY);
                 tooltip.add(new StringTextComponent(modifierDesc).withStyle(TextFormatting.GOLD));
 
-                final Iterator<ModifierRollResult> iterator = result.iterator();
-                while (iterator.hasNext()) {
-                    final ModifierRollResult outcome = iterator.next();
+                for (ModifierRollResult outcome : result) {
                     tooltip.addAll(outcome.getTooltipDescription("- ", true));
                 }
             }

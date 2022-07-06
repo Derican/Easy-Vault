@@ -9,6 +9,7 @@ import iskallia.vault.world.gen.structure.JigsawPiecePlacer;
 import iskallia.vault.world.vault.VaultRaid;
 import iskallia.vault.world.vault.gen.piece.VaultPiece;
 import iskallia.vault.world.vault.logic.objective.ScavengerHuntObjective;
+import iskallia.vault.world.vault.logic.objective.TreasureHuntObjective;
 import iskallia.vault.world.vault.modifier.ChestModifier;
 import iskallia.vault.world.vault.player.VaultPlayer;
 import iskallia.vault.world.vault.player.VaultRunner;
@@ -54,9 +55,7 @@ public class BreadcrumbFeature extends Feature<NoFeatureConfig> {
             Predicate<BlockPos> filter = pos -> false;
             final Set<ChunkPos> chunks = new HashSet<ChunkPos>();
 
-            final Iterator<VaultPiece> iterator = pieces.iterator();
-            while (iterator.hasNext()) {
-                final VaultPiece piece = iterator.next();
+            for (VaultPiece piece : pieces) {
                 final MutableBoundingBox box = piece.getBoundingBox();
                 filter = filter.or((Predicate<? super BlockPos>) box::isInside);
                 final ChunkPos chMin = new ChunkPos(box.x0 >> 4, box.z0 >> 4);
@@ -69,9 +68,7 @@ public class BreadcrumbFeature extends Feature<NoFeatureConfig> {
             }
             final Predicate<BlockPos> featurePlacementFilter = filter;
 
-            final Iterator<ChunkPos> iterator2 = chunks.iterator();
-            while (iterator2.hasNext()) {
-                final ChunkPos pos = iterator2.next();
+            for (ChunkPos pos : chunks) {
                 final BlockPos featurePos = pos.getWorldPosition();
                 placeBreadcrumbFeatures(vault, (ISeedReader) sWorld, (at, state) -> featurePlacementFilter.test(at) && sWorld.setBlock(at, state, 2), sWorld.getRandom(), featurePos);
             }
@@ -80,12 +77,17 @@ public class BreadcrumbFeature extends Feature<NoFeatureConfig> {
 
     private static void placeBreadcrumbFeatures(final VaultRaid vault, final ISeedReader world, final BiPredicate<BlockPos, BlockState> blockPlacer, final Random rand, final BlockPos featurePos) {
         vault.getActiveObjective(ScavengerHuntObjective.class).ifPresent(objective -> doTreasureSpawnPass(rand, (IWorld) world, blockPlacer, featurePos));
-        doChestSpawnPass(rand, (IWorld) world, blockPlacer, featurePos, ModBlocks.VAULT_CHEST.defaultBlockState());
-        final List<VaultPlayer> runners = vault.getPlayers().stream().filter(vaultPlayer -> vaultPlayer instanceof VaultRunner).collect(Collectors.toList());
-        for (int i = 0; i < runners.size() - 1; ++i) {
-            doChestSpawnPass(rand, (IWorld) world, blockPlacer, featurePos, ModBlocks.VAULT_COOP_CHEST.defaultBlockState());
+        vault.getActiveObjective(TreasureHuntObjective.class).ifPresent(objective -> doTreasureSpawnPass(rand, (IWorld) world, blockPlacer, featurePos));
+        if (!vault.getProperties().exists(VaultRaid.PARENT)) {
+            doChestSpawnPass(rand, (IWorld) world, blockPlacer, featurePos, ModBlocks.VAULT_CHEST.defaultBlockState());
+            final List<VaultPlayer> runners = vault.getPlayers().stream().filter(vaultPlayer -> vaultPlayer instanceof VaultRunner).collect(Collectors.toList());
+            for (int i = 0; i < runners.size() - 1; ++i) {
+                doChestSpawnPass(rand, (IWorld) world, blockPlacer, featurePos, ModBlocks.VAULT_COOP_CHEST.defaultBlockState());
+            }
         }
-        placeChestModifierFeatures(vault, world, blockPlacer, rand, featurePos);
+        if (!vault.getProperties().exists(VaultRaid.PARENT)) {
+            placeChestModifierFeatures(vault, world, blockPlacer, rand, featurePos);
+        }
     }
 
     private static void placeChestModifierFeatures(final VaultRaid vault, final ISeedReader world, final BiPredicate<BlockPos, BlockState> blockPlacer, final Random rand, final BlockPos featurePos) {

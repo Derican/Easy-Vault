@@ -7,8 +7,8 @@ public class SummonEternalCountConfig extends SummonEternalConfig {
     @Expose
     private final int additionalCount;
 
-    public SummonEternalCountConfig(final int cost, final int cooldown, final int numberOfEternals, final int despawnTime, final boolean vaultOnly, final float ancientChance, final int additionalCount) {
-        super(cost, cooldown, numberOfEternals, despawnTime, ancientChance, vaultOnly);
+    public SummonEternalCountConfig(final int cost, final int cooldown, final int numberOfEternals, final int summonedEternalsCap, final int despawnTime, final boolean vaultOnly, final float ancientChance, final int additionalCount) {
+        super(cost, cooldown, numberOfEternals, summonedEternalsCap, despawnTime, ancientChance, vaultOnly);
         this.additionalCount = additionalCount;
     }
 

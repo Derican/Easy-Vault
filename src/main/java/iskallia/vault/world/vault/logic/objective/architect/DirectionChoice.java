@@ -15,6 +15,7 @@ import org.apache.commons.lang3.StringUtils;
 import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Function;
 
 public class DirectionChoice {
     private final Direction direction;
@@ -70,9 +71,17 @@ public class DirectionChoice {
     }
 
     public List<VoteModifier> getModifiers() {
+        return this.getModifiers(ModConfigs.ARCHITECT_EVENT::getModifier);
+    }
+
+    public List<VoteModifier> getFinalArchitectModifiers() {
+        return this.getModifiers(ModConfigs.FINAL_ARCHITECT::getModifier);
+    }
+
+    public List<VoteModifier> getModifiers(final Function<String, VoteModifier> resolver) {
         final List<VoteModifier> modifierList = new ArrayList<VoteModifier>();
         this.modifiers.forEach(modifierStr -> {
-            final VoteModifier modifier = ModConfigs.ARCHITECT_EVENT.getModifier(modifierStr);
+            final VoteModifier modifier = resolver.apply(modifierStr);
             if (modifier != null) {
                 modifierList.add(modifier);
             }

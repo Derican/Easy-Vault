@@ -2,8 +2,10 @@ package iskallia.vault.network.message;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
-import iskallia.vault.client.util.ParticleHelper;
+import iskallia.vault.client.util.ClientEffectHelper;
 import net.minecraft.network.PacketBuffer;
+import net.minecraft.util.SoundCategory;
+import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraftforge.fml.network.NetworkEvent;
 
@@ -22,6 +24,18 @@ public class EffectMessage {
         });
         this.effectType = effectType;
         this.pos = pos;
+    }
+
+    public static EffectMessage playSound(final SoundEvent event, final SoundCategory category, final float pitch, final float volume) {
+        final EffectMessage msg = new EffectMessage(Type.PLAY_SOUND, Vector3d.ZERO);
+        msg.addData(buf -> {
+            buf.writeUtf(event.getRegistryName().toString());
+            buf.writeEnum((Enum)category);
+            buf.writeFloat(pitch);
+            buf.writeFloat(volume);
+            return;
+        });
+        return msg;
     }
 
     public Type getEffectType() {
@@ -63,11 +77,12 @@ public class EffectMessage {
 
     public static void handle(final EffectMessage pkt, final Supplier<NetworkEvent.Context> contextSupplier) {
         final NetworkEvent.Context context = contextSupplier.get();
-        context.enqueueWork(() -> ParticleHelper.spawnParticle(pkt));
+        context.enqueueWork(() -> ClientEffectHelper.doEffect(pkt));
         context.setPacketHandled(true);
     }
 
     public enum Type {
-        COLORED_FIREWORK;
+        COLORED_FIREWORK,
+        PLAY_SOUND;
     }
 }

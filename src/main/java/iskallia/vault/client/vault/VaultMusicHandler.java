@@ -58,7 +58,7 @@ public class VaultMusicHandler {
             return;
         }
         final VaultOverlayMessage.OverlayType type = ClientVaultRaidData.getOverlayType();
-        if (type != VaultOverlayMessage.OverlayType.VAULT) {
+        if (type != VaultOverlayMessage.OverlayType.VAULT || !ClientVaultRaidData.showTimer()) {
             return;
         }
         final int remainingTicks = ClientVaultRaidData.getRemainingTicks();

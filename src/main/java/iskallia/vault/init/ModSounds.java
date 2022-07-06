@@ -53,7 +53,9 @@ public class ModSounds {
     public static SoundEvent VAULT_CHEST_EPIC_OPEN;
     public static SoundEvent VAULT_CHEST_OMEGA_OPEN;
     public static SoundEvent VAULT_CHEST_RARE_OPEN;
+    public static SoundEvent WITCHSKALL_IDLE;
     public static SoundEvent FAVOUR_UP;
+    public static SoundEvent EYESORE_GRAWL;
     public static LazySoundType VAULT_GEM;
 
     public static void registerSounds(final RegistryEvent.Register<SoundEvent> event) {
@@ -103,7 +105,9 @@ public class ModSounds {
         ModSounds.VAULT_CHEST_EPIC_OPEN = registerSound(event, "vault_chest_epic_open");
         ModSounds.VAULT_CHEST_OMEGA_OPEN = registerSound(event, "vault_chest_omega_open");
         ModSounds.VAULT_CHEST_RARE_OPEN = registerSound(event, "vault_chest_rare_open");
+        ModSounds.WITCHSKALL_IDLE = registerSound(event, "witchskall_idle");
         ModSounds.FAVOUR_UP = registerSound(event, "favour_up");
+        ModSounds.EYESORE_GRAWL = registerSound(event, "eyesore_grawl");
     }
 
     public static void registerSoundTypes() {

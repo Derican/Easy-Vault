@@ -56,10 +56,14 @@ public class VotingSession {
             if (world.hasChunkAt(this.getStabilizerPos())) {
                 final TileEntity tile = world.getBlockEntity(this.getStabilizerPos());
                 if (tile instanceof StabilizerTileEntity) {
-                    ((StabilizerTileEntity) tile).setActive();
+                    this.setStabilizerActive((StabilizerTileEntity)tile);
                 }
             }
         }
+    }
+
+    protected void setStabilizerActive(final StabilizerTileEntity tile) {
+        tile.setActive();
     }
 
     public BlockPos getStabilizerPos() {
@@ -80,6 +84,15 @@ public class VotingSession {
 
     public List<DirectionChoice> getDirections() {
         return this.directions;
+    }
+
+    public boolean hasDirectionChoice(final Direction direction) {
+        for (final DirectionChoice directionChoice : this.getDirections()) {
+            if (directionChoice.getDirection() == direction) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public float getChoicePercentage(final DirectionChoice choice) {
@@ -115,6 +128,9 @@ public class VotingSession {
     }
 
     public static VotingSession deserialize(final CompoundNBT tag) {
+        if (tag.getBoolean("isFinal")) {
+            return new SummonAndKillBossesVotingSession(tag);
+        }
         return new VotingSession(tag);
     }
 }

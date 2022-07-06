@@ -1,17 +1,17 @@
 package iskallia.vault.container.inventory;
 
-import iskallia.vault.attribute.IntegerAttribute;
-import iskallia.vault.container.base.RecipeInventory;
-import iskallia.vault.init.ModAttributes;
+import net.minecraft.inventory.EquipmentSlotType;
 import iskallia.vault.init.ModItems;
 import iskallia.vault.init.ModModels;
-import iskallia.vault.item.gear.VaultArmorItem;
+import net.minecraft.entity.MobEntity;
 import iskallia.vault.item.gear.VaultGear;
 import iskallia.vault.item.gear.VaultSwordItem;
-import net.minecraft.entity.MobEntity;
-import net.minecraft.inventory.EquipmentSlotType;
+import iskallia.vault.item.gear.VaultArmorItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.MathHelper;
+import iskallia.vault.init.ModAttributes;
+import iskallia.vault.attribute.IntegerAttribute;
+import iskallia.vault.container.base.RecipeInventory;
 
 public class TransmogTableInventory extends RecipeInventory {
     public static final int GEAR_SLOT = 0;
@@ -52,16 +52,15 @@ public class TransmogTableInventory extends RecipeInventory {
         if (appearanceRarity == VaultGear.Rarity.SCRAPPY) {
             return false;
         }
+        if (armorRarity == VaultGear.Rarity.UNIQUE) {
+            return false;
+        }
         final EquipmentSlotType armorSlot = MobEntity.getEquipmentSlotForItem(appearanceStack);
         final EquipmentSlotType appearanceSlot = MobEntity.getEquipmentSlotForItem(armorStack);
         if (armorSlot != appearanceSlot) {
             return false;
         }
-        final int armorSpecialModel = ModAttributes.GEAR_SPECIAL_MODEL.getBase(armorStack).orElse(-1);
         final int appearanceSpecialModel = ModAttributes.GEAR_SPECIAL_MODEL.getBase(appearanceStack).orElse(-1);
-        if (armorSpecialModel != -1) {
-            return false;
-        }
         if (appearanceSpecialModel != -1) {
             final ModModels.SpecialGearModel specialGearModel = ModModels.SpecialGearModel.getModel(appearanceSlot, appearanceSpecialModel);
             if (specialGearModel != null && !specialGearModel.getModelProperties().doesAllowTransmogrification()) {
@@ -80,11 +79,10 @@ public class TransmogTableInventory extends RecipeInventory {
         if (appearanceRarity == VaultGear.Rarity.SCRAPPY) {
             return false;
         }
-        final int armorSpecialModel = ModAttributes.GEAR_SPECIAL_MODEL.getBase(swordStack).orElse(-1);
-        final int appearanceSpecialModel = ModAttributes.GEAR_SPECIAL_MODEL.getBase(appearanceStack).orElse(-1);
-        if (armorSpecialModel != -1) {
+        if (swordRarity == VaultGear.Rarity.UNIQUE) {
             return false;
         }
+        final int appearanceSpecialModel = ModAttributes.GEAR_SPECIAL_MODEL.getBase(appearanceStack).orElse(-1);
         if (appearanceSpecialModel != -1) {
             final ModModels.SpecialSwordModel specialSwordModel = ModModels.SpecialSwordModel.getModel(appearanceSpecialModel);
             if (specialSwordModel != null && !specialSwordModel.getModelProperties().doesAllowTransmogrification()) {
@@ -98,14 +96,16 @@ public class TransmogTableInventory extends RecipeInventory {
     public ItemStack resultingItemStack() {
         final ItemStack gearStack = this.getItem(0);
         final ItemStack appearanceStack = this.getItem(1);
-        final IntegerAttribute modelAttr = ModAttributes.GEAR_MODEL.getOrDefault(appearanceStack, 0);
-        final int modelId = modelAttr.getValue(appearanceStack);
-        final IntegerAttribute specialModelAttr = ModAttributes.GEAR_SPECIAL_MODEL.getOrDefault(appearanceStack, -1);
-        final int specialModelId = specialModelAttr.getValue(appearanceStack);
+        final int gearModel = ModAttributes.GEAR_MODEL.getBase(gearStack).orElse(-1);
+        final int gearSpecialModel = ModAttributes.GEAR_SPECIAL_MODEL.getBase(gearStack).orElse(-1);
+        final int appearanceModel = ModAttributes.GEAR_MODEL.getBase(appearanceStack).orElse(-1);
+        final int appearanceSpecialModel = ModAttributes.GEAR_SPECIAL_MODEL.getBase(appearanceStack).orElse(-1);
         final ItemStack resultingStack = gearStack.copy();
-        ModAttributes.GEAR_MODEL.create(resultingStack, modelId);
-        if (specialModelId != -1) {
-            ModAttributes.GEAR_SPECIAL_MODEL.create(resultingStack, specialModelId);
+        if (appearanceSpecialModel != -1) {
+            ModAttributes.GEAR_SPECIAL_MODEL.create(resultingStack, appearanceSpecialModel);
+        } else {
+            ModAttributes.GEAR_MODEL.create(resultingStack, appearanceModel);
+            ModAttributes.GEAR_SPECIAL_MODEL.create(resultingStack, -1);
         }
         return resultingStack;
     }

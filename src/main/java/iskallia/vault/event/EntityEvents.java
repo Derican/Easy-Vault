@@ -120,7 +120,7 @@ public class EntityEvents {
     }
 
     @SubscribeEvent
-    public static void onPlayerFallDamage(final LivingDamageEvent event) {
+    public static void onPlayerFallDamage(final LivingHurtEvent event) {
         if (event.getEntity().level.isClientSide) {
             return;
         }
@@ -212,9 +212,7 @@ public class EntityEvents {
                         final List<MobEntity> nearby2 = nearby.subList(0, Math.min(additionalChains, nearby.size()));
                         float multiplier = 0.5f;
 
-                        final Iterator<MobEntity> iterator = nearby2.iterator();
-                        while (iterator.hasNext()) {
-                            final MobEntity me = iterator.next();
+                        for (MobEntity me : nearby2) {
                             me.hurt(event.getSource(), event.getAmount() * multiplier);
                             multiplier *= 0.5f;
                         }
@@ -240,9 +238,7 @@ public class EntityEvents {
                     nearby3.removeIf(mob -> (attacker instanceof EternalEntity || attacker instanceof PlayerEntity) && mob instanceof EternalEntity);
                     if (!nearby3.isEmpty()) {
 
-                        final Iterator<MobEntity> iterator2 = nearby3.iterator();
-                        while (iterator2.hasNext()) {
-                            final MobEntity me2 = iterator2.next();
+                        for (MobEntity me2 : nearby3) {
                             me2.hurt(event.getSource(), event.getAmount() * 0.6f);
                         }
                     }

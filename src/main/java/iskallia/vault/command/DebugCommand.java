@@ -53,6 +53,7 @@ public class DebugCommand extends Command {
         } else {
             vault.getPlayer((PlayerEntity) player).ifPresent(vPlayer -> VaultRaid.REMOVE_SCAVENGER_ITEMS.then(VaultRaid.REMOVE_INVENTORY_RESTORE_SNAPSHOTS).then(VaultRaid.EXIT_SAFELY).execute(vault, vPlayer, world));
         }
+        VaultRaidData.get(world).remove(vault.getProperties().getValue(VaultRaid.IDENTIFIER));
         final IFormattableTextComponent playerName = player.getDisplayName().copy();
         playerName.setStyle(Style.EMPTY.withColor(Color.fromRgb(9974168)));
         final StringTextComponent suffix = new StringTextComponent(" bailed.");

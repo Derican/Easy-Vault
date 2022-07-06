@@ -1,59 +1,80 @@
 package iskallia.vault.world.vault.logic.objective;
 
+import net.minecraft.nbt.ListNBT;
+import com.google.common.collect.HashBiMap;
+import net.minecraft.block.Blocks;
 import com.google.common.collect.Iterables;
-import iskallia.vault.block.entity.VaultLootableTileEntity;
-import iskallia.vault.block.item.LootStatueBlockItem;
-import iskallia.vault.config.LootTablesConfig;
-import iskallia.vault.init.ModBlocks;
-import iskallia.vault.init.ModConfigs;
-import iskallia.vault.init.ModItems;
-import iskallia.vault.nbt.VListNBT;
-import iskallia.vault.util.PlayerFilter;
-import iskallia.vault.util.StatueType;
-import iskallia.vault.util.VaultRarity;
-import iskallia.vault.world.data.EternalsData;
 import iskallia.vault.world.data.VaultRaidData;
-import iskallia.vault.world.vault.VaultRaid;
-import iskallia.vault.world.vault.gen.VaultGenerator;
-import iskallia.vault.world.vault.gen.layout.VaultRoomLayoutGenerator;
-import iskallia.vault.world.vault.logic.task.IVaultTask;
-import iskallia.vault.world.vault.logic.task.VaultTask;
+
+import java.util.UUID;
+
+import iskallia.vault.block.entity.VaultLootableTileEntity;
+import net.minecraft.nbt.INBT;
+
+import java.util.Iterator;
+
+import iskallia.vault.config.LootTablesConfig;
 import iskallia.vault.world.vault.modifier.ArtifactChanceModifier;
 import iskallia.vault.world.vault.modifier.InventoryRestoreModifier;
-import iskallia.vault.world.vault.player.VaultPlayer;
-import iskallia.vault.world.vault.player.VaultRunner;
-import iskallia.vault.world.vault.time.VaultTimer;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.item.ItemStack;
-import net.minecraft.loot.LootContext;
-import net.minecraft.loot.LootTable;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.nbt.INBT;
-import net.minecraft.nbt.ListNBT;
-import net.minecraft.server.MinecraftServer;
+import iskallia.vault.init.ModBlocks;
+import iskallia.vault.util.VaultRarity;
+import iskallia.vault.block.item.LootStatueBlockItem;
+import iskallia.vault.util.StatueType;
 import net.minecraft.util.IItemProvider;
-import net.minecraft.util.NonNullList;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.world.server.ServerWorld;
-import net.minecraftforge.common.util.INBTSerializable;
+import iskallia.vault.init.ModItems;
+import iskallia.vault.world.data.EternalsData;
+import iskallia.vault.init.ModConfigs;
+import iskallia.vault.world.vault.time.VaultTimer;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import java.util.*;
+import java.util.List;
+import java.util.Collections;
+import java.util.ArrayList;
+
+import net.minecraft.util.math.MathHelper;
+import iskallia.vault.world.vault.player.VaultRunner;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.NonNullList;
+import net.minecraft.loot.LootContext;
+import iskallia.vault.util.PlayerFilter;
+import iskallia.vault.world.vault.player.VaultPlayer;
+
+import java.util.Collection;
+
+import net.minecraft.util.text.StringTextComponent;
+import iskallia.vault.world.vault.gen.layout.VaultRoomLayoutGenerator;
+import iskallia.vault.world.vault.gen.VaultGenerator;
+import net.minecraft.loot.LootTable;
+
 import java.util.function.Function;
+import javax.annotation.Nonnull;
+
+import net.minecraft.block.BlockState;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.server.ServerWorld;
+
+import javax.annotation.Nullable;
+
+import net.minecraft.util.text.ITextComponent;
+import iskallia.vault.world.vault.VaultRaid;
+import net.minecraft.server.MinecraftServer;
+import iskallia.vault.nbt.VListNBT;
+import iskallia.vault.world.vault.logic.task.VaultTask;
+
+import java.util.Random;
 import java.util.function.Supplier;
 
+import net.minecraft.util.ResourceLocation;
+import com.google.common.collect.BiMap;
+import iskallia.vault.world.vault.logic.task.IVaultTask;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraftforge.common.util.INBTSerializable;
+
 public abstract class VaultObjective implements INBTSerializable<CompoundNBT>, IVaultTask {
-    public static final Map<ResourceLocation, Supplier<? extends VaultObjective>> REGISTRY;
+    public static final BiMap<ResourceLocation, Supplier<? extends VaultObjective>> REGISTRY;
     public static final float COOP_DOUBLE_CRATE_CHANCE = 0.5f;
     protected static final Random rand;
     private ResourceLocation id;
-    private VaultTask onTick;
+    protected VaultTask onTick;
     private VaultTask onComplete;
     private boolean completed;
     private int completionTime;
@@ -104,7 +125,7 @@ public abstract class VaultObjective implements INBTSerializable<CompoundNBT>, I
     }
 
     @Nonnull
-    public abstract BlockState getObjectiveRelevantBlock();
+    public abstract BlockState getObjectiveRelevantBlock(final VaultRaid p0, final ServerWorld p1, final BlockPos p2);
 
     public void postProcessObjectiveRelevantBlock(final ServerWorld world, final BlockPos pos) {
     }
@@ -306,14 +327,14 @@ public abstract class VaultObjective implements INBTSerializable<CompoundNBT>, I
     }
 
     public static VaultObjective fromNBT(final CompoundNBT nbt) {
-        final VaultObjective objective = VaultObjective.REGISTRY.get(new ResourceLocation(nbt.getString("Id"))).get();
+        final VaultObjective objective = (VaultObjective.REGISTRY.get(new ResourceLocation(nbt.getString("Id")))).get();
         objective.deserializeNBT(nbt);
         return objective;
     }
 
     @Nullable
     public static VaultObjective getObjective(final ResourceLocation key) {
-        return VaultObjective.REGISTRY.getOrDefault(key, () -> null).get();
+        return (VaultObjective.REGISTRY.getOrDefault(key, () -> null)).get();
     }
 
     public static <T extends VaultObjective> Supplier<T> register(final Supplier<T> objective) {
@@ -331,7 +352,7 @@ public abstract class VaultObjective implements INBTSerializable<CompoundNBT>, I
                 if (objective == null) {
                     return Blocks.AIR.defaultBlockState();
                 }
-                return objective.getObjectiveRelevantBlock();
+                return objective.getObjectiveRelevantBlock(vault, world, pos);
             }
 
             @Override
@@ -346,7 +367,7 @@ public abstract class VaultObjective implements INBTSerializable<CompoundNBT>, I
     }
 
     static {
-        REGISTRY = new HashMap<ResourceLocation, Supplier<? extends VaultObjective>>();
+        REGISTRY = (BiMap) HashBiMap.create();
         rand = new Random();
     }
 

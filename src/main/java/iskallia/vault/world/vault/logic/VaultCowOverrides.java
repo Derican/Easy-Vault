@@ -25,6 +25,7 @@ import java.util.UUID;
 
 public class VaultCowOverrides {
     private static final UUID DAMAGE_NERF_MULTIPLIER;
+    public static boolean forceSpecialVault;
     public static final String ENTITY_TAG = "replaced_entity";
 
     public static void setupVault(final VaultRaid vault) {
@@ -62,5 +63,6 @@ public class VaultCowOverrides {
 
     static {
         DAMAGE_NERF_MULTIPLIER = UUID.fromString("384df991-f603-344c-a090-3693adfa984a");
+        VaultCowOverrides.forceSpecialVault = false;
     }
 }

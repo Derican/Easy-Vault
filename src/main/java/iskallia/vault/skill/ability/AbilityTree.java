@@ -302,9 +302,7 @@ public class AbilityTree implements INBTSerializable<CompoundNBT> {
     public AbilityTree remove(final MinecraftServer server, final AbilityNode<?, ?>... nodes) {
         NetcodeUtils.runIfPresent(server, this.uuid, player -> {
 
-            final Iterator<AbilityNode<?, ?>> iterator = this.getLearnedNodes().iterator();
-            while (iterator.hasNext()) {
-                final AbilityNode<?, ?> node2 = iterator.next();
+            for (AbilityNode<?, ?> node2 : this.getLearnedNodes()) {
                 this.putOnCooldown(server, node2, 0, ModConfigs.ABILITIES.getCooldown(node2, player));
             }
             return;

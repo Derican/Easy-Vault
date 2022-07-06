@@ -1,8 +1,10 @@
 package iskallia.vault.altar;
 
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.INBT;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.util.IItemProvider;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 
 public class RequiredItem {
     private ItemStack item;
@@ -13,6 +15,10 @@ public class RequiredItem {
         this.item = stack;
         this.currentAmount = currentAmount;
         this.amountRequired = amountRequired;
+    }
+
+    public RequiredItem(final Item item, final int currentAmount, final int amountRequired) {
+        this(new ItemStack((IItemProvider) item), currentAmount, amountRequired);
     }
 
     public static CompoundNBT serializeNBT(final RequiredItem requiredItem) {

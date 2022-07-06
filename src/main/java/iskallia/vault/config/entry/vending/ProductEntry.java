@@ -46,6 +46,13 @@ public class ProductEntry {
         this.amountMax = amountMax;
     }
 
+    public ProductEntry(final Item item, final int amountMin, final int amountMax, @Nullable final String nbt) {
+        this.id = Objects.requireNonNull(item.getRegistryName()).toString();
+        this.nbt = nbt;
+        this.amountMin = amountMin;
+        this.amountMax = amountMax;
+    }
+
     public Item getItem() {
         return (Item) ForgeRegistries.ITEMS.getValue(new ResourceLocation(this.id));
     }

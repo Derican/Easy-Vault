@@ -230,6 +230,7 @@ public class ModItems {
     public static WutaxShardItem WUTAX_SHARD;
     public static BasicItem WUTAX_CRYSTAL;
     public static VaultCatalystItem VAULT_CATALYST;
+    public static BasicItem VAULT_SAND;
     public static VaultInhibitorItem VAULT_INHIBITOR;
     public static BasicTooltipItem PAINITE_STAR;
     public static VaultRuneItem VAULT_RUNE_MINE;
@@ -314,6 +315,10 @@ public class ModItems {
     public static VaultMagnetItem VAULT_MAGNET_STRONG;
     public static VaultMagnetItem VAULT_MAGNET_OMEGA;
     public static final BucketItem VOID_LIQUID_BUCKET;
+    public static final GodEssenceItem TENOS_ESSENCE;
+    public static final GodEssenceItem VELARA_ESSENCE;
+    public static final GodEssenceItem WENDARR_ESSENCE;
+    public static final GodEssenceItem IDONA_ESSENCE;
     public static LootableItem UNIDENTIFIED_TREASURE_KEY;
     public static VoidOrbItem VOID_ORB;
     public static BasicItem CRYSTAL_BURGER;
@@ -347,7 +352,12 @@ public class ModItems {
     public static VaultCharmUpgrade CHARM_UPGRADE_TIER_1;
     public static VaultCharmUpgrade CHARM_UPGRADE_TIER_2;
     public static VaultCharmUpgrade CHARM_UPGRADE_TIER_3;
+    public static VaultCharmUpgrade CHARM_UPGRADE_TIER_4;
     public static BurntCrystalItem BURNT_CRYSTAL;
+    public static FinalVaultKeystoneItem KEYSTONE_IDONA;
+    public static FinalVaultKeystoneItem KEYSTONE_TENOS;
+    public static FinalVaultKeystoneItem KEYSTONE_VELARA;
+    public static FinalVaultKeystoneItem KEYSTONE_WENDARR;
 
     public static void registerItems(final RegistryEvent.Register<Item> event) {
         final IForgeRegistry<Item> registry = (IForgeRegistry<Item>) event.getRegistry();
@@ -563,6 +573,7 @@ public class ModItems {
         registry.register(ModItems.VAULT_RUNE_VENDOR);
         registry.register(ModItems.VAULT_RUNE_XMARK);
         registry.register(ModItems.VAULT_CATALYST_FRAGMENT);
+        registry.register(ModItems.VAULT_SAND);
         registry.register(ModItems.SOUL_FLAME);
         registry.register(ModItems.VAULT_GEAR);
         registry.register(ModItems.CRYSTAL_SEAL_EXECUTIONER);
@@ -637,6 +648,10 @@ public class ModItems {
         registry.register(ModItems.SCAVENGER_SCRAP_SPICE_JAR);
         registry.register(ModItems.SCAVENGER_SCRAP_WIZARD_WAND);
         registry.register(ModItems.VOID_LIQUID_BUCKET);
+        registry.register(ModItems.TENOS_ESSENCE);
+        registry.register(ModItems.VELARA_ESSENCE);
+        registry.register(ModItems.WENDARR_ESSENCE);
+        registry.register(ModItems.IDONA_ESSENCE);
         registry.register(ModItems.VAULTERITE_INGOT);
         registry.register(ModItems.RED_VAULT_ESSENCE);
         registry.register(ModItems.UNIDENTIFIED_TREASURE_KEY);
@@ -672,7 +687,7 @@ public class ModItems {
         registry.register(ModItems.CHARM_UPGRADE_TIER_1);
         registry.register(ModItems.CHARM_UPGRADE_TIER_2);
         registry.register(ModItems.CHARM_UPGRADE_TIER_3);
-        registry.register(ModItems.BURNT_CRYSTAL);
+        registry.register(ModItems.CHARM_UPGRADE_TIER_4);
     }
 
     static {
@@ -908,6 +923,7 @@ public class ModItems {
         ModItems.VAULT_RUNE_VENDOR = new VaultRuneItem(ModItems.VAULT_MOD_GROUP, Vault.id("vault_rune_vendor"), "vendor");
         ModItems.VAULT_RUNE_XMARK = new VaultRuneItem(ModItems.VAULT_MOD_GROUP, Vault.id("vault_rune_xmark"), "x_spot");
         ModItems.VAULT_CATALYST_FRAGMENT = new BasicTooltipItem(Vault.id("vault_catalyst_fragment"), new Item.Properties().tab(ModItems.VAULT_MOD_GROUP), new ITextComponent[]{(ITextComponent) new StringTextComponent("Can be used to craft very powerful Catalysts,").withStyle(TextFormatting.GRAY), (ITextComponent) new StringTextComponent("which can modify a vault crystal.").withStyle(TextFormatting.GRAY)});
+        ModItems.VAULT_SAND = new BasicItem(Vault.id("vault_sand"), new Item.Properties().tab(ModItems.VAULT_MOD_GROUP));
         ModItems.SOUL_FLAME = new BasicItem(Vault.id("soul_flame"), new Item.Properties().tab(ModItems.VAULT_MOD_GROUP).stacksTo(3));
         ModItems.VAULT_GEAR = new BasicItem(Vault.id("vault_gear"), new Item.Properties().tab(ModItems.VAULT_MOD_GROUP).stacksTo(4));
         ModItems.CRYSTAL_SEAL_EXECUTIONER = new ItemVaultCrystalSeal(Vault.id("crystal_seal_executioner"), Vault.id("summon_and_kill_boss"));
@@ -981,7 +997,11 @@ public class ModItems {
         ModItems.VAULT_MAGNET_WEAK = new VaultMagnetItem(Vault.id("vault_magnet_weak"), VaultMagnetItem.MagnetType.WEAK);
         ModItems.VAULT_MAGNET_STRONG = new VaultMagnetItem(Vault.id("vault_magnet_strong"), VaultMagnetItem.MagnetType.STRONG);
         ModItems.VAULT_MAGNET_OMEGA = new VaultMagnetItem(Vault.id("vault_magnet_omega"), VaultMagnetItem.MagnetType.OMEGA);
-        VOID_LIQUID_BUCKET = (BucketItem) new BucketItem((Supplier) ModFluids.VOID_LIQUID, new Item.Properties().craftRemainder(Items.BUCKET).stacksTo(1).tab(ModItems.VAULT_MOD_GROUP)).setRegistryName(Vault.id("void_liquid_bucket"));
+        VOID_LIQUID_BUCKET = (BucketItem) new BucketItem(ModFluids.VOID_LIQUID, new Item.Properties().craftRemainder(Items.BUCKET).stacksTo(1).tab(ModItems.VAULT_MOD_GROUP)).setRegistryName(Vault.id("void_liquid_bucket"));
+        TENOS_ESSENCE = (GodEssenceItem) new GodEssenceItem(Vault.id("god_essence_tenos"), PlayerFavourData.VaultGodType.OMNISCIENT, new Item.Properties().tab(ModItems.VAULT_MOD_GROUP).stacksTo(1)).withTooltip((ITextComponent) new StringTextComponent("The eyes are the first to aquire new knowledge when experiencing").withStyle(TextFormatting.ITALIC));
+        VELARA_ESSENCE = (GodEssenceItem) new GodEssenceItem(Vault.id("god_essence_velara"), PlayerFavourData.VaultGodType.BENEVOLENT, new Item.Properties().tab(ModItems.VAULT_MOD_GROUP).stacksTo(1)).withTooltip((ITextComponent) new StringTextComponent("Life might start blind, but is always seen by the eyes of others").withStyle(TextFormatting.ITALIC));
+        WENDARR_ESSENCE = (GodEssenceItem) new GodEssenceItem(Vault.id("god_essence_wendarr"), PlayerFavourData.VaultGodType.TIMEKEEPER, new Item.Properties().tab(ModItems.VAULT_MOD_GROUP).stacksTo(1)).withTooltip((ITextComponent) new StringTextComponent("Time can only be perceived by the eyes of a god").withStyle(TextFormatting.ITALIC));
+        IDONA_ESSENCE = (GodEssenceItem) new GodEssenceItem(Vault.id("god_essence_idona"), PlayerFavourData.VaultGodType.MALEVOLENCE, new Item.Properties().tab(ModItems.VAULT_MOD_GROUP).stacksTo(1)).withTooltip((ITextComponent) new StringTextComponent("Sacrifices are something that please the eyes of the gods").withStyle(TextFormatting.ITALIC));
         ModItems.UNIDENTIFIED_TREASURE_KEY = new LootableItem(Vault.id("unidentified_treasure_key"), new Item.Properties().tab(ModItems.VAULT_MOD_GROUP), () -> ModConfigs.UNIDENTIFIED_TREASURE_KEY.getRandomKey(new Random()));
         ModItems.VOID_ORB = new VoidOrbItem(Vault.id("void_orb"), new Item.Properties().tab(ModItems.VAULT_MOD_GROUP).stacksTo(1));
         ModItems.CRYSTAL_BURGER = new BasicTooltipItem(Vault.id("crystal_burger"), new Item.Properties().tab(ModItems.VAULT_MOD_GROUP), new ITextComponent[]{(ITextComponent) new StringTextComponent("Eternal Exp food").withStyle(TextFormatting.GOLD)});
@@ -1015,6 +1035,11 @@ public class ModItems {
         ModItems.CHARM_UPGRADE_TIER_1 = new VaultCharmUpgrade(Vault.id("charm_upgrade_tier_1"), VaultCharmUpgrade.Tier.ONE, new Item.Properties().tab(ModItems.VAULT_MOD_GROUP).stacksTo(1).fireResistant());
         ModItems.CHARM_UPGRADE_TIER_2 = new VaultCharmUpgrade(Vault.id("charm_upgrade_tier_2"), VaultCharmUpgrade.Tier.TWO, new Item.Properties().tab(ModItems.VAULT_MOD_GROUP).stacksTo(1).fireResistant());
         ModItems.CHARM_UPGRADE_TIER_3 = new VaultCharmUpgrade(Vault.id("charm_upgrade_tier_3"), VaultCharmUpgrade.Tier.THREE, new Item.Properties().tab(ModItems.VAULT_MOD_GROUP).stacksTo(1).fireResistant());
+        ModItems.CHARM_UPGRADE_TIER_4 = new VaultCharmUpgrade(Vault.id("charm_upgrade_tier_4"), VaultCharmUpgrade.Tier.FOUR, new Item.Properties().tab(ModItems.VAULT_MOD_GROUP).stacksTo(1).fireResistant());
         ModItems.BURNT_CRYSTAL = new BurntCrystalItem(ModItems.VAULT_MOD_GROUP, Vault.id("burnt_crystal"));
+        ModItems.KEYSTONE_IDONA = new FinalVaultKeystoneItem(Vault.id("final_keystone_idona"), PlayerFavourData.VaultGodType.MALEVOLENCE);
+        ModItems.KEYSTONE_TENOS = new FinalVaultKeystoneItem(Vault.id("final_keystone_tenos"), PlayerFavourData.VaultGodType.OMNISCIENT);
+        ModItems.KEYSTONE_VELARA = new FinalVaultKeystoneItem(Vault.id("final_keystone_velara"), PlayerFavourData.VaultGodType.BENEVOLENT);
+        ModItems.KEYSTONE_WENDARR = new FinalVaultKeystoneItem(Vault.id("final_keystone_wendarr"), PlayerFavourData.VaultGodType.TIMEKEEPER);
     }
 }

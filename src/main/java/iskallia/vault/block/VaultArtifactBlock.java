@@ -98,7 +98,10 @@ public class VaultArtifactBlock extends FacedBlock {
             final List<BlockPos> validPositions = isValidArtifactSetup(sWorld, pos, state);
             if (!validPositions.isEmpty()) {
                 validPositions.forEach(at -> world.removeBlock(at, false));
-                ServerScheduler.INSTANCE.schedule(5, () -> Block.popResource((World) sWorld, pos, new ItemStack((IItemProvider) ModItems.VAULT_RUNE)));
+                ServerScheduler.INSTANCE.schedule(5, () -> {
+                    final ItemStack frameStack = new ItemStack((IItemProvider)ModBlocks.FINAL_VAULT_FRAME_BLOCK_ITEM);
+                    Block.popResource((World)sWorld, pos, frameStack);
+                });
             }
         }
     }

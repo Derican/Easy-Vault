@@ -1,23 +1,32 @@
 package iskallia.vault.config;
 
-import com.google.gson.annotations.Expose;
-import iskallia.vault.Vault;
-import iskallia.vault.init.ModConfigs;
-import iskallia.vault.util.data.WeightedList;
+import javax.annotation.Nullable;
+import javax.annotation.Nonnull;
+
 import iskallia.vault.world.vault.VaultRaid;
-import iskallia.vault.world.vault.logic.objective.VaultObjective;
+import net.minecraft.world.IWorld;
+import net.minecraft.world.server.ServerWorld;
+import net.minecraftforge.event.world.BlockEvent;
 import net.minecraft.block.BlockState;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+
+import java.util.Iterator;
+
+import net.minecraft.util.ResourceLocation;
+import iskallia.vault.util.GlobUtils;
+import iskallia.vault.init.ModConfigs;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent;
+import iskallia.vault.Vault;
+import iskallia.vault.util.data.WeightedList;
 import net.minecraft.block.Blocks;
 import net.minecraft.item.Items;
-import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.event.entity.player.PlayerInteractEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
+import iskallia.vault.world.vault.logic.objective.VaultObjective;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
+
+import com.google.gson.annotations.Expose;
+import net.minecraftforge.fml.common.Mod;
 
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class VaultGeneralConfig extends Config {
@@ -99,8 +108,18 @@ public class VaultGeneralConfig extends Config {
         if (event.getPlayer().level.dimension() != Vault.VAULT_KEY) {
             return;
         }
-        if (ModConfigs.VAULT_GENERAL.ITEM_BLACKLIST.contains(event.getItemStack().getItem().getRegistryName().toString()) && event.isCancelable()) {
-            event.setCanceled(true);
+        if (!event.isCancelable()) {
+            return;
+        }
+        final ResourceLocation registryName = event.getItemStack().getItem().getRegistryName();
+        if (registryName == null) {
+            return;
+        }
+        final String itemId = registryName.toString();
+        for (final String blacklistGlob : ModConfigs.VAULT_GENERAL.ITEM_BLACKLIST) {
+            if (GlobUtils.matches(blacklistGlob, itemId)) {
+                event.setCanceled(true);
+            }
         }
     }
 
@@ -109,9 +128,44 @@ public class VaultGeneralConfig extends Config {
         if (event.getPlayer().level.dimension() != Vault.VAULT_KEY) {
             return;
         }
+        if (!event.isCancelable()) {
+            return;
+        }
         final BlockState state = event.getWorld().getBlockState(event.getPos());
-        if (ModConfigs.VAULT_GENERAL.BLOCK_BLACKLIST.contains(state.getBlock().getRegistryName().toString()) && event.isCancelable()) {
-            event.setCanceled(true);
+        final ResourceLocation registryName = state.getBlock().getRegistryName();
+        if (registryName == null) {
+            return;
+        }
+        final String blockId = registryName.toString();
+        for (final String blacklistGlob : ModConfigs.VAULT_GENERAL.BLOCK_BLACKLIST) {
+            if (GlobUtils.matches(blacklistGlob, blockId)) {
+                event.setCanceled(true);
+            }
+        }
+    }
+
+    @SubscribeEvent
+    public static void cancelBlockPlacement(final BlockEvent.EntityPlaceEvent event) {
+        final IWorld world = event.getWorld();
+        if (world.isClientSide()) {
+            return;
+        }
+        if (((ServerWorld) world).dimension() != Vault.VAULT_KEY) {
+            return;
+        }
+        if (!event.isCancelable()) {
+            return;
+        }
+        final BlockState state = world.getBlockState(event.getPos());
+        final ResourceLocation registryName = state.getBlock().getRegistryName();
+        if (registryName == null) {
+            return;
+        }
+        final String blockId = registryName.toString();
+        for (final String blacklistGlob : ModConfigs.VAULT_GENERAL.BLOCK_BLACKLIST) {
+            if (GlobUtils.matches(blacklistGlob, blockId)) {
+                event.setCanceled(true);
+            }
         }
     }
 

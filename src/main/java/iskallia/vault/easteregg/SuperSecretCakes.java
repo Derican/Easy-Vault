@@ -49,6 +49,9 @@ public class SuperSecretCakes {
         }
         final World world = event.getWorld();
         final PlayerEntity player = event.getPlayer();
+        if (player.isSpectator()) {
+            return;
+        }
         if (world.getBlockState(event.getPos()).getBlock() instanceof CakeBlock) {
             if (world.isClientSide()) {
                 final Random random = new Random();
@@ -65,7 +68,7 @@ public class SuperSecretCakes {
                 final VaultRaid raid = VaultRaidData.get(sWorld).getAt(sWorld, event.getPos());
                 if (raid != null) {
                     raid.getGenerator().getPiecesAt(event.getPos(), VaultRoom.class).forEach(room -> ((VaultRoom) room).setCakeEaten(true));
-                    raid.getActiveObjective(CakeHuntObjective.class).ifPresent(cakeObjective -> cakeObjective.expandVault(sWorld, event.getPos(), raid));
+                    raid.getActiveObjective(CakeHuntObjective.class).ifPresent(cakeObjective -> cakeObjective.expandVault(sWorld, sPlayer, event.getPos(), raid));
                 }
                 event.setCanceled(true);
             }

@@ -67,6 +67,17 @@ public class NBTHelper {
         nbt.put(name, (INBT) listNBT);
     }
 
+    public static <T extends Enum<T>> void writeEnum(final CompoundNBT nbt, final String key, final T enumValue) {
+        nbt.putInt(key, enumValue.ordinal());
+    }
+
+    public static <T extends Enum<T>> T readEnum(final CompoundNBT nbt, final String key, final Class<T> enumClazz) {
+        if (!enumClazz.isEnum()) {
+            throw new IllegalArgumentException("Passed class is not an enum!");
+        }
+        return enumClazz.getEnumConstants()[nbt.getInt(key)];
+    }
+
     public static <T> void writeOptional(final CompoundNBT nbt, final String key, @Nullable final T object, final BiConsumer<CompoundNBT, T> writer) {
         nbt.putBoolean(key + "_present", object != null);
         if (object != null) {

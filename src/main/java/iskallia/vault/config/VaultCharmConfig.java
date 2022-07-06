@@ -22,6 +22,7 @@ public class VaultCharmConfig extends Config {
         this.tierMultipliers.put(1, 3);
         this.tierMultipliers.put(2, 9);
         this.tierMultipliers.put(3, 114);
+        this.tierMultipliers.put(4, 228);
     }
 
     public int getMultiplierForTier(final int tier) {

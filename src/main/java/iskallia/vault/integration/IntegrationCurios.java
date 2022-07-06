@@ -60,9 +60,7 @@ public class IntegrationCurios {
                     final IDynamicStackHandler stackHandler = handle.getStacks();
                     final CompoundNBT handlerKeyMap = tag.getCompound(handlerKey);
 
-                    final Iterator<String> iterator2 = handlerKeyMap.getAllKeys().iterator();
-                    while (iterator2.hasNext()) {
-                        final String strSlot = iterator2.next();
+                    for (String strSlot : handlerKeyMap.getAllKeys()) {
                         int slot;
                         try {
                             slot = Integer.parseInt(strSlot);

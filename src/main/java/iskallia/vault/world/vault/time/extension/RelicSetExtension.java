@@ -28,7 +28,9 @@ public class RelicSetExtension extends TimeExtension {
     @Override
     public CompoundNBT serializeNBT() {
         final CompoundNBT nbt = super.serializeNBT();
-        nbt.putString("RelicSet", this.getRelicSet().getId().toString());
+        if (this.relicSet != null) {
+            nbt.putString("RelicSet", this.getRelicSet().getId().toString());
+        }
         return nbt;
     }
 

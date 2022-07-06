@@ -7,10 +7,7 @@ import iskallia.vault.util.VaultRarity;
 import iskallia.vault.util.data.WeightedList;
 import net.minecraft.util.ResourceLocation;
 
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class LootTablesConfig extends Config {
     @Expose
@@ -27,40 +24,77 @@ public class LootTablesConfig extends Config {
 
     @Override
     protected void reset() {
-        final Level level = new Level(0);
-        level.VAULT_CHEST.put(VaultRarity.COMMON.name(), Vault.sId("chest/lvl0/breadcrumb_common"));
-        level.VAULT_CHEST.put(VaultRarity.RARE.name(), Vault.sId("chest/lvl0/breadcrumb_rare"));
-        level.VAULT_CHEST.put(VaultRarity.EPIC.name(), Vault.sId("chest/lvl0/breadcrumb_epic"));
-        level.VAULT_CHEST.put(VaultRarity.OMEGA.name(), Vault.sId("chest/lvl0/breadcrumb_omega"));
-        level.TREASURE_CHEST.put(VaultRarity.COMMON.name(), Vault.sId("chest/lvl0/treasure_common"));
-        level.TREASURE_CHEST.put(VaultRarity.RARE.name(), Vault.sId("chest/lvl0/treasure_rare"));
-        level.TREASURE_CHEST.put(VaultRarity.EPIC.name(), Vault.sId("chest/lvl0/treasure_epic"));
-        level.TREASURE_CHEST.put(VaultRarity.OMEGA.name(), Vault.sId("chest/lvl0/treasure_omega"));
-        level.ALTAR_CHEST.put(VaultRarity.COMMON.name(), Vault.sId("chest/lvl0/altar_common"));
-        level.ALTAR_CHEST.put(VaultRarity.RARE.name(), Vault.sId("chest/lvl0/altar_rare"));
-        level.ALTAR_CHEST.put(VaultRarity.EPIC.name(), Vault.sId("chest/lvl0/altar_epic"));
-        level.ALTAR_CHEST.put(VaultRarity.OMEGA.name(), Vault.sId("chest/lvl0/altar_omega"));
-        level.COOP_CHEST.put(VaultRarity.COMMON.name(), Vault.sId("chest/lvl0/coop_common"));
-        level.COOP_CHEST.put(VaultRarity.RARE.name(), Vault.sId("chest/lvl0/coop_rare"));
-        level.COOP_CHEST.put(VaultRarity.EPIC.name(), Vault.sId("chest/lvl0/coop_epic"));
-        level.COOP_CHEST.put(VaultRarity.OMEGA.name(), Vault.sId("chest/lvl0/coop_omega"));
-        level.BONUS_CHEST.put(VaultRarity.COMMON.name(), Vault.sId("chest/lvl0/bonus_common"));
-        level.BONUS_CHEST.put(VaultRarity.RARE.name(), Vault.sId("chest/lvl0/bonus_rare"));
-        level.BONUS_CHEST.put(VaultRarity.EPIC.name(), Vault.sId("chest/lvl0/bonus_epic"));
-        level.BONUS_CHEST.put(VaultRarity.OMEGA.name(), Vault.sId("chest/lvl0/bonus_omega"));
-        level.ALTAR = Vault.sId("chest/altar");
-        level.BOSS_CRATE = Vault.sId("chest/lvl0/boss");
-        level.SCAVENGER_CRATE = Vault.sId("chest/lvl0/scavenger");
-        level.ANCIENT_ETERNAL_BOX = Vault.sId("chest/lvl0/ancient_additional");
-        level.BOSS_BONUS_CRATE = Vault.sId("chest/lvl0/boss_bonus");
-        level.VAULT_FIGHTER = Vault.sId("entities/lvl0/vault_fighter");
-        level.COW = Vault.sId("entities/lvl0/cow");
-        level.TREASURE_GOBLIN = Vault.sId("entities/lvl0/treasure_goblin");
-        level.ARTIFACT_CHANCE = 0.01f;
-        level.SUB_FIGHTER_RAFFLE_SEAL_CHANCE = 0.01f;
-        level.CRYSTAL_TYPE.add(CrystalData.Type.CLASSIC, 4);
-        level.CRYSTAL_TYPE.add(CrystalData.Type.COOP, 1);
-        this.LEVELS.add(level);
+        {
+            final Level level = new Level(0);
+            level.VAULT_CHEST.put(VaultRarity.COMMON.name(), Vault.sId("chest/lvl0/vaultchestcommon"));
+            level.VAULT_CHEST.put(VaultRarity.RARE.name(), Vault.sId("chest/lvl0/vaultchestrare"));
+            level.VAULT_CHEST.put(VaultRarity.EPIC.name(), Vault.sId("chest/lvl0/vaultchestepic"));
+            level.VAULT_CHEST.put(VaultRarity.OMEGA.name(), Vault.sId("chest/lvl0/vaultchestomega"));
+            level.TREASURE_CHEST.put(VaultRarity.COMMON.name(), Vault.sId("chest/lvl0/treasurecommon"));
+            level.TREASURE_CHEST.put(VaultRarity.RARE.name(), Vault.sId("chest/lvl0/treasurecommon"));
+            level.TREASURE_CHEST.put(VaultRarity.EPIC.name(), Vault.sId("chest/lvl0/treasurecommon"));
+            level.TREASURE_CHEST.put(VaultRarity.OMEGA.name(), Vault.sId("chest/lvl0/treasurecommon"));
+            level.ALTAR_CHEST.put(VaultRarity.COMMON.name(), Vault.sId("chest/lvl0/godaltarcommon"));
+            level.ALTAR_CHEST.put(VaultRarity.RARE.name(), Vault.sId("chest/lvl0/godaltarrare"));
+            level.ALTAR_CHEST.put(VaultRarity.EPIC.name(), Vault.sId("chest/lvl0/godaltarepic"));
+            level.ALTAR_CHEST.put(VaultRarity.OMEGA.name(), Vault.sId("chest/lvl0/godaltaromega"));
+            level.COOP_CHEST.put(VaultRarity.COMMON.name(), Vault.sId("chest/lvl0/vaultchestepic"));
+            level.COOP_CHEST.put(VaultRarity.RARE.name(), Vault.sId("chest/lvl0/vaultchestepic"));
+            level.COOP_CHEST.put(VaultRarity.EPIC.name(), Vault.sId("chest/lvl0/vaultchestepic"));
+            level.COOP_CHEST.put(VaultRarity.OMEGA.name(), Vault.sId("chest/lvl0/vaultchestepic"));
+            level.BONUS_CHEST.put(VaultRarity.COMMON.name(), Vault.sId("chest/lvl0/gildedcommon"));
+            level.BONUS_CHEST.put(VaultRarity.RARE.name(), Vault.sId("chest/lvl0/gildedrare"));
+            level.BONUS_CHEST.put(VaultRarity.EPIC.name(), Vault.sId("chest/lvl0/gildedepic"));
+            level.BONUS_CHEST.put(VaultRarity.OMEGA.name(), Vault.sId("chest/lvl0/gildedomega"));
+            level.ALTAR = Vault.sId("chest/altar");
+            level.BOSS_CRATE = Vault.sId("chest/lvl0/bosscrate");
+            level.SCAVENGER_CRATE = Vault.sId("chest/lvl0/bosscratenew");
+            level.BOSS_BONUS_CRATE = Vault.sId("chest/lvl0/championbox");
+            level.VAULT_FIGHTER = Vault.sId("entities/lvl0/vault_fighter");
+            level.COW = Vault.sId("entities/lvl0/cow");
+            level.TREASURE_GOBLIN = Vault.sId("entities/lvl0/treasure_goblin");
+            level.ANCIENT_ETERNAL_BOX = Vault.sId("chest/lvl0/ancientbox");
+            level.ARTIFACT_CHANCE = 0.00f;
+            level.SUB_FIGHTER_RAFFLE_SEAL_CHANCE = 0.005f;
+            level.CRYSTAL_TYPE.add(CrystalData.Type.CLASSIC, 1);
+            this.LEVELS.add(level);
+        }
+        for (int i : Arrays.asList(25, 50, 75, 100, 150, 200, 250)) {
+            final Level level = new Level(i);
+            level.VAULT_CHEST.put(VaultRarity.COMMON.name(), Vault.sId(String.format("chest/lvl%d/vaultchestcommon", i)));
+            level.VAULT_CHEST.put(VaultRarity.RARE.name(), Vault.sId(String.format("chest/lvl%d/vaultchestrare", i)));
+            level.VAULT_CHEST.put(VaultRarity.EPIC.name(), Vault.sId(String.format("chest/lvl%d/vaultchestepic", i)));
+            level.VAULT_CHEST.put(VaultRarity.OMEGA.name(), Vault.sId(String.format("chest/lvl%d/vaultchestomega", i)));
+            level.TREASURE_CHEST.put(VaultRarity.COMMON.name(), Vault.sId(String.format("chest/lvl%d/treasurecommon", i)));
+            level.TREASURE_CHEST.put(VaultRarity.RARE.name(), Vault.sId(String.format("chest/lvl%d/treasurerare", i)));
+            level.TREASURE_CHEST.put(VaultRarity.EPIC.name(), Vault.sId(String.format("chest/lvl%d/treasurerare", i)));
+            level.TREASURE_CHEST.put(VaultRarity.OMEGA.name(), Vault.sId(String.format("chest/lvl%d/treasureomega", i)));
+            level.ALTAR_CHEST.put(VaultRarity.COMMON.name(), Vault.sId(String.format("chest/lvl%d/godaltarcommon", i)));
+            level.ALTAR_CHEST.put(VaultRarity.RARE.name(), Vault.sId(String.format("chest/lvl%d/godaltarrare", i)));
+            level.ALTAR_CHEST.put(VaultRarity.EPIC.name(), Vault.sId(String.format("chest/lvl%d/godaltarepic", i)));
+            level.ALTAR_CHEST.put(VaultRarity.OMEGA.name(), Vault.sId(String.format("chest/lvl%d/godaltaromega", i)));
+            level.COOP_CHEST.put(VaultRarity.COMMON.name(), Vault.sId(String.format("chest/lvl%d/coopchest", i)));
+            level.COOP_CHEST.put(VaultRarity.RARE.name(), Vault.sId(String.format("chest/lvl%d/coopchest", i)));
+            level.COOP_CHEST.put(VaultRarity.EPIC.name(), Vault.sId(String.format("chest/lvl%d/coopchest", i)));
+            level.COOP_CHEST.put(VaultRarity.OMEGA.name(), Vault.sId(String.format("chest/lvl%d/coopchest", i)));
+            level.BONUS_CHEST.put(VaultRarity.COMMON.name(), Vault.sId(String.format("chest/lvl%d/gildedcommon", i)));
+            level.BONUS_CHEST.put(VaultRarity.RARE.name(), Vault.sId(String.format("chest/lvl%d/gildedrare", i)));
+            level.BONUS_CHEST.put(VaultRarity.EPIC.name(), Vault.sId(String.format("chest/lvl%d/gildedepic", i)));
+            level.BONUS_CHEST.put(VaultRarity.OMEGA.name(), Vault.sId(String.format("chest/lvl%d/gildedomega", i)));
+            level.ALTAR = Vault.sId("chest/altar");
+            level.BOSS_CRATE = Vault.sId(String.format("chest/lvl%d/bosscratenew", i));
+            level.SCAVENGER_CRATE = Vault.sId(String.format("chest/lvl%d/scavengecrate", i));
+            level.BOSS_BONUS_CRATE = Vault.sId(String.format("chest/lvl%d/championbox", i));
+            level.VAULT_FIGHTER = Vault.sId(String.format("entities/lvl%d/vault_fighter", i));
+            level.COW = Vault.sId(String.format("entities/lvl%d/cow", i));
+            level.TREASURE_GOBLIN = Vault.sId(String.format("entities/lvl%d/treasure_goblin", i));
+            level.ANCIENT_ETERNAL_BOX = Vault.sId(String.format("chest/lvl%d/ancientbox", i));
+            level.ARTIFACT_CHANCE = 0.01f * (i - 25) / 25;
+            level.SUB_FIGHTER_RAFFLE_SEAL_CHANCE = 0.005f * (i - 25) / 25;
+            level.CRYSTAL_TYPE.add(CrystalData.Type.CLASSIC, 4);
+            level.CRYSTAL_TYPE.add(CrystalData.Type.COOP, 1);
+            this.LEVELS.add(level);
+        }
     }
 
     public Level getForLevel(final int level) {
