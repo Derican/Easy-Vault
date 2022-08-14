@@ -16,6 +16,7 @@ import net.minecraft.util.SoundEvent;
 import net.minecraft.world.gen.feature.Feature;
 import net.minecraft.world.gen.feature.structure.Structure;
 import net.minecraftforge.client.event.ModelRegistryEvent;
+import net.minecraftforge.client.event.TextureStitchEvent;
 import net.minecraftforge.common.loot.GlobalLootModifierSerializer;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -101,5 +102,10 @@ public class RegistryEvents {
 //            ((RangedAttribute)attr).maxValue = Double.MAX_VALUE;
         }
         ModAttributes.register(event);
+    }
+
+    @SubscribeEvent
+    public static void onStitch(TextureStitchEvent.Pre event){
+        ModMaterials.registerMaterials(event);
     }
 }

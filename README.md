@@ -26,6 +26,7 @@ Witch skull is removed due to runtime error. Pull requests are appreciated!
 
 ## Changelog
 
+- 14 Aug,2022 Fix chests textures
 - 30 Jul,2022 Delete FinalVaultAllowParty
 - 5 Jul,2022 Update to 1.13.4
 - 26 Jun,2022 Fix greyscale vert
@@ -39,7 +40,6 @@ Witch skull is removed due to runtime error. Pull requests are appreciated!
 
 ## Known Issues
 
-- Incompatible Textures in several chests
 - Unhandled base gravity setter
 - Unhandled last slots setter
 - Lack in global trader configs
@@ -48,5 +48,5 @@ Witch skull is removed due to runtime error. Pull requests are appreciated!
 ## Q&A
 
 1. The timer of vault disappeared!
-   1. Check whether you've installed Inventory HUD+, if so, please disable **Inventory** tab.
+   1. Check whether you've installed Inventory HUD+, if so, please disable **Potion** tab.
    2. Report in the issues.
