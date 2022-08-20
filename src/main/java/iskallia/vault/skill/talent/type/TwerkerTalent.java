@@ -27,11 +27,11 @@ public class TwerkerTalent extends PlayerTalent {
     @Expose
     private final int tickDelay = 5;
     @Expose
-    private final int xRange = 2;
+    private int xRange = 2;
     @Expose
     private final int yRange = 1;
     @Expose
-    private final int zRange = 2;
+    private int zRange = 2;
     @Expose
     private boolean growsPumpkinsMelons;
     @Expose
@@ -39,31 +39,29 @@ public class TwerkerTalent extends PlayerTalent {
     @Expose
     private boolean growsAnimals;
 
-    public TwerkerTalent(final int cost) {
+    public TwerkerTalent(final int cost, int range, boolean growsPumpkinsMelons, boolean growsSugarcaneCactus, boolean growsAnimals) {
         super(cost);
-        this.growsPumpkinsMelons = false;
-        this.growsSugarcaneCactus = false;
-        this.growsAnimals = false;
+        this.xRange = range;
+        this.zRange = range;
+        this.growsPumpkinsMelons = growsPumpkinsMelons;
+        this.growsSugarcaneCactus = growsSugarcaneCactus;
+        this.growsAnimals = growsAnimals;
     }
 
     public int getTickDelay() {
-        this.getClass();
-        return 5;
+        return this.tickDelay;
     }
 
     public int getXRange() {
-        this.getClass();
-        return 2;
+        return this.xRange;
     }
 
     public int getYRange() {
-        this.getClass();
-        return 1;
+        return this.yRange;
     }
 
     public int getZRange() {
-        this.getClass();
-        return 2;
+        return this.zRange;
     }
 
     @Override
@@ -76,7 +74,7 @@ public class TwerkerTalent extends PlayerTalent {
             final Block block = world.getBlockState(pos).getBlock();
             if (block instanceof CropsBlock || block instanceof SaplingBlock) {
                 BoneMealItem.applyBonemeal(new ItemStack((IItemProvider) Items.BONE_MEAL), (World) world, pos, player);
-                world.sendParticles((IParticleData) ParticleTypes.HAPPY_VILLAGER, (double) pos.getX(), (double) pos.getY(), (double) pos.getZ(), 100, 1.0, 0.5, 1.0, 0.0);
+                world.sendParticles((IParticleData) ParticleTypes.HAPPY_VILLAGER, pos.getX(), pos.getY(), pos.getZ(), 100, 1.0, 0.5, 1.0, 0.0);
             }
             if (this.growsPumpkinsMelons && block instanceof StemBlock) {
                 if (((StemBlock) block).isValidBonemealTarget((IBlockReader) world, pos, state, false)) {
@@ -86,7 +84,7 @@ public class TwerkerTalent extends PlayerTalent {
                         state.randomTick(world, pos, world.random);
                     }
                 }
-                world.sendParticles((IParticleData) ParticleTypes.HAPPY_VILLAGER, (double) pos.getX(), (double) pos.getY(), (double) pos.getZ(), 100, 1.0, 0.5, 1.0, 0.0);
+                world.sendParticles((IParticleData) ParticleTypes.HAPPY_VILLAGER, pos.getX(), pos.getY(), pos.getZ(), 100, 1.0, 0.5, 1.0, 0.0);
             }
             if (this.growsSugarcaneCactus) {
                 final BlockPos above = new BlockPos((Vector3i) pos).above();
@@ -104,18 +102,18 @@ public class TwerkerTalent extends PlayerTalent {
                         newState.neighborChanged((World) world, above, block, pos, false);
                         world.getBlockTicks().scheduleTick(above, block, 1, TickPriority.EXTREMELY_HIGH);
                         ForgeHooks.onCropsGrowPost((World) world, above, state);
-                        world.sendParticles((IParticleData) ParticleTypes.HAPPY_VILLAGER, (double) pos.getX(), (double) pos.getY(), (double) pos.getZ(), 100, 1.0, 0.5, 1.0, 0.0);
+                        world.sendParticles((IParticleData) ParticleTypes.HAPPY_VILLAGER, pos.getX(), pos.getY(), pos.getZ(), 100, 1.0, 0.5, 1.0, 0.0);
                     }
                 }
             }
             if (this.growsAnimals) {
-                final AxisAlignedBB searchBox = player.getBoundingBox().inflate((double) this.getXRange(), (double) this.getYRange(), (double) this.getZRange());
+                final AxisAlignedBB searchBox = player.getBoundingBox().inflate(this.getXRange(), this.getYRange(), this.getZRange());
                 final List<AgeableEntity> entities = world.getLoadedEntitiesOfClass(AgeableEntity.class, searchBox, entity -> entity.isAlive() && !entity.isSpectator() && entity.isBaby());
                 AgeableEntity entity = null;
                 for (AgeableEntity ageableEntity : entities) {
                     entity = ageableEntity;
                     if (TwerkerTalent.rand.nextFloat() < 0.4f) {
-                        world.sendParticles((IParticleData) ParticleTypes.HAPPY_VILLAGER, (double) pos.getX(), (double) pos.getY(), (double) pos.getZ(), 100, 1.0, 0.5, 1.0, 0.0);
+                        world.sendParticles((IParticleData) ParticleTypes.HAPPY_VILLAGER, pos.getX(), pos.getY(), pos.getZ(), 100, 1.0, 0.5, 1.0, 0.0);
                     }
                     if (TwerkerTalent.rand.nextFloat() < 0.05f) {
                         entity.setBaby(false);

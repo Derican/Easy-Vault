@@ -1,0 +1,33 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern":
+  [
+    "iri",
+    "igi",
+    "ibi"
+  ],
+  "key":
+  {
+    "i":
+    {
+      "item": "minecraft:gold_ingot"
+    },
+    "r":
+    {
+      "item": "minecraft:redstone"
+    },
+    "g":
+    {
+      "item": "minecraft:glass_pane"
+    },
+    "b":
+    {
+      "item": "minecraft:diamond"
+    }
+  },
+  "result":
+  {
+    "item": "the_vault:advanced_vending_machine",
+    "count": 1
+  }
+}

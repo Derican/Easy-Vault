@@ -26,7 +26,8 @@ Witch skull is removed due to runtime error. Pull requests are appreciated!
 
 ## Changelog
 
-- 14 Aug,2022 Fix chests textures
+- 20 Aug,2022 Fix Twerker talent
+- 14 Aug,2022 Fix chests textures, add recipe for advanced vending machine
 - 30 Jul,2022 Delete FinalVaultAllowParty
 - 5 Jul,2022 Update to 1.13.4
 - 26 Jun,2022 Fix greyscale vert

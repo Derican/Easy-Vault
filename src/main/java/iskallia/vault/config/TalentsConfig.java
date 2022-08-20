@@ -127,7 +127,7 @@ public class TalentsConfig extends Config {
         this.WATER_BREATHING = TalentGroup.ofEffect("Water Breathing", Effects.WATER_BREATHING, EffectTalent.Type.ICON_ONLY, 1, i -> 5, EffectTalent.Operator.SET);
         this.WELL_FIT = TalentGroup.ofAttribute("Well Fit", Attributes.MAX_HEALTH, "Extra Health", 10, i -> 1, i -> i * 2.0, i -> AttributeModifier.Operation.ADDITION);
         this.REACH = TalentGroup.ofAttribute("Reach", (Attribute) ForgeMod.REACH_DISTANCE.get(), "Maximum Reach", 10, i -> 1, i -> i * 1.0, i -> AttributeModifier.Operation.ADDITION);
-        this.TWERKER = new TalentGroup<TwerkerTalent>("Twerker", new TwerkerTalent[]{new TwerkerTalent(4)});
+        this.TWERKER = new TalentGroup<TwerkerTalent>("Twerker", new TwerkerTalent(4, 1, false, false, false), new TwerkerTalent(4, 2, true, false, false), new TwerkerTalent(4, 3, true, true, false), new TwerkerTalent(4, 3, true, true, true));
         this.ELVISH = new TalentGroup<ElvishTalent>("Elvish", new ElvishTalent[]{new ElvishTalent(10)});
         this.CARELESS = new TalentGroup<CarelessTalent>("Careless", new CarelessTalent[]{new CarelessTalent(3)});
         this.ANGEL = new TalentGroup<AngelTalent>("Angel", new AngelTalent[]{new AngelTalent(200)});
