@@ -315,14 +315,14 @@ public abstract class VaultGearConfig extends Config {
                 List<Integer> picked = IntStream.range(0, generators.size())
                         .filter(ii -> generators.get(ii) != null)
                         .flatMap(iii -> IntStream.range(0, generators.get(iii).weight)
-                                .map(j -> j))
+                                .map(j -> iii))
                         .filter(iiii -> !existing.get(iiii))
                         .boxed()
                         .collect(Collectors.toList());
                 Collections.shuffle(picked, random);
                 picked = picked.stream().distinct().collect(Collectors.toList());
-                int added;
-                for (added = Math.min(rolls, picked.size()), i = 0; i < added; ++i) {
+                int added = Math.min(rolls, picked.size());
+                for (i = 0; i < added; ++i) {
                     if (this.ADD_ARMOR == generators.get(picked.get(i))) {
                         ModAttributes.ADD_ARMOR.create(stack, random, this.ADD_ARMOR.value);
                     }

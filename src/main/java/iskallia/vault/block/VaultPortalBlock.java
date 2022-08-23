@@ -122,19 +122,6 @@ public class VaultPortalBlock extends NetherPortalBlock {
                 }
             }
             player.setPortalCooldown();
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    while (true){
-                        try {
-                            Thread.sleep(5000);
-                        } catch (InterruptedException e) {
-                            throw new RuntimeException(e);
-                        }
-                        int i=0;
-                    }
-                }
-            }).start();
         }
     }
 
