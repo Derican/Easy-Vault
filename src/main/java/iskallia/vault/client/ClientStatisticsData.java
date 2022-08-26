@@ -27,7 +27,7 @@ public class ClientStatisticsData {
     }
 
     public static List<PlayerStatisticsCollector.AttributeSnapshot> getPlayerAttributeSnapshots() {
-        return Collections.unmodifiableList((List<? extends PlayerStatisticsCollector.AttributeSnapshot>) ClientStatisticsData.attributeValues);
+        return Collections.unmodifiableList(ClientStatisticsData.attributeValues);
     }
 
     public static int getFavour(final PlayerFavourData.VaultGodType type) {

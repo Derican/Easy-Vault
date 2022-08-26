@@ -15,13 +15,13 @@ public class ArmorViewSlot extends ReadOnlySlot {
     private final EquipmentSlotType equipmentSlotType;
 
     public ArmorViewSlot(final PlayerEntity player, final EquipmentSlotType equipmentSlotType, final int xPosition, final int yPosition) {
-        super((IInventory) player.inventory, 39 - equipmentSlotType.getIndex(), xPosition, yPosition);
+        super(player.inventory, 39 - equipmentSlotType.getIndex(), xPosition, yPosition);
         this.equipmentSlotType = equipmentSlotType;
     }
 
     @OnlyIn(Dist.CLIENT)
     public Pair<ResourceLocation, ResourceLocation> getNoItemIcon() {
-        return (Pair<ResourceLocation, ResourceLocation>) Pair.of(PlayerContainer.BLOCK_ATLAS, ArmorViewSlot.ARMOR_SLOT_TEXTURES[this.equipmentSlotType.getIndex()]);
+        return Pair.of(PlayerContainer.BLOCK_ATLAS, ArmorViewSlot.ARMOR_SLOT_TEXTURES[this.equipmentSlotType.getIndex()]);
     }
 
     static {

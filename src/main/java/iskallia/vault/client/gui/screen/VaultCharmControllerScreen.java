@@ -33,7 +33,7 @@ public class VaultCharmControllerScreen extends ContainerScreen<VaultCharmContro
         final int offsetY = (this.height - this.imageHeight) / 2;
         this.blit(matrixStack, offsetX, offsetY, 0, 0, this.imageWidth, this.imageHeight);
         int drawnSlots = 0;
-        for (final Slot slot : ((VaultCharmControllerContainer) this.menu).slots) {
+        for (final Slot slot : this.menu.slots) {
             if (slot.index > 35) {
                 this.blit(matrixStack, offsetX + slot.x - 1, offsetY + slot.y - 1, 195, 0, 18, 18);
                 if (drawnSlots++ == 54) {
@@ -45,8 +45,8 @@ public class VaultCharmControllerScreen extends ContainerScreen<VaultCharmContro
     }
 
     protected void renderLabels(final MatrixStack matrixStack, final int x, final int y) {
-        final String title = "Charm Inscription - " + ((VaultCharmControllerContainer) this.menu).getCurrentAmountWhitelisted() + "/" + ((VaultCharmControllerContainer) this.menu).getInventorySize() + " slots";
-        this.font.draw(matrixStack, (ITextComponent) new StringTextComponent(title), 5.0f, 5.0f, 4210752);
+        final String title = "Charm Inscription - " + this.menu.getCurrentAmountWhitelisted() + "/" + this.menu.getInventorySize() + " slots";
+        this.font.draw(matrixStack, new StringTextComponent(title), 5.0f, 5.0f, 4210752);
         if (this.needsScrollBars()) {
             this.minecraft.getTextureManager().bind(VaultCharmControllerScreen.TEXTURE);
             this.blit(matrixStack, 175, 18 + (int) (95.0f * this.currentScroll), 195 + (this.needsScrollBars() ? 0 : 12), 19, 12, 15);
@@ -64,7 +64,7 @@ public class VaultCharmControllerScreen extends ContainerScreen<VaultCharmContro
     }
 
     private boolean needsScrollBars() {
-        return ((VaultCharmControllerContainer) this.menu).canScroll();
+        return this.menu.canScroll();
     }
 
     private boolean scrollBarClicked(final double mouseX, final double mouseY) {
@@ -91,11 +91,11 @@ public class VaultCharmControllerScreen extends ContainerScreen<VaultCharmContro
         if (!this.needsScrollBars()) {
             return false;
         }
-        final int i = ((VaultCharmControllerContainer) this.menu).getInventorySize() / 9 - 6;
+        final int i = this.menu.getInventorySize() / 9 - 6;
         this.currentScroll -= (float) (delta / i);
         this.currentScroll = MathHelper.clamp(this.currentScroll, 0.0f, 1.0f);
         ModNetwork.CHANNEL.sendToServer(new VaultCharmControllerScrollMessage(this.currentScroll));
-        ((VaultCharmControllerContainer) this.menu).scrollTo(this.currentScroll);
+        this.menu.scrollTo(this.currentScroll);
         return true;
     }
 
@@ -105,11 +105,11 @@ public class VaultCharmControllerScreen extends ContainerScreen<VaultCharmContro
             final int bottom = top + 110;
             this.currentScroll = ((float) mouseY - top - 7.5f) / (bottom - top - 15.0f);
             this.currentScroll = MathHelper.clamp(this.currentScroll, 0.0f, 1.0f);
-            final int intervals = ((VaultCharmControllerContainer) this.menu).getInventorySize() / 9 - 6;
+            final int intervals = this.menu.getInventorySize() / 9 - 6;
             final float scroll = Math.round(this.currentScroll * intervals) / (float) intervals;
             if (scroll != this.scrollDelta) {
                 ModNetwork.CHANNEL.sendToServer(new VaultCharmControllerScrollMessage(scroll));
-                ((VaultCharmControllerContainer) this.menu).scrollTo(scroll);
+                this.menu.scrollTo(scroll);
                 this.scrollDelta = scroll;
             }
             return true;

@@ -47,7 +47,7 @@ public class EyestalkEntity extends VexEntity {
     public UUID mother;
 
     public EyestalkEntity(final EntityType<? extends VexEntity> p_i50190_1_, final World p_i50190_2_) {
-        super((EntityType) p_i50190_1_, p_i50190_2_);
+        super(p_i50190_1_, p_i50190_2_);
         this.targetCooldown = VMapNBT.ofUUID(TargetData::new);
         this.currentTarget = null;
         this.mother = null;
@@ -64,7 +64,7 @@ public class EyestalkEntity extends VexEntity {
         if (this.mother != null) {
             nbt.putString("Mother", this.mother.toString());
         }
-        nbt.put("Cooldowns", (INBT) this.targetCooldown.serializeNBT());
+        nbt.put("Cooldowns", this.targetCooldown.serializeNBT());
     }
 
     public void readAdditionalSaveData(final CompoundNBT nbt) {
@@ -122,19 +122,19 @@ public class EyestalkEntity extends VexEntity {
         float f2 = ModConfigs.EYESORE.eyeStalk.knockback;
         if (entity instanceof LivingEntity) {
             f += EnchantmentHelper.getDamageBonus(this.getMainHandItem(), ((LivingEntity) entity).getMobType());
-            f2 += EnchantmentHelper.getKnockbackBonus((LivingEntity) this);
+            f2 += EnchantmentHelper.getKnockbackBonus(this);
         }
-        final int i = EnchantmentHelper.getFireAspect((LivingEntity) this);
+        final int i = EnchantmentHelper.getFireAspect(this);
         if (i > 0) {
             entity.setSecondsOnFire(i * 4);
         }
-        final boolean flag = entity.hurt(DamageSource.mobAttack((LivingEntity) this), f);
+        final boolean flag = entity.hurt(DamageSource.mobAttack(this), f);
         if (flag) {
             if (f2 > 0.0f && entity instanceof LivingEntity) {
                 this.applyKnockback(entity, f2 * 0.5f, MathHelper.sin(this.yRot * 0.017453292f), -MathHelper.cos(this.yRot * 0.017453292f));
                 this.setDeltaMovement(this.getDeltaMovement().multiply(0.6, 1.0, 0.6));
             }
-            this.doEnchantDamageEffects((LivingEntity) this, entity);
+            this.doEnchantDamageEffects(this, entity);
             this.setLastHurtMob(entity);
         }
         return flag;
@@ -144,7 +144,7 @@ public class EyestalkEntity extends VexEntity {
         if (strength > 0.0f) {
             target.hasImpulse = true;
             final Vector3d vector3d = target.getDeltaMovement();
-            final Vector3d vector3d2 = new Vector3d(ratioX, 0.0, ratioZ).normalize().scale((double) strength);
+            final Vector3d vector3d2 = new Vector3d(ratioX, 0.0, ratioZ).normalize().scale(strength);
             target.setDeltaMovement(vector3d.x / 2.0 - vector3d2.x, this.onGround ? Math.min(0.4, vector3d.y / 2.0 + strength) : vector3d.y, vector3d.z / 2.0 - vector3d2.z);
         }
     }

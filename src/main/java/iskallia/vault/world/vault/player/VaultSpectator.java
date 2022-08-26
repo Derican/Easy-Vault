@@ -122,7 +122,7 @@ public class VaultSpectator extends VaultPlayer {
         final CompoundNBT nbt = super.serializeNBT();
         nbt.putInt("OldGameType", this.oldGameType.ordinal());
         nbt.putBoolean("Initialized", this.initialized);
-        nbt.put("Delegate", (INBT) this.delegate.serializeNBT());
+        nbt.put("Delegate", this.delegate.serializeNBT());
         return nbt;
     }
 

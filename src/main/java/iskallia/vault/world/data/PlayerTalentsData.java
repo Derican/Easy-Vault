@@ -25,7 +25,7 @@ import java.util.function.Supplier;
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class PlayerTalentsData extends WorldSavedData {
     protected static final String DATA_NAME = "the_vault_PlayerTalents";
-    private Map<UUID, TalentTree> playerMap;
+    private final Map<UUID, TalentTree> playerMap;
 
     public PlayerTalentsData() {
         this("the_vault_PlayerTalents");
@@ -45,19 +45,19 @@ public class PlayerTalentsData extends WorldSavedData {
     }
 
     public PlayerTalentsData add(final ServerPlayerEntity player, final TalentNode<?>... nodes) {
-        this.getTalents((PlayerEntity) player).add(player.getServer(), nodes);
+        this.getTalents(player).add(player.getServer(), nodes);
         this.setDirty();
         return this;
     }
 
     public PlayerTalentsData remove(final ServerPlayerEntity player, final TalentNode<?>... nodes) {
-        this.getTalents((PlayerEntity) player).remove(player.getServer(), nodes);
+        this.getTalents(player).remove(player.getServer(), nodes);
         this.setDirty();
         return this;
     }
 
     public PlayerTalentsData upgradeTalent(final ServerPlayerEntity player, final TalentNode<?> talentNode) {
-        final TalentTree talentTree = this.getTalents((PlayerEntity) player);
+        final TalentTree talentTree = this.getTalents(player);
         talentTree.upgradeTalent(player.getServer(), talentNode);
         talentTree.sync(player.getServer());
         this.setDirty();
@@ -65,7 +65,7 @@ public class PlayerTalentsData extends WorldSavedData {
     }
 
     public PlayerTalentsData downgradeTalent(final ServerPlayerEntity player, final TalentNode<?> talentNode) {
-        final TalentTree talentTree = this.getTalents((PlayerEntity) player);
+        final TalentTree talentTree = this.getTalents(player);
         talentTree.downgradeTalent(player.getServer(), talentNode);
         talentTree.sync(player.getServer());
         this.setDirty();
@@ -78,7 +78,7 @@ public class PlayerTalentsData extends WorldSavedData {
         if (oldTalentTree != null) {
             for (final TalentNode<?> node : oldTalentTree.getNodes()) {
                 if (node.isLearned()) {
-                    ((PlayerTalent) node.getTalent()).onRemoved((PlayerEntity) player);
+                    node.getTalent().onRemoved(player);
                 }
             }
         }
@@ -129,8 +129,8 @@ public class PlayerTalentsData extends WorldSavedData {
             talentList.add(talentTree.serializeNBT());
             return;
         });
-        nbt.put("PlayerEntries", (INBT) playerList);
-        nbt.put("TalentEntries", (INBT) talentList);
+        nbt.put("PlayerEntries", playerList);
+        nbt.put("TalentEntries", talentList);
         return nbt;
     }
 

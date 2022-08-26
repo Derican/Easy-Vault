@@ -35,7 +35,7 @@ public class EtchingVendorControllerTileEntity extends TileEntity implements ITi
     private final List<EtchingTrade> trades;
 
     public EtchingVendorControllerTileEntity() {
-        super((TileEntityType) ModBlocks.ETCHING_CONTROLLER_TILE_ENTITY);
+        super(ModBlocks.ETCHING_CONTROLLER_TILE_ENTITY);
         this.monitoredEntityId = -1;
         this.trades = new ArrayList<EtchingTrade>();
     }
@@ -57,16 +57,16 @@ public class EtchingVendorControllerTileEntity extends TileEntity implements ITi
         } else if ((monitoredEntity = this.level.getEntity(this.monitoredEntityId)) == null) {
             monitoredEntity = this.createVendor();
         }
-        monitoredEntity.setPos(this.worldPosition.getX() + 0.5, (double) this.worldPosition.getY(), this.worldPosition.getZ() + 0.5);
+        monitoredEntity.setPos(this.worldPosition.getX() + 0.5, this.worldPosition.getY(), this.worldPosition.getZ() + 0.5);
     }
 
     private Entity createVendor() {
         final ServerWorld sWorld = (ServerWorld) this.getLevel();
-        final EtchingVendorEntity vendor = (EtchingVendorEntity) ModEntities.ETCHING_VENDOR.create(sWorld, (CompoundNBT) null, (ITextComponent) null, (PlayerEntity) null, this.getBlockPos(), SpawnReason.STRUCTURE, false, false);
+        final EtchingVendorEntity vendor = ModEntities.ETCHING_VENDOR.create(sWorld, null, null, null, this.getBlockPos(), SpawnReason.STRUCTURE, false, false);
         vendor.setVendorPos(this.getBlockPos());
-        sWorld.addFreshEntity((Entity) vendor);
+        sWorld.addFreshEntity(vendor);
         this.monitoredEntityId = vendor.getId();
-        return (Entity) vendor;
+        return vendor;
     }
 
     private void generateTrades() {
@@ -113,7 +113,7 @@ public class EtchingVendorControllerTileEntity extends TileEntity implements ITi
         for (final EtchingTrade trade : this.trades) {
             trades.add(trade.serialize());
         }
-        compound.put("trades", (INBT) trades);
+        compound.put("trades", trades);
         return tag;
     }
 
@@ -170,7 +170,7 @@ public class EtchingVendorControllerTileEntity extends TileEntity implements ITi
 
         public CompoundNBT serialize() {
             final CompoundNBT nbt = new CompoundNBT();
-            nbt.put("stack", (INBT) this.soldEtching.serializeNBT());
+            nbt.put("stack", this.soldEtching.serializeNBT());
             nbt.putInt("amount", this.requiredPlatinum);
             nbt.putBoolean("sold", this.sold);
             return nbt;

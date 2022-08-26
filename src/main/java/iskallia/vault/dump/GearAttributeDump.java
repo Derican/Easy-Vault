@@ -51,8 +51,8 @@ public class GearAttributeDump extends JsonDump {
         this.addTooltip(modifiers, ModAttributes.EFFECT_IMMUNITY, PossibleValues.enumType("Poison", "Wither", "Hunger", "Mining Fatigue", "Slowness", "Weakness"), TooltipFragment.of("+${value} Immunity").color(10801083));
         this.addTooltip(modifiers, ModAttributes.EFFECT_CLOUD, PossibleValues.enumType("Poison", "Wither", "Hunger", "Mining Fatigue", "Slowness", "Weakness"), TooltipFragment.of("+${value} Cloud").color(15007916));
         this.addTooltip(modifiers, ModAttributes.SOULBOUND, PossibleValues.noneType(), TooltipFragment.of("Soulbound").color(9856253));
-        jsonObject.add("attributes", (JsonElement) attributes);
-        jsonObject.add("modifiers", (JsonElement) modifiers);
+        jsonObject.add("attributes", attributes);
+        jsonObject.add("modifiers", modifiers);
         return jsonObject;
     }
 
@@ -64,7 +64,7 @@ public class GearAttributeDump extends JsonDump {
         for (final TooltipFragment fragment : fragments) {
             final JsonObject fragmentJson = new JsonObject();
             fragmentJson.addProperty("text", fragment.text);
-            fragmentJson.addProperty("color", (Number) fragment.color);
+            fragmentJson.addProperty("color", fragment.color);
             if (fragment.bold) {
                 fragmentJson.addProperty("bold", Boolean.valueOf(true));
             }
@@ -74,16 +74,16 @@ public class GearAttributeDump extends JsonDump {
             if (fragment.underline) {
                 fragmentJson.addProperty("underline", Boolean.valueOf(true));
             }
-            format.add((JsonElement) fragmentJson);
+            format.add(fragmentJson);
         }
-        tooltipJson.add("format", (JsonElement) format);
+        tooltipJson.add("format", format);
         final JsonObject possibleValuesJson = new JsonObject();
         possibleValuesJson.addProperty("type", possibleValues.type);
         if (possibleValues.values != null) {
-            possibleValuesJson.add("values", (JsonElement) possibleValues.valuesAsJson());
+            possibleValuesJson.add("values", possibleValues.valuesAsJson());
         }
-        tooltipJson.add("possibleValues", (JsonElement) possibleValuesJson);
-        json.add(attribute.getId().getPath(), (JsonElement) tooltipJson);
+        tooltipJson.add("possibleValues", possibleValuesJson);
+        json.add(attribute.getId().getPath(), tooltipJson);
     }
 
     public static class TooltipFragment {

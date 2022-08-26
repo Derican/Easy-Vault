@@ -38,7 +38,7 @@ public class FinalVaultModifierModifier extends VoteModifier
         if (modifier == null) {
             return;
         }
-        final ITextComponent ct = (ITextComponent)new StringTextComponent("Added ").withStyle(TextFormatting.GRAY).append(modifier.getNameComponent());
+        final ITextComponent ct = new StringTextComponent("Added ").withStyle(TextFormatting.GRAY).append(modifier.getNameComponent());
         vault.getModifiers().addPermanentModifier(modifier);
         vault.getPlayers().forEach(vPlayer -> {
             modifier.apply(vault, vPlayer, world, world.getRandom());

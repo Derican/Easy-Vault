@@ -57,7 +57,7 @@ public class RaidModifierConfig extends Config {
     }
 
     public List<RaidModifier> getAll() {
-        Stream<List<RaidModifier>> stream = Stream.<List<RaidModifier>>of(new List[]{this.DAMAGE_TAKEN_MODIFIERS, this.MONSTER_AMOUNT_MODIFIERS, this.MONSTER_DAMAGE_MODIFIERS, this.MONSTER_HEALTH_MODIFIERS, this.MONSTER_LEVEL_MODIFIERS, this.BLOCK_PLACEMENT_MODIFIERS, this.MONSTER_SPEED_MODIFIERS, this.ITEM_PLACEMENT_MODIFIERS, this.ARTIFACT_FRAGMENT_MODIFIERS, this.MODIFIER_DOUBLING_MODIFIERS
+        Stream<List<RaidModifier>> stream = Stream.of(new List[]{this.DAMAGE_TAKEN_MODIFIERS, this.MONSTER_AMOUNT_MODIFIERS, this.MONSTER_DAMAGE_MODIFIERS, this.MONSTER_HEALTH_MODIFIERS, this.MONSTER_LEVEL_MODIFIERS, this.BLOCK_PLACEMENT_MODIFIERS, this.MONSTER_SPEED_MODIFIERS, this.ITEM_PLACEMENT_MODIFIERS, this.ARTIFACT_FRAGMENT_MODIFIERS, this.MODIFIER_DOUBLING_MODIFIERS
         });
         Stream<RaidModifier> stream1 = stream.flatMap(Collection::stream);
         List<RaidModifier> list = stream1.collect(Collectors.toList());
@@ -80,7 +80,7 @@ public class RaidModifierConfig extends Config {
                     return !(modifier instanceof ArtifactFragmentModifier);
                 });
             }
-            return (RollableModifier) modifierList.getRandom(RaidModifierConfig.rand);
+            return modifierList.getRandom(RaidModifierConfig.rand);
         });
     }
 
@@ -137,11 +137,11 @@ public class RaidModifierConfig extends Config {
 
     public static class RollableModifier {
         @Expose
-        private String modifier;
+        private final String modifier;
         @Expose
-        private float minValue;
+        private final float minValue;
         @Expose
-        private float maxValue;
+        private final float maxValue;
 
         public RollableModifier(final String modifier, final float minValue, final float maxValue) {
             this.modifier = modifier;

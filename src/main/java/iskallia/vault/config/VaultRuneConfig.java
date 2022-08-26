@@ -23,7 +23,7 @@ public class VaultRuneConfig extends Config {
     }
 
     public Item getRandomRune() {
-        return (Item) ForgeRegistries.ITEMS.getValue(new ResourceLocation((String) this.runeWeights.getRandom(VaultRuneConfig.rand)));
+        return ForgeRegistries.ITEMS.getValue(new ResourceLocation(this.runeWeights.getRandom(VaultRuneConfig.rand)));
     }
 
     public Optional<Integer> getMinimumLevel(final Item item) {
@@ -57,9 +57,9 @@ public class VaultRuneConfig extends Config {
 
     public static class RuneLevel {
         @Expose
-        private String item;
+        private final String item;
         @Expose
-        private int minLevel;
+        private final int minLevel;
 
         public RuneLevel(final String item, final int minLevel) {
             this.item = item;

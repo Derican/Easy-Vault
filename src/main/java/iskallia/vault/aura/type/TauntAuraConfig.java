@@ -36,6 +36,6 @@ public class TauntAuraConfig extends EternalAuraConfig.AuraConfig {
             return;
         }
         final LivingEntity auraProvider = ((EntityAuraProvider) aura.getAuraProvider()).getSource();
-        EntityHelper.getNearby((IWorld) world, (Vector3i) new BlockPos(aura.getOffset()), aura.getRadius(), MobEntity.class).forEach(mob -> mob.setTarget(auraProvider));
+        EntityHelper.getNearby(world, new BlockPos(aura.getOffset()), aura.getRadius(), MobEntity.class).forEach(mob -> mob.setTarget(auraProvider));
     }
 }

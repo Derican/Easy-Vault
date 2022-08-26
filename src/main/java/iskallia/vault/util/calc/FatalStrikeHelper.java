@@ -24,14 +24,14 @@ import net.minecraft.item.ItemStack;
 public class FatalStrikeHelper {
     public static float getPlayerFatalStrikeChance(final ServerPlayerEntity player) {
         float chance = 0.0f;
-        final TalentTree tree = PlayerTalentsData.get(player.getLevel()).getTalents((PlayerEntity) player);
+        final TalentTree tree = PlayerTalentsData.get(player.getLevel()).getTalents(player);
         for (final Object talent : tree.getTalents(FatalStrikeTalent.class)) {
             chance += ((FatalStrikeTalent) talent).getFatalStrikeChance();
         }
         for (final Object talent2 : tree.getTalents(FatalStrikeChanceTalent.class)) {
             chance += ((FatalStrikeChanceTalent) talent2).getAdditionalFatalStrikeChance();
         }
-        final SetTree sets = PlayerSetsData.get(player.getLevel()).getSets((PlayerEntity) player);
+        final SetTree sets = PlayerSetsData.get(player.getLevel()).getSets(player);
         for (final SetNode<?> node : sets.getNodes()) {
             if (!(node.getSet() instanceof AssassinSet)) {
                 continue;
@@ -47,7 +47,7 @@ public class FatalStrikeHelper {
                 }
             }
         }
-        chance += getFatalStrikeChance((LivingEntity) player);
+        chance += getFatalStrikeChance(player);
         if (vault != null) {
             for (final VaultInfluence influence : vault.getInfluences().getInfluences(VaultAttributeInfluence.class)) {
                 if (((VaultAttributeInfluence) influence).getType() == VaultAttributeInfluence.Type.FATAL_STRIKE_CHANCE && ((VaultAttributeInfluence) influence).isMultiplicative()) {
@@ -71,7 +71,7 @@ public class FatalStrikeHelper {
 
     public static float getPlayerFatalStrikeDamage(final ServerPlayerEntity player) {
         float additionalMultiplier = 0.0f;
-        final TalentTree tree = PlayerTalentsData.get(player.getLevel()).getTalents((PlayerEntity) player);
+        final TalentTree tree = PlayerTalentsData.get(player.getLevel()).getTalents(player);
         for (final Object talent : tree.getTalents(FatalStrikeTalent.class)) {
             additionalMultiplier += ((FatalStrikeTalent) talent).getFatalStrikeDamage();
         }
@@ -86,7 +86,7 @@ public class FatalStrikeHelper {
                 }
             }
         }
-        additionalMultiplier += getFatalStrikeDamage((LivingEntity) player);
+        additionalMultiplier += getFatalStrikeDamage(player);
         if (vault != null) {
             for (final VaultInfluence influence : vault.getInfluences().getInfluences(VaultAttributeInfluence.class)) {
                 if (((VaultAttributeInfluence) influence).getType() == VaultAttributeInfluence.Type.FATAL_STRIKE_DAMAGE && ((VaultAttributeInfluence) influence).isMultiplicative()) {

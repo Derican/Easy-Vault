@@ -85,7 +85,7 @@ public class VendingMachineTileEntity extends SkinnableTileEntity {
                 e.printStackTrace();
             }
         }
-        compound.put("coresList", (INBT) list);
+        compound.put("coresList", list);
         return super.save(compound);
     }
 
@@ -115,7 +115,7 @@ public class VendingMachineTileEntity extends SkinnableTileEntity {
                 e.printStackTrace();
             }
         }
-        nbt.put("coresList", (INBT) list);
+        nbt.put("coresList", list);
         return nbt;
     }
 

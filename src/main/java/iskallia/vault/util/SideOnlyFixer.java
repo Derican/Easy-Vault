@@ -6,7 +6,7 @@ import net.minecraft.item.ItemStack;
 public class SideOnlyFixer {
     public static int getSlotFor(final PlayerInventory inventory, final ItemStack stack) {
         for (int i = 0; i < inventory.items.size(); ++i) {
-            if (!((ItemStack) inventory.items.get(i)).isEmpty() && stackEqualExact(stack, (ItemStack) inventory.items.get(i))) {
+            if (!inventory.items.get(i).isEmpty() && stackEqualExact(stack, inventory.items.get(i))) {
                 return i;
             }
         }

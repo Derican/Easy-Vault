@@ -75,7 +75,7 @@ public class ScavengerHuntConfig extends Config {
         for (final Map.Entry<String, ItemPool> mobDropEntry : this.mobDropItems.entrySet()) {
             for (final WeightedList.Entry<ItemEntry> entry : mobDropEntry.getValue().getPool()) {
                 if (requiredItem.equals(entry.value.getItem())) {
-                    return new ResourceLocation((String)mobDropEntry.getKey());
+                    return new ResourceLocation(mobDropEntry.getKey());
                 }
             }
         }
@@ -274,7 +274,7 @@ public class ScavengerHuntConfig extends Config {
         }
 
         public Item getItem() {
-            return (Item) ForgeRegistries.ITEMS.getValue(new ResourceLocation(this.item));
+            return ForgeRegistries.ITEMS.getValue(new ResourceLocation(this.item));
         }
 
         public int getRandomAmount() {
@@ -282,7 +282,7 @@ public class ScavengerHuntConfig extends Config {
         }
 
         public ItemStack createItemStack() {
-            return new ItemStack((IItemProvider) this.getItem(), this.getRandomAmount());
+            return new ItemStack(this.getItem(), this.getRandomAmount());
         }
     }
 
@@ -294,7 +294,7 @@ public class ScavengerHuntConfig extends Config {
         private final ResourceLocation iconPath;
         private final TextFormatting requirementColor;
 
-        private SourceType(final ResourceLocation iconPath, final TextFormatting requirementColor) {
+        SourceType(final ResourceLocation iconPath, final TextFormatting requirementColor) {
             this.iconPath = iconPath;
             this.requirementColor = requirementColor;
         }

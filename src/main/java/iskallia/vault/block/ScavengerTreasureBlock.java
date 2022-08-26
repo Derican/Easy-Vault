@@ -52,7 +52,7 @@ public class ScavengerTreasureBlock extends ContainerBlock {
     private static final VoxelShape BOX;
 
     public ScavengerTreasureBlock() {
-        super(AbstractBlock.Properties.of(Material.METAL, MaterialColor.GOLD).harvestLevel(0).harvestTool(ToolType.PICKAXE).strength(10.0f, 1.0f).sound((SoundType) ModSounds.VAULT_GEM));
+        super(AbstractBlock.Properties.of(Material.METAL, MaterialColor.GOLD).harvestLevel(0).harvestTool(ToolType.PICKAXE).strength(10.0f, 1.0f).sound(ModSounds.VAULT_GEM));
     }
 
     public VoxelShape getShape(final BlockState state, final IBlockReader worldIn, final BlockPos pos, final ISelectionContext context) {
@@ -70,7 +70,7 @@ public class ScavengerTreasureBlock extends ContainerBlock {
 
     public List<ItemStack> getDrops(final BlockState state, final LootContext.Builder builder) {
         final ServerWorld world = builder.getLevel();
-        final BlockPos pos = new BlockPos((Vector3d) builder.getOptionalParameter(LootParameters.ORIGIN));
+        final BlockPos pos = new BlockPos(builder.getOptionalParameter(LootParameters.ORIGIN));
         final VaultRaid vault = VaultRaidData.get(world).getAt(world, pos);
         final List<ItemStack> drops = new ArrayList<ItemStack>(super.getDrops(state, builder));
         if (vault == null) {

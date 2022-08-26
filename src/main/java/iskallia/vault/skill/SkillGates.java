@@ -122,9 +122,9 @@ public class SkillGates {
 
     public static class Entry {
         @Expose
-        private List<String> dependsOn;
+        private final List<String> dependsOn;
         @Expose
-        private List<String> lockedBy;
+        private final List<String> lockedBy;
 
         public Entry() {
             this.dependsOn = new LinkedList<String>();

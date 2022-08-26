@@ -12,7 +12,7 @@ import net.minecraft.world.World;
 
 public class VaultGuardianEntity extends PiglinBruteEntity {
     public VaultGuardianEntity(final EntityType<? extends PiglinBruteEntity> type, final World world) {
-        super((EntityType) type, world);
+        super(type, world);
         this.setCanPickUpLoot(false);
         final ModifiableAttributeInstance attribute = this.getAttribute(Attributes.ATTACK_KNOCKBACK);
         if (attribute != null) {

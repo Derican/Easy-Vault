@@ -31,7 +31,7 @@ public class ExperiencedTalent extends PlayerTalent {
             return;
         }
         final ServerPlayerEntity player = (ServerPlayerEntity) event.getPlayer();
-        final TalentTree talents = PlayerTalentsData.get(player.getLevel()).getTalents((PlayerEntity) player);
+        final TalentTree talents = PlayerTalentsData.get(player.getLevel()).getTalents(player);
         final ExperienceOrbEntity orb = event.getOrb();
         float increase = 0.0f;
         for (final Object talent : talents.getTalents(ExperiencedTalent.class)) {

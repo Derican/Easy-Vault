@@ -6,7 +6,7 @@ import iskallia.vault.item.gear.VaultGear;
 public class BloodSet extends PlayerSet {
     public static int MULTIPLIER_ID;
     @Expose
-    private float damageMultiplier;
+    private final float damageMultiplier;
 
     public BloodSet(final float damageMultiplier) {
         super(VaultGear.Set.BLOOD);

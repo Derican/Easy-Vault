@@ -107,7 +107,7 @@ public abstract class VaultGenerator implements INBTSerializable<CompoundNBT> {
                                 final PortalPlacer placer = portalPlacer.get();
                                 if (placer != null) {
                                     vault.getProperties().create(VaultRaid.START_FACING, direction);
-                                    placer.place((IWorld)world, pos, direction, count, count + 1);
+                                    placer.place(world, pos, direction, count, count + 1);
                                     return true;
                                 }
                                 break Label_0255;
@@ -127,7 +127,7 @@ public abstract class VaultGenerator implements INBTSerializable<CompoundNBT> {
             nbt.putInt("StartChunkX", this.startChunk.x);
             nbt.putInt("StartChunkZ", this.startChunk.z);
         }
-        nbt.put("Pieces", (INBT) this.pieces.serializeNBT());
+        nbt.put("Pieces", this.pieces.serializeNBT());
         return nbt;
     }
 

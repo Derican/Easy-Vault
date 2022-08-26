@@ -4,17 +4,17 @@ import com.google.gson.annotations.Expose;
 
 public class MagnetEntry {
     @Expose
-    private float speed;
+    private final float speed;
     @Expose
-    private float radius;
+    private final float radius;
     @Expose
-    private boolean pullItems;
+    private final boolean pullItems;
     @Expose
-    private boolean pullExperience;
+    private final boolean pullExperience;
     @Expose
-    private boolean pullInstantly;
+    private final boolean pullInstantly;
     @Expose
-    private int maxDurability;
+    private final int maxDurability;
 
     public MagnetEntry(final float speed, final float radius, final boolean pullItems, final boolean pullExperience, final boolean pullInstantly, final int maxDurability) {
         this.speed = speed;

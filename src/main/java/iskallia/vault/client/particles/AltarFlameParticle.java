@@ -51,7 +51,7 @@ public class AltarFlameParticle extends DeceleratingParticle {
         public Particle createParticle(final BasicParticleType type, final ClientWorld world, final double x, final double y, final double z, final double xSpeed, final double ySpeed, final double zSpeed) {
             final AltarFlameParticle particle = new AltarFlameParticle(world, x, y, z, xSpeed, ySpeed, zSpeed);
             particle.pickSprite(this.spriteSet);
-            return (Particle) particle;
+            return particle;
         }
     }
 }

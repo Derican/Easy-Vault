@@ -71,7 +71,7 @@ public class EternalEntity extends ZombieEntity {
     private String providedAura;
 
     public EternalEntity(final EntityType<? extends ZombieEntity> type, final World world) {
-        super((EntityType) type, world);
+        super(type, world);
         this.sizeMultiplier = 1.0f;
         this.ancient = false;
         this.despawnTime = Long.MAX_VALUE;
@@ -85,14 +85,14 @@ public class EternalEntity extends ZombieEntity {
 
     protected void defineSynchedData() {
         super.defineSynchedData();
-        this.entityData.define((DataParameter) EternalEntity.ETERNAL_NAME, "Eternal");
+        this.entityData.define(EternalEntity.ETERNAL_NAME, "Eternal");
     }
 
     protected void addBehaviourGoals() {
-        this.goalSelector.addGoal(2, (Goal) new ZombieAttackGoal((ZombieEntity) this, 1.1, false));
-        this.goalSelector.addGoal(6, (Goal) new MoveThroughVillageGoal((CreatureEntity) this, 1.1, true, 4, this::canBreakDoors));
-        this.goalSelector.addGoal(7, (Goal) new WaterAvoidingRandomWalkingGoal((CreatureEntity) this, 1.1));
-        this.targetSelector.addGoal(2, (Goal) new FollowEntityGoal<>(this, 1.1, 32.0f, 3.0f, false, () -> this.getOwner().right()));
+        this.goalSelector.addGoal(2, new ZombieAttackGoal(this, 1.1, false));
+        this.goalSelector.addGoal(6, new MoveThroughVillageGoal(this, 1.1, true, 4, this::canBreakDoors));
+        this.goalSelector.addGoal(7, new WaterAvoidingRandomWalkingGoal(this, 1.1));
+        this.targetSelector.addGoal(2, new FollowEntityGoal<>(this, 1.1, 32.0f, 3.0f, false, () -> this.getOwner().right()));
     }
 
     @OnlyIn(Dist.CLIENT)
@@ -105,7 +105,7 @@ public class EternalEntity extends ZombieEntity {
     }
 
     public void setSkinName(final String skinName) {
-        this.entityData.set((DataParameter) EternalEntity.ETERNAL_NAME, skinName);
+        this.entityData.set(EternalEntity.ETERNAL_NAME, skinName);
     }
 
     public String getSkinName() {
@@ -172,7 +172,7 @@ public class EternalEntity extends ZombieEntity {
             return Either.left(this.owner);
         }
         final ServerPlayerEntity player = this.getServer().getPlayerList().getPlayer(this.owner);
-        return (Either<UUID, ServerPlayerEntity>) ((player == null) ? Either.left(this.owner) : Either.right(player));
+        return (player == null) ? Either.left(this.owner) : Either.right(player);
     }
 
     public void tick() {
@@ -190,11 +190,7 @@ public class EternalEntity extends ZombieEntity {
                 this.kill();
             }
             final double amplitude = this.getDeltaMovement().distanceToSqr(0.0, this.getDeltaMovement().y(), 0.0);
-            if (amplitude > 0.004) {
-                this.setSprinting(true);
-            } else {
-                this.setSprinting(false);
-            }
+            this.setSprinting(amplitude > 0.004);
             this.bossInfo.setPercent(this.getHealth() / this.getMaxHealth());
             if (this.tickCount % 10 == 0) {
                 this.updateAttackTarget();
@@ -203,13 +199,13 @@ public class EternalEntity extends ZombieEntity {
                 this.getOwner().ifRight(sPlayer -> {
                     final EternalAuraConfig.AuraConfig auraCfg = ModConfigs.ETERNAL_AURAS.getByName(this.providedAura);
                     if (auraCfg != null) {
-                        AuraManager.getInstance().provideAura(EntityAuraProvider.ofEntity((LivingEntity) this, auraCfg));
+                        AuraManager.getInstance().provideAura(EntityAuraProvider.ofEntity(this, auraCfg));
                     }
                     return;
                 });
             }
-            final Map<Effect, EffectTalent.CombinedEffects> combinedEffects = EffectTalent.getGearEffectData((LivingEntity) this);
-            EffectTalent.applyEffects((LivingEntity) this, combinedEffects);
+            final Map<Effect, EffectTalent.CombinedEffects> combinedEffects = EffectTalent.getGearEffectData(this);
+            EffectTalent.applyEffects(this, combinedEffects);
         } else {
             if (this.dead) {
                 return;
@@ -325,7 +321,7 @@ public class EternalEntity extends ZombieEntity {
     public EternalEntity changeSize(final float m) {
         EntityHelper.changeSize(this, this.sizeMultiplier = m);
         if (!this.level.isClientSide()) {
-            ModNetwork.CHANNEL.send(PacketDistributor.TRACKING_ENTITY.with(() -> this), new FighterSizeMessage((Entity) this, this.sizeMultiplier));
+            ModNetwork.CHANNEL.send(PacketDistributor.TRACKING_ENTITY.with(() -> this), new FighterSizeMessage(this, this.sizeMultiplier));
         }
         return this;
     }
@@ -355,13 +351,13 @@ public class EternalEntity extends ZombieEntity {
         this.setCanPickUpLoot(false);
         this.setPersistenceRequired();
         if (this.random.nextInt(100) == 0) {
-            final ChickenEntity chicken = (ChickenEntity) EntityType.CHICKEN.create(this.level);
+            final ChickenEntity chicken = EntityType.CHICKEN.create(this.level);
             if (chicken != null) {
                 chicken.moveTo(this.getX(), this.getY(), this.getZ(), this.yRot, 0.0f);
                 chicken.finalizeSpawn(world, difficulty, reason, spawnData, dataTag);
                 chicken.setChickenJockey(true);
-                ((ServerWorld) this.level).addWithUUID((Entity) chicken);
-                this.startRiding((Entity) chicken);
+                ((ServerWorld) this.level).addWithUUID(chicken);
+                this.startRiding(chicken);
             }
         }
         return spawnData;
@@ -382,10 +378,10 @@ public class EternalEntity extends ZombieEntity {
         if (!this.level.isClientSide() && this.level instanceof ServerWorld) {
             final ServerWorld sWorld = (ServerWorld) this.level;
             sWorld.sendParticles((IParticleData) ParticleTypes.SWEEP_ATTACK, this.getX(), this.getY(), this.getZ(), 1, 0.0, 0.0, 0.0, 0.0);
-            this.level.playSound((PlayerEntity) null, this.blockPosition(), SoundEvents.PLAYER_ATTACK_SWEEP, SoundCategory.PLAYERS, 1.0f, this.random.nextFloat() - this.random.nextFloat());
+            this.level.playSound(null, this.blockPosition(), SoundEvents.PLAYER_ATTACK_SWEEP, SoundCategory.PLAYERS, 1.0f, this.random.nextFloat() - this.random.nextFloat());
             if (entity instanceof LivingEntity) {
                 this.getOwner().ifRight(owner -> {
-                    final AbilityTree abilityData = PlayerAbilitiesData.get(sWorld).getAbilities((PlayerEntity) owner);
+                    final AbilityTree abilityData = PlayerAbilitiesData.get(sWorld).getAbilities(owner);
                     final AbilityNode<?, ?> eternalsNode = abilityData.getNodeByName("Summon Eternal");
                     if ("Summon Eternal_Debuffs".equals(eternalsNode.getSpecialization())) {
                         final SummonEternalDebuffConfig cfg = (SummonEternalDebuffConfig) eternalsNode.getAbilityConfig();
@@ -402,6 +398,6 @@ public class EternalEntity extends ZombieEntity {
     }
 
     static {
-        ETERNAL_NAME = EntityDataManager.defineId((Class) EternalEntity.class, DataSerializers.STRING);
+        ETERNAL_NAME = EntityDataManager.defineId(EternalEntity.class, DataSerializers.STRING);
     }
 }

@@ -41,7 +41,7 @@ public class RaidEventListener {
             final VaultRaid vault = VaultRaidData.get(sPlayer.getLevel()).getAt(sPlayer.getLevel(), sPlayer.blockPosition());
             if (vault != null) {
                 final ActiveRaid raid = vault.getActiveRaid();
-                if (raid != null && raid.isPlayerInRaid((PlayerEntity) sPlayer)) {
+                if (raid != null && raid.isPlayerInRaid(sPlayer)) {
                     float dmg = event.getAmount();
                     dmg *= (float) (1.0 + vault.getActiveObjective(RaidChallengeObjective.class).map(raidObjective -> raidObjective.getModifiersOfType(DamageTakenModifier.class).values().stream().mapToDouble(Float::doubleValue).sum()).orElse(0.0));
                     event.setAmount(dmg);
@@ -55,7 +55,7 @@ public class RaidEventListener {
         final LivingEntity died = event.getEntityLiving();
         final World world = died.getCommandSenderWorld();
         final BlockPos at = died.blockPosition();
-        final ActiveRaid raid = getRaidAt((IWorld) world, at);
+        final ActiveRaid raid = getRaidAt(world, at);
         if (raid == null) {
             return;
         }
@@ -67,7 +67,7 @@ public class RaidEventListener {
 
     @SubscribeEvent
     public static void onSpawn(final ZombieEvent.SummonAidEvent event) {
-        if (isInLockedRaidRoom((IWorld) event.getWorld(), event.getSummoner().blockPosition())) {
+        if (isInLockedRaidRoom(event.getWorld(), event.getSummoner().blockPosition())) {
             event.setResult(Event.Result.DENY);
         }
     }
@@ -111,7 +111,7 @@ public class RaidEventListener {
                 return;
             }
         }
-        if (isInLockedRaidRoom((IWorld) event.getWorld(), event.getPos())) {
+        if (isInLockedRaidRoom(event.getWorld(), event.getPos())) {
             event.setCanceled(true);
             event.setCancellationResult(ActionResultType.FAIL);
         }

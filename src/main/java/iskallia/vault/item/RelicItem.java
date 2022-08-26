@@ -15,7 +15,7 @@ public class RelicItem extends Item {
     }
 
     public static ItemStack withCustomModelData(final int customModelData) {
-        final ItemStack itemStack = new ItemStack((IItemProvider) ModItems.VAULT_RELIC);
+        final ItemStack itemStack = new ItemStack(ModItems.VAULT_RELIC);
         final CompoundNBT nbt = new CompoundNBT();
         nbt.putInt("CustomModelData", customModelData);
         itemStack.setTag(nbt);

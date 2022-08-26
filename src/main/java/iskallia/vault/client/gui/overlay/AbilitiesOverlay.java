@@ -61,7 +61,7 @@ public class AbilitiesOverlay {
         minecraft.getProfiler().push("abilityBar");
         matrixStack.pushPose();
         RenderSystem.enableBlend();
-        matrixStack.translate(10.0, (double) (bottom - barHeight), 0.0);
+        matrixStack.translate(10.0, bottom - barHeight, 0.0);
         minecraft.getTextureManager().bind(AbilitiesOverlay.HUD_RESOURCE);
         minecraft.gui.blit(matrixStack, 0, 0, 1, 13, barWidth, barHeight);
         minecraft.getTextureManager().bind(AbilitiesOverlay.ABILITIES_RESOURCE);

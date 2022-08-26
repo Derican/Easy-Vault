@@ -40,7 +40,7 @@ public class EternalAttributes implements INBTSerializable<CompoundNBT> {
     }
 
     public Map<Attribute, Float> getAttributes() {
-        return Collections.unmodifiableMap((Map<? extends Attribute, ? extends Float>) this.attributes);
+        return Collections.unmodifiableMap(this.attributes);
     }
 
     private void setAttributeValue(final Attribute attribute, final float value) {
@@ -54,14 +54,14 @@ public class EternalAttributes implements INBTSerializable<CompoundNBT> {
 
     public CompoundNBT serializeNBT() {
         final CompoundNBT tag = new CompoundNBT();
-        this.attributes.forEach((attribute, value) -> tag.putFloat(attribute.getRegistryName().toString(), (float) value));
+        this.attributes.forEach((attribute, value) -> tag.putFloat(attribute.getRegistryName().toString(), value));
         return tag;
     }
 
     public void deserializeNBT(final CompoundNBT tag) {
         this.attributes.clear();
         tag.getAllKeys().forEach(attributeKey -> {
-            final Attribute attr = (Attribute) ForgeRegistries.ATTRIBUTES.getValue(new ResourceLocation(attributeKey));
+            final Attribute attr = ForgeRegistries.ATTRIBUTES.getValue(new ResourceLocation(attributeKey));
             if (attr != null) {
                 this.attributes.put(attr, tag.getFloat(attributeKey));
             }

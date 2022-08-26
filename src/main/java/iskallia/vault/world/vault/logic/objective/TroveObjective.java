@@ -43,7 +43,7 @@ public class TroveObjective extends VaultObjective {
 
     @Override
     public ITextComponent getVaultName() {
-        return (ITextComponent) new StringTextComponent("Vault Trove").withStyle(TextFormatting.GOLD);
+        return new StringTextComponent("Vault Trove").withStyle(TextFormatting.GOLD);
     }
 
     @Override

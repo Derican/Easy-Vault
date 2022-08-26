@@ -46,15 +46,15 @@ public class OtherSidePortalBlock extends NetherPortalBlock {
     public static final AbstractBlock.IPositionPredicate FRAME;
 
     public OtherSidePortalBlock() {
-        super(AbstractBlock.Properties.copy((AbstractBlock) Blocks.NETHER_PORTAL));
-        this.registerDefaultState((BlockState) ((BlockState) this.stateDefinition.any()).setValue((Property) OtherSidePortalBlock.AXIS, (Comparable) Direction.Axis.X));
+        super(AbstractBlock.Properties.copy(Blocks.NETHER_PORTAL));
+        this.registerDefaultState(this.stateDefinition.any().setValue((Property) OtherSidePortalBlock.AXIS, (Comparable) Direction.Axis.X));
     }
 
     public void fillItemCategory(final ItemGroup group, final NonNullList<ItemStack> items) {
     }
 
     protected void createBlockStateDefinition(final StateContainer.Builder<Block, BlockState> builder) {
-        super.createBlockStateDefinition((StateContainer.Builder) builder);
+        super.createBlockStateDefinition(builder);
     }
 
     public void randomTick(final BlockState state, final ServerWorld world, final BlockPos pos, final Random random) {
@@ -67,16 +67,16 @@ public class OtherSidePortalBlock extends NetherPortalBlock {
         if (entity.isPassenger() || entity.isVehicle() || !entity.canChangeDimensions()) {
             return;
         }
-        final VoxelShape playerVoxel = VoxelShapes.create(entity.getBoundingBox().move((double) (-pos.getX()), (double) (-pos.getY()), (double) (-pos.getZ())));
-        if (!VoxelShapes.joinIsNotEmpty(playerVoxel, state.getShape((IBlockReader) world, pos), IBooleanFunction.AND)) {
+        final VoxelShape playerVoxel = VoxelShapes.create(entity.getBoundingBox().move(-pos.getX(), -pos.getY(), -pos.getZ()));
+        if (!VoxelShapes.joinIsNotEmpty(playerVoxel, state.getShape(world, pos), IBooleanFunction.AND)) {
             return;
         }
-        final VaultPortalSize current = new VaultPortalSize((IWorld) world, pos, (Direction.Axis) state.getValue((Property) OtherSidePortalBlock.AXIS), OtherSidePortalBlock.FRAME);
+        final VaultPortalSize current = new VaultPortalSize(world, pos, (Direction.Axis) state.getValue((Property) OtherSidePortalBlock.AXIS), OtherSidePortalBlock.FRAME);
         if (!current.validatePortal()) {
             return;
         }
-        final RegistryKey<World> destinationKey = (RegistryKey<World>) ((world.dimension() == Vault.OTHER_SIDE_KEY) ? World.OVERWORLD : Vault.OTHER_SIDE_KEY);
-        final ServerWorld destination = ((ServerWorld) world).getServer().getLevel((RegistryKey) destinationKey);
+        final RegistryKey<World> destinationKey = (world.dimension() == Vault.OTHER_SIDE_KEY) ? World.OVERWORLD : Vault.OTHER_SIDE_KEY;
+        final ServerWorld destination = ((ServerWorld) world).getServer().getLevel(destinationKey);
         if (destination == null) {
             return;
         }
@@ -99,7 +99,7 @@ public class OtherSidePortalBlock extends NetherPortalBlock {
         if (targetPos == null || targetDim == null) {
             return;
         }
-        final ServerWorld target = world.getServer().getLevel((RegistryKey) targetDim);
+        final ServerWorld target = world.getServer().getLevel(targetDim);
         if (target == null) {
             return;
         }
@@ -107,7 +107,7 @@ public class OtherSidePortalBlock extends NetherPortalBlock {
             targetPos = BurntCrystalItem.forcePlace((ServerWorld) world, current.getBottomLeft(), target, current);
             data.setLinkedPos(targetPos);
         }
-        VaultUtils.moveTo(target, (Entity) player, new Vector3d(targetPos.getX() + 0.2, (double) targetPos.getY(), targetPos.getZ() + 0.2));
+        VaultUtils.moveTo(target, player, new Vector3d(targetPos.getX() + 0.2, targetPos.getY(), targetPos.getZ() + 0.2));
         player.setPortalCooldown();
     }
 
@@ -118,7 +118,7 @@ public class OtherSidePortalBlock extends NetherPortalBlock {
         final Direction.Axis facingAxis = facing.getAxis();
         final Direction.Axis portalAxis = (Direction.Axis) state.getValue((Property) OtherSidePortalBlock.AXIS);
         final boolean flag = portalAxis != facingAxis && facingAxis.isHorizontal();
-        return (flag || facingState.is((Block) this) || new VaultPortalSize(iworld, currentPos, portalAxis, OtherSidePortalBlock.FRAME).validatePortal()) ? super.updateShape(state, facing, facingState, iworld, currentPos, facingPos) : Blocks.AIR.defaultBlockState();
+        return (flag || facingState.is(this) || new VaultPortalSize(iworld, currentPos, portalAxis, OtherSidePortalBlock.FRAME).validatePortal()) ? super.updateShape(state, facing, facingState, iworld, currentPos, facingPos) : Blocks.AIR.defaultBlockState();
     }
 
     @OnlyIn(Dist.CLIENT)
@@ -131,14 +131,14 @@ public class OtherSidePortalBlock extends NetherPortalBlock {
             final double d5 = (rand.nextFloat() - 0.5) * 0.5;
             double d6 = (rand.nextFloat() - 0.5) * 0.5;
             final int j = rand.nextInt(2) * 2 - 1;
-            if (!world.getBlockState(pos.west()).is((Block) this) && !world.getBlockState(pos.east()).is((Block) this)) {
+            if (!world.getBlockState(pos.west()).is(this) && !world.getBlockState(pos.east()).is(this)) {
                 d0 = pos.getX() + 0.5 + 0.25 * j;
                 d4 = rand.nextFloat() * 2.0f * j;
             } else {
                 d3 = pos.getZ() + 0.5 + 0.25 * j;
                 d6 = rand.nextFloat() * 2.0f * j;
             }
-            world.addParticle((IParticleData) ParticleTypes.WHITE_ASH, d0, d2, d3, d4, d5, d6);
+            world.addParticle(ParticleTypes.WHITE_ASH, d0, d2, d3, d4, d5, d6);
         }
     }
 

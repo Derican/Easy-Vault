@@ -38,7 +38,7 @@ public class ArchitectEventConfig extends Config {
     private WeightedList<String> rolls;
 
     public List<VoteModifier> getAll() {
-        Stream<List<VoteModifier>> stream = Stream.<List<VoteModifier>>of(new List[]{this.BLOCK_PLACEMENT, this.FLOATING_ITEM_PLACEMENT, this.TIME_MODIFIER, this.ADDITIONAL_MOB_SPAWNS, this.ROOM_SELECTION, this.RANDOM});
+        Stream<List<VoteModifier>> stream = Stream.of(new List[]{this.BLOCK_PLACEMENT, this.FLOATING_ITEM_PLACEMENT, this.TIME_MODIFIER, this.ADDITIONAL_MOB_SPAWNS, this.ROOM_SELECTION, this.RANDOM});
         Stream<VoteModifier> stream1 = stream.flatMap(Collection::stream);
         List<VoteModifier> modifiers = stream1.collect(Collectors.toList());
 //        final List<VoteModifier> modifiers = (List<VoteModifier>) Stream.of(new List[] { this.BLOCK_PLACEMENT, this.FLOATING_ITEM_PLACEMENT, this.TIME_MODIFIER, this.ADDITIONAL_MOB_SPAWNS, this.ROOM_SELECTION, this.RANDOM }).flatMap(Collection::stream).collect(Collectors.toList());

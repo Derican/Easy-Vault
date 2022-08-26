@@ -28,7 +28,7 @@ public class PlayerLeechHelper {
         final float leechMultiplier = 1.0f;
         if (attacker instanceof ServerPlayerEntity) {
             final ServerPlayerEntity sPlayer = (ServerPlayerEntity) attacker;
-            final TalentTree talents = PlayerTalentsData.get(sPlayer.getLevel()).getTalents((PlayerEntity) sPlayer);
+            final TalentTree talents = PlayerTalentsData.get(sPlayer.getLevel()).getTalents(sPlayer);
             if (talents.hasLearnedNode(ModConfigs.TALENTS.WARD)) {
                 return;
             }
@@ -52,7 +52,7 @@ public class PlayerLeechHelper {
         ActiveFlags.IS_LEECHING.runIfNotSet(() -> attacker.heal(amountLeeched));
         if (attacker.getRandom().nextFloat() <= 0.2) {
             final float pitch = MathUtilities.randomFloat(1.0f, 1.5f);
-            attacker.getCommandSenderWorld().playSound((PlayerEntity) null, attacker.getX(), attacker.getY(), attacker.getZ(), ModSounds.VAMPIRE_HISSING_SFX, SoundCategory.MASTER, 0.020000001f, pitch);
+            attacker.getCommandSenderWorld().playSound(null, attacker.getX(), attacker.getY(), attacker.getZ(), ModSounds.VAMPIRE_HISSING_SFX, SoundCategory.MASTER, 0.020000001f, pitch);
         }
     }
 }

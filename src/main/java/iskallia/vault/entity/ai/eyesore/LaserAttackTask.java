@@ -56,22 +56,22 @@ public class LaserAttackTask extends EyesoreTask<EyesoreEntity>
             player = players.get(this.getRandom().nextInt(players.size()));
             this.target = player.getUUID();
             this.getEntity().getEntityData().set((DataParameter)EyesoreEntity.LASER_TARGET, (Object)Optional.of(player.getUUID()));
-            this.getVault().getPlayers().stream().map(p -> p.getServerPlayer(this.getWorld().getServer())).filter(Optional::isPresent).map(Optional::get).forEach(p -> this.getWorld().playSound((PlayerEntity)null, p.getX(), p.getY(), p.getZ(), SoundEvents.ELDER_GUARDIAN_CURSE, SoundCategory.HOSTILE, 10.0f, 1.0f));
+            this.getVault().getPlayers().stream().map(p -> p.getServerPlayer(this.getWorld().getServer())).filter(Optional::isPresent).map(Optional::get).forEach(p -> this.getWorld().playSound(null, p.getX(), p.getY(), p.getZ(), SoundEvents.ELDER_GUARDIAN_CURSE, SoundCategory.HOSTILE, 10.0f, 1.0f));
         }
         final Entity entity = this.getWorld().getEntity(this.target);
         final LivingEntity targetEntity = (entity instanceof LivingEntity) ? (LivingEntity) entity : null;
         if (targetEntity != null) {
-            final double distance = this.getEntity().blockPosition().distSqr((Vector3i)targetEntity.blockPosition());
+            final double distance = this.getEntity().blockPosition().distSqr(targetEntity.blockPosition());
             final Optional<VaultPiece> finalVault = this.getVault().getGenerator().getPieces(FinalVaultBoss.class).stream().findFirst();
             if (finalVault.isPresent()) {
                 final Vector3i center = finalVault.get().getCenter();
-                this.getEntity().path.stayInRange(new Vector3d((double)center.getX(), (double)center.getY(), (double)center.getZ()), (Entity)targetEntity, 0.15, 30.0, 2.0);
+                this.getEntity().path.stayInRange(new Vector3d(center.getX(), center.getY(), center.getZ()), targetEntity, 0.15, 30.0, 2.0);
             }
             else {
-                this.getEntity().path.stayInRange(this.getEntity(), (Entity)targetEntity, 0.15, 30.0, 2.0);
+                this.getEntity().path.stayInRange(this.getEntity(), targetEntity, 0.15, 30.0, 2.0);
             }
             final Vector3d eyePos1 = this.getEntity().getEyePosition(1.0f);
-            final Vector3d eyePos2 = this.getPosition((Entity)targetEntity);
+            final Vector3d eyePos2 = this.getPosition(targetEntity);
             final RayTraceContext context = new RayTraceContext(eyePos1, eyePos2, RayTraceContext.BlockMode.COLLIDER, RayTraceContext.FluidMode.NONE, (this).getEntity());
             final BlockRayTraceResult result = this.getWorld().clip(context);
             if (result.getType() == RayTraceResult.Type.MISS) {
@@ -111,7 +111,7 @@ public class LaserAttackTask extends EyesoreTask<EyesoreEntity>
     
     protected float getTargetPitch(final LivingEntity target) {
         final double d0 = target.getX() - this.getEntity().getX();
-        final double d2 = this.getEyePosition((Entity)target) - this.getEntity().getEyeY();
+        final double d2 = this.getEyePosition(target) - this.getEntity().getEyeY();
         final double d3 = target.getZ() - this.getEntity().getZ();
         final double d4 = MathHelper.sqrt(d0 * d0 + d3 * d3);
         return (float)(-(MathHelper.atan2(d2, d4) * 57.2957763671875));

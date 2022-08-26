@@ -13,7 +13,7 @@ public enum VaultRarity {
 
     public final TextFormatting color;
 
-    private VaultRarity(final TextFormatting color) {
+    VaultRarity(final TextFormatting color) {
         this.color = color;
     }
 

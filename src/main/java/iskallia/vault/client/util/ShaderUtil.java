@@ -42,7 +42,7 @@ public class ShaderUtil {
 
     public static int getUniformLocation(final int shaderProgram, final String uniform) {
         final Map<String, Integer> uniforms = ShaderUtil.UNIFORM_CONSTANTS.computeIfAbsent(Integer.valueOf(shaderProgram), program -> new HashMap());
-        return uniforms.computeIfAbsent(uniform, uniformKey -> ARBShaderObjects.glGetUniformLocationARB(shaderProgram, (CharSequence) uniformKey));
+        return uniforms.computeIfAbsent(uniform, uniformKey -> ARBShaderObjects.glGetUniformLocationARB(shaderProgram, uniformKey));
     }
 
     public static void releaseShader() {
@@ -88,7 +88,7 @@ public class ShaderUtil {
             if (shader == 0) {
                 return 0;
             }
-            ARBShaderObjects.glShaderSourceARB(shader, (CharSequence) readFile(filename));
+            ARBShaderObjects.glShaderSourceARB(shader, readFile(filename));
             ARBShaderObjects.glCompileShaderARB(shader);
             if (ARBShaderObjects.glGetObjectParameteriARB(shader, 35713) == 0) {
                 throw new RuntimeException("Error creating shader \"" + filename + "\": " + getLogInfo(shader));

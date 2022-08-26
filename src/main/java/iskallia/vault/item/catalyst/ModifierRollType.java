@@ -11,7 +11,7 @@ public enum ModifierRollType {
 
     private final Function<ITextComponent, ITextComponent> formatter;
 
-    private ModifierRollType(final Function<ITextComponent, ITextComponent> formatter) {
+    ModifierRollType(final Function<ITextComponent, ITextComponent> formatter) {
         this.formatter = formatter;
     }
 

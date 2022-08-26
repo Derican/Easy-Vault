@@ -30,8 +30,8 @@ public class MonsterEyeEntity extends SlimeEntity implements VaultBoss {
     public RegenAfterAWhile<MonsterEyeEntity> regenAfterAWhile;
 
     public MonsterEyeEntity(final EntityType<? extends SlimeEntity> type, final World worldIn) {
-        super((EntityType) type, worldIn);
-        this.teleportTask = new TeleportRandomly<MonsterEyeEntity>(this, (TeleportRandomly.Condition<MonsterEyeEntity>[]) new TeleportRandomly.Condition[]{(entity, source, amount) -> {
+        super(type, worldIn);
+        this.teleportTask = new TeleportRandomly<MonsterEyeEntity>(this, new TeleportRandomly.Condition[]{(entity, source, amount) -> {
             if (!(source.getEntity() instanceof LivingEntity)) {
                 return 0.2;
             } else {
@@ -48,10 +48,10 @@ public class MonsterEyeEntity extends SlimeEntity implements VaultBoss {
 
     protected void registerGoals() {
         super.registerGoals();
-        this.goalSelector.addGoal(1, (Goal) TeleportGoal.builder(this).start(entity -> entity.getTarget() != null && entity.tickCount % 60 == 0).to(entity -> entity.getTarget().position().add((entity.random.nextDouble() - 0.5) * 8.0, (double) (entity.random.nextInt(16) - 8), (entity.random.nextDouble() - 0.5) * 8.0)).then(entity -> entity.playSound(ModSounds.BOSS_TP_SFX, 1.0f, 1.0f)).build());
-        this.goalSelector.addGoal(1, (Goal) new ThrowProjectilesGoal<>(this, 96, 10, FighterEntity.SNOWBALLS));
-        this.goalSelector.addGoal(1, (Goal) new AOEGoal<>(this, e -> !(e instanceof VaultBoss)));
-        this.targetSelector.addGoal(1, (Goal) new NearestAttackableTargetGoal((MobEntity) this, (Class) PlayerEntity.class, false));
+        this.goalSelector.addGoal(1, TeleportGoal.builder(this).start(entity -> entity.getTarget() != null && entity.tickCount % 60 == 0).to(entity -> entity.getTarget().position().add((entity.random.nextDouble() - 0.5) * 8.0, entity.random.nextInt(16) - 8, (entity.random.nextDouble() - 0.5) * 8.0)).then(entity -> entity.playSound(ModSounds.BOSS_TP_SFX, 1.0f, 1.0f)).build());
+        this.goalSelector.addGoal(1, new ThrowProjectilesGoal<>(this, 96, 10, FighterEntity.SNOWBALLS));
+        this.goalSelector.addGoal(1, new AOEGoal<>(this, e -> !(e instanceof VaultBoss)));
+        this.targetSelector.addGoal(1, new NearestAttackableTargetGoal(this, PlayerEntity.class, false));
         this.getAttribute(Attributes.FOLLOW_RANGE).setBaseValue(100.0);
     }
 
@@ -72,9 +72,9 @@ public class MonsterEyeEntity extends SlimeEntity implements VaultBoss {
     protected void dealDamage(final LivingEntity entityIn) {
         if (this.isAlive()) {
             final int i = this.getSize();
-            if (this.distanceToSqr((Entity) entityIn) < 0.8 * i * 0.8 * i && this.canSee((Entity) entityIn) && entityIn.hurt(DamageSource.mobAttack((LivingEntity) this), this.getAttackDamage())) {
+            if (this.distanceToSqr(entityIn) < 0.8 * i * 0.8 * i && this.canSee(entityIn) && entityIn.hurt(DamageSource.mobAttack(this), this.getAttackDamage())) {
                 this.playSound(SoundEvents.SLIME_ATTACK, 1.0f, (this.random.nextFloat() - this.random.nextFloat()) * 0.2f + 1.0f);
-                this.doEnchantDamageEffects((LivingEntity) this, (Entity) entityIn);
+                this.doEnchantDamageEffects(this, entityIn);
             }
         }
     }

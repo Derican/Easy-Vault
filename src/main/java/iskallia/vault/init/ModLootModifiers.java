@@ -9,7 +9,7 @@ import net.minecraftforge.registries.IForgeRegistry;
 
 public class ModLootModifiers {
     public static void registerGlobalModifiers(final RegistryEvent.Register<GlobalLootModifierSerializer<?>> event) {
-        final IForgeRegistry<GlobalLootModifierSerializer<?>> registry = (IForgeRegistry<GlobalLootModifierSerializer<?>>) event.getRegistry();
+        final IForgeRegistry<GlobalLootModifierSerializer<?>> registry = event.getRegistry();
         registry.register(new LootModifierAutoSmelt.Serializer().setRegistryName(Vault.id("paxel_auto_smelt")));
         registry.register(new LootModifierDestructive.Serializer().setRegistryName(Vault.id("paxel_destructive")));
     }

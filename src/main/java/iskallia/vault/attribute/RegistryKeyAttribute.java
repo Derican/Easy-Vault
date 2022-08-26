@@ -12,7 +12,7 @@ public class RegistryKeyAttribute<T> extends VAttribute.Instance<RegistryKey<T>>
             final CompoundNBT valueNBT = new CompoundNBT();
             valueNBT.putString("Parent", this.getBaseValue().getRegistryName().toString());
             valueNBT.putString("Identifier", this.getBaseValue().location().toString());
-            nbt.put("BaseValue", (INBT) valueNBT);
+            nbt.put("BaseValue", valueNBT);
         }
     }
 
@@ -20,7 +20,7 @@ public class RegistryKeyAttribute<T> extends VAttribute.Instance<RegistryKey<T>>
     public void read(final CompoundNBT nbt) {
         if (nbt.contains("BaseValue", 10)) {
             final CompoundNBT valueNBT = nbt.getCompound("BaseValue");
-            this.setBaseValue((RegistryKey<T>) RegistryKey.create(RegistryKey.createRegistryKey(new ResourceLocation(valueNBT.getString("Parent"))), new ResourceLocation(valueNBT.getString("Identifier"))));
+            this.setBaseValue(RegistryKey.create(RegistryKey.createRegistryKey(new ResourceLocation(valueNBT.getString("Parent"))), new ResourceLocation(valueNBT.getString("Identifier"))));
         }
     }
 }

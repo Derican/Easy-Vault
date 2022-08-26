@@ -27,17 +27,17 @@ import javax.annotation.Nonnull;
 public abstract class VoidFluid extends FlowingFluid {
     @Nonnull
     public Fluid getFlowing() {
-        return (Fluid) ModFluids.FLOWING_VOID_LIQUID.get();
+        return ModFluids.FLOWING_VOID_LIQUID.get();
     }
 
     @Nonnull
     public Fluid getSource() {
-        return (Fluid) ModFluids.VOID_LIQUID.get();
+        return ModFluids.VOID_LIQUID.get();
     }
 
     @Nonnull
     public Item getBucket() {
-        return (Item) ModItems.VOID_LIQUID_BUCKET;
+        return ModItems.VOID_LIQUID_BUCKET;
     }
 
     protected boolean canConvertToSource() {
@@ -68,8 +68,8 @@ public abstract class VoidFluid extends FlowingFluid {
     }
 
     public int getSpreadDelay(@Nonnull final World world, final BlockPos pos, final FluidState p_215667_3_, final FluidState p_215667_4_) {
-        int i = this.getTickDelay((IWorldReader) world);
-        if (!p_215667_3_.isEmpty() && !p_215667_4_.isEmpty() && !(boolean) p_215667_3_.getValue(VoidFluid.FALLING) && !(boolean) p_215667_4_.getValue(VoidFluid.FALLING) && p_215667_4_.getHeight((IBlockReader) world, pos) > p_215667_3_.getHeight((IBlockReader) world, pos) && world.getRandom().nextInt(4) != 0) {
+        int i = this.getTickDelay(world);
+        if (!p_215667_3_.isEmpty() && !p_215667_4_.isEmpty() && !(boolean) p_215667_3_.getValue(VoidFluid.FALLING) && !(boolean) p_215667_4_.getValue(VoidFluid.FALLING) && p_215667_4_.getHeight(world, pos) > p_215667_3_.getHeight(world, pos) && world.getRandom().nextInt(4) != 0) {
             i *= 4;
         }
         return i;
@@ -86,17 +86,17 @@ public abstract class VoidFluid extends FlowingFluid {
 
     @Nonnull
     protected FluidAttributes createAttributes() {
-        return FluidAttributes.Water.builder(Vault.id("block/fluid/void_liquid"), Vault.id("block/fluid/flowing_void_liquid")).overlay(new ResourceLocation("block/water_overlay")).translationKey("block.the_vault.void_liquid").density(3000).viscosity(6000).temperature(1300).color(16777215).sound(SoundEvents.BUCKET_FILL, SoundEvents.BUCKET_EMPTY).build((Fluid) this);
+        return FluidAttributes.Water.builder(Vault.id("block/fluid/void_liquid"), Vault.id("block/fluid/flowing_void_liquid")).overlay(new ResourceLocation("block/water_overlay")).translationKey("block.the_vault.void_liquid").density(3000).viscosity(6000).temperature(1300).color(16777215).sound(SoundEvents.BUCKET_FILL, SoundEvents.BUCKET_EMPTY).build(this);
     }
 
     public static class Flowing extends VoidFluid {
         protected void createFluidStateDefinition(final StateContainer.Builder<Fluid, FluidState> builder) {
-            super.createFluidStateDefinition((StateContainer.Builder) builder);
-            builder.add(new Property[]{Flowing.LEVEL});
+            super.createFluidStateDefinition(builder);
+            builder.add(Flowing.LEVEL);
         }
 
         public int getAmount(final FluidState state) {
-            return (int) state.getValue(Flowing.LEVEL);
+            return state.getValue(Flowing.LEVEL);
         }
 
         public boolean isSource(final FluidState state) {

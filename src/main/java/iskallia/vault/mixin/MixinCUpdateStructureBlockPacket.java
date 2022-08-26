@@ -76,6 +76,6 @@ public class MixinCUpdateStructureBlockPacket
     @Redirect(method = { "write" }, at = @At(value = "INVOKE", target = "Lnet/minecraft/network/PacketBuffer;writeByte(I)Lio/netty/buffer/ByteBuf;"))
     private ByteBuf writePacketData(final PacketBuffer buf, int value) {
         buf.writeVarInt(value);
-        return (ByteBuf)buf;
+        return buf;
     }
 }

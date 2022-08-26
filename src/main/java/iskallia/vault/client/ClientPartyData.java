@@ -106,7 +106,7 @@ public class ClientPartyData {
             NORMAL,
             POISONED,
             WITHERED,
-            DEAD;
+            DEAD
         }
     }
 }

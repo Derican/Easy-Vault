@@ -18,7 +18,7 @@ public class PartyStatusMessage {
 
     public static void encode(final PartyStatusMessage message, final PacketBuffer buffer) {
         final CompoundNBT tag = new CompoundNBT();
-        tag.put("list", (INBT) message.serializedParties);
+        tag.put("list", message.serializedParties);
         buffer.writeNbt(tag);
     }
 

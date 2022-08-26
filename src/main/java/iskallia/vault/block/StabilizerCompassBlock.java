@@ -31,14 +31,14 @@ public class StabilizerCompassBlock extends Block
     
     public StabilizerCompassBlock() {
         super(AbstractBlock.Properties.of(Material.STONE).sound(SoundType.STONE).strength(-1.0f, 3.6E8f).noDrops());
-        this.registerDefaultState((BlockState)((BlockState)this.stateDefinition.any()).setValue((Property)StabilizerCompassBlock.DIRECTION, (Comparable)Direction.NORTH));
+        this.registerDefaultState(this.stateDefinition.any().setValue((Property)StabilizerCompassBlock.DIRECTION, (Comparable)Direction.NORTH));
     }
     
     public void fillItemCategory(final ItemGroup group, final NonNullList<ItemStack> items) {
     }
     
     protected void createBlockStateDefinition(final StateContainer.Builder<Block, BlockState> builder) {
-        builder.add(new Property[] { (Property)StabilizerCompassBlock.DIRECTION });
+        builder.add(StabilizerCompassBlock.DIRECTION);
     }
     
     public ActionResultType use(final BlockState state, final World world, final BlockPos pos, final PlayerEntity player, final Hand hand, final BlockRayTraceResult hit) {
@@ -54,7 +54,7 @@ public class StabilizerCompassBlock extends Block
                         final SummonAndKillBossesVotingSession session = (SummonAndKillBossesVotingSession)objective.getActiveSession();
                         final Direction direction = (Direction)state.getValue((Property)StabilizerCompassBlock.DIRECTION);
                         final BlockPos stabilizerPos = pos.above().relative(direction.getOpposite());
-                        if (stabilizerPos.equals((Object)session.getStabilizerPos()) && session.hasDirectionChoice(direction)) {
+                        if (stabilizerPos.equals(session.getStabilizerPos()) && session.hasDirectionChoice(direction)) {
                             session.setVotedDirection(direction);
                         }
                     }
@@ -66,6 +66,6 @@ public class StabilizerCompassBlock extends Block
     }
     
     static {
-        DIRECTION = (EnumProperty)BlockStateProperties.HORIZONTAL_FACING;
+        DIRECTION = BlockStateProperties.HORIZONTAL_FACING;
     }
 }

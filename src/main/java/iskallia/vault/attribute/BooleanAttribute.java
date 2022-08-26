@@ -16,7 +16,7 @@ public class BooleanAttribute extends PooledAttribute<Boolean> {
 
     @Override
     public void write(final CompoundNBT nbt) {
-        nbt.putBoolean("BaseValue", (boolean) this.getBaseValue());
+        nbt.putBoolean("BaseValue", this.getBaseValue());
     }
 
     @Override

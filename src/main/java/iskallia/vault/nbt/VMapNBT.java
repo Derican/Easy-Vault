@@ -12,7 +12,7 @@ import java.util.function.Supplier;
 import java.util.stream.IntStream;
 
 public class VMapNBT<K, V> implements INBTSerializable<ListNBT>, Map<K, V> {
-    private Map<K, V> delegate;
+    private final Map<K, V> delegate;
     private final BiConsumer<CompoundNBT, K> writeKey;
     private final BiConsumer<CompoundNBT, V> writeValue;
     private final Function<CompoundNBT, K> readKey;
@@ -27,15 +27,15 @@ public class VMapNBT<K, V> implements INBTSerializable<ListNBT>, Map<K, V> {
     }
 
     public VMapNBT(final BiConsumer<CompoundNBT, K> writeKey, final BiConsumer<CompoundNBT, V> writeValue, final Function<CompoundNBT, K> readKey, final Function<CompoundNBT, V> readValue) {
-        this((Map) new HashMap(), writeKey, writeValue, readKey, readValue);
+        this(new HashMap(), writeKey, writeValue, readKey, readValue);
     }
 
     public ListNBT serializeNBT() {
         final ListNBT nbt = new ListNBT();
         this.delegate.forEach((key, value) -> {
             final CompoundNBT entry = new CompoundNBT();
-            this.writeKey.accept(entry, (K) key);
-            this.writeValue.accept(entry, (V) value);
+            this.writeKey.accept(entry, key);
+            this.writeValue.accept(entry, value);
             nbt.add(entry);
             return;
         });
@@ -104,7 +104,7 @@ public class VMapNBT<K, V> implements INBTSerializable<ListNBT>, Map<K, V> {
     }
 
     public static VMapNBT<UUID, Integer> ofUUIDToInt() {
-        return new VMapNBT<UUID, Integer>((nbt, uuid) -> nbt.putString("Key", uuid.toString()), (nbt, value) -> nbt.putInt("Value", (int)value), nbt -> UUID.fromString(nbt.getString("Key")), nbt -> nbt.getInt("Value"));
+        return new VMapNBT<UUID, Integer>((nbt, uuid) -> nbt.putString("Key", uuid.toString()), (nbt, value) -> nbt.putInt("Value", value), nbt -> UUID.fromString(nbt.getString("Key")), nbt -> nbt.getInt("Value"));
     }
 
     public static <N extends INBT, T extends INBTSerializable<N>> VMapNBT<Integer, T> ofInt(final Supplier<T> supplier) {
@@ -112,7 +112,7 @@ public class VMapNBT<K, V> implements INBTSerializable<ListNBT>, Map<K, V> {
     }
 
     public static <N extends INBT, T extends INBTSerializable<N>> VMapNBT<Integer, T> ofInt(final Map<Integer, T> map, final Supplier<T> supplier) {
-        return new VMapNBT<Integer, T>(map, (nbt, integer) -> nbt.putInt("Key", (int) integer), (nbt, value) -> nbt.put("Value", value.serializeNBT()), nbt -> nbt.getInt("Key"), nbt -> {
+        return new VMapNBT<Integer, T>(map, (nbt, integer) -> nbt.putInt("Key", integer), (nbt, value) -> nbt.put("Value", value.serializeNBT()), nbt -> nbt.getInt("Key"), nbt -> {
             final INBTSerializable value2 = supplier.get();
             value2.deserializeNBT(nbt.get("Value"));
             return (T) value2;

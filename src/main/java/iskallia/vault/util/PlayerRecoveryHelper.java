@@ -24,7 +24,7 @@ public class PlayerRecoveryHelper {
             return;
         }
         final ServerPlayerEntity sPlayer = (ServerPlayerEntity) healed;
-        final int rage = PlayerRageHelper.getCurrentRage((PlayerEntity) sPlayer, LogicalSide.SERVER);
+        final int rage = PlayerRageHelper.getCurrentRage(sPlayer, LogicalSide.SERVER);
         float multiplier = 1.0f;
         multiplier *= 1.0f - rage / 100.0f / 2.0f;
         final VaultRaid vault = VaultRaidData.get(sPlayer.getLevel()).getActiveFor(sPlayer);

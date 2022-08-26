@@ -38,24 +38,24 @@ public class ModifierRollResult {
 
     @OnlyIn(Dist.CLIENT)
     public List<ITextComponent> getTooltipDescription(final String prefix, final boolean canAddDetail) {
-        return this.getTooltipDescription((IFormattableTextComponent) new StringTextComponent(prefix), canAddDetail);
+        return this.getTooltipDescription(new StringTextComponent(prefix), canAddDetail);
     }
 
     @OnlyIn(Dist.CLIENT)
     public List<ITextComponent> getTooltipDescription(final IFormattableTextComponent prefix, final boolean canAddDetail) {
         final List<ITextComponent> description = new ArrayList<ITextComponent>();
-        description.add((ITextComponent) prefix.append(this.getDescription()));
+        description.add(prefix.append(this.getDescription()));
         if (canAddDetail && Screen.hasShiftDown()) {
             final IFormattableTextComponent modifierDescription = this.getModifierDescription();
             if (modifierDescription != null) {
-                description.add((ITextComponent) new StringTextComponent("   ").append((ITextComponent) modifierDescription.withStyle(TextFormatting.DARK_GRAY)));
+                description.add(new StringTextComponent("   ").append(modifierDescription.withStyle(TextFormatting.DARK_GRAY)));
             }
         }
         return description;
     }
 
     public ITextComponent getDescription() {
-        IFormattableTextComponent name = (IFormattableTextComponent) new StringTextComponent(this.value);
+        IFormattableTextComponent name = new StringTextComponent(this.value);
         if (this.type == ModifierRollType.ADD_RANDOM_MODIFIER) {
             final VaultCrystalCatalystConfig.TaggedPool pool = ModConfigs.VAULT_CRYSTAL_CATALYST.getPool(this.value);
             if (pool != null) {
@@ -67,7 +67,7 @@ public class ModifierRollResult {
                 name.setStyle(Style.EMPTY.withColor(Color.fromRgb(modifier.getColor())));
             }
         }
-        return this.type.getDescription((ITextComponent) name);
+        return this.type.getDescription(name);
     }
 
     @Nullable
@@ -75,7 +75,7 @@ public class ModifierRollResult {
         if (this.type == ModifierRollType.ADD_SPECIFIC_MODIFIER) {
             final VaultModifier modifier = ModConfigs.VAULT_MODIFIERS.getByName(this.value);
             if (modifier != null) {
-                return (IFormattableTextComponent) new StringTextComponent(modifier.getDescription());
+                return new StringTextComponent(modifier.getDescription());
             }
         }
         return null;
@@ -97,6 +97,6 @@ public class ModifierRollResult {
     }
 
     static {
-        CODEC = RecordCodecBuilder.create(rollInstance -> rollInstance.group(EnumCodec.of(ModifierRollType.class).fieldOf("type").forGetter(outcome -> outcome.type), Codec.STRING.fieldOf("value").forGetter(outcome -> outcome.value)).apply((Applicative) rollInstance, ModifierRollResult::new));
+        CODEC = RecordCodecBuilder.create(rollInstance -> rollInstance.group(EnumCodec.of(ModifierRollType.class).fieldOf("type").forGetter(outcome -> outcome.type), Codec.STRING.fieldOf("value").forGetter(outcome -> outcome.value)).apply(rollInstance, ModifierRollResult::new));
     }
 }

@@ -62,7 +62,7 @@ public class ClientVaultRaidData {
         if (event.phase == TickEvent.Phase.END) {
             return;
         }
-        final World clientWorld = (World) Minecraft.getInstance().level;
+        final World clientWorld = Minecraft.getInstance().level;
         if (clientWorld == null || clientWorld.dimension() == Vault.VAULT_KEY) {
             return;
         }

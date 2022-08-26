@@ -180,13 +180,13 @@ public class CakeHuntObjective extends VaultObjective {
         Collections.shuffle(modifierList);
         final VaultModifier modifier = MiscUtils.getRandomEntry(modifierList, CakeHuntObjective.rand);
         if (modifier != null) {
-            final ITextComponent c0 = (ITextComponent) player.getDisplayName().copy().withStyle(TextFormatting.LIGHT_PURPLE);
-            final ITextComponent c2 = (ITextComponent) new StringTextComponent(" found a ").withStyle(TextFormatting.GRAY);
-            final ITextComponent c3 = (ITextComponent) new StringTextComponent("cake").withStyle(TextFormatting.GREEN);
-            final ITextComponent c4 = (ITextComponent) new StringTextComponent(" and added ").withStyle(TextFormatting.GRAY);
+            final ITextComponent c0 = player.getDisplayName().copy().withStyle(TextFormatting.LIGHT_PURPLE);
+            final ITextComponent c2 = new StringTextComponent(" found a ").withStyle(TextFormatting.GRAY);
+            final ITextComponent c3 = new StringTextComponent("cake").withStyle(TextFormatting.GREEN);
+            final ITextComponent c4 = new StringTextComponent(" and added ").withStyle(TextFormatting.GRAY);
             final ITextComponent c5 = modifier.getNameComponent();
-            final ITextComponent c6 = (ITextComponent) new StringTextComponent(".").withStyle(TextFormatting.GRAY);
-            final ITextComponent ct = (ITextComponent) new StringTextComponent("").append(c0).append(c2).append(c3).append(c4).append(c5).append(c6);
+            final ITextComponent c6 = new StringTextComponent(".").withStyle(TextFormatting.GRAY);
+            final ITextComponent ct = new StringTextComponent("").append(c0).append(c2).append(c3).append(c4).append(c5).append(c6);
             vault.getModifiers().addPermanentModifier(modifier);
             vault.getPlayers().forEach(vPlayer -> {
                 modifier.apply(vault, vPlayer, sWorld, sWorld.getRandom());
@@ -202,7 +202,7 @@ public class CakeHuntObjective extends VaultObjective {
         }
         rewardPlayer.runIfPresent(world.getServer(), sPlayer -> {
             final BlockPos pos = sPlayer.blockPosition();
-            final LootContext.Builder builder = new LootContext.Builder(world).withRandom(world.random).withParameter(LootParameters.THIS_ENTITY, sPlayer).withParameter(LootParameters.ORIGIN, Vector3d.atCenterOf((Vector3i) pos)).withLuck(sPlayer.getLuck());
+            final LootContext.Builder builder = new LootContext.Builder(world).withRandom(world.random).withParameter(LootParameters.THIS_ENTITY, sPlayer).withParameter(LootParameters.ORIGIN, Vector3d.atCenterOf(pos)).withLuck(sPlayer.getLuck());
             final LootContext ctx = builder.create(LootParameterSets.CHEST);
             this.dropRewardCrate(world, vault, pos, ctx);
             for (int i = 1; i < vault.getPlayers().size(); ++i) {
@@ -213,27 +213,27 @@ public class CakeHuntObjective extends VaultObjective {
             final IFormattableTextComponent msgContainer = new StringTextComponent("").withStyle(TextFormatting.WHITE);
             final IFormattableTextComponent playerName = sPlayer.getDisplayName().copy();
             playerName.setStyle(Style.EMPTY.withColor(Color.fromRgb(9974168)));
-            MiscUtils.broadcast((ITextComponent) msgContainer.append((ITextComponent) playerName).append(" finished a Cake Hunt!"));
+            MiscUtils.broadcast(msgContainer.append(playerName).append(" finished a Cake Hunt!"));
         });
     }
 
     private void dropRewardCrate(final ServerWorld world, final VaultRaid vault, final BlockPos pos, final LootContext context) {
         final NonNullList<ItemStack> stacks = this.createLoot(world, vault, context);
         final ItemStack crate = VaultCrateBlock.getCrateWithLoot(ModBlocks.VAULT_CRATE_CAKE, stacks);
-        final ItemEntity item = new ItemEntity((World) world, (double) pos.getX(), (double) pos.getY(), (double) pos.getZ(), crate);
+        final ItemEntity item = new ItemEntity(world, pos.getX(), pos.getY(), pos.getZ(), crate);
         item.setDefaultPickUpDelay();
-        world.addFreshEntity((Entity) item);
-        this.crates.add(new Crate((List<ItemStack>) stacks));
+        world.addFreshEntity(item);
+        this.crates.add(new Crate(stacks));
     }
 
     @Override
     protected void addSpecialLoot(final ServerWorld world, final VaultRaid vault, final LootContext context, final NonNullList<ItemStack> stacks) {
         super.addSpecialLoot(world, vault, context, stacks);
         for (int amt = Math.max(CakeHuntObjective.rand.nextInt(this.maxCakeCount), CakeHuntObjective.rand.nextInt(this.maxCakeCount)), i = 0; i < amt; ++i) {
-            stacks.add(new ItemStack((IItemProvider) Items.CAKE));
+            stacks.add(new ItemStack(Items.CAKE));
         }
         if (world.getRandom().nextFloat() < 0.25f) {
-            stacks.add(new ItemStack((IItemProvider) ModItems.ARMOR_CRATE_CAKE));
+            stacks.add(new ItemStack(ModItems.ARMOR_CRATE_CAKE));
         }
     }
 
@@ -254,10 +254,10 @@ public class CakeHuntObjective extends VaultObjective {
                 if (!((VaultRoom) room).isCakeEaten()) {
                     final BlockPos cakePos = ((VaultRoom) room).getCakePos();
                     if (cakePos != null) {
-                        final int bDst = (int) MathHelper.sqrt(playerEntity.blockPosition().distSqr((Vector3i) cakePos));
+                        final int bDst = (int) MathHelper.sqrt(playerEntity.blockPosition().distSqr(cakePos));
 
                         final StringTextComponent stringTextComponent = new StringTextComponent("Distance to cake: " + bDst + "m");
-                        final ITextComponent dist = (ITextComponent) stringTextComponent.withStyle(TextFormatting.GRAY);
+                        final ITextComponent dist = stringTextComponent.withStyle(TextFormatting.GRAY);
                         playerEntity.displayClientMessage(dist, true);
                     }
                 }
@@ -285,7 +285,7 @@ public class CakeHuntObjective extends VaultObjective {
             BlockPos at;
             do {
                 at = MiscUtils.getRandomPos(roomBox, CakeHuntObjective.rand);
-            } while (!world.isEmptyBlock(at) || !world.getBlockState(at.below()).isFaceSturdy((IBlockReader) world, at, Direction.UP) || !world.isEmptyBlock(at.above()));
+            } while (!world.isEmptyBlock(at) || !world.getBlockState(at.below()).isFaceSturdy(world, at, Direction.UP) || !world.isEmptyBlock(at.above()));
             world.setBlock(at, Blocks.CAKE.defaultBlockState(), 2);
             room.setCakePos(at);
         } else {
@@ -303,7 +303,7 @@ public class CakeHuntObjective extends VaultObjective {
             BlockPos at;
             do {
                 at = MiscUtils.getRandomPos(roomBox, CakeHuntObjective.rand);
-            } while (!world.isEmptyBlock(at) || !world.getBlockState(at.below()).isFaceSturdy((IBlockReader) world, at, Direction.UP) || !world.isEmptyBlock(at.above()));
+            } while (!world.isEmptyBlock(at) || !world.getBlockState(at.below()).isFaceSturdy(world, at, Direction.UP) || !world.isEmptyBlock(at.above()));
             world.setBlock(at, Blocks.CAKE.defaultBlockState(), 2);
             room.setCakePos(at);
         }
@@ -325,7 +325,7 @@ public class CakeHuntObjective extends VaultObjective {
 
     @Override
     public ITextComponent getObjectiveDisplayName() {
-        return (ITextComponent) new StringTextComponent("Cake Hunt").withStyle(TextFormatting.DARK_PURPLE);
+        return new StringTextComponent("Cake Hunt").withStyle(TextFormatting.DARK_PURPLE);
     }
 
     @Override
@@ -336,7 +336,7 @@ public class CakeHuntObjective extends VaultObjective {
     @Nullable
     @Override
     public ITextComponent getObjectiveTargetDescription(final int amount) {
-        return (ITextComponent) new StringTextComponent("Cakes needed to be found: ").append((ITextComponent) new StringTextComponent(String.valueOf(amount)).withStyle(TextFormatting.DARK_PURPLE));
+        return new StringTextComponent("Cakes needed to be found: ").append(new StringTextComponent(String.valueOf(amount)).withStyle(TextFormatting.DARK_PURPLE));
     }
 
     @Nullable

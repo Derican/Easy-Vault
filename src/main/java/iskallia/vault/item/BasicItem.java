@@ -25,7 +25,7 @@ public class BasicItem extends Item {
     }
 
     public void appendHoverText(final ItemStack stack, @Nullable final World worldIn, final List<ITextComponent> tooltip, final ITooltipFlag flagIn) {
-        super.appendHoverText(stack, worldIn, (List) tooltip, flagIn);
+        super.appendHoverText(stack, worldIn, tooltip, flagIn);
         if (this.tooltip != null) {
             tooltip.addAll(Arrays.asList(this.tooltip));
         }

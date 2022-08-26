@@ -16,7 +16,7 @@ public class RelicStatueTileEntity extends TileEntity {
     protected ResourceLocation relicSet;
 
     public RelicStatueTileEntity() {
-        super((TileEntityType) ModBlocks.RELIC_STATUE_TILE_ENTITY);
+        super(ModBlocks.RELIC_STATUE_TILE_ENTITY);
         this.relicSet = Vault.id("none");
     }
 

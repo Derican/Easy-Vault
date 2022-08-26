@@ -33,7 +33,7 @@ public class FinalArchitectGoalData extends VaultGoalData
     @Override
     public void receive(final VaultGoalMessage pkt) {
         final CompoundNBT tag = pkt.payload;
-        this.message = (ITextComponent)ITextComponent.Serializer.fromJson(tag.getString("message"));
+        this.message = ITextComponent.Serializer.fromJson(tag.getString("message"));
         this.killedBosses = tag.getInt("killedBosses");
         this.totalKilledBossesNeeded = tag.getInt("totalBosses");
         this.knowledge = tag.getInt("knowledge");

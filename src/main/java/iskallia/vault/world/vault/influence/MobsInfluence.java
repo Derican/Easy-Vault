@@ -26,7 +26,7 @@ public class MobsInfluence extends VaultInfluence {
     @Override
     public void apply(final VaultRaid vault, final VaultPlayer player, final ServerWorld world, final Random random) {
         player.getProperties().get(VaultRaid.SPAWNER).ifPresent(spawner -> {
-            ((VaultSpawner) spawner.getBaseValue()).addMaxMobs(this.mobsAdded);
+            spawner.getBaseValue().addMaxMobs(this.mobsAdded);
             spawner.updateNBT();
         });
     }
@@ -34,7 +34,7 @@ public class MobsInfluence extends VaultInfluence {
     @Override
     public void remove(final VaultRaid vault, final VaultPlayer player, final ServerWorld world, final Random random) {
         player.getProperties().get(VaultRaid.SPAWNER).ifPresent(spawner -> {
-            ((VaultSpawner) spawner.getBaseValue()).addMaxMobs(-this.mobsAdded);
+            spawner.getBaseValue().addMaxMobs(-this.mobsAdded);
             spawner.updateNBT();
         });
     }

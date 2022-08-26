@@ -29,7 +29,7 @@ public class PlayerDamageOverlay {
         if (event.getType() != RenderGameOverlayEvent.ElementType.FOOD) {
             return;
         }
-        final PlayerEntity player = (PlayerEntity) Minecraft.getInstance().player;
+        final PlayerEntity player = Minecraft.getInstance().player;
         if (player == null) {
             return;
         }
@@ -49,15 +49,15 @@ public class PlayerDamageOverlay {
         }
         displayStr += "%";
         final TextFormatting color = (value < 0.0f) ? TextFormatting.RED : TextFormatting.DARK_GREEN;
-        final ITextComponent display = (ITextComponent) new StringTextComponent(displayStr).withStyle(color);
+        final ITextComponent display = new StringTextComponent(displayStr).withStyle(color);
         ForgeIngameGui.left_height += 6;
         final int left = mc.getWindow().getGuiScaledWidth() / 2 - 91;
         final int top = mc.getWindow().getGuiScaledHeight() - ForgeIngameGui.left_height;
         final MatrixStack matrixStack = event.getMatrixStack();
         mc.getTextureManager().bind(PlayerDamageOverlay.STRENGTH_ICON);
         matrixStack.pushPose();
-        matrixStack.translate((double) left, (double) top, 0.0);
-        ScreenDrawHelper.drawQuad(buf -> ScreenDrawHelper.rect((IVertexBuilder) buf, matrixStack).dim(16.0f, 16.0f).draw());
+        matrixStack.translate(left, top, 0.0);
+        ScreenDrawHelper.drawQuad(buf -> ScreenDrawHelper.rect(buf, matrixStack).dim(16.0f, 16.0f).draw());
         matrixStack.translate(16.0, 4.0, 0.0);
         mc.font.drawShadow(matrixStack, display, 0.0f, 0.0f, 16777215);
         matrixStack.popPose();

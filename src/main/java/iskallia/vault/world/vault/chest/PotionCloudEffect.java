@@ -38,12 +38,12 @@ public class PotionCloudEffect extends VaultChestEffect {
     @Override
     public void apply(final VaultRaid vault, final VaultPlayer player, final ServerWorld world) {
         player.runIfPresent(world.getServer(), playerEntity -> {
-            final PotionEntity entity = new PotionEntity((World) world, (LivingEntity) playerEntity);
-            final ItemStack stack = new ItemStack((IItemProvider) Items.LINGERING_POTION);
+            final PotionEntity entity = new PotionEntity(world, playerEntity);
+            final ItemStack stack = new ItemStack(Items.LINGERING_POTION);
             this.getPotions().forEach(potion -> PotionUtils.setPotion(stack, potion));
             entity.setItem(stack);
-            entity.shootFromRotation((Entity) playerEntity, playerEntity.xRot, playerEntity.yRot, -20.0f, 0.5f, 1.0f);
-            world.addFreshEntity((Entity) entity);
+            entity.shootFromRotation(playerEntity, playerEntity.xRot, playerEntity.yRot, -20.0f, 0.5f, 1.0f);
+            world.addFreshEntity(entity);
         });
     }
 }

@@ -21,11 +21,11 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 public class VaultCrateTileEntity extends TileEntity {
-    private ItemStackHandler itemHandler;
-    private LazyOptional<IItemHandler> handler;
+    private final ItemStackHandler itemHandler;
+    private final LazyOptional<IItemHandler> handler;
 
     public VaultCrateTileEntity() {
-        super((TileEntityType) ModBlocks.VAULT_CRATE_TILE_ENTITY);
+        super(ModBlocks.VAULT_CRATE_TILE_ENTITY);
         this.itemHandler = this.createHandler();
         this.handler = LazyOptional.of(() -> this.itemHandler);
     }
@@ -37,7 +37,7 @@ public class VaultCrateTileEntity extends TileEntity {
     }
 
     public CompoundNBT save(final CompoundNBT compound) {
-        compound.put("inv", (INBT) this.itemHandler.serializeNBT());
+        compound.put("inv", this.itemHandler.serializeNBT());
         return super.save(compound);
     }
 
@@ -67,7 +67,7 @@ public class VaultCrateTileEntity extends TileEntity {
     @Nonnull
     public <T> LazyOptional<T> getCapability(@Nonnull final Capability<T> cap, @Nullable final Direction side) {
         if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
-            return (LazyOptional<T>) this.handler.cast();
+            return this.handler.cast();
         }
         return (LazyOptional<T>) super.getCapability((Capability) cap, side);
     }

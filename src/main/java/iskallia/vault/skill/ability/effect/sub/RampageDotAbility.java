@@ -55,7 +55,7 @@ public class RampageDotAbility extends RampageAbility<RampageDotConfig> {
                 return;
             }
             DamageOverTimeHelper.invalidateAll(targetEntity);
-            DamageOverTimeHelper.applyDamageOverTime(targetEntity, (DamageSource)PlayerDamageOverTimeSource.causeDoTDamage(player), event.getAmount(), cfg.getDotSecondDuration());
+            DamageOverTimeHelper.applyDamageOverTime(targetEntity, PlayerDamageOverTimeSource.causeDoTDamage(player), event.getAmount(), cfg.getDotSecondDuration());
             event.setAmount(0.0f);
         }
     }
@@ -66,7 +66,7 @@ public class RampageDotAbility extends RampageAbility<RampageDotConfig> {
         }
 
         public static PlayerDamageOverTimeSource causeDoTDamage(final PlayerEntity player) {
-            return new PlayerDamageOverTimeSource((Entity) player);
+            return new PlayerDamageOverTimeSource(player);
         }
     }
 }

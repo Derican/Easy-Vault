@@ -52,7 +52,7 @@ public class VoteModifier {
     }
 
     public ITextComponent getDescription() {
-        return (ITextComponent) new StringTextComponent(this.getDescriptionText()).withStyle(Style.EMPTY.withColor(Color.fromRgb(Integer.parseInt(this.color))));
+        return new StringTextComponent(this.getDescriptionText()).withStyle(Style.EMPTY.withColor(Color.fromRgb(Integer.parseInt(this.color))));
     }
 
     @Nullable

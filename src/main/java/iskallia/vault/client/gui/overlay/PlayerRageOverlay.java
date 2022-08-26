@@ -23,7 +23,7 @@ public class PlayerRageOverlay {
         if (event.getType() != RenderGameOverlayEvent.ElementType.EXPERIENCE) {
             return;
         }
-        final PlayerEntity player = (PlayerEntity) Minecraft.getInstance().player;
+        final PlayerEntity player = Minecraft.getInstance().player;
         if (player == null) {
             return;
         }

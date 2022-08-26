@@ -21,7 +21,7 @@ public class FloatingTextTileEntity extends TileEntity
     protected List<String> lines;
     
     public FloatingTextTileEntity() {
-        super((TileEntityType)ModBlocks.FLOATING_TEXT_TILE_ENTITY);
+        super(ModBlocks.FLOATING_TEXT_TILE_ENTITY);
         (this.lines = new LinkedList<String>()).add("[\"\",{\"text\":\"A sample \",\"bold\":true},{\"text\":\"floating\",\"bold\":true,\"color\":\"light_purple\"},{\"text\":\" text\",\"bold\":true}]");
         this.lines.add("");
         this.lines.add("{\"text\":\"Edit the content by using\",\"bold\":true}");

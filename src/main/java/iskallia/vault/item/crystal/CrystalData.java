@@ -87,7 +87,7 @@ public class CrystalData implements INBTSerializable<CompoundNBT> {
 
     public void updateDelegate() {
         if (this.delegate != null) {
-            this.delegate.put("CrystalData", (INBT) this.serializeNBT());
+            this.delegate.put("CrystalData", this.serializeNBT());
         }
     }
 
@@ -107,7 +107,7 @@ public class CrystalData implements INBTSerializable<CompoundNBT> {
     }
 
     public void setPlayerBossName(final String playerBossName) {
-        final boolean nameChanged = !StringUtils.equalsIgnoreCase((CharSequence) this.playerBossName, (CharSequence) playerBossName);
+        final boolean nameChanged = !StringUtils.equalsIgnoreCase(this.playerBossName, playerBossName);
         this.playerBossName = playerBossName;
         if (nameChanged) {
             this.updateDelegate();
@@ -177,7 +177,7 @@ public class CrystalData implements INBTSerializable<CompoundNBT> {
     }
 
     public List<Modifier> getModifiers() {
-        return Collections.unmodifiableList((List<? extends Modifier>) this.modifiers);
+        return Collections.unmodifiableList(this.modifiers);
     }
 
     public void clearModifiers() {
@@ -201,7 +201,7 @@ public class CrystalData implements INBTSerializable<CompoundNBT> {
     }
 
     public List<String> getGuaranteedRoomFilters() {
-        return Collections.unmodifiableList((List<? extends String>) this.guaranteedRoomFilters);
+        return Collections.unmodifiableList(this.guaranteedRoomFilters);
     }
 
     public boolean preventsRandomModifiers() {
@@ -303,7 +303,7 @@ public class CrystalData implements INBTSerializable<CompoundNBT> {
     public void addInformation(final World world, final List<ITextComponent> tooltip, final ITooltipFlag flag) {
         final Type crystalType = this.getType();
         if (crystalType.showTypePrefix()) {
-            tooltip.add((ITextComponent) new StringTextComponent("Type: ").append(this.getType().getDisplayName()));
+            tooltip.add(new StringTextComponent("Type: ").append(this.getType().getDisplayName()));
         } else {
             tooltip.add(this.getType().getDisplayName());
         }
@@ -312,12 +312,12 @@ public class CrystalData implements INBTSerializable<CompoundNBT> {
             ITextComponent objectiveCountDescription = null;
             ITextComponent objective;
             if (objectiveKey == null) {
-                objective = (ITextComponent) new StringTextComponent("???").withStyle(TextFormatting.GRAY);
+                objective = new StringTextComponent("???").withStyle(TextFormatting.GRAY);
             } else {
                 VaultRaid.ARCHITECT_EVENT.get();
                 final VaultObjective vObjective = VaultObjective.getObjective(objectiveKey);
                 if (vObjective == null) {
-                    objective = (ITextComponent) new StringTextComponent("???").withStyle(TextFormatting.GRAY);
+                    objective = new StringTextComponent("???").withStyle(TextFormatting.GRAY);
                 } else {
                     objective = vObjective.getObjectiveDisplayName();
                     if (this.targetObjectiveCount >= 0) {
@@ -325,13 +325,13 @@ public class CrystalData implements INBTSerializable<CompoundNBT> {
                     }
                 }
             }
-            tooltip.add((ITextComponent) new StringTextComponent("Objective: ").append(objective));
+            tooltip.add(new StringTextComponent("Objective: ").append(objective));
             if (objectiveCountDescription != null) {
                 tooltip.add(objectiveCountDescription);
             }
         }
         if (!this.getPlayerBossName().isEmpty()) {
-            tooltip.add((ITextComponent) new StringTextComponent("Player Boss: ").append((ITextComponent) new StringTextComponent(this.getPlayerBossName()).withStyle(TextFormatting.GREEN)));
+            tooltip.add(new StringTextComponent("Player Boss: ").append(new StringTextComponent(this.getPlayerBossName()).withStyle(TextFormatting.GREEN)));
         }
         final Map<String, Integer> collapsedFilters = new HashMap<String, Integer>();
         String roomFilter = null;
@@ -362,10 +362,10 @@ public class CrystalData implements INBTSerializable<CompoundNBT> {
             if (vModifier != null) {
                 modifierName.setStyle(Style.EMPTY.withColor(Color.fromRgb(vModifier.getColor())));
             }
-            final ITextComponent type = (ITextComponent) new StringTextComponent(modifier.operation.title).withStyle(modifier.operation.color);
-            tooltip.add((ITextComponent) new StringTextComponent("- ").append(type).append(" ").append((ITextComponent) modifierName));
+            final ITextComponent type = new StringTextComponent(modifier.operation.title).withStyle(modifier.operation.color);
+            tooltip.add(new StringTextComponent("- ").append(type).append(" ").append(modifierName));
             if (Screen.hasShiftDown() && vModifier != null) {
-                final ITextComponent description = (ITextComponent) new StringTextComponent("   " + vModifier.getDescription()).withStyle(TextFormatting.DARK_GRAY);
+                final ITextComponent description = new StringTextComponent("   " + vModifier.getDescription()).withStyle(TextFormatting.DARK_GRAY);
                 tooltip.add(description);
             }
         }
@@ -373,27 +373,27 @@ public class CrystalData implements INBTSerializable<CompoundNBT> {
             final int count2 = this.getEchoData().getEchoCount();
             final StringTextComponent txt = new StringTextComponent("Echoed");
             txt.setStyle(Style.EMPTY.withColor(Color.fromRgb(2491465)));
-            tooltip.add((ITextComponent) new StringTextComponent("- ").append((ITextComponent) txt));
+            tooltip.add(new StringTextComponent("- ").append(txt));
             if (Screen.hasShiftDown()) {
-                final ITextComponent description2 = (ITextComponent) new StringTextComponent("   " + count2 + "% Echo Rate").withStyle(TextFormatting.DARK_GRAY);
+                final ITextComponent description2 = new StringTextComponent("   " + count2 + "% Echo Rate").withStyle(TextFormatting.DARK_GRAY);
                 tooltip.add(description2);
             }
         }
         if (!this.canBeModified()) {
             final StringTextComponent txt2 = new StringTextComponent("Exhausted");
             txt2.setStyle(Style.EMPTY.withColor(Color.fromRgb(3084959)));
-            tooltip.add((ITextComponent) new StringTextComponent("- ").append((ITextComponent) txt2));
+            tooltip.add(new StringTextComponent("- ").append(txt2));
             if (Screen.hasShiftDown()) {
-                final ITextComponent description3 = (ITextComponent) new StringTextComponent("   Crystal can not be modified.").withStyle(TextFormatting.DARK_GRAY);
+                final ITextComponent description3 = new StringTextComponent("   Crystal can not be modified.").withStyle(TextFormatting.DARK_GRAY);
                 tooltip.add(description3);
             }
         }
         if (this.delegate.getBoolean("Cloned")) {
             final StringTextComponent txt2 = new StringTextComponent("Cloned");
             txt2.setStyle(Style.EMPTY.withColor(Color.fromRgb(2491465)));
-            tooltip.add((ITextComponent) new StringTextComponent("- ").append((ITextComponent) txt2));
+            tooltip.add(new StringTextComponent("- ").append(txt2));
             if (Screen.hasShiftDown()) {
-                final ITextComponent description3 = (ITextComponent) new StringTextComponent("   Crystal has been cloned with an Echoed Crystal.").withStyle(TextFormatting.DARK_GRAY);
+                final ITextComponent description3 = new StringTextComponent("   Crystal has been cloned with an Echoed Crystal.").withStyle(TextFormatting.DARK_GRAY);
                 tooltip.add(description3);
             }
         }
@@ -405,7 +405,7 @@ public class CrystalData implements INBTSerializable<CompoundNBT> {
         nbt.putString("PlayerBossName", this.playerBossName);
         final ListNBT modifiersList = new ListNBT();
         this.modifiers.forEach(modifier -> modifiersList.add(modifier.toNBT()));
-        nbt.put("Modifiers", (INBT) modifiersList);
+        nbt.put("Modifiers", modifiersList);
         nbt.putBoolean("preventsRandomModifiers", this.preventsRandomModifiers);
         nbt.putBoolean("canBeModified", this.canBeModified);
         nbt.putBoolean("canTriggerInfluences", this.canTriggerInfluences);
@@ -414,14 +414,14 @@ public class CrystalData implements INBTSerializable<CompoundNBT> {
             nbt.putString("Objective", this.selectedObjective.toString());
         }
         nbt.putInt("targetObjectiveCount", this.targetObjectiveCount);
-        nbt.put("echoData", (INBT) this.getEchoData().toNBT());
+        nbt.put("echoData", this.getEchoData().toNBT());
         final ListNBT roomList = new ListNBT();
         this.guaranteedRoomFilters.forEach(roomKey -> roomList.add(StringNBT.valueOf(roomKey)));
         if (this.frameData != null) {
-            nbt.put("Frame", (INBT)this.frameData.serializeNBT());
+            nbt.put("Frame", this.frameData.serializeNBT());
         }
         nbt.putBoolean("Challenge", this.challenge);
-        nbt.put("rooms", (INBT) roomList);
+        nbt.put("rooms", roomList);
         return nbt;
     }
 
@@ -468,21 +468,21 @@ public class CrystalData implements INBTSerializable<CompoundNBT> {
     }
 
     public enum Type {
-        CLASSIC(VaultLogic.COOP, (VaultRaidBuilder)CoopVaultBuilder.getInstance(), "Normal"),
-        RAFFLE(VaultLogic.RAFFLE, (VaultRaidBuilder)RaffleVaultBuilder.getInstance(), "Raffle"),
-        COOP(VaultLogic.COOP, (VaultRaidBuilder)CoopVaultBuilder.getInstance(), "Cooperative"),
-        TROVE(VaultLogic.CLASSIC, (VaultRaidBuilder)TroveVaultBuilder.getInstance(), "Vault Trove", TextFormatting.GOLD),
+        CLASSIC(VaultLogic.COOP, CoopVaultBuilder.getInstance(), "Normal"),
+        RAFFLE(VaultLogic.RAFFLE, RaffleVaultBuilder.getInstance(), "Raffle"),
+        COOP(VaultLogic.COOP, CoopVaultBuilder.getInstance(), "Cooperative"),
+        TROVE(VaultLogic.CLASSIC, TroveVaultBuilder.getInstance(), "Vault Trove", TextFormatting.GOLD),
         BOSS_BENEVOLENT_PREP("Velara's Sacrifice", PlayerFavourData.VaultGodType.BENEVOLENT.getChatColor()),
         BOSS_BENEVOLENT("Velara's Demand", PlayerFavourData.VaultGodType.BENEVOLENT.getChatColor()),
         BOSS_OMNISCIENT("Tenos' Oblivion", PlayerFavourData.VaultGodType.OMNISCIENT.getChatColor()),
         BOSS_TIMEKEEPER("Wendarr's Transience", PlayerFavourData.VaultGodType.TIMEKEEPER.getChatColor()),
         BOSS_MALEVOLENCE("Idona's Wrath", PlayerFavourData.VaultGodType.MALEVOLENCE.getChatColor()),
-        FINAL_LOBBY(VaultLogic.FINAL_LOBBY, (VaultRaidBuilder)FinalLobbyBuilder.getInstance(), "Final Vault", TextFormatting.DARK_PURPLE),
-        FINAL_BOSS(VaultLogic.FINAL_BOSS, (VaultRaidBuilder)FinalBossBuilder.getInstance(), "Final Vault - Boss", TextFormatting.DARK_PURPLE),
-        FINAL_VELARA(VaultLogic.COOP, (VaultRaidBuilder)CoopVaultBuilder.getInstance(), "Final Velara Challenge", TextFormatting.GREEN),
-        FINAL_TENOS(VaultLogic.COOP, (VaultRaidBuilder)CoopVaultBuilder.getInstance(), "Final Tenos Challenge", TextFormatting.AQUA),
-        FINAL_WENDARR(VaultLogic.COOP, (VaultRaidBuilder)CoopVaultBuilder.getInstance(), "Final Wendarr Challenge", TextFormatting.GOLD),
-        FINAL_IDONA(VaultLogic.COOP, (VaultRaidBuilder)CoopVaultBuilder.getInstance(), "Final Idona Challenge", TextFormatting.RED);
+        FINAL_LOBBY(VaultLogic.FINAL_LOBBY, FinalLobbyBuilder.getInstance(), "Final Vault", TextFormatting.DARK_PURPLE),
+        FINAL_BOSS(VaultLogic.FINAL_BOSS, FinalBossBuilder.getInstance(), "Final Vault - Boss", TextFormatting.DARK_PURPLE),
+        FINAL_VELARA(VaultLogic.COOP, CoopVaultBuilder.getInstance(), "Final Velara Challenge", TextFormatting.GREEN),
+        FINAL_TENOS(VaultLogic.COOP, CoopVaultBuilder.getInstance(), "Final Tenos Challenge", TextFormatting.AQUA),
+        FINAL_WENDARR(VaultLogic.COOP, CoopVaultBuilder.getInstance(), "Final Wendarr Challenge", TextFormatting.GOLD),
+        FINAL_IDONA(VaultLogic.COOP, CoopVaultBuilder.getInstance(), "Final Idona Challenge", TextFormatting.RED);
 
 
         private final VaultLogic logic;
@@ -490,19 +490,19 @@ public class CrystalData implements INBTSerializable<CompoundNBT> {
         private final String name;
         private final TextFormatting color;
 
-        private Type(final String name) {
+        Type(final String name) {
             this(VaultLogic.CLASSIC, ClassicVaultBuilder.getInstance(), name, TextFormatting.GOLD);
         }
 
-        private Type(final String name, final TextFormatting color) {
+        Type(final String name, final TextFormatting color) {
             this(VaultLogic.CLASSIC, ClassicVaultBuilder.getInstance(), name, color);
         }
 
-        private Type(final VaultLogic logic, final VaultRaidBuilder vaultBuilder, final String name) {
+        Type(final VaultLogic logic, final VaultRaidBuilder vaultBuilder, final String name) {
             this(logic, vaultBuilder, name, TextFormatting.GOLD);
         }
 
-        private Type(final VaultLogic logic, final VaultRaidBuilder vaultBuilder, final String name, final TextFormatting color) {
+        Type(final VaultLogic logic, final VaultRaidBuilder vaultBuilder, final String name, final TextFormatting color) {
             this.logic = logic;
             this.vaultBuilder = vaultBuilder;
             this.name = name;
@@ -550,7 +550,7 @@ public class CrystalData implements INBTSerializable<CompoundNBT> {
         }
 
         public ITextComponent getDisplayName() {
-            return (ITextComponent) new StringTextComponent(this.name).withStyle(this.color);
+            return new StringTextComponent(this.name).withStyle(this.color);
         }
     }
 
@@ -594,7 +594,7 @@ public class CrystalData implements INBTSerializable<CompoundNBT> {
             private final String title;
             private final TextFormatting color;
 
-            private Operation(final String title, final TextFormatting color) {
+            Operation(final String title, final TextFormatting color) {
                 this.title = title;
                 this.color = color;
             }

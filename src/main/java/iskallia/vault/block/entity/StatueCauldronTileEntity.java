@@ -48,14 +48,14 @@ public class StatueCauldronTileEntity extends TileEntity implements ITickableTil
     private UUID owner;
     private int statueCount;
     private int requiredAmount;
-    private List<String> names;
+    private final List<String> names;
 
     public List<String> getNames() {
         return this.names;
     }
 
     public StatueCauldronTileEntity() {
-        super((TileEntityType) ModBlocks.STATUE_CAULDRON_TILE_ENTITY);
+        super(ModBlocks.STATUE_CAULDRON_TILE_ENTITY);
         this.itemHandler = this.createHandler();
         this.handler = LazyOptional.of(() -> this.itemHandler);
         this.itemPredicate = (itemEntity -> itemEntity.getItem().getItem() instanceof LootStatueBlockItem);
@@ -111,7 +111,7 @@ public class StatueCauldronTileEntity extends TileEntity implements ITickableTil
                 }
                 final ItemStack statue = LootStatueBlockItem.getStatueBlockItem(name, StatueType.OMEGA);
                 final ItemEntity itemEntity = new ItemEntity(this.level, this.getBlockPos().getX() + 0.5, this.getBlockPos().getY() + 1.2, this.getBlockPos().getZ() + 0.5, statue);
-                this.level.addFreshEntity((Entity) itemEntity);
+                this.level.addFreshEntity(itemEntity);
                 this.level.setBlockAndUpdate(this.getBlockPos(), ModBlocks.STATUE_CAULDRON.defaultBlockState().setValue(StatueCauldronBlock.LEVEL, 0));
                 this.statueCount = 0;
                 this.names.clear();
@@ -122,7 +122,7 @@ public class StatueCauldronTileEntity extends TileEntity implements ITickableTil
 
     private void bubbleCauldron(final ServerWorld world) {
         final int particleCount = 100;
-        world.playSound((PlayerEntity) null, (double) this.worldPosition.getX(), (double) this.worldPosition.getY(), (double) this.worldPosition.getZ(), ModSounds.CAULDRON_BUBBLES_SFX, SoundCategory.MASTER, 1.0f, (float) Math.random());
+        world.playSound(null, this.worldPosition.getX(), this.worldPosition.getY(), this.worldPosition.getZ(), ModSounds.CAULDRON_BUBBLES_SFX, SoundCategory.MASTER, 1.0f, (float) Math.random());
         world.sendParticles((IParticleData) ParticleTypes.WITCH, this.worldPosition.getX() + 0.5, this.worldPosition.getY() + 0.5, this.worldPosition.getZ() + 0.5, particleCount, 0.0, 0.0, 0.0, 3.141592653589793);
     }
 
@@ -133,7 +133,7 @@ public class StatueCauldronTileEntity extends TileEntity implements ITickableTil
             }
 
             public boolean isItemValid(final int slot, @Nonnull final ItemStack stack) {
-                if ((int) StatueCauldronTileEntity.this.getBlockState().getValue(CauldronBlock.LEVEL) != 3) {
+                if (StatueCauldronTileEntity.this.getBlockState().getValue(CauldronBlock.LEVEL) != 3) {
                     return false;
                 }
                 if (StatueCauldronTileEntity.this.getStatueCount() >= StatueCauldronTileEntity.this.getRequiredAmount()) {
@@ -173,7 +173,7 @@ public class StatueCauldronTileEntity extends TileEntity implements ITickableTil
     @Nonnull
     public <T> LazyOptional<T> getCapability(@Nonnull final Capability<T> cap, @Nullable final Direction side) {
         if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
-            return (LazyOptional<T>) this.handler.cast();
+            return this.handler.cast();
         }
         return (LazyOptional<T>) super.getCapability((Capability) cap, side);
     }
@@ -191,7 +191,7 @@ public class StatueCauldronTileEntity extends TileEntity implements ITickableTil
                 nameList.add(nameNbt);
             }
         }
-        compound.put("NameList", (INBT) nameList);
+        compound.put("NameList", nameList);
         compound.putInt("StatueCount", this.statueCount);
         compound.putInt("RequiredAmount", this.requiredAmount);
         return super.save(compound);
@@ -226,7 +226,7 @@ public class StatueCauldronTileEntity extends TileEntity implements ITickableTil
                 nameList.add(nameNbt);
             }
         }
-        compound.put("NameList", (INBT) nameList);
+        compound.put("NameList", nameList);
         compound.putInt("StatueCount", this.statueCount);
         compound.putInt("RequiredAmount", this.requiredAmount);
         return compound;

@@ -143,7 +143,7 @@ public class CryochamberScreen extends ContainerScreen<CryochamberContainer> {
             return;
         }
         if (this.eternalSkinCache == null) {
-            this.eternalSkinCache = EternalHelper.spawnEternal((World) Minecraft.getInstance().level, snapshot);
+            this.eternalSkinCache = EternalHelper.spawnEternal(Minecraft.getInstance().level, snapshot);
             this.eternalSkinCache.skin.updateSkin(snapshot.getName());
             Arrays.stream(EquipmentSlotType.values()).forEach(slot -> this.eternalSkinCache.setItemSlot(slot, ItemStack.EMPTY));
         }
@@ -175,7 +175,7 @@ public class CryochamberScreen extends ContainerScreen<CryochamberContainer> {
             for (final EternalAuraConfig.AuraConfig abilityOption : options) {
                 final Rectangle box = new Rectangle(abilityX, abilityY, 24, 24);
                 if (box.contains(mouseX - this.leftPos, mouseY - this.topPos)) {
-                    this.renderComponentTooltip(matrixStack, (List) abilityOption.getTooltip(), mouseX - this.leftPos, mouseY - this.topPos);
+                    this.renderComponentTooltip(matrixStack, abilityOption.getTooltip(), mouseX - this.leftPos, mouseY - this.topPos);
                 }
                 abilityX += 30;
             }
@@ -189,7 +189,7 @@ public class CryochamberScreen extends ContainerScreen<CryochamberContainer> {
             matrixStack.pushPose();
             matrixStack.translate(26.0, 92.0, 0.0);
             matrixStack.scale(0.8f, 0.8f, 0.8f);
-            UIHelper.renderWrappedText(matrixStack, (ITextComponent) new StringTextComponent(cfg.getDescription()), 82, 0, 4210752);
+            UIHelper.renderWrappedText(matrixStack, new StringTextComponent(cfg.getDescription()), 82, 0, 4210752);
             matrixStack.popPose();
         }
     }
@@ -208,7 +208,7 @@ public class CryochamberScreen extends ContainerScreen<CryochamberContainer> {
             matrixStack.pushPose();
             matrixStack.translate(86.0, 13.0, 0.0);
             matrixStack.scale(0.8f, 0.8f, 0.8f);
-            matrixStack.translate((double) (-offsetX), 0.0, 0.0);
+            matrixStack.translate(-offsetX, 0.0, 0.0);
             this.font.draw(matrixStack, display, 0.0f, 0.0f, 4210752);
             matrixStack.popPose();
         }
@@ -242,15 +242,15 @@ public class CryochamberScreen extends ContainerScreen<CryochamberContainer> {
         this.minecraft.getTextureManager().bind(CryochamberScreen.TEXTURE);
         this.blit(matrixStack, 8, offsetY, 216, vOffset, 16, 16);
         matrixStack.pushPose();
-        matrixStack.translate(26.0, (double) (offsetY + 6), 0.0);
+        matrixStack.translate(26.0, offsetY + 6, 0.0);
         matrixStack.scale(0.8f, 0.8f, 0.8f);
         this.font.draw(matrixStack, description, 0.0f, 0.0f, 4210752);
         matrixStack.popPose();
         final float xShift = this.font.width(valueStr) * 0.8f;
         matrixStack.pushPose();
-        matrixStack.translate(73.0, (double) (offsetY + 6), 0.0);
+        matrixStack.translate(73.0, offsetY + 6, 0.0);
         matrixStack.scale(0.8f, 0.8f, 0.8f);
-        matrixStack.translate((double) (-xShift), 0.0, 0.0);
+        matrixStack.translate(-xShift, 0.0, 0.0);
         this.font.draw(matrixStack, valueStr, 0.0f, 0.0f, 4210752);
         matrixStack.popPose();
     }
@@ -264,7 +264,7 @@ public class CryochamberScreen extends ContainerScreen<CryochamberContainer> {
         final float x = 136.0f - this.font.width(lvlStr) / 2.0f;
         final int y = 12;
         matrixStack.pushPose();
-        matrixStack.translate((double) x, (double) y, 0.0);
+        matrixStack.translate(x, y, 0.0);
         matrixStack.scale(0.8f, 0.8f, 1.0f);
         FontHelper.drawStringWithBorder(matrixStack, lvlStr, 0.0f, 0.0f, -6601, -12698050);
         matrixStack.popPose();
@@ -289,11 +289,11 @@ public class CryochamberScreen extends ContainerScreen<CryochamberContainer> {
             lookY = -30;
         }
         matrixStack.pushPose();
-        matrixStack.translate((double) offsetX, (double) offsetY, -400.0);
+        matrixStack.translate(offsetX, offsetY, -400.0);
         if (!snapshot.isAncient()) {
             matrixStack.scale(1.2f, 1.2f, 1.2f);
         }
-        UIHelper.drawFacingEntity((LivingEntity) this.eternalSkinCache, matrixStack, lookX, lookY);
+        UIHelper.drawFacingEntity(this.eternalSkinCache, matrixStack, lookX, lookY);
         matrixStack.popPose();
         if (!snapshot.isAlive()) {
             ShaderUtil.releaseShader();
@@ -302,7 +302,7 @@ public class CryochamberScreen extends ContainerScreen<CryochamberContainer> {
         if (!heldStack.isEmpty() && EternalInteractionMessage.canBeFed(snapshot, heldStack)) {
             final Rectangle feedRct = new Rectangle(99, 25, 51, 90);
             if (feedRct.contains(mouseX - this.leftPos, mouseY - this.topPos)) {
-                this.renderTooltip(matrixStack, (ITextComponent) new StringTextComponent("Give to " + this.title.getString()), mouseX - this.leftPos, mouseY - this.topPos);
+                this.renderTooltip(matrixStack, new StringTextComponent("Give to " + this.title.getString()), mouseX - this.leftPos, mouseY - this.topPos);
             }
         }
         if (!snapshot.isAlive()) {
@@ -359,11 +359,11 @@ public class CryochamberScreen extends ContainerScreen<CryochamberContainer> {
 
     @Nullable
     private EternalDataSnapshot getEternal() {
-        final World world = (World) Minecraft.getInstance().level;
+        final World world = Minecraft.getInstance().level;
         if (world == null) {
             return null;
         }
-        final CryoChamberTileEntity tile = ((CryochamberContainer) this.menu).getCryoChamber(world);
+        final CryoChamberTileEntity tile = this.menu.getCryoChamber(world);
         if (tile == null) {
             return null;
         }

@@ -18,12 +18,12 @@ import net.minecraft.world.server.ServerWorld;
 public class SoulAltarBlock extends FillableAltarBlock<SoulAltarTileEntity> {
     @Override
     public SoulAltarTileEntity createTileEntity(final BlockState state, final IBlockReader world) {
-        return (SoulAltarTileEntity) ModBlocks.SOUL_ALTAR_TILE_ENTITY.create();
+        return ModBlocks.SOUL_ALTAR_TILE_ENTITY.create();
     }
 
     @Override
     public IParticleData getFlameParticle() {
-        return (IParticleData) ModParticles.RED_FLAME.get();
+        return ModParticles.RED_FLAME.get();
     }
 
     @Override

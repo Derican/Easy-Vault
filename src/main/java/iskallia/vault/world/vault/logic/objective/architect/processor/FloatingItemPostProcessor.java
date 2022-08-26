@@ -39,14 +39,14 @@ public class FloatingItemPostProcessor extends VaultPieceProcessor {
             while (!placed) {
                 final BlockPos pos = MiscUtils.getRandomPos(box, FloatingItemPostProcessor.rand);
                 final BlockState state = world.getBlockState(pos);
-                if (state.isAir((IBlockReader) world, pos)) {
+                if (state.isAir(world, pos)) {
                     placed = true;
                     final ItemStack stack = this.itemList.getRandom(FloatingItemPostProcessor.rand);
                     if (stack == null) {
                         continue;
                     }
-                    final FloatingItemEntity itemEntity = FloatingItemEntity.create((World) world, pos, stack.copy());
-                    world.addFreshEntity((Entity) itemEntity);
+                    final FloatingItemEntity itemEntity = FloatingItemEntity.create(world, pos, stack.copy());
+                    world.addFreshEntity(itemEntity);
                 }
             }
         }

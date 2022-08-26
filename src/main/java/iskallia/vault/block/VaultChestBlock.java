@@ -24,7 +24,7 @@ import java.util.function.Supplier;
 
 public class VaultChestBlock extends ChestBlock {
     protected VaultChestBlock(final AbstractBlock.Properties builder, final Supplier<TileEntityType<? extends ChestTileEntity>> tileSupplier) {
-        super(builder, (Supplier) tileSupplier);
+        super(builder, tileSupplier);
     }
 
     public VaultChestBlock(final AbstractBlock.Properties builder) {
@@ -68,7 +68,7 @@ public class VaultChestBlock extends ChestBlock {
     }
 
     public TileEntity newBlockEntity(final IBlockReader world) {
-        return (TileEntity) new VaultChestTileEntity();
+        return new VaultChestTileEntity();
     }
 
     public BlockState getStateForPlacement(final BlockItemUseContext context) {

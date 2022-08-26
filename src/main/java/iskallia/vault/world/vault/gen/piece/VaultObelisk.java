@@ -22,7 +22,7 @@ public class VaultObelisk extends VaultPiece {
     }
 
     public boolean isCompleted(final World world) {
-        return BlockPos.betweenClosedStream(this.getBoundingBox()).map(world::getBlockState).filter(state -> state.getBlock() instanceof ObeliskBlock).anyMatch(blockState -> (int) blockState.getValue(ObeliskBlock.COMPLETION) == 4);
+        return BlockPos.betweenClosedStream(this.getBoundingBox()).map(world::getBlockState).filter(state -> state.getBlock() instanceof ObeliskBlock).anyMatch(blockState -> blockState.getValue(ObeliskBlock.COMPLETION) == 4);
     }
 
     @Override

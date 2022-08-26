@@ -40,19 +40,19 @@ public class ItemModArmorCrate extends BasicItem {
             final int slot = world.getRandom().nextInt(4);
             ItemStack itemStack;
             if (slot == 0) {
-                itemStack = new ItemStack((IItemProvider) ModItems.HELMET);
+                itemStack = new ItemStack(ModItems.HELMET);
                 this.configureItemStack(itemStack, modelSet.head.getId());
                 AdvancementHelper.grantCriterion(serverPlayer, Vault.id("armors/" + this.getRegistryName().getPath() + "/set"), "looted_helmet");
             } else if (slot == 1) {
-                itemStack = new ItemStack((IItemProvider) ModItems.CHESTPLATE);
+                itemStack = new ItemStack(ModItems.CHESTPLATE);
                 this.configureItemStack(itemStack, modelSet.chestplate.getId());
                 AdvancementHelper.grantCriterion(serverPlayer, Vault.id("armors/" + this.getRegistryName().getPath() + "/set"), "looted_chestplate");
             } else if (slot == 2) {
-                itemStack = new ItemStack((IItemProvider) ModItems.LEGGINGS);
+                itemStack = new ItemStack(ModItems.LEGGINGS);
                 this.configureItemStack(itemStack, modelSet.leggings.getId());
                 AdvancementHelper.grantCriterion(serverPlayer, Vault.id("armors/" + this.getRegistryName().getPath() + "/set"), "looted_leggings");
             } else {
-                itemStack = new ItemStack((IItemProvider) ModItems.BOOTS);
+                itemStack = new ItemStack(ModItems.BOOTS);
                 this.configureItemStack(itemStack, modelSet.boots.getId());
                 AdvancementHelper.grantCriterion(serverPlayer, Vault.id("armors/" + this.getRegistryName().getPath() + "/set"), "looted_boots");
             }
@@ -60,7 +60,7 @@ public class ItemModArmorCrate extends BasicItem {
             ItemRelicBoosterPack.successEffects(world, player.position());
             heldStack.shrink(1);
         }
-        return (ActionResult<ItemStack>) super.use(world, player, hand);
+        return super.use(world, player, hand);
     }
 
     private void configureItemStack(final ItemStack gearStack, final int model) {

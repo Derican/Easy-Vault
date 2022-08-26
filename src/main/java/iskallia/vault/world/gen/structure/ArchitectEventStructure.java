@@ -33,7 +33,7 @@ public class ArchitectEventStructure extends Structure<ArchitectEventStructure.C
     public static final int START_Y = 19;
 
     public ArchitectEventStructure(final Codec<Config> codec) {
-        super((Codec) codec);
+        super(codec);
     }
 
     public GenerationStage.Decoration step() {
@@ -41,7 +41,7 @@ public class ArchitectEventStructure extends Structure<ArchitectEventStructure.C
     }
 
     public Structure.IStartFactory<Config> getStartFactory() {
-        return (Structure.IStartFactory<Config>) ((structure, x, z, boundingBox, references, seed) -> new Start(this, x, z, boundingBox, references, seed));
+        return (structure, x, z, boundingBox, references, seed) -> new Start(this, x, z, boundingBox, references, seed);
     }
 
     public static class Config implements IFeatureConfig {
@@ -63,11 +63,11 @@ public class ArchitectEventStructure extends Structure<ArchitectEventStructure.C
         }
 
         public VillageConfig toVillageConfig() {
-            return new VillageConfig((Supplier) this.getStartPool(), this.getSize());
+            return new VillageConfig(this.getStartPool(), this.getSize());
         }
 
         static {
-            CODEC = RecordCodecBuilder.create(builder -> builder.group(JigsawPattern.CODEC.fieldOf("start_pool").forGetter(Config::getStartPool), Codec.intRange(0, Integer.MAX_VALUE).fieldOf("size").forGetter(Config::getSize)).apply((Applicative) builder, Config::new));
+            CODEC = RecordCodecBuilder.create(builder -> builder.group(JigsawPattern.CODEC.fieldOf("start_pool").forGetter(Config::getStartPool), Codec.intRange(0, Integer.MAX_VALUE).fieldOf("size").forGetter(Config::getSize)).apply(builder, Config::new));
         }
     }
 
@@ -75,20 +75,20 @@ public class ArchitectEventStructure extends Structure<ArchitectEventStructure.C
         private final ArchitectEventStructure structure;
 
         public Start(final ArchitectEventStructure structure, final int chunkX, final int chunkZ, final MutableBoundingBox box, final int references, final long worldSeed) {
-            super((Structure) structure, chunkX, chunkZ, box, references, worldSeed);
+            super(structure, chunkX, chunkZ, box, references, worldSeed);
             this.structure = structure;
         }
 
         public void generatePieces(final DynamicRegistries registry, final ChunkGenerator gen, final TemplateManager manager, final int chunkX, final int chunkZ, final Biome biome, final Config config) {
             final BlockPos blockpos = new BlockPos(chunkX * 16, 19, chunkZ * 16);
             Pools.init();
-            JigsawGeneratorLegacy.addPieces(registry, config.toVillageConfig(), AbstractVillagePiece::new, gen, manager, blockpos, this.pieces, (Random) this.random, false, false);
+            JigsawGeneratorLegacy.addPieces(registry, config.toVillageConfig(), AbstractVillagePiece::new, gen, manager, blockpos, this.pieces, this.random, false, false);
             this.calculateBoundingBox();
         }
 
         public void generate(final JigsawGenerator jigsaw, final DynamicRegistries registry, final ChunkGenerator gen, final TemplateManager manager) {
             VaultStructure.Pools.init();
-            jigsaw.generate(registry, new VaultStructure.Config(() -> registry.registryOrThrow(Registry.TEMPLATE_POOL_REGISTRY).get(Vault.id("architect_event/starts")), 1).toVillageConfig(), AbstractVillagePiece::new, gen, manager, this.pieces, (Random) this.random, false, false);
+            jigsaw.generate(registry, new VaultStructure.Config(() -> registry.registryOrThrow(Registry.TEMPLATE_POOL_REGISTRY).get(Vault.id("architect_event/starts")), 1).toVillageConfig(), AbstractVillagePiece::new, gen, manager, this.pieces, this.random, false, false);
             this.calculateBoundingBox();
         }
     }
@@ -100,7 +100,7 @@ public class ArchitectEventStructure extends Structure<ArchitectEventStructure.C
         }
 
         static {
-            START = JigsawPatternRegistry.register(new JigsawPattern(Vault.id("architect_event/starts"), new ResourceLocation("empty"), (List) ImmutableList.of(Pair.of(JigsawPiece.single(Vault.sId("architect_event/starts"), ProcessorLists.EMPTY), 1)), JigsawPattern.PlacementBehaviour.RIGID));
+            START = JigsawPatternRegistry.register(new JigsawPattern(Vault.id("architect_event/starts"), new ResourceLocation("empty"), ImmutableList.of(Pair.of(JigsawPiece.single(Vault.sId("architect_event/starts"), ProcessorLists.EMPTY), 1)), JigsawPattern.PlacementBehaviour.RIGID));
         }
     }
 }

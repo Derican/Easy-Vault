@@ -66,8 +66,8 @@ public class ObeliskGoalOverlay {
         final int bottom = mc.getWindow().getGuiScaledHeight();
         final IReorderingProcessor bidiText = message.getVisualOrderText();
         matrixStack.pushPose();
-        matrixStack.translate(15.0, (double) (bottom - 34), 0.0);
-        fr.drawInBatch(bidiText, 0.0f, 0.0f, -1, true, matrixStack.last().pose(), (IRenderTypeBuffer) buffer, false, 0, LightmapHelper.getPackedFullbrightCoords());
+        matrixStack.translate(15.0, bottom - 34, 0.0);
+        fr.drawInBatch(bidiText, 0.0f, 0.0f, -1, true, matrixStack.last().pose(), buffer, false, 0, LightmapHelper.getPackedFullbrightCoords());
         buffer.endBatch();
         matrixStack.popPose();
     }
@@ -83,8 +83,8 @@ public class ObeliskGoalOverlay {
         RenderSystem.enableBlend();
         RenderSystem.defaultBlendFunc();
         ScreenDrawHelper.drawQuad(buf -> {
-            ScreenDrawHelper.rect((IVertexBuilder) buf, renderStack).at(15.0f, (float) (bottom - 34)).dim(perc, (float) height).texVanilla(0.0f, (float) (offsetY + height), perc, (float) height).draw();
-            ScreenDrawHelper.rect((IVertexBuilder) buf, renderStack).at(15.0f, (float) (bottom - 34)).dim((float) width, (float) height).texVanilla(0.0f, (float) offsetY, (float) width, (float) height).draw();
+            ScreenDrawHelper.rect(buf, renderStack).at(15.0f, (float) (bottom - 34)).dim(perc, (float) height).texVanilla(0.0f, (float) (offsetY + height), perc, (float) height).draw();
+            ScreenDrawHelper.rect(buf, renderStack).at(15.0f, (float) (bottom - 34)).dim((float) width, (float) height).texVanilla(0.0f, (float) offsetY, (float) width, (float) height).draw();
         });
     }
 
@@ -102,21 +102,21 @@ public class ObeliskGoalOverlay {
         final int iconWidth = 12;
         final int iconHeight = 22;
         matrixStack.pushPose();
-        matrixStack.translate(15.0, (double) (bottom - 34), 0.0);
-        matrixStack.translate(0.0, (double) (-margin), 0.0);
-        matrixStack.translate(0.0, (double) (-scale * iconHeight), 0.0);
+        matrixStack.translate(15.0, bottom - 34, 0.0);
+        matrixStack.translate(0.0, -margin, 0.0);
+        matrixStack.translate(0.0, -scale * iconHeight, 0.0);
         matrixStack.scale(scale, scale, scale);
         for (int i = 0; i < currentObelisks; ++i) {
             final int u = 77;
             final int v = 84;
             AbstractGui.blit(matrixStack, 0, 0, (float) u, (float) v, iconWidth, iconHeight, 256, 256);
-            matrixStack.translate((double) (scale * gap + iconWidth), 0.0, 0.0);
+            matrixStack.translate(scale * gap + iconWidth, 0.0, 0.0);
         }
         for (int i = 0; i < untouchedObelisks; ++i) {
             final int u = 64;
             final int v = 84;
             AbstractGui.blit(matrixStack, 0, 0, (float) u, (float) v, iconWidth, iconHeight, 256, 256);
-            matrixStack.translate((double) (scale * gap + iconWidth), 0.0, 0.0);
+            matrixStack.translate(scale * gap + iconWidth, 0.0, 0.0);
         }
         matrixStack.popPose();
     }

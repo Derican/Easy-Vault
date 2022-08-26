@@ -41,7 +41,7 @@ public class TieredVaultItem extends BasicTooltipItem {
         final ITextComponent display = this.getTierDisplayLock();
         if (display != null) {
             tooltip.add(StringTextComponent.EMPTY);
-            tooltip.add((ITextComponent) new StringTextComponent("Only usable on Vault Gear ").withStyle(TextFormatting.GRAY).append(display));
+            tooltip.add(new StringTextComponent("Only usable on Vault Gear ").withStyle(TextFormatting.GRAY).append(display));
         }
     }
 
@@ -52,7 +52,7 @@ public class TieredVaultItem extends BasicTooltipItem {
         }
         final VaultGearConfig.General.TierConfig cfg = ModConfigs.VAULT_GEAR.getTierConfig(this.getVaultGearTier());
         if (cfg != null && !cfg.getDisplay().getString().isEmpty()) {
-            return (ITextComponent) new StringTextComponent("Tier: ").withStyle(TextFormatting.GRAY).append(cfg.getDisplay());
+            return new StringTextComponent("Tier: ").withStyle(TextFormatting.GRAY).append(cfg.getDisplay());
         }
         return null;
     }

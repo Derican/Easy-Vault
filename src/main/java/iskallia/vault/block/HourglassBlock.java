@@ -60,7 +60,7 @@ public class HourglassBlock extends Block {
 
     public HourglassBlock() {
         super(AbstractBlock.Properties.of(Material.GLASS, MaterialColor.COLOR_BROWN).noOcclusion().requiresCorrectToolForDrops().harvestTool(ToolType.AXE).harvestLevel(1).strength(3.0f, 3600000.0f));
-        this.registerDefaultState((BlockState) ((BlockState) this.stateDefinition.any()).setValue((Property) HourglassBlock.HALF, (Comparable) DoubleBlockHalf.LOWER));
+        this.registerDefaultState(this.stateDefinition.any().setValue((Property) HourglassBlock.HALF, (Comparable) DoubleBlockHalf.LOWER));
     }
 
     public boolean removedByPlayer(final BlockState state, final World world, final BlockPos pos, final PlayerEntity player, final boolean willHarvest, final FluidState fluid) {
@@ -119,7 +119,7 @@ public class HourglassBlock extends Block {
                     if (hourglass.getFilledPercentage() >= 1.0f) {
                         this.playFullEffects(world, pos);
                     } else {
-                        world.playSound((PlayerEntity) null, player.getX(), player.getY(), player.getZ(), SoundEvents.SAND_BREAK, SoundCategory.BLOCKS, 0.6f, 1.0f);
+                        world.playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.SAND_BREAK, SoundCategory.BLOCKS, 0.6f, 1.0f);
                     }
                 }
             }
@@ -132,7 +132,7 @@ public class HourglassBlock extends Block {
             final Vector3d offset = MiscUtils.getRandomOffset(pos, HourglassBlock.rand, 2.0f);
             ((ServerWorld) world).sendParticles((IParticleData) ParticleTypes.HAPPY_VILLAGER, offset.x, offset.y, offset.z, 3, 0.0, 0.0, 0.0, 1.0);
         }
-        world.playSound((PlayerEntity) null, pos, SoundEvents.PLAYER_LEVELUP, SoundCategory.BLOCKS, 1.0f, 1.0f);
+        world.playSound(null, pos, SoundEvents.PLAYER_LEVELUP, SoundCategory.BLOCKS, 1.0f, 1.0f);
     }
 
     @Nullable
@@ -140,13 +140,13 @@ public class HourglassBlock extends Block {
         final BlockPos pos = context.getClickedPos();
         final World world = context.getLevel();
         if (World.isInWorldBounds(pos) && world.getBlockState(pos.above()).canBeReplaced(context)) {
-            return (BlockState) this.defaultBlockState().setValue((Property) HourglassBlock.HALF, (Comparable) DoubleBlockHalf.LOWER);
+            return this.defaultBlockState().setValue((Property) HourglassBlock.HALF, (Comparable) DoubleBlockHalf.LOWER);
         }
         return null;
     }
 
     protected void createBlockStateDefinition(final StateContainer.Builder<Block, BlockState> builder) {
-        builder.add(new Property[]{(Property) HourglassBlock.HALF});
+        builder.add(HourglassBlock.HALF);
     }
 
     public void playerWillDestroy(final World worldIn, final BlockPos pos, final BlockState state, final PlayerEntity player) {
@@ -167,21 +167,21 @@ public class HourglassBlock extends Block {
     public BlockState updateShape(final BlockState state, final Direction facing, final BlockState facingState, final IWorld worldIn, final BlockPos currentPos, final BlockPos facingPos) {
         final DoubleBlockHalf half = (DoubleBlockHalf) state.getValue((Property) HourglassBlock.HALF);
         if (facing.getAxis() == Direction.Axis.Y && half == DoubleBlockHalf.LOWER == (facing == Direction.UP)) {
-            return (facingState.is((Block) this) && facingState.getValue((Property) HourglassBlock.HALF) != half) ? state : Blocks.AIR.defaultBlockState();
+            return (facingState.is(this) && facingState.getValue((Property) HourglassBlock.HALF) != half) ? state : Blocks.AIR.defaultBlockState();
         }
-        return (half == DoubleBlockHalf.LOWER && facing == Direction.DOWN && !state.canSurvive((IWorldReader) worldIn, currentPos)) ? Blocks.AIR.defaultBlockState() : super.updateShape(state, facing, facingState, worldIn, currentPos, facingPos);
+        return (half == DoubleBlockHalf.LOWER && facing == Direction.DOWN && !state.canSurvive(worldIn, currentPos)) ? Blocks.AIR.defaultBlockState() : super.updateShape(state, facing, facingState, worldIn, currentPos, facingPos);
     }
 
     public void setPlacedBy(final World worldIn, final BlockPos pos, final BlockState state, @Nullable final LivingEntity placer, final ItemStack stack) {
-        worldIn.setBlock(pos.above(), (BlockState) state.setValue((Property) HourglassBlock.HALF, (Comparable) DoubleBlockHalf.UPPER), 3);
+        worldIn.setBlock(pos.above(), state.setValue((Property) HourglassBlock.HALF, (Comparable) DoubleBlockHalf.UPPER), 3);
     }
 
     public void onRemove(final BlockState state, final World world, final BlockPos pos, final BlockState newState, final boolean isMoving) {
         if (!state.is(newState.getBlock()) || !newState.hasTileEntity()) {
             final TileEntity te = getBlockTileEntity(world, pos, state);
             if (te instanceof HourglassTileEntity && state.getValue((Property) HourglassBlock.HALF) == DoubleBlockHalf.LOWER) {
-                final ItemStack stack = new ItemStack((IItemProvider) ModBlocks.HOURGLASS);
-                stack.getOrCreateTag().put("BlockEntityTag", (INBT) te.serializeNBT());
+                final ItemStack stack = new ItemStack(ModBlocks.HOURGLASS);
+                stack.getOrCreateTag().put("BlockEntityTag", te.serializeNBT());
                 Block.popResource(world, pos, stack);
             }
         }

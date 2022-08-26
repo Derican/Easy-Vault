@@ -59,10 +59,10 @@ public class VaultPartyOverlay {
         }
         int height = 0;
         matrixStack.pushPose();
-        matrixStack.translate((double) (right - 5), (double) offsetY, 0.0);
+        matrixStack.translate(right - 5, offsetY, 0.0);
         matrixStack.pushPose();
         matrixStack.scale(0.8f, 0.8f, 1.0f);
-        final ITextComponent vpText = (ITextComponent) new StringTextComponent("Eternals").withStyle(TextFormatting.GOLD);
+        final ITextComponent vpText = new StringTextComponent("Eternals").withStyle(TextFormatting.GOLD);
         FontHelper.drawTextComponent(matrixStack, vpText, true);
         matrixStack.popPose();
         height += 8;
@@ -70,7 +70,7 @@ public class VaultPartyOverlay {
         matrixStack.scale(0.7f, 0.7f, 1.0f);
         for (final ActiveEternalData.ActiveEternal eternal : eternals) {
             final int eternalHeight = renderEternalSection(matrixStack, eternal) + 4;
-            matrixStack.translate(0.0, (double) eternalHeight, 0.0);
+            matrixStack.translate(0.0, eternalHeight, 0.0);
             height += (int) (eternalHeight * 0.7f);
         }
         matrixStack.popPose();
@@ -83,28 +83,28 @@ public class VaultPartyOverlay {
         final int gap = 2;
         final boolean dead = eternal.getHealth() <= 0.0f;
         final ResourceLocation skin = eternal.getSkin().getLocationSkin();
-        final IFormattableTextComponent txt = (IFormattableTextComponent) new StringTextComponent("");
+        final IFormattableTextComponent txt = new StringTextComponent("");
         matrixStack.pushPose();
-        matrixStack.translate((double) (-headSize), 0.0, 0.0);
+        matrixStack.translate(-headSize, 0.0, 0.0);
         render2DHead(matrixStack, skin, headSize, dead);
-        matrixStack.translate((double) (-gap), (double) ((headSize - textSize) / 2.0f), 0.0);
+        matrixStack.translate(-gap, (headSize - textSize) / 2.0f, 0.0);
         if (dead) {
-            txt.append((ITextComponent) new StringTextComponent("Unalived").withStyle(TextFormatting.RED));
+            txt.append(new StringTextComponent("Unalived").withStyle(TextFormatting.RED));
         } else {
             final int heartSize = 9;
             final int heartU = 86;
             final int heartV = 2;
-            matrixStack.translate((double) (-heartSize), 0.0, 0.0);
+            matrixStack.translate(-heartSize, 0.0, 0.0);
             Minecraft.getInstance().getTextureManager().bind(VaultPartyOverlay.VAULT_HUD_SPRITE);
             AbstractGui.blit(matrixStack, 0, 0, (float) heartU, (float) heartV, heartSize, heartSize, 256, 256);
-            matrixStack.translate((double) (-gap), 0.0, 0.0);
-            txt.append((ITextComponent) new StringTextComponent((int) eternal.getHealth() + "x").withStyle(TextFormatting.WHITE));
+            matrixStack.translate(-gap, 0.0, 0.0);
+            txt.append(new StringTextComponent((int) eternal.getHealth() + "x").withStyle(TextFormatting.WHITE));
         }
-        final int width = FontHelper.drawTextComponent(matrixStack, (ITextComponent) txt, true);
+        final int width = FontHelper.drawTextComponent(matrixStack, txt, true);
         if (eternal.getAbilityName() != null) {
             final EternalAuraConfig.AuraConfig cfg = ModConfigs.ETERNAL_AURAS.getByName(eternal.getAbilityName());
             if (cfg != null) {
-                matrixStack.translate((double) (-(width + 18)), -4.0, 0.0);
+                matrixStack.translate(-(width + 18), -4.0, 0.0);
                 Minecraft.getInstance().getTextureManager().bind(new ResourceLocation(cfg.getIconPath()));
                 AbstractGui.blit(matrixStack, 0, 0, 0.0f, 0.0f, 16, 16, 16, 16);
             }
@@ -121,10 +121,10 @@ public class VaultPartyOverlay {
         }
         int height = 0;
         matrixStack.pushPose();
-        matrixStack.translate((double) (right - 5), (double) offsetY, 0.0);
+        matrixStack.translate(right - 5, offsetY, 0.0);
         matrixStack.pushPose();
         matrixStack.scale(0.8f, 0.8f, 1.0f);
-        final ITextComponent vpText = (ITextComponent) new StringTextComponent("Vault Party").withStyle(TextFormatting.GREEN);
+        final ITextComponent vpText = new StringTextComponent("Vault Party").withStyle(TextFormatting.GREEN);
         FontHelper.drawTextComponent(matrixStack, vpText, true);
         matrixStack.popPose();
         height += 8;
@@ -135,7 +135,7 @@ public class VaultPartyOverlay {
             for (final UUID uuid : thisParty.getMembers()) {
                 final NetworkPlayerInfo info = netHandler.getPlayerInfo(uuid);
                 final int playerHeight = renderPartyPlayerSection(matrixStack, thisParty, uuid, info) + 4;
-                matrixStack.translate(0.0, (double) playerHeight, 0.0);
+                matrixStack.translate(0.0, playerHeight, 0.0);
                 height += (int) (playerHeight * 0.7f);
             }
         }
@@ -153,23 +153,23 @@ public class VaultPartyOverlay {
         final String prefix = playerUUID.equals(party.getLeader()) ? "\u2b50 " : "";
         final IFormattableTextComponent txt = new StringTextComponent(prefix).withStyle(TextFormatting.GOLD);
         matrixStack.pushPose();
-        matrixStack.translate((double) (-headSize), 0.0, 0.0);
+        matrixStack.translate(-headSize, 0.0, 0.0);
         render2DHead(matrixStack, skin, headSize, offline);
-        matrixStack.translate((double) (-gap), (double) ((headSize - textSize) / 2.0f), 0.0);
+        matrixStack.translate(-gap, (headSize - textSize) / 2.0f, 0.0);
         if (offline) {
-            txt.append((ITextComponent) new StringTextComponent(prefix + "OFFLINE").withStyle(TextFormatting.GRAY));
+            txt.append(new StringTextComponent(prefix + "OFFLINE").withStyle(TextFormatting.GRAY));
         } else {
             final int heartSize = 9;
             final int heartU = 86;
             final int heartV = 2;
-            matrixStack.translate((double) (-heartSize), 0.0, 0.0);
+            matrixStack.translate(-heartSize, 0.0, 0.0);
             Minecraft.getInstance().getTextureManager().bind(VaultPartyOverlay.VAULT_HUD_SPRITE);
             final ClientPartyData.PartyMember.Status status = (member == null) ? ClientPartyData.PartyMember.Status.NORMAL : member.status;
             AbstractGui.blit(matrixStack, 0, 0, (float) (heartU + getPartyPlayerStatusOffset(status)), (float) heartV, heartSize, heartSize, 256, 256);
-            matrixStack.translate((double) (-gap), 0.0, 0.0);
-            txt.append((ITextComponent) new StringTextComponent((member == null) ? "-" : ((int) member.healthPts + "x")).withStyle(TextFormatting.WHITE));
+            matrixStack.translate(-gap, 0.0, 0.0);
+            txt.append(new StringTextComponent((member == null) ? "-" : ((int) member.healthPts + "x")).withStyle(TextFormatting.WHITE));
         }
-        FontHelper.drawTextComponent(matrixStack, (ITextComponent) txt, true);
+        FontHelper.drawTextComponent(matrixStack, txt, true);
         matrixStack.popPose();
         return headSize;
     }

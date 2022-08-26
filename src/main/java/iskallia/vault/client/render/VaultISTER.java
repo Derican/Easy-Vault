@@ -24,18 +24,18 @@ public class VaultISTER extends ItemStackTileEntityRenderer {
     }
 
     public void renderByItem(final ItemStack stack, final ItemCameraTransforms.TransformType type, final MatrixStack matrixStack, final IRenderTypeBuffer buffer, final int combinedLight, final int combinedOverlay) {
-        final World world = (World) Minecraft.getInstance().level;
+        final World world = Minecraft.getInstance().level;
         if (world != null && stack.getItem() instanceof BlockItem) {
             final Block block = ((BlockItem) stack.getItem()).getBlock();
             if (block instanceof VaultChestBlock) {
-                final TileEntity te = ((VaultChestBlock) block).newBlockEntity((IBlockReader) world);
+                final TileEntity te = ((VaultChestBlock) block).newBlockEntity(world);
                 if (te instanceof VaultChestTileEntity) {
                     ((VaultChestTileEntity) te).setRenderState(block.defaultBlockState());
                     TileEntityRendererDispatcher.instance.renderItem(te, matrixStack, buffer, combinedLight, combinedOverlay);
                 }
             }
             if (block instanceof ScavengerChestBlock) {
-                final TileEntity te = ((ScavengerChestBlock) block).newBlockEntity((IBlockReader) world);
+                final TileEntity te = ((ScavengerChestBlock) block).newBlockEntity(world);
                 if (te instanceof ScavengerChestTileEntity) {
                     TileEntityRendererDispatcher.instance.renderItem(te, matrixStack, buffer, combinedLight, combinedOverlay);
                 }

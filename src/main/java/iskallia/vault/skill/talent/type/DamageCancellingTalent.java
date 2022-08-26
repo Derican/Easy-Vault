@@ -25,7 +25,7 @@ public abstract class DamageCancellingTalent extends PlayerTalent {
             return;
         }
         final ServerPlayerEntity player = (ServerPlayerEntity) event.getEntityLiving();
-        final TalentTree abilities = PlayerTalentsData.get(player.getLevel()).getTalents((PlayerEntity) player);
+        final TalentTree abilities = PlayerTalentsData.get(player.getLevel()).getTalents(player);
         for (final TalentNode<?> node : abilities.getNodes()) {
             if (!(node.getTalent() instanceof DamageCancellingTalent)) {
                 continue;

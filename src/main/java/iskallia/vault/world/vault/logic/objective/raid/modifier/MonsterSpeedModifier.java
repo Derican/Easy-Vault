@@ -25,7 +25,7 @@ public class MonsterSpeedModifier extends RaidModifier {
     public void affectRaidMob(final MobEntity mob, final float value) {
         final ModifiableAttributeInstance attr = mob.getAttribute(Attributes.MOVEMENT_SPEED);
         if (attr != null) {
-            attr.addPermanentModifier(new AttributeModifier(MonsterSpeedModifier.MOB_SPEED_INCREASE, "Raid Mob Speed", (double) value, AttributeModifier.Operation.MULTIPLY_BASE));
+            attr.addPermanentModifier(new AttributeModifier(MonsterSpeedModifier.MOB_SPEED_INCREASE, "Raid Mob Speed", value, AttributeModifier.Operation.MULTIPLY_BASE));
         }
     }
 
@@ -36,7 +36,7 @@ public class MonsterSpeedModifier extends RaidModifier {
     @Override
     public ITextComponent getDisplay(final float value) {
         final int percDisplay = Math.round(value * 100.0f);
-        return (ITextComponent) new StringTextComponent("+" + percDisplay + "% increased Mob Speed").withStyle(TextFormatting.RED);
+        return new StringTextComponent("+" + percDisplay + "% increased Mob Speed").withStyle(TextFormatting.RED);
     }
 
     static {

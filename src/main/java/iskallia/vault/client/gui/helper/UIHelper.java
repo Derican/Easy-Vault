@@ -49,9 +49,9 @@ public class UIHelper {
     }
 
     public static void drawFacingPlayer(final MatrixStack renderStack, final int containerMouseX, final int containerMouseY) {
-        final PlayerEntity player = (PlayerEntity) Minecraft.getInstance().player;
+        final PlayerEntity player = Minecraft.getInstance().player;
         if (player != null) {
-            drawFacingEntity((LivingEntity) player, renderStack, containerMouseX, containerMouseY);
+            drawFacingEntity(player, renderStack, containerMouseX, containerMouseY);
         }
     }
 
@@ -82,7 +82,7 @@ public class UIHelper {
         entityrenderermanager.setRenderShadow(false);
         RenderHelper.setupForFlatItems();
         final IRenderTypeBuffer.Impl buffers = Minecraft.getInstance().renderBuffers().bufferSource();
-        entityrenderermanager.render((Entity) entity, 0.0, 0.0, 0.0, 0.0f, 1.0f, renderStack, (IRenderTypeBuffer) buffers, LightmapHelper.getPackedFullbrightCoords());
+        entityrenderermanager.render((Entity) entity, 0.0, 0.0, 0.0, 0.0f, 1.0f, renderStack, buffers, LightmapHelper.getPackedFullbrightCoords());
         buffers.endBatch();
         RenderSystem.enableDepthTest();
         RenderSystem.enableAlphaTest();
@@ -115,17 +115,17 @@ public class UIHelper {
         gui.blit(matrixStack, x, y + th + verticalGap, u, v + th + 3, lw, bh);
         gui.blit(matrixStack, x + lw + horizontalGap, y + th + verticalGap, u + lw + 3, v + th + 3, rw, bh);
         matrixStack.pushPose();
-        matrixStack.translate((double) (x + lw), (double) y, 0.0);
+        matrixStack.translate(x + lw, y, 0.0);
         matrixStack.scale((float) horizontalGap, 1.0f, 1.0f);
         gui.blit(matrixStack, 0, 0, u + lw + 1, v, 1, th);
-        matrixStack.translate(0.0, (double) (th + verticalGap), 0.0);
+        matrixStack.translate(0.0, th + verticalGap, 0.0);
         gui.blit(matrixStack, 0, 0, u + lw + 1, v + th + 3, 1, bh);
         matrixStack.popPose();
         matrixStack.pushPose();
-        matrixStack.translate((double) x, (double) (y + th), 0.0);
+        matrixStack.translate(x, y + th, 0.0);
         matrixStack.scale(1.0f, (float) verticalGap, 1.0f);
         gui.blit(matrixStack, 0, 0, u, v + th + 1, lw, 1);
-        matrixStack.translate((double) (lw + horizontalGap), 0.0, 0.0);
+        matrixStack.translate(lw + horizontalGap, 0.0, 0.0);
         gui.blit(matrixStack, 0, 0, u + lw + 3, v + th + 1, rw, 1);
         matrixStack.popPose();
     }
@@ -136,20 +136,20 @@ public class UIHelper {
         final FontRenderer fontRenderer = minecraft.font;
         final int textWidth = fontRenderer.width(text);
         matrixStack.pushPose();
-        matrixStack.translate((double) x, (double) y, 0.0);
+        matrixStack.translate(x, y, 0.0);
         final float scale = 0.75f;
         matrixStack.scale(scale, scale, scale);
         matrixStack.translate(-9.0, 0.0, 0.0);
         gui.blit(matrixStack, 0, 0, 143, 36, 9, 24);
         final int gap = 5;
         int remainingWidth = textWidth + 2 * gap;
-        matrixStack.translate((double) (-remainingWidth), 0.0, 0.0);
+        matrixStack.translate(-remainingWidth, 0.0, 0.0);
         while (remainingWidth > 0) {
             gui.blit(matrixStack, 0, 0, 136, 36, 6, 24);
             remainingWidth -= 6;
-            matrixStack.translate((double) Math.min(6, remainingWidth), 0.0, 0.0);
+            matrixStack.translate(Math.min(6, remainingWidth), 0.0, 0.0);
         }
-        matrixStack.translate((double) (-textWidth - 2 * gap - 6), 0.0, 0.0);
+        matrixStack.translate(-textWidth - 2 * gap - 6, 0.0, 0.0);
         gui.blit(matrixStack, 0, 0, 121, 36, 14, 24);
         fontRenderer.draw(matrixStack, text, (float) (14 + gap), 9.0f, -12305893);
         matrixStack.popPose();
@@ -158,13 +158,13 @@ public class UIHelper {
     public static int renderCenteredWrappedText(final MatrixStack matrixStack, final ITextComponent text, final int maxWidth, final int padding) {
         final Minecraft minecraft = Minecraft.getInstance();
         final FontRenderer fontRenderer = minecraft.font;
-        final List<ITextProperties> lines = getLines((ITextComponent) TextComponentUtils.mergeStyles(text.copy(), text.getStyle()), maxWidth - 3 * padding);
+        final List<ITextProperties> lines = getLines(TextComponentUtils.mergeStyles(text.copy(), text.getStyle()), maxWidth - 3 * padding);
         final int length = lines.stream().mapToInt(fontRenderer::width).max().orElse(0);
-        final List<IReorderingProcessor> processors = LanguageMap.getInstance().getVisualOrder((List) lines);
+        final List<IReorderingProcessor> processors = LanguageMap.getInstance().getVisualOrder(lines);
         matrixStack.pushPose();
-        matrixStack.translate((double) (-length / 2.0f), 0.0, 0.0);
+        matrixStack.translate(-length / 2.0f, 0.0, 0.0);
         for (int i = 0; i < processors.size(); ++i) {
-            fontRenderer.draw(matrixStack, (IReorderingProcessor) processors.get(i), (float) padding, (float) (10 * i + padding), -15130590);
+            fontRenderer.draw(matrixStack, processors.get(i), (float) padding, (float) (10 * i + padding), -15130590);
         }
         matrixStack.popPose();
         return processors.size();
@@ -177,10 +177,10 @@ public class UIHelper {
     public static int renderWrappedText(final MatrixStack matrixStack, final ITextComponent text, final int maxWidth, final int padding, final int color) {
         final Minecraft minecraft = Minecraft.getInstance();
         final FontRenderer fontRenderer = minecraft.font;
-        final List<ITextProperties> lines = getLines((ITextComponent) TextComponentUtils.mergeStyles(text.copy(), text.getStyle()), maxWidth - 3 * padding);
-        final List<IReorderingProcessor> processors = LanguageMap.getInstance().getVisualOrder((List) lines);
+        final List<ITextProperties> lines = getLines(TextComponentUtils.mergeStyles(text.copy(), text.getStyle()), maxWidth - 3 * padding);
+        final List<IReorderingProcessor> processors = LanguageMap.getInstance().getVisualOrder(lines);
         for (int i = 0; i < processors.size(); ++i) {
-            fontRenderer.draw(matrixStack, (IReorderingProcessor) processors.get(i), (float) padding, (float) (10 * i + padding), color);
+            fontRenderer.draw(matrixStack, processors.get(i), (float) padding, (float) (10 * i + padding), color);
         }
         return processors.size();
     }
@@ -191,7 +191,7 @@ public class UIHelper {
         List<ITextProperties> list = null;
         float f = Float.MAX_VALUE;
         for (final int i : UIHelper.LINE_BREAK_VALUES) {
-            final List<ITextProperties> list2 = charactermanager.splitLines((ITextProperties) component, maxWidth - i, Style.EMPTY);
+            final List<ITextProperties> list2 = charactermanager.splitLines(component, maxWidth - i, Style.EMPTY);
             final float f2 = Math.abs(getTextWidth(charactermanager, list2) - maxWidth);
             if (f2 <= 10.0f) {
                 return list2;

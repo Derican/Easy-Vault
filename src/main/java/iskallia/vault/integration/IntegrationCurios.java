@@ -36,16 +36,16 @@ public class IntegrationCurios {
                 final IDynamicStackHandler stackHandler = handle.getStacks();
                 for (int slot = 0; slot < stackHandler.getSlots(); ++slot) {
                     final ItemStack stack = stackHandler.getStackInSlot(slot);
-                    if (!(!stackFilter.test(player, stack))) {
+                    if (stackFilter.test(player, stack)) {
                         if (!stack.isEmpty()) {
-                            keyMap.put(String.valueOf(slot), (INBT) stack.serializeNBT());
+                            keyMap.put(String.valueOf(slot), stack.serializeNBT());
                             if (removeSnapshotItems) {
                                 stackHandler.setStackInSlot(slot, ItemStack.EMPTY);
                             }
                         }
                     }
                 }
-                tag.put(key, (INBT) keyMap);
+                tag.put(key, keyMap);
                 return;
             });
             return tag;

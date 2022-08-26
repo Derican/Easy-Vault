@@ -29,12 +29,12 @@ public class VendingMachineContainer extends Container {
     protected PlayerInventory playerInventory;
 
     public VendingMachineContainer(final int windowId, final World world, final BlockPos pos, final PlayerInventory playerInventory, final PlayerEntity player) {
-        super((ContainerType) ModContainers.VENDING_MACHINE_CONTAINER, windowId);
+        super(ModContainers.VENDING_MACHINE_CONTAINER, windowId);
         final BlockState blockState = world.getBlockState(pos);
         this.tileEntity = (VendingMachineTileEntity) VendingMachineBlock.getBlockTileEntity(world, pos, blockState);
         this.playerInventory = playerInventory;
         this.vendingInventory = new VendingInventory();
-        this.addSlot((Slot) new Slot(this.vendingInventory, 0, 210, 43) {
+        this.addSlot(new Slot(this.vendingInventory, 0, 210, 43) {
             public void setChanged() {
                 super.setChanged();
                 VendingMachineContainer.this.vendingInventory.updateRecipe();
@@ -45,14 +45,14 @@ public class VendingMachineContainer extends Container {
                 VendingMachineContainer.this.vendingInventory.updateRecipe();
             }
         });
-        this.addSlot((Slot) new SellSlot((IInventory) this.vendingInventory, 2, 268, 43));
+        this.addSlot(new SellSlot(this.vendingInventory, 2, 268, 43));
         for (int i1 = 0; i1 < 3; ++i1) {
             for (int k1 = 0; k1 < 9; ++k1) {
-                this.addSlot(new Slot((IInventory) playerInventory, k1 + i1 * 9 + 9, 167 + k1 * 18, 86 + i1 * 18));
+                this.addSlot(new Slot(playerInventory, k1 + i1 * 9 + 9, 167 + k1 * 18, 86 + i1 * 18));
             }
         }
         for (int j1 = 0; j1 < 9; ++j1) {
-            this.addSlot(new Slot((IInventory) playerInventory, j1, 167 + j1 * 18, 144));
+            this.addSlot(new Slot(playerInventory, j1, 167 + j1 * 18, 144));
         }
     }
 

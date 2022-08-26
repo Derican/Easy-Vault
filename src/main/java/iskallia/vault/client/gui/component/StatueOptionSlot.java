@@ -5,11 +5,11 @@ import net.minecraft.item.ItemStack;
 import java.awt.*;
 
 public class StatueOptionSlot {
-    private int posX;
-    private int posY;
-    private int width;
-    private int height;
-    private ItemStack stack;
+    private final int posX;
+    private final int posY;
+    private final int width;
+    private final int height;
+    private final ItemStack stack;
 
     public StatueOptionSlot(final int posX, final int posY, final int width, final int height, final ItemStack stack) {
         this.posX = posX;

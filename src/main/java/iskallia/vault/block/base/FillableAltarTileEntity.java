@@ -27,7 +27,7 @@ public abstract class FillableAltarTileEntity extends TileEntity implements ITic
     private int maxProgress;
 
     public FillableAltarTileEntity(final TileEntityType<?> tileEntityTypeIn) {
-        super((TileEntityType) tileEntityTypeIn);
+        super(tileEntityTypeIn);
         this.currentProgress = 0;
         this.maxProgress = 0;
     }

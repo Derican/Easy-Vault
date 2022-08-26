@@ -81,7 +81,7 @@ public class PlayerImmunityData extends WorldSavedData {
             final CompoundNBT effectTag = new CompoundNBT();
             final AtomicInteger index = new AtomicInteger();
             effects.forEach(effectId -> effectTag.putString("Effect" + index.getAndIncrement(), effectId));
-            compound.put(uuid.toString(), (INBT) effectTag);
+            compound.put(uuid.toString(), effectTag);
             return;
         });
         return compound;

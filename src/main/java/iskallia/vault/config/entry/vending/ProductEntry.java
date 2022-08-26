@@ -54,7 +54,7 @@ public class ProductEntry {
     }
 
     public Item getItem() {
-        return (Item) ForgeRegistries.ITEMS.getValue(new ResourceLocation(this.id));
+        return ForgeRegistries.ITEMS.getValue(new ResourceLocation(this.id));
     }
 
     public int generateAmount() {
@@ -77,7 +77,7 @@ public class ProductEntry {
     }
 
     public ItemStack generateItemStack() {
-        final ItemStack itemStack = new ItemStack((IItemProvider) this.getItem(), this.generateAmount());
+        final ItemStack itemStack = new ItemStack(this.getItem(), this.generateAmount());
         itemStack.setTag(this.getNBT());
         return itemStack;
     }

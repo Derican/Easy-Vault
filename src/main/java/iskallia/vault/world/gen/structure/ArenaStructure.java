@@ -32,7 +32,7 @@ public class ArenaStructure extends Structure<ArenaStructure.Config> {
     public static final int START_Y = 32;
 
     public ArenaStructure(final Codec<Config> config) {
-        super((Codec) config);
+        super(config);
     }
 
     public GenerationStage.Decoration step() {
@@ -40,21 +40,21 @@ public class ArenaStructure extends Structure<ArenaStructure.Config> {
     }
 
     public Structure.IStartFactory<Config> getStartFactory() {
-        return (Structure.IStartFactory<Config>) ((p_242778_1_, p_242778_2_, p_242778_3_, p_242778_4_, p_242778_5_, p_242778_6_) -> new Start(this, p_242778_2_, p_242778_3_, p_242778_4_, p_242778_5_, p_242778_6_));
+        return (p_242778_1_, p_242778_2_, p_242778_3_, p_242778_4_, p_242778_5_, p_242778_6_) -> new Start(this, p_242778_2_, p_242778_3_, p_242778_4_, p_242778_5_, p_242778_6_);
     }
 
     public static class Start extends MarginedStructureStart<Config> {
         private final ArenaStructure structure;
 
         public Start(final ArenaStructure structure, final int chunkX, final int chunkZ, final MutableBoundingBox box, final int references, final long worldSeed) {
-            super((Structure) structure, chunkX, chunkZ, box, references, worldSeed);
+            super(structure, chunkX, chunkZ, box, references, worldSeed);
             this.structure = structure;
         }
 
         public void generatePieces(final DynamicRegistries registry, final ChunkGenerator gen, final TemplateManager manager, final int chunkX, final int chunkZ, final Biome biome, final Config config) {
             final BlockPos blockpos = new BlockPos(chunkX * 16, 32, chunkZ * 16);
             Pools.init();
-            JigsawGeneratorLegacy.addPieces(registry, config.toVillageConfig(), AbstractVillagePiece::new, gen, manager, blockpos, this.pieces, (Random) this.random, false, false);
+            JigsawGeneratorLegacy.addPieces(registry, config.toVillageConfig(), AbstractVillagePiece::new, gen, manager, blockpos, this.pieces, this.random, false, false);
             this.calculateBoundingBox();
         }
     }
@@ -78,11 +78,11 @@ public class ArenaStructure extends Structure<ArenaStructure.Config> {
         }
 
         public VillageConfig toVillageConfig() {
-            return new VillageConfig((Supplier) this.getStartPool(), this.getSize());
+            return new VillageConfig(this.getStartPool(), this.getSize());
         }
 
         static {
-            CODEC = RecordCodecBuilder.create(builder -> builder.group(JigsawPattern.CODEC.fieldOf("start_pool").forGetter(Config::getStartPool), Codec.intRange(0, Integer.MAX_VALUE).fieldOf("size").forGetter(Config::getSize)).apply((Applicative) builder, Config::new));
+            CODEC = RecordCodecBuilder.create(builder -> builder.group(JigsawPattern.CODEC.fieldOf("start_pool").forGetter(Config::getStartPool), Codec.intRange(0, Integer.MAX_VALUE).fieldOf("size").forGetter(Config::getSize)).apply(builder, Config::new));
         }
     }
 
@@ -93,7 +93,7 @@ public class ArenaStructure extends Structure<ArenaStructure.Config> {
         }
 
         static {
-            START = JigsawPatternRegistry.register(new JigsawPattern(Vault.id("arena/starts"), new ResourceLocation("empty"), (List) ImmutableList.of(Pair.of(JigsawPiece.single(Vault.sId("arena/arena1/p_p"), ProcessorLists.EMPTY), 1)), JigsawPattern.PlacementBehaviour.RIGID));
+            START = JigsawPatternRegistry.register(new JigsawPattern(Vault.id("arena/starts"), new ResourceLocation("empty"), ImmutableList.of(Pair.of(JigsawPiece.single(Vault.sId("arena/arena1/p_p"), ProcessorLists.EMPTY), 1)), JigsawPattern.PlacementBehaviour.RIGID));
         }
     }
 }

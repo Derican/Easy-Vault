@@ -54,14 +54,14 @@ public class VaultSandEvent implements INBTSerializable<CompoundNBT>, IVaultTask
     
     public void addSand(final ServerPlayerEntity player, final String contributor, final TextFormatting contributorColor, final int amount, final Supplier<Boolean> onSandFilled) {
         final SandProgress progress = this.playerProgress.computeIfAbsent(player.getUUID(), uuid -> new SandProgress());
-        final int requiredTotal = ModConfigs.SAND_EVENT.getRedemptionsRequiredPerSand((PlayerEntity)player);
+        final int requiredTotal = ModConfigs.SAND_EVENT.getRedemptionsRequiredPerSand(player);
         final int current = (int)(requiredTotal * progress.fillPercent);
         final int newAmount = current + amount;
         if (newAmount > requiredTotal) {
             if (onSandFilled.get()) {
                 progress.fillPercent = 0.0f;
                 progress.spawnedSands++;
-                player.getLevel().playSound((PlayerEntity)null, player.getX(), player.getY(), player.getZ(), SoundEvents.PLAYER_LEVELUP, SoundCategory.PLAYERS, 0.6f, 1.0f);
+                player.getLevel().playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.PLAYER_LEVELUP, SoundCategory.PLAYERS, 0.6f, 1.0f);
             }
         }
         else {
@@ -69,7 +69,7 @@ public class VaultSandEvent implements INBTSerializable<CompoundNBT>, IVaultTask
         }
         this.sendUpdate(player, progress);
         final IFormattableTextComponent display = new StringTextComponent(contributor).withStyle(contributorColor);
-        ModNetwork.CHANNEL.sendTo((Object)new SandEventContributorMessage((ITextComponent)display), player.connection.connection, NetworkDirection.PLAY_TO_CLIENT);
+        ModNetwork.CHANNEL.sendTo((Object)new SandEventContributorMessage(display), player.connection.connection, NetworkDirection.PLAY_TO_CLIENT);
     }
     
     public void pickupSand(final ServerPlayerEntity player) {
@@ -99,8 +99,8 @@ public class VaultSandEvent implements INBTSerializable<CompoundNBT>, IVaultTask
             final BlockPos pos = offset.offset(x, y, z);
             if (world.isAreaLoaded(pos, 1)) {
                 final BlockState state = world.getBlockState(pos);
-                if (state.isAir((IBlockReader)world, pos)) {
-                    world.addFreshEntity((Entity)VaultSandEntity.create((World)world, pos));
+                if (state.isAir(world, pos)) {
+                    world.addFreshEntity(VaultSandEntity.create(world, pos));
                     return true;
                 }
             }
@@ -111,7 +111,7 @@ public class VaultSandEvent implements INBTSerializable<CompoundNBT>, IVaultTask
     
     public CompoundNBT serializeNBT() {
         final CompoundNBT nbt = new CompoundNBT();
-        this.playerProgress.forEach((uuid, progress) -> nbt.put(uuid.toString(), (INBT)progress.serialize()));
+        this.playerProgress.forEach((uuid, progress) -> nbt.put(uuid.toString(), progress.serialize()));
         return nbt;
     }
     

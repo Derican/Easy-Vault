@@ -40,7 +40,7 @@ public class VaultGoalMessage extends OpcodeMessage<VaultGoalMessage.VaultGoal> 
     }
 
     public static VaultGoalMessage obeliskGoal(final int touched, final int max) {
-        final ITextComponent text = (ITextComponent) new StringTextComponent("Obelisks").withStyle(TextFormatting.BOLD);
+        final ITextComponent text = new StringTextComponent("Obelisks").withStyle(TextFormatting.BOLD);
         return OpcodeMessage.composeMessage(new VaultGoalMessage(), VaultGoal.OBELISK_GOAL, payload -> {
             payload.putString("Message", ITextComponent.Serializer.toJson(text));
             payload.putInt("TouchedObelisks", touched);
@@ -49,7 +49,7 @@ public class VaultGoalMessage extends OpcodeMessage<VaultGoalMessage.VaultGoal> 
     }
 
     public static VaultGoalMessage killBossGoal() {
-        final ITextComponent text = (ITextComponent) new StringTextComponent("Boss Battle").withStyle(TextFormatting.BOLD).withStyle(TextFormatting.GREEN);
+        final ITextComponent text = new StringTextComponent("Boss Battle").withStyle(TextFormatting.BOLD).withStyle(TextFormatting.GREEN);
         return OpcodeMessage.composeMessage(new VaultGoalMessage(), VaultGoal.OBELISK_MESSAGE, payload -> payload.putString("Message", ITextComponent.Serializer.toJson(text)));
     }
 
@@ -60,7 +60,7 @@ public class VaultGoalMessage extends OpcodeMessage<VaultGoalMessage.VaultGoal> 
             for (ScavengerHuntObjective.ItemSubmission submission : activeSubmissions) {
                 list.add(submission.serialize());
             }
-            payload.put("scavengerItems", (INBT) list);
+            payload.put("scavengerItems", list);
         });
     }
 
@@ -71,7 +71,7 @@ public class VaultGoalMessage extends OpcodeMessage<VaultGoalMessage.VaultGoal> 
             for (TreasureHuntObjective.ItemSubmission submission : activeSubmissions) {
                 list.add(submission.serialize());
             }
-            payload.put("scavengerItems", (INBT) list);
+            payload.put("scavengerItems", list);
         });
     }
 
@@ -81,7 +81,7 @@ public class VaultGoalMessage extends OpcodeMessage<VaultGoalMessage.VaultGoal> 
             payload.putInt("ticksUntilNextVote", ticksUntilNextVote);
             payload.putInt("totalTicksUntilNextVote", totalTicksUntilNextVote);
             if (activeVotingSession != null) {
-                payload.put("votingSession", (INBT) activeVotingSession.serialize());
+                payload.put("votingSession", activeVotingSession.serialize());
             }
         });
     }
@@ -89,9 +89,9 @@ public class VaultGoalMessage extends OpcodeMessage<VaultGoalMessage.VaultGoal> 
     public static VaultGoalMessage architectFinalEvent(final int killedBosses, final int totalBosses, final int knowledge, final int totalKnowledge, @Nullable final VotingSession activeVotingSession, final boolean killCurrentBoss) {
         ITextComponent text;
         if (killCurrentBoss) {
-            text = (ITextComponent) new StringTextComponent("Kill the Boss!").withStyle(TextFormatting.BOLD).withStyle(TextFormatting.RED);
+            text = new StringTextComponent("Kill the Boss!").withStyle(TextFormatting.BOLD).withStyle(TextFormatting.RED);
         } else {
-            text = (ITextComponent) new StringTextComponent("Gather Knowledge!").withStyle(TextFormatting.BOLD).withStyle(TextFormatting.AQUA);
+            text = new StringTextComponent("Gather Knowledge!").withStyle(TextFormatting.BOLD).withStyle(TextFormatting.AQUA);
         }
         return OpcodeMessage.composeMessage(new VaultGoalMessage(), VaultGoal.FINAL_ARCHITECT_GOAL, payload -> {
             payload.putString("message", ITextComponent.Serializer.toJson(text));
@@ -100,7 +100,7 @@ public class VaultGoalMessage extends OpcodeMessage<VaultGoalMessage.VaultGoal> 
             payload.putInt("knowledge", knowledge);
             payload.putInt("totalKnowledge", totalKnowledge);
             if (activeVotingSession != null) {
-                payload.put("votingSession", (INBT) activeVotingSession.serialize());
+                payload.put("votingSession", activeVotingSession.serialize());
             }
         });
     }
@@ -123,10 +123,10 @@ public class VaultGoalMessage extends OpcodeMessage<VaultGoalMessage.VaultGoal> 
             payload.putInt("targetRaids", target);
             final ListNBT positives = new ListNBT();
             positiveModifiers.forEach(modifier -> positives.add(StringNBT.valueOf(ITextComponent.Serializer.toJson(modifier))));
-            payload.put("positives", (INBT) positives);
+            payload.put("positives", positives);
             final ListNBT negatives = new ListNBT();
             negativeModifiers.forEach(modifier -> negatives.add(StringNBT.valueOf(ITextComponent.Serializer.toJson(modifier))));
-            payload.put("negatives", (INBT) negatives);
+            payload.put("negatives", negatives);
         });
     }
 
@@ -151,6 +151,6 @@ public class VaultGoalMessage extends OpcodeMessage<VaultGoalMessage.VaultGoal> 
         RAID_GOAL,
         CAKE_HUNT_GOAL,
         CLEAR,
-        FINAL_ARCHITECT_GOAL;
+        FINAL_ARCHITECT_GOAL
     }
 }

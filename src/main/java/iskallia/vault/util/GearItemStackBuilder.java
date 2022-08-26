@@ -47,7 +47,7 @@ public class GearItemStackBuilder {
     }
 
     public ItemStack build() {
-        final ItemStack itemStack = new ItemStack((IItemProvider) this.item);
+        final ItemStack itemStack = new ItemStack(this.item);
         ModAttributes.GEAR_STATE.create(itemStack, VaultGear.State.IDENTIFIED);
         ModAttributes.GEAR_RARITY.create(itemStack, this.gearRarity);
         itemStack.getOrCreateTag().remove("RollTicks");

@@ -26,7 +26,7 @@ public class VaultRoom extends VaultPiece {
     public static final ResourceLocation ID;
     private boolean cakeEaten;
     private BlockPos cakePos;
-    private VListNBT<UUID, StringNBT> sandIds;
+    private final VListNBT<UUID, StringNBT> sandIds;
 
     protected VaultRoom(final ResourceLocation id) {
         super(id);
@@ -90,9 +90,9 @@ public class VaultRoom extends VaultPiece {
         final CompoundNBT tag = super.serializeNBT();
         tag.putBoolean("cakeEaten", this.cakeEaten);
         if (this.cakePos != null) {
-            tag.put("cakePos", (INBT) NBTHelper.serializeBlockPos(this.cakePos));
+            tag.put("cakePos", NBTHelper.serializeBlockPos(this.cakePos));
         }
-        tag.put("sandIds", (INBT) this.sandIds.serializeNBT());
+        tag.put("sandIds", this.sandIds.serializeNBT());
         return tag;
     }
 

@@ -64,7 +64,7 @@ public class Product implements INBTSerializable {
         if (this.itemCache != null) {
             return this.itemCache;
         }
-        this.itemCache = (Item) ForgeRegistries.ITEMS.getValue(new ResourceLocation(this.id));
+        this.itemCache = ForgeRegistries.ITEMS.getValue(new ResourceLocation(this.id));
         if (this.itemCache == null) {
             System.out.println("Unknown item " + this.id + ".");
         }
@@ -95,7 +95,7 @@ public class Product implements INBTSerializable {
     }
 
     public ItemStack toStack() {
-        final ItemStack stack = new ItemStack((IItemProvider) this.getItem(), this.getAmount());
+        final ItemStack stack = new ItemStack(this.getItem(), this.getAmount());
         stack.setTag(this.getNBT());
         return stack;
     }

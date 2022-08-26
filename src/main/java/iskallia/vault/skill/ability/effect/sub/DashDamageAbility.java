@@ -20,11 +20,11 @@ public class DashDamageAbility extends DashAbility<DashDamageConfig> {
     @Override
     public boolean onAction(final DashDamageConfig config, final ServerPlayerEntity player, final boolean active) {
         if (super.onAction(config, player, active)) {
-            final List<LivingEntity> other = EntityHelper.getNearby((IWorld) player.getCommandSenderWorld(), (Vector3i) player.blockPosition(), config.getRadiusOfAttack(), LivingEntity.class);
+            final List<LivingEntity> other = EntityHelper.getNearby(player.getCommandSenderWorld(), player.blockPosition(), config.getRadiusOfAttack(), LivingEntity.class);
             other.removeIf(e -> e instanceof PlayerEntity);
             final float atk = (float) player.getAttributeValue(Attributes.ATTACK_DAMAGE);
             for (final LivingEntity entity : other) {
-                ActiveFlags.IS_AOE_ATTACKING.runIfNotSet(() -> entity.hurt(DamageSource.playerAttack((PlayerEntity) player), atk * config.getAttackDamagePercentPerDash()));
+                ActiveFlags.IS_AOE_ATTACKING.runIfNotSet(() -> entity.hurt(DamageSource.playerAttack(player), atk * config.getAttackDamagePercentPerDash()));
                 ServerScheduler.INSTANCE.schedule(0, () -> PlayerDamageHelper.applyMultiplier(player, 0.95f, PlayerDamageHelper.Operation.STACKING_MULTIPLY, true, config.getCooldown()));
             }
             return true;

@@ -30,7 +30,7 @@ public class CriticalStrikeTalent extends PlayerTalent {
             return;
         }
         final ServerPlayerEntity player = (ServerPlayerEntity) event.getPlayer();
-        final TalentTree talents = PlayerTalentsData.get(player.getLevel()).getTalents((PlayerEntity) player);
+        final TalentTree talents = PlayerTalentsData.get(player.getLevel()).getTalents(player);
         for (final Object criticalStrikeTalent : talents.getTalents(CriticalStrikeTalent.class)) {
             if (player.level.random.nextFloat() < ((CriticalStrikeTalent) criticalStrikeTalent).getChance()) {
                 if (event.getDamageModifier() < 1.5f) {

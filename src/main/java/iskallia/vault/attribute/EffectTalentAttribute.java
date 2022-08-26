@@ -36,8 +36,8 @@ public class EffectTalentAttribute extends PooledAttribute<List<EffectTalent>> {
             effectsList.add(effectTag);
             return;
         });
-        tag.put("EffectTalents", (INBT) effectsList);
-        nbt.put("BaseValue", (INBT) tag);
+        tag.put("EffectTalents", effectsList);
+        nbt.put("BaseValue", tag);
     }
 
     @Override
@@ -48,7 +48,7 @@ public class EffectTalentAttribute extends PooledAttribute<List<EffectTalent>> {
         }
         final CompoundNBT tag = nbt.getCompound("BaseValue");
         final ListNBT effectsList = tag.getList("EffectTalents", 10);
-        setBaseValue((List<EffectTalent>) effectsList.stream()
+        setBaseValue(effectsList.stream()
                 .map(inbt -> (CompoundNBT) inbt)
                 .map(compoundNBT -> new EffectTalent(0, tag.getString("Id"), tag.getInt("Amplifier"), tag.getString("Type"), tag.getString("Operator")))
                 .collect(Collectors.toList()));

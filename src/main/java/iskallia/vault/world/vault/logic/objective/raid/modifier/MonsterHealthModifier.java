@@ -25,7 +25,7 @@ public class MonsterHealthModifier extends RaidModifier {
     public void affectRaidMob(final MobEntity mob, final float value) {
         final ModifiableAttributeInstance attr = mob.getAttribute(Attributes.MAX_HEALTH);
         if (attr != null) {
-            attr.addPermanentModifier(new AttributeModifier(MonsterHealthModifier.MOB_HEALTH_INCREASE, "Raid Mob Health Increase", (double) value, AttributeModifier.Operation.MULTIPLY_BASE));
+            attr.addPermanentModifier(new AttributeModifier(MonsterHealthModifier.MOB_HEALTH_INCREASE, "Raid Mob Health Increase", value, AttributeModifier.Operation.MULTIPLY_BASE));
         }
     }
 
@@ -36,7 +36,7 @@ public class MonsterHealthModifier extends RaidModifier {
     @Override
     public ITextComponent getDisplay(final float value) {
         final int percDisplay = Math.round(value * 100.0f);
-        return (ITextComponent) new StringTextComponent("+" + percDisplay + "% increased Mob Health").withStyle(TextFormatting.RED);
+        return new StringTextComponent("+" + percDisplay + "% increased Mob Health").withStyle(TextFormatting.RED);
     }
 
     static {

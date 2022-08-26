@@ -36,7 +36,7 @@ public class SetGroup<T extends PlayerSet> {
         if (level == 0) {
             return this.name + " " + RomanNumber.toRoman(0);
         }
-        return (String) this.getRegistry().inverse().get(this.getSet(level));
+        return this.getRegistry().inverse().get(this.getSet(level));
     }
 
     public T getSet(final int level) {

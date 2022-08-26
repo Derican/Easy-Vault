@@ -18,7 +18,7 @@ public class TraderInventory implements IInventory {
     private Trade selectedTrade;
 
     public TraderInventory() {
-        this.slots = (NonNullList<ItemStack>) NonNullList.withSize(3, ItemStack.EMPTY);
+        this.slots = NonNullList.withSize(3, ItemStack.EMPTY);
     }
 
     public void updateTrade(final Trade core) {
@@ -38,25 +38,25 @@ public class TraderInventory implements IInventory {
     }
 
     public ItemStack getItem(final int index) {
-        return (ItemStack) this.slots.get(index);
+        return this.slots.get(index);
     }
 
     public ItemStack removeItem(final int index, final int count) {
-        final ItemStack itemStack = (ItemStack) this.slots.get(index);
+        final ItemStack itemStack = this.slots.get(index);
         if (index == 2 && !itemStack.isEmpty()) {
-            final ItemStack andSplit = ItemStackHelper.removeItem((List) this.slots, index, itemStack.getCount());
+            final ItemStack andSplit = ItemStackHelper.removeItem(this.slots, index, itemStack.getCount());
             this.removeItem(0, this.selectedTrade.getBuy().getAmount());
             this.selectedTrade.onTraded();
             this.updateRecipe();
             return andSplit;
         }
-        final ItemStack splitStack = ItemStackHelper.removeItem((List) this.slots, index, count);
+        final ItemStack splitStack = ItemStackHelper.removeItem(this.slots, index, count);
         this.updateRecipe();
         return splitStack;
     }
 
     public ItemStack removeItemNoUpdate(final int index) {
-        final ItemStack andRemove = ItemStackHelper.takeItem((List) this.slots, index);
+        final ItemStack andRemove = ItemStackHelper.takeItem(this.slots, index);
         this.updateRecipe();
         return andRemove;
     }
@@ -80,9 +80,9 @@ public class TraderInventory implements IInventory {
         final Trade trade = this.selectedTrade;
         final Product buy = trade.getBuy();
         final Product sell = trade.getSell();
-        if (((ItemStack) this.slots.get(0)).getItem() != buy.getItem()) {
+        if (this.slots.get(0).getItem() != buy.getItem()) {
             this.slots.set(2, ItemStack.EMPTY);
-        } else if (((ItemStack) this.slots.get(0)).getCount() < buy.getAmount()) {
+        } else if (this.slots.get(0).getCount() < buy.getAmount()) {
             this.slots.set(2, ItemStack.EMPTY);
         } else {
             this.slots.set(2, sell.toStack());

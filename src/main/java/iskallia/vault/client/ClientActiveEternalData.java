@@ -9,7 +9,7 @@ public class ClientActiveEternalData {
     private static final Set<ActiveEternalData.ActiveEternal> activeEternals;
 
     public static Set<ActiveEternalData.ActiveEternal> getActiveEternals() {
-        return Collections.unmodifiableSet((Set<? extends ActiveEternalData.ActiveEternal>) ClientActiveEternalData.activeEternals);
+        return Collections.unmodifiableSet(ClientActiveEternalData.activeEternals);
     }
 
     public static void receive(final ActiveEternalMessage message) {

@@ -30,7 +30,7 @@ public class ExitPortalPieceProcessor extends VaultPieceProcessor {
         final Direction portalDir = generatedDirection.getClockWise();
         final VaultRoom room = (VaultRoom) piece;
         final BlockPos at = new BlockPos(room.getCenter()).relative(portalDir, -1);
-        this.objective.buildPortal(ExitPortalPieceProcessor.EXIT_PORTAL_PLACER.place((IWorld) world, at, portalDir, 3, 5));
+        this.objective.buildPortal(ExitPortalPieceProcessor.EXIT_PORTAL_PLACER.place(world, at, portalDir, 3, 5));
     }
 
     static {

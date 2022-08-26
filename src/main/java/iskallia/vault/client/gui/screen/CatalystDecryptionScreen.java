@@ -38,7 +38,7 @@ public class CatalystDecryptionScreen extends ContainerScreen<CatalystDecryption
 
     protected void renderLabels(final MatrixStack matrixStack, final int x, final int y) {
         this.font.draw(matrixStack, this.title, 5.0f, 5.0f, 4210752);
-        final Slot crystalSlot = ((CatalystDecryptionContainer) this.menu).getSlot(((CatalystDecryptionContainer) this.menu).slots.size() - 1);
+        final Slot crystalSlot = this.menu.getSlot(this.menu.slots.size() - 1);
         if (!crystalSlot.hasItem()) {
             return;
         }
@@ -46,7 +46,7 @@ public class CatalystDecryptionScreen extends ContainerScreen<CatalystDecryption
         if (crystal.isEmpty() || !(crystal.getItem() instanceof VaultCrystalItem)) {
             return;
         }
-        for (final Slot catalystSlot : ((CatalystDecryptionContainer) this.menu).getCatalystSlots()) {
+        for (final Slot catalystSlot : this.menu.getCatalystSlots()) {
             if (!catalystSlot.hasItem()) {
                 continue;
             }
@@ -71,12 +71,12 @@ public class CatalystDecryptionScreen extends ContainerScreen<CatalystDecryption
             if (!isLeft) {
                 RenderSystem.translatef((float) (catalystSlot.x + 14), (float) catalystSlot.y, 0.0f);
                 RenderSystem.scalef(0.65f, 0.65f, 0.65f);
-                this.renderWrappedToolTip(matrixStack, (List) results, 0, 0, this.font);
+                this.renderWrappedToolTip(matrixStack, results, 0, 0, this.font);
             } else {
                 final int maxLength = results.stream().mapToInt(txt -> this.font.width(txt.getVisualOrderText())).max().orElse(0);
                 RenderSystem.translatef(catalystSlot.x - 14 - maxLength * 0.65f, (float) catalystSlot.y, 0.0f);
                 RenderSystem.scalef(0.65f, 0.65f, 0.65f);
-                this.renderWrappedToolTip(matrixStack, (List) results, 0, 0, this.font);
+                this.renderWrappedToolTip(matrixStack, results, 0, 0, this.font);
             }
             RenderSystem.popMatrix();
         }

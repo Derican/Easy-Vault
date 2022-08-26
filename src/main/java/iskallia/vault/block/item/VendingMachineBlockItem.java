@@ -38,7 +38,7 @@ public class VendingMachineBlockItem extends BlockItem {
                     final TraderCore core = NBTSerializer.deserialize(TraderCore.class, (CompoundNBT) tag);
                     final StringTextComponent text = new StringTextComponent(" Vendor: " + core.getName());
                     text.setStyle(Style.EMPTY.withColor(Color.fromRgb(-26266)));
-                    tooltip.add((ITextComponent) text);
+                    tooltip.add(text);
                     return;
                 } catch (final Exception e) {
                     e.printStackTrace();
@@ -46,6 +46,6 @@ public class VendingMachineBlockItem extends BlockItem {
                 }
             }
         }
-        super.appendHoverText(stack, worldIn, (List) tooltip, flagIn);
+        super.appendHoverText(stack, worldIn, tooltip, flagIn);
     }
 }

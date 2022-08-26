@@ -32,7 +32,7 @@ public class CoopVaultBuilder extends VaultRaidBuilder {
     @Override
     public VaultRaid.Builder initializeBuilder(final ServerWorld world, final ServerPlayerEntity player, final CrystalData crystal) {
         final VaultRaid.Builder builder = this.getDefaultBuilder(crystal, world, player);
-        final boolean isAncientVault = VaultRaid.ANCIENTS.get().getId().equals((Object) crystal.getSelectedObjective());
+        final boolean isAncientVault = VaultRaid.ANCIENTS.get().getId().equals(crystal.getSelectedObjective());
         if (player != null) {
             final Optional<VaultPartyData.Party> partyOpt = VaultPartyData.get(world).getParty(player.getUUID());
             if (partyOpt.isPresent() && partyOpt.get().getMembers().size() > 1 && !isAncientVault && !crystal.isChallenge()) {

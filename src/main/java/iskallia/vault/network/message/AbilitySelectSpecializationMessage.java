@@ -46,18 +46,18 @@ public class AbilitySelectSpecializationMessage {
             } else {
                 final String specialization = message.specialization;
                 final PlayerAbilitiesData abilitiesData = PlayerAbilitiesData.get((ServerWorld) sender.level);
-                final AbilityTree abilityTree = abilitiesData.getAbilities((PlayerEntity) sender);
+                final AbilityTree abilityTree = abilitiesData.getAbilities(sender);
                 final AbilityNode<?, ?> abilityNode = abilityTree.getNodeByName(message.ability);
                 if (abilityNode == null) {
                     return;
                 } else {
                     final PlayerVaultStatsData statsData = PlayerVaultStatsData.get((ServerWorld) sender.level);
-                    final PlayerVaultStats stats = statsData.getVaultStats((PlayerEntity) sender);
+                    final PlayerVaultStats stats = statsData.getVaultStats(sender);
                     if (specialization != null) {
                         if (!abilityNode.getGroup().hasSpecialization(specialization)) {
                             return;
                         } else {
-                            final AbilityConfig specConfig = (AbilityConfig) abilityNode.getGroup().getAbilityConfig(specialization, abilityNode.getLevel());
+                            final AbilityConfig specConfig = abilityNode.getGroup().getAbilityConfig(specialization, abilityNode.getLevel());
                             if (specConfig == null) {
                                 return;
                             } else if (stats.getVaultLevel() < specConfig.getLevelRequirement()) {

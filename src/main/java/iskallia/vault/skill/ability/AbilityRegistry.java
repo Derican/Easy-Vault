@@ -18,15 +18,15 @@ public class AbilityRegistry {
 
     @Nullable
     public static AbilityEffect<?> getAbility(final String key) {
-        return (AbilityEffect) AbilityRegistry.abilityRegistry.get(key);
+        return AbilityRegistry.abilityRegistry.get(key);
     }
 
     @Nullable
     public static String getKey(final AbilityEffect<?> ability) {
-        return (String) AbilityRegistry.abilityRegistry.inverse().get(ability);
+        return AbilityRegistry.abilityRegistry.inverse().get(ability);
     }
 
     static {
-        abilityRegistry = (BiMap) HashBiMap.create();
+        abilityRegistry = HashBiMap.create();
     }
 }

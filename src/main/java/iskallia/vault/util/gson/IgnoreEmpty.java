@@ -13,7 +13,7 @@ public class IgnoreEmpty {
             if (value == null || value == 0) {
                 out.nullValue();
             } else {
-                out.value((Number) value);
+                out.value(value);
             }
         }
 
@@ -31,7 +31,7 @@ public class IgnoreEmpty {
             if (value == null || value == 0.0) {
                 out.nullValue();
             } else {
-                out.value((Number) value);
+                out.value(value);
             }
         }
 

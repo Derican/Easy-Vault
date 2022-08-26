@@ -73,8 +73,8 @@ public class GlobalTraderConfig extends Config {
             knockback.putString("id", "minecraft:knockback");
             knockback.putInt("lvl", 10);
             enchantments.add(knockback);
-            nbt.put("Enchantments", (INBT) enchantments);
-            nbt.put("ench", (INBT) enchantments);
+            nbt.put("Enchantments", enchantments);
+            nbt.put("ench", enchantments);
             this.POOL.add(new Trade(new Product(Items.ENCHANTED_GOLDEN_APPLE, 8, null), null, new Product(Items.STICK, 1, nbt)), 1);
         }
 

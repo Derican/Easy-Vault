@@ -13,7 +13,7 @@ import java.util.function.Predicate;
 
 public class JigsawPatternFilter {
     private Predicate<ResourceLocation> roomPieceFilter;
-    private WeightedList<JigsawPiece> filteredPieceCache;
+    private final WeightedList<JigsawPiece> filteredPieceCache;
 
     public JigsawPatternFilter() {
         this.roomPieceFilter = (key -> true);

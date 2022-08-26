@@ -44,7 +44,7 @@ public class ItemVaultRaffleSeal extends Item {
         if (stack.getCount() > 1) {
             while (stack.getCount() > 1) {
                 stack.shrink(1);
-                final ItemStack gearPiece = new ItemStack((IItemProvider) this);
+                final ItemStack gearPiece = new ItemStack(this);
                 MiscUtils.giveItem(player, gearPiece);
             }
         }
@@ -56,12 +56,12 @@ public class ItemVaultRaffleSeal extends Item {
 
     @OnlyIn(Dist.CLIENT)
     public void appendHoverText(final ItemStack stack, @Nullable final World world, final List<ITextComponent> tooltip, final ITooltipFlag flag) {
-        tooltip.add((ITextComponent) new StringTextComponent("Turns a crystal into a ").withStyle(TextFormatting.GRAY).append((ITextComponent) new StringTextComponent("Raffle").withStyle(TextFormatting.GOLD)).append((ITextComponent) new StringTextComponent(" crystal.").withStyle(TextFormatting.GRAY)));
+        tooltip.add(new StringTextComponent("Turns a crystal into a ").withStyle(TextFormatting.GRAY).append(new StringTextComponent("Raffle").withStyle(TextFormatting.GOLD)).append(new StringTextComponent(" crystal.").withStyle(TextFormatting.GRAY)));
         final String raffleName = getPlayerName(stack);
         if (!raffleName.isEmpty()) {
-            tooltip.add((ITextComponent) new StringTextComponent("Player Boss: ").withStyle(TextFormatting.GRAY).append((ITextComponent) new StringTextComponent(raffleName).withStyle(TextFormatting.GREEN)));
+            tooltip.add(new StringTextComponent("Player Boss: ").withStyle(TextFormatting.GRAY).append(new StringTextComponent(raffleName).withStyle(TextFormatting.GREEN)));
         } else {
-            tooltip.add((ITextComponent) new StringTextComponent("Player Boss: ").withStyle(TextFormatting.GRAY).append((ITextComponent) new StringTextComponent("???").withStyle(TextFormatting.GREEN)));
+            tooltip.add(new StringTextComponent("Player Boss: ").withStyle(TextFormatting.GRAY).append(new StringTextComponent("???").withStyle(TextFormatting.GREEN)));
         }
     }
 }

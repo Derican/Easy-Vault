@@ -19,7 +19,7 @@ public class MixinItem {
         if (stack.getItem() == Items.ENCHANTED_BOOK) {
             final int overLevels = OverlevelEnchantHelper.getOverlevels(stack);
             if (overLevels != -1) {
-                final IFormattableTextComponent formatted = ModConfigs.OVERLEVEL_ENCHANT.format((ITextComponent) info.getReturnValue(), overLevels);
+                final IFormattableTextComponent formatted = ModConfigs.OVERLEVEL_ENCHANT.format(info.getReturnValue(), overLevels);
                 if (formatted != null) {
                     info.setReturnValue(formatted);
                     info.cancel();

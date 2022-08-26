@@ -88,7 +88,7 @@ public class PlayerDamageHelper {
         if (event.phase == TickEvent.Phase.START) {
             return;
         }
-        final MinecraftServer srv = (MinecraftServer) LogicalSidedProvider.INSTANCE.get(LogicalSide.SERVER);
+        final MinecraftServer srv = LogicalSidedProvider.INSTANCE.get(LogicalSide.SERVER);
         PlayerDamageHelper.multipliers.forEach((playerId, multipliers) -> {
             final ServerPlayerEntity sPlayer = srv.getPlayerList().getPlayer(playerId);
             if (sPlayer != null) {
@@ -149,7 +149,7 @@ public class PlayerDamageHelper {
     }
 
     public static void sync(final ServerPlayerEntity sPlayer) {
-        final float multiplier = getDamageMultiplier((PlayerEntity) sPlayer, false);
+        final float multiplier = getDamageMultiplier(sPlayer, false);
         ModNetwork.CHANNEL.sendTo(new PlayerDamageMultiplierMessage(multiplier), sPlayer.connection.connection, NetworkDirection.PLAY_TO_CLIENT);
     }
 
@@ -230,6 +230,6 @@ public class PlayerDamageHelper {
 
     public enum Operation {
         ADDITIVE_MULTIPLY,
-        STACKING_MULTIPLY;
+        STACKING_MULTIPLY
     }
 }

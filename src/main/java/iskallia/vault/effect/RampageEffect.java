@@ -34,7 +34,7 @@ public class RampageEffect extends Effect {
         if (livingEntity instanceof ServerPlayerEntity) {
             final ServerPlayerEntity player = (ServerPlayerEntity) livingEntity;
             this.removeExistingDamageBuff(player);
-            final AbilityTree abilities = PlayerAbilitiesData.get((ServerWorld) player.getCommandSenderWorld()).getAbilities((PlayerEntity) player);
+            final AbilityTree abilities = PlayerAbilitiesData.get((ServerWorld) player.getCommandSenderWorld()).getAbilities(player);
             final AbilityNode<?, ?> rampageNode = abilities.getNodeByName("Rampage");
             final RampageConfig cfg = (RampageConfig) rampageNode.getAbilityConfig();
             if (cfg != null) {

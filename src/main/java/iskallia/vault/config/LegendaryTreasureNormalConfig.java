@@ -74,8 +74,8 @@ public class LegendaryTreasureNormalConfig extends Config {
         ItemStack stack = ItemStack.EMPTY;
         final SingleItemEntry singleItemEntry = this.ITEMS.get(rand.nextInt(this.ITEMS.size()));
         try {
-            final Item item = (Item) ForgeRegistries.ITEMS.getValue(new ResourceLocation(singleItemEntry.ITEM));
-            stack = new ItemStack((IItemProvider) item);
+            final Item item = ForgeRegistries.ITEMS.getValue(new ResourceLocation(singleItemEntry.ITEM));
+            stack = new ItemStack(item);
             final CompoundNBT nbt = JsonToNBT.parseTag(singleItemEntry.NBT);
             stack.setTag(nbt);
         } catch (final Exception e) {

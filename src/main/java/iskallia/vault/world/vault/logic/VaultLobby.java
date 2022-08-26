@@ -152,13 +152,13 @@ public class VaultLobby implements INBTSerializable<CompoundNBT>, IVaultTask {
             if (attribute != null) {
                 attribute.removeModifier(CakeHuntObjective.PENALTY);
             }
-            if (sPlayer.isAlive() && this.snapshots.restoreSnapshot((PlayerEntity) sPlayer)) {
-                this.snapshots.removeSnapshot((PlayerEntity) sPlayer);
+            if (sPlayer.isAlive() && this.snapshots.restoreSnapshot(sPlayer)) {
+                this.snapshots.removeSnapshot(sPlayer);
             }
             final Set<VaultPiece> portals = vault.getGenerator().getPiecesAt(sPlayer.blockPosition(), VaultPortal.class);
             if (!portals.isEmpty()) {
                 final VaultPortal portal = (VaultPortal) portals.iterator().next();
-                if (!(!this.isInPortal(world, sPlayer))) {
+                if (this.isInPortal(world, sPlayer)) {
                     final String[] split = portal.getTemplate().getPath().split(Pattern.quote("_"));
                     final PlayerFavourData.VaultGodType type = this.fromColor(split[split.length - 1]);
                     if (type != null) {
@@ -170,7 +170,7 @@ public class VaultLobby implements INBTSerializable<CompoundNBT>, IVaultTask {
                                 VaultRaidData.get(world).startVault(world, builder, v -> {
                                     v.getProperties().create(VaultRaid.LEVEL, 300);
                                     v.getProperties().create(VaultRaid.FORCE_ACTIVE, true);
-                                    v.getProperties().create(VaultRaid.PARENT, (UUID) vault.getProperties().getValue(VaultRaid.IDENTIFIER));
+                                    v.getProperties().create(VaultRaid.PARENT, vault.getProperties().getValue(VaultRaid.IDENTIFIER));
                                     branch.vaultId = v.getProperties().getBase(VaultRaid.IDENTIFIER).orElse(null);
                                     this.initialize(branch, v);
                                     return;
@@ -184,7 +184,7 @@ public class VaultLobby implements INBTSerializable<CompoundNBT>, IVaultTask {
                                 if (target != null) {
                                     if (VaultRaidData.get(world).getActiveFor(player.getPlayerId()) != VaultRaidData.get(world).get(branch.vaultId)) {
                                         vault.getPlayers().remove(player);
-                                        this.snapshots.createSnapshot((PlayerEntity) sPlayer);
+                                        this.snapshots.createSnapshot(sPlayer);
                                         this.joinVault(target, sPlayer, world, branch);
                                     }
                                 }
@@ -216,17 +216,17 @@ public class VaultLobby implements INBTSerializable<CompoundNBT>, IVaultTask {
                 for (final VaultPlayer vPlayer : vault.getPlayers()) {
                     vPlayer.runIfPresent(world.getServer(), playerEntity -> {
 
-                        final FireworkRocketEntity fireworkRocketEntity = new FireworkRocketEntity((World) world, playerEntity.getX(), playerEntity.getY(), playerEntity.getZ(), new ItemStack((IItemProvider) Items.FIREWORK_ROCKET));
-                        world.addFreshEntity((Entity) fireworkRocketEntity);
-                        world.playSound((PlayerEntity) null, playerEntity.getX(), playerEntity.getY(), playerEntity.getZ(), SoundEvents.UI_TOAST_CHALLENGE_COMPLETE, SoundCategory.MASTER, 1.0f, 1.0f);
+                        final FireworkRocketEntity fireworkRocketEntity = new FireworkRocketEntity(world, playerEntity.getX(), playerEntity.getY(), playerEntity.getZ(), new ItemStack(Items.FIREWORK_ROCKET));
+                        world.addFreshEntity(fireworkRocketEntity);
+                        world.playSound(null, playerEntity.getX(), playerEntity.getY(), playerEntity.getZ(), SoundEvents.UI_TOAST_CHALLENGE_COMPLETE, SoundCategory.MASTER, 1.0f, 1.0f);
                         final StringTextComponent title = new StringTextComponent("The Final Challenge");
                         title.setStyle(Style.EMPTY.withColor(Color.fromRgb(14491166)));
                         final StringTextComponent subtitle = new StringTextComponent("The Gods are watching...");
                         subtitle.setStyle(Style.EMPTY.withColor(Color.fromRgb(14491166)));
-                        final STitlePacket titlePacket = new STitlePacket(STitlePacket.Type.TITLE, (ITextComponent) title);
-                        final STitlePacket subtitlePacket = new STitlePacket(STitlePacket.Type.SUBTITLE, (ITextComponent) subtitle);
-                        playerEntity.connection.send((IPacket) titlePacket);
-                        playerEntity.connection.send((IPacket) subtitlePacket);
+                        final STitlePacket titlePacket = new STitlePacket(STitlePacket.Type.TITLE, title);
+                        final STitlePacket subtitlePacket = new STitlePacket(STitlePacket.Type.SUBTITLE, subtitle);
+                        playerEntity.connection.send(titlePacket);
+                        playerEntity.connection.send(subtitlePacket);
                         return;
                     });
                 }
@@ -250,14 +250,14 @@ public class VaultLobby implements INBTSerializable<CompoundNBT>, IVaultTask {
                     data.setCanGenerateTreasureRooms(false);
                     data.setCanTriggerInfluences(false);
                     data.setType(CrystalData.Type.FINAL_BOSS);
-                    data.setSelectedObjective((ResourceLocation) VaultObjective.REGISTRY.inverse().get((Object) VaultRaid.KILL_THE_BOSS));
+                    data.setSelectedObjective(VaultObjective.REGISTRY.inverse().get(VaultRaid.KILL_THE_BOSS));
                     final VaultRaid.Builder builder = data.createVault(world, sPlayer);
 
                     for (VaultPlayer player2 : vault.getPlayers()) {
-                        player2.runIfPresent(world.getServer(), p -> this.snapshots.createSnapshot((PlayerEntity) p));
+                        player2.runIfPresent(world.getServer(), p -> this.snapshots.createSnapshot(p));
                     }
                     VaultRaidData.get(world).startVault(world, builder, v1 -> {
-                        v1.getProperties().create(VaultRaid.PARENT, (UUID) vault.getProperties().getValue(VaultRaid.IDENTIFIER));
+                        v1.getProperties().create(VaultRaid.PARENT, vault.getProperties().getValue(VaultRaid.IDENTIFIER));
                         this.bossVaultId = v1.getProperties().getBase(VaultRaid.IDENTIFIER).orElse(null);
                         vault.getPlayers().clear();
                         vault.getProperties().create(VaultRaid.LOBBY, this);
@@ -273,10 +273,10 @@ public class VaultLobby implements INBTSerializable<CompoundNBT>, IVaultTask {
             vPlayer.runIfPresent(world.getServer(), player -> {
                 final IFormattableTextComponent title = new StringTextComponent(String.valueOf(secondsLeft)).withStyle(TextFormatting.BOLD);
                 title.setStyle(Style.EMPTY.withColor(Color.fromRgb(14491166)));
-                final STitlePacket titlePacket = new STitlePacket(STitlePacket.Type.TITLE, (ITextComponent) title);
+                final STitlePacket titlePacket = new STitlePacket(STitlePacket.Type.TITLE, title);
                 final STitlePacket subtitlePacket = new STitlePacket(STitlePacket.Type.SUBTITLE, StringTextComponent.EMPTY);
-                player.connection.send((IPacket) titlePacket);
-                player.connection.send((IPacket) subtitlePacket);
+                player.connection.send(titlePacket);
+                player.connection.send(subtitlePacket);
                 ModNetwork.CHANNEL.send(PacketDistributor.PLAYER.with(() -> player), (Object) msg);
             });
         }
@@ -314,17 +314,17 @@ public class VaultLobby implements INBTSerializable<CompoundNBT>, IVaultTask {
         data.setCanTriggerInfluences(false);
         if (branch.type == PlayerFavourData.VaultGodType.BENEVOLENT) {
             data.setType(CrystalData.Type.FINAL_VELARA);
-            data.setSelectedObjective((ResourceLocation) VaultObjective.REGISTRY.inverse().get((Object) VaultRaid.CAKE_HUNT));
+            data.setSelectedObjective(VaultObjective.REGISTRY.inverse().get(VaultRaid.CAKE_HUNT));
             data.setTargetObjectiveCount(42);
         } else if (branch.type == PlayerFavourData.VaultGodType.OMNISCIENT) {
             data.setType(CrystalData.Type.FINAL_TENOS);
-            data.setSelectedObjective((ResourceLocation) VaultObjective.REGISTRY.inverse().get((Object) VaultRaid.ARCHITECT_KILL_ALL_BOSSES));
+            data.setSelectedObjective(VaultObjective.REGISTRY.inverse().get(VaultRaid.ARCHITECT_KILL_ALL_BOSSES));
         } else if (branch.type == PlayerFavourData.VaultGodType.TIMEKEEPER) {
             data.setType(CrystalData.Type.FINAL_WENDARR);
-            data.setSelectedObjective((ResourceLocation) VaultObjective.REGISTRY.inverse().get((Object) VaultRaid.TREASURE_HUNT));
+            data.setSelectedObjective(VaultObjective.REGISTRY.inverse().get(VaultRaid.TREASURE_HUNT));
         } else if (branch.type == PlayerFavourData.VaultGodType.MALEVOLENCE) {
             data.setType(CrystalData.Type.FINAL_IDONA);
-            data.setSelectedObjective((ResourceLocation) VaultObjective.REGISTRY.inverse().get((Object) VaultRaid.RAID_CHALLENGE));
+            data.setSelectedObjective(VaultObjective.REGISTRY.inverse().get(VaultRaid.RAID_CHALLENGE));
             data.setTargetObjectiveCount(10);
         } else {
             data = null;
@@ -422,7 +422,7 @@ public class VaultLobby implements INBTSerializable<CompoundNBT>, IVaultTask {
                     final VaultGodEye target = (VaultGodEye) godEyes.get(player.level.getRandom().nextInt(godEyes.size()));
                     final BlockState state = player.getLevel().getBlockState(target.getMin());
                     if (state.hasProperty((Property) GodEyeBlock.LIT)) {
-                        player.getLevel().setBlockAndUpdate(target.getMin(), (BlockState) state.setValue((Property) GodEyeBlock.LIT, (Comparable) Boolean.FALSE));
+                        player.getLevel().setBlockAndUpdate(target.getMin(), state.setValue((Property) GodEyeBlock.LIT, (Comparable) Boolean.FALSE));
                     }
                     this.bossVaultId = null;
                     parent.getProperties().create(VaultRaid.LOBBY, this);
@@ -435,7 +435,7 @@ public class VaultLobby implements INBTSerializable<CompoundNBT>, IVaultTask {
                 FinalVaultData.get(world).onCompleted(player.getUUID());
                 final ItemStack trophy = VaultChampionTrophyBlockItem.create(player, VaultChampionTrophy.Variant.values()[MathHelper.clamp(id, 0, VaultChampionTrophy.Variant.values().length - 1)]);
                 VaultChampionTrophyBlockItem.setScore(trophy, score);
-                ScheduledItemDropData.get(player.getLevel()).addDrop((PlayerEntity) player, trophy);
+                ScheduledItemDropData.get(player.getLevel()).addDrop(player, trophy);
             }
             if (vault.getActiveObjectives().isEmpty()) {
                 player.getLevel().getServer().submit(() -> VaultRaid.EXIT_SAFELY.execute(parent, member, player.getLevel()));
@@ -469,18 +469,18 @@ public class VaultLobby implements INBTSerializable<CompoundNBT>, IVaultTask {
             }
             if (item != null) {
 
-                final ItemStack stack = new ItemStack((IItemProvider) item, (this.players.size() > 1) ? 1 : 2);
+                final ItemStack stack = new ItemStack(item, (this.players.size() > 1) ? 1 : 2);
                 player.inventory.add(stack);
                 final String vaultName = (new String[]{"Velara's Gluttony", "Tenos' Puzzle", "Wendarr's Passage", "Idona's Wrath"})[type.ordinal()];
-                final ITextComponent c0 = (ITextComponent) player.getDisplayName().copy().withStyle(TextFormatting.LIGHT_PURPLE);
-                final ITextComponent c2 = (ITextComponent) new StringTextComponent(" completed ").withStyle(TextFormatting.GRAY);
-                final ITextComponent c3 = (ITextComponent) new StringTextComponent(vaultName).withStyle(branch.type.getChatColor());
-                final ITextComponent c4 = (ITextComponent) new StringTextComponent(" and was awarded ").withStyle(TextFormatting.GRAY);
+                final ITextComponent c0 = player.getDisplayName().copy().withStyle(TextFormatting.LIGHT_PURPLE);
+                final ITextComponent c2 = new StringTextComponent(" completed ").withStyle(TextFormatting.GRAY);
+                final ITextComponent c3 = new StringTextComponent(vaultName).withStyle(branch.type.getChatColor());
+                final ITextComponent c4 = new StringTextComponent(" and was awarded ").withStyle(TextFormatting.GRAY);
 
                 final StringTextComponent stringTextComponent = new StringTextComponent(branch.type.getName() + "'s Essence");
-                final ITextComponent c5 = (ITextComponent) stringTextComponent.withStyle(branch.type.getChatColor());
-                final ITextComponent c6 = (ITextComponent) new StringTextComponent("!").withStyle(TextFormatting.GRAY);
-                final ITextComponent message = (ITextComponent) new StringTextComponent("").append(c0).append(c2).append(c3).append(c4).append(c5).append(c6);
+                final ITextComponent c5 = stringTextComponent.withStyle(branch.type.getChatColor());
+                final ITextComponent c6 = new StringTextComponent("!").withStyle(TextFormatting.GRAY);
+                final ITextComponent message = new StringTextComponent("").append(c0).append(c2).append(c3).append(c4).append(c5).append(c6);
                 player.getServer().getPlayerList().broadcastMessage(message, ChatType.CHAT, player.getUUID());
                 int score2 = 0;
                 switch (type) {
@@ -520,7 +520,7 @@ public class VaultLobby implements INBTSerializable<CompoundNBT>, IVaultTask {
         for (int xx = min.getX(); xx <= max.getX(); ++xx) {
             for (int yy = min.getY(); yy <= max.getY(); ++yy) {
                 for (int zz = min.getZ(); zz <= max.getZ(); ++zz) {
-                    final BlockState state = world.getBlockState((BlockPos) pos.set(xx, yy, zz));
+                    final BlockState state = world.getBlockState(pos.set(xx, yy, zz));
                     if (state.getBlock() == ModBlocks.VAULT_PORTAL) {
                         return true;
                     }
@@ -537,12 +537,12 @@ public class VaultLobby implements INBTSerializable<CompoundNBT>, IVaultTask {
         if (this.bossVaultId != null) {
             nbt.putString("BossVaultId", this.bossVaultId.toString());
         }
-        nbt.put("Branches", (INBT) branchList);
-        nbt.put("Snapshots", (INBT) this.snapshots.serializeNBT());
-        nbt.put("Players", (INBT) this.players.serializeNBT());
+        nbt.put("Branches", branchList);
+        nbt.put("Snapshots", this.snapshots.serializeNBT());
+        nbt.put("Players", this.players.serializeNBT());
         final CompoundNBT scores = new CompoundNBT();
         this.scores.forEach((type, scoreList) -> NBTHelper.writeList(scores, type.name(), scoreList, IntNBT.class, IntNBT::valueOf));
-        nbt.put("scores", (INBT) scores);
+        nbt.put("scores", scores);
         return nbt;
     }
 

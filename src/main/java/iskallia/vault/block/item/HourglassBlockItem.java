@@ -28,9 +28,9 @@ public class HourglassBlockItem extends BlockItem
     public void appendHoverText(final ItemStack stack, @Nullable final World worldIn, final List<ITextComponent> tooltip, final ITooltipFlag flagIn) {
         final CompoundNBT tag = stack.getOrCreateTag().getCompound("BlockEntityTag");
         if (tag.contains("ownerPlayerName")) {
-            tooltip.add((ITextComponent)new StringTextComponent(tag.getString("ownerPlayerName")).withStyle(TextFormatting.GOLD));
+            tooltip.add(new StringTextComponent(tag.getString("ownerPlayerName")).withStyle(TextFormatting.GOLD));
         }
-        super.appendHoverText(stack, worldIn, (List)tooltip, flagIn);
+        super.appendHoverText(stack, worldIn, tooltip, flagIn);
     }
     
     public static void addHourglassOwner(final ItemStack stack, final UUID playerUUID, final String playerName) {
@@ -40,6 +40,6 @@ public class HourglassBlockItem extends BlockItem
         final CompoundNBT tileTag = new CompoundNBT();
         tileTag.putUUID("ownerUUID", playerUUID);
         tileTag.putString("ownerPlayerName", playerName);
-        stack.getOrCreateTag().put("BlockEntityTag", (INBT)tileTag);
+        stack.getOrCreateTag().put("BlockEntityTag", tileTag);
     }
 }

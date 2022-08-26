@@ -74,7 +74,7 @@ public class EntityEvents {
         for (final List<VillagerTrades.ITrade> trades : event.getTrades().values()) {
             trades.removeIf(trade -> {
                 try {
-                    final MerchantOffer offer = trade.getOffer((Entity) null, EntityEvents.rand);
+                    final MerchantOffer offer = trade.getOffer(null, EntityEvents.rand);
                     final ItemStack output = offer.assemble();
                     final Item outItem = output.getItem();
                     if (outItem instanceof ShieldItem) {
@@ -92,7 +92,7 @@ public class EntityEvents {
     @SubscribeEvent
     public static void onBlockBreak(final BlockEvent.BreakEvent event) {
         final PlayerEntity player = event.getPlayer();
-        final ModifiableAttributeInstance reachAttr = player.getAttribute((Attribute) ForgeMod.REACH_DISTANCE.get());
+        final ModifiableAttributeInstance reachAttr = player.getAttribute(ForgeMod.REACH_DISTANCE.get());
         if (reachAttr == null) {
             return;
         }
@@ -164,7 +164,7 @@ public class EntityEvents {
                             continue;
                         }
                         final EffectCloudEntity cloud = EffectCloudEntity.fromConfig(attacked.level, attacker, attacked.getX(), attacked.getY(), attacked.getZ(), config);
-                        world.addFreshEntity((Entity) cloud);
+                        world.addFreshEntity(cloud);
                     }
                 }
             }
@@ -203,12 +203,12 @@ public class EntityEvents {
             final int additionalChains = VaultGearHelper.getAttributeValueOnGearSumInt(attacker, ModAttributes.ON_HIT_CHAIN);
             if (additionalChains > 0) {
                 ActiveFlags.IS_AOE_ATTACKING.runIfNotSet(() -> {
-                    final List<MobEntity> nearby = EntityHelper.getNearby((IWorld) world, (Vector3i) attacked.blockPosition(), 5.0f, MobEntity.class);
+                    final List<MobEntity> nearby = EntityHelper.getNearby(world, attacked.blockPosition(), 5.0f, MobEntity.class);
                     nearby.remove(attacked);
                     nearby.remove(attacker);
                     nearby.removeIf(mob -> (attacker instanceof EternalEntity || attacker instanceof PlayerEntity) && mob instanceof EternalEntity);
                     if (!nearby.isEmpty()) {
-                        nearby.sort(Comparator.comparing(e -> e.distanceToSqr((Entity) attacked)));
+                        nearby.sort(Comparator.comparing(e -> e.distanceToSqr(attacked)));
                         final List<MobEntity> nearby2 = nearby.subList(0, Math.min(additionalChains, nearby.size()));
                         float multiplier = 0.5f;
 
@@ -232,7 +232,7 @@ public class EntityEvents {
             final int blockAoE = VaultGearHelper.getAttributeValueOnGearSumInt(attacker, ModAttributes.ON_HIT_AOE);
             if (blockAoE > 0) {
                 ActiveFlags.IS_AOE_ATTACKING.runIfNotSet(() -> {
-                    final List<MobEntity> nearby3 = EntityHelper.getNearby((IWorld) world, (Vector3i) attacked.blockPosition(), (float) blockAoE, MobEntity.class);
+                    final List<MobEntity> nearby3 = EntityHelper.getNearby(world, attacked.blockPosition(), (float) blockAoE, MobEntity.class);
                     nearby3.remove(attacked);
                     nearby3.remove(attacker);
                     nearby3.removeIf(mob -> (attacker instanceof EternalEntity || attacker instanceof PlayerEntity) && mob instanceof EternalEntity);
@@ -331,7 +331,7 @@ public class EntityEvents {
         }
         if (killerEntity instanceof ServerPlayerEntity) {
             final ServerPlayerEntity killer = (ServerPlayerEntity) killerEntity;
-            if (MiscUtils.inventoryContains((IInventory) killer.inventory, stack -> stack.getItem() instanceof ItemShardPouch) && vault.getActiveObjectives().stream().noneMatch(objective -> objective.shouldPauseTimer(sWorld.getServer(), vault))) {
+            if (MiscUtils.inventoryContains(killer.inventory, stack -> stack.getItem() instanceof ItemShardPouch) && vault.getActiveObjectives().stream().noneMatch(objective -> objective.shouldPauseTimer(sWorld.getServer(), vault))) {
                 addedDrops |= addShardDrops(world, entity, killer, vault, event.getDrops());
             }
         }
@@ -350,7 +350,7 @@ public class EntityEvents {
             return false;
         }
         final ScavengerHuntObjective objective = objectiveOpt.get();
-        final List<ScavengerHuntConfig.ItemEntry> specialDrops = ModConfigs.SCAVENGER_HUNT.generateMobDropLoot(objective.getGenerationDropFilter(), (EntityType<?>) killed.getType());
+        final List<ScavengerHuntConfig.ItemEntry> specialDrops = ModConfigs.SCAVENGER_HUNT.generateMobDropLoot(objective.getGenerationDropFilter(), killed.getType());
         return !specialDrops.isEmpty() && vault.getProperties().getBase(VaultRaid.IDENTIFIER).map(identifier -> {
             specialDrops.forEach(entry -> {
                 final ItemStack stack = entry.createItemStack();
@@ -381,7 +381,7 @@ public class EntityEvents {
         if (name.isEmpty()) {
             return false;
         }
-        final ItemStack raffleSeal = new ItemStack((IItemProvider) ModItems.CRYSTAL_SEAL_RAFFLE);
+        final ItemStack raffleSeal = new ItemStack(ModItems.CRYSTAL_SEAL_RAFFLE);
         ItemVaultRaffleSeal.setPlayerName(raffleSeal, name);
         final ItemEntity itemEntity = new ItemEntity(world, killed.getX(), killed.getY(), killed.getZ(), raffleSeal);
         itemEntity.setDefaultPickUpDelay();
@@ -399,7 +399,7 @@ public class EntityEvents {
                 return false;
             }
         }
-        int shardCount = ModConfigs.SOUL_SHARD.getRandomShards((EntityType<?>) killed.getType());
+        int shardCount = ModConfigs.SOUL_SHARD.getRandomShards(killed.getType());
         for (final VaultInfluence influence : vault.getInfluences().getInfluences(VaultAttributeInfluence.class)) {
             if (((VaultAttributeInfluence) influence).getType() == VaultAttributeInfluence.Type.SOUL_SHARD_DROPS && !((VaultAttributeInfluence) influence).isMultiplicative()) {
                 shardCount += (int) ((VaultAttributeInfluence) influence).getValue();
@@ -423,7 +423,7 @@ public class EntityEvents {
                 shardCount *= (int) ((VaultAttributeInfluence) influence2).getValue();
             }
         }
-        final ItemStack shards = new ItemStack((IItemProvider) ModItems.SOUL_SHARD, shardCount);
+        final ItemStack shards = new ItemStack(ModItems.SOUL_SHARD, shardCount);
         final ItemEntity itemEntity = new ItemEntity(world, killed.getX(), killed.getY(), killed.getZ(), shards);
         itemEntity.setDefaultPickUpDelay();
         drops.add(itemEntity);
@@ -484,7 +484,7 @@ public class EntityEvents {
             final Entity trueSource = event.getSource().getEntity();
             if (trueSource instanceof LivingEntity) {
                 final LivingEntity attacker = (LivingEntity) trueSource;
-                attacker.hurt(DamageSource.thorns((Entity) entityLiving), event.getAmount() * 0.2f);
+                attacker.hurt(DamageSource.thorns(entityLiving), event.getAmount() * 0.2f);
             }
         }
     }
@@ -503,7 +503,7 @@ public class EntityEvents {
             if (source.getAttributes().hasAttribute(ModAttributes.CRIT_MULTIPLIER)) {
                 final double multiplier = source.getAttributeValue(ModAttributes.CRIT_MULTIPLIER);
                 if (source.level.random.nextDouble() < chance) {
-                    source.level.playSound((PlayerEntity) null, source.getX(), source.getY(), source.getZ(), SoundEvents.PLAYER_ATTACK_CRIT, source.getSoundSource(), 1.0f, 1.0f);
+                    source.level.playSound(null, source.getX(), source.getY(), source.getZ(), SoundEvents.PLAYER_ATTACK_CRIT, source.getSoundSource(), 1.0f, 1.0f);
                     event.setAmount((float) (event.getAmount() * multiplier));
                 }
             }
@@ -523,7 +523,7 @@ public class EntityEvents {
                 if (event.getEntityLiving().level.random.nextDouble() < chance) {
                     for (int i = 0; i < 64; ++i) {
                         if (teleportRandomly(event.getEntityLiving(), range)) {
-                            event.getEntityLiving().level.playSound((PlayerEntity) null, event.getEntityLiving().xo, event.getEntityLiving().yo, event.getEntityLiving().zo, ModSounds.BOSS_TP_SFX, event.getEntityLiving().getSoundSource(), 1.0f, 1.0f);
+                            event.getEntityLiving().level.playSound(null, event.getEntityLiving().xo, event.getEntityLiving().yo, event.getEntityLiving().zo, ModSounds.BOSS_TP_SFX, event.getEntityLiving().getSoundSource(), 1.0f, 1.0f);
                             event.setCanceled(true);
                             return;
                         }
@@ -537,7 +537,7 @@ public class EntityEvents {
                 if (event.getEntityLiving().level.random.nextDouble() < chance) {
                     for (int i = 0; i < 64; ++i) {
                         if (teleportRandomly(event.getEntityLiving(), range)) {
-                            event.getEntityLiving().level.playSound((PlayerEntity) null, event.getEntityLiving().xo, event.getEntityLiving().yo, event.getEntityLiving().zo, ModSounds.BOSS_TP_SFX, event.getEntityLiving().getSoundSource(), 1.0f, 1.0f);
+                            event.getEntityLiving().level.playSound(null, event.getEntityLiving().xo, event.getEntityLiving().yo, event.getEntityLiving().zo, ModSounds.BOSS_TP_SFX, event.getEntityLiving().getSoundSource(), 1.0f, 1.0f);
                             event.setCanceled(true);
                             return;
                         }

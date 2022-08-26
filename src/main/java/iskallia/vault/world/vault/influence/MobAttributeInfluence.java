@@ -37,14 +37,14 @@ public class MobAttributeInfluence extends VaultInfluence {
     public CompoundNBT serializeNBT() {
         final CompoundNBT tag = super.serializeNBT();
         tag.putString("attribute", this.targetAttribute.getRegistryName().toString());
-        tag.put("modifier", (INBT) this.modifier.save());
+        tag.put("modifier", this.modifier.save());
         return tag;
     }
 
     @Override
     public void deserializeNBT(final CompoundNBT tag) {
         super.deserializeNBT(tag);
-        this.targetAttribute = (Attribute) ForgeRegistries.ATTRIBUTES.getValue(new ResourceLocation(tag.getString("attribute")));
+        this.targetAttribute = ForgeRegistries.ATTRIBUTES.getValue(new ResourceLocation(tag.getString("attribute")));
         this.modifier = AttributeModifier.load(tag.getCompound("modifier"));
     }
 

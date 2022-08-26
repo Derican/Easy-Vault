@@ -39,7 +39,7 @@ public class TankSlowAbility extends TankAbility<TankSlowConfig> {
             final AbilityNode<?, ?> tankNode = abilities.getNodeByName("Tank");
             if (tankNode.getAbility() == this && tankNode.isLearned()) {
                 final TankSlowConfig config = (TankSlowConfig) tankNode.getAbilityConfig();
-                final List<LivingEntity> entities = EntityHelper.getNearby((IWorld) sWorld, (Vector3i) event.player.blockPosition(), config.getSlowAreaRadius(), LivingEntity.class);
+                final List<LivingEntity> entities = EntityHelper.getNearby(sWorld, event.player.blockPosition(), config.getSlowAreaRadius(), LivingEntity.class);
                 entities.removeIf(e -> e instanceof PlayerEntity || e instanceof EternalEntity);
                 for (final LivingEntity entity : entities) {
                     entity.addEffect(new EffectInstance(Effects.MOVEMENT_SLOWDOWN, 80, config.getSlownessAmplifier(), false, false, false));

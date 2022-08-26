@@ -41,15 +41,15 @@ public class TalentUpgradeMessage {
                 final TalentGroup<?> talentGroup = ModConfigs.TALENTS.getByName(message.talentName);
                 final PlayerVaultStatsData statsData = PlayerVaultStatsData.get((ServerWorld) sender.level);
                 final PlayerTalentsData abilitiesData = PlayerTalentsData.get((ServerWorld) sender.level);
-                final TalentTree talentTree = abilitiesData.getTalents((PlayerEntity) sender);
+                final TalentTree talentTree = abilitiesData.getTalents(sender);
                 if (ModConfigs.SKILL_GATES.getGates().isLocked(talentGroup, talentTree)) {
                     return;
                 } else {
                     final TalentNode<?> talentNode = talentTree.getNodeByName(message.talentName);
-                    final PlayerVaultStats stats = statsData.getVaultStats((PlayerEntity) sender);
+                    final PlayerVaultStats stats = statsData.getVaultStats(sender);
                     if (talentNode.getLevel() >= talentGroup.getMaxLevel()) {
                         return;
-                    } else if (stats.getVaultLevel() < ((PlayerTalent) talentNode.getGroup().getTalent(talentNode.getLevel() + 1)).getLevelRequirement()) {
+                    } else if (stats.getVaultLevel() < talentNode.getGroup().getTalent(talentNode.getLevel() + 1).getLevelRequirement()) {
                         return;
                     } else {
                         final int requiredSkillPts = talentGroup.cost(talentNode.getLevel() + 1);

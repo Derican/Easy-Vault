@@ -35,7 +35,7 @@ public abstract class EffectAbility extends AbilityEffect<EffectConfig> {
     @Override
     public boolean onAction(final EffectConfig config, final ServerPlayerEntity player, final boolean active) {
         if (active) {
-            this.playEffects(config, (PlayerEntity) player);
+            this.playEffects(config, player);
         }
         return true;
     }

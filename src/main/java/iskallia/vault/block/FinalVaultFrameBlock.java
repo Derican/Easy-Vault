@@ -43,12 +43,12 @@ public class FinalVaultFrameBlock extends Block
     }
     
     protected void createBlockStateDefinition(final StateContainer.Builder<Block, BlockState> builder) {
-        builder.add(new Property[] { (Property)FinalVaultFrameBlock.FACING });
+        builder.add(FinalVaultFrameBlock.FACING);
     }
     
     @Nullable
     public BlockState getStateForPlacement(final BlockItemUseContext context) {
-        return (BlockState)this.defaultBlockState().setValue((Property)FinalVaultFrameBlock.FACING, (Comparable)context.getHorizontalDirection().getOpposite());
+        return this.defaultBlockState().setValue((Property)FinalVaultFrameBlock.FACING, (Comparable)context.getHorizontalDirection().getOpposite());
     }
     
     @SubscribeEvent
@@ -60,7 +60,7 @@ public class FinalVaultFrameBlock extends Block
         if (player.isCreative()) {
             return;
         }
-        final FinalVaultFrameTileEntity tileEntity = FinalVaultFrameTileEntity.get((IBlockReader)player.level, event.getPos());
+        final FinalVaultFrameTileEntity tileEntity = FinalVaultFrameTileEntity.get(player.level, event.getPos());
         if (tileEntity == null) {
             return;
         }
@@ -79,13 +79,13 @@ public class FinalVaultFrameBlock extends Block
     }
     
     public ItemStack getPickBlock(final BlockState state, final RayTraceResult target, final IBlockReader world, final BlockPos pos, final PlayerEntity player) {
-        final ItemStack itemStack = new ItemStack((IItemProvider)this.getBlock());
+        final ItemStack itemStack = new ItemStack(this.getBlock());
         final FinalVaultFrameTileEntity tileEntity = FinalVaultFrameTileEntity.get(world, pos);
         final CompoundNBT entityNBT = new CompoundNBT();
         if (tileEntity != null) {
             tileEntity.writeToEntityTag(entityNBT);
         }
-        itemStack.getOrCreateTag().put("BlockEntityTag", (INBT)entityNBT);
+        itemStack.getOrCreateTag().put("BlockEntityTag", entityNBT);
         return itemStack;
     }
     
@@ -97,7 +97,7 @@ public class FinalVaultFrameBlock extends Block
         if (tag == null) {
             return;
         }
-        final FinalVaultFrameTileEntity tileEntity = FinalVaultFrameTileEntity.get((IBlockReader)world, pos);
+        final FinalVaultFrameTileEntity tileEntity = FinalVaultFrameTileEntity.get(world, pos);
         if (tileEntity == null) {
             return;
         }
@@ -107,15 +107,15 @@ public class FinalVaultFrameBlock extends Block
     
     public void playerWillDestroy(@Nonnull final World world, @Nonnull final BlockPos pos, @Nonnull final BlockState state, @Nonnull final PlayerEntity player) {
         if (!world.isClientSide && !player.isCreative()) {
-            final FinalVaultFrameTileEntity tileEntity = FinalVaultFrameTileEntity.get((IBlockReader)world, pos);
+            final FinalVaultFrameTileEntity tileEntity = FinalVaultFrameTileEntity.get(world, pos);
             if (tileEntity != null) {
-                final ItemStack itemStack = new ItemStack((IItemProvider)this.getBlock());
+                final ItemStack itemStack = new ItemStack(this.getBlock());
                 final CompoundNBT entityNBT = new CompoundNBT();
                 tileEntity.writeToEntityTag(entityNBT);
-                itemStack.getOrCreateTag().put("BlockEntityTag", (INBT)entityNBT);
+                itemStack.getOrCreateTag().put("BlockEntityTag", entityNBT);
                 final ItemEntity itemEntity = new ItemEntity(world, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, itemStack);
                 itemEntity.setDefaultPickUpDelay();
-                world.addFreshEntity((Entity)itemEntity);
+                world.addFreshEntity(itemEntity);
             }
         }
         super.playerWillDestroy(world, pos, state, player);

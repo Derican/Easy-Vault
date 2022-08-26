@@ -73,7 +73,7 @@ public class VaultRaidControllerTileEntity extends TileEntity implements ITickab
     private final List<Object> particleReferences;
 
     public VaultRaidControllerTileEntity() {
-        super((TileEntityType) ModBlocks.RAID_CONTROLLER_TILE_ENTITY);
+        super(ModBlocks.RAID_CONTROLLER_TILE_ENTITY);
         this.triggeredRaid = false;
         this.activeTimeout = 0;
         this.raidModifiers = new LinkedHashMap<String, Float>();
@@ -88,7 +88,7 @@ public class VaultRaidControllerTileEntity extends TileEntity implements ITickab
         if (!this.getLevel().isClientSide()) {
             final BlockState up = this.getLevel().getBlockState(this.getBlockPos().above());
             if (!(up.getBlock() instanceof VaultRaidControllerBlock)) {
-                this.getLevel().setBlockAndUpdate(this.getBlockPos().above(), (BlockState) ModBlocks.RAID_CONTROLLER_BLOCK.defaultBlockState().setValue((Property) StabilizerBlock.HALF, (Comparable) DoubleBlockHalf.UPPER));
+                this.getLevel().setBlockAndUpdate(this.getBlockPos().above(), ModBlocks.RAID_CONTROLLER_BLOCK.defaultBlockState().setValue((Property) StabilizerBlock.HALF, (Comparable) DoubleBlockHalf.UPPER));
             }
             if (this.activeTimeout > 0) {
                 --this.activeTimeout;
@@ -100,7 +100,7 @@ public class VaultRaidControllerTileEntity extends TileEntity implements ITickab
                 final ServerWorld sWorld = (ServerWorld) this.getLevel();
                 final VaultRaid vault = VaultRaidData.get(sWorld).getAt(sWorld, this.getBlockPos());
                 if (vault != null && vault.getPlayers().size() > 0) {
-                    if (vault.getActiveRaid() != null && vault.getActiveRaid().getController().equals((Object) this.getBlockPos())) {
+                    if (vault.getActiveRaid() != null && vault.getActiveRaid().getController().equals(this.getBlockPos())) {
                         final boolean needsUpdate = this.activeTimeout <= 0;
                         this.activeTimeout = 20;
                         if (needsUpdate) {
@@ -108,7 +108,7 @@ public class VaultRaidControllerTileEntity extends TileEntity implements ITickab
                         }
                     }
                     vault.getActiveObjective(RaidChallengeObjective.class).ifPresent(raidObjective -> {
-                        if (!(!this.raidModifiers.isEmpty())) {
+                        if (this.raidModifiers.isEmpty()) {
                             if (vault.getProperties().exists(VaultRaid.PARENT)) {
                                 this.generateModifiersFinal(vault);
                             } else {
@@ -163,7 +163,7 @@ public class VaultRaidControllerTileEntity extends TileEntity implements ITickab
         if (this.particleReferences.size() < 3) {
             for (int toAdd = 3 - this.particleReferences.size(), i = 0; i < toAdd; ++i) {
                 final ParticleManager mgr = Minecraft.getInstance().particleEngine;
-                final Particle p = mgr.createParticle((IParticleData) ModParticles.RAID_EFFECT_CUBE.get(), this.worldPosition.getX() + 0.5, this.worldPosition.getY() + 0.5, this.worldPosition.getZ() + 0.5, 0.0, 0.0, 0.0);
+                final Particle p = mgr.createParticle(ModParticles.RAID_EFFECT_CUBE.get(), this.worldPosition.getX() + 0.5, this.worldPosition.getY() + 0.5, this.worldPosition.getZ() + 0.5, 0.0, 0.0, 0.0);
                 this.particleReferences.add(p);
             }
         }
@@ -175,13 +175,13 @@ public class VaultRaidControllerTileEntity extends TileEntity implements ITickab
         final Color c = new Color(11932948);
         if (VaultRaidControllerTileEntity.rand.nextInt(3) == 0) {
             Vector3d pPos = new Vector3d(this.worldPosition.getX() + 0.5 + VaultRaidControllerTileEntity.rand.nextFloat() * 3.5 * (VaultRaidControllerTileEntity.rand.nextBoolean() ? 1 : -1), this.worldPosition.getY() + 2.1 + VaultRaidControllerTileEntity.rand.nextFloat() * 3.5 * (VaultRaidControllerTileEntity.rand.nextBoolean() ? 1 : -1), this.worldPosition.getZ() + 0.5 + VaultRaidControllerTileEntity.rand.nextFloat() * 3.5 * (VaultRaidControllerTileEntity.rand.nextBoolean() ? 1 : -1));
-            SimpleAnimatedParticle fwParticle = (SimpleAnimatedParticle) mgr2.createParticle((IParticleData) ParticleTypes.FIREWORK, pPos.x(), pPos.y(), pPos.z(), 0.0, 0.0, 0.0);
+            SimpleAnimatedParticle fwParticle = (SimpleAnimatedParticle) mgr2.createParticle(ParticleTypes.FIREWORK, pPos.x(), pPos.y(), pPos.z(), 0.0, 0.0, 0.0);
             fwParticle.setColor(c.getRed() / 255.0f, c.getGreen() / 255.0f, c.getBlue() / 255.0f);
 //            TODO: check if the omit is acceptable
 //            fwParticle.baseGravity = -0.001f;
             fwParticle.setLifetime(fwParticle.getLifetime() / 2);
             pPos = new Vector3d(this.worldPosition.getX() + 0.5 + VaultRaidControllerTileEntity.rand.nextFloat() * 0.3 * (VaultRaidControllerTileEntity.rand.nextBoolean() ? 1 : -1), this.worldPosition.getY() + 2.25 + VaultRaidControllerTileEntity.rand.nextFloat() * 0.3 * (VaultRaidControllerTileEntity.rand.nextBoolean() ? 1 : -1), this.worldPosition.getZ() + 0.5 + VaultRaidControllerTileEntity.rand.nextFloat() * 0.3 * (VaultRaidControllerTileEntity.rand.nextBoolean() ? 1 : -1));
-            fwParticle = (SimpleAnimatedParticle) mgr2.createParticle((IParticleData) ParticleTypes.FIREWORK, pPos.x(), pPos.y(), pPos.z(), 0.0, 0.0, 0.0);
+            fwParticle = (SimpleAnimatedParticle) mgr2.createParticle(ParticleTypes.FIREWORK, pPos.x(), pPos.y(), pPos.z(), 0.0, 0.0, 0.0);
             fwParticle.setColor(c.getRed() / 255.0f, c.getGreen() / 255.0f, c.getBlue() / 255.0f);
 //            TODO: check if the omit is acceptable
 //            fwParticle.baseGravity = 0.0f;
@@ -215,7 +215,7 @@ public class VaultRaidControllerTileEntity extends TileEntity implements ITickab
             if (modifier == null) {
                 return null;
             } else {
-                return new Tuple((Object) modifier, modifierEntry.getValue());
+                return new Tuple(modifier, modifierEntry.getValue());
             }
         }).filter(Objects::nonNull).map(tpl -> ((RaidModifier) tpl.getA()).getDisplay((float) tpl.getB())).collect(Collectors.toList());
     }
@@ -241,11 +241,11 @@ public class VaultRaidControllerTileEntity extends TileEntity implements ITickab
         this.raidModifiers.forEach((modifier, value) -> {
             final CompoundNBT nbt = new CompoundNBT();
             nbt.putString("name", modifier);
-            nbt.putFloat("value", (float) value);
+            nbt.putFloat("value", value);
             modifiers.add(nbt);
             return;
         });
-        tag.put("raidModifiers", (INBT) modifiers);
+        tag.put("raidModifiers", modifiers);
         return super.save(tag);
     }
 

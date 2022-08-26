@@ -14,7 +14,7 @@ public class FloatAttribute extends NumberAttribute<Float> {
 
     @Override
     public void write(final CompoundNBT nbt) {
-        nbt.putFloat("BaseValue", (float) this.getBaseValue());
+        nbt.putFloat("BaseValue", this.getBaseValue());
     }
 
     @Override

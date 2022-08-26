@@ -36,7 +36,7 @@ public class GhostWalkEffect extends Effect {
     private void initializeAttributeModifiers() {
         this.attributeModifiers = new AttributeModifier[ModConfigs.ABILITIES.GHOST_WALK.getMaxLevel()];
         for (int i = 0; i < this.attributeModifiers.length; ++i) {
-            this.attributeModifiers[i] = new AttributeModifier(this.getRegistryName().toString(), (double) ((i + 1) * 0.1f), AttributeModifier.Operation.ADDITION);
+            this.attributeModifiers[i] = new AttributeModifier(this.getRegistryName().toString(), (i + 1) * 0.1f, AttributeModifier.Operation.ADDITION);
         }
     }
 
@@ -56,7 +56,7 @@ public class GhostWalkEffect extends Effect {
         if (livingEntity instanceof ServerPlayerEntity) {
             final ServerPlayerEntity player = (ServerPlayerEntity) livingEntity;
             this.removeExistingDamageBuff(player);
-            final AbilityTree abilities = PlayerAbilitiesData.get((ServerWorld) player.getCommandSenderWorld()).getAbilities((PlayerEntity) player);
+            final AbilityTree abilities = PlayerAbilitiesData.get((ServerWorld) player.getCommandSenderWorld()).getAbilities(player);
             final AbilityNode<?, ?> ghostWalkNode = abilities.getNodeByName("Ghost Walk");
             if (ghostWalkNode.getAbilityConfig() instanceof GhostWalkDamageConfig) {
                 final float dmgIncrease = ((GhostWalkDamageConfig) ghostWalkNode.getAbilityConfig()).getDamageMultiplierInGhostWalk();

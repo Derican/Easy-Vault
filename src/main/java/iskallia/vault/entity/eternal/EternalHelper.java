@@ -22,8 +22,8 @@ public class EternalHelper {
     }
 
     private static EternalEntity spawnEternal(final World world, final int level, final boolean isAncient, final String name, final Map<EquipmentSlotType, ItemStack> equipment, final Map<Attribute, Float> attributes) {
-        final EternalEntity eternal = (EternalEntity) ModEntities.ETERNAL.create(world);
-        eternal.setCustomName((ITextComponent) new StringTextComponent("[").withStyle(TextFormatting.GREEN).append((ITextComponent) new StringTextComponent(String.valueOf(level)).withStyle(TextFormatting.RED)).append((ITextComponent) new StringTextComponent("] " + name).withStyle(TextFormatting.GREEN)));
+        final EternalEntity eternal = ModEntities.ETERNAL.create(world);
+        eternal.setCustomName(new StringTextComponent("[").withStyle(TextFormatting.GREEN).append(new StringTextComponent(String.valueOf(level)).withStyle(TextFormatting.RED)).append(new StringTextComponent("] " + name).withStyle(TextFormatting.GREEN)));
         eternal.setSkinName(name);
         equipment.forEach((slot, stack) -> {
             eternal.setItemSlot(slot, stack.copy());

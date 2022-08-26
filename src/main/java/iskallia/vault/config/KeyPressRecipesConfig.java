@@ -49,7 +49,7 @@ public class KeyPressRecipesConfig extends Config {
             return ItemStack.EMPTY;
         }
         final ResourceLocation resultID = new ResourceLocation(recipe.RESULT_ITEM.ITEM);
-        final Item item = (Item) ForgeRegistries.ITEMS.getValue(resultID);
+        final Item item = ForgeRegistries.ITEMS.getValue(resultID);
         if (item == null) {
             Vault.LOGGER.warn("Invalid Key Press recipe result -> {}", recipe.RESULT_ITEM.ITEM);
             return ItemStack.EMPTY;

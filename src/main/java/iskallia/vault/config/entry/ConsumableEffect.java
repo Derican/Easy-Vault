@@ -4,7 +4,7 @@ import com.google.gson.annotations.Expose;
 
 public class ConsumableEffect {
     @Expose
-    private String effectId;
+    private final String effectId;
     @Expose
     private final int amplifier;
     @Expose

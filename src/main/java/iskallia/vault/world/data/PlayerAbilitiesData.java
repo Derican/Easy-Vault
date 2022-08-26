@@ -46,19 +46,19 @@ public class PlayerAbilitiesData extends WorldSavedData {
     }
 
     public PlayerAbilitiesData add(final ServerPlayerEntity player, final AbilityNode<?, ?>... nodes) {
-        this.getAbilities((PlayerEntity) player).add(player.getServer(), nodes);
+        this.getAbilities(player).add(player.getServer(), nodes);
         this.setDirty();
         return this;
     }
 
     public PlayerAbilitiesData remove(final ServerPlayerEntity player, final AbilityNode<?, ?>... nodes) {
-        this.getAbilities((PlayerEntity) player).remove(player.getServer(), nodes);
+        this.getAbilities(player).remove(player.getServer(), nodes);
         this.setDirty();
         return this;
     }
 
     public PlayerAbilitiesData upgradeAbility(final ServerPlayerEntity player, final AbilityNode<?, ?> abilityNode) {
-        final AbilityTree abilityTree = this.getAbilities((PlayerEntity) player);
+        final AbilityTree abilityTree = this.getAbilities(player);
         abilityTree.upgradeAbility(player.getServer(), abilityNode);
         abilityTree.sync(player.server);
         this.setDirty();
@@ -66,7 +66,7 @@ public class PlayerAbilitiesData extends WorldSavedData {
     }
 
     public PlayerAbilitiesData downgradeAbility(final ServerPlayerEntity player, final AbilityNode<?, ?> abilityNode) {
-        final AbilityTree abilityTree = this.getAbilities((PlayerEntity) player);
+        final AbilityTree abilityTree = this.getAbilities(player);
         abilityTree.downgradeAbility(player.getServer(), abilityNode);
         abilityTree.sync(player.server);
         this.setDirty();
@@ -74,7 +74,7 @@ public class PlayerAbilitiesData extends WorldSavedData {
     }
 
     public PlayerAbilitiesData selectSpecialization(final ServerPlayerEntity player, final String ability, @Nullable final String specialization) {
-        final AbilityTree abilityTree = this.getAbilities((PlayerEntity) player);
+        final AbilityTree abilityTree = this.getAbilities(player);
         abilityTree.selectSpecialization(ability, specialization);
         abilityTree.sync(player.server);
         this.setDirty();
@@ -87,7 +87,7 @@ public class PlayerAbilitiesData extends WorldSavedData {
         if (oldAbilityTree != null) {
             for (final AbilityNode<?, ?> node : oldAbilityTree.getNodes()) {
                 if (node.isLearned()) {
-                    node.onRemoved((PlayerEntity) player);
+                    node.onRemoved(player);
                 }
             }
         }
@@ -99,7 +99,7 @@ public class PlayerAbilitiesData extends WorldSavedData {
     }
 
     public static void setAbilityOnCooldown(final ServerPlayerEntity player, final String abilityName) {
-        final AbilityTree abilities = get(player.getLevel()).getAbilities((PlayerEntity) player);
+        final AbilityTree abilities = get(player.getLevel()).getAbilities(player);
         final AbilityNode<?, ?> abilityNode = abilities.getNodeByName(abilityName);
         abilities.putOnCooldown(player.getServer(), abilityNode, ModConfigs.ABILITIES.getCooldown(abilityNode, player));
     }
@@ -111,7 +111,7 @@ public class PlayerAbilitiesData extends WorldSavedData {
         }
         if (event.side.isServer() && event.player instanceof ServerPlayerEntity) {
             final ServerPlayerEntity sPlayer = (ServerPlayerEntity) event.player;
-            get(sPlayer.getLevel()).getAbilities((PlayerEntity) sPlayer).tick(sPlayer);
+            get(sPlayer.getLevel()).getAbilities(sPlayer).tick(sPlayer);
         }
     }
 
@@ -135,8 +135,8 @@ public class PlayerAbilitiesData extends WorldSavedData {
             abilitiesList.add(researchTree.serializeNBT());
             return;
         });
-        nbt.put("PlayerEntries", (INBT) playerList);
-        nbt.put("AbilityEntries", (INBT) abilitiesList);
+        nbt.put("PlayerEntries", playerList);
+        nbt.put("AbilityEntries", abilitiesList);
         return nbt;
     }
 

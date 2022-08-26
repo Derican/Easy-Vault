@@ -43,7 +43,7 @@ public class GodEyeBlock extends FacedBlock {
 
     public GodEyeBlock(final PlayerFavourData.VaultGodType godType) {
         super(AbstractBlock.Properties.of(Material.STONE, MaterialColor.STONE).strength(-1.0f, 3.6E8f).noDrops().noOcclusion().sound(SoundType.STONE));
-        this.registerDefaultState((BlockState) ((BlockState) ((BlockState) this.stateDefinition.any()).setValue((Property) GodEyeBlock.FACING, (Comparable) Direction.SOUTH)).setValue((Property) GodEyeBlock.LIT, (Comparable) false));
+        this.registerDefaultState(this.stateDefinition.any().setValue((Property) GodEyeBlock.FACING, (Comparable) Direction.SOUTH).setValue((Property) GodEyeBlock.LIT, (Comparable) false));
         this.godType = godType;
     }
 
@@ -52,13 +52,13 @@ public class GodEyeBlock extends FacedBlock {
     }
 
     public void fillItemCategory(@Nonnull final ItemGroup group, @Nonnull final NonNullList<ItemStack> items) {
-        super.fillItemCategory(group, (NonNullList) items);
+        super.fillItemCategory(group, items);
     }
 
     @Override
     protected void createBlockStateDefinition(final StateContainer.Builder<Block, BlockState> builder) {
         super.createBlockStateDefinition(builder);
-        builder.add(new Property[]{(Property) GodEyeBlock.LIT});
+        builder.add(GodEyeBlock.LIT);
     }
 
     @Nonnull
@@ -90,10 +90,10 @@ public class GodEyeBlock extends FacedBlock {
                     if (!player.isCreative()) {
                         heldItem.shrink(1);
                     }
-                    final BlockState newState = (BlockState) state.setValue((Property) GodEyeBlock.LIT, (Comparable) true);
+                    final BlockState newState = state.setValue((Property) GodEyeBlock.LIT, (Comparable) true);
                     world.setBlock(pos, newState, 3);
                     world.globalLevelEvent(1038, pos, 0);
-                    ((ServerWorld) world).sendParticles((IParticleData) ParticleTypes.POOF, (double) (pos.getX() + 0.5f), (double) (pos.getY() + 0.5f), (double) (pos.getZ() + 0.5f), 100, 0.0, 0.0, 0.0, 1.5707963267948966);
+                    ((ServerWorld) world).sendParticles((IParticleData) ParticleTypes.POOF, pos.getX() + 0.5f, pos.getY() + 0.5f, pos.getZ() + 0.5f, 100, 0.0, 0.0, 0.0, 1.5707963267948966);
                 }
             }
         }

@@ -17,10 +17,10 @@ public class EnumCodec<T extends Enum<T>> implements Codec<T> {
     }
 
     public <V> DataResult<Pair<T, V>> decode(final DynamicOps<V> ops, final V input) {
-        return (DataResult<Pair<T, V>>) ops.getNumberValue(input).map(Number::intValue).map(i -> MiscUtils.getEnumEntry(this.enumClass, i)).map(r -> Pair.of(r, ops.empty()));
+        return ops.getNumberValue(input).map(Number::intValue).map(i -> MiscUtils.getEnumEntry(this.enumClass, i)).map(r -> Pair.of(r, ops.empty()));
     }
 
     public <V> DataResult<V> encode(final T input, final DynamicOps<V> ops, final V prefix) {
-        return (DataResult<V>) ops.mergeToPrimitive(prefix, ops.createInt(input.ordinal()));
+        return ops.mergeToPrimitive(prefix, ops.createInt(input.ordinal()));
     }
 }

@@ -29,15 +29,15 @@ public class ServerScheduler {
             final Iterator<Tuple<Runnable, Counter>> iterator = this.queue.iterator();
             while (iterator.hasNext()) {
                 final Tuple<Runnable, Counter> r = iterator.next();
-                ((Counter) r.getB()).decrement();
-                if (((Counter) r.getB()).getValue() <= 0) {
-                    ((Runnable) r.getA()).run();
+                r.getB().decrement();
+                if (r.getB().getValue() <= 0) {
+                    r.getA().run();
                     iterator.remove();
                 }
             }
             this.inTick = false;
             for (final Tuple<Runnable, Integer> wait : this.waiting) {
-                this.queue.addLast((Tuple<Runnable, Counter>) new Tuple(wait.getA(), new Counter((int) wait.getB())));
+                this.queue.addLast((Tuple<Runnable, Counter>) new Tuple(wait.getA(), new Counter(wait.getB())));
             }
         }
         this.waiting.clear();

@@ -23,7 +23,7 @@ import java.util.List;
 
 public class OmegaStatueScreen extends ContainerScreen<OmegaStatueContainer> {
     public static final ResourceLocation TEXTURE;
-    private List<StatueOptionSlot> slots;
+    private final List<StatueOptionSlot> slots;
     List<ItemStack> items;
     BlockPos statuePos;
 
@@ -117,10 +117,10 @@ public class OmegaStatueScreen extends ContainerScreen<OmegaStatueContainer> {
         final StringTextComponent text2 = new StringTextComponent("the statue to generate.");
         final float startTextX = i + this.imageWidth / 2.0f - this.font.width(text.getString()) / 2.0f;
         final float startTextY = j + 59.0f;
-        this.font.draw(matrixStack, (ITextComponent) text, startTextX, startTextY, 4210752);
+        this.font.draw(matrixStack, text, startTextX, startTextY, 4210752);
         final float startText1X = i + this.titleLabelX - this.font.width(text2.getString()) / 2.0f;
         final float startText1Y = j + 56.0f + 13.0f;
-        this.font.draw(matrixStack, (ITextComponent) text2, startText1X, startText1Y, 4210752);
+        this.font.draw(matrixStack, text2, startText1X, startText1Y, 4210752);
     }
 
     public boolean mouseClicked(final double mouseX, final double mouseY, final int button) {

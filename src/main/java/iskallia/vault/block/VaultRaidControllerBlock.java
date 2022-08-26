@@ -123,7 +123,7 @@ public class VaultRaidControllerBlock extends Block {
     }
 
     protected void createBlockStateDefinition(final StateContainer.Builder<Block, BlockState> builder) {
-        builder.add(new Property[]{VaultRaidControllerBlock.HALF});
+        builder.add(VaultRaidControllerBlock.HALF);
     }
 
     static {

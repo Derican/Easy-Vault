@@ -29,7 +29,7 @@ public class ArmorEditSlot extends Slot {
 
     public boolean mayPlace(final ItemStack stack) {
         try {
-            return stack.canEquip(this.slotType, (Entity) null);
+            return stack.canEquip(this.slotType, null);
         } catch (final Exception exc) {
             return MobEntity.getEquipmentSlotForItem(stack) == this.slotType;
         }
@@ -41,7 +41,7 @@ public class ArmorEditSlot extends Slot {
         if (this.slotType.getType() != EquipmentSlotType.Group.ARMOR) {
             return null;
         }
-        return (Pair<ResourceLocation, ResourceLocation>) Pair.of(PlayerContainer.BLOCK_ATLAS, ArmorEditSlot.ARMOR_SLOT_TEXTURES[this.slotType.getIndex()]);
+        return Pair.of(PlayerContainer.BLOCK_ATLAS, ArmorEditSlot.ARMOR_SLOT_TEXTURES[this.slotType.getIndex()]);
     }
 
     static {

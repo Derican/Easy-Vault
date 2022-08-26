@@ -78,7 +78,7 @@ public class FragmentedVaultGenerator extends VaultGenerator {
         final StructureStart<?> start = ModFeatures.VAULT_FEATURE.generate(gen, world.registryAccess(), world.getChunkSource().generator, world.getStructureManager(), 0, world.getSeed());
         gen.getGeneratedPieces().stream().flatMap(piece -> VaultPiece.of(piece).stream()).forEach(this.pieces::add);
         this.removeRandomObjectivePieces(vault, gen, layout.getObjectiveRoomRatio());
-        world.getChunk(this.startChunk.x, this.startChunk.z, ChunkStatus.EMPTY, true).setStartForFeature((Structure) ModStructures.VAULT_STAR, (StructureStart) start);
+        world.getChunk(this.startChunk.x, this.startChunk.z, ChunkStatus.EMPTY, true).setStartForFeature(ModStructures.VAULT_STAR, start);
         this.tick(world, vault);
         return (!vault.getProperties().exists(VaultRaid.START_POS) || !vault.getProperties().exists(VaultRaid.START_FACING)) && this.findStartPosition(world, vault, this.startChunk, () -> new PortalPlacer((pos1, random, facing) -> ModBlocks.VAULT_PORTAL.defaultBlockState().setValue(VaultPortalBlock.AXIS, facing.getAxis()), (pos1, random, facing) -> Blocks.BLACKSTONE.defaultBlockState()));
     }
@@ -130,7 +130,7 @@ public class FragmentedVaultGenerator extends VaultGenerator {
     public CompoundNBT serializeNBT() {
         final CompoundNBT tag = super.serializeNBT();
         if (this.layoutGenerator != null) {
-            tag.put("Layout", (INBT) VaultRoomLayoutRegistry.serialize(this.layoutGenerator));
+            tag.put("Layout", VaultRoomLayoutRegistry.serialize(this.layoutGenerator));
         }
         return tag;
     }

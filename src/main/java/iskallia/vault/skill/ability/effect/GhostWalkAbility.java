@@ -36,7 +36,7 @@ public class GhostWalkAbility<C extends GhostWalkConfig> extends AbilityEffect<C
             return false;
         }
         final EffectInstance newEffect = new EffectInstance(config.getEffect(), config.getDurationTicks(), config.getAmplifier(), false, config.getType().showParticles, config.getType().showIcon);
-        player.level.playSound((PlayerEntity) player, player.getX(), player.getY(), player.getZ(), ModSounds.GHOST_WALK_SFX, SoundCategory.PLAYERS, 0.2f, 1.0f);
+        player.level.playSound(player, player.getX(), player.getY(), player.getZ(), ModSounds.GHOST_WALK_SFX, SoundCategory.PLAYERS, 0.2f, 1.0f);
         player.playNotifySound(ModSounds.GHOST_WALK_SFX, SoundCategory.PLAYERS, 0.2f, 1.0f);
         player.addEffect(newEffect);
         return false;
@@ -51,7 +51,7 @@ public class GhostWalkAbility<C extends GhostWalkConfig> extends AbilityEffect<C
             if (ghostWalk != null) {
                 final ServerWorld world = (ServerWorld) player.getCommandSenderWorld();
                 final PlayerAbilitiesData data = PlayerAbilitiesData.get(world);
-                final AbilityTree abilities = data.getAbilities((PlayerEntity) player);
+                final AbilityTree abilities = data.getAbilities(player);
                 final AbilityNode<?, ?> node = abilities.getNodeOf(this);
                 if (node.getAbility() == this && node.isLearned()) {
                     player.removeEffect(ModEffects.GHOST_WALK);
@@ -77,7 +77,7 @@ public class GhostWalkAbility<C extends GhostWalkConfig> extends AbilityEffect<C
     @SubscribeEvent
     public void onTarget(final LivingSetAttackTargetEvent event) {
         if (event.getEntityLiving() instanceof MobEntity && this.isInvulnerable(event.getTarget(), null)) {
-            ((MobEntity) event.getEntityLiving()).setTarget((LivingEntity) null);
+            ((MobEntity) event.getEntityLiving()).setTarget(null);
         }
     }
 
@@ -88,11 +88,9 @@ public class GhostWalkAbility<C extends GhostWalkConfig> extends AbilityEffect<C
             if (ghostWalk != null && this.preventsDamage() && (source == null || !source.isBypassInvul())) {
                 final ServerWorld world = (ServerWorld) player.getCommandSenderWorld();
                 final PlayerAbilitiesData data = PlayerAbilitiesData.get(world);
-                final AbilityTree abilities = data.getAbilities((PlayerEntity) player);
+                final AbilityTree abilities = data.getAbilities(player);
                 final AbilityNode<?, ?> node = abilities.getNodeOf(this);
-                if (node.getAbility() == this && node.isLearned()) {
-                    return true;
-                }
+                return node.getAbility() == this && node.isLearned();
             }
         }
         return false;

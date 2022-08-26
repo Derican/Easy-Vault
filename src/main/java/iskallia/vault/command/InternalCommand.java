@@ -32,7 +32,7 @@ public class InternalCommand extends Command {
     }
 
     private int resetShardTrader(final CommandContext<CommandSource> ctx) throws CommandSyntaxException {
-        SoulShardTraderData.get(((CommandSource) ctx.getSource()).getServer()).resetTrades();
+        SoulShardTraderData.get(ctx.getSource().getServer()).resetTrades();
         return 0;
     }
 

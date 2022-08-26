@@ -48,7 +48,7 @@ public class VaultPartyData extends WorldSavedData {
     }
 
     public CompoundNBT save(final CompoundNBT nbt) {
-        nbt.put("ActiveParties", (INBT) this.activeParties.serializeNBT());
+        nbt.put("ActiveParties", this.activeParties.serializeNBT());
         return nbt;
     }
 
@@ -90,7 +90,7 @@ public class VaultPartyData extends WorldSavedData {
 
     @SubscribeEvent
     public static void onServerTick(final TickEvent.ServerTickEvent event) {
-        final MinecraftServer serverInstance = (MinecraftServer) LogicalSidedProvider.INSTANCE.get(LogicalSide.SERVER);
+        final MinecraftServer serverInstance = LogicalSidedProvider.INSTANCE.get(LogicalSide.SERVER);
         if (event.phase != TickEvent.Phase.END) {
             return;
         }
@@ -125,7 +125,7 @@ public class VaultPartyData extends WorldSavedData {
         }
 
         public List<UUID> getMembers() {
-            return Collections.unmodifiableList((List<? extends UUID>) this.members);
+            return Collections.unmodifiableList(this.members);
         }
 
         @Nullable
@@ -151,7 +151,7 @@ public class VaultPartyData extends WorldSavedData {
         public boolean remove(final UUID member) {
             final boolean removed = this.members.remove(member);
             if (removed && member.equals(this.leader)) {
-                this.leader = MiscUtils.getRandomEntry((Collection<UUID>) this.members, VaultPartyData.rand);
+                this.leader = MiscUtils.getRandomEntry(this.members, VaultPartyData.rand);
             }
             return removed;
         }
@@ -169,14 +169,14 @@ public class VaultPartyData extends WorldSavedData {
         }
 
         public ListNBT toClientMemberList() {
-            final MinecraftServer serverInstance = (MinecraftServer) LogicalSidedProvider.INSTANCE.get(LogicalSide.SERVER);
+            final MinecraftServer serverInstance = LogicalSidedProvider.INSTANCE.get(LogicalSide.SERVER);
             final ListNBT partyMembers = new ListNBT();
             for (final UUID uuid : this.members) {
                 final ServerPlayerEntity player = serverInstance.getPlayerList().getPlayer(uuid);
                 if (player == null) {
                     continue;
                 }
-                final ClientPartyData.PartyMember partyMember = new ClientPartyData.PartyMember((PlayerEntity) player);
+                final ClientPartyData.PartyMember partyMember = new ClientPartyData.PartyMember(player);
                 partyMembers.add(partyMember.serializeNBT());
             }
             return partyMembers;
@@ -187,8 +187,8 @@ public class VaultPartyData extends WorldSavedData {
             if (this.leader != null) {
                 nbt.putUUID("leader", this.leader);
             }
-            nbt.put("Members", (INBT) this.members.serializeNBT());
-            nbt.put("Invites", (INBT) this.invites.serializeNBT());
+            nbt.put("Members", this.members.serializeNBT());
+            nbt.put("Invites", this.invites.serializeNBT());
             return nbt;
         }
 

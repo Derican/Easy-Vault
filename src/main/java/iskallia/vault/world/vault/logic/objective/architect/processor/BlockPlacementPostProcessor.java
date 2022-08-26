@@ -33,7 +33,7 @@ public class BlockPlacementPostProcessor extends VaultPieceProcessor {
             for (boolean placed = false; !placed; placed = true) {
                 final BlockPos pos = MiscUtils.getRandomPos(box, BlockPlacementPostProcessor.rand);
                 final BlockState state = world.getBlockState(pos);
-                if (state.isAir((IBlockReader) world, pos) && world.getBlockState(pos.below()).isFaceSturdy((IBlockReader) world, pos, Direction.UP) && world.setBlock(pos, this.toPlace, 2)) {
+                if (state.isAir(world, pos) && world.getBlockState(pos.below()).isFaceSturdy(world, pos, Direction.UP) && world.setBlock(pos, this.toPlace, 2)) {
                 }
             }
         }

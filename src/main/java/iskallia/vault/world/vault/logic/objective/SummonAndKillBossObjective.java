@@ -111,7 +111,7 @@ public class SummonAndKillBossObjective extends VaultObjective {
     @Nullable
     @Override
     public ITextComponent getObjectiveTargetDescription(final int amount) {
-        return (ITextComponent) new StringTextComponent("Required Obelisks: ").append((ITextComponent) new StringTextComponent(String.valueOf(amount)).withStyle(TextFormatting.GOLD));
+        return new StringTextComponent("Required Obelisks: ").append(new StringTextComponent(String.valueOf(amount)).withStyle(TextFormatting.GOLD));
     }
 
     @Nonnull
@@ -130,7 +130,7 @@ public class SummonAndKillBossObjective extends VaultObjective {
 
     @Override
     public ITextComponent getObjectiveDisplayName() {
-        return (ITextComponent) new StringTextComponent("Kill the Boss").withStyle(TextFormatting.GOLD);
+        return new StringTextComponent("Kill the Boss").withStyle(TextFormatting.GOLD);
     }
 
     @Override
@@ -178,7 +178,7 @@ public class SummonAndKillBossObjective extends VaultObjective {
 
     public void spawnBossLoot(final VaultRaid vault, final VaultPlayer player, final ServerWorld world) {
         player.runIfPresent(world.getServer(), playerEntity -> {
-            final LootContext.Builder builder = new LootContext.Builder(world).withRandom(world.random).withParameter(LootParameters.THIS_ENTITY, playerEntity).withParameter(LootParameters.ORIGIN, this.getBossPos()).withParameter(LootParameters.DAMAGE_SOURCE, DamageSource.playerAttack((PlayerEntity) playerEntity)).withOptionalParameter(LootParameters.KILLER_ENTITY, playerEntity).withOptionalParameter(LootParameters.DIRECT_KILLER_ENTITY, playerEntity).withParameter(LootParameters.LAST_DAMAGE_PLAYER, playerEntity).withLuck(playerEntity.getLuck());
+            final LootContext.Builder builder = new LootContext.Builder(world).withRandom(world.random).withParameter(LootParameters.THIS_ENTITY, playerEntity).withParameter(LootParameters.ORIGIN, this.getBossPos()).withParameter(LootParameters.DAMAGE_SOURCE, DamageSource.playerAttack(playerEntity)).withOptionalParameter(LootParameters.KILLER_ENTITY, playerEntity).withOptionalParameter(LootParameters.DIRECT_KILLER_ENTITY, playerEntity).withParameter(LootParameters.LAST_DAMAGE_PLAYER, playerEntity).withLuck(playerEntity.getLuck());
             final LootContext ctx = builder.create(LootParameterSets.ENTITY);
             this.dropBossCrate(world, vault, player, ctx);
             for (int i = 1; i < vault.getPlayers().size(); ++i) {
@@ -186,7 +186,7 @@ public class SummonAndKillBossObjective extends VaultObjective {
                     this.dropBossCrate(world, vault, player, ctx);
                 }
             }
-            world.getServer().getPlayerList().broadcastMessage(this.getBossKillMessage((PlayerEntity) playerEntity), ChatType.CHAT, player.getPlayerId());
+            world.getServer().getPlayerList().broadcastMessage(this.getBossKillMessage(playerEntity), ChatType.CHAT, player.getPlayerId());
         });
     }
 
@@ -194,7 +194,7 @@ public class SummonAndKillBossObjective extends VaultObjective {
         final IFormattableTextComponent msgContainer = new StringTextComponent("").withStyle(TextFormatting.WHITE);
         final IFormattableTextComponent playerName = player.getDisplayName().copy();
         playerName.setStyle(Style.EMPTY.withColor(Color.fromRgb(9974168)));
-        return (ITextComponent) msgContainer.append((ITextComponent) playerName).append(" defeated ").append(this.getBossName()).append("!");
+        return msgContainer.append(playerName).append(" defeated ").append(this.getBossName()).append("!");
     }
 
     private void dropBossCrate(final ServerWorld world, final VaultRaid vault, final VaultPlayer rewardPlayer, final LootContext context) {
@@ -207,7 +207,7 @@ public class SummonAndKillBossObjective extends VaultObjective {
                     final VaultTimer timer = vPlayer.getTimer();
                     final PlayerVaultStatsData data = PlayerVaultStatsData.get(world);
                     if (timer.getRunTime() < data.getFastestVaultTime().getTickCount()) {
-                        vPlayer.runIfPresent(world.getServer(), sPlayer -> data.updateFastestVaultTime((PlayerEntity) sPlayer, timer.getRunTime()));
+                        vPlayer.runIfPresent(world.getServer(), sPlayer -> data.updateFastestVaultTime(sPlayer, timer.getRunTime()));
                     }
                 });
                 return;
@@ -215,10 +215,10 @@ public class SummonAndKillBossObjective extends VaultObjective {
         });
         final BlockPos dropPos = rewardPlayer.getServerPlayer(world.getServer()).map(Entity::blockPosition).orElse(new BlockPos(this.getBossPos()));
         final ItemStack crate = VaultCrateBlock.getCrateWithLoot(ModBlocks.VAULT_CRATE, stacks);
-        final ItemEntity item = new ItemEntity((World) world, (double) dropPos.getX(), (double) dropPos.getY(), (double) dropPos.getZ(), crate);
+        final ItemEntity item = new ItemEntity(world, dropPos.getX(), dropPos.getY(), dropPos.getZ(), crate);
         item.setDefaultPickUpDelay();
-        world.addFreshEntity((Entity) item);
-        this.crates.add(new Crate((List<ItemStack>) stacks));
+        world.addFreshEntity(item);
+        this.crates.add(new Crate(stacks));
     }
 
     @Override
@@ -226,7 +226,7 @@ public class SummonAndKillBossObjective extends VaultObjective {
         super.addSpecialLoot(world, vault, context, stacks);
         final boolean isCowVault = vault.getProperties().getBaseOrDefault(VaultRaid.COW_VAULT, false);
         if (isCowVault) {
-            stacks.add(new ItemStack((IItemProvider) ModItems.ARMOR_CRATE_HELLCOW));
+            stacks.add(new ItemStack(ModItems.ARMOR_CRATE_HELLCOW));
         }
     }
 
@@ -305,7 +305,7 @@ public class SummonAndKillBossObjective extends VaultObjective {
             this.bossId = UUID.fromString(nbt.getString("BossId"));
         }
         if (nbt.contains("BossName", 8)) {
-            this.bossName = (ITextComponent) ITextComponent.Serializer.fromJson(nbt.getString("BossName"));
+            this.bossName = ITextComponent.Serializer.fromJson(nbt.getString("BossName"));
         }
         this.bossPos = new Vector3d(nbt.getDouble("BossPosX"), nbt.getDouble("BossPosY"), nbt.getDouble("BossPosZ"));
         this.isBossDead = nbt.getBoolean("IsBossDead");

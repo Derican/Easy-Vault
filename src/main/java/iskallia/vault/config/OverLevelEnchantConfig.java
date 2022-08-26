@@ -31,7 +31,7 @@ public class OverLevelEnchantConfig extends Config {
         }
         final StringTextComponent prefix = new StringTextComponent(tier.getPrefix() + " ");
         prefix.setStyle(Style.EMPTY.withColor(Color.parseColor(tier.getColorHex())));
-        return (IFormattableTextComponent) prefix;
+        return prefix;
     }
 
     public IFormattableTextComponent format(final ITextComponent baseName, final int overlevel) {

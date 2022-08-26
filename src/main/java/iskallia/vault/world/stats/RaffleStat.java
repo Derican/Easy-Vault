@@ -27,12 +27,12 @@ public class RaffleStat implements INBTSerializable<CompoundNBT> {
         final ListNBT contributorsList = new ListNBT();
         this.contributors.forEach(entry -> {
             final CompoundNBT tag = new CompoundNBT();
-            tag.putString("Value", (String) entry.value);
+            tag.putString("Value", entry.value);
             tag.putInt("Weight", entry.weight);
             contributorsList.add(tag);
             return;
         });
-        nbt.put("Contributors", (INBT) contributorsList);
+        nbt.put("Contributors", contributorsList);
         if (this.winner != null) {
             nbt.putString("Winner", this.winner);
         }

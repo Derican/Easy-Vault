@@ -26,8 +26,8 @@ public class EtchingTradeContainer extends Container {
     private final int vendorEntityId;
 
     public EtchingTradeContainer(final int containerId, final PlayerInventory playerInventory, final int vendorEntityId) {
-        super((ContainerType) ModContainers.ETCHING_TRADE_CONTAINER, containerId);
-        this.tradeInventory = (IInventory) new Inventory(6);
+        super(ModContainers.ETCHING_TRADE_CONTAINER, containerId);
+        this.tradeInventory = new Inventory(6);
         this.world = playerInventory.player.level;
         this.vendorEntityId = vendorEntityId;
         this.initPlayerSlots(playerInventory);
@@ -37,18 +37,18 @@ public class EtchingTradeContainer extends Container {
     private void initPlayerSlots(final PlayerInventory playerInventory) {
         for (int row = 0; row < 3; ++row) {
             for (int column = 0; column < 9; ++column) {
-                this.addSlot(new Slot((IInventory) playerInventory, column + row * 9 + 9, 8 + column * 18, 102 + row * 18));
+                this.addSlot(new Slot(playerInventory, column + row * 9 + 9, 8 + column * 18, 102 + row * 18));
             }
         }
         for (int hotbarSlot = 0; hotbarSlot < 9; ++hotbarSlot) {
-            this.addSlot(new Slot((IInventory) playerInventory, hotbarSlot, 8 + hotbarSlot * 18, 160));
+            this.addSlot(new Slot(playerInventory, hotbarSlot, 8 + hotbarSlot * 18, 160));
         }
     }
 
     private void initTradeSlots() {
         for (int i = 0; i < 3; ++i) {
-            this.addSlot((Slot) new FilteredSlot((IItemHandler) new InvWrapper(this.tradeInventory), i * 2, 53, 10 + i * 28, stack -> stack.getItem() == ModItems.VAULT_PLATINUM));
-            this.addSlot((Slot) new EtchingBuySlot(this, (IItemHandler) new InvWrapper(this.tradeInventory), i, i * 2 + 1, 107, 10 + i * 28));
+            this.addSlot(new FilteredSlot(new InvWrapper(this.tradeInventory), i * 2, 53, 10 + i * 28, stack -> stack.getItem() == ModItems.VAULT_PLATINUM));
+            this.addSlot(new EtchingBuySlot(this, new InvWrapper(this.tradeInventory), i, i * 2 + 1, 107, 10 + i * 28));
         }
         final EtchingVendorEntity vendor = this.getVendor();
         if (vendor == null) {

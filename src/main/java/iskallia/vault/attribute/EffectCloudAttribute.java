@@ -28,8 +28,8 @@ public class EffectCloudAttribute extends PooledAttribute<List<EffectCloudEntity
         final CompoundNBT tag = new CompoundNBT();
         final ListNBT effectsList = new ListNBT();
         getBaseValue().forEach(effect -> effectsList.add(effect.serializeNBT()));
-        tag.put("EffectClouds", (INBT) effectsList);
-        nbt.put("BaseValue", (INBT) tag);
+        tag.put("EffectClouds", effectsList);
+        nbt.put("BaseValue", tag);
     }
 
     @Override
@@ -40,7 +40,7 @@ public class EffectCloudAttribute extends PooledAttribute<List<EffectCloudEntity
         }
         final CompoundNBT tag = nbt.getCompound("BaseValue");
         final ListNBT effectsList = tag.getList("EffectClouds", 10);
-        setBaseValue((List<EffectCloudEntity.Config>) effectsList.stream()
+        setBaseValue(effectsList.stream()
                 .map(inbt -> EffectCloudEntity.Config.fromNBT((CompoundNBT) inbt))
                 .collect(Collectors.toList()));
     }

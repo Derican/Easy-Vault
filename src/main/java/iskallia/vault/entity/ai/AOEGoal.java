@@ -50,7 +50,7 @@ public class AOEGoal<T extends MobEntity> extends GoalTask<T> {
             return;
         }
         if (!this.started && this.delay < 0 && this.getEntity().isOnGround()) {
-            this.getWorld().playSound((PlayerEntity) null, this.getEntity().getX(), this.getEntity().getY(), this.getEntity().getZ(), SoundEvents.DRAGON_FIREBALL_EXPLODE, this.getEntity().getSoundSource(), 1.0f, 1.0f);
+            this.getWorld().playSound(null, this.getEntity().getX(), this.getEntity().getY(), this.getEntity().getZ(), SoundEvents.DRAGON_FIREBALL_EXPLODE, this.getEntity().getSoundSource(), 1.0f, 1.0f);
             ((ServerWorld) this.getWorld()).sendParticles((IParticleData) ParticleTypes.EXPLOSION, this.getEntity().getX() + 0.5, this.getEntity().getY() + 0.1, this.getEntity().getZ() + 0.5, 10, this.getRandom().nextGaussian() * 0.02, this.getRandom().nextGaussian() * 0.02, this.getRandom().nextGaussian() * 0.02, 1.0);
             this.shockwave = this.getEntity().blockPosition();
             this.started = true;
@@ -67,7 +67,7 @@ public class AOEGoal<T extends MobEntity> extends GoalTask<T> {
                 if (e == this.getEntity() || e.isSpectator() || !this.filter.test(e)) {
                     return false;
                 } else {
-                    final double d = Math.sqrt(e.blockPosition().distSqr((Vector3i) this.shockwave));
+                    final double d = Math.sqrt(e.blockPosition().distSqr(this.shockwave));
                     return d >= distance && d < nextDistance;
                 }
             }).forEach(e -> {

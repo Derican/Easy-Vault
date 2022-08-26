@@ -55,16 +55,16 @@ public class VaultPortalBlock extends NetherPortalBlock {
     public static final EnumProperty<Style> STYLE;
 
     public VaultPortalBlock() {
-        super(AbstractBlock.Properties.copy((AbstractBlock) Blocks.NETHER_PORTAL));
-        this.registerDefaultState((BlockState) ((BlockState) ((BlockState) this.stateDefinition.any()).setValue((Property) VaultPortalBlock.AXIS, (Comparable) Direction.Axis.X)).setValue((Property) VaultPortalBlock.STYLE, (Comparable) Style.RAINBOW));
+        super(AbstractBlock.Properties.copy(Blocks.NETHER_PORTAL));
+        this.registerDefaultState(this.stateDefinition.any().setValue((Property) VaultPortalBlock.AXIS, (Comparable) Direction.Axis.X).setValue((Property) VaultPortalBlock.STYLE, (Comparable) Style.RAINBOW));
     }
 
     public void fillItemCategory(final ItemGroup group, final NonNullList<ItemStack> items) {
     }
 
     protected void createBlockStateDefinition(final StateContainer.Builder<Block, BlockState> builder) {
-        super.createBlockStateDefinition((StateContainer.Builder) builder);
-        builder.add(new Property[]{(Property) VaultPortalBlock.STYLE});
+        super.createBlockStateDefinition(builder);
+        builder.add(VaultPortalBlock.STYLE);
     }
 
     public void randomTick(final BlockState state, final ServerWorld world, final BlockPos pos, final Random random) {
@@ -77,12 +77,12 @@ public class VaultPortalBlock extends NetherPortalBlock {
         if (entity.isPassenger() || entity.isVehicle() || !entity.canChangeDimensions()) {
             return;
         }
-        final VoxelShape playerVoxel = VoxelShapes.create(entity.getBoundingBox().move((double) (-pos.getX()), (double) (-pos.getY()), (double) (-pos.getZ())));
-        if (!VoxelShapes.joinIsNotEmpty(playerVoxel, state.getShape((IBlockReader) world, pos), IBooleanFunction.AND)) {
+        final VoxelShape playerVoxel = VoxelShapes.create(entity.getBoundingBox().move(-pos.getX(), -pos.getY(), -pos.getZ()));
+        if (!VoxelShapes.joinIsNotEmpty(playerVoxel, state.getShape(world, pos), IBooleanFunction.AND)) {
             return;
         }
-        final RegistryKey<World> destinationKey = (RegistryKey<World>) ((world.dimension() == Vault.VAULT_KEY) ? World.OVERWORLD : Vault.VAULT_KEY);
-        final ServerWorld destination = ((ServerWorld) world).getServer().getLevel((RegistryKey) destinationKey);
+        final RegistryKey<World> destinationKey = (world.dimension() == Vault.VAULT_KEY) ? World.OVERWORLD : Vault.VAULT_KEY;
+        final ServerWorld destination = ((ServerWorld) world).getServer().getLevel(destinationKey);
         if (destination == null) {
             return;
         }
@@ -112,7 +112,7 @@ public class VaultPortalBlock extends NetherPortalBlock {
                 }
                 world.setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
                 if (data.getType() == CrystalData.Type.FINAL_LOBBY) {
-                    final List<BlockPos> frame = VaultPortalSize.getFrame((IWorld) world, pos);
+                    final List<BlockPos> frame = VaultPortalSize.getFrame(world, pos);
                     frame.forEach(frameBlock -> {
                         if (world.getBlockState(frameBlock).getBlock() == ModBlocks.FINAL_VAULT_FRAME) {
                             world.setBlock(frameBlock, Blocks.BLACKSTONE.defaultBlockState(), 11);
@@ -133,7 +133,7 @@ public class VaultPortalBlock extends NetherPortalBlock {
             final Direction.Axis facingAxis = facing.getAxis();
             final Direction.Axis portalAxis = (Direction.Axis) state.getValue((Property) VaultPortalBlock.AXIS);
             final boolean flag = portalAxis != facingAxis && facingAxis.isHorizontal();
-            return (flag || facingState.is((Block) this) || new VaultPortalSize(iworld, currentPos, portalAxis, VaultPortalBlock.FRAME).validatePortal()) ? super.updateShape(state, facing, facingState, iworld, currentPos, facingPos) : Blocks.AIR.defaultBlockState();
+            return (flag || facingState.is(this) || new VaultPortalSize(iworld, currentPos, portalAxis, VaultPortalBlock.FRAME).validatePortal()) ? super.updateShape(state, facing, facingState, iworld, currentPos, facingPos) : Blocks.AIR.defaultBlockState();
         }
         return state;
     }
@@ -148,14 +148,14 @@ public class VaultPortalBlock extends NetherPortalBlock {
             final double d5 = (rand.nextFloat() - 0.5) * 0.5;
             double d6 = (rand.nextFloat() - 0.5) * 0.5;
             final int j = rand.nextInt(2) * 2 - 1;
-            if (!world.getBlockState(pos.west()).is((Block) this) && !world.getBlockState(pos.east()).is((Block) this)) {
+            if (!world.getBlockState(pos.west()).is(this) && !world.getBlockState(pos.east()).is(this)) {
                 d0 = pos.getX() + 0.5 + 0.25 * j;
                 d4 = rand.nextFloat() * 2.0f * j;
             } else {
                 d3 = pos.getZ() + 0.5 + 0.25 * j;
                 d6 = rand.nextFloat() * 2.0f * j;
             }
-            world.addParticle((IParticleData) ParticleTypes.ASH, d0, d2, d3, d4, d5, d6);
+            world.addParticle(ParticleTypes.ASH, d0, d2, d3, d4, d5, d6);
         }
     }
 

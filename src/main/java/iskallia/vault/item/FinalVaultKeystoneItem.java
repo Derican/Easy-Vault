@@ -32,11 +32,11 @@ public class FinalVaultKeystoneItem extends Item
     }
     
     public void appendHoverText(@Nonnull final ItemStack stack, @Nullable final World world, @Nonnull final List<ITextComponent> tooltip, @Nonnull final ITooltipFlag flag) {
-        super.appendHoverText(stack, world, (List)tooltip, flag);
+        super.appendHoverText(stack, world, tooltip, flag);
         final IFormattableTextComponent godNameText = new StringTextComponent(this.associatedGod.getName()).withStyle(this.associatedGod.getChatColor());
         final IFormattableTextComponent godTitleText = new StringTextComponent(this.associatedGod.getTitle()).withStyle(this.associatedGod.getChatColor()).withStyle(TextFormatting.BOLD);
-        tooltip.add((ITextComponent)new StringTextComponent(""));
-        tooltip.add((ITextComponent)new StringTextComponent("Keystone of ").append((ITextComponent)godNameText));
-        tooltip.add((ITextComponent)godTitleText);
+        tooltip.add(new StringTextComponent(""));
+        tooltip.add(new StringTextComponent("Keystone of ").append(godNameText));
+        tooltip.add(godTitleText);
     }
 }

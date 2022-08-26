@@ -25,6 +25,6 @@ public class MonsterAmountModifier extends RaidModifier {
     @Override
     public ITextComponent getDisplay(final float value) {
         final int percDisplay = Math.round(value * 100.0f);
-        return (ITextComponent) new StringTextComponent("+" + percDisplay + "% increased Amount of Monsters").withStyle(TextFormatting.RED);
+        return new StringTextComponent("+" + percDisplay + "% increased Amount of Monsters").withStyle(TextFormatting.RED);
     }
 }

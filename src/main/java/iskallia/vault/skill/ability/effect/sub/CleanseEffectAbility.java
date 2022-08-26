@@ -20,7 +20,7 @@ public class CleanseEffectAbility extends CleanseAbility<CleanseEffectConfig> {
             for (final EffectInstance ignored : effects) {
                 final String effectStr = addEffects.get(CleanseEffectAbility.rand.nextInt(addEffects.size()));
                 Registry.MOB_EFFECT.getOptional(new ResourceLocation(effectStr)).ifPresent(effect -> {
-                    final EffectTalent.CombinedEffects grantedEffects = EffectTalent.getEffectData((PlayerEntity) player, player.getLevel(), effect);
+                    final EffectTalent.CombinedEffects grantedEffects = EffectTalent.getEffectData(player, player.getLevel(), effect);
                     if (grantedEffects.getDisplayEffect() != null && grantedEffects.getAmplifier() >= 0) {
                         final EffectTalent.Type type = grantedEffects.getDisplayEffect().getType();
                         new EffectInstance(effect, 600, grantedEffects.getAmplifier() + config.getEffectAmplifier() + 1, false, type.showParticles, type.showIcon);

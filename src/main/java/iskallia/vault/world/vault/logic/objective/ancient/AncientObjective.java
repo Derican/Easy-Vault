@@ -77,7 +77,7 @@ public class AncientObjective extends VaultObjective {
         vault.getProperties().getBase(VaultRaid.HOST).ifPresent(id -> {
             final List<String> ancients = AncientEternalArchive.getAncients(srv, id);
             for (int i = 0; i < Math.min(ancients.size(), 4); ++i) {
-                this.generatedEternals.add((String) ancients.get(i));
+                this.generatedEternals.add(ancients.get(i));
             }
         });
     }
@@ -85,7 +85,7 @@ public class AncientObjective extends VaultObjective {
     @Nonnull
     @Override
     public BlockState getObjectiveRelevantBlock(final VaultRaid vault, final ServerWorld world, final BlockPos pos) {
-        return (BlockState)ModBlocks.CRYO_CHAMBER.defaultBlockState().setValue(CryoChamberBlock.CHAMBER_STATE, CryoChamberBlock.ChamberState.RUSTY);
+        return ModBlocks.CRYO_CHAMBER.defaultBlockState().setValue(CryoChamberBlock.CHAMBER_STATE, CryoChamberBlock.ChamberState.RUSTY);
     }
 
     @Override
@@ -114,18 +114,18 @@ public class AncientObjective extends VaultObjective {
         if (!this.foundEternals.isEmpty()) {
             this.setCompleted();
             player.runIfPresent(world.getServer(), sPlayer -> {
-                ScheduledItemDropData.get(world).addDrop((PlayerEntity) sPlayer, this.getRewardCrate(sPlayer, vault));
-                final IFormattableTextComponent ct = (IFormattableTextComponent) new StringTextComponent("");
-                ct.append((ITextComponent) sPlayer.getDisplayName().copy().setStyle(Style.EMPTY.withColor(Color.fromRgb(9974168))));
+                ScheduledItemDropData.get(world).addDrop(sPlayer, this.getRewardCrate(sPlayer, vault));
+                final IFormattableTextComponent ct = new StringTextComponent("");
+                ct.append(sPlayer.getDisplayName().copy().setStyle(Style.EMPTY.withColor(Color.fromRgb(9974168))));
                 ct.append(" rescued ");
                 for (int i = 0; i < this.foundEternals.size(); ++i) {
                     if (i != 0) {
                         ct.append(", ");
                     }
-                    ct.append((ITextComponent) new StringTextComponent((String) this.foundEternals.get(i)).withStyle(TextFormatting.GOLD));
+                    ct.append(new StringTextComponent(this.foundEternals.get(i)).withStyle(TextFormatting.GOLD));
                 }
                 ct.append("!");
-                MiscUtils.broadcast((ITextComponent) ct);
+                MiscUtils.broadcast(ct);
             });
         }
     }
@@ -133,11 +133,11 @@ public class AncientObjective extends VaultObjective {
     private ItemStack getRewardCrate(final ServerPlayerEntity sPlayer, final VaultRaid vault) {
         final ServerWorld world = sPlayer.getLevel();
         final BlockPos pos = sPlayer.blockPosition();
-        final LootContext.Builder builder = new LootContext.Builder(world).withRandom(world.random).withParameter(LootParameters.THIS_ENTITY, sPlayer).withParameter(LootParameters.ORIGIN, Vector3d.atCenterOf((Vector3i) pos)).withLuck(sPlayer.getLuck());
+        final LootContext.Builder builder = new LootContext.Builder(world).withRandom(world.random).withParameter(LootParameters.THIS_ENTITY, sPlayer).withParameter(LootParameters.ORIGIN, Vector3d.atCenterOf(pos)).withLuck(sPlayer.getLuck());
         final LootContext ctx = builder.create(LootParameterSets.CHEST);
         final NonNullList<ItemStack> stacks = this.createLoot(world, vault, ctx);
         final ItemStack crate = VaultCrateBlock.getCrateWithLoot(ModBlocks.VAULT_CRATE, stacks);
-        this.crates.add(new Crate((List<ItemStack>) stacks));
+        this.crates.add(new Crate(stacks));
         return crate;
     }
 
@@ -157,23 +157,23 @@ public class AncientObjective extends VaultObjective {
         final LootTable ancientTable = world.getServer().getLootTables().get(config.getAncientEternalBonusBox());
         for (final String eternalName : this.foundEternals) {
             final NonNullList<ItemStack> ancientLoot = NonNullList.create();
-            ancientLoot.addAll((Collection) ancientTable.getRandomItems(context));
-            Collections.shuffle((List<?>) ancientLoot);
-            final ItemStack box = new ItemStack((IItemProvider) Items.BLACK_SHULKER_BOX);
-            ItemStackHelper.saveAllItems(box.getOrCreateTagElement("BlockEntityTag"), (NonNullList) ancientLoot);
-            box.setHoverName((ITextComponent) new StringTextComponent(eternalName).withStyle(TextFormatting.GOLD));
+            ancientLoot.addAll(ancientTable.getRandomItems(context));
+            Collections.shuffle(ancientLoot);
+            final ItemStack box = new ItemStack(Items.BLACK_SHULKER_BOX);
+            ItemStackHelper.saveAllItems(box.getOrCreateTagElement("BlockEntityTag"), ancientLoot);
+            box.setHoverName(new StringTextComponent(eternalName).withStyle(TextFormatting.GOLD));
             stacks.add(box);
         }
     }
 
     @Override
     public ITextComponent getVaultName() {
-        return (ITextComponent) new StringTextComponent("Ancient Vault").withStyle(TextFormatting.DARK_AQUA);
+        return new StringTextComponent("Ancient Vault").withStyle(TextFormatting.DARK_AQUA);
     }
 
     @Override
     public ITextComponent getObjectiveDisplayName() {
-        return (ITextComponent) new StringTextComponent("Ancient Vault").withStyle(TextFormatting.DARK_AQUA);
+        return new StringTextComponent("Ancient Vault").withStyle(TextFormatting.DARK_AQUA);
     }
 
     @Nullable
@@ -194,14 +194,14 @@ public class AncientObjective extends VaultObjective {
 
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public static void onBreak(final BlockEvent.BreakEvent event) {
-        if (event.getWorld().isClientSide() || !event.getState().is((Block) ModBlocks.CRYO_CHAMBER)) {
+        if (event.getWorld().isClientSide() || !event.getState().is(ModBlocks.CRYO_CHAMBER)) {
             return;
         }
         if (!(event.getWorld() instanceof ServerWorld)) {
             return;
         }
         final ServerWorld sWorld = (ServerWorld) event.getWorld();
-        final TileEntity te = CryoChamberBlock.getCryoChamberTileEntity((World) sWorld, event.getPos(), event.getState());
+        final TileEntity te = CryoChamberBlock.getCryoChamberTileEntity(sWorld, event.getPos(), event.getState());
         if (!(te instanceof AncientCryoChamberTileEntity)) {
             return;
         }
@@ -231,7 +231,7 @@ public class AncientObjective extends VaultObjective {
         final CompoundNBT tag = super.serializeNBT();
         final ListNBT ancients = new ListNBT();
         this.generatedEternals.forEach(ancient -> ancients.add(StringNBT.valueOf(ancient)));
-        tag.put("ancients", (INBT) ancients);
+        tag.put("ancients", ancients);
         final ListNBT placed = new ListNBT();
         this.placedEternals.forEach(pos -> {
             final CompoundNBT posTag = new CompoundNBT();
@@ -241,10 +241,10 @@ public class AncientObjective extends VaultObjective {
             placed.add(posTag);
             return;
         });
-        tag.put("placed", (INBT) placed);
+        tag.put("placed", placed);
         final ListNBT found = new ListNBT();
         this.foundEternals.forEach(name -> found.add(StringNBT.valueOf(name)));
-        tag.put("found", (INBT) found);
+        tag.put("found", found);
         tag.putInt("generatedIdentifier", this.generatedIdentifier);
         return tag;
     }

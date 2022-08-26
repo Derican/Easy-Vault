@@ -34,7 +34,7 @@ public class FloatingItemEntity extends ItemEntity {
     private static final DataParameter<Integer> COLOR2;
 
     public FloatingItemEntity(final EntityType<? extends ItemEntity> type, final World world) {
-        super((EntityType) type, world);
+        super(type, world);
         this.addTag("PreventMagnetMovement");
     }
 
@@ -57,8 +57,8 @@ public class FloatingItemEntity extends ItemEntity {
 
     protected void defineSynchedData() {
         super.defineSynchedData();
-        this.getEntityData().define((DataParameter) FloatingItemEntity.COLOR1, 16777215);
-        this.getEntityData().define((DataParameter) FloatingItemEntity.COLOR2, 16777215);
+        this.getEntityData().define(FloatingItemEntity.COLOR1, 16777215);
+        this.getEntityData().define(FloatingItemEntity.COLOR2, 16777215);
     }
 
     public void setColor(final int color) {
@@ -66,8 +66,8 @@ public class FloatingItemEntity extends ItemEntity {
     }
 
     public void setColor(final int color1, final int color2) {
-        this.entityData.set((DataParameter) FloatingItemEntity.COLOR1, color1);
-        this.entityData.set((DataParameter) FloatingItemEntity.COLOR2, color2);
+        this.entityData.set(FloatingItemEntity.COLOR1, color1);
+        this.entityData.set(FloatingItemEntity.COLOR2, color2);
     }
 
     public void tick() {
@@ -81,7 +81,7 @@ public class FloatingItemEntity extends ItemEntity {
     @OnlyIn(Dist.CLIENT)
     private void playEffects() {
         final ParticleManager mgr = Minecraft.getInstance().particleEngine;
-        final Vector3d thisPos = this.position().add(0.0, (double) (this.getBbHeight() / 4.0f), 0.0);
+        final Vector3d thisPos = this.position().add(0.0, this.getBbHeight() / 4.0f, 0.0);
         int color1 = (int) this.getEntityData().get((DataParameter) FloatingItemEntity.COLOR1);
         int color2 = (int) this.getEntityData().get((DataParameter) FloatingItemEntity.COLOR2);
         if (color1 == 16777215 && color2 == 16777215) {
@@ -90,17 +90,17 @@ public class FloatingItemEntity extends ItemEntity {
                 color1 = (color2 = override.get().getRGB());
             } else {
                 color1 = ColorizationHelper.getColor(this.getItem()).map(Color::getRGB).orElse(16777215);
-                this.entityData.set((DataParameter) FloatingItemEntity.COLOR1, color1);
+                this.entityData.set(FloatingItemEntity.COLOR1, color1);
                 final int r = Math.min((color1 >> 16 & 0xFF) * 2, 255);
                 final int g = Math.min((color1 >> 8 & 0xFF) * 2, 255);
                 final int b = Math.min((color1 >> 0 & 0xFF) * 2, 255);
                 color2 = (r << 16 | g << 8 | b);
-                this.entityData.set((DataParameter) FloatingItemEntity.COLOR2, color2);
+                this.entityData.set(FloatingItemEntity.COLOR2, color2);
             }
         }
         if (this.random.nextInt(3) == 0) {
-            final Vector3d rPos = thisPos.add((double) ((this.random.nextFloat() - this.random.nextFloat()) * (this.random.nextFloat() * 8.0f)), (double) ((this.random.nextFloat() - this.random.nextFloat()) * (this.random.nextFloat() * 8.0f)), (double) ((this.random.nextFloat() - this.random.nextFloat()) * (this.random.nextFloat() * 8.0f)));
-            final SimpleAnimatedParticle p = (SimpleAnimatedParticle) mgr.createParticle((IParticleData) ParticleTypes.FIREWORK, rPos.x, rPos.y, rPos.z, 0.0, 0.0, 0.0);
+            final Vector3d rPos = thisPos.add((this.random.nextFloat() - this.random.nextFloat()) * (this.random.nextFloat() * 8.0f), (this.random.nextFloat() - this.random.nextFloat()) * (this.random.nextFloat() * 8.0f), (this.random.nextFloat() - this.random.nextFloat()) * (this.random.nextFloat() * 8.0f));
+            final SimpleAnimatedParticle p = (SimpleAnimatedParticle) mgr.createParticle(ParticleTypes.FIREWORK, rPos.x, rPos.y, rPos.z, 0.0, 0.0, 0.0);
             if (p != null) {
 //                TODO: check if the omit is acceptable
 //                p.baseGravity = 0.0f;
@@ -108,7 +108,7 @@ public class FloatingItemEntity extends ItemEntity {
             }
         }
         if (this.random.nextBoolean()) {
-            final SimpleAnimatedParticle p = (SimpleAnimatedParticle) mgr.createParticle((IParticleData) ParticleTypes.FIREWORK, thisPos.x, thisPos.y, thisPos.z, (this.random.nextFloat() - this.random.nextFloat()) * 0.2, (this.random.nextFloat() - this.random.nextFloat()) * 0.2, (this.random.nextFloat() - this.random.nextFloat()) * 0.2);
+            final SimpleAnimatedParticle p = (SimpleAnimatedParticle) mgr.createParticle(ParticleTypes.FIREWORK, thisPos.x, thisPos.y, thisPos.z, (this.random.nextFloat() - this.random.nextFloat()) * 0.2, (this.random.nextFloat() - this.random.nextFloat()) * 0.2, (this.random.nextFloat() - this.random.nextFloat()) * 0.2);
             if (p != null) {
 //                TODO: check if the omit is acceptable
 //                p.baseGravity = 0.0f;
@@ -121,7 +121,7 @@ public class FloatingItemEntity extends ItemEntity {
         final boolean wasAlive = this.isAlive();
         super.playerTouch(player);
         if (wasAlive && !this.isAlive()) {
-            player.getCommandSenderWorld().playSound((PlayerEntity) null, player.getX(), player.getY(), player.getZ(), SoundEvents.NOTE_BLOCK_BELL, SoundCategory.PLAYERS, 0.6f, 1.0f);
+            player.getCommandSenderWorld().playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.NOTE_BLOCK_BELL, SoundCategory.PLAYERS, 0.6f, 1.0f);
         }
     }
 
@@ -130,11 +130,11 @@ public class FloatingItemEntity extends ItemEntity {
     }
 
     public IPacket<?> getAddEntityPacket() {
-        return (IPacket<?>) NetworkHooks.getEntitySpawningPacket((Entity) this);
+        return NetworkHooks.getEntitySpawningPacket(this);
     }
 
     static {
-        COLOR1 = EntityDataManager.defineId((Class) FloatingItemEntity.class, DataSerializers.INT);
-        COLOR2 = EntityDataManager.defineId((Class) FloatingItemEntity.class, DataSerializers.INT);
+        COLOR1 = EntityDataManager.defineId(FloatingItemEntity.class, DataSerializers.INT);
+        COLOR2 = EntityDataManager.defineId(FloatingItemEntity.class, DataSerializers.INT);
     }
 }

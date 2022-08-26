@@ -31,7 +31,7 @@ public class OtherSideData implements INBTSerializable<CompoundNBT> {
 
     public void updateDelegate() {
         if (this.delegate != null) {
-            this.delegate.put("OtherSideData", (INBT) this.serializeNBT());
+            this.delegate.put("OtherSideData", this.serializeNBT());
         }
     }
 
@@ -68,6 +68,6 @@ public class OtherSideData implements INBTSerializable<CompoundNBT> {
     public void deserializeNBT(final CompoundNBT nbt) {
         final int[] arr = nbt.getIntArray("LinkedPos");
         this.linkedPos = new BlockPos(arr[0], arr[1], arr[2]);
-        this.linkedDim = (RegistryKey<World>) RegistryKey.create(Registry.DIMENSION_REGISTRY, new ResourceLocation(nbt.getString("LinkedDim")));
+        this.linkedDim = RegistryKey.create(Registry.DIMENSION_REGISTRY, new ResourceLocation(nbt.getString("LinkedDim")));
     }
 }

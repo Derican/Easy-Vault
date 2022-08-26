@@ -8,7 +8,7 @@ import java.util.Random;
 public abstract class PlayerTalent {
     protected static final Random rand;
     @Expose
-    private int cost;
+    private final int cost;
     @Expose
     private int levelRequirement;
 

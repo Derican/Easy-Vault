@@ -102,7 +102,7 @@ public class FinalRaidModifierConfig extends Config {
                     return !(modifier instanceof ArtifactFragmentModifier);
                 });
             }
-            return (RollableModifier) modifierList.getRandom(FinalRaidModifierConfig.rand);
+            return modifierList.getRandom(FinalRaidModifierConfig.rand);
         });
     }
 
@@ -158,11 +158,11 @@ public class FinalRaidModifierConfig extends Config {
 
     public static class RollableModifier {
         @Expose
-        private String modifier;
+        private final String modifier;
         @Expose
-        private float minValue;
+        private final float minValue;
         @Expose
-        private float maxValue;
+        private final float maxValue;
 
         public RollableModifier(final String modifier, final float minValue, final float maxValue) {
             this.modifier = modifier;

@@ -90,7 +90,7 @@ public class MiscUtils {
     }
 
     public static int getRandomEmptySlot(final IInventory inventory) {
-        return getRandomEmptySlot((IItemHandler) new InvWrapper(inventory));
+        return getRandomEmptySlot(new InvWrapper(inventory));
     }
 
     public static int getRandomEmptySlot(final IItemHandler handler) {
@@ -222,14 +222,14 @@ public class MiscUtils {
     }
 
     public static Vector3d getRandomOffset(final BlockPos pos, final Random r) {
-        return new Vector3d((double) (pos.getX() + r.nextFloat()), (double) (pos.getY() + r.nextFloat()), (double) (pos.getZ() + r.nextFloat()));
+        return new Vector3d(pos.getX() + r.nextFloat(), pos.getY() + r.nextFloat(), pos.getZ() + r.nextFloat());
     }
 
     public static Vector3d getRandomOffset(final BlockPos pos, final Random r, final float scale) {
         final float x = pos.getX() + 0.5f - scale / 2.0f + r.nextFloat() * scale;
         final float y = pos.getY() + 0.5f - scale / 2.0f + r.nextFloat() * scale;
         final float z = pos.getZ() + 0.5f - scale / 2.0f + r.nextFloat() * scale;
-        return new Vector3d((double) x, (double) y, (double) z);
+        return new Vector3d(x, y, z);
     }
 
     public static Collection<ChunkPos> getChunksContaining(final AxisAlignedBB box) {
@@ -258,7 +258,7 @@ public class MiscUtils {
     }
 
     public static void broadcast(final ITextComponent message) {
-        final MinecraftServer srv = (MinecraftServer) LogicalSidedProvider.INSTANCE.get(LogicalSide.SERVER);
+        final MinecraftServer srv = LogicalSidedProvider.INSTANCE.get(LogicalSide.SERVER);
         if (srv != null) {
             srv.getPlayerList().broadcastMessage(message, ChatType.CHAT, Util.NIL_UUID);
         }
@@ -317,14 +317,14 @@ public class MiscUtils {
             return -1;
         }
         final BlockState state = b.defaultBlockState();
-        return Minecraft.getInstance().getBlockColors().getColor(state, (IBlockDisplayReader) null, (BlockPos) null, 0);
+        return Minecraft.getInstance().getBlockColors().getColor(state, null, null, 0);
     }
 
     @Nullable
     public static PlayerEntity findPlayerUsingAnvil(final ItemStack left, final ItemStack right) {
         for (final PlayerEntity player : SidedHelper.getSidedPlayers()) {
             if (player.containerMenu instanceof RepairContainer) {
-                final NonNullList<ItemStack> contents = (NonNullList<ItemStack>) player.containerMenu.getItems();
+                final NonNullList<ItemStack> contents = player.containerMenu.getItems();
                 if (contents.get(0) == left && contents.get(1) == right) {
                     return player;
                 }
@@ -336,7 +336,7 @@ public class MiscUtils {
 
     public static void fillContainer(final Container ct, final NonNullList<ItemStack> items) {
         for (int slot = 0; slot < items.size(); ++slot) {
-            ct.setItem(slot, (ItemStack) items.get(slot));
+            ct.setItem(slot, items.get(slot));
         }
     }
 
@@ -348,7 +348,7 @@ public class MiscUtils {
             if (dropped != null) {
                 dropped.makeFakeItem();
             }
-            player.level.playSound((PlayerEntity) null, player.getX(), player.getY(), player.getZ(), SoundEvents.ITEM_PICKUP, SoundCategory.PLAYERS, 0.2f, ((player.getRandom().nextFloat() - player.getRandom().nextFloat()) * 0.7f + 1.0f) * 2.0f);
+            player.level.playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.ITEM_PICKUP, SoundCategory.PLAYERS, 0.2f, ((player.getRandom().nextFloat() - player.getRandom().nextFloat()) * 0.7f + 1.0f) * 2.0f);
             player.inventoryMenu.broadcastChanges();
         } else {
             final ItemEntity dropped = player.drop(stack, false);

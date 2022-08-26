@@ -56,7 +56,7 @@ public class VaultCrystalItem extends Item {
     }
 
     public static ItemStack getCrystalWithBoss(final String playerBossName) {
-        final ItemStack stack = new ItemStack((IItemProvider) ModItems.VAULT_CRYSTAL);
+        final ItemStack stack = new ItemStack(ModItems.VAULT_CRYSTAL);
         final CrystalData data = new CrystalData(stack);
         data.setPlayerBossName(playerBossName);
         data.setType(CrystalData.Type.RAFFLE);
@@ -64,7 +64,7 @@ public class VaultCrystalItem extends Item {
     }
 
     public static ItemStack getCrystalWithObjective(final ResourceLocation objectiveKey) {
-        final ItemStack stack = new ItemStack((IItemProvider) ModItems.VAULT_CRYSTAL);
+        final ItemStack stack = new ItemStack(ModItems.VAULT_CRYSTAL);
         final CrystalData data = new CrystalData(stack);
         data.setSelectedObjective(objectiveKey);
         if (VaultCrystalItem.rand.nextBoolean()) {
@@ -77,7 +77,7 @@ public class VaultCrystalItem extends Item {
         if (this.allowdedIn(group)) {
             for (final CrystalData.Type crystalType : CrystalData.Type.values()) {
                 if (crystalType.visibleInCreative()) {
-                    final ItemStack crystal = new ItemStack((IItemProvider) this);
+                    final ItemStack crystal = new ItemStack(this);
                     getData(crystal).setType(crystalType);
                     items.add(crystal);
                 }
@@ -88,7 +88,7 @@ public class VaultCrystalItem extends Item {
     public ITextComponent getName(final ItemStack stack) {
         final CrystalData data = getData(stack);
         if (data.getEchoData().getEchoCount() > 0) {
-            return (ITextComponent) new StringTextComponent("Echoed Vault Crystal").withStyle(TextFormatting.DARK_PURPLE);
+            return new StringTextComponent("Echoed Vault Crystal").withStyle(TextFormatting.DARK_PURPLE);
         }
         return super.getName(stack);
     }
@@ -104,12 +104,12 @@ public class VaultCrystalItem extends Item {
         }
         final BlockPos pos = context.getClickedPos();
         if (this.tryCreatePortal(context.getLevel(), pos, context.getClickedFace(), data)) {
-            context.getLevel().playSound((PlayerEntity) null, (double) pos.getX(), (double) pos.getY(), (double) pos.getZ(), ModSounds.VAULT_PORTAL_OPEN, SoundCategory.BLOCKS, 1.0f, 1.0f);
+            context.getLevel().playSound(null, pos.getX(), pos.getY(), pos.getZ(), ModSounds.VAULT_PORTAL_OPEN, SoundCategory.BLOCKS, 1.0f, 1.0f);
             final IFormattableTextComponent playerName = context.getPlayer().getDisplayName().copy();
             playerName.setStyle(Style.EMPTY.withColor(Color.fromRgb(9974168)));
             final String suffix = (data.getType() == CrystalData.Type.FINAL_LOBBY) ? " opened the Final Vault!" : " opened a Vault!";
             final StringTextComponent suffixComponent = new StringTextComponent(suffix);
-            context.getLevel().getServer().getPlayerList().broadcastMessage((ITextComponent)new StringTextComponent("").append((ITextComponent)playerName).append((ITextComponent)suffixComponent), ChatType.CHAT, context.getPlayer().getUUID());
+            context.getLevel().getServer().getPlayerList().broadcastMessage(new StringTextComponent("").append(playerName).append(suffixComponent), ChatType.CHAT, context.getPlayer().getUUID());
             context.getItemInHand().shrink(1);
             return ActionResultType.SUCCESS;
         }
@@ -117,10 +117,10 @@ public class VaultCrystalItem extends Item {
     }
 
     private boolean tryCreatePortal(final World world, final BlockPos pos, final Direction facing, final CrystalData data) {
-        final Optional<VaultPortalSize> optional = VaultPortalSize.getPortalSize((IWorld)world, pos.relative(facing), Direction.Axis.X, VaultPortalBlock.FRAME);
+        final Optional<VaultPortalSize> optional = VaultPortalSize.getPortalSize(world, pos.relative(facing), Direction.Axis.X, VaultPortalBlock.FRAME);
         if (optional.isPresent()) {
             final VaultPortalSize portal = optional.get();
-            final BlockState state = (BlockState)ModBlocks.VAULT_PORTAL.defaultBlockState().setValue(VaultPortalBlock.AXIS, portal.getAxis());
+            final BlockState state = ModBlocks.VAULT_PORTAL.defaultBlockState().setValue(VaultPortalBlock.AXIS, portal.getAxis());
             data.frameData = new FrameData();
             for (int i = -1; i <= portal.getWidth(); ++i) {
                 for (int j = -1; j <= portal.getHeight(); ++j) {
@@ -170,25 +170,25 @@ public class VaultCrystalItem extends Item {
     @OnlyIn(Dist.CLIENT)
     public void appendHoverText(final ItemStack stack, final World world, final List<ITextComponent> tooltip, final ITooltipFlag flag) {
         getData(stack).addInformation(world, tooltip, flag);
-        super.appendHoverText(stack, world, (List) tooltip, flag);
+        super.appendHoverText(stack, world, tooltip, flag);
     }
 
     public ActionResult<ItemStack> use(final World worldIn, final PlayerEntity player, final Hand handIn) {
         if (worldIn.isClientSide) {
-            return (ActionResult<ItemStack>) super.use(worldIn, player, handIn);
+            return super.use(worldIn, player, handIn);
         }
         if (handIn == Hand.OFF_HAND) {
-            return (ActionResult<ItemStack>) super.use(worldIn, player, handIn);
+            return super.use(worldIn, player, handIn);
         }
         final ItemStack stack = player.getMainHandItem();
         final CrystalData data = getData(stack);
         if (!data.getPlayerBossName().isEmpty() && player.isShiftKeyDown()) {
             final CompoundNBT nbt = new CompoundNBT();
             nbt.putInt("RenameType", RenameType.VAULT_CRYSTAL.ordinal());
-            nbt.put("Data", (INBT) stack.serializeNBT());
-            NetworkHooks.openGui((ServerPlayerEntity) player, (INamedContainerProvider) new INamedContainerProvider() {
+            nbt.put("Data", stack.serializeNBT());
+            NetworkHooks.openGui((ServerPlayerEntity) player, new INamedContainerProvider() {
                 public ITextComponent getDisplayName() {
-                    return (ITextComponent) new StringTextComponent("Rename Raffle Boss");
+                    return new StringTextComponent("Rename Raffle Boss");
                 }
 
                 @Nullable
@@ -197,7 +197,7 @@ public class VaultCrystalItem extends Item {
                 }
             }, buffer -> buffer.writeNbt(nbt));
         }
-        return (ActionResult<ItemStack>) super.use(worldIn, player, handIn);
+        return super.use(worldIn, player, handIn);
     }
 
     public void inventoryTick(final ItemStack stack, final World world, final Entity entity, final int itemSlot, final boolean isSelected) {
@@ -251,7 +251,7 @@ public class VaultCrystalItem extends Item {
             final CrystalData data = getData(stack);
             final int remainder = data.addEchoGems(amount);
             if (remainder > 0) {
-                EntityHelper.giveItem((PlayerEntity) player, new ItemStack((IItemProvider) ModItems.ECHO_GEM, remainder));
+                EntityHelper.giveItem(player, new ItemStack(ModItems.ECHO_GEM, remainder));
             }
             markApplyEchoAttempted(stack);
         }
@@ -275,15 +275,15 @@ public class VaultCrystalItem extends Item {
         final CrystalData data = getData(stack);
         if (nbt.getInt("ShouldClone") == -1) {
             data.setModifiable(false);
-            player.getCommandSenderWorld().playSound((PlayerEntity) null, player.blockPosition(), SoundEvents.FIRE_EXTINGUISH, SoundCategory.PLAYERS, 1.0f, 1.0f);
+            player.getCommandSenderWorld().playSound(null, player.blockPosition(), SoundEvents.FIRE_EXTINGUISH, SoundCategory.PLAYERS, 1.0f, 1.0f);
             stack.getOrCreateTag().remove("ShouldClone");
         } else {
             data.setModifiable(false);
             nbt.putBoolean("Cloned", true);
             data.setModifiable(false);
             stack.getOrCreateTag().remove("ShouldClone");
-            EntityHelper.giveItem((PlayerEntity) player, stack.copy());
-            player.getCommandSenderWorld().playSound((PlayerEntity) null, player.blockPosition(), SoundEvents.PLAYER_LEVELUP, SoundCategory.PLAYERS, 0.8f, 1.5f);
+            EntityHelper.giveItem(player, stack.copy());
+            player.getCommandSenderWorld().playSound(null, player.blockPosition(), SoundEvents.PLAYER_LEVELUP, SoundCategory.PLAYERS, 0.8f, 1.5f);
         }
     }
 

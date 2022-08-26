@@ -64,6 +64,6 @@ public class ThornsTalent extends PlayerTalent {
             return;
         }
         final float dmg = (float) hurt.getAttributeValue(Attributes.ATTACK_DAMAGE);
-        ServerScheduler.INSTANCE.schedule(0, () -> ActiveFlags.IS_REFLECT_ATTACKING.runIfNotSet(() -> source.hurt(DamageSource.thorns((Entity) hurt), dmg * thornsDamage)));
+        ServerScheduler.INSTANCE.schedule(0, () -> ActiveFlags.IS_REFLECT_ATTACKING.runIfNotSet(() -> source.hurt(DamageSource.thorns(hurt), dmg * thornsDamage)));
     }
 }

@@ -58,9 +58,9 @@ public class VaultLootablesConfig extends Config {
 
     public static class Lootable {
         @Expose
-        private WeightedList<String> DEFAULT;
+        private final WeightedList<String> DEFAULT;
         @Expose
-        private Map<String, WeightedList<String>> OVERRIDES;
+        private final Map<String, WeightedList<String>> OVERRIDES;
 
         public Lootable() {
             this.DEFAULT = new WeightedList<String>();
@@ -76,7 +76,7 @@ public class VaultLootablesConfig extends Config {
                     pool = modifier.adjustLootWeighting(poolName, pool);
                 }
             }
-            return Registry.BLOCK.getOptional(new ResourceLocation((String) pool.getRandom(random))).orElse(Blocks.AIR).defaultBlockState();
+            return Registry.BLOCK.getOptional(new ResourceLocation(pool.getRandom(random))).orElse(Blocks.AIR).defaultBlockState();
         }
 
         public WeightedList<String> getPool(@Nullable final UUID playerUUID) {

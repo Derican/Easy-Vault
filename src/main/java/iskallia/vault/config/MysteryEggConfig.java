@@ -42,7 +42,7 @@ public class MysteryEggConfig extends Config {
     private Item getEgg(final EntityType<?> type) {
         Item item = Items.AIR;
         try {
-            item = StreamSupport.stream(SpawnEggItem.eggs().spliterator(), false).filter(eggItem -> type.equals(eggItem.getType((CompoundNBT) null))).findAny().get();
+            item = StreamSupport.stream(SpawnEggItem.eggs().spliterator(), false).filter(eggItem -> type.equals(eggItem.getType(null))).findAny().get();
         } catch (NoSuchElementException e) {
 
         }

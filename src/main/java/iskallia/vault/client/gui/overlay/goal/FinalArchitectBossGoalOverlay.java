@@ -61,12 +61,12 @@ public class FinalArchitectBossGoalOverlay extends BossBarOverlay
         final int barWidth = segmentWidth * barSegments;
         final int totalWidth = barWidth + startEndWith * 2;
         final int offsetX = midX - totalWidth / 2;
-        final ITextComponent title = (ITextComponent)new StringTextComponent("Vote!").withStyle(TextFormatting.BOLD);
-        final float shiftTitleX = fr.width((ITextProperties)title) * 1.25f;
+        final ITextComponent title = new StringTextComponent("Vote!").withStyle(TextFormatting.BOLD);
+        final float shiftTitleX = fr.width(title) * 1.25f;
         renderStack.pushPose();
-        renderStack.translate((double)(midX - shiftTitleX / 2.0f), (double)offsetY, 0.0);
+        renderStack.translate(midX - shiftTitleX / 2.0f, offsetY, 0.0);
         renderStack.scale(1.25f, 1.25f, 1.0f);
-        fr.drawInBatch(title, 0.0f, 0.0f, -1, false, renderStack.last().pose(), (IRenderTypeBuffer)buffer, true, 0, LightmapHelper.getPackedFullbrightCoords());
+        fr.drawInBatch(title, 0.0f, 0.0f, -1, false, renderStack.last().pose(), buffer, true, 0, LightmapHelper.getPackedFullbrightCoords());
         buffer.endBatch();
         renderStack.popPose();
         offsetY += (int)12.5f;
@@ -88,17 +88,17 @@ public class FinalArchitectBossGoalOverlay extends BossBarOverlay
             int yShift = 0;
             final IReorderingProcessor bidiDir = choice.getDirectionDisplay().getVisualOrderText();
             final int dirLength = fr.width(bidiDir);
-            fr.drawInBatch(bidiDir, barMid - dirLength / 2.0f, (float)(yShift + offsetY), -1, false, renderStack.last().pose(), (IRenderTypeBuffer)buffer, true, 0, LightmapHelper.getPackedFullbrightCoords());
+            fr.drawInBatch(bidiDir, barMid - dirLength / 2.0f, (float)(yShift + offsetY), -1, false, renderStack.last().pose(), buffer, true, 0, LightmapHelper.getPackedFullbrightCoords());
             yShift += 9;
             float scaledShift = 0.0f;
             final float modifierScale = 0.75f;
             renderStack.pushPose();
-            renderStack.translate((double)barMid, (double)(offsetY + yShift), 0.0);
+            renderStack.translate(barMid, offsetY + yShift, 0.0);
             renderStack.scale(modifierScale, modifierScale, 1.0f);
             for (final VoteModifier modifier : choice.getFinalArchitectModifiers()) {
                 final IReorderingProcessor bidiDesc = modifier.getDescription().getVisualOrderText();
                 final int descLength = fr.width(bidiDesc);
-                fr.drawInBatch(bidiDesc, -descLength / 2.0f, 0.0f, -1, false, renderStack.last().pose(), (IRenderTypeBuffer)buffer, true, 0, LightmapHelper.getPackedFullbrightCoords());
+                fr.drawInBatch(bidiDesc, -descLength / 2.0f, 0.0f, -1, false, renderStack.last().pose(), buffer, true, 0, LightmapHelper.getPackedFullbrightCoords());
                 renderStack.translate(0.0, 9.0, 0.0);
                 scaledShift += 9.0f;
             }

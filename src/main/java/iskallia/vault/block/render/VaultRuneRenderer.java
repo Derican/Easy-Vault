@@ -19,7 +19,7 @@ import net.minecraft.util.text.ITextProperties;
 import net.minecraft.util.text.StringTextComponent;
 
 public class VaultRuneRenderer extends TileEntityRenderer<VaultRuneTileEntity> {
-    private Minecraft mc;
+    private final Minecraft mc;
 
     public VaultRuneRenderer(final TileEntityRendererDispatcher rendererDispatcherIn) {
         super(rendererDispatcherIn);
@@ -31,7 +31,7 @@ public class VaultRuneRenderer extends TileEntityRenderer<VaultRuneTileEntity> {
         final Vector3d eyePosition = player.getEyePosition(1.0f);
         final Vector3d look = player.getViewVector(1.0f);
         final Vector3d endPos = eyePosition.add(look.x * 5.0, look.y * 5.0, look.z * 5.0);
-        final RayTraceContext context = new RayTraceContext(eyePosition, endPos, RayTraceContext.BlockMode.OUTLINE, RayTraceContext.FluidMode.NONE, (Entity) player);
+        final RayTraceContext context = new RayTraceContext(eyePosition, endPos, RayTraceContext.BlockMode.OUTLINE, RayTraceContext.FluidMode.NONE, player);
         final BlockRayTraceResult result = player.level.clip(context);
         if (result.getBlockPos().equals(tileEntity.getBlockPos())) {
             final StringTextComponent text = new StringTextComponent(tileEntity.getBelongsTo());
@@ -44,14 +44,14 @@ public class VaultRuneRenderer extends TileEntityRenderer<VaultRuneTileEntity> {
         matrixStack.pushPose();
         final float scale = 0.02f;
         final int opacity = 1711276032;
-        final float offset = (float) (-fontRenderer.width((ITextProperties) text) / 2);
+        final float offset = (float) (-fontRenderer.width(text) / 2);
         final Matrix4f matrix4f = matrixStack.last().pose();
         matrixStack.translate(0.5, 1.399999976158142, 0.5);
         matrixStack.scale(scale, scale, scale);
         matrixStack.mulPose(this.mc.getEntityRenderDispatcher().cameraOrientation());
         matrixStack.mulPose(Vector3f.ZP.rotationDegrees(180.0f));
-        fontRenderer.drawInBatch((ITextComponent) text, offset, 0.0f, color, false, matrix4f, buffer, true, opacity, lightLevel);
-        fontRenderer.drawInBatch((ITextComponent) text, offset, 0.0f, -1, false, matrix4f, buffer, false, 0, lightLevel);
+        fontRenderer.drawInBatch(text, offset, 0.0f, color, false, matrix4f, buffer, true, opacity, lightLevel);
+        fontRenderer.drawInBatch(text, offset, 0.0f, -1, false, matrix4f, buffer, false, 0, lightLevel);
         matrixStack.popPose();
     }
 }

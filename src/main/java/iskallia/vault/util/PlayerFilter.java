@@ -27,11 +27,11 @@ public class PlayerFilter implements Predicate<UUID> {
     }
 
     public static PlayerFilter of(final PlayerEntity... players) {
-        return new PlayerFilter((List<UUID>) Arrays.stream(players).map(Entity::getUUID).collect(Collectors.toList()));
+        return new PlayerFilter(Arrays.stream(players).map(Entity::getUUID).collect(Collectors.toList()));
     }
 
     public static PlayerFilter of(final VaultPlayer... players) {
-        return new PlayerFilter((List<UUID>) Arrays.stream(players).map(VaultPlayer::getPlayerId).collect(Collectors.toList()));
+        return new PlayerFilter(Arrays.stream(players).map(VaultPlayer::getPlayerId).collect(Collectors.toList()));
     }
 
     @Override

@@ -69,16 +69,16 @@ public class ItemVaultCrystalSeal extends Item {
     public void appendHoverText(final ItemStack stack, @Nullable final World world, final List<ITextComponent> tooltip, final ITooltipFlag flag) {
         final VaultObjective objective = VaultObjective.getObjective(this.objectiveId);
         if (objective != null) {
-            tooltip.add((ITextComponent) new StringTextComponent("Sets a vault crystal's objective").withStyle(TextFormatting.GRAY));
-            tooltip.add((ITextComponent) new StringTextComponent("to: ").withStyle(TextFormatting.GRAY).append(objective.getObjectiveDisplayName()));
+            tooltip.add(new StringTextComponent("Sets a vault crystal's objective").withStyle(TextFormatting.GRAY));
+            tooltip.add(new StringTextComponent("to: ").withStyle(TextFormatting.GRAY).append(objective.getObjectiveDisplayName()));
         }
         final String eventKey = getEventKey(stack);
         if (eventKey != null) {
             if (objective != null) {
                 tooltip.add(StringTextComponent.EMPTY);
             }
-            tooltip.add((ITextComponent) new StringTextComponent("Event Item").withStyle(TextFormatting.AQUA));
-            tooltip.add((ITextComponent) new StringTextComponent("Expires after the event finishes.").withStyle(TextFormatting.GRAY));
+            tooltip.add(new StringTextComponent("Event Item").withStyle(TextFormatting.AQUA));
+            tooltip.add(new StringTextComponent("Expires after the event finishes.").withStyle(TextFormatting.GRAY));
         }
     }
 }

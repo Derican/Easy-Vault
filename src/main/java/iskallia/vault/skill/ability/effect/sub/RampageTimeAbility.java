@@ -45,13 +45,13 @@ public class RampageTimeAbility extends RampageAbility<RampageTimeConfig> {
         if (rampage == null) {
             return;
         }
-        final AbilityTree abilities = PlayerAbilitiesData.get(world).getAbilities((PlayerEntity) sPlayer);
+        final AbilityTree abilities = PlayerAbilitiesData.get(world).getAbilities(sPlayer);
         final AbilityNode<?, ?> node = abilities.getNodeByName("Rampage");
         if (node.getAbility() == this && node.isLearned()) {
             final RampageTimeConfig cfg = (RampageTimeConfig) node.getAbilityConfig();
             final EffectInstance effectInstance = rampage;
 //            effectInstance.duration += cfg.getTickTimeIncreasePerHit();
-            sPlayer.connection.send((IPacket) new SPlayEntityEffectPacket(sPlayer.getId(), rampage));
+            sPlayer.connection.send(new SPlayEntityEffectPacket(sPlayer.getId(), rampage));
         }
     }
 

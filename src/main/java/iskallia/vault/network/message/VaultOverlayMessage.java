@@ -37,7 +37,7 @@ public class VaultOverlayMessage {
 
     public static void encode(final VaultOverlayMessage message, final PacketBuffer buffer) {
         buffer.writeInt(message.remainingTicks);
-        buffer.writeEnum((Enum) message.type);
+        buffer.writeEnum(message.type);
         buffer.writeBoolean(message.earlyKill);
         buffer.writeBoolean(message.showTimer);
     }
@@ -76,6 +76,6 @@ public class VaultOverlayMessage {
     public enum OverlayType {
         VAULT,
         ARENA,
-        NONE;
+        NONE
     }
 }

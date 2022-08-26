@@ -24,7 +24,7 @@ public abstract class JsonDump {
         }
         final JsonObject jsonObject = this.dumpToJSON();
         final FileWriter writer = new FileWriter(configFile);
-        JsonDump.GSON.toJson((JsonElement) jsonObject, (Appendable) writer);
+        JsonDump.GSON.toJson(jsonObject, writer);
         writer.close();
     }
 

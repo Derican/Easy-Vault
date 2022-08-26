@@ -60,7 +60,7 @@ public class CryoChamberBlock extends Block {
 
     public void fillItemCategory(final ItemGroup group, final NonNullList<ItemStack> items) {
         for (final ChamberState state : ChamberState.values()) {
-            final ItemStack stack = new ItemStack((IItemProvider) this);
+            final ItemStack stack = new ItemStack(this);
             stack.setDamageValue(state.ordinal());
             items.add(stack);
         }
@@ -90,12 +90,12 @@ public class CryoChamberBlock extends Block {
     }
 
     protected void createBlockStateDefinition(final StateContainer.Builder<Block, BlockState> builder) {
-        builder.add(new Property[]{CryoChamberBlock.HALF, CryoChamberBlock.FACING, CryoChamberBlock.CHAMBER_STATE});
+        builder.add(CryoChamberBlock.HALF, CryoChamberBlock.FACING, CryoChamberBlock.CHAMBER_STATE);
     }
 
     public void playerWillDestroy(final World worldIn, final BlockPos pos, final BlockState state, final PlayerEntity player) {
         if (!worldIn.isClientSide && player.isCreative()) {
-            final DoubleBlockHalf half = (DoubleBlockHalf) state.getValue(CryoChamberBlock.HALF);
+            final DoubleBlockHalf half = state.getValue(CryoChamberBlock.HALF);
             if (half == DoubleBlockHalf.UPPER) {
                 final BlockPos blockpos = pos.below();
                 final BlockState blockstate = worldIn.getBlockState(blockpos);
@@ -109,11 +109,11 @@ public class CryoChamberBlock extends Block {
     }
 
     public BlockState updateShape(final BlockState stateIn, final Direction facing, final BlockState facingState, final IWorld worldIn, final BlockPos currentPos, final BlockPos facingPos) {
-        final DoubleBlockHalf half = (DoubleBlockHalf) stateIn.getValue(CryoChamberBlock.HALF);
+        final DoubleBlockHalf half = stateIn.getValue(CryoChamberBlock.HALF);
         if (facing.getAxis() == Direction.Axis.Y && half == DoubleBlockHalf.LOWER == (facing == Direction.UP)) {
-            return ((facingState.is((Block) this) && facingState.getValue(CryoChamberBlock.HALF) != half) ? stateIn.setValue(CryoChamberBlock.FACING, facingState.getValue(CryoChamberBlock.FACING)) : Blocks.AIR.defaultBlockState());
+            return ((facingState.is(this) && facingState.getValue(CryoChamberBlock.HALF) != half) ? stateIn.setValue(CryoChamberBlock.FACING, facingState.getValue(CryoChamberBlock.FACING)) : Blocks.AIR.defaultBlockState());
         }
-        return (half == DoubleBlockHalf.LOWER && facing == Direction.DOWN && !stateIn.canSurvive((IWorldReader) worldIn, currentPos)) ? Blocks.AIR.defaultBlockState() : super.updateShape(stateIn, facing, facingState, worldIn, currentPos, facingPos);
+        return (half == DoubleBlockHalf.LOWER && facing == Direction.DOWN && !stateIn.canSurvive(worldIn, currentPos)) ? Blocks.AIR.defaultBlockState() : super.updateShape(stateIn, facing, facingState, worldIn, currentPos, facingPos);
     }
 
     public void setPlacedBy(final World worldIn, final BlockPos pos, final BlockState state, final LivingEntity placer, final ItemStack stack) {
@@ -142,13 +142,13 @@ public class CryoChamberBlock extends Block {
     }
 
     private void dropCryoChamber(final World world, final BlockPos pos, final BlockState state, final CryoChamberTileEntity te) {
-        final ItemStack chamberStack = new ItemStack((IItemProvider) ModBlocks.CRYO_CHAMBER);
-        chamberStack.setDamageValue(((ChamberState) state.getValue(CryoChamberBlock.CHAMBER_STATE)).ordinal());
+        final ItemStack chamberStack = new ItemStack(ModBlocks.CRYO_CHAMBER);
+        chamberStack.setDamageValue(state.getValue(CryoChamberBlock.CHAMBER_STATE).ordinal());
         final CompoundNBT nbt = chamberStack.getOrCreateTag();
-        nbt.put("BlockEntityTag", (INBT) te.serializeNBT());
+        nbt.put("BlockEntityTag", te.serializeNBT());
         chamberStack.setTag(nbt);
-        final ItemEntity entity = new ItemEntity(world, (double) pos.getX(), (double) pos.getY(), (double) pos.getZ(), chamberStack);
-        world.addFreshEntity((Entity) entity);
+        final ItemEntity entity = new ItemEntity(world, pos.getX(), pos.getY(), pos.getZ(), chamberStack);
+        world.addFreshEntity(entity);
     }
 
     public ActionResultType use(final BlockState state, final World world, final BlockPos pos, final PlayerEntity player, final Hand hand, final BlockRayTraceResult hit) {
@@ -165,16 +165,16 @@ public class CryoChamberBlock extends Block {
         final ItemStack heldStack = player.getItemInHand(hand);
         if (chamber.getEternal() != null) {
             if (!player.isShiftKeyDown()) {
-                NetworkHooks.openGui((ServerPlayerEntity) player, (INamedContainerProvider) chamber, buffer -> buffer.writeBlockPos(pos));
+                NetworkHooks.openGui((ServerPlayerEntity) player, chamber, buffer -> buffer.writeBlockPos(pos));
                 return ActionResultType.SUCCESS;
             }
             if (heldStack.isEmpty()) {
                 final CompoundNBT nbt = new CompoundNBT();
                 nbt.putInt("RenameType", RenameType.CRYO_CHAMBER.ordinal());
-                nbt.put("Data", (INBT) chamber.getRenameNBT());
-                NetworkHooks.openGui((ServerPlayerEntity) player, (INamedContainerProvider) new INamedContainerProvider() {
+                nbt.put("Data", chamber.getRenameNBT());
+                NetworkHooks.openGui((ServerPlayerEntity) player, new INamedContainerProvider() {
                     public ITextComponent getDisplayName() {
-                        return (ITextComponent) new StringTextComponent("Cryo Chamber");
+                        return new StringTextComponent("Cryo Chamber");
                     }
 
                     @Nullable
@@ -184,7 +184,7 @@ public class CryoChamberBlock extends Block {
                 }, buffer -> buffer.writeNbt(nbt));
                 return ActionResultType.SUCCESS;
             }
-        } else if (!((ChamberState) state.getValue(CryoChamberBlock.CHAMBER_STATE)).containsAncient() && heldStack.getItem() == ModItems.TRADER_CORE) {
+        } else if (!state.getValue(CryoChamberBlock.CHAMBER_STATE).containsAncient() && heldStack.getItem() == ModItems.TRADER_CORE) {
             final TraderCore coreToInsert = ItemTraderCore.getCoreFromStack(heldStack);
             if (chamber.getOwner() == null) {
                 chamber.setOwner(player.getUUID());
@@ -224,7 +224,7 @@ public class CryoChamberBlock extends Block {
 
         private final String name;
 
-        private ChamberState(final String name) {
+        ChamberState(final String name) {
             this.name = name;
         }
 

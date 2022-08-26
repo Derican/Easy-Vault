@@ -30,11 +30,11 @@ public class PartyEvents {
         final ServerWorld sWorld = (ServerWorld) world;
         UUID attackerUUID = attacker.getUUID();
         if (attacker instanceof EternalEntity) {
-            attackerUUID = (UUID) ((EternalEntity) attacker).getOwner().map(Function.identity(), Entity::getUUID);
+            attackerUUID = ((EternalEntity) attacker).getOwner().map(Function.identity(), Entity::getUUID);
         }
         final UUID attackedUUID = attacked.getUUID();
         if (attacked instanceof EternalEntity) {
-            attackerUUID = (UUID) ((EternalEntity) attacked).getOwner().map(Function.identity(), Entity::getUUID);
+            attackerUUID = ((EternalEntity) attacked).getOwner().map(Function.identity(), Entity::getUUID);
         }
         final VaultPartyData.Party party = VaultPartyData.get(sWorld).getParty(attackerUUID).orElse(null);
         if (party != null && party.hasMember(attackedUUID)) {

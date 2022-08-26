@@ -57,9 +57,9 @@ public class VaultInfluences implements INBTSerializable<CompoundNBT>, Iterable<
         for (final VaultInfluence influence : this.influences) {
             final CompoundNBT ct = new CompoundNBT();
             ct.putString("id", influence.getKey().toString());
-            ct.put("data", (INBT) influence.serializeNBT());
+            ct.put("data", influence.serializeNBT());
         }
-        tag.put("influences", (INBT) influenceList);
+        tag.put("influences", influenceList);
         return tag;
     }
 

@@ -18,7 +18,7 @@ import javax.annotation.Nullable;
 
 public class EtchingVendorControllerBlock extends ContainerBlock {
     public EtchingVendorControllerBlock() {
-        super(AbstractBlock.Properties.copy((AbstractBlock) Blocks.BARRIER).noCollission().isRedstoneConductor(EtchingVendorControllerBlock::nonSolid).isViewBlocking(EtchingVendorControllerBlock::nonSolid));
+        super(AbstractBlock.Properties.copy(Blocks.BARRIER).noCollission().isRedstoneConductor(EtchingVendorControllerBlock::nonSolid).isViewBlocking(EtchingVendorControllerBlock::nonSolid));
     }
 
     private static boolean nonSolid(final BlockState state, final IBlockReader reader, final BlockPos pos) {

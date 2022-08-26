@@ -60,13 +60,13 @@ public abstract class MixinItemStack {
         if (!this.isDamageableItem()) {
             return false;
         }
-        if (damager != null && this.getItem() instanceof VaultArmorItem && PlayerSet.isActive(VaultGear.Set.ZOD, (LivingEntity) damager)) {
+        if (damager != null && this.getItem() instanceof VaultArmorItem && PlayerSet.isActive(VaultGear.Set.ZOD, damager)) {
             return false;
         }
         if (damage > 0) {
             int unbreakingLevel = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.UNBREAKING, (ItemStack) (Object) this);
             if (damager != null) {
-                final TalentTree abilities = PlayerTalentsData.get(damager.getLevel()).getTalents((PlayerEntity) damager);
+                final TalentTree abilities = PlayerTalentsData.get(damager.getLevel()).getTalents(damager);
                 for (final Object talent : abilities.getTalents(UnbreakableTalent.class)) {
                     unbreakingLevel += (int) ((UnbreakableTalent) talent).getExtraUnbreaking();
                 }

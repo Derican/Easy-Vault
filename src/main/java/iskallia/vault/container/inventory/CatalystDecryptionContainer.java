@@ -28,7 +28,7 @@ public class CatalystDecryptionContainer extends Container {
     private final List<Slot> catalystSlots;
 
     public CatalystDecryptionContainer(final int windowId, final World world, final BlockPos pos, final PlayerInventory playerInventory) {
-        super((ContainerType) ModContainers.CATALYST_DECRYPTION_CONTAINER, windowId);
+        super(ModContainers.CATALYST_DECRYPTION_CONTAINER, windowId);
         this.catalystSlots = new ArrayList<Slot>();
         this.tilePos = pos;
         final TileEntity te = world.getBlockEntity(pos);
@@ -40,19 +40,19 @@ public class CatalystDecryptionContainer extends Container {
     private void initSlots(final IItemHandler tableInventory, final PlayerInventory playerInventory) {
         for (int row = 0; row < 3; ++row) {
             for (int column = 0; column < 9; ++column) {
-                this.addSlot(new Slot((IInventory) playerInventory, column + row * 9 + 9, 8 + column * 18, 152 + row * 18));
+                this.addSlot(new Slot(playerInventory, column + row * 9 + 9, 8 + column * 18, 152 + row * 18));
             }
         }
         for (int hotbarSlot = 0; hotbarSlot < 9; ++hotbarSlot) {
-            this.addSlot(new Slot((IInventory) playerInventory, hotbarSlot, 8 + hotbarSlot * 18, 210));
+            this.addSlot(new Slot(playerInventory, hotbarSlot, 8 + hotbarSlot * 18, 210));
         }
         final Predicate<ItemStack> catalystFilter = stack -> stack.getItem() instanceof VaultCatalystItem || stack.getItem() instanceof VaultInhibitorItem;
         final Predicate<ItemStack> crystalFilter = stack -> stack.getItem() instanceof VaultCrystalItem;
         for (int slotY = 0; slotY < 5; ++slotY) {
-            this.addCatalystSlot((Slot) new FilteredSlot(tableInventory, slotY * 2, 56, 15 + slotY * 26, catalystFilter));
-            this.addCatalystSlot((Slot) new FilteredSlot(tableInventory, slotY * 2 + 1, 104, 15 + slotY * 26, catalystFilter));
+            this.addCatalystSlot(new FilteredSlot(tableInventory, slotY * 2, 56, 15 + slotY * 26, catalystFilter));
+            this.addCatalystSlot(new FilteredSlot(tableInventory, slotY * 2 + 1, 104, 15 + slotY * 26, catalystFilter));
         }
-        this.addSlot((Slot) new FilteredSlot(tableInventory, 10, 80, 67, crystalFilter));
+        this.addSlot(new FilteredSlot(tableInventory, 10, 80, 67, crystalFilter));
     }
 
     private void addCatalystSlot(final Slot slot) {

@@ -46,9 +46,9 @@ public class ItemShardPouch extends Item {
         final ItemStack contained = getContainedStack(stack);
         if (!contained.isEmpty()) {
             final int count = contained.getCount();
-            tooltip.add((ITextComponent) new StringTextComponent(count + " Shard" + ((count > 1) ? "s" : "")).withStyle(TextFormatting.GOLD));
+            tooltip.add(new StringTextComponent(count + " Shard" + ((count > 1) ? "s" : "")).withStyle(TextFormatting.GOLD));
         } else {
-            tooltip.add((ITextComponent) new StringTextComponent("Empty").withStyle(TextFormatting.GOLD));
+            tooltip.add(new StringTextComponent("Empty").withStyle(TextFormatting.GOLD));
         }
     }
 
@@ -100,7 +100,7 @@ public class ItemShardPouch extends Item {
 
     public static void setContainedStack(final ItemStack pouch, final ItemStack contained) {
         final CompoundNBT invTag = pouch.getOrCreateTagElement("Inventory");
-        invTag.put("Stack", (INBT) contained.serializeNBT());
+        invTag.put("Stack", contained.serializeNBT());
         invTag.putInt("StackSize", contained.getCount());
     }
 
@@ -113,9 +113,9 @@ public class ItemShardPouch extends Item {
             } else {
                 pouchSlot = player.inventory.selected;
             }
-            NetworkHooks.openGui((ServerPlayerEntity) player, (INamedContainerProvider) new INamedContainerProvider() {
+            NetworkHooks.openGui((ServerPlayerEntity) player, new INamedContainerProvider() {
                 public ITextComponent getDisplayName() {
-                    return (ITextComponent) new StringTextComponent("Shard Pouch");
+                    return new StringTextComponent("Shard Pouch");
                 }
 
                 @Nullable
@@ -124,7 +124,7 @@ public class ItemShardPouch extends Item {
                 }
             }, buf -> buf.writeInt(pouchSlot));
         }
-        return (ActionResult<ItemStack>) ActionResult.pass(stack);
+        return ActionResult.pass(stack);
     }
 
     public boolean shouldCauseReequipAnimation(final ItemStack oldStack, final ItemStack newStack, final boolean slotChanged) {
@@ -132,17 +132,17 @@ public class ItemShardPouch extends Item {
     }
 
     public static NonNullSupplier<IItemHandler> getInventorySupplier(final ItemStack stack) {
-        return (NonNullSupplier<IItemHandler>) new NonNullSupplier<IItemHandler>() {
+        return new NonNullSupplier<IItemHandler>() {
             @Nonnull
             public IItemHandler get() {
-                return (IItemHandler) new Handler(stack);
+                return new Handler(stack);
             }
         };
     }
 
     @Nullable
     public ICapabilityProvider initCapabilities(final ItemStack stack, @Nullable final CompoundNBT nbt) {
-        return (ICapabilityProvider) new ICapabilityProvider() {
+        return new ICapabilityProvider() {
             @Nonnull
             public <T> LazyOptional<T> getCapability(@Nonnull final Capability<T> cap, @Nullable final Direction side) {
                 return (LazyOptional<T>) ((cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) ? LazyOptional.of((NonNullSupplier) ItemShardPouch.getInventorySupplier(stack)).cast() : LazyOptional.empty());

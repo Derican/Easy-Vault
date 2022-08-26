@@ -45,7 +45,7 @@ public class FloatingTextBlock extends BarrierBlock
             final int i = pos.getX();
             final int j = pos.getY();
             final int k = pos.getZ();
-            world.addParticle((IParticleData)ParticleTypes.BARRIER, i + 0.5, j + 0.5, k + 0.5, 0.0, 0.0, 0.0);
+            world.addParticle(ParticleTypes.BARRIER, i + 0.5, j + 0.5, k + 0.5, 0.0, 0.0, 0.0);
         }
     }
     

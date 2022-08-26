@@ -33,7 +33,7 @@ public class SummonAndKillBossesVotingSession extends VotingSession {
     @Override
     protected void setStabilizerActive(final StabilizerTileEntity tile) {
         super.setStabilizerActive(tile);
-        tile.setHighlightDirections((Collection<Direction>) this.getDirections().stream().map(DirectionChoice::getDirection).collect(Collectors.toList()));
+        tile.setHighlightDirections(this.getDirections().stream().map(DirectionChoice::getDirection).collect(Collectors.toList()));
     }
 
     @Override

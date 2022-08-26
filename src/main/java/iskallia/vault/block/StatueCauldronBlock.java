@@ -62,18 +62,18 @@ public class StatueCauldronBlock extends CauldronBlock {
             }
             return ActionResultType.PASS;
         }
-        final int i = (int) state.getValue(StatueCauldronBlock.LEVEL);
+        final int i = state.getValue(StatueCauldronBlock.LEVEL);
         final Item item = itemstack.getItem();
         if (item instanceof BucketItem && ((BucketItem) item).getFluid() != Fluids.EMPTY) {
             if (i < 3 && !worldIn.isClientSide) {
                 if (!player.isCreative()) {
-                    final LazyOptional<IFluidHandlerItem> providerOptional = (LazyOptional<IFluidHandlerItem>) itemstack.getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY);
+                    final LazyOptional<IFluidHandlerItem> providerOptional = itemstack.getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY);
                     providerOptional.ifPresent(provider -> provider.drain(1000, IFluidHandler.FluidAction.EXECUTE));
                 }
                 player.awardStat(Stats.FILL_CAULDRON);
                 worldIn.setBlock(pos, state.setValue(StatueCauldronBlock.LEVEL, 3), 3);
-                worldIn.updateNeighbourForOutputSignal(pos, (Block) this);
-                worldIn.playSound((PlayerEntity) null, pos, SoundEvents.BUCKET_EMPTY, SoundCategory.BLOCKS, 1.0f, 1.0f);
+                worldIn.updateNeighbourForOutputSignal(pos, this);
+                worldIn.playSound(null, pos, SoundEvents.BUCKET_EMPTY, SoundCategory.BLOCKS, 1.0f, 1.0f);
             }
             return ActionResultType.sidedSuccess(worldIn.isClientSide);
         }
@@ -83,7 +83,7 @@ public class StatueCauldronBlock extends CauldronBlock {
     @OnlyIn(Dist.CLIENT)
     private void openStatueScreen(final World worldIn, final BlockPos pos) {
         final Minecraft mc = Minecraft.getInstance();
-        mc.setScreen((Screen) new StatueCauldronScreen((ClientWorld) worldIn, pos));
+        mc.setScreen(new StatueCauldronScreen((ClientWorld) worldIn, pos));
     }
 
     @Nullable
@@ -123,18 +123,18 @@ public class StatueCauldronBlock extends CauldronBlock {
     public void playerWillDestroy(final World world, final BlockPos pos, final BlockState state, final PlayerEntity player) {
         if (!world.isClientSide) {
             final TileEntity tileEntity = world.getBlockEntity(pos);
-            final ItemStack itemStack = new ItemStack((IItemProvider) this.getBlock());
+            final ItemStack itemStack = new ItemStack(this.getBlock());
             if (tileEntity instanceof StatueCauldronTileEntity) {
                 final StatueCauldronTileEntity cauldron = (StatueCauldronTileEntity) tileEntity;
                 final CompoundNBT statueNBT = cauldron.serializeNBT();
                 final CompoundNBT stackNBT = itemStack.getOrCreateTag();
-                statueNBT.putInt("Level", (int) state.getValue(StatueCauldronBlock.LEVEL));
-                stackNBT.put("BlockEntityTag", (INBT) statueNBT);
+                statueNBT.putInt("Level", state.getValue(StatueCauldronBlock.LEVEL));
+                stackNBT.put("BlockEntityTag", statueNBT);
                 itemStack.setTag(stackNBT);
             }
             final ItemEntity itemEntity = new ItemEntity(world, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, itemStack);
             itemEntity.setDefaultPickUpDelay();
-            world.addFreshEntity((Entity) itemEntity);
+            world.addFreshEntity(itemEntity);
         }
         super.playerWillDestroy(world, pos, state, player);
     }

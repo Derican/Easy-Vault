@@ -32,7 +32,7 @@ import java.util.*;
 public class JigsawGeneratorLegacy {
     public static void addPieces(final DynamicRegistries p_242837_0_, final VillageConfig p_242837_1_, final JigsawManager.IPieceFactory p_242837_2_, final ChunkGenerator p_242837_3_, final TemplateManager p_242837_4_, final BlockPos p_242837_5_, final List<? super AbstractVillagePiece> p_242837_6_, final Random p_242837_7_, final boolean p_242837_8_, final boolean p_242837_9_) {
         Structure.bootstrap();
-        final MutableRegistry<JigsawPattern> mutableregistry = (MutableRegistry<JigsawPattern>) p_242837_0_.registryOrThrow(Registry.TEMPLATE_POOL_REGISTRY);
+        final MutableRegistry<JigsawPattern> mutableregistry = p_242837_0_.registryOrThrow(Registry.TEMPLATE_POOL_REGISTRY);
         final Rotation rotation = Rotation.getRandom(p_242837_7_);
         final JigsawPattern jigsawpattern = p_242837_1_.startPool().get();
         final JigsawPiece jigsawpiece = jigsawpattern.getRandomTemplate(p_242837_7_);
@@ -51,8 +51,8 @@ public class JigsawGeneratorLegacy {
         p_242837_6_.add(abstractvillagepiece);
         if (p_242837_1_.maxDepth() > 0) {
             final int maxRange = 1073741823;
-            final AxisAlignedBB axisalignedbb = new AxisAlignedBB((double) (i - maxRange), (double) (k - maxRange), (double) (j - maxRange), (double) (i + maxRange + 1), (double) (k + maxRange + 1), (double) (j + maxRange + 1));
-            final Assembler jigsawmanager$assembler = new Assembler((Registry) mutableregistry, p_242837_1_.maxDepth(), p_242837_2_, p_242837_3_, p_242837_4_, (List) p_242837_6_, p_242837_7_);
+            final AxisAlignedBB axisalignedbb = new AxisAlignedBB(i - maxRange, k - maxRange, j - maxRange, i + maxRange + 1, k + maxRange + 1, j + maxRange + 1);
+            final Assembler jigsawmanager$assembler = new Assembler(mutableregistry, p_242837_1_.maxDepth(), p_242837_2_, p_242837_3_, p_242837_4_, p_242837_6_, p_242837_7_);
             jigsawmanager$assembler.availablePieces.addLast(new Entry(abstractvillagepiece, new MutableObject(VoxelShapes.join(VoxelShapes.create(axisalignedbb), VoxelShapes.create(AxisAlignedBB.of(mutableboundingbox)), IBooleanFunction.ONLY_FIRST)), k + maxRange, 0));
             while (!jigsawmanager$assembler.availablePieces.isEmpty()) {
                 final Entry jigsawmanager$entry = jigsawmanager$assembler.availablePieces.removeFirst();
@@ -105,7 +105,7 @@ public class JigsawGeneratorLegacy {
                         final ResourceLocation resourcelocation2 = mainJigsawPattern.get().getFallback();
                         final Optional<JigsawPattern> fallbackJigsawPattern = this.pools.getOptional(resourcelocation2);
                         if (fallbackJigsawPattern.isPresent() && (fallbackJigsawPattern.get().size() != 0 || Objects.equals(resourcelocation2, JigsawPatternRegistry.EMPTY.location()))) {
-                            final boolean flag2 = mutableboundingbox.isInside((Vector3i) blockpos3);
+                            final boolean flag2 = mutableboundingbox.isInside(blockpos3);
                             MutableObject<VoxelShape> mutableobject2;
                             int l;
                             if (flag2) {
@@ -135,7 +135,7 @@ public class JigsawGeneratorLegacy {
                                     int i2;
                                     if (p_236831_5_ && mutableboundingbox2.getYSpan() <= 16) {
                                         i2 = list2.stream().mapToInt(p_242841_2_ -> {
-                                            if (!mutableboundingbox2.isInside((Vector3i) p_242841_2_.pos.relative(JigsawBlock.getFrontFacing(p_242841_2_.state)))) {
+                                            if (!mutableboundingbox2.isInside(p_242841_2_.pos.relative(JigsawBlock.getFrontFacing(p_242841_2_.state)))) {
                                                 return 0;
                                             } else {
                                                 final ResourceLocation resourcelocation3 = new ResourceLocation(p_242841_2_.nbt.getString("pool"));
@@ -175,10 +175,10 @@ public class JigsawGeneratorLegacy {
                                                 final int k3 = Math.max(i2 + 1, mutableboundingbox4.y1 - mutableboundingbox4.y0);
                                                 mutableboundingbox4.y1 = mutableboundingbox4.y0 + k3;
                                             }
-                                            if (VoxelShapes.joinIsNotEmpty((VoxelShape) mutableobject2.getValue(), VoxelShapes.create(AxisAlignedBB.of(mutableboundingbox4).deflate(0.25)), IBooleanFunction.ONLY_SECOND)) {
+                                            if (VoxelShapes.joinIsNotEmpty(mutableobject2.getValue(), VoxelShapes.create(AxisAlignedBB.of(mutableboundingbox4).deflate(0.25)), IBooleanFunction.ONLY_SECOND)) {
                                                 continue;
                                             }
-                                            mutableobject2.setValue(VoxelShapes.joinUnoptimized((VoxelShape) mutableobject2.getValue(), VoxelShapes.create(AxisAlignedBB.of(mutableboundingbox4)), IBooleanFunction.ONLY_FIRST));
+                                            mutableobject2.setValue(VoxelShapes.joinUnoptimized(mutableobject2.getValue(), VoxelShapes.create(AxisAlignedBB.of(mutableboundingbox4)), IBooleanFunction.ONLY_FIRST));
                                             final int j4 = p_236831_1_.getGroundLevelDelta();
                                             int l3;
                                             if (flag3) {
@@ -205,7 +205,7 @@ public class JigsawGeneratorLegacy {
                                             }
                                             this.structurePieces.add(abstractvillagepiece);
                                             if (currentDepth + 1 <= this.maxDepth) {
-                                                this.availablePieces.addLast(new Entry(abstractvillagepiece, (MutableObject) mutableobject2, l, currentDepth + 1));
+                                                this.availablePieces.addLast(new Entry(abstractvillagepiece, mutableobject2, l, currentDepth + 1));
                                                 continue Label_0086;
                                             }
                                             continue Label_0086;

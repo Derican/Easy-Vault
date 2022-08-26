@@ -16,7 +16,7 @@ import java.util.function.Supplier;
 
 public class ScavengerChestBlock extends ChestBlock {
     protected ScavengerChestBlock(final AbstractBlock.Properties builder, final Supplier<TileEntityType<? extends ChestTileEntity>> tileEntityTypeIn) {
-        super(builder, (Supplier) tileEntityTypeIn);
+        super(builder, tileEntityTypeIn);
     }
 
     public ScavengerChestBlock(final AbstractBlock.Properties builder) {
@@ -24,7 +24,7 @@ public class ScavengerChestBlock extends ChestBlock {
     }
 
     public TileEntity newBlockEntity(final IBlockReader worldIn) {
-        return (TileEntity) new ScavengerChestTileEntity();
+        return new ScavengerChestTileEntity();
     }
 
     public BlockState getStateForPlacement(final BlockItemUseContext context) {

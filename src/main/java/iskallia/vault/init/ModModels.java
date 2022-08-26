@@ -70,7 +70,7 @@ public class ModModels {
     }
 
     private static void setRenderLayers(final Block block, final RenderType... renderTypes) {
-        RenderTypeLookup.setRenderLayer(block, (Predicate) Predicates.in((Collection) Arrays.asList(renderTypes)));
+        RenderTypeLookup.setRenderLayer(block, Predicates.in((Collection) Arrays.asList(renderTypes)));
     }
 
     public static void registerItemColors(final ItemColors colors) {
@@ -86,7 +86,7 @@ public class ModModels {
                 return -1;
             }
             return ((IDyeableArmorItem) stack.getItem()).getColor(stack);
-        }, new IItemProvider[]{(IItemProvider) ModItems.HELMET, (IItemProvider) ModItems.CHESTPLATE, (IItemProvider) ModItems.LEGGINGS, (IItemProvider) ModItems.BOOTS});
+        }, ModItems.HELMET, ModItems.CHESTPLATE, ModItems.LEGGINGS, ModItems.BOOTS);
         colors.register((stack, color) -> {
             if (color > 0) {
                 if (ModAttributes.GEAR_STATE.getBase(stack).orElse(VaultGear.State.UNIDENTIFIED) == VaultGear.State.UNIDENTIFIED) {
@@ -99,7 +99,7 @@ public class ModModels {
                 return -1;
             }
             return ((VaultGear) stack.getItem()).getColor(stack.getItem(), stack);
-        }, new IItemProvider[]{(IItemProvider) ModItems.AXE, (IItemProvider) ModItems.SWORD});
+        }, ModItems.AXE, ModItems.SWORD);
         colors.register((stack, color) -> {
             if (color > 0) {
                 if (ModAttributes.GEAR_STATE.getBase(stack).orElse(VaultGear.State.UNIDENTIFIED) == VaultGear.State.UNIDENTIFIED) {
@@ -112,7 +112,7 @@ public class ModModels {
                 return -1;
             }
             return -1;
-        }, new IItemProvider[]{(IItemProvider) ModItems.IDOL_BENEVOLENT, (IItemProvider) ModItems.IDOL_OMNISCIENT, (IItemProvider) ModItems.IDOL_TIMEKEEPER, (IItemProvider) ModItems.IDOL_MALEVOLENCE});
+        }, ModItems.IDOL_BENEVOLENT, ModItems.IDOL_OMNISCIENT, ModItems.IDOL_TIMEKEEPER, ModItems.IDOL_MALEVOLENCE);
     }
 
     public static class ItemProperty {
@@ -123,28 +123,28 @@ public class ModModels {
         public static IItemPropertyGetter PUZZLE_COLOR;
 
         public static void register() {
-            registerItemProperty((Item) ModItems.SWORD, "special_texture", ItemProperty.SPECIAL_GEAR_TEXTURE);
-            registerItemProperty((Item) ModItems.HELMET, "special_texture", ItemProperty.SPECIAL_GEAR_TEXTURE);
-            registerItemProperty((Item) ModItems.CHESTPLATE, "special_texture", ItemProperty.SPECIAL_GEAR_TEXTURE);
-            registerItemProperty((Item) ModItems.LEGGINGS, "special_texture", ItemProperty.SPECIAL_GEAR_TEXTURE);
-            registerItemProperty((Item) ModItems.BOOTS, "special_texture", ItemProperty.SPECIAL_GEAR_TEXTURE);
-            registerItemProperty((Item) ModItems.SWORD, "texture", ItemProperty.GEAR_TEXTURE);
-            registerItemProperty((Item) ModItems.AXE, "texture", ItemProperty.GEAR_TEXTURE);
-            registerItemProperty((Item) ModItems.HELMET, "texture", ItemProperty.GEAR_TEXTURE);
-            registerItemProperty((Item) ModItems.CHESTPLATE, "texture", ItemProperty.GEAR_TEXTURE);
-            registerItemProperty((Item) ModItems.LEGGINGS, "texture", ItemProperty.GEAR_TEXTURE);
-            registerItemProperty((Item) ModItems.BOOTS, "texture", ItemProperty.GEAR_TEXTURE);
+            registerItemProperty(ModItems.SWORD, "special_texture", ItemProperty.SPECIAL_GEAR_TEXTURE);
+            registerItemProperty(ModItems.HELMET, "special_texture", ItemProperty.SPECIAL_GEAR_TEXTURE);
+            registerItemProperty(ModItems.CHESTPLATE, "special_texture", ItemProperty.SPECIAL_GEAR_TEXTURE);
+            registerItemProperty(ModItems.LEGGINGS, "special_texture", ItemProperty.SPECIAL_GEAR_TEXTURE);
+            registerItemProperty(ModItems.BOOTS, "special_texture", ItemProperty.SPECIAL_GEAR_TEXTURE);
+            registerItemProperty(ModItems.SWORD, "texture", ItemProperty.GEAR_TEXTURE);
+            registerItemProperty(ModItems.AXE, "texture", ItemProperty.GEAR_TEXTURE);
+            registerItemProperty(ModItems.HELMET, "texture", ItemProperty.GEAR_TEXTURE);
+            registerItemProperty(ModItems.CHESTPLATE, "texture", ItemProperty.GEAR_TEXTURE);
+            registerItemProperty(ModItems.LEGGINGS, "texture", ItemProperty.GEAR_TEXTURE);
+            registerItemProperty(ModItems.BOOTS, "texture", ItemProperty.GEAR_TEXTURE);
             registerItemProperty(ModItems.ETCHING, "texture", ItemProperty.GEAR_TEXTURE);
             registerItemProperty(ModItems.IDOL_BENEVOLENT, "texture", ItemProperty.GEAR_TEXTURE);
             registerItemProperty(ModItems.IDOL_OMNISCIENT, "texture", ItemProperty.GEAR_TEXTURE);
             registerItemProperty(ModItems.IDOL_TIMEKEEPER, "texture", ItemProperty.GEAR_TEXTURE);
             registerItemProperty(ModItems.IDOL_MALEVOLENCE, "texture", ItemProperty.GEAR_TEXTURE);
-            registerItemProperty((Item) ModItems.SWORD, "vault_rarity", ItemProperty.GEAR_RARITY);
-            registerItemProperty((Item) ModItems.AXE, "vault_rarity", ItemProperty.GEAR_RARITY);
-            registerItemProperty((Item) ModItems.HELMET, "vault_rarity", ItemProperty.GEAR_RARITY);
-            registerItemProperty((Item) ModItems.CHESTPLATE, "vault_rarity", ItemProperty.GEAR_RARITY);
-            registerItemProperty((Item) ModItems.LEGGINGS, "vault_rarity", ItemProperty.GEAR_RARITY);
-            registerItemProperty((Item) ModItems.BOOTS, "vault_rarity", ItemProperty.GEAR_RARITY);
+            registerItemProperty(ModItems.SWORD, "vault_rarity", ItemProperty.GEAR_RARITY);
+            registerItemProperty(ModItems.AXE, "vault_rarity", ItemProperty.GEAR_RARITY);
+            registerItemProperty(ModItems.HELMET, "vault_rarity", ItemProperty.GEAR_RARITY);
+            registerItemProperty(ModItems.CHESTPLATE, "vault_rarity", ItemProperty.GEAR_RARITY);
+            registerItemProperty(ModItems.LEGGINGS, "vault_rarity", ItemProperty.GEAR_RARITY);
+            registerItemProperty(ModItems.BOOTS, "vault_rarity", ItemProperty.GEAR_RARITY);
             registerItemProperty(ModItems.ETCHING, "vault_rarity", ItemProperty.GEAR_RARITY);
             registerItemProperty(ModItems.IDOL_BENEVOLENT, "vault_rarity", ItemProperty.GEAR_TEXTURE);
             registerItemProperty(ModItems.IDOL_OMNISCIENT, "vault_rarity", ItemProperty.GEAR_TEXTURE);
@@ -152,10 +152,10 @@ public class ModModels {
             registerItemProperty(ModItems.IDOL_MALEVOLENCE, "vault_rarity", ItemProperty.GEAR_TEXTURE);
             registerItemProperty(ModItems.ETCHING, "vault_set", ItemProperty.ETCHING);
             registerItemProperty(ModItems.PUZZLE_RUNE, "puzzle_color", ItemProperty.PUZZLE_COLOR);
-            registerItemProperty((Item) ModBlocks.PUZZLE_RUNE_BLOCK_ITEM, "puzzle_color", ItemProperty.PUZZLE_COLOR);
-            ItemModelsProperties.register((Item) ModItems.DRILL_ARROW, new ResourceLocation("tier"), (stack, world, entity) -> ItemDrillArrow.getArrowTier(stack).ordinal() / (float) ItemDrillArrow.ArrowTier.values().length);
+            registerItemProperty(ModBlocks.PUZZLE_RUNE_BLOCK_ITEM, "puzzle_color", ItemProperty.PUZZLE_COLOR);
+            ItemModelsProperties.register(ModItems.DRILL_ARROW, new ResourceLocation("tier"), (stack, world, entity) -> ItemDrillArrow.getArrowTier(stack).ordinal() / (float) ItemDrillArrow.ArrowTier.values().length);
             ItemModelsProperties.register(Item.byBlock(ModBlocks.CRYO_CHAMBER), new ResourceLocation("type"), (stack, world, entity) -> stack.getDamageValue() / (float) CryoChamberBlock.ChamberState.values().length);
-            ItemModelsProperties.register((Item) ModItems.VAULT_CRYSTAL, new ResourceLocation("type"), (stack, world, entity) -> (float) VaultCrystalItem.getData(stack).getType().ordinal());
+            ItemModelsProperties.register(ModItems.VAULT_CRYSTAL, new ResourceLocation("type"), (stack, world, entity) -> (float) VaultCrystalItem.getData(stack).getType().ordinal());
         }
 
         public static void registerItemProperty(final Item item, final String name, final IItemPropertyGetter property) {
@@ -380,10 +380,10 @@ public class ModModels {
                     final T chestplateModel = constructor.newInstance(1.0f, EquipmentSlotType.CHEST);
                     final T leggingsModel = constructor.newInstance(1.0f, EquipmentSlotType.LEGS);
                     final T bootsModel = constructor.newInstance(1.0f, EquipmentSlotType.FEET);
-                    gearModel.helmetModel = (VaultGearModel<? extends LivingEntity>) helmetModel;
-                    gearModel.chestplateModel = (VaultGearModel<? extends LivingEntity>) chestplateModel;
-                    gearModel.leggingsModel = (VaultGearModel<? extends LivingEntity>) leggingsModel;
-                    gearModel.bootsModel = (VaultGearModel<? extends LivingEntity>) bootsModel;
+                    gearModel.helmetModel = helmetModel;
+                    gearModel.chestplateModel = chestplateModel;
+                    gearModel.leggingsModel = leggingsModel;
+                    gearModel.bootsModel = bootsModel;
                 }
                 registry.put(gearModel.id, gearModel);
                 return gearModel;
@@ -565,7 +565,7 @@ public class ModModels {
                 if (FMLEnvironment.dist.isClient()) {
                     final Class<T> modelClass = modelClassSupplier.get();
                     final Constructor<T> constructor = modelClass.getConstructor(Float.TYPE, EquipmentSlotType.class);
-                    specialGearModel.model = (VaultGearModel<? extends LivingEntity>) constructor.newInstance(1.0f, slotType);
+                    specialGearModel.model = constructor.newInstance(1.0f, slotType);
                 }
                 registry.put(specialGearModel.id, specialGearModel);
                 return specialGearModel;

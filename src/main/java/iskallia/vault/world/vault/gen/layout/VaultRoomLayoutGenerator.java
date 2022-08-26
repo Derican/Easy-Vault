@@ -162,7 +162,7 @@ public abstract class VaultRoomLayoutGenerator implements JigsawPoolProvider {
         }
 
         public BlockPos getAbsoluteOffset(final Rotation vaultRotation, final Rotation roomRotation) {
-            return this.getRoomOffset().rotate(vaultRotation).offset((Vector3i) new BlockPos(-23, -13, -23).rotate(roomRotation));
+            return this.getRoomOffset().rotate(vaultRotation).offset(new BlockPos(-23, -13, -23).rotate(roomRotation));
         }
 
         public JigsawPiece getRandomPiece(final JigsawPattern pattern, final Random random) {
@@ -229,7 +229,7 @@ public abstract class VaultRoomLayoutGenerator implements JigsawPoolProvider {
             if (dir.getZ() < 0) {
                 relativeOffset = relativeOffset.offset(0, 0, -1);
             }
-            return relativeOffset.rotate(vaultRotation).offset((Vector3i) new BlockPos(-5, 6, -24).rotate(tunnelRotation));
+            return relativeOffset.rotate(vaultRotation).offset(new BlockPos(-5, 6, -24).rotate(tunnelRotation));
         }
 
         public JigsawPiece getRandomPiece(final JigsawPattern pattern, final Random random) {

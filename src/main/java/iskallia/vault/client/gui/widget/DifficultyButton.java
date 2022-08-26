@@ -25,7 +25,7 @@ public class DifficultyButton extends Button {
 
     public void getNextOption() {
         this.difficulty = this.difficulty.getNext();
-        this.setMessage((ITextComponent) new StringTextComponent(this.text + ": " + this.difficulty.toString()));
+        this.setMessage(new StringTextComponent(this.text + ": " + this.difficulty.toString()));
     }
 
     public String getKey() {
@@ -39,6 +39,6 @@ public class DifficultyButton extends Button {
     public void renderToolTip(final MatrixStack matrixStack, final int mouseX, final int mouseY) {
         final List<StringTextComponent> tooltips = new ArrayList<StringTextComponent>();
         tooltips.add(new StringTextComponent(this.text));
-        GuiUtils.drawHoveringText(matrixStack, (List) tooltips, mouseX, mouseY, this.width + mouseX, this.height + mouseY, -1, Minecraft.getInstance().font);
+        GuiUtils.drawHoveringText(matrixStack, tooltips, mouseX, mouseY, this.width + mouseX, this.height + mouseY, -1, Minecraft.getInstance().font);
     }
 }

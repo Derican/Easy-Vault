@@ -87,8 +87,8 @@ public class FrenzyModifier extends TexturedVaultModifier {
     }
 
     public void applyToEntity(final LivingEntity entity) {
-        this.applyModifier(entity, Attributes.ATTACK_DAMAGE, new AttributeModifier(this.getDamageModifierID(), "Frenzy Damage Multiplier", (double) this.getDamageMultiplier(), AttributeModifier.Operation.MULTIPLY_BASE));
-        this.applyModifier(entity, Attributes.MOVEMENT_SPEED, new AttributeModifier(this.getMovementSpeedModifierID(), "Frenzy MovementSpeed Addition", (double) this.getAdditionalMovementSpeed(), AttributeModifier.Operation.ADDITION));
+        this.applyModifier(entity, Attributes.ATTACK_DAMAGE, new AttributeModifier(this.getDamageModifierID(), "Frenzy Damage Multiplier", this.getDamageMultiplier(), AttributeModifier.Operation.MULTIPLY_BASE));
+        this.applyModifier(entity, Attributes.MOVEMENT_SPEED, new AttributeModifier(this.getMovementSpeedModifierID(), "Frenzy MovementSpeed Addition", this.getAdditionalMovementSpeed(), AttributeModifier.Operation.ADDITION));
         if (this.doHealthReduction) {
             this.applyModifier(entity, Attributes.MAX_HEALTH, new AttributeModifier(this.getHealthModifierID(), "Frenzy MaxHealth 1", 1.0, FrenzyModifier.FRENZY_HEALTH_OPERATION));
             entity.setHealth(1.0f);

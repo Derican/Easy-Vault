@@ -75,7 +75,7 @@ public class JigsawGenerator implements VaultJigsawGenerator {
     @Override
     public void generate(final DynamicRegistries registries, final VillageConfig config, final JigsawManager.IPieceFactory pieceFactory, final ChunkGenerator gen, final TemplateManager manager, final List<StructurePiece> pieceList, final Random random, final boolean flag1, final boolean flag2) {
         Structure.bootstrap();
-        final MutableRegistry<JigsawPattern> registry = (MutableRegistry<JigsawPattern>) registries.registryOrThrow(Registry.TEMPLATE_POOL_REGISTRY);
+        final MutableRegistry<JigsawPattern> registry = registries.registryOrThrow(Registry.TEMPLATE_POOL_REGISTRY);
         final Rotation rotation = Rotation.getRandom(random);
         final JigsawPattern pattern = config.startPool().get();
         final JigsawPiece startJigsaw = pattern.getRandomTemplate(random);
@@ -91,13 +91,13 @@ public class JigsawGenerator implements VaultJigsawGenerator {
         }
         final int offset = startBox.y0 + startPiece.getGroundLevelDelta();
         startPiece.move(0, centerY - offset, 0);
-        pieceList.add((StructurePiece) startPiece);
+        pieceList.add(startPiece);
         final int depth = (this.getSize() == -1) ? config.maxDepth() : this.getSize();
         if (depth > 0) {
-            final AxisAlignedBB boundingBox = new AxisAlignedBB((double) this.getStructureBox().x0, (double) this.getStructureBox().y0, (double) this.getStructureBox().z0, (double) this.getStructureBox().x1, (double) this.getStructureBox().y1, (double) this.getStructureBox().z1);
+            final AxisAlignedBB boundingBox = new AxisAlignedBB(this.getStructureBox().x0, this.getStructureBox().y0, this.getStructureBox().z0, this.getStructureBox().x1, this.getStructureBox().y1, this.getStructureBox().z1);
             final MutableObject<VoxelShape> mutableBox = (MutableObject<VoxelShape>) new MutableObject(VoxelShapes.join(VoxelShapes.create(boundingBox), VoxelShapes.create(AxisAlignedBB.of(startBox)), IBooleanFunction.ONLY_FIRST));
-            final Assembler assembler = new Assembler((Registry) registry, depth, pieceFactory, gen, manager, (List) pieceList, random);
-            assembler.availablePieces.addLast(new Entry(startPiece, (MutableObject) mutableBox, this.getStructureBox().y1, 0));
+            final Assembler assembler = new Assembler(registry, depth, pieceFactory, gen, manager, pieceList, random);
+            assembler.availablePieces.addLast(new Entry(startPiece, mutableBox, this.getStructureBox().y1, 0));
             while (!assembler.availablePieces.isEmpty()) {
                 final Entry entry = assembler.availablePieces.removeFirst();
                 assembler.generate(entry.villagePiece, entry.free, entry.boundsTop, entry.depth, flag1);
@@ -171,7 +171,7 @@ public class JigsawGenerator implements VaultJigsawGenerator {
                         final ResourceLocation resourcelocation2 = mainJigsawPattern.get().getFallback();
                         final Optional<JigsawPattern> fallbackJigsawPattern = this.registry.getOptional(resourcelocation2);
                         if (fallbackJigsawPattern.isPresent() && (fallbackJigsawPattern.get().size() != 0 || Objects.equals(resourcelocation2, JigsawPatternRegistry.EMPTY.location()))) {
-                            final boolean flag2 = mutableboundingbox.isInside((Vector3i) blockpos3);
+                            final boolean flag2 = mutableboundingbox.isInside(blockpos3);
                             MutableObject<VoxelShape> mutableobject2;
                             int l;
                             if (flag2) {
@@ -208,7 +208,7 @@ public class JigsawGenerator implements VaultJigsawGenerator {
                                     int i2;
                                     if (p_236831_5_ && mutableboundingbox2.getYSpan() <= 16) {
                                         i2 = list1.stream().mapToInt(p_242841_2_ -> {
-                                            if (!mutableboundingbox2.isInside((Vector3i) p_242841_2_.pos.relative(JigsawBlock.getFrontFacing(p_242841_2_.state)))) {
+                                            if (!mutableboundingbox2.isInside(p_242841_2_.pos.relative(JigsawBlock.getFrontFacing(p_242841_2_.state)))) {
                                                 return 0;
                                             } else {
                                                 final ResourceLocation resourcelocation3 = new ResourceLocation(p_242841_2_.nbt.getString("pool"));
@@ -248,10 +248,10 @@ public class JigsawGenerator implements VaultJigsawGenerator {
                                                 final int k3 = Math.max(i2 + 1, mutableboundingbox4.y1 - mutableboundingbox4.y0);
                                                 mutableboundingbox4.y1 = mutableboundingbox4.y0 + k3;
                                             }
-                                            if (VoxelShapes.joinIsNotEmpty((VoxelShape) mutableobject2.getValue(), VoxelShapes.create(AxisAlignedBB.of(mutableboundingbox4).deflate(0.25)), IBooleanFunction.ONLY_SECOND)) {
+                                            if (VoxelShapes.joinIsNotEmpty(mutableobject2.getValue(), VoxelShapes.create(AxisAlignedBB.of(mutableboundingbox4).deflate(0.25)), IBooleanFunction.ONLY_SECOND)) {
                                                 continue;
                                             }
-                                            mutableobject2.setValue(VoxelShapes.joinUnoptimized((VoxelShape) mutableobject2.getValue(), VoxelShapes.create(AxisAlignedBB.of(mutableboundingbox4)), IBooleanFunction.ONLY_FIRST));
+                                            mutableobject2.setValue(VoxelShapes.joinUnoptimized(mutableobject2.getValue(), VoxelShapes.create(AxisAlignedBB.of(mutableboundingbox4)), IBooleanFunction.ONLY_FIRST));
                                             final int j4 = piece.getGroundLevelDelta();
                                             int l3;
                                             if (flag3) {
@@ -278,7 +278,7 @@ public class JigsawGenerator implements VaultJigsawGenerator {
                                             }
                                             this.structurePieces.add(abstractvillagepiece);
                                             if (currentDepth + 1 <= this.maxDepth) {
-                                                this.availablePieces.addLast(new Entry(abstractvillagepiece, (MutableObject) mutableobject2, l, currentDepth + 1));
+                                                this.availablePieces.addLast(new Entry(abstractvillagepiece, mutableobject2, l, currentDepth + 1));
                                                 continue Label_0086;
                                             }
                                             continue Label_0086;

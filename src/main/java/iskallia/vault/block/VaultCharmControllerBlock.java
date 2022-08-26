@@ -67,16 +67,16 @@ public class VaultCharmControllerBlock extends Block {
         final VaultCharmUpgrade item = (VaultCharmUpgrade) heldItem.getItem();
         final int newSize = item.getTier().getSlotAmount();
         if (inventory.canUpgrade(newSize)) {
-            player.level.playSound((PlayerEntity) null, pos, SoundEvents.EXPERIENCE_ORB_PICKUP, SoundCategory.BLOCKS, 1.0f, 1.0f);
+            player.level.playSound(null, pos, SoundEvents.EXPERIENCE_ORB_PICKUP, SoundCategory.BLOCKS, 1.0f, 1.0f);
             data.upgradeInventorySize(sPlayer, item.getTier().getSlotAmount());
             heldItem.shrink(1);
             return ActionResultType.SUCCESS;
         }
-        player.level.playSound((PlayerEntity) null, pos, SoundEvents.FIRE_EXTINGUISH, SoundCategory.BLOCKS, 1.0f, 1.0f);
+        player.level.playSound(null, pos, SoundEvents.FIRE_EXTINGUISH, SoundCategory.BLOCKS, 1.0f, 1.0f);
         return ActionResultType.SUCCESS;
     }
 
     public VoxelShape getShape(final BlockState p_220053_1_, final IBlockReader p_220053_2_, final BlockPos p_220053_3_, final ISelectionContext p_220053_4_) {
-        return VoxelShapes.or(Block.box(5.0, 0.0, 5.0, 11.0, 1.0, 11.0), new VoxelShape[]{Block.box(5.0, 0.0, 5.0, 11.0, 1.0, 11.0), Block.box(6.0, 1.0, 6.0, 10.0, 4.0, 10.0), Block.box(5.0, 4.0, 5.0, 11.0, 7.0, 11.0), Block.box(4.0, 7.0, 4.0, 12.0, 9.0, 12.0), Block.box(1.0, 9.0, 1.0, 15.0, 11.0, 15.0), Block.box(5.0, 11.0, 5.0, 11.0, 15.0, 11.0)});
+        return VoxelShapes.or(Block.box(5.0, 0.0, 5.0, 11.0, 1.0, 11.0), Block.box(5.0, 0.0, 5.0, 11.0, 1.0, 11.0), Block.box(6.0, 1.0, 6.0, 10.0, 4.0, 10.0), Block.box(5.0, 4.0, 5.0, 11.0, 7.0, 11.0), Block.box(4.0, 7.0, 4.0, 12.0, 9.0, 12.0), Block.box(1.0, 9.0, 1.0, 15.0, 11.0, 15.0), Block.box(5.0, 11.0, 5.0, 11.0, 15.0, 11.0));
     }
 }

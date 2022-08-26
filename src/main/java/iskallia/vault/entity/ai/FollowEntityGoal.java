@@ -34,7 +34,7 @@ public class FollowEntityGoal<T extends MobEntity, O extends LivingEntity> exten
         this.maxDist = maxDist;
         this.teleportToLeaves = teleportToLeaves;
         this.ownerSupplier = ownerSupplier;
-        this.setFlags((EnumSet) EnumSet.of(Goal.Flag.MOVE, Goal.Flag.LOOK));
+        this.setFlags(EnumSet.of(Flag.MOVE, Flag.LOOK));
         if (!(this.getEntity().getNavigation() instanceof GroundPathNavigator) && !(this.getEntity().getNavigation() instanceof FlyingPathNavigator)) {
             throw new IllegalArgumentException("Unsupported mob type for FollowOwnerGoal");
         }
@@ -56,7 +56,7 @@ public class FollowEntityGoal<T extends MobEntity, O extends LivingEntity> exten
     }
 
     public boolean canContinueToUse() {
-        return !this.navigator.isDone() && this.getEntity().distanceToSqr((Entity) this.owner) > this.maxDist * this.maxDist;
+        return !this.navigator.isDone() && this.getEntity().distanceToSqr(this.owner) > this.maxDist * this.maxDist;
     }
 
     public void start() {
@@ -72,17 +72,17 @@ public class FollowEntityGoal<T extends MobEntity, O extends LivingEntity> exten
     }
 
     public void tick() {
-        this.getEntity().getLookControl().setLookAt((Entity) this.owner, 10.0f, (float) this.getEntity().getMaxHeadXRot());
+        this.getEntity().getLookControl().setLookAt(this.owner, 10.0f, (float) this.getEntity().getMaxHeadXRot());
         final int timeToRecalcPath = this.timeToRecalcPath - 1;
         this.timeToRecalcPath = timeToRecalcPath;
         if (timeToRecalcPath > 0) {
             return;
         }
         if (!this.getEntity().isLeashed() && !this.getEntity().isPassenger()) {
-            if (this.getEntity().distanceToSqr((Entity) this.owner) >= 144.0) {
+            if (this.getEntity().distanceToSqr(this.owner) >= 144.0) {
                 this.tryToTeleportNearEntity();
             } else {
-                this.navigator.moveTo((Entity) this.owner, this.followSpeed);
+                this.navigator.moveTo(this.owner, this.followSpeed);
             }
         }
         this.timeToRecalcPath = 10;
@@ -108,13 +108,13 @@ public class FollowEntityGoal<T extends MobEntity, O extends LivingEntity> exten
         if (!this.isTeleportFriendlyBlock(new BlockPos(x, y, z))) {
             return false;
         }
-        this.getEntity().moveTo(x + 0.5, (double) y, z + 0.5, this.getEntity().yRot, this.getEntity().xRot);
+        this.getEntity().moveTo(x + 0.5, y, z + 0.5, this.getEntity().yRot, this.getEntity().xRot);
         this.navigator.stop();
         return true;
     }
 
     private boolean isTeleportFriendlyBlock(final BlockPos pos) {
-        final PathNodeType pathnodetype = WalkNodeProcessor.getBlockPathTypeStatic((IBlockReader) this.getWorld(), pos.mutable());
+        final PathNodeType pathnodetype = WalkNodeProcessor.getBlockPathTypeStatic(this.getWorld(), pos.mutable());
         if (pathnodetype != PathNodeType.WALKABLE) {
             return false;
         }
@@ -122,7 +122,7 @@ public class FollowEntityGoal<T extends MobEntity, O extends LivingEntity> exten
         if (!this.teleportToLeaves && blockstate.getBlock() instanceof LeavesBlock) {
             return false;
         }
-        final BlockPos blockpos = pos.subtract((Vector3i) this.getEntity().blockPosition());
+        final BlockPos blockpos = pos.subtract(this.getEntity().blockPosition());
         return this.getWorld().noCollision(this.getEntity(), this.getEntity().getBoundingBox().move(blockpos));
     }
 

@@ -58,7 +58,7 @@ public class SuperSecretCakes {
                 final String cakeQuote = SuperSecretCakes.CAKE_QUOTES[random.nextInt(SuperSecretCakes.CAKE_QUOTES.length)];
                 final StringTextComponent text = new StringTextComponent("\"" + cakeQuote + "\"");
                 text.setStyle(Style.EMPTY.withItalic(Boolean.valueOf(true)).withColor(Color.fromRgb(-15343)));
-                player.displayClientMessage((ITextComponent) text, true);
+                player.displayClientMessage(text, true);
             } else if (world instanceof ServerWorld && player instanceof ServerPlayerEntity) {
                 final ServerPlayerEntity sPlayer = (ServerPlayerEntity) player;
                 final ServerWorld sWorld = (ServerWorld) world;

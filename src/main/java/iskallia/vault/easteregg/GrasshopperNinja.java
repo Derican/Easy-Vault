@@ -16,7 +16,7 @@ public class GrasshopperNinja {
     }
 
     public static boolean isGrasshopperShape(final PlayerEntity playerEntity) {
-        return PlayerSet.allMatch((LivingEntity) playerEntity, (slotType, stack) -> {
+        return PlayerSet.allMatch(playerEntity, (slotType, stack) -> {
             if (!(stack.getItem() instanceof VaultArmorItem)) {
                 return false;
             } else {

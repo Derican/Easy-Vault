@@ -29,7 +29,7 @@ public class NonRaffleCrystalShapedRecipe extends ShapedRecipe {
     static int MAX_HEIGHT;
 
     public NonRaffleCrystalShapedRecipe(final ResourceLocation idIn, final String groupIn, final int recipeWidthIn, final int recipeHeightIn, final NonNullList<Ingredient> recipeItemsIn, final ItemStack recipeOutputIn) {
-        super(idIn, groupIn, recipeWidthIn, recipeHeightIn, (NonNullList) recipeItemsIn, recipeOutputIn);
+        super(idIn, groupIn, recipeWidthIn, recipeHeightIn, recipeItemsIn, recipeOutputIn);
     }
 
     public boolean matches(final CraftingInventory inv, final World worldIn) {
@@ -67,7 +67,7 @@ public class NonRaffleCrystalShapedRecipe extends ShapedRecipe {
             final int i = buffer.readVarInt();
             final int j = buffer.readVarInt();
             final String s = buffer.readUtf(32767);
-            final NonNullList<Ingredient> nonnulllist = (NonNullList<Ingredient>) NonNullList.withSize(i * j, Ingredient.EMPTY);
+            final NonNullList<Ingredient> nonnulllist = NonNullList.withSize(i * j, Ingredient.EMPTY);
             for (int k = 0; k < nonnulllist.size(); ++k) {
                 nonnulllist.set(k, Ingredient.fromNetwork(buffer));
             }
@@ -86,7 +86,7 @@ public class NonRaffleCrystalShapedRecipe extends ShapedRecipe {
         }
 
         private static NonNullList<Ingredient> deserializeIngredients(final String[] pattern, final Map<String, Ingredient> keys, final int patternWidth, final int patternHeight) {
-            final NonNullList<Ingredient> nonnulllist = (NonNullList<Ingredient>) NonNullList.withSize(patternWidth * patternHeight, Ingredient.EMPTY);
+            final NonNullList<Ingredient> nonnulllist = NonNullList.withSize(patternWidth * patternHeight, Ingredient.EMPTY);
             final Set<String> set = Sets.newHashSet((Iterable) keys.keySet());
             set.remove(" ");
             for (int i = 0; i < pattern.length; ++i) {
@@ -179,7 +179,7 @@ public class NonRaffleCrystalShapedRecipe extends ShapedRecipe {
                 if (" ".equals(entry.getKey())) {
                     throw new JsonSyntaxException("Invalid key entry: ' ' is a reserved symbol.");
                 }
-                map.put(entry.getKey(), Ingredient.fromJson((JsonElement) entry.getValue()));
+                map.put(entry.getKey(), Ingredient.fromJson(entry.getValue()));
             }
             map.put(" ", Ingredient.EMPTY);
             return map;

@@ -58,8 +58,8 @@ public class GlobalDifficultyScreen extends ContainerScreen<GlobalDifficultyCont
         this.crystalCostButton.render(matrixStack, mouseX, mouseY, partialTicks);
         this.confirmButton.render(matrixStack, mouseX, mouseY, partialTicks);
         matrixStack.pushPose();
-        matrixStack.translate((double) (this.leftPos + 5), (double) (this.topPos + 27), 0.0);
-        UIHelper.renderWrappedText(matrixStack, (ITextComponent) ModConfigs.DIFFICULTY_DESCRIPTION.getDescription(), this.imageWidth - 10, 5);
+        matrixStack.translate(this.leftPos + 5, this.topPos + 27, 0.0);
+        UIHelper.renderWrappedText(matrixStack, ModConfigs.DIFFICULTY_DESCRIPTION.getDescription(), this.imageWidth - 10, 5);
         matrixStack.popPose();
         this.renderTitle(matrixStack);
     }
@@ -88,11 +88,11 @@ public class GlobalDifficultyScreen extends ContainerScreen<GlobalDifficultyCont
     }
 
     private void initializeFields() {
-        final GlobalDifficultyData.Difficulty vaultDifficulty = GlobalDifficultyData.Difficulty.values()[((GlobalDifficultyContainer) this.menu).getData().getInt("VaultDifficulty")];
-        this.vaultDifficultyButton = new DifficultyButton("Vault Mob Difficulty", "VaultDifficulty", this.buttonStartX, this.buttonStartY, 168, 20, (ITextComponent) new StringTextComponent("Vault Mob Difficulty: " + vaultDifficulty.toString()), this::buttonPressed);
-        final GlobalDifficultyData.Difficulty crystalCost = GlobalDifficultyData.Difficulty.values()[((GlobalDifficultyContainer) this.menu).getData().getInt("CrystalCost")];
-        this.crystalCostButton = new DifficultyButton("Crystal Cost Multiplier", "CrystalCost", this.buttonStartX, this.vaultDifficultyButton.y + 20 + 5, 168, 20, (ITextComponent) new StringTextComponent("Crystal Cost Multiplier: " + crystalCost.toString()), this::buttonPressed);
-        this.confirmButton = new Button(this.buttonStartX, this.crystalCostButton.y + 20 + 5, 168, 20, (ITextComponent) new StringTextComponent("Confirm"), this::buttonPressed);
+        final GlobalDifficultyData.Difficulty vaultDifficulty = GlobalDifficultyData.Difficulty.values()[this.menu.getData().getInt("VaultDifficulty")];
+        this.vaultDifficultyButton = new DifficultyButton("Vault Mob Difficulty", "VaultDifficulty", this.buttonStartX, this.buttonStartY, 168, 20, new StringTextComponent("Vault Mob Difficulty: " + vaultDifficulty.toString()), this::buttonPressed);
+        final GlobalDifficultyData.Difficulty crystalCost = GlobalDifficultyData.Difficulty.values()[this.menu.getData().getInt("CrystalCost")];
+        this.crystalCostButton = new DifficultyButton("Crystal Cost Multiplier", "CrystalCost", this.buttonStartX, this.vaultDifficultyButton.y + 20 + 5, 168, 20, new StringTextComponent("Crystal Cost Multiplier: " + crystalCost.toString()), this::buttonPressed);
+        this.confirmButton = new Button(this.buttonStartX, this.crystalCostButton.y + 20 + 5, 168, 20, new StringTextComponent("Confirm"), this::buttonPressed);
         this.addButton((Widget) this.vaultDifficultyButton);
         this.addButton((Widget) this.crystalCostButton);
         this.addButton((Widget) this.confirmButton);
@@ -104,13 +104,13 @@ public class GlobalDifficultyScreen extends ContainerScreen<GlobalDifficultyCont
             difficultyButton.getNextOption();
             this.selectDifficulty(difficultyButton.getKey(), difficultyButton.getCurrentOption());
         } else {
-            ModNetwork.CHANNEL.sendToServer(GlobalDifficultyMessage.setGlobalDifficultyOptions(((GlobalDifficultyContainer) this.menu).getData()));
+            ModNetwork.CHANNEL.sendToServer(GlobalDifficultyMessage.setGlobalDifficultyOptions(this.menu.getData()));
             this.onClose();
         }
     }
 
     public void selectDifficulty(final String key, final GlobalDifficultyData.Difficulty selected) {
-        ((GlobalDifficultyContainer) this.menu).getData().putInt(key, selected.ordinal());
+        this.menu.getData().putInt(key, selected.ordinal());
     }
 
     private void renderTitle(final MatrixStack matrixStack) {

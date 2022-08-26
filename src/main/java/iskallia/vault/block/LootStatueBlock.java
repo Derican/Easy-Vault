@@ -84,10 +84,10 @@ public class LootStatueBlock extends Block {
             if (statue.getStatueType().allowsRenaming()) {
                 final CompoundNBT nbt = new CompoundNBT();
                 nbt.putInt("RenameType", RenameType.PLAYER_STATUE.ordinal());
-                nbt.put("Data", (INBT) statue.serializeNBT());
-                NetworkHooks.openGui((ServerPlayerEntity) player, (INamedContainerProvider) new INamedContainerProvider() {
+                nbt.put("Data", statue.serializeNBT());
+                NetworkHooks.openGui((ServerPlayerEntity) player, new INamedContainerProvider() {
                     public ITextComponent getDisplayName() {
-                        return (ITextComponent) new StringTextComponent("Player Statue");
+                        return new StringTextComponent("Player Statue");
                     }
 
                     @Nullable
@@ -135,17 +135,17 @@ public class LootStatueBlock extends Block {
     public void playerWillDestroy(final World world, final BlockPos pos, final BlockState state, final PlayerEntity player) {
         if (!world.isClientSide) {
             final TileEntity tileEntity = world.getBlockEntity(pos);
-            final ItemStack itemStack = new ItemStack((IItemProvider) this.getBlock());
+            final ItemStack itemStack = new ItemStack(this.getBlock());
             if (tileEntity instanceof LootStatueTileEntity) {
                 final LootStatueTileEntity statueTileEntity = (LootStatueTileEntity) tileEntity;
                 final CompoundNBT statueNBT = statueTileEntity.serializeNBT();
                 final CompoundNBT stackNBT = new CompoundNBT();
-                stackNBT.put("BlockEntityTag", (INBT) statueNBT);
+                stackNBT.put("BlockEntityTag", statueNBT);
                 itemStack.setTag(stackNBT);
             }
             final ItemEntity itemEntity = new ItemEntity(world, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, itemStack);
             itemEntity.setDefaultPickUpDelay();
-            world.addFreshEntity((Entity) itemEntity);
+            world.addFreshEntity(itemEntity);
         }
         super.playerWillDestroy(world, pos, state, player);
     }
@@ -160,7 +160,7 @@ public class LootStatueBlock extends Block {
     }
 
     protected void createBlockStateDefinition(final StateContainer.Builder<Block, BlockState> builder) {
-        builder.add(new Property[]{LootStatueBlock.FACING});
+        builder.add(LootStatueBlock.FACING);
     }
 
     @Nullable

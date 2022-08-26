@@ -21,9 +21,9 @@ public abstract class BackupListArgument implements ArgumentType<String> {
         @Override
         protected UUID getPlayerRef(final CommandContext<CommandSource> ctx) {
             try {
-                return EntityArgument.getPlayer((CommandContext) ctx, "player").getUUID();
+                return EntityArgument.getPlayer(ctx, "player").getUUID();
             } catch (final CommandSyntaxException e) {
-                throw new RuntimeException((Throwable) e);
+                throw new RuntimeException(e);
             }
         }
     }
@@ -31,7 +31,7 @@ public abstract class BackupListArgument implements ArgumentType<String> {
     public static class UUIDRef extends BackupListArgument {
         @Override
         protected UUID getPlayerRef(final CommandContext<CommandSource> ctx) {
-            return UUIDArgument.getUuid((CommandContext) ctx, "player");
+            return UUIDArgument.getUuid(ctx, "player");
         }
     }
 }

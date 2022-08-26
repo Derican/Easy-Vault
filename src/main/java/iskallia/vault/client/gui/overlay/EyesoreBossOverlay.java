@@ -36,7 +36,7 @@ public class EyesoreBossOverlay
             return;
         }
         minecraft.level.entitiesForRendering().iterator().forEachRemaining(entity -> {
-            if (!(!(entity instanceof EyesoreEntity))) {
+            if (entity instanceof EyesoreEntity) {
                 final EyesoreEntity eyesore = (EyesoreEntity)entity;
                 final PlayerEntity target = (eyesore.getEntityData().get(EyesoreEntity.LASER_TARGET)).map(id -> entity.getCommandSenderWorld().getPlayerByUUID(id)).orElse(null);
                 if (target != null) {

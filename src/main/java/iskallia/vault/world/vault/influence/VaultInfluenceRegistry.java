@@ -14,12 +14,12 @@ public class VaultInfluenceRegistry {
 
     public static void init() {
         VaultInfluenceRegistry.influences.clear();
-        register(TimeInfluence.ID, (Supplier<VaultInfluence>) TimeInfluence::new);
-        register(EffectInfluence.ID, (Supplier<VaultInfluence>) EffectInfluence::new);
-        register(MobAttributeInfluence.ID, (Supplier<VaultInfluence>) MobAttributeInfluence::new);
-        register(MobsInfluence.ID, (Supplier<VaultInfluence>) MobsInfluence::new);
-        register(DamageInfluence.ID, (Supplier<VaultInfluence>) DamageInfluence::new);
-        register(DamageTakenInfluence.ID, (Supplier<VaultInfluence>) DamageTakenInfluence::new);
+        register(TimeInfluence.ID, TimeInfluence::new);
+        register(EffectInfluence.ID, EffectInfluence::new);
+        register(MobAttributeInfluence.ID, MobAttributeInfluence::new);
+        register(MobsInfluence.ID, MobsInfluence::new);
+        register(DamageInfluence.ID, DamageInfluence::new);
+        register(DamageTakenInfluence.ID, DamageTakenInfluence::new);
         Arrays.stream(VaultAttributeInfluence.Type.values()).forEach(type -> register(VaultAttributeInfluence.newInstance(type)));
     }
 

@@ -17,7 +17,7 @@ import net.minecraftforge.registries.ForgeRegistryEntry;
 
 public class ShapelessCopyNbtRecipe extends ShapelessRecipe {
     public ShapelessCopyNbtRecipe(final ResourceLocation idIn, final String groupIn, final ItemStack recipeOutputIn, final NonNullList<Ingredient> recipeItemsIn) {
-        super(idIn, groupIn, recipeOutputIn, (NonNullList) recipeItemsIn);
+        super(idIn, groupIn, recipeOutputIn, recipeItemsIn);
     }
 
     public ItemStack assemble(final CraftingInventory inv) {
@@ -65,7 +65,7 @@ public class ShapelessCopyNbtRecipe extends ShapelessRecipe {
         public ShapelessCopyNbtRecipe fromNetwork(final ResourceLocation recipeId, final PacketBuffer buffer) {
             final String s = buffer.readUtf(32767);
             final int i = buffer.readVarInt();
-            final NonNullList<Ingredient> nonnulllist = (NonNullList<Ingredient>) NonNullList.withSize(i, Ingredient.EMPTY);
+            final NonNullList<Ingredient> nonnulllist = NonNullList.withSize(i, Ingredient.EMPTY);
             for (int j = 0; j < nonnulllist.size(); ++j) {
                 nonnulllist.set(j, Ingredient.fromNetwork(buffer));
             }

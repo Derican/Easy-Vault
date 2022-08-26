@@ -56,7 +56,7 @@ public class UnknownEggItem extends Item {
             final Optional<Item> egg = this.getStoredEgg(vault, player.getItemInHand(hand), world.getRandom());
             egg.ifPresent(item -> item.use(world, player, hand));
         }
-        return (ActionResult<ItemStack>) super.use(world, player, hand);
+        return super.use(world, player, hand);
     }
 
     public Optional<Item> getStoredEgg(final VaultRaid vault, final ItemStack stack, final Random random) {
@@ -73,8 +73,8 @@ public class UnknownEggItem extends Item {
 
     @OnlyIn(Dist.CLIENT)
     public void appendHoverText(final ItemStack stack, final World world, final List<ITextComponent> tooltip, final ITooltipFlag flag) {
-        super.appendHoverText(stack, world, (List) tooltip, flag);
-        tooltip.add((ITextComponent) new StringTextComponent("Target: ").append((ITextComponent) new StringTextComponent((String) UnknownEggItem.STORED_EGG.getOrDefault(stack, "NONE").getValue(stack)).withStyle(TextFormatting.GREEN)));
+        super.appendHoverText(stack, world, tooltip, flag);
+        tooltip.add(new StringTextComponent("Target: ").append(new StringTextComponent(UnknownEggItem.STORED_EGG.getOrDefault(stack, "NONE").getValue(stack)).withStyle(TextFormatting.GREEN)));
     }
 
     static {

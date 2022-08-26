@@ -95,7 +95,7 @@ public class VaultModifiers implements INBTSerializable<CompoundNBT>, Iterable<V
                 return;
             });
             if (activeModifier.tick()) {
-                final ITextComponent removalMsg = (ITextComponent) new StringTextComponent("Modifier ").withStyle(TextFormatting.GRAY).append(modifier.getNameComponent()).append((ITextComponent) new StringTextComponent(" expired.").withStyle(TextFormatting.GRAY));
+                final ITextComponent removalMsg = new StringTextComponent("Modifier ").withStyle(TextFormatting.GRAY).append(modifier.getNameComponent()).append(new StringTextComponent(" expired.").withStyle(TextFormatting.GRAY));
                 vault.getPlayers().forEach(vPlayer -> {
                     if (applyFilter.test(vPlayer.getPlayerId())) {
                         modifier.remove(vault, vPlayer, world, world.getRandom());
@@ -114,7 +114,7 @@ public class VaultModifiers implements INBTSerializable<CompoundNBT>, Iterable<V
         final CompoundNBT nbt = new CompoundNBT();
         final ListNBT modifiersList = new ListNBT();
         this.modifiers.forEach(modifier -> modifiersList.add(modifier.serialize()));
-        nbt.put("modifiers", (INBT) modifiersList);
+        nbt.put("modifiers", modifiersList);
         nbt.putBoolean("Initialized", this.isInitialized());
         return nbt;
     }
@@ -156,7 +156,7 @@ public class VaultModifiers implements INBTSerializable<CompoundNBT>, Iterable<V
     }
 
     public Stream<VaultModifier> stream() {
-        return this.modifiers.stream().map(rec$ -> ((ActiveModifier) rec$).getModifier());
+        return this.modifiers.stream().map(rec$ -> rec$.getModifier());
     }
 
     @Nonnull

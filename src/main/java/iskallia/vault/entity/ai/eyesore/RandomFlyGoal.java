@@ -16,7 +16,7 @@ public class RandomFlyGoal extends Goal
     
     public RandomFlyGoal(final EyesoreEntity eyesore) {
         this.eyesore = eyesore;
-        this.setFlags((EnumSet)EnumSet.of(Goal.Flag.MOVE));
+        this.setFlags(EnumSet.of(Flag.MOVE));
     }
     
     public boolean canUse() {

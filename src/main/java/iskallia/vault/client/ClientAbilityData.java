@@ -28,7 +28,7 @@ public class ClientAbilityData {
 
     @Nonnull
     public static List<AbilityNode<?, ?>> getLearnedAbilityNodes() {
-        return Collections.unmodifiableList((List<? extends AbilityNode<?, ?>>) ClientAbilityData.learnedAbilities);
+        return Collections.unmodifiableList(ClientAbilityData.learnedAbilities);
     }
 
     public static int getIndexOf(final AbilityNode<?, ?> node) {

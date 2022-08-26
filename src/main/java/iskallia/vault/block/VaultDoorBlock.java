@@ -54,7 +54,7 @@ public class VaultDoorBlock extends DoorBlock {
 
     public ActionResultType use(final BlockState state, final World world, final BlockPos pos, final PlayerEntity player, final Hand hand, final BlockRayTraceResult hit) {
         final ItemStack heldStack = player.getItemInHand(hand);
-        final Boolean isOpen = (Boolean) state.getValue(VaultDoorBlock.OPEN);
+        final Boolean isOpen = state.getValue(VaultDoorBlock.OPEN);
         if (!isOpen && heldStack.getItem() == this.getKeyItem()) {
             heldStack.shrink(1);
             this.setOpen(world, state, pos, true);

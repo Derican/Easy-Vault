@@ -9,7 +9,7 @@ import java.util.List;
 
 public class UnknownEggConfig extends Config {
     @Expose
-    private List<Level> OVERRIDES;
+    private final List<Level> OVERRIDES;
 
     public UnknownEggConfig() {
         this.OVERRIDES = new ArrayList<Level>();

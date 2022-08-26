@@ -34,7 +34,7 @@ public class SingleItemEntry {
 
     public ItemStack createItemStack() {
         return Registry.ITEM.getOptional(new ResourceLocation(this.ITEM)).map(item -> {
-            final ItemStack stack = new ItemStack((IItemProvider) item);
+            final ItemStack stack = new ItemStack(item);
             try {
                 if (this.NBT != null) {
                     final CompoundNBT tag = JsonToNBT.parseTag(this.NBT);

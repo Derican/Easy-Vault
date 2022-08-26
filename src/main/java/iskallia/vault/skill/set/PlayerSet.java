@@ -15,7 +15,7 @@ import java.util.function.BiPredicate;
 
 public class PlayerSet {
     @Expose
-    private String set;
+    private final String set;
 
     public PlayerSet(final VaultGear.Set set) {
         this.set = set.name();

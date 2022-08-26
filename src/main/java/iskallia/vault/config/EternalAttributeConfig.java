@@ -32,7 +32,7 @@ public class EternalAttributeConfig extends Config {
     public Map<Attribute, Float> createAttributes() {
         final Map<Attribute, Float> selectedAttributes = new HashMap<Attribute, Float>();
         this.initialAttributes.forEach((attrKey, valueRange) -> {
-            final Attribute attribute = (Attribute) ForgeRegistries.ATTRIBUTES.getValue(new ResourceLocation(attrKey));
+            final Attribute attribute = ForgeRegistries.ATTRIBUTES.getValue(new ResourceLocation(attrKey));
             if (attribute != null) {
                 selectedAttributes.put(attribute, valueRange.getRandom());
             }

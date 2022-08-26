@@ -41,10 +41,10 @@ public class AbilityUpgradeMessage {
                 final AbilityGroup<?, ?> abilityGroup = ModConfigs.ABILITIES.getAbilityGroupByName(message.abilityName);
                 final PlayerVaultStatsData statsData = PlayerVaultStatsData.get((ServerWorld) sender.level);
                 final PlayerAbilitiesData abilitiesData = PlayerAbilitiesData.get((ServerWorld) sender.level);
-                final AbilityTree abilityTree = abilitiesData.getAbilities((PlayerEntity) sender);
+                final AbilityTree abilityTree = abilitiesData.getAbilities(sender);
                 final AbilityNode<?, ?> abilityNode = abilityTree.getNodeByName(message.abilityName);
-                final PlayerVaultStats stats = statsData.getVaultStats((PlayerEntity) sender);
-                if (stats.getVaultLevel() < ((AbilityConfig) abilityNode.getAbilityConfig()).getLevelRequirement()) {
+                final PlayerVaultStats stats = statsData.getVaultStats(sender);
+                if (stats.getVaultLevel() < abilityNode.getAbilityConfig().getLevelRequirement()) {
                     return;
                 } else if (abilityNode.getLevel() >= abilityGroup.getMaxLevel()) {
                     return;

@@ -36,12 +36,12 @@ public class EffectEnhancement extends PaxelEnhancement {
 
     @Override
     public IFormattableTextComponent getDescription() {
-        return (IFormattableTextComponent) new TranslationTextComponent("paxel_enhancement.the_vault.effects.desc", new Object[]{this.extraAmplifier, this.getEffect().getDisplayName().getString()});
+        return new TranslationTextComponent("paxel_enhancement.the_vault.effects.desc", new Object[]{this.extraAmplifier, this.getEffect().getDisplayName().getString()});
     }
 
     public Effect getEffect() {
         if (this.effect == null) {
-            this.effect = (Effect) Registry.MOB_EFFECT.get(new ResourceLocation(this.effectName));
+            this.effect = Registry.MOB_EFFECT.get(new ResourceLocation(this.effectName));
         }
         return this.effect;
     }

@@ -30,7 +30,7 @@ import java.util.List;
 
 public class VaultArmorItem extends DyeableArmorItem implements VaultGear<VaultArmorItem> {
     public VaultArmorItem(final ResourceLocation id, final EquipmentSlotType slot, final Item.Properties builder) {
-        super((IArmorMaterial) Material.INSTANCE, slot, builder);
+        super(Material.INSTANCE, slot, builder);
         this.setRegistryName(id);
     }
 
@@ -48,7 +48,7 @@ public class VaultArmorItem extends DyeableArmorItem implements VaultGear<VaultA
     }
 
     public Multimap<Attribute, AttributeModifier> getAttributeModifiers(final EquipmentSlotType slot, final ItemStack stack) {
-        return this.getAttributeModifiers(this, slot, stack, (Multimap<Attribute, AttributeModifier>) super.getAttributeModifiers(slot, stack));
+        return this.getAttributeModifiers(this, slot, stack, super.getAttributeModifiers(slot, stack));
     }
 
     public void fillItemCategory(final ItemGroup group, final NonNullList<ItemStack> items) {
@@ -76,7 +76,7 @@ public class VaultArmorItem extends DyeableArmorItem implements VaultGear<VaultA
     public ActionResult<ItemStack> use(final World world, final PlayerEntity player, final Hand hand) {
         final ItemStack heldStack = player.getItemInHand(hand);
         final EquipmentSlotType slot = MobEntity.getEquipmentSlotForItem(heldStack);
-        return this.onItemRightClick(this, world, player, hand, (ActionResult<ItemStack>) (this.canEquip(heldStack, slot, (Entity) player) ? super.use(world, player, hand) : ActionResult.fail(heldStack)));
+        return this.onItemRightClick(this, world, player, hand, this.canEquip(heldStack, slot, player) ? super.use(world, player, hand) : ActionResult.fail(heldStack));
     }
 
     public void inventoryTick(final ItemStack stack, final World world, final Entity entity, final int itemSlot, final boolean isSelected) {
@@ -89,7 +89,7 @@ public class VaultArmorItem extends DyeableArmorItem implements VaultGear<VaultA
 
     @OnlyIn(Dist.CLIENT)
     public void appendHoverText(final ItemStack itemStack, final World world, final List<ITextComponent> tooltip, final ITooltipFlag flag) {
-        super.appendHoverText(itemStack, world, (List) tooltip, flag);
+        super.appendHoverText(itemStack, world, tooltip, flag);
         this.addInformation(this, itemStack, tooltip, Screen.hasShiftDown());
     }
 

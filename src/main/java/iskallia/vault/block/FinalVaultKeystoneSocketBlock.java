@@ -42,12 +42,12 @@ public class FinalVaultKeystoneSocketBlock extends Block
     
     public FinalVaultKeystoneSocketBlock() {
         super(AbstractBlock.Properties.of(Material.STONE).strength(3.6E7f).sound(SoundType.STONE));
-        this.registerDefaultState((BlockState)((BlockState)((BlockState)this.stateDefinition.any()).setValue((Property)FinalVaultKeystoneSocketBlock.ACTIVATED, (Comparable)false)).setValue((Property)FinalVaultKeystoneSocketBlock.ASSOCIATED_GOD, (Comparable)PlayerFavourData.VaultGodType.BENEVOLENT));
+        this.registerDefaultState(this.stateDefinition.any().setValue((Property)FinalVaultKeystoneSocketBlock.ACTIVATED, (Comparable)false).setValue((Property)FinalVaultKeystoneSocketBlock.ASSOCIATED_GOD, (Comparable)PlayerFavourData.VaultGodType.BENEVOLENT));
     }
     
     public BlockPattern getOrCreatePortalShape() {
         if (FinalVaultKeystoneSocketBlock.portalShape == null) {
-            FinalVaultKeystoneSocketBlock.portalShape = BlockPatternBuilder.start().aisle(new String[] { "?xx?", "x??x", "x??x", "?xx?" }).where('?', CachedBlockInfo.hasState(BlockStateMatcher.ANY)).where('x', CachedBlockInfo.hasState((Predicate)BlockStateMatcher.forBlock((Block)ModBlocks.FINAL_VAULT_KEYSTONE_SOCKET).where((Property)FinalVaultKeystoneSocketBlock.ACTIVATED, o -> Objects.equals(o, true)))).build();
+            FinalVaultKeystoneSocketBlock.portalShape = BlockPatternBuilder.start().aisle("?xx?", "x??x", "x??x", "?xx?").where('?', CachedBlockInfo.hasState(BlockStateMatcher.ANY)).where('x', CachedBlockInfo.hasState(BlockStateMatcher.forBlock(ModBlocks.FINAL_VAULT_KEYSTONE_SOCKET).where((Property)FinalVaultKeystoneSocketBlock.ACTIVATED, o -> Objects.equals(o, true)))).build();
         }
         return FinalVaultKeystoneSocketBlock.portalShape;
     }
@@ -58,7 +58,7 @@ public class FinalVaultKeystoneSocketBlock extends Block
     }
     
     protected void createBlockStateDefinition(final StateContainer.Builder<Block, BlockState> builder) {
-        builder.add(new Property[] { (Property)FinalVaultKeystoneSocketBlock.ACTIVATED }).add(new Property[] { (Property)FinalVaultKeystoneSocketBlock.ASSOCIATED_GOD });
+        builder.add(new Property[] {FinalVaultKeystoneSocketBlock.ACTIVATED}).add(FinalVaultKeystoneSocketBlock.ASSOCIATED_GOD);
     }
     
     @Nonnull
@@ -74,9 +74,9 @@ public class FinalVaultKeystoneSocketBlock extends Block
                     if (!player.isCreative()) {
                         heldItem.shrink(1);
                     }
-                    final BlockState newState = (BlockState)state.setValue((Property)FinalVaultKeystoneSocketBlock.ACTIVATED, (Comparable)true);
+                    final BlockState newState = state.setValue((Property)FinalVaultKeystoneSocketBlock.ACTIVATED, (Comparable)true);
                     world.setBlock(pos, newState, 3);
-                    final BlockPattern.PatternHelper patternHelper = this.getOrCreatePortalShape().find((IWorldReader)world, pos);
+                    final BlockPattern.PatternHelper patternHelper = this.getOrCreatePortalShape().find(world, pos);
                     if (patternHelper != null) {
                         final int portalSize = 2;
                         final BlockPos portalStart = patternHelper.getFrontTopLeft().offset(-portalSize, 0, -portalSize);

@@ -50,13 +50,13 @@ public class ScavengerBarOverlay extends BossBarOverlay {
         renderStack.pushPose();
         int yOffset = 0;
         renderStack.pushPose();
-        renderStack.translate((double) (midX + shiftX), (double) (itemBoxWidth * 0.75f), 0.0);
+        renderStack.translate(midX + shiftX, itemBoxWidth * 0.75f, 0.0);
         for (final ScavengerHuntObjective.ItemSubmission itemRequirement : items) {
             final int reqYOffset = renderItemRequirement(renderStack, itemRequirement, itemBoxWidth);
             if (reqYOffset > yOffset) {
                 yOffset = reqYOffset;
             }
-            renderStack.translate((double) (itemBoxWidth + gapWidth), 0.0, 0.0);
+            renderStack.translate(itemBoxWidth + gapWidth, 0.0, 0.0);
         }
         renderStack.popPose();
         return yOffset;
@@ -65,11 +65,11 @@ public class ScavengerBarOverlay extends BossBarOverlay {
     private static int renderItemRequirement(final MatrixStack renderStack, final ScavengerHuntObjective.ItemSubmission itemRequirement, final int itemBoxWidth) {
         final Minecraft mc = Minecraft.getInstance();
         final FontRenderer fr = mc.font;
-        final ItemStack requiredStack = new ItemStack((IItemProvider) itemRequirement.getRequiredItem());
+        final ItemStack requiredStack = new ItemStack(itemRequirement.getRequiredItem());
         final ScavengerHuntConfig.SourceType source = ModConfigs.SCAVENGER_HUNT.getRequirementSource(requiredStack);
         final ResourceLocation iconPath = (source == ScavengerHuntConfig.SourceType.MOB) ? MobHeadTextures.get(ModConfigs.SCAVENGER_HUNT.getRequirementMobType(requiredStack)).orElse(source.getIconPath()) : source.getIconPath();
         renderStack.pushPose();
-        renderStack.translate(0.0, (double)(-itemBoxWidth / 2.0f), 0.0);
+        renderStack.translate(0.0, -itemBoxWidth / 2.0f, 0.0);
         renderItemStack(renderStack, requiredStack);
         RenderSystem.enableBlend();
         RenderSystem.defaultBlendFunc();
@@ -77,19 +77,19 @@ public class ScavengerBarOverlay extends BossBarOverlay {
         renderStack.pushPose();
         renderStack.translate(-16.0, -2.4, 0.0);
         renderStack.scale(0.4f, 0.4f, 1.0f);
-        ScreenDrawHelper.drawQuad(buf -> ScreenDrawHelper.rect((IVertexBuilder) buf, renderStack).dim(16.0f, 16.0f).draw());
+        ScreenDrawHelper.drawQuad(buf -> ScreenDrawHelper.rect(buf, renderStack).dim(16.0f, 16.0f).draw());
         renderStack.popPose();
         RenderSystem.disableBlend();
         renderStack.translate(0.0, 10.0, 0.0);
         final String requiredText = itemRequirement.getCurrentAmount() + "/" + itemRequirement.getRequiredAmount();
         final IFormattableTextComponent cmp = new StringTextComponent(requiredText).withStyle(TextFormatting.GREEN);
-        UIHelper.renderCenteredWrappedText(renderStack, (ITextComponent) cmp, 30, 0);
+        UIHelper.renderCenteredWrappedText(renderStack, cmp, 30, 0);
         renderStack.translate(0.0, 10.0, 0.0);
         renderStack.pushPose();
         renderStack.scale(0.5f, 0.5f, 1.0f);
         final ITextComponent name = requiredStack.getHoverName();
         final IFormattableTextComponent display = name.copy().withStyle(source.getRequirementColor());
-        final int lines = UIHelper.renderCenteredWrappedText(renderStack, (ITextComponent) display, 60, 0);
+        final int lines = UIHelper.renderCenteredWrappedText(renderStack, display, 60, 0);
         renderStack.popPose();
         renderStack.popPose();
         return 25 + lines * 5;
@@ -107,7 +107,7 @@ public class ScavengerBarOverlay extends BossBarOverlay {
         RenderSystem.multMatrix(renderStack.last().pose());
         ir.blitOffset = 200.0f;
         ir.renderAndDecorateItem(item, 0, 0);
-        ir.renderGuiItemDecorations(fr, item, 0, 0, (String) null);
+        ir.renderGuiItemDecorations(fr, item, 0, 0, null);
         ir.blitOffset = 0.0f;
         RenderSystem.popMatrix();
         renderStack.translate(8.0, 8.0, 0.0);

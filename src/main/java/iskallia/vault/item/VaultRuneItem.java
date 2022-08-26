@@ -37,14 +37,14 @@ public class VaultRuneItem extends Item {
             return;
         }
         tooltip.add(StringTextComponent.EMPTY);
-        tooltip.add((ITextComponent) new StringTextComponent("Combine with a vault crystal to add").withStyle(TextFormatting.GRAY));
-        tooltip.add((ITextComponent) new StringTextComponent("a room to the vault: ").withStyle(TextFormatting.GRAY).append(displayName));
+        tooltip.add(new StringTextComponent("Combine with a vault crystal to add").withStyle(TextFormatting.GRAY));
+        tooltip.add(new StringTextComponent("a room to the vault: ").withStyle(TextFormatting.GRAY).append(displayName));
         if (ModConfigs.VAULT_RUNE == null) {
             return;
         }
         ModConfigs.VAULT_RUNE.getMinimumLevel(this).ifPresent(minLevel -> {
             tooltip.add(StringTextComponent.EMPTY);
-            tooltip.add(new StringTextComponent("Only usable after level ").withStyle(TextFormatting.GRAY).append((ITextComponent) new StringTextComponent(String.valueOf(minLevel)).withStyle(TextFormatting.AQUA)));
+            tooltip.add(new StringTextComponent("Only usable after level ").withStyle(TextFormatting.GRAY).append(new StringTextComponent(String.valueOf(minLevel)).withStyle(TextFormatting.AQUA)));
         });
     }
 }

@@ -27,7 +27,7 @@ public class VaultLootableTileEntity extends TileEntity implements ITickableTile
     private VaultLootableBlock.Type type;
 
     public VaultLootableTileEntity() {
-        super((TileEntityType) ModBlocks.VAULT_LOOTABLE_TILE_ENTITY);
+        super(ModBlocks.VAULT_LOOTABLE_TILE_ENTITY);
     }
 
     public VaultLootableTileEntity setType(final VaultLootableBlock.Type type) {

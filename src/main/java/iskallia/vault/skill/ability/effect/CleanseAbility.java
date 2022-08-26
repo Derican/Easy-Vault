@@ -20,7 +20,7 @@ public class CleanseAbility<C extends CleanseConfig> extends AbilityEffect<C> {
     public boolean onAction(final C config, final ServerPlayerEntity player, final boolean active) {
         final List<EffectInstance> effects = player.getActiveEffects().stream().filter(effect -> !effect.getEffect().isBeneficial()).collect(Collectors.toList());
         this.removeEffects(config, player, effects);
-        player.level.playSound((PlayerEntity) player, player.getX(), player.getY(), player.getZ(), ModSounds.CLEANSE_SFX, SoundCategory.PLAYERS, 0.2f, 1.0f);
+        player.level.playSound(player, player.getX(), player.getY(), player.getZ(), ModSounds.CLEANSE_SFX, SoundCategory.PLAYERS, 0.2f, 1.0f);
         player.playNotifySound(ModSounds.CLEANSE_SFX, SoundCategory.PLAYERS, 0.2f, 1.0f);
         return true;
     }

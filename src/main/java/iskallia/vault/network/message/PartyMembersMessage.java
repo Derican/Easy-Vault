@@ -10,7 +10,7 @@ import net.minecraftforge.fml.network.NetworkEvent;
 import java.util.function.Supplier;
 
 public class PartyMembersMessage {
-    private ListNBT serializedMembers;
+    private final ListNBT serializedMembers;
 
     public PartyMembersMessage(final ListNBT serializedMembers) {
         this.serializedMembers = serializedMembers;
@@ -18,7 +18,7 @@ public class PartyMembersMessage {
 
     public static void encode(final PartyMembersMessage message, final PacketBuffer buffer) {
         final CompoundNBT tag = new CompoundNBT();
-        tag.put("list", (INBT) message.serializedMembers);
+        tag.put("list", message.serializedMembers);
         buffer.writeNbt(tag);
     }
 

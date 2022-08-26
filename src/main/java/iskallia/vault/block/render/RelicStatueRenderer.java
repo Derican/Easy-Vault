@@ -46,7 +46,7 @@ public class RelicStatueRenderer extends TileEntityRenderer<RelicStatueTileEntit
         if (relicSet == RelicSet.DRAGON) {
             matrixStack.translate(0.0, 0.0, 0.15);
             matrixStack.mulPose(Vector3f.YP.rotationDegrees(90.0f));
-            this.renderItem(matrixStack, buffer, combinedLight, combinedOverlay, 0.7f, 7.0f, (Item) Registry.ITEM.get(Vault.id("statue_dragon")));
+            this.renderItem(matrixStack, buffer, combinedLight, combinedOverlay, 0.7f, 7.0f, Registry.ITEM.get(Vault.id("statue_dragon")));
         } else if (relicSet == RelicSet.MINER) {
             this.renderItem(matrixStack, buffer, combinedLight, combinedOverlay, 1.2f, 2.0f, RelicItem.withCustomModelData(0));
         } else if (relicSet == RelicSet.WARRIOR) {
@@ -99,15 +99,15 @@ public class RelicStatueRenderer extends TileEntityRenderer<RelicStatueTileEntit
     }
 
     private void renderItem(final MatrixStack matrixStack, final IRenderTypeBuffer buffer, final int lightLevel, final int overlay, final float yOffset, final float scale, final Item item) {
-        this.renderItem(matrixStack, buffer, lightLevel, overlay, yOffset, scale, new ItemStack((IItemProvider) item));
+        this.renderItem(matrixStack, buffer, lightLevel, overlay, yOffset, scale, new ItemStack(item));
     }
 
     private void renderItem(final MatrixStack matrixStack, final IRenderTypeBuffer buffer, final int lightLevel, final int overlay, final float yOffset, final float scale, final ItemStack itemStack) {
         final Minecraft minecraft = Minecraft.getInstance();
         matrixStack.pushPose();
-        matrixStack.translate(0.0, (double) yOffset, 0.0);
+        matrixStack.translate(0.0, yOffset, 0.0);
         matrixStack.scale(scale, scale, scale);
-        final IBakedModel ibakedmodel = minecraft.getItemRenderer().getModel(itemStack, (World) null, (LivingEntity) null);
+        final IBakedModel ibakedmodel = minecraft.getItemRenderer().getModel(itemStack, null, null);
         minecraft.getItemRenderer().render(itemStack, ItemCameraTransforms.TransformType.GROUND, true, matrixStack, buffer, lightLevel, overlay, ibakedmodel);
         matrixStack.popPose();
     }

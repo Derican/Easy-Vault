@@ -68,7 +68,7 @@ public class VaultChampionTrophyBlockItem extends BlockItem
     
     @OnlyIn(Dist.CLIENT)
     public void appendHoverText(@Nonnull final ItemStack stack, @Nullable final World worldIn, @Nonnull final List<ITextComponent> tooltip, @Nonnull final ITooltipFlag flag) {
-        super.appendHoverText(stack, worldIn, (List)tooltip, flag);
+        super.appendHoverText(stack, worldIn, tooltip, flag);
         final CompoundNBT blockEntityTag = stack.getOrCreateTagElement("BlockEntityTag");
         final String uuidString = blockEntityTag.getString("OwnerUUID");
         final UUID ownerUUID = uuidString.isEmpty() ? null : UUID.fromString(uuidString);
@@ -76,11 +76,11 @@ public class VaultChampionTrophyBlockItem extends BlockItem
         final int score = blockEntityTag.getInt("Score");
         final IFormattableTextComponent titleText = new StringTextComponent("Vault Champion").withStyle(TextFormatting.GOLD);
         final IFormattableTextComponent championText = new StringTextComponent("Mighty " + ownerNickname).withStyle(TextFormatting.GOLD).withStyle(TextFormatting.BOLD);
-        final IFormattableTextComponent scoreText = new StringTextComponent("Score: ").withStyle(TextFormatting.GOLD).append((ITextComponent)new StringTextComponent(String.valueOf(score)).withStyle(TextFormatting.AQUA));
-        tooltip.add((ITextComponent)new StringTextComponent(""));
-        tooltip.add((ITextComponent)titleText);
-        tooltip.add((ITextComponent)championText);
-        tooltip.add((ITextComponent)scoreText);
+        final IFormattableTextComponent scoreText = new StringTextComponent("Score: ").withStyle(TextFormatting.GOLD).append(new StringTextComponent(String.valueOf(score)).withStyle(TextFormatting.AQUA));
+        tooltip.add(new StringTextComponent(""));
+        tooltip.add(titleText);
+        tooltip.add(championText);
+        tooltip.add(scoreText);
     }
     
     public static void setScore(final ItemStack itemStack, final int score) {
@@ -93,7 +93,7 @@ public class VaultChampionTrophyBlockItem extends BlockItem
     }
     
     public static ItemStack create(final UUID ownerUUID, final String ownerNickname, final VaultChampionTrophy.Variant variant) {
-        final ItemStack itemStack = new ItemStack((IItemProvider)ModBlocks.VAULT_CHAMPION_TROPHY_BLOCK_ITEM);
+        final ItemStack itemStack = new ItemStack(ModBlocks.VAULT_CHAMPION_TROPHY_BLOCK_ITEM);
         final CompoundNBT nbt = itemStack.getOrCreateTag();
         final CompoundNBT blockEntityTag = itemStack.getOrCreateTagElement("BlockEntityTag");
         if (ownerUUID != null) {

@@ -39,7 +39,7 @@ public class PaxelEnhancements {
 
     public static void enhance(final ItemStack itemStack, final PaxelEnhancement enhancement) {
         final CompoundNBT nbt = itemStack.getOrCreateTag();
-        nbt.put("Enhancement", (INBT) enhancement.serializeNBT());
+        nbt.put("Enhancement", enhancement.serializeNBT());
         nbt.putBoolean("ShouldEnhance", false);
     }
 

@@ -92,18 +92,18 @@ public class VendingMachineRenderer extends TileEntityRenderer<VendingMachineTil
         final float textCenter = (1.0f + size) / 2.0f;
         matrixStack.pushPose();
         if (facing == Direction.NORTH) {
-            matrixStack.translate((double) textCenter, (double) yOffset, -0.025000005960464478);
+            matrixStack.translate(textCenter, yOffset, -0.025000005960464478);
             matrixStack.mulPose(Vector3f.ZP.rotationDegrees(180.0f));
         } else if (facing == Direction.SOUTH) {
-            matrixStack.translate((double) (-textCenter + 1.0f), (double) yOffset, 1.024999976158142);
+            matrixStack.translate(-textCenter + 1.0f, yOffset, 1.024999976158142);
             matrixStack.mulPose(Vector3f.ZP.rotationDegrees(180.0f));
             matrixStack.mulPose(Vector3f.YP.rotationDegrees(180.0f));
         } else if (facing == Direction.EAST) {
-            matrixStack.translate(1.024999976158142, (double) yOffset, (double) textCenter);
+            matrixStack.translate(1.024999976158142, yOffset, textCenter);
             matrixStack.mulPose(Vector3f.ZP.rotationDegrees(180.0f));
             matrixStack.mulPose(Vector3f.YP.rotationDegrees(90.0f));
         } else if (facing == Direction.WEST) {
-            matrixStack.translate(-0.025000005960464478, (double) yOffset, (double) (-textCenter + 1.0f));
+            matrixStack.translate(-0.025000005960464478, yOffset, -textCenter + 1.0f);
             matrixStack.mulPose(Vector3f.ZP.rotationDegrees(180.0f));
             matrixStack.mulPose(Vector3f.YP.rotationDegrees(270.0f));
         }

@@ -46,12 +46,12 @@ public class DevAccessories {
         }
         final String bossName = bossInfo.getName().getString();
         if (bossName.equalsIgnoreCase("iskall85")) {
-            final ItemStack itemStack = new GearItemStackBuilder((Item) ModItems.HELMET).setGearRarity(VaultGear.Rarity.UNIQUE).setColor(-5384139).setSpecialModelId(ModModels.SpecialGearModel.ISKALL_HOLOLENS.getId()).build();
-            EntityHelper.giveItem((PlayerEntity) player, itemStack);
+            final ItemStack itemStack = new GearItemStackBuilder(ModItems.HELMET).setGearRarity(VaultGear.Rarity.UNIQUE).setColor(-5384139).setSpecialModelId(ModModels.SpecialGearModel.ISKALL_HOLOLENS.getId()).build();
+            EntityHelper.giveItem(player, itemStack);
         } else if (!bossName.equalsIgnoreCase("iGoodie")) {
             if (bossName.equalsIgnoreCase("Douwsky")) {
-                final ItemStack itemStack = new GearItemStackBuilder((Item) ModItems.SWORD).setGearRarity(VaultGear.Rarity.UNIQUE).setSpecialModelId(ModModels.SpecialSwordModel.JANITORS_BROOM.getId()).build();
-                EntityHelper.giveItem((PlayerEntity) player, itemStack);
+                final ItemStack itemStack = new GearItemStackBuilder(ModItems.SWORD).setGearRarity(VaultGear.Rarity.UNIQUE).setSpecialModelId(ModModels.SpecialSwordModel.JANITORS_BROOM.getId()).build();
+                EntityHelper.giveItem(player, itemStack);
             }
         }
     }

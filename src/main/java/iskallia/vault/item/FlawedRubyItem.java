@@ -42,7 +42,7 @@ public class FlawedRubyItem extends BasicTooltipItem {
             }
             final ServerWorld serverWorld = (ServerWorld) world;
             FlawedRubyConfig.Outcome outcome = FlawedRubyConfig.Outcome.FAIL;
-            final TalentTree talents = PlayerTalentsData.get(serverWorld).getTalents((PlayerEntity) player);
+            final TalentTree talents = PlayerTalentsData.get(serverWorld).getTalents(player);
             if (talents.hasLearnedNode(ModConfigs.TALENTS.ARTISAN)) {
                 outcome = ModConfigs.FLAWED_RUBY.getForArtisan();
             } else if (talents.hasLearnedNode(ModConfigs.TALENTS.TREASURE_HUNTER)) {
@@ -54,7 +54,7 @@ public class FlawedRubyItem extends BasicTooltipItem {
                 ModAttributes.IMBUED.create(gearPiece, true);
             } else if (outcome == FlawedRubyConfig.Outcome.BREAK) {
                 gearPiece.setCount(0);
-                player.getCommandSenderWorld().playSound((PlayerEntity) null, player.blockPosition(), SoundEvents.ITEM_BREAK, SoundCategory.PLAYERS, 1.0f, 1.0f);
+                player.getCommandSenderWorld().playSound(null, player.blockPosition(), SoundEvents.ITEM_BREAK, SoundCategory.PLAYERS, 1.0f, 1.0f);
             }
             resetApplied(gearPiece);
         }

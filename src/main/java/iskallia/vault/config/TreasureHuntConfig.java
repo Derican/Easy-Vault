@@ -100,7 +100,7 @@ public class TreasureHuntConfig extends Config {
         for (final Map.Entry<String, ItemPool> mobDropEntry : this.mobDropItems.entrySet()) {
             for (final WeightedList.Entry<ScavengerHuntConfig.ItemEntry> entry : mobDropEntry.getValue().getPool()) {
                 if (requiredItem.equals(entry.value.getItem())) {
-                    return new ResourceLocation((String) mobDropEntry.getKey());
+                    return new ResourceLocation(mobDropEntry.getKey());
                 }
             }
         }
@@ -265,7 +265,7 @@ public class TreasureHuntConfig extends Config {
         }
 
         public List<WeightedList.Entry<ScavengerHuntConfig.ItemEntry>> getPool() {
-            return Collections.unmodifiableList((List<? extends WeightedList.Entry<ScavengerHuntConfig.ItemEntry>>) this.pool);
+            return Collections.unmodifiableList(this.pool);
         }
 
         public ScavengerHuntConfig.ItemEntry getRandomEntry(final Predicate<ScavengerHuntConfig.ItemEntry> dropFilter) {

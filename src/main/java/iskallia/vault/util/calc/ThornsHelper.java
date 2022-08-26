@@ -20,14 +20,14 @@ import net.minecraft.item.ItemStack;
 public class ThornsHelper {
     public static float getPlayerThornsChance(final ServerPlayerEntity player) {
         float chance = 0.0f;
-        final TalentTree tree = PlayerTalentsData.get(player.getLevel()).getTalents((PlayerEntity) player);
+        final TalentTree tree = PlayerTalentsData.get(player.getLevel()).getTalents(player);
         for (final Object talent : tree.getTalents(ThornsTalent.class)) {
             chance += ((ThornsTalent) talent).getThornsChance();
         }
         for (final Object talent2 : tree.getTalents(ThornsChanceTalent.class)) {
             chance += ((ThornsChanceTalent) talent2).getAdditionalThornsChance();
         }
-        final SetTree sets = PlayerSetsData.get(player.getLevel()).getSets((PlayerEntity) player);
+        final SetTree sets = PlayerSetsData.get(player.getLevel()).getSets(player);
         for (final SetNode<?> node : sets.getNodes()) {
             if (!(node.getSet() instanceof PorcupineSet)) {
                 continue;
@@ -35,7 +35,7 @@ public class ThornsHelper {
             final PorcupineSet set = (PorcupineSet) node.getSet();
             chance += set.getAdditionalThornsChance();
         }
-        chance += getThornsChance((LivingEntity) player);
+        chance += getThornsChance(player);
         return chance;
     }
 
@@ -52,14 +52,14 @@ public class ThornsHelper {
 
     public static float getPlayerThornsDamage(final ServerPlayerEntity player) {
         float additionalMultiplier = 0.0f;
-        final TalentTree tree = PlayerTalentsData.get(player.getLevel()).getTalents((PlayerEntity) player);
+        final TalentTree tree = PlayerTalentsData.get(player.getLevel()).getTalents(player);
         for (final Object talent : tree.getTalents(ThornsTalent.class)) {
             additionalMultiplier += ((ThornsTalent) talent).getThornsDamage();
         }
         for (final Object talent2 : tree.getTalents(ThornsDamageTalent.class)) {
             additionalMultiplier += ((ThornsDamageTalent) talent2).getAdditionalThornsDamage();
         }
-        final SetTree sets = PlayerSetsData.get(player.getLevel()).getSets((PlayerEntity) player);
+        final SetTree sets = PlayerSetsData.get(player.getLevel()).getSets(player);
         for (final SetNode<?> node : sets.getNodes()) {
             if (!(node.getSet() instanceof PorcupineSet)) {
                 continue;
@@ -67,7 +67,7 @@ public class ThornsHelper {
             final PorcupineSet set = (PorcupineSet) node.getSet();
             additionalMultiplier += set.getAdditionalThornsDamage();
         }
-        additionalMultiplier += getThornsDamage((LivingEntity) player);
+        additionalMultiplier += getThornsDamage(player);
         return additionalMultiplier;
     }
 

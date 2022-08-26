@@ -33,7 +33,7 @@ public class MazeBlock extends Block {
     }
 
     protected void createBlockStateDefinition(final StateContainer.Builder<Block, BlockState> builder) {
-        builder.add(new Property[]{MazeBlock.COLOR});
+        builder.add(MazeBlock.COLOR);
     }
 
     @Nullable
@@ -51,17 +51,17 @@ public class MazeBlock extends Block {
         final PlayerEntity player = (PlayerEntity) entityIn;
         final Scoreboard scoreboard = worldIn.getScoreboard();
         if (scoreboard.getObjective("Color") == null) {
-            scoreboard.addObjective("Color", ScoreCriteria.DUMMY, (ITextComponent) new StringTextComponent("Color"), ScoreCriteria.RenderType.INTEGER);
+            scoreboard.addObjective("Color", ScoreCriteria.DUMMY, new StringTextComponent("Color"), ScoreCriteria.RenderType.INTEGER);
         }
         final ScoreObjective colorObjective = scoreboard.getObjective("Color");
         assert colorObjective != null;
         final Score colorScore = worldIn.getScoreboard().getOrCreatePlayerScore(player.getDisplayName().getString(), colorObjective);
         final MazeColor playerColor = MazeColor.values()[colorScore.getScore()];
-        final MazeColor blockColor = (MazeColor) worldIn.getBlockState(pos).getValue(MazeBlock.COLOR);
+        final MazeColor blockColor = worldIn.getBlockState(pos).getValue(MazeBlock.COLOR);
         if (playerColor != blockColor) {
             final BlockPos nextPosition = player.blockPosition().relative(player.getDirection(), 1);
             colorScore.setScore((playerColor == MazeColor.RED) ? MazeColor.BLUE.ordinal() : MazeColor.RED.ordinal());
-            player.teleportTo(nextPosition.getX() + 0.5, (double) nextPosition.getY(), nextPosition.getZ() + 0.5);
+            player.teleportTo(nextPosition.getX() + 0.5, nextPosition.getY(), nextPosition.getZ() + 0.5);
         }
         super.stepOn(worldIn, pos, entityIn);
     }
@@ -74,9 +74,9 @@ public class MazeBlock extends Block {
         RED("red"),
         BLUE("blue");
 
-        private String name;
+        private final String name;
 
-        private MazeColor(final String name) {
+        MazeColor(final String name) {
             this.name = name;
         }
 

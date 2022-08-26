@@ -24,6 +24,6 @@ public class CompoundModifierOutcome {
     }
 
     public List<SingleModifierOutcome> getRolls() {
-        return Collections.unmodifiableList((List<? extends SingleModifierOutcome>) this.rolls);
+        return Collections.unmodifiableList(this.rolls);
     }
 }

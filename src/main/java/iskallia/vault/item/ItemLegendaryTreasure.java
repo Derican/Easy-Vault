@@ -21,7 +21,7 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 public class ItemLegendaryTreasure extends Item {
-    private VaultRarity vaultRarity;
+    private final VaultRarity vaultRarity;
 
     public ItemLegendaryTreasure(final ItemGroup group, final ResourceLocation id, final VaultRarity vaultRarity) {
         super(new Item.Properties().tab(group).stacksTo(1));
@@ -31,10 +31,10 @@ public class ItemLegendaryTreasure extends Item {
 
     public ActionResult<ItemStack> use(final World worldIn, final PlayerEntity playerIn, final Hand handIn) {
         if (worldIn.isClientSide) {
-            return (ActionResult<ItemStack>) super.use(worldIn, playerIn, handIn);
+            return super.use(worldIn, playerIn, handIn);
         }
         if (handIn != Hand.MAIN_HAND) {
-            return (ActionResult<ItemStack>) super.use(worldIn, playerIn, handIn);
+            return super.use(worldIn, playerIn, handIn);
         }
         final ItemStack stack = playerIn.getMainHandItem();
         if (stack.getItem() instanceof ItemLegendaryTreasure) {
@@ -62,23 +62,23 @@ public class ItemLegendaryTreasure extends Item {
             stack.shrink(1);
             ItemRelicBoosterPack.successEffects(worldIn, playerIn.position());
         }
-        return (ActionResult<ItemStack>) super.use(worldIn, playerIn, handIn);
+        return super.use(worldIn, playerIn, handIn);
     }
 
     @OnlyIn(Dist.CLIENT)
     public void appendHoverText(final ItemStack stack, @Nullable final World worldIn, final List<ITextComponent> tooltip, final ITooltipFlag flagIn) {
         if (stack.getItem() instanceof ItemLegendaryTreasure) {
             final ItemLegendaryTreasure item = (ItemLegendaryTreasure) stack.getItem();
-            tooltip.add((ITextComponent) new StringTextComponent(TextFormatting.GOLD + "Right-Click to identify..."));
-            tooltip.add((ITextComponent) new StringTextComponent("Rarity: " + item.getRarity().color + item.getRarity()));
+            tooltip.add(new StringTextComponent(TextFormatting.GOLD + "Right-Click to identify..."));
+            tooltip.add(new StringTextComponent("Rarity: " + item.getRarity().color + item.getRarity()));
         }
-        super.appendHoverText(stack, worldIn, (List) tooltip, flagIn);
+        super.appendHoverText(stack, worldIn, tooltip, flagIn);
     }
 
     public ITextComponent getName(final ItemStack stack) {
         if (stack.getItem() instanceof ItemLegendaryTreasure) {
             final ItemLegendaryTreasure item = (ItemLegendaryTreasure) stack.getItem();
-            return (ITextComponent) new StringTextComponent(item.getRarity().color + "Legendary Treasure");
+            return new StringTextComponent(item.getRarity().color + "Legendary Treasure");
         }
         return super.getName(stack);
     }

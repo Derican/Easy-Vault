@@ -118,7 +118,7 @@ public class LootStatueTileEntity extends SkinnableTileEntity implements ITickab
         ItemStack stack = ItemStack.EMPTY;
         if (this.chipCount > 0) {
             --this.chipCount;
-            stack = new ItemStack((IItemProvider) ModItems.ACCELERATION_CHIP, 1);
+            stack = new ItemStack(ModItems.ACCELERATION_CHIP, 1);
             this.sendUpdates();
         }
         return stack;
@@ -180,11 +180,11 @@ public class LootStatueTileEntity extends SkinnableTileEntity implements ITickab
                     final BlockPos offset = down.offset(x, 0, z);
                     final TileEntity tileEntity = this.level.getBlockEntity(offset);
                     if (tileEntity != null) {
-                        final LazyOptional<IItemHandler> handler = (LazyOptional<IItemHandler>) tileEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, Direction.UP);
+                        final LazyOptional<IItemHandler> handler = tileEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, Direction.UP);
                         if (handler.isPresent()) {
-                            final ItemStack remainder = ItemHandlerHelper.insertItemStacked((IItemHandler) handler.orElse(null), stack, true);
+                            final ItemStack remainder = ItemHandlerHelper.insertItemStacked(handler.orElse(null), stack, true);
                             if (remainder.isEmpty()) {
-                                ItemHandlerHelper.insertItemStacked((IItemHandler) handler.orElse(null), stack, false);
+                                ItemHandlerHelper.insertItemStacked(handler.orElse(null), stack, false);
                                 if (this.itemsRemaining != -1) {
                                     --this.itemsRemaining;
                                 }
@@ -197,7 +197,7 @@ public class LootStatueTileEntity extends SkinnableTileEntity implements ITickab
         } else {
             final TileEntity tileEntity2 = this.level.getBlockEntity(down);
             if (tileEntity2 != null) {
-                final LazyOptional<IItemHandler> handler2 = (LazyOptional<IItemHandler>) tileEntity2.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, Direction.UP);
+                final LazyOptional<IItemHandler> handler2 = tileEntity2.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, Direction.UP);
                 handler2.ifPresent(h -> {
                     ItemHandlerHelper.insertItemStacked(h, stack, simulate);
                     if (this.itemsRemaining != -1) {
@@ -223,16 +223,16 @@ public class LootStatueTileEntity extends SkinnableTileEntity implements ITickab
         if (this.statueType == StatueType.OMEGA) {
             if (!this.master) {
                 nbt.putBoolean("Master", false);
-                nbt.put("MasterPos", (INBT) NBTUtil.writeBlockPos(this.masterPos));
+                nbt.put("MasterPos", NBTUtil.writeBlockPos(this.masterPos));
                 return super.save(nbt);
             }
             nbt.putBoolean("Master", true);
-            nbt.put("MasterPos", (INBT) NBTUtil.writeBlockPos(this.getBlockPos()));
+            nbt.put("MasterPos", NBTUtil.writeBlockPos(this.getBlockPos()));
         }
         final String nickname = this.skin.getLatestNickname();
         nbt.putString("PlayerNickname", (nickname == null) ? "" : nickname);
         nbt.putInt("CurrentTick", this.getCurrentTick());
-        nbt.put("LootItem", (INBT) this.getLootItem().serializeNBT());
+        nbt.put("LootItem", this.getLootItem().serializeNBT());
         nbt.putInt("ChipCount", this.chipCount);
         nbt.putInt("ItemsRemaining", this.itemsRemaining);
         nbt.putInt("TotalItems", this.totalItems);
@@ -242,7 +242,7 @@ public class LootStatueTileEntity extends SkinnableTileEntity implements ITickab
 
     public void load(final BlockState state, final CompoundNBT nbt) {
         if (!nbt.contains("StatueType", 3)) {
-            throw new IllegalStateException("Invalid State NBT " + nbt.toString());
+            throw new IllegalStateException("Invalid State NBT " + nbt);
         }
         this.setStatueType(StatueType.values()[nbt.getInt("StatueType")]);
         if (this.statueType == StatueType.OMEGA) {
@@ -279,16 +279,16 @@ public class LootStatueTileEntity extends SkinnableTileEntity implements ITickab
         if (this.statueType == StatueType.OMEGA) {
             if (!this.master) {
                 nbt.putBoolean("Master", false);
-                nbt.put("MasterPos", (INBT) NBTUtil.writeBlockPos(this.masterPos));
+                nbt.put("MasterPos", NBTUtil.writeBlockPos(this.masterPos));
                 return nbt;
             }
             nbt.putBoolean("Master", true);
-            nbt.put("MasterPos", (INBT) NBTUtil.writeBlockPos(this.getBlockPos()));
+            nbt.put("MasterPos", NBTUtil.writeBlockPos(this.getBlockPos()));
         }
         final String nickname = this.skin.getLatestNickname();
         nbt.putString("PlayerNickname", (nickname == null) ? "" : nickname);
         nbt.putInt("CurrentTick", this.getCurrentTick());
-        nbt.put("LootItem", (INBT) this.getLootItem().serializeNBT());
+        nbt.put("LootItem", this.getLootItem().serializeNBT());
         nbt.putInt("ChipCount", this.chipCount);
         nbt.putInt("ItemsRemaining", this.itemsRemaining);
         nbt.putInt("TotalItems", this.totalItems);

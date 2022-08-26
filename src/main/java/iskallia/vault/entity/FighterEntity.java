@@ -40,7 +40,7 @@ public class FighterEntity extends ZombieEntity {
     public ServerBossInfo bossInfo;
 
     public FighterEntity(final EntityType<? extends ZombieEntity> type, final World world) {
-        super((EntityType) type, world);
+        super(type, world);
         this.lastName = "Fighter";
         this.sizeMultiplier = 1.0f;
         if (!this.level.isClientSide) {
@@ -51,7 +51,7 @@ public class FighterEntity extends ZombieEntity {
         }
         (this.bossInfo = new ServerBossInfo(this.getDisplayName(), BossInfo.Color.PURPLE, BossInfo.Overlay.PROGRESS)).setDarkenScreen(true);
         this.bossInfo.setVisible(false);
-        this.setCustomName((ITextComponent) new StringTextComponent(this.lastName));
+        this.setCustomName(new StringTextComponent(this.lastName));
     }
 
     @OnlyIn(Dist.CLIENT)
@@ -87,11 +87,7 @@ public class FighterEntity extends ZombieEntity {
             }
         } else {
             final double amplitude = this.getDeltaMovement().distanceToSqr(0.0, this.getDeltaMovement().y(), 0.0);
-            if (amplitude > 0.004) {
-                this.setSprinting(true);
-            } else {
-                this.setSprinting(false);
-            }
+            this.setSprinting(amplitude > 0.004);
             this.bossInfo.setPercent(this.getHealth() / this.getMaxHealth());
         }
     }
@@ -147,7 +143,7 @@ public class FighterEntity extends ZombieEntity {
     public FighterEntity changeSize(final float m) {
         EntityHelper.changeSize(this, this.sizeMultiplier = m);
         if (!this.level.isClientSide()) {
-            ModNetwork.CHANNEL.send(PacketDistributor.TRACKING_ENTITY.with(() -> this), new FighterSizeMessage((Entity) this, this.sizeMultiplier));
+            ModNetwork.CHANNEL.send(PacketDistributor.TRACKING_ENTITY.with(() -> this), new FighterSizeMessage(this, this.sizeMultiplier));
         }
         return this;
     }
@@ -165,12 +161,12 @@ public class FighterEntity extends ZombieEntity {
         this.setCanPickUpLoot(true);
         this.setPersistenceRequired();
         if (this.random.nextInt(100) == 0) {
-            final ChickenEntity chicken = (ChickenEntity) EntityType.CHICKEN.create(this.level);
+            final ChickenEntity chicken = EntityType.CHICKEN.create(this.level);
             chicken.moveTo(this.getX(), this.getY(), this.getZ(), this.yRot, 0.0f);
             chicken.finalizeSpawn(world, difficulty, reason, spawnData, dataTag);
             chicken.setChickenJockey(true);
-            ((ServerWorld) this.level).addWithUUID((Entity) chicken);
-            this.startRiding((Entity) chicken);
+            ((ServerWorld) this.level).addWithUUID(chicken);
+            this.startRiding(chicken);
         }
         return spawnData;
     }
@@ -185,7 +181,7 @@ public class FighterEntity extends ZombieEntity {
     public boolean doHurtTarget(final Entity entity) {
         if (!this.level.isClientSide) {
             ((ServerWorld) this.level).sendParticles((IParticleData) ParticleTypes.SWEEP_ATTACK, this.getX(), this.getY(), this.getZ(), 1, 0.0, 0.0, 0.0, 0.0);
-            this.level.playSound((PlayerEntity) null, this.blockPosition(), SoundEvents.PLAYER_ATTACK_SWEEP, SoundCategory.PLAYERS, 1.0f, this.random.nextFloat() - this.random.nextFloat());
+            this.level.playSound(null, this.blockPosition(), SoundEvents.PLAYER_ATTACK_SWEEP, SoundCategory.PLAYERS, 1.0f, this.random.nextFloat() - this.random.nextFloat());
         }
         return super.doHurtTarget(entity);
     }
@@ -199,7 +195,7 @@ public class FighterEntity extends ZombieEntity {
                     return;
                 }
                 final int i = (entity instanceof BlazeEntity) ? 3 : 1;
-                entity.hurt(DamageSource.indirectMobAttack((Entity) this, shooter), (float) i);
+                entity.hurt(DamageSource.indirectMobAttack(this, shooter), (float) i);
             }
         });
     }

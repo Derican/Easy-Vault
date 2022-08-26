@@ -19,7 +19,7 @@ public class VaultScavengerData extends VaultGoalData {
     }
 
     public List<ScavengerHuntObjective.ItemSubmission> getRequiredItemSubmissions() {
-        return Collections.unmodifiableList((List<? extends ScavengerHuntObjective.ItemSubmission>) this.itemSubmissions);
+        return Collections.unmodifiableList(this.itemSubmissions);
     }
 
     @Nullable

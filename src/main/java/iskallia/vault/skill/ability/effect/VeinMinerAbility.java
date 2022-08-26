@@ -39,7 +39,7 @@ public class VeinMinerAbility<C extends VeinMinerConfig> extends AbilityEffect<C
             return;
         }
         final ServerPlayerEntity player = (ServerPlayerEntity) event.getPlayer();
-        final AbilityTree abilityTree = PlayerAbilitiesData.get((ServerWorld) event.getWorld()).getAbilities((PlayerEntity) player);
+        final AbilityTree abilityTree = PlayerAbilitiesData.get((ServerWorld) event.getWorld()).getAbilities(player);
         if (!abilityTree.isActive()) {
             return;
         }
@@ -63,7 +63,7 @@ public class VeinMinerAbility<C extends VeinMinerConfig> extends AbilityEffect<C
         try {
             return this.doVeinMine(player, world, targetBlock, pos, config);
         } finally {
-            BlockDropCaptureHelper.getCapturedStacksAndStop().forEach(entity -> Block.popResource((World) world, entity.blockPosition(), entity.getItem()));
+            BlockDropCaptureHelper.getCapturedStacksAndStop().forEach(entity -> Block.popResource(world, entity.blockPosition(), entity.getItem()));
         }
     }
 
@@ -89,11 +89,11 @@ public class VeinMinerAbility<C extends VeinMinerConfig> extends AbilityEffect<C
                     return;
                 } else {
                     final BlockState at = world.getBlockState(offset);
-                    if (at.isAir((IBlockReader) world, offset) || at.getBlock() != targetBlock) {
+                    if (at.isAir(world, offset) || at.getBlock() != targetBlock) {
                         return;
                     } else {
                         if (this.shouldVoid(world, targetBlock)) {
-                            at.removedByPlayer((World) world, offset, (PlayerEntity) player, false, at.getFluidState());
+                            at.removedByPlayer(world, offset, player, false, at.getFluidState());
                             BlockHelper.damageMiningItem(heldItem, player, 1);
                         } else if (this.doDestroy(world, offset, player, config)) {
                             BlockHelper.damageMiningItem(heldItem, player, 1);
@@ -109,7 +109,7 @@ public class VeinMinerAbility<C extends VeinMinerConfig> extends AbilityEffect<C
     }
 
     private boolean doDestroy(final ServerWorld world, final BlockPos pos, final ServerPlayerEntity player, final C config) {
-        final ItemStack miningStack = this.getVeinMiningItem((PlayerEntity) player, config);
+        final ItemStack miningStack = this.getVeinMiningItem(player, config);
         return BlockHelper.breakBlock(world, player, pos, world.getBlockState(pos), miningStack, true, false);
     }
 

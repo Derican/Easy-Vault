@@ -132,7 +132,7 @@ public class VaultGearHelper {
         if (generatorEntry == null) {
             return false;
         }
-        final VAttribute.Instance.Generator generator = (VAttribute.Instance.Generator) generatorEntry.value;
+        final VAttribute.Instance.Generator generator = generatorEntry.value;
         attribute.create(stack, VaultGearHelper.rand, generator);
         return true;
     }
@@ -416,11 +416,11 @@ public class VaultGearHelper {
         if (attribute == ModAttributes.ON_HIT_STUN) {
             return text("Stun Attack Chance", 1681124);
         }
-        return (ITextComponent) new StringTextComponent(attribute.getId().toString()).withStyle(TextFormatting.GRAY);
+        return new StringTextComponent(attribute.getId().toString()).withStyle(TextFormatting.GRAY);
     }
 
     private static ITextComponent text(final String txt, final int color) {
-        return (ITextComponent) new StringTextComponent(txt).setStyle(Style.EMPTY.withColor(Color.fromRgb(color)));
+        return new StringTextComponent(txt).setStyle(Style.EMPTY.withColor(Color.fromRgb(color)));
     }
 
     static {

@@ -19,7 +19,7 @@ public class VaultOreBlock extends OreBlock {
     public ItemVaultGem associatedGem;
 
     public VaultOreBlock(@Nonnull final ItemVaultGem associatedGem) {
-        super(AbstractBlock.Properties.of(Material.STONE, MaterialColor.DIAMOND).requiresCorrectToolForDrops().lightLevel(state -> 9).strength(3.0f, 3.0f).sound((SoundType) ModSounds.VAULT_GEM));
+        super(AbstractBlock.Properties.of(Material.STONE, MaterialColor.DIAMOND).requiresCorrectToolForDrops().lightLevel(state -> 9).strength(3.0f, 3.0f).sound(ModSounds.VAULT_GEM));
         this.associatedGem = associatedGem;
         VaultOreBlock.ORES.add(this);
     }

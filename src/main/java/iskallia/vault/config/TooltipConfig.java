@@ -34,9 +34,9 @@ public class TooltipConfig extends Config {
 
     public static class TooltipEntry {
         @Expose
-        private String item;
+        private final String item;
         @Expose
-        private String value;
+        private final String value;
 
         public TooltipEntry(final String item, final String value) {
             this.item = item;

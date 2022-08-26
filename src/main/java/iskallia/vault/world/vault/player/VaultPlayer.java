@@ -177,13 +177,13 @@ public abstract class VaultPlayer implements INBTSerializable<CompoundNBT> {
         nbt.putString("Id", this.getId().toString());
         nbt.putString("PlayerId", this.getPlayerId().toString());
         nbt.putBoolean("Exited", this.hasExited());
-        nbt.put("Timer", (INBT) this.timer.serializeNBT());
-        nbt.put("AddedExtensions", (INBT) this.addedExtensions.serializeNBT());
-        nbt.put("AppliedExtensions", (INBT) this.appliedExtensions.serializeNBT());
-        nbt.put("Modifiers", (INBT) this.modifiers.serializeNBT());
-        nbt.put("Properties", (INBT) this.properties.serializeNBT());
-        nbt.put("Behaviours", (INBT) this.behaviours.serializeNBT());
-        nbt.put("Objectives", (INBT) this.objectives.serializeNBT());
+        nbt.put("Timer", this.timer.serializeNBT());
+        nbt.put("AddedExtensions", this.addedExtensions.serializeNBT());
+        nbt.put("AppliedExtensions", this.appliedExtensions.serializeNBT());
+        nbt.put("Modifiers", this.modifiers.serializeNBT());
+        nbt.put("Properties", this.properties.serializeNBT());
+        nbt.put("Behaviours", this.behaviours.serializeNBT());
+        nbt.put("Objectives", this.objectives.serializeNBT());
         return nbt;
     }
 

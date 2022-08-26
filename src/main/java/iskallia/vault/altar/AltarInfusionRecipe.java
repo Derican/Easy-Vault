@@ -85,8 +85,8 @@ public class AltarInfusionRecipe {
             cachedItems.add(RequiredItem.serializeNBT(item));
         }
         nbt.putUUID("player", this.getPlayer());
-        nbt.put("requiredItems", (INBT) requiredItems);
-        nbt.put("cachedItems", (INBT) cachedItems);
+        nbt.put("requiredItems", requiredItems);
+        nbt.put("cachedItems", cachedItems);
         nbt.putBoolean("pogInfused", this.pogInfused);
         return nbt;
     }

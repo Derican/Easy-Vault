@@ -32,26 +32,26 @@ public class EtchingVendorEntity extends MobEntity {
     private static final DataParameter<BlockPos> VENDOR_POS;
 
     public EtchingVendorEntity(final EntityType<? extends MobEntity> type, final World world) {
-        super((EntityType) type, world);
+        super(type, world);
         this.setInvulnerable(true);
         this.setNoGravity(true);
     }
 
     protected void defineSynchedData() {
         super.defineSynchedData();
-        this.entityData.define((DataParameter) EtchingVendorEntity.VENDOR_POS, BlockPos.ZERO);
+        this.entityData.define(EtchingVendorEntity.VENDOR_POS, BlockPos.ZERO);
     }
 
     protected void registerGoals() {
         super.registerGoals();
 //        this.goalSelector = new GoalSelector(this.level.getProfilerSupplier());
 //        this.targetSelector = new GoalSelector(this.level.getProfilerSupplier());
-        this.goalSelector.addGoal(1, (Goal) new LookAtGoal((MobEntity) this, (Class) PlayerEntity.class, 8.0f));
-        this.goalSelector.addGoal(10, (Goal) new LookRandomlyGoal((MobEntity) this));
+        this.goalSelector.addGoal(1, new LookAtGoal(this, PlayerEntity.class, 8.0f));
+        this.goalSelector.addGoal(10, new LookRandomlyGoal(this));
     }
 
     public void setVendorPos(final BlockPos pos) {
-        this.entityData.set((DataParameter) EtchingVendorEntity.VENDOR_POS, pos);
+        this.entityData.set(EtchingVendorEntity.VENDOR_POS, pos);
     }
 
     public BlockPos getVendorPos() {
@@ -76,7 +76,7 @@ public class EtchingVendorEntity extends MobEntity {
         if (!this.level.isAreaLoaded(this.getVendorPos(), 1)) {
             return false;
         }
-        if (this.distanceToSqr(Vector3d.atCenterOf((Vector3i) this.getVendorPos())) > 4.0) {
+        if (this.distanceToSqr(Vector3d.atCenterOf(this.getVendorPos())) > 4.0) {
             return false;
         }
         final TileEntity te = this.level.getBlockEntity(this.getVendorPos());
@@ -90,9 +90,9 @@ public class EtchingVendorEntity extends MobEntity {
 
     protected ActionResultType mobInteract(final PlayerEntity player, final Hand hand) {
         if (player instanceof ServerPlayerEntity) {
-            NetworkHooks.openGui((ServerPlayerEntity) player, (INamedContainerProvider) new INamedContainerProvider() {
+            NetworkHooks.openGui((ServerPlayerEntity) player, new INamedContainerProvider() {
                 public ITextComponent getDisplayName() {
-                    return (ITextComponent) new StringTextComponent("Etching Trader");
+                    return new StringTextComponent("Etching Trader");
                 }
 
                 @Nullable
@@ -122,6 +122,6 @@ public class EtchingVendorEntity extends MobEntity {
     }
 
     static {
-        VENDOR_POS = EntityDataManager.defineId((Class) EtchingVendorEntity.class, DataSerializers.BLOCK_POS);
+        VENDOR_POS = EntityDataManager.defineId(EtchingVendorEntity.class, DataSerializers.BLOCK_POS);
     }
 }

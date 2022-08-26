@@ -53,7 +53,7 @@ public class ClientSandEventData
     
     public Collection<ContributorDisplay> getContributors() {
         synchronized (this.contributors) {
-            return Collections.unmodifiableCollection((Collection<? extends ContributorDisplay>)this.contributors);
+            return Collections.unmodifiableCollection(this.contributors);
         }
     }
     

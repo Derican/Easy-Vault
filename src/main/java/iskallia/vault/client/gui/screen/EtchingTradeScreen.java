@@ -33,7 +33,7 @@ public class EtchingTradeScreen extends ContainerScreen<EtchingTradeContainer> {
         final int offsetX = (this.width - this.imageWidth) / 2;
         final int offsetY = (this.height - this.imageHeight) / 2;
         blit(matrixStack, offsetX, offsetY, this.getBlitOffset(), 0.0f, 0.0f, this.imageWidth, this.imageHeight, 256, 512);
-        final EtchingTradeContainer container = (EtchingTradeContainer) this.getMenu();
+        final EtchingTradeContainer container = this.getMenu();
         final EtchingVendorEntity vendor = container.getVendor();
         if (vendor == null) {
             return;
@@ -67,7 +67,7 @@ public class EtchingTradeScreen extends ContainerScreen<EtchingTradeContainer> {
 
     protected void renderLabels(final MatrixStack matrixStack, final int x, final int y) {
         super.renderLabels(matrixStack, x, y);
-        final EtchingTradeContainer container = (EtchingTradeContainer) this.getMenu();
+        final EtchingTradeContainer container = this.getMenu();
         final EtchingVendorEntity vendor = container.getVendor();
         if (vendor == null) {
             return;
@@ -82,9 +82,9 @@ public class EtchingTradeScreen extends ContainerScreen<EtchingTradeContainer> {
                 if (!trade.isSold()) {
                     final int xx = 71;
                     final int yy = 10 + i * 28;
-                    final ItemStack stack = new ItemStack((IItemProvider) ModItems.VAULT_PLATINUM, trade.getRequiredPlatinum());
+                    final ItemStack stack = new ItemStack(ModItems.VAULT_PLATINUM, trade.getRequiredPlatinum());
                     this.itemRenderer.renderGuiItem(stack, xx, yy);
-                    this.itemRenderer.renderGuiItemDecorations(this.font, stack, xx, yy, (String) null);
+                    this.itemRenderer.renderGuiItemDecorations(this.font, stack, xx, yy, null);
                 }
             }
         }

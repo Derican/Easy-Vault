@@ -41,7 +41,7 @@ public class JigsawPiecePlacer {
         this.templateManager = world.getStructureManager();
         this.structureManager = world.structureFeatureManager();
         this.chunkGenerator = world.getChunkSource().generator;
-        this.jigsawPatternRegistry = (Registry<JigsawPattern>) world.getServer().registryAccess().registryOrThrow(Registry.TEMPLATE_POOL_REGISTRY);
+        this.jigsawPatternRegistry = world.getServer().registryAccess().registryOrThrow(Registry.TEMPLATE_POOL_REGISTRY);
     }
 
     public static JigsawPiecePlacer newPlacer(final JigsawPiece piece, final ServerWorld world, final BlockPos pos) {
@@ -61,7 +61,7 @@ public class JigsawPiecePlacer {
     public List<VaultPiece> placeJigsaw() {
         final List<AbstractVillagePiece> resolvedPieces = this.resolver.resolveJigsawPieces(this.templateManager, this.jigsawPatternRegistry);
         resolvedPieces.forEach(this::placeStructurePiece);
-        return resolvedPieces.stream().flatMap(piece -> VaultPiece.of((StructurePiece) piece).stream()).filter(Objects::nonNull).collect(Collectors.toList());
+        return resolvedPieces.stream().flatMap(piece -> VaultPiece.of(piece).stream()).filter(Objects::nonNull).collect(Collectors.toList());
     }
 
     private void placeStructurePiece(final AbstractVillagePiece structurePiece) {
@@ -79,11 +79,11 @@ public class JigsawPiecePlacer {
 
     private void placeJigsawPiece(final JigsawPiece jigsawPiece, final BlockPos seedPos, final BlockPos generationPos, final Rotation pieceRotation, final MutableBoundingBox pieceBox) {
         if (jigsawPiece instanceof PalettedListPoolElement) {
-            ((PalettedListPoolElement) jigsawPiece).generate(this.templateManager, (ISeedReader) this.world, this.structureManager, this.chunkGenerator, seedPos, generationPos, pieceRotation, pieceBox, JigsawPiecePlacer.rand, false, 18);
+            ((PalettedListPoolElement) jigsawPiece).generate(this.templateManager, this.world, this.structureManager, this.chunkGenerator, seedPos, generationPos, pieceRotation, pieceBox, JigsawPiecePlacer.rand, false, 18);
         } else if (jigsawPiece instanceof PalettedSinglePoolElement) {
-            ((PalettedSinglePoolElement) jigsawPiece).generate(null, this.templateManager, (ISeedReader) this.world, this.structureManager, this.chunkGenerator, seedPos, generationPos, pieceRotation, pieceBox, JigsawPiecePlacer.rand, false, 18);
+            ((PalettedSinglePoolElement) jigsawPiece).generate(null, this.templateManager, this.world, this.structureManager, this.chunkGenerator, seedPos, generationPos, pieceRotation, pieceBox, JigsawPiecePlacer.rand, false, 18);
         } else {
-            jigsawPiece.place(this.templateManager, (ISeedReader) this.world, this.structureManager, this.chunkGenerator, seedPos, generationPos, pieceRotation, pieceBox, JigsawPiecePlacer.rand, false);
+            jigsawPiece.place(this.templateManager, this.world, this.structureManager, this.chunkGenerator, seedPos, generationPos, pieceRotation, pieceBox, JigsawPiecePlacer.rand, false);
         }
     }
 

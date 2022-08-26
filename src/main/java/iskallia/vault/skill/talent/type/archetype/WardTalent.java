@@ -95,11 +95,11 @@ public class WardTalent extends ArchetypeTalent {
         }
         final ServerPlayerEntity sPlayer = (ServerPlayerEntity) event.player;
         final UUID playerUUID = sPlayer.getUUID();
-        final float maxAbsorption = AbsorptionHelper.getMaxAbsorption((PlayerEntity) sPlayer);
+        final float maxAbsorption = AbsorptionHelper.getMaxAbsorption(sPlayer);
         if (maxAbsorption <= 0.1f) {
             return;
         }
-        final TalentTree tree = PlayerTalentsData.get(sPlayer.getLevel()).getTalents((PlayerEntity) sPlayer);
+        final TalentTree tree = PlayerTalentsData.get(sPlayer.getLevel()).getTalents(sPlayer);
         final int startSeconds = tree.getLearnedNodes(WardTalent.class).stream().mapToInt(node -> ((WardTalent) node.getTalent()).getStartRegenAfterCombatSeconds()).min().orElse(-1);
         if (startSeconds < 0) {
             return;

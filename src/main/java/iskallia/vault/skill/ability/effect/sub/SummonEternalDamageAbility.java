@@ -16,7 +16,7 @@ public class SummonEternalDamageAbility extends SummonEternalAbility<SummonEtern
     protected void postProcessEternal(final EternalEntity eternalEntity, final SummonEternalDamageConfig config) {
         super.postProcessEternal(eternalEntity, config);
         final ModifiableAttributeInstance instance = eternalEntity.getAttribute(Attributes.ATTACK_DAMAGE);
-        instance.addTransientModifier(new AttributeModifier(SummonEternalDamageAbility.INCREASED_DAMAGE_MOD_UUID, "Eternal increased damage", (double) config.getIncreasedDamagePercent(), AttributeModifier.Operation.MULTIPLY_BASE));
+        instance.addTransientModifier(new AttributeModifier(SummonEternalDamageAbility.INCREASED_DAMAGE_MOD_UUID, "Eternal increased damage", config.getIncreasedDamagePercent(), AttributeModifier.Operation.MULTIPLY_BASE));
         eternalEntity.sizeMultiplier *= 1.2f;
     }
 

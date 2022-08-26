@@ -67,7 +67,7 @@ public class PlayerStatsData extends WorldSavedData {
     }
 
     public CompoundNBT save(final CompoundNBT nbt) {
-        nbt.put("Stats", (INBT) this.playerStats.serializeNBT());
+        nbt.put("Stats", this.playerStats.serializeNBT());
         return nbt;
     }
 
@@ -93,15 +93,15 @@ public class PlayerStatsData extends WorldSavedData {
         }
 
         public List<VaultRaid> getVaults() {
-            return Collections.unmodifiableList((List<? extends VaultRaid>) this.vaults);
+            return Collections.unmodifiableList(this.vaults);
         }
 
         public List<CrystalStat> getCrystals() {
-            return Collections.unmodifiableList((List<? extends CrystalStat>) this.crystals);
+            return Collections.unmodifiableList(this.crystals);
         }
 
         public List<RaffleStat> getRaffles() {
-            return Collections.unmodifiableList((List<? extends RaffleStat>) this.raffles);
+            return Collections.unmodifiableList(this.raffles);
         }
 
         public boolean hasFinishedRaidReward() {
@@ -110,9 +110,9 @@ public class PlayerStatsData extends WorldSavedData {
 
         public CompoundNBT serializeNBT() {
             final CompoundNBT nbt = new CompoundNBT();
-            nbt.put("Vaults", (INBT) this.vaults.serializeNBT());
-            nbt.put("Crystals", (INBT) this.crystals.serializeNBT());
-            nbt.put("Raffles", (INBT) this.raffles.serializeNBT());
+            nbt.put("Vaults", this.vaults.serializeNBT());
+            nbt.put("Crystals", this.crystals.serializeNBT());
+            nbt.put("Raffles", this.raffles.serializeNBT());
             nbt.putBoolean("finishedRaidReward", this.finishedRaidReward);
             return nbt;
         }

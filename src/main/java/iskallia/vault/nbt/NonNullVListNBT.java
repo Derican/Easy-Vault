@@ -63,7 +63,7 @@ public class NonNullVListNBT<T, N extends INBT> extends VListNBT<T, N> {
     public static <T extends INBTSerializable<N>, N extends INBT> VListNBT<T, N> of(final Supplier<T> supplier) {
         return new NonNullVListNBT<T, N>(INBTSerializable::serializeNBT, n -> {
             final T value = supplier.get();
-            ((INBTSerializable) value).deserializeNBT(n);
+            value.deserializeNBT(n);
             return value;
         });
     }

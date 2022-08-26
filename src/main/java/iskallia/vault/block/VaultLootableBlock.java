@@ -21,7 +21,7 @@ public class VaultLootableBlock extends Block {
     private final Type type;
 
     public VaultLootableBlock(final Type type) {
-        super(AbstractBlock.Properties.copy((AbstractBlock) Blocks.BLACK_WOOL));
+        super(AbstractBlock.Properties.copy(Blocks.BLACK_WOOL));
         this.type = type;
     }
 
@@ -38,17 +38,17 @@ public class VaultLootableBlock extends Block {
     }
 
     public enum Type {
-        ORE((Supplier<VaultLootableTileEntity.Generator>) VaultLootableTileEntity.VaultOreBlockGenerator::new),
+        ORE(VaultLootableTileEntity.VaultOreBlockGenerator::new),
         RICHITY(() -> ModConfigs.VAULT_LOOTABLES.RICHITY::get),
-        RESOURCE((Supplier<VaultLootableTileEntity.Generator>) VaultLootableTileEntity.VaultResourceBlockGenerator::new),
+        RESOURCE(VaultLootableTileEntity.VaultResourceBlockGenerator::new),
         MISC(() -> ModConfigs.VAULT_LOOTABLES.MISC::get),
         VAULT_CHEST(() -> ModConfigs.VAULT_LOOTABLES.VAULT_CHEST::get),
         VAULT_TREASURE(() -> ModConfigs.VAULT_LOOTABLES.VAULT_TREASURE::get),
-        VAULT_OBJECTIVE((Supplier<VaultLootableTileEntity.Generator>) VaultObjective::getObjectiveBlock);
+        VAULT_OBJECTIVE(VaultObjective::getObjectiveBlock);
 
         private final Supplier<VaultLootableTileEntity.Generator> generator;
 
-        private Type(final Supplier<VaultLootableTileEntity.Generator> generator) {
+        Type(final Supplier<VaultLootableTileEntity.Generator> generator) {
             this.generator = generator;
         }
 

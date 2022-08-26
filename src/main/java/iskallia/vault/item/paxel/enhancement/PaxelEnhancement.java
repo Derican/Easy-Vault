@@ -30,7 +30,7 @@ public abstract class PaxelEnhancement implements INBTSerializable<CompoundNBT> 
         final ServerPlayerEntity player = (ServerPlayerEntity) event.getPlayer();
         final UUID playerUUID = player.getUUID();
         final int currentHeldSlotIndex = player.inventory.selected;
-        final ItemStack currentStack = (ItemStack) player.inventory.items.get(currentHeldSlotIndex);
+        final ItemStack currentStack = player.inventory.items.get(currentHeldSlotIndex);
         PaxelEnhancement.PLAYER_HELD_SLOT.put(playerUUID, currentHeldSlotIndex);
         PaxelEnhancement.PLAYER_HELD_STACK.put(playerUUID, currentStack);
         final PaxelEnhancement enhancement = PaxelEnhancements.getEnhancement(currentStack);
@@ -44,7 +44,7 @@ public abstract class PaxelEnhancement implements INBTSerializable<CompoundNBT> 
         final ServerPlayerEntity player = (ServerPlayerEntity) event.getPlayer();
         final UUID playerUUID = player.getUUID();
         final int currentHeldSlotIndex = player.inventory.selected;
-        final ItemStack currentStack = (ItemStack) player.inventory.items.get(currentHeldSlotIndex);
+        final ItemStack currentStack = player.inventory.items.get(currentHeldSlotIndex);
         PaxelEnhancement.PLAYER_HELD_SLOT.remove(playerUUID);
         PaxelEnhancement.PLAYER_HELD_STACK.remove(playerUUID);
         final PaxelEnhancement enhancement = PaxelEnhancements.getEnhancement(currentStack);
@@ -65,9 +65,9 @@ public abstract class PaxelEnhancement implements INBTSerializable<CompoundNBT> 
         final UUID playerUUID = player.getUUID();
         final int currentHeldSlotIndex = player.inventory.selected;
         final int previousHeldSlotIndex = PaxelEnhancement.PLAYER_HELD_SLOT.computeIfAbsent(playerUUID, uuid -> currentHeldSlotIndex);
-        final ItemStack currentStack = (ItemStack) player.inventory.items.get(currentHeldSlotIndex);
+        final ItemStack currentStack = player.inventory.items.get(currentHeldSlotIndex);
         final PaxelEnhancement currentEnhancement = PaxelEnhancements.getEnhancement(currentStack);
-        final ItemStack prevStack = PaxelEnhancement.PLAYER_HELD_STACK.computeIfAbsent(playerUUID, uuid -> ((ItemStack) player.inventory.items.get(previousHeldSlotIndex)).copy());
+        final ItemStack prevStack = PaxelEnhancement.PLAYER_HELD_STACK.computeIfAbsent(playerUUID, uuid -> player.inventory.items.get(previousHeldSlotIndex).copy());
         final PaxelEnhancement prevEnhancement = PaxelEnhancements.getEnhancement(prevStack);
         if (currentHeldSlotIndex != previousHeldSlotIndex || !ItemStack.matches(currentStack, prevStack)) {
             PaxelEnhancement.PLAYER_HELD_SLOT.put(playerUUID, currentHeldSlotIndex);
@@ -85,11 +85,11 @@ public abstract class PaxelEnhancement implements INBTSerializable<CompoundNBT> 
     }
 
     public IFormattableTextComponent getName() {
-        return (IFormattableTextComponent) new TranslationTextComponent(String.format("paxel_enhancement.%s.%s", this.resourceLocation.getNamespace(), this.resourceLocation.getPath()));
+        return new TranslationTextComponent(String.format("paxel_enhancement.%s.%s", this.resourceLocation.getNamespace(), this.resourceLocation.getPath()));
     }
 
     public IFormattableTextComponent getDescription() {
-        return (IFormattableTextComponent) new TranslationTextComponent(String.format("paxel_enhancement.%s.%s.desc", this.resourceLocation.getNamespace(), this.resourceLocation.getPath()));
+        return new TranslationTextComponent(String.format("paxel_enhancement.%s.%s.desc", this.resourceLocation.getNamespace(), this.resourceLocation.getPath()));
     }
 
     public abstract Color getColor();

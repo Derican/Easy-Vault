@@ -43,7 +43,7 @@ public class AbilitiesConfig extends Config {
     }
 
     public AbilityGroup<?, ?> getAbilityGroupByName(String name) {
-        return (AbilityGroup<?, ?>) getAll().stream()
+        return getAll().stream()
                 .filter(group -> group.getParentName().equals(name))
                 .findFirst()
                 .orElseThrow(() -> new IllegalStateException("Unknown ability with name " + name));

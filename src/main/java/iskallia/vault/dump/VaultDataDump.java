@@ -33,7 +33,7 @@ public class VaultDataDump {
         try {
             dataFile.createNewFile();
             final FileWriter writer = new FileWriter(dataFile);
-            VaultDataDump.GSON.toJson(getData(), (Appendable) writer);
+            VaultDataDump.GSON.toJson(getData(), writer);
             writer.flush();
             writer.close();
         } catch (final IOException e) {

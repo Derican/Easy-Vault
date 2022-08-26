@@ -37,7 +37,7 @@ public class ClientEvents {
         if (event.getType() != RenderGameOverlayEvent.ElementType.HEALTH) {
             return;
         }
-        final PlayerEntity player = (PlayerEntity) Minecraft.getInstance().player;
+        final PlayerEntity player = Minecraft.getInstance().player;
         if (player == null) {
             return;
         }
@@ -45,7 +45,7 @@ public class ClientEvents {
         if (talentNode == null || !talentNode.isLearned()) {
             return;
         }
-        final PlayerTalent talent = (PlayerTalent) talentNode.getTalent();
+        final PlayerTalent talent = talentNode.getTalent();
         if (!(talent instanceof FrenzyTalent)) {
             return;
         }

@@ -63,8 +63,8 @@ public class MegaJumpBreakAbility extends MegaJumpAbility<MegaJumpBreakConfig> {
         if (focusedAbilityNode != null && focusedAbilityNode.getAbility() == this) {
             for (final BlockPos offset : BlockHelper.getOvalPositions(player.blockPosition().above(3), 4.0f, 6.0f)) {
                 final BlockState state = sWorld.getBlockState(offset);
-                if (!state.isAir((IBlockReader) sWorld, offset) && (!state.requiresCorrectToolForDrops() || state.getHarvestLevel() <= 2)) {
-                    final float hardness = state.getDestroySpeed((IBlockReader) sWorld, offset);
+                if (!state.isAir(sWorld, offset) && (!state.requiresCorrectToolForDrops() || state.getHarvestLevel() <= 2)) {
+                    final float hardness = state.getDestroySpeed(sWorld, offset);
                     if (hardness < 0.0f || hardness > 25.0f) {
                         continue;
                     }
@@ -75,8 +75,8 @@ public class MegaJumpBreakAbility extends MegaJumpAbility<MegaJumpBreakConfig> {
     }
 
     private void destroyBlock(final ServerWorld world, final BlockPos pos, final PlayerEntity player) {
-        final ItemStack miningItem = new ItemStack((IItemProvider) Items.DIAMOND_PICKAXE);
-        Block.dropResources(world.getBlockState(pos), (World) world, pos, world.getBlockEntity(pos), (Entity) null, miningItem);
-        world.destroyBlock(pos, false, (Entity) player);
+        final ItemStack miningItem = new ItemStack(Items.DIAMOND_PICKAXE);
+        Block.dropResources(world.getBlockState(pos), world, pos, world.getBlockEntity(pos), null, miningItem);
+        world.destroyBlock(pos, false, player);
     }
 }

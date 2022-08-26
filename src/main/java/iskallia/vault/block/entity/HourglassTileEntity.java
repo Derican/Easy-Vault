@@ -32,7 +32,7 @@ public class HourglassTileEntity extends TileEntity {
     private int totalSand;
 
     public HourglassTileEntity() {
-        super((TileEntityType) ModBlocks.HOURGLASS_TILE_ENTITY);
+        super(ModBlocks.HOURGLASS_TILE_ENTITY);
         this.ownerPlayerName = "Unknown";
         this.currentSand = 0;
         this.totalSand = -1;

@@ -53,7 +53,7 @@ public class GlassCannonTalent extends ArchetypeTalent {
         }
         if (entity instanceof ServerPlayerEntity) {
             final ServerPlayerEntity sPlayer = (ServerPlayerEntity) entity;
-            final TalentTree talents = PlayerTalentsData.get(sPlayer.getLevel()).getTalents((PlayerEntity) sPlayer);
+            final TalentTree talents = PlayerTalentsData.get(sPlayer.getLevel()).getTalents(sPlayer);
             for (final TalentNode<?> node : talents.getLearnedNodes(GlassCannonTalent.class)) {
                 final GlassCannonTalent talent = (GlassCannonTalent) node.getTalent();
                 event.setAmount(event.getAmount() * talent.getDamageTakenMultiplier());
@@ -67,8 +67,8 @@ public class GlassCannonTalent extends ArchetypeTalent {
             return;
         }
         final ServerPlayerEntity sPlayer = (ServerPlayerEntity) event.player;
-        final TalentTree talents = PlayerTalentsData.get(sPlayer.getLevel()).getTalents((PlayerEntity) sPlayer);
-        if (talents.hasLearnedNode(ModConfigs.TALENTS.GLASS_CANNON) && ArchetypeTalent.isEnabled((World) sPlayer.getLevel())) {
+        final TalentTree talents = PlayerTalentsData.get(sPlayer.getLevel()).getTalents(sPlayer);
+        if (talents.hasLearnedNode(ModConfigs.TALENTS.GLASS_CANNON) && ArchetypeTalent.isEnabled(sPlayer.getLevel())) {
             final float damageMultiplier = talents.getNodeOf(ModConfigs.TALENTS.GLASS_CANNON).getTalent().getDamageDealtMultiplier();
             PlayerDamageHelper.DamageMultiplier existing = GlassCannonTalent.multiplierMap.get(sPlayer.getUUID());
             if (existing != null) {

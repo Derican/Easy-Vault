@@ -22,7 +22,7 @@ public class EternalInteractionMessage {
 
     public static EternalInteractionMessage feedItem(final ItemStack stack) {
         final EternalInteractionMessage pkt = new EternalInteractionMessage(Action.FEED_SELECTED);
-        pkt.extraData.put("stack", (INBT) stack.serializeNBT());
+        pkt.extraData.put("stack", stack.serializeNBT());
         return pkt;
     }
 
@@ -39,7 +39,7 @@ public class EternalInteractionMessage {
     }
 
     public static void encode(final EternalInteractionMessage pkt, final PacketBuffer buffer) {
-        buffer.writeEnum((Enum) pkt.action);
+        buffer.writeEnum(pkt.action);
         buffer.writeNbt(pkt.extraData);
     }
 
@@ -103,6 +103,6 @@ public class EternalInteractionMessage {
     public enum Action {
         FEED_SELECTED,
         LEVEL_UP,
-        SELECT_EFFECT;
+        SELECT_EFFECT
     }
 }

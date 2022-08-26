@@ -79,7 +79,7 @@ public class ActiveRaidOverlay extends BossBarOverlay {
         final int width = fr.width(waveDisplay);
         final float midX = mc.getWindow().getGuiScaledWidth() / 2.0f;
         renderStack.pushPose();
-        renderStack.translate((double) (midX - width / 2.0f), (double) offsetY, 0.0);
+        renderStack.translate(midX - width / 2.0f, offsetY, 0.0);
         renderStack.scale(1.25f, 1.25f, 1.0f);
         FontHelper.drawStringWithBorder(renderStack, fullDisplay, 0.0f, 0.0f, 16777215, 0);
         buffer.endBatch();
@@ -101,10 +101,10 @@ public class ActiveRaidOverlay extends BossBarOverlay {
         RenderSystem.enableBlend();
         RenderSystem.defaultBlendFunc();
         ScreenDrawHelper.drawQuad(buf -> {
-            ScreenDrawHelper.rect((IVertexBuilder) buf, renderStack).at(midX - width / 2.0f, (float) offsetY).dim((float) mobWidth, 5.0f).texVanilla(0.0f, 168.0f, (float) mobWidth, 5.0f).draw();
-            ScreenDrawHelper.rect((IVertexBuilder) buf, renderStack).at(midX - width / 2.0f, (float) offsetY).dim((float) mobWidth, 5.0f).texVanilla(0.0f, 178.0f, (float) mobWidth, 5.0f).draw();
-            ScreenDrawHelper.rect((IVertexBuilder) buf, renderStack).at(midX - width / 2.0f + mobWidth, (float) offsetY).dim((float) totalWidth, 5.0f).texVanilla((float) mobWidth, 163.0f, (float) totalWidth, 5.0f).draw();
-            ScreenDrawHelper.rect((IVertexBuilder) buf, renderStack).at(midX - width / 2.0f + mobWidth, (float) offsetY).dim((float) totalWidth, 5.0f).texVanilla((float) mobWidth, 173.0f, (float) totalWidth, 5.0f).draw();
+            ScreenDrawHelper.rect(buf, renderStack).at(midX - width / 2.0f, (float) offsetY).dim((float) mobWidth, 5.0f).texVanilla(0.0f, 168.0f, (float) mobWidth, 5.0f).draw();
+            ScreenDrawHelper.rect(buf, renderStack).at(midX - width / 2.0f, (float) offsetY).dim((float) mobWidth, 5.0f).texVanilla(0.0f, 178.0f, (float) mobWidth, 5.0f).draw();
+            ScreenDrawHelper.rect(buf, renderStack).at(midX - width / 2.0f + mobWidth, (float) offsetY).dim((float) totalWidth, 5.0f).texVanilla((float) mobWidth, 163.0f, (float) totalWidth, 5.0f).draw();
+            ScreenDrawHelper.rect(buf, renderStack).at(midX - width / 2.0f + mobWidth, (float) offsetY).dim((float) totalWidth, 5.0f).texVanilla((float) mobWidth, 173.0f, (float) totalWidth, 5.0f).draw();
             return;
         });
         RenderSystem.disableBlend();
@@ -131,40 +131,40 @@ public class ActiveRaidOverlay extends BossBarOverlay {
         float maxHeight = Math.max(positives.size(), negatives.size()) * height;
         if (this.data.getRaidsCompleted() > 0) {
             renderStack.pushPose();
-            renderStack.translate((double) midX, (double) offsetY, 0.0);
+            renderStack.translate(midX, offsetY, 0.0);
             renderStack.scale(scale, scale, 1.0f);
             final String raid = (this.data.getRaidsCompleted() > 1) ? " Raids" : " Raid";
-            final ITextComponent info = (ITextComponent) new StringTextComponent(this.data.getRaidsCompleted() + raid + " Completed").withStyle(TextFormatting.GOLD);
-            final int width = fr.width((ITextProperties) info);
-            fr.drawInBatch(info, (float) (-width / 2), 0.0f, -1, false, renderStack.last().pose(), (IRenderTypeBuffer) buffer, true, 0, LightmapHelper.getPackedFullbrightCoords());
+            final ITextComponent info = new StringTextComponent(this.data.getRaidsCompleted() + raid + " Completed").withStyle(TextFormatting.GOLD);
+            final int width = fr.width(info);
+            fr.drawInBatch(info, (float) (-width / 2), 0.0f, -1, false, renderStack.last().pose(), buffer, true, 0, LightmapHelper.getPackedFullbrightCoords());
             renderStack.popPose();
             offsetY += (int) (height + 1.0f);
         }
         renderStack.pushPose();
-        renderStack.translate((double) (midX - 5.0f), (double) offsetY, 0.0);
+        renderStack.translate(midX - 5.0f, offsetY, 0.0);
         renderStack.scale(scale, scale, 1.0f);
         for (final ITextComponent positive : positives) {
-            final int width = fr.width((ITextProperties) positive);
-            fr.drawInBatch(positive, (float) (-width), 0.0f, -1, false, renderStack.last().pose(), (IRenderTypeBuffer) buffer, true, 0, LightmapHelper.getPackedFullbrightCoords());
+            final int width = fr.width(positive);
+            fr.drawInBatch(positive, (float) (-width), 0.0f, -1, false, renderStack.last().pose(), buffer, true, 0, LightmapHelper.getPackedFullbrightCoords());
             renderStack.translate(0.0, 10.0, 0.0);
         }
         renderStack.popPose();
         renderStack.pushPose();
-        renderStack.translate((double) (midX + 5.0f), (double) offsetY, 0.0);
+        renderStack.translate(midX + 5.0f, offsetY, 0.0);
         renderStack.scale(scale, scale, 1.0f);
         for (final ITextComponent negative : negatives) {
-            fr.drawInBatch(negative, 0.0f, 0.0f, -1, false, renderStack.last().pose(), (IRenderTypeBuffer) buffer, true, 0, LightmapHelper.getPackedFullbrightCoords());
+            fr.drawInBatch(negative, 0.0f, 0.0f, -1, false, renderStack.last().pose(), buffer, true, 0, LightmapHelper.getPackedFullbrightCoords());
             renderStack.translate(0.0, 10.0, 0.0);
         }
         renderStack.popPose();
         if (drawAdditionalInfo) {
             renderStack.pushPose();
-            renderStack.translate((double) midX, (double) (offsetY + maxHeight), 0.0);
+            renderStack.translate(midX, offsetY + maxHeight, 0.0);
             renderStack.scale(scale, scale, 1.0f);
             final KeyBinding listSetting = mc.options.keyPlayerList;
-            final ITextComponent info = (ITextComponent) new StringTextComponent("Hold ").withStyle(TextFormatting.DARK_GRAY).append(listSetting.getTranslatedKeyMessage());
-            final int width = fr.width((ITextProperties) info);
-            fr.drawInBatch(info, (float) (-width / 2), 0.0f, -1, false, renderStack.last().pose(), (IRenderTypeBuffer) buffer, true, 0, LightmapHelper.getPackedFullbrightCoords());
+            final ITextComponent info = new StringTextComponent("Hold ").withStyle(TextFormatting.DARK_GRAY).append(listSetting.getTranslatedKeyMessage());
+            final int width = fr.width(info);
+            fr.drawInBatch(info, (float) (-width / 2), 0.0f, -1, false, renderStack.last().pose(), buffer, true, 0, LightmapHelper.getPackedFullbrightCoords());
             renderStack.popPose();
             maxHeight += height;
         }

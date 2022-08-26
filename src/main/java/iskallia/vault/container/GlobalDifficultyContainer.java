@@ -7,10 +7,10 @@ import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.nbt.CompoundNBT;
 
 public class GlobalDifficultyContainer extends Container {
-    private CompoundNBT data;
+    private final CompoundNBT data;
 
     public GlobalDifficultyContainer(final int windowId, final CompoundNBT data) {
-        super((ContainerType) ModContainers.GLOBAL_DIFFICULTY_CONTAINER, windowId);
+        super(ModContainers.GLOBAL_DIFFICULTY_CONTAINER, windowId);
         this.data = data;
     }
 

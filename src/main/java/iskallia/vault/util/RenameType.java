@@ -4,5 +4,5 @@ public enum RenameType {
     PLAYER_STATUE,
     TRADER_CORE,
     CRYO_CHAMBER,
-    VAULT_CRYSTAL;
+    VAULT_CRYSTAL
 }

@@ -61,11 +61,11 @@ public class Vault {
     }
 
     public void onCommandRegister(final RegisterCommandsEvent event) {
-        ModCommands.registerCommands((CommandDispatcher<CommandSource>) event.getDispatcher(), event.getEnvironment());
+        ModCommands.registerCommands(event.getDispatcher(), event.getEnvironment());
     }
 
     public void onBiomeLoad(final BiomeLoadingEvent event) {
-        event.getGeneration().addFeature(GenerationStage.Decoration.UNDERGROUND_ORES, (ConfiguredFeature) ModFeatures.VAULT_ROCK_ORE);
+        event.getGeneration().addFeature(GenerationStage.Decoration.UNDERGROUND_ORES, ModFeatures.VAULT_ROCK_ORE);
     }
 
     public void onBiomeLoadPost(final BiomeLoadingEvent event) {
@@ -73,7 +73,7 @@ public class Vault {
             for (final GenerationStage.Decoration stage : GenerationStage.Decoration.values()) {
                 event.getGeneration().getFeatures(stage).clear();
             }
-            event.getGeneration().addFeature(GenerationStage.Decoration.UNDERGROUND_DECORATION, (ConfiguredFeature) ModFeatures.BREADCRUMB_CHEST);
+            event.getGeneration().addFeature(GenerationStage.Decoration.UNDERGROUND_DECORATION, ModFeatures.BREADCRUMB_CHEST);
         }
     }
 
@@ -81,9 +81,9 @@ public class Vault {
         final ServerPlayerEntity player = (ServerPlayerEntity) event.getPlayer();
         final ServerWorld serverWorld = player.getLevel();
         final MinecraftServer server = player.getServer();
-        PlayerVaultStatsData.get(serverWorld).getVaultStats((PlayerEntity) player).sync(server);
-        PlayerAbilitiesData.get(serverWorld).getAbilities((PlayerEntity) player).sync(server);
-        PlayerTalentsData.get(serverWorld).getTalents((PlayerEntity) player).sync(server);
+        PlayerVaultStatsData.get(serverWorld).getVaultStats(player).sync(server);
+        PlayerAbilitiesData.get(serverWorld).getAbilities(player).sync(server);
+        PlayerTalentsData.get(serverWorld).getTalents(player).sync(server);
         EternalsData.get(serverWorld).syncTo(player);
         SoulShardTraderData.get(serverWorld).syncTo(player);
         ModConfigs.SOUL_SHARD.syncTo(player);
@@ -100,7 +100,7 @@ public class Vault {
 
     static {
         LOGGER = LogManager.getLogger();
-        Vault.VAULT_KEY = (RegistryKey<World>) RegistryKey.create(Registry.DIMENSION_REGISTRY, id("vault"));
-        Vault.OTHER_SIDE_KEY = (RegistryKey<World>) RegistryKey.create(Registry.DIMENSION_REGISTRY, id("the_other_side"));
+        Vault.VAULT_KEY = RegistryKey.create(Registry.DIMENSION_REGISTRY, id("vault"));
+        Vault.OTHER_SIDE_KEY = RegistryKey.create(Registry.DIMENSION_REGISTRY, id("the_other_side"));
     }
 }

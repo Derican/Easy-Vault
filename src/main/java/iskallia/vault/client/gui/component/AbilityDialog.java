@@ -70,7 +70,7 @@ public class AbilityDialog extends ComponentDialog {
             if (targetAbilityNode.getSpecialization() != null) {
                 buttonText = "Select Specialization";
                 pressAction = (button -> this.selectSpecialization());
-                activeState = (existingNode.getSpecialization() == null && existingNode.isLearned() && VaultBarOverlay.vaultLevel >= ((AbilityConfig) targetAbilityNode.getAbilityConfig()).getLevelRequirement());
+                activeState = (existingNode.getSpecialization() == null && existingNode.isLearned() && VaultBarOverlay.vaultLevel >= targetAbilityNode.getAbilityConfig().getLevelRequirement());
             } else {
                 if (!targetAbilityNode.isLearned()) {
                     buttonText = "Learn (" + targetAbilityGroup.learningCost() + ")";
@@ -78,12 +78,12 @@ public class AbilityDialog extends ComponentDialog {
                     buttonText = ((existingNode.getLevel() >= targetAbilityGroup.getMaxLevel()) ? "Fully Learned" : ("Upgrade (" + targetAbilityGroup.levelUpCost(targetAbilityNode.getSpecialization(), targetAbilityNode.getLevel()) + ")"));
                 }
                 pressAction = (button -> this.upgradeAbility());
-                final AbilityConfig ability = (AbilityConfig) targetAbilityNode.getAbilityConfig();
+                final AbilityConfig ability = targetAbilityNode.getAbilityConfig();
                 final int cost = (ability == null) ? targetAbilityGroup.learningCost() : targetAbilityGroup.levelUpCost(targetAbilityNode.getSpecialization(), targetAbilityNode.getLevel());
-                activeState = (cost <= VaultBarOverlay.unspentSkillPoints && existingNode.getLevel() < targetAbilityGroup.getMaxLevel() && targetAbilityNode.getLevel() < targetAbilityGroup.getMaxLevel() + 1 && VaultBarOverlay.vaultLevel >= ((AbilityConfig) targetAbilityNode.getAbilityConfig()).getLevelRequirement());
+                activeState = (cost <= VaultBarOverlay.unspentSkillPoints && existingNode.getLevel() < targetAbilityGroup.getMaxLevel() && targetAbilityNode.getLevel() < targetAbilityGroup.getMaxLevel() + 1 && VaultBarOverlay.vaultLevel >= targetAbilityNode.getAbilityConfig().getLevelRequirement());
             }
             this.descriptionComponent = new ScrollableContainer(this::renderDescriptions);
-            this.selectButton = new Button(10, this.bounds.height - 40, this.bounds.width - 30, 20, (ITextComponent) new StringTextComponent(buttonText), pressAction, (button, matrixStack, x, y) -> {
+            this.selectButton = new Button(10, this.bounds.height - 40, this.bounds.width - 30, 20, new StringTextComponent(buttonText), pressAction, (button, matrixStack, x, y) -> {
             });
             this.selectButton.active = activeState;
         }
@@ -113,7 +113,7 @@ public class AbilityDialog extends ComponentDialog {
         if (existingNode.getSpecialization() != null && targetNode.getGroup().equals(existingNode.getGroup())) {
             return;
         }
-        if (VaultBarOverlay.vaultLevel < ((AbilityConfig) targetNode.getAbilityConfig()).getLevelRequirement()) {
+        if (VaultBarOverlay.vaultLevel < targetNode.getAbilityConfig().getLevelRequirement()) {
             return;
         }
         Minecraft.getInstance().player.playSound(ModSounds.SKILL_TREE_UPGRADE_SFX, 1.0f, 1.0f);
@@ -129,7 +129,7 @@ public class AbilityDialog extends ComponentDialog {
             return;
         }
         matrixStack.pushPose();
-        matrixStack.translate((double) (this.bounds.x + 5), (double) (this.bounds.y + 5), 0.0);
+        matrixStack.translate(this.bounds.x + 5, this.bounds.y + 5, 0.0);
         this.renderHeading(matrixStack, mouseX, mouseY, partialTicks);
         this.descriptionComponent.setBounds(this.getDescriptionsBounds());
         this.descriptionComponent.render(matrixStack, mouseX, mouseY, partialTicks);
@@ -167,7 +167,7 @@ public class AbilityDialog extends ComponentDialog {
         matrixStack.translate(10.0, 0.0, 0.0);
         FontHelper.drawStringWithBorder(matrixStack, abilityName, (float) (abilityBounds.width + gap), 13.0f, learned ? -1849 : -1, learned ? -12897536 : -16777216);
         FontHelper.drawStringWithBorder(matrixStack, subText, (float) (abilityBounds.width + gap), 23.0f, learned ? -1849 : -1, learned ? -12897536 : -16777216);
-        matrixStack.translate((double) (-abilityStyle.x), (double) (-abilityStyle.y), 0.0);
+        matrixStack.translate(-abilityStyle.x, -abilityStyle.y, 0.0);
         matrixStack.translate(abilityBounds.getWidth() / 2.0, 0.0, 0.0);
         matrixStack.translate(0.0, 23.0, 0.0);
         this.selectedAbilityWidget.render(matrixStack, mouseX, mouseY, partialTicks);
@@ -178,25 +178,25 @@ public class AbilityDialog extends ComponentDialog {
         final AbilityNode<?, ?> targetAbilityNode = this.selectedAbilityWidget.makeAbilityNode();
         final Rectangle renderableBounds = this.descriptionComponent.getRenderableBounds();
         final StringTextComponent text = new StringTextComponent("");
-        text.append((ITextComponent) ModConfigs.SKILL_DESCRIPTIONS.getDescriptionFor(this.selectedAbilityWidget.getAbilityName()));
+        text.append(ModConfigs.SKILL_DESCRIPTIONS.getDescriptionFor(this.selectedAbilityWidget.getAbilityName()));
         if (targetAbilityNode.getSpecialization() == null) {
             text.append("\n\n").append(this.getAdditionalDescription(targetAbilityNode));
         }
-        final int renderedLineCount = UIHelper.renderWrappedText(matrixStack, (ITextComponent) text, renderableBounds.width, 10);
+        final int renderedLineCount = UIHelper.renderWrappedText(matrixStack, text, renderableBounds.width, 10);
         this.descriptionComponent.setInnerHeight(renderedLineCount * 10 + 20);
         RenderSystem.enableDepthTest();
     }
 
     private ITextComponent getAdditionalDescription(final AbilityNode<?, ?> abilityNode) {
         final String arrow = String.valueOf('\u25b6');
-        final ITextComponent arrowTxt = (ITextComponent) new StringTextComponent(" " + arrow + " ").withStyle(Style.EMPTY.withColor(Color.fromRgb(4737095)));
+        final ITextComponent arrowTxt = new StringTextComponent(" " + arrow + " ").withStyle(Style.EMPTY.withColor(Color.fromRgb(4737095)));
         final IFormattableTextComponent txt = new StringTextComponent("Cost: ").withStyle(Style.EMPTY.withColor(Color.fromRgb(4737095)));
         for (int lvl = 1; lvl <= abilityNode.getGroup().getMaxLevel(); ++lvl) {
             if (lvl > 1) {
                 txt.append(arrowTxt);
             }
             final int cost = abilityNode.getGroup().levelUpCost(null, lvl);
-            txt.append((ITextComponent) new StringTextComponent(String.valueOf(cost)).withStyle(TextFormatting.WHITE));
+            txt.append(new StringTextComponent(String.valueOf(cost)).withStyle(TextFormatting.WHITE));
         }
         boolean displayRequirements = false;
         final IFormattableTextComponent lvlReq = new StringTextComponent("\n\nLevel requirement: ").withStyle(Style.EMPTY.withColor(Color.fromRgb(4737095)));
@@ -204,24 +204,24 @@ public class AbilityDialog extends ComponentDialog {
             if (lvl2 > 0) {
                 lvlReq.append(arrowTxt);
             }
-            final int levelRequirement = ((AbilityConfig) abilityNode.getGroup().getAbilityConfig(null, lvl2)).getLevelRequirement();
+            final int levelRequirement = abilityNode.getGroup().getAbilityConfig(null, lvl2).getLevelRequirement();
             final StringTextComponent lvlReqPart = new StringTextComponent(String.valueOf(levelRequirement));
             if (VaultBarOverlay.vaultLevel < levelRequirement) {
                 lvlReqPart.withStyle(Style.EMPTY.withColor(Color.fromRgb(8257536)));
             } else {
                 lvlReqPart.withStyle(TextFormatting.WHITE);
             }
-            lvlReq.append((ITextComponent) lvlReqPart);
+            lvlReq.append(lvlReqPart);
             if (levelRequirement > 0) {
                 displayRequirements = true;
             }
         }
         if (displayRequirements) {
-            txt.append((ITextComponent) lvlReq);
+            txt.append(lvlReq);
         } else {
-            txt.append((ITextComponent) new StringTextComponent("\n\nNo Level requirements"));
+            txt.append(new StringTextComponent("\n\nNo Level requirements"));
         }
-        return (ITextComponent) txt;
+        return txt;
     }
 
     private void renderFooter(final MatrixStack matrixStack, final int mouseX, final int mouseY, final float partialTicks) {

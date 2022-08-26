@@ -30,7 +30,7 @@ import net.minecraft.world.World;
 import java.util.List;
 
 public class VaultAltarRenderer extends TileEntityRenderer<VaultAltarTileEntity> {
-    private Minecraft mc;
+    private final Minecraft mc;
     private float currentTick;
 
     public VaultAltarRenderer(final TileEntityRendererDispatcher rendererDispatcherIn) {
@@ -45,7 +45,7 @@ public class VaultAltarRenderer extends TileEntityRenderer<VaultAltarTileEntity>
         }
         final ClientPlayerEntity player = this.mc.player;
         final int lightLevel = this.getLightAtPos(altar.getLevel(), altar.getBlockPos().above());
-        this.renderItem(new ItemStack((IItemProvider) ModItems.VAULT_ROCK), new double[]{0.5, 1.35, 0.5}, Vector3f.YP.rotationDegrees(180.0f - player.yRot), matrixStack, buffer, partialTicks, combinedOverlay, lightLevel);
+        this.renderItem(new ItemStack(ModItems.VAULT_ROCK), new double[]{0.5, 1.35, 0.5}, Vector3f.YP.rotationDegrees(180.0f - player.yRot), matrixStack, buffer, partialTicks, combinedOverlay, lightLevel);
         if (altar.getRecipe() == null || altar.getRecipe().getRequiredItems().isEmpty()) {
             return;
         }
@@ -66,8 +66,8 @@ public class VaultAltarRenderer extends TileEntityRenderer<VaultAltarTileEntity>
         }
         if (recipe.isPogInfused()) {
             final boolean infusing = altar.getAltarState() == VaultAltarTileEntity.AltarState.INFUSING;
-            final ItemStack pogStack = new ItemStack((IItemProvider)ModItems.POG);
-            final IBakedModel ibakedmodel = this.mc.getItemRenderer().getModel(pogStack, (World)null, (LivingEntity)null);
+            final ItemStack pogStack = new ItemStack(ModItems.POG);
+            final IBakedModel ibakedmodel = this.mc.getItemRenderer().getModel(pogStack, null, null);
             for (int j = 0; j < 3; ++j) {
                 final double r = 1.0;
                 matrixStack.pushPose();
@@ -88,7 +88,7 @@ public class VaultAltarRenderer extends TileEntityRenderer<VaultAltarTileEntity>
         if (stack.getItem().getItem() != ModItems.VAULT_ROCK) {
             matrixStack.scale(0.5f, 0.5f, 0.5f);
         }
-        final IBakedModel ibakedmodel = this.mc.getItemRenderer().getModel(stack, (World) null, (LivingEntity) null);
+        final IBakedModel ibakedmodel = this.mc.getItemRenderer().getModel(stack, null, null);
         this.mc.getItemRenderer().render(stack, ItemCameraTransforms.TransformType.GROUND, true, matrixStack, buffer, lightLevel, combinedOverlay, ibakedmodel);
         matrixStack.popPose();
     }
@@ -102,16 +102,16 @@ public class VaultAltarRenderer extends TileEntityRenderer<VaultAltarTileEntity>
         matrixStack.pushPose();
         final float scale = 0.01f;
         final int opacity = 1711276032;
-        float offset = (float) (-fontRenderer.width((ITextProperties) text) / 2);
+        float offset = (float) (-fontRenderer.width(text) / 2);
         final Matrix4f matrix4f = matrixStack.last().pose();
         matrixStack.translate(corner[0], corner[1] + 0.25, corner[2]);
         matrixStack.scale(scale, scale, scale);
         matrixStack.mulPose(this.mc.getEntityRenderDispatcher().cameraOrientation());
         matrixStack.mulPose(Vector3f.ZP.rotationDegrees(180.0f));
-        fontRenderer.drawInBatch((ITextComponent) text, offset, 0.0f, color, false, matrix4f, buffer, false, opacity, lightLevel);
+        fontRenderer.drawInBatch(text, offset, 0.0f, color, false, matrix4f, buffer, false, opacity, lightLevel);
         if (player.isShiftKeyDown()) {
             final ITextComponent itemName = item.getItem().getHoverName();
-            offset = (float) (-fontRenderer.width((ITextProperties) itemName) / 2);
+            offset = (float) (-fontRenderer.width(itemName) / 2);
             matrixStack.translate(0.0, 1.399999976158142, 0.0);
             matrix4f.translate(new Vector3f(0.0f, 0.15f, 0.0f));
             fontRenderer.drawInBatch(item.getItem().getHoverName(), offset, 0.0f, color, false, matrix4f, buffer, false, opacity, lightLevel);

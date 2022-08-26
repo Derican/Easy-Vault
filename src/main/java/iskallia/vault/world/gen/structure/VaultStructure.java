@@ -33,7 +33,7 @@ public class VaultStructure extends Structure<VaultStructure.Config> {
     public static final int START_Y = 19;
 
     public VaultStructure(final Codec<Config> config) {
-        super((Codec) config);
+        super(config);
     }
 
     public GenerationStage.Decoration step() {
@@ -48,20 +48,20 @@ public class VaultStructure extends Structure<VaultStructure.Config> {
         private final VaultStructure structure;
 
         public Start(final VaultStructure structure, final int chunkX, final int chunkZ, final MutableBoundingBox box, final int references, final long worldSeed) {
-            super((Structure) structure, chunkX, chunkZ, box, references, worldSeed);
+            super(structure, chunkX, chunkZ, box, references, worldSeed);
             this.structure = structure;
         }
 
         public void generatePieces(final DynamicRegistries registry, final ChunkGenerator gen, final TemplateManager manager, final int chunkX, final int chunkZ, final Biome biome, final Config config) {
             final BlockPos blockpos = new BlockPos(chunkX * 16, 19, chunkZ * 16);
             Pools.init();
-            JigsawGeneratorLegacy.addPieces(registry, config.toVillageConfig(), AbstractVillagePiece::new, gen, manager, blockpos, this.pieces, (Random) this.random, false, false);
+            JigsawGeneratorLegacy.addPieces(registry, config.toVillageConfig(), AbstractVillagePiece::new, gen, manager, blockpos, this.pieces, this.random, false, false);
             this.calculateBoundingBox();
         }
 
         public void generate(final VaultJigsawGenerator jigsaw, final DynamicRegistries registry, final ChunkGenerator gen, final TemplateManager manager) {
             Pools.init();
-            jigsaw.generate(registry, new Config(() -> registry.registryOrThrow(Registry.TEMPLATE_POOL_REGISTRY).get(Vault.id("vault/starts")), 11).toVillageConfig(), AbstractVillagePiece::new, gen, manager, this.pieces, (Random) this.random, false, false);
+            jigsaw.generate(registry, new Config(() -> registry.registryOrThrow(Registry.TEMPLATE_POOL_REGISTRY).get(Vault.id("vault/starts")), 11).toVillageConfig(), AbstractVillagePiece::new, gen, manager, this.pieces, this.random, false, false);
             this.calculateBoundingBox();
         }
     }
@@ -85,7 +85,7 @@ public class VaultStructure extends Structure<VaultStructure.Config> {
         }
 
         public VillageConfig toVillageConfig() {
-            return new VillageConfig((Supplier) this.getStartPool(), this.getSize());
+            return new VillageConfig(this.getStartPool(), this.getSize());
         }
 
         static {
@@ -100,7 +100,7 @@ public class VaultStructure extends Structure<VaultStructure.Config> {
         }
 
         static {
-            FINAL_START = JigsawPatternRegistry.register(new JigsawPattern(Vault.id("final_vault/start"), new ResourceLocation("empty"), (List) ImmutableList.of(Pair.of(JigsawPiece.single(Vault.sId("final_vault/start"), ProcessorLists.EMPTY), 1)), JigsawPattern.PlacementBehaviour.RIGID));
+            FINAL_START = JigsawPatternRegistry.register(new JigsawPattern(Vault.id("final_vault/start"), new ResourceLocation("empty"), ImmutableList.of(Pair.of(JigsawPiece.single(Vault.sId("final_vault/start"), ProcessorLists.EMPTY), 1)), JigsawPattern.PlacementBehaviour.RIGID));
         }
     }
 }

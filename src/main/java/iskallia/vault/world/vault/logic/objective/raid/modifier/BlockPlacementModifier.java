@@ -51,7 +51,7 @@ public class BlockPlacementModifier extends RaidModifier {
             BlockPos at;
             do {
                 at = MiscUtils.getRandomPos(placementBox, BlockPlacementModifier.rand);
-            } while (!world.isEmptyBlock(at) || !world.getBlockState(at.below()).isFaceSturdy((IBlockReader) world, at, Direction.UP));
+            } while (!world.isEmptyBlock(at) || !world.getBlockState(at.below()).isFaceSturdy(world, at, Direction.UP));
             world.setBlock(at, placementState, 2);
         }
     }
@@ -60,6 +60,6 @@ public class BlockPlacementModifier extends RaidModifier {
     public ITextComponent getDisplay(final float value) {
         final int sets = Math.round(value);
         final String set = (sets > 1) ? "sets" : "set";
-        return (ITextComponent) new StringTextComponent("+" + sets + " " + set + " of " + this.blockDescription).withStyle(TextFormatting.GREEN);
+        return new StringTextComponent("+" + sets + " " + set + " of " + this.blockDescription).withStyle(TextFormatting.GREEN);
     }
 }

@@ -22,7 +22,7 @@ public class AbilitySelectionScreen extends Screen {
     private static final ResourceLocation ABILITIES_RESOURCE;
 
     public AbilitySelectionScreen() {
-        super((ITextComponent) new StringTextComponent(""));
+        super(new StringTextComponent(""));
     }
 
     public List<AbilitySelectionWidget> getAbilitiesAsWidgets() {
@@ -109,7 +109,7 @@ public class AbilitySelectionScreen extends Screen {
                 if (widget.getAbilityNode().getSpecialization() != null) {
                     final String specName = widget.getAbilityNode().getSpecializationName();
                     final int specNameWidth = minecraft.font.width(specName);
-                    minecraft.font.drawShadow(matrixStack, specName, midX - specNameWidth / 2.0f, midY - (radius + yOffset - 10.0f), (int) TextFormatting.GOLD.getColor());
+                    minecraft.font.drawShadow(matrixStack, specName, midX - specNameWidth / 2.0f, midY - (radius + yOffset - 10.0f), TextFormatting.GOLD.getColor());
                 }
                 if (widget.getAbilityNode().getGroup().equals(ClientAbilityData.getSelectedAbility())) {
                     final String text = "Currently Focused Ability";

@@ -26,7 +26,7 @@ public class VaultTreasure extends VaultPiece {
     }
 
     public boolean isDoorOpen(final World world) {
-        return BlockPos.betweenClosedStream(this.getBoundingBox()).map(world::getBlockState).filter(state -> state.getBlock() instanceof VaultDoorBlock).anyMatch(state -> (boolean) state.getValue(VaultDoorBlock.OPEN));
+        return BlockPos.betweenClosedStream(this.getBoundingBox()).map(world::getBlockState).filter(state -> state.getBlock() instanceof VaultDoorBlock).anyMatch(state -> state.getValue(VaultDoorBlock.OPEN));
     }
 
     @Override
@@ -34,7 +34,7 @@ public class VaultTreasure extends VaultPiece {
         final AxisAlignedBB blind = AxisAlignedBB.of(this.boundingBox).inflate(-2.0, -2.0, -2.0);
         final AxisAlignedBB inner = blind.inflate(-0.5, -0.5, -0.5);
         vault.getPlayers().forEach(vaultPlayer -> vaultPlayer.runIfPresent(world.getServer(), playerEntity -> {
-            if (blind.intersects(playerEntity.getBoundingBox()) && !this.isDoorOpen((World) world)) {
+            if (blind.intersects(playerEntity.getBoundingBox()) && !this.isDoorOpen(world)) {
                 playerEntity.addEffect(new EffectInstance(Effects.BLINDNESS, 40));
                 if (!playerEntity.isSpectator() && inner.intersects(playerEntity.getBoundingBox())) {
                     playerEntity.hurt(DamageSource.MAGIC, 1000000.0f);

@@ -20,7 +20,7 @@ public class SandEventConfig extends Config {
     @Expose
     private float maxDistance;
     @Expose
-    private boolean enabled;
+    private final boolean enabled;
 
     public SandEventConfig() {
         this.HOURGLASS_TOTAL_SAND_REQUIRED = new HashMap<String, Integer>();

@@ -30,12 +30,12 @@ public class VaultMusicHandler {
             stopBossLoop();
         }
         VaultMusicHandler.bossLoop = SimpleSound.forMusic(ModSounds.VAULT_BOSS_LOOP);
-        Minecraft.getInstance().getSoundManager().play((ISound) VaultMusicHandler.bossLoop);
+        Minecraft.getInstance().getSoundManager().play(VaultMusicHandler.bossLoop);
     }
 
     public static void stopBossLoop() {
         if (VaultMusicHandler.bossLoop != null) {
-            Minecraft.getInstance().getSoundManager().stop((ISound) VaultMusicHandler.bossLoop);
+            Minecraft.getInstance().getSoundManager().stop(VaultMusicHandler.bossLoop);
             VaultMusicHandler.bossLoop = null;
         }
         VaultMusicHandler.playBossMusic = false;
@@ -68,7 +68,7 @@ public class VaultMusicHandler {
         }
         if (!ClientVaultRaidData.isInBossFight()) {
             stopBossLoop();
-        } else if (!sh.isActive((ISound) VaultMusicHandler.bossLoop)) {
+        } else if (!sh.isActive(VaultMusicHandler.bossLoop)) {
             startBossLoop();
         }
         if (ClientVaultRaidData.isInBossFight()) {
@@ -87,16 +87,16 @@ public class VaultMusicHandler {
 
     private static void stopSound(final SimpleSound sound) {
         final SoundHandler sh = Minecraft.getInstance().getSoundManager();
-        if (sound != null && sh.isActive((ISound) sound)) {
-            sh.stop((ISound) sound);
+        if (sound != null && sh.isActive(sound)) {
+            sh.stop(sound);
         }
     }
 
     private static SimpleSound playNotActive(@Nullable SimpleSound existing, final Supplier<SimpleSound> playSound) {
         final Minecraft mc = Minecraft.getInstance();
-        if (existing == null || !mc.getSoundManager().isActive((ISound) existing)) {
+        if (existing == null || !mc.getSoundManager().isActive(existing)) {
             existing = playSound.get();
-            mc.getSoundManager().play((ISound) existing);
+            mc.getSoundManager().play(existing);
         }
         return existing;
     }

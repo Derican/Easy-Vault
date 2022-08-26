@@ -15,7 +15,7 @@ public class MegaJumpKnockbackAbility extends MegaJumpAbility<MegaJumpKnockbackC
     @Override
     public boolean onAction(final MegaJumpKnockbackConfig config, final ServerPlayerEntity player, final boolean active) {
         if (super.onAction(config, player, active)) {
-            final List<LivingEntity> entities = EntityHelper.getNearby((IWorld) player.getCommandSenderWorld(), (Vector3i) player.blockPosition(), config.getRadius(), LivingEntity.class);
+            final List<LivingEntity> entities = EntityHelper.getNearby(player.getCommandSenderWorld(), player.blockPosition(), config.getRadius(), LivingEntity.class);
             entities.removeIf(e -> e instanceof PlayerEntity);
             for (final LivingEntity entity : entities) {
                 double xDiff = player.getX() - entity.getX();

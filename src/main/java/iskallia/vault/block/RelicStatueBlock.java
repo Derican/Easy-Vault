@@ -44,7 +44,7 @@ public class RelicStatueBlock extends Block {
     }
 
     protected void createBlockStateDefinition(final StateContainer.Builder<Block, BlockState> builder) {
-        builder.add(new Property[]{RelicStatueBlock.FACING});
+        builder.add(RelicStatueBlock.FACING);
     }
 
     public VoxelShape getShape(final BlockState state, final IBlockReader worldIn, final BlockPos pos, final ISelectionContext context) {
@@ -54,17 +54,17 @@ public class RelicStatueBlock extends Block {
     public void playerWillDestroy(final World world, final BlockPos pos, final BlockState state, final PlayerEntity player) {
         if (!world.isClientSide) {
             final TileEntity tileEntity = world.getBlockEntity(pos);
-            final ItemStack itemStack = new ItemStack((IItemProvider) this.getBlock());
+            final ItemStack itemStack = new ItemStack(this.getBlock());
             if (tileEntity instanceof RelicStatueTileEntity) {
                 final RelicStatueTileEntity statueTileEntity = (RelicStatueTileEntity) tileEntity;
                 final CompoundNBT statueNBT = statueTileEntity.serializeNBT();
                 final CompoundNBT stackNBT = new CompoundNBT();
-                stackNBT.put("BlockEntityTag", (INBT) statueNBT);
+                stackNBT.put("BlockEntityTag", statueNBT);
                 itemStack.setTag(stackNBT);
             }
             final ItemEntity itemEntity = new ItemEntity(world, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, itemStack);
             itemEntity.setDefaultPickUpDelay();
-            world.addFreshEntity((Entity) itemEntity);
+            world.addFreshEntity(itemEntity);
         }
         super.playerWillDestroy(world, pos, state, player);
     }

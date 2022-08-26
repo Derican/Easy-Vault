@@ -17,7 +17,7 @@ public class XpAltarTileEntity extends FillableAltarTileEntity {
 
     @Override
     public ITextComponent getRequirementName() {
-        return (ITextComponent) new StringTextComponent("EXP Levels");
+        return new StringTextComponent("EXP Levels");
     }
 
     @Override
@@ -27,7 +27,7 @@ public class XpAltarTileEntity extends FillableAltarTileEntity {
 
     @Override
     public ITextComponent getRequirementUnit() {
-        return (ITextComponent) new StringTextComponent("levels");
+        return new StringTextComponent("levels");
     }
 
     @Override

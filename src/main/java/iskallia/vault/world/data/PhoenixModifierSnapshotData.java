@@ -59,9 +59,9 @@ public class PhoenixModifierSnapshotData extends InventorySnapshotData {
         final ServerPlayerEntity player = (ServerPlayerEntity) event.getEntity();
         final ServerWorld world = (ServerWorld) player.level;
         final VaultRaid currentRaid = VaultRaidData.get(world).getActiveFor(player);
-        if (currentRaid != null && !currentRaid.getActiveModifiersFor(PlayerFilter.of((PlayerEntity) player), InventoryRestoreModifier.class).isEmpty()) {
+        if (currentRaid != null && !currentRaid.getActiveModifiersFor(PlayerFilter.of(player), InventoryRestoreModifier.class).isEmpty()) {
             final PhoenixModifierSnapshotData data = get(world);
-            if (data.hasSnapshot((PlayerEntity) player)) {
+            if (data.hasSnapshot(player)) {
                 player.addTag("the_vault_restore_inventory");
             }
         }

@@ -60,31 +60,31 @@ public class PlayerVaultStatsData extends WorldSavedData {
     }
 
     public PlayerVaultStatsData setVaultLevel(final ServerPlayerEntity player, final int level) {
-        this.getVaultStats((PlayerEntity) player).setVaultLevel(player.getServer(), level);
+        this.getVaultStats(player).setVaultLevel(player.getServer(), level);
         this.setDirty();
         return this;
     }
 
     public PlayerVaultStatsData addVaultExp(final ServerPlayerEntity player, final int exp) {
-        this.getVaultStats((PlayerEntity) player).addVaultExp(player.getServer(), exp);
+        this.getVaultStats(player).addVaultExp(player.getServer(), exp);
         this.setDirty();
         return this;
     }
 
     public PlayerVaultStatsData spendSkillPts(final ServerPlayerEntity player, final int amount) {
-        this.getVaultStats((PlayerEntity) player).spendSkillPoints(player.getServer(), amount);
+        this.getVaultStats(player).spendSkillPoints(player.getServer(), amount);
         this.setDirty();
         return this;
     }
 
     public PlayerVaultStatsData spendKnowledgePts(final ServerPlayerEntity player, final int amount) {
-        this.getVaultStats((PlayerEntity) player).spendKnowledgePoints(player.getServer(), amount);
+        this.getVaultStats(player).spendKnowledgePoints(player.getServer(), amount);
         this.setDirty();
         return this;
     }
 
     public PlayerVaultStatsData addSkillPoint(final ServerPlayerEntity player, final int amount) {
-        this.getVaultStats((PlayerEntity) player).addSkillPoints(amount).sync(player.getLevel().getServer());
+        this.getVaultStats(player).addSkillPoints(amount).sync(player.getLevel().getServer());
         this.setDirty();
         return this;
     }
@@ -96,13 +96,13 @@ public class PlayerVaultStatsData extends WorldSavedData {
     }
 
     public PlayerVaultStatsData addKnowledgePoints(final ServerPlayerEntity player, final int amount) {
-        this.getVaultStats((PlayerEntity) player).addKnowledgePoints(amount).sync(player.getLevel().getServer());
+        this.getVaultStats(player).addKnowledgePoints(amount).sync(player.getLevel().getServer());
         this.setDirty();
         return this;
     }
 
     public PlayerVaultStatsData reset(final ServerPlayerEntity player) {
-        this.getVaultStats((PlayerEntity) player).reset(player.getServer());
+        this.getVaultStats(player).reset(player.getServer());
         this.setDirty();
         return this;
     }
@@ -151,11 +151,11 @@ public class PlayerVaultStatsData extends WorldSavedData {
         final int vLevel = stats.getVaultLevel();
         final NonNullList<ItemStack> loot = generateTrophyBox(overWorld, vLevel);
         loot.set(4, TrophyStatueBlockItem.getTrophy(overWorld, week));
-        loot.set(13, new ItemStack((IItemProvider) ModItems.UNIDENTIFIED_ARTIFACT));
+        loot.set(13, new ItemStack(ModItems.UNIDENTIFIED_ARTIFACT));
         loot.set(22, ChallengeCrystalArchive.getRandom());
-        final ItemStack box = new ItemStack((IItemProvider) Items.WHITE_SHULKER_BOX);
-        box.getOrCreateTag().put("BlockEntityTag", (INBT) new CompoundNBT());
-        ItemStackHelper.saveAllItems(box.getOrCreateTag().getCompound("BlockEntityTag"), (NonNullList) loot);
+        final ItemStack box = new ItemStack(Items.WHITE_SHULKER_BOX);
+        box.getOrCreateTag().put("BlockEntityTag", new CompoundNBT());
+        ItemStackHelper.saveAllItems(box.getOrCreateTag().getCompound("BlockEntityTag"), loot);
         ScheduledItemDropData.get(overWorld).addDrop(previousRecord.getPlayerUUID(), box);
         this.grantedRewards.add(week);
         this.setDirty();
@@ -167,9 +167,9 @@ public class PlayerVaultStatsData extends WorldSavedData {
         final NonNullList<ItemStack> recordLoot = NonNullList.create();
         final LootContext.Builder builder = new LootContext.Builder(overWorld).withRandom(overWorld.random);
         while (recordLoot.size() < 27) {
-            recordLoot.addAll((Collection) bossBonusTbl.getRandomItems(builder.create(LootParameterSets.EMPTY)));
+            recordLoot.addAll(bossBonusTbl.getRandomItems(builder.create(LootParameterSets.EMPTY)));
         }
-        Collections.shuffle((List<?>) recordLoot);
+        Collections.shuffle(recordLoot);
         while (recordLoot.size() > 27) {
             recordLoot.remove(recordLoot.size() - 1);
         }
@@ -232,20 +232,20 @@ public class PlayerVaultStatsData extends WorldSavedData {
             statsList.add(stats.serializeNBT());
             return;
         });
-        nbt.put("PlayerEntries", (INBT) playerList);
-        nbt.put("StatEntries", (INBT) statsList);
+        nbt.put("PlayerEntries", playerList);
+        nbt.put("StatEntries", statsList);
         this.weeklyVaultRecords.forEach((weekKey, entries) -> {
             final CompoundNBT tag = new CompoundNBT();
-            tag.put("weekKey", (INBT) weekKey.serialize());
+            tag.put("weekKey", weekKey.serialize());
             final ListNBT recordEntries = new ListNBT();
             entries.forEach(entry -> recordEntries.add(entry.serialize()));
-            tag.put("entries", (INBT) recordEntries);
+            tag.put("entries", recordEntries);
             recordWeekList.add(tag);
             return;
         });
-        nbt.put("WeeklyRecords", (INBT) recordWeekList);
+        nbt.put("WeeklyRecords", recordWeekList);
         this.grantedRewards.forEach(week -> rewardsWeekly.add(week.serialize()));
-        nbt.put("WeeklyRewards", (INBT) rewardsWeekly);
+        nbt.put("WeeklyRewards", rewardsWeekly);
         return nbt;
     }
 

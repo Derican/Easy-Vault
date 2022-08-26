@@ -12,7 +12,7 @@ import java.util.Random;
 
 public class VaultRockBlock extends OreBlock {
     public VaultRockBlock() {
-        super(AbstractBlock.Properties.of(Material.STONE, MaterialColor.DIAMOND).requiresCorrectToolForDrops().lightLevel(state -> 9).strength(3.0f, 3.0f).sound((SoundType) ModSounds.VAULT_GEM));
+        super(AbstractBlock.Properties.of(Material.STONE, MaterialColor.DIAMOND).requiresCorrectToolForDrops().lightLevel(state -> 9).strength(3.0f, 3.0f).sound(ModSounds.VAULT_GEM));
     }
 
     protected int xpOnDrop(final Random rand) {

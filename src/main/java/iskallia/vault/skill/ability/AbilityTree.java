@@ -100,7 +100,7 @@ public class AbilityTree implements INBTSerializable<CompoundNBT> {
             final List<AbilityNode<?, ?>> learnedNodes = this.getLearnedNodes();
             int abilityIndex = learnedNodes.indexOf(selected);
             final int abilityIndex2 = ++abilityIndex % learnedNodes.size();
-            return (AbilityNode<?, ?>) learnedNodes.get(abilityIndex2);
+            return learnedNodes.get(abilityIndex2);
         });
     }
 
@@ -111,7 +111,7 @@ public class AbilityTree implements INBTSerializable<CompoundNBT> {
             if (--abilityIndex < 0) {
                 abilityIndex += learnedNodes.size();
             }
-            return (AbilityNode<?, ?>) learnedNodes.get(abilityIndex);
+            return learnedNodes.get(abilityIndex);
         });
     }
 
@@ -127,7 +127,7 @@ public class AbilityTree implements INBTSerializable<CompoundNBT> {
             if (selectedAbilityNode != null) {
                 NetcodeUtils.runIfPresent(server, this.uuid, player -> {
                     final AbilityConfig selectedAbilityConfig = selectedAbilityNode.getAbilityConfig();
-                    selectedAbilityNode.onBlur((PlayerEntity) player);
+                    selectedAbilityNode.onBlur(player);
                     if (prevActive) {
                         if (selectedAbilityConfig.getBehavior() == AbilityConfig.Behavior.PRESS_TO_TOGGLE) {
                             if (selectedAbilityNode.onAction(player, false)) {
@@ -143,7 +143,7 @@ public class AbilityTree implements INBTSerializable<CompoundNBT> {
             final AbilityNode<?, ?> nextAttempt = changeNodeFn.apply(selectedAbilityNode);
             final AbilityNode<?, ?> nextSelection = this.setSelectedAbility(nextAttempt);
             if (nextSelection != null) {
-                NetcodeUtils.runIfPresent(server, this.uuid, (Consumer<ServerPlayerEntity>) nextSelection::onFocus);
+                NetcodeUtils.runIfPresent(server, this.uuid, nextSelection::onFocus);
             }
             this.swappingPerformed = true;
             this.syncFocusedIndex(server);
@@ -157,7 +157,7 @@ public class AbilityTree implements INBTSerializable<CompoundNBT> {
         if (focusedAbilityNode == null) {
             return;
         }
-        final AbilityConfig focusedAbilityConfig = (AbilityConfig) focusedAbilityNode.getAbilityConfig();
+        final AbilityConfig focusedAbilityConfig = focusedAbilityNode.getAbilityConfig();
         if (focusedAbilityConfig.getBehavior() == AbilityConfig.Behavior.HOLD_TO_ACTIVATE) {
             this.active = true;
             NetcodeUtils.runIfPresent(server, this.uuid, player -> {
@@ -180,7 +180,7 @@ public class AbilityTree implements INBTSerializable<CompoundNBT> {
         if (this.isOnCooldown(focusedAbilityNode)) {
             return;
         }
-        final AbilityConfig focusedAbilityConfig = (AbilityConfig) focusedAbilityNode.getAbilityConfig();
+        final AbilityConfig focusedAbilityConfig = focusedAbilityNode.getAbilityConfig();
         final AbilityConfig.Behavior behavior = focusedAbilityConfig.getBehavior();
         if (behavior == AbilityConfig.Behavior.PRESS_TO_TOGGLE) {
             this.active = !this.active;
@@ -209,9 +209,9 @@ public class AbilityTree implements INBTSerializable<CompoundNBT> {
             this.active = false;
             final AbilityNode<?, ?> selectedAbilityNode = this.getSelectedAbility();
             if (selectedAbilityNode != null) {
-                final AbilityConfig abilityConfig = (AbilityConfig) selectedAbilityNode.getAbilityConfig();
+                final AbilityConfig abilityConfig = selectedAbilityNode.getAbilityConfig();
                 NetcodeUtils.runIfPresent(server, this.uuid, player -> {
-                    selectedAbilityNode.onBlur((PlayerEntity) player);
+                    selectedAbilityNode.onBlur(player);
                     if (prevActive) {
                         if (abilityConfig.getBehavior() == AbilityConfig.Behavior.PRESS_TO_TOGGLE) {
                             if (selectedAbilityNode.onAction(player, this.active)) {
@@ -233,7 +233,7 @@ public class AbilityTree implements INBTSerializable<CompoundNBT> {
             }
             final AbilityNode<?, ?> newFocused = this.setSelectedAbility(toSelect);
             if (newFocused != null) {
-                NetcodeUtils.runIfPresent(server, this.uuid, (Consumer<ServerPlayerEntity>) newFocused::onFocus);
+                NetcodeUtils.runIfPresent(server, this.uuid, newFocused::onFocus);
             }
             this.syncFocusedIndex(server);
         }
@@ -244,7 +244,7 @@ public class AbilityTree implements INBTSerializable<CompoundNBT> {
         if (focusedAbility == null) {
             return;
         }
-        final AbilityConfig.Behavior behavior = ((AbilityConfig) focusedAbility.getAbilityConfig()).getBehavior();
+        final AbilityConfig.Behavior behavior = focusedAbility.getAbilityConfig().getBehavior();
         if (behavior == AbilityConfig.Behavior.HOLD_TO_ACTIVATE) {
             this.active = false;
             this.swappingLocked = false;
@@ -289,7 +289,7 @@ public class AbilityTree implements INBTSerializable<CompoundNBT> {
         for (final AbilityNode<?, ?> node : nodes) {
             NetcodeUtils.runIfPresent(server, this.uuid, player -> {
                 if (node.isLearned()) {
-                    node.onAdded((PlayerEntity) player);
+                    node.onAdded(player);
                 }
                 return;
             });
@@ -310,7 +310,7 @@ public class AbilityTree implements INBTSerializable<CompoundNBT> {
         for (final AbilityNode<?, ?> node : nodes) {
             NetcodeUtils.runIfPresent(server, this.uuid, player -> {
                 if (node.isLearned()) {
-                    node.onRemoved((PlayerEntity) player);
+                    node.onRemoved(player);
                 }
                 return;
             });
@@ -344,7 +344,7 @@ public class AbilityTree implements INBTSerializable<CompoundNBT> {
     public void tick(final ServerPlayerEntity sPlayer) {
         final AbilityNode<?, ?> selectedAbility = this.getSelectedAbility();
         if (selectedAbility != null) {
-            selectedAbility.onTick((PlayerEntity) sPlayer, this.isActive());
+            selectedAbility.onTick(sPlayer, this.isActive());
         }
         for (final AbilityNode<?, ?> ability : this.cooldowns.keySet()) {
             this.cooldowns.computeIfPresent(ability, (index, cooldown) -> cooldown - 1);
@@ -412,7 +412,7 @@ public class AbilityTree implements INBTSerializable<CompoundNBT> {
         final CompoundNBT nbt = new CompoundNBT();
         final ListNBT list = new ListNBT();
         this.nodes.stream().map(AbilityNode::serializeNBT).forEach(list::add);
-        nbt.put("Nodes", (INBT) list);
+        nbt.put("Nodes", list);
         final AbilityNode<?, ?> selected = this.getSelectedAbility();
         if (selected != null) {
             nbt.putString("SelectedAbility", selected.getGroup().getParentName());
@@ -438,6 +438,6 @@ public class AbilityTree implements INBTSerializable<CompoundNBT> {
     public enum ActivityFlag {
         NO_OP,
         DEACTIVATE_ABILITY,
-        ACTIVATE_ABILITY;
+        ACTIVATE_ABILITY
     }
 }

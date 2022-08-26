@@ -14,7 +14,7 @@ public class VaultRuneTileEntity extends TileEntity {
     protected String belongsTo;
 
     public VaultRuneTileEntity() {
-        super((TileEntityType) ModBlocks.VAULT_RUNE_TILE_ENTITY);
+        super(ModBlocks.VAULT_RUNE_TILE_ENTITY);
         this.belongsTo = "";
     }
 

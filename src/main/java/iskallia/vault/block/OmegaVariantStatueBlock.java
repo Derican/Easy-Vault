@@ -64,11 +64,11 @@ public class OmegaVariantStatueBlock extends LootStatueBlock {
                     for (final ItemStack option : options) {
                         itemList.add(option.serializeNBT());
                     }
-                    data.put("Items", (INBT) itemList);
-                    data.put("Position", (INBT) NBTUtil.writeBlockPos(pos));
-                    NetworkHooks.openGui((ServerPlayerEntity) player, (INamedContainerProvider) new INamedContainerProvider() {
+                    data.put("Items", itemList);
+                    data.put("Position", NBTUtil.writeBlockPos(pos));
+                    NetworkHooks.openGui((ServerPlayerEntity) player, new INamedContainerProvider() {
                         public ITextComponent getDisplayName() {
-                            return (ITextComponent) new StringTextComponent("Omega Statue Options");
+                            return new StringTextComponent("Omega Statue Options");
                         }
 
                         @Nullable
@@ -93,6 +93,6 @@ public class OmegaVariantStatueBlock extends LootStatueBlock {
 
     @Override
     protected void createBlockStateDefinition(final StateContainer.Builder<Block, BlockState> builder) {
-        builder.add(new Property[]{OmegaVariantStatueBlock.FACING});
+        builder.add(OmegaVariantStatueBlock.FACING);
     }
 }

@@ -39,7 +39,7 @@ public class EffectConfig extends AbilityConfig {
     }
 
     public Effect getEffect() {
-        return (Effect) Registry.MOB_EFFECT.get(new ResourceLocation(this.effect));
+        return Registry.MOB_EFFECT.get(new ResourceLocation(this.effect));
     }
 
     public int getAmplifier() {
@@ -61,7 +61,7 @@ public class EffectConfig extends AbilityConfig {
         public final boolean showParticles;
         public final boolean showIcon;
 
-        private Type(final String name, final boolean showParticles, final boolean showIcon) {
+        Type(final String name, final boolean showParticles, final boolean showIcon) {
             this.name = name;
             this.showParticles = showParticles;
             this.showIcon = showIcon;

@@ -56,13 +56,13 @@ public class ShardTradeScreen extends ContainerScreen<ShardTradeContainer> {
 
     protected void renderLabels(final MatrixStack matrixStack, final int x, final int y) {
         matrixStack.pushPose();
-        matrixStack.translate((double) this.titleLabelX, (double) this.titleLabelY, 0.0);
+        matrixStack.translate(this.titleLabelX, this.titleLabelY, 0.0);
         matrixStack.scale(0.75f, 0.75f, 1.0f);
         this.font.draw(matrixStack, this.title, 0.0f, 0.0f, 4210752);
         matrixStack.popPose();
         this.font.draw(matrixStack, this.inventory.getDisplayName(), (float) this.inventoryLabelX, (float) this.inventoryLabelY, 4210752);
         final int shardCount = ItemShardPouch.getShardCount(Minecraft.getInstance().player.inventory);
-        final ItemStack stack = new ItemStack((IItemProvider) ModItems.SOUL_SHARD);
+        final ItemStack stack = new ItemStack(ModItems.SOUL_SHARD);
         for (int tradeIndex = 0; tradeIndex < 3; ++tradeIndex) {
             final Tuple<ItemStack, Integer> trade = ClientShardTradeData.getTradeInfo(tradeIndex);
             if (trade != null) {
@@ -72,7 +72,7 @@ public class ShardTradeScreen extends ContainerScreen<ShardTradeContainer> {
                 final String text = String.valueOf(trade.getB());
                 final int width = this.font.width(text);
                 int color = 16777215;
-                if (shardCount < (int) trade.getB()) {
+                if (shardCount < trade.getB()) {
                     color = 8257536;
                 }
                 matrixStack.pushPose();

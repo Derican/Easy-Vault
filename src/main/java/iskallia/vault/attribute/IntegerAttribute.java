@@ -14,7 +14,7 @@ public class IntegerAttribute extends NumberAttribute<Integer> {
 
     @Override
     public void write(final CompoundNBT nbt) {
-        nbt.putInt("BaseValue", (int) this.getBaseValue());
+        nbt.putInt("BaseValue", this.getBaseValue());
     }
 
     @Override

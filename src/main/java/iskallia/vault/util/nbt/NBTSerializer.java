@@ -54,52 +54,52 @@ public class NBTSerializer {
             return null;
         }
         if (clazz.isAssignableFrom(Byte.class)) {
-            return (INBT) ByteNBT.valueOf((Byte) obj);
+            return ByteNBT.valueOf((Byte) obj);
         }
         if (clazz.isAssignableFrom(Boolean.class)) {
-            return (INBT) ByteNBT.valueOf((byte) (((Boolean) obj) ? 1 : 0));
+            return ByteNBT.valueOf((byte) (((Boolean) obj) ? 1 : 0));
         }
         if (clazz.isAssignableFrom(Short.class)) {
-            return (INBT) ShortNBT.valueOf((Short) obj);
+            return ShortNBT.valueOf((Short) obj);
         }
         if (clazz.isAssignableFrom(Integer.class)) {
-            return (INBT) IntNBT.valueOf((Integer) obj);
+            return IntNBT.valueOf((Integer) obj);
         }
         if (clazz.isAssignableFrom(Long.class)) {
-            return (INBT) LongNBT.valueOf((Long) obj);
+            return LongNBT.valueOf((Long) obj);
         }
         if (clazz.isAssignableFrom(Float.class)) {
-            return (INBT) FloatNBT.valueOf((Float) obj);
+            return FloatNBT.valueOf((Float) obj);
         }
         if (clazz.isAssignableFrom(Double.class)) {
-            return (INBT) DoubleNBT.valueOf((Double) obj);
+            return DoubleNBT.valueOf((Double) obj);
         }
         if (clazz.isAssignableFrom(byte[].class)) {
-            return (INBT) new ByteArrayNBT((byte[]) obj);
+            return new ByteArrayNBT((byte[]) obj);
         }
         if (clazz.isAssignableFrom(Byte[].class)) {
-            return (INBT) new ByteArrayNBT(ArrayUtils.toPrimitive((Byte[]) (Byte[]) obj));
+            return new ByteArrayNBT((byte[]) ArrayUtils.toPrimitive(obj));
         }
         if (clazz.isAssignableFrom(String.class)) {
-            return (INBT) StringNBT.valueOf((String) obj);
+            return StringNBT.valueOf((String) obj);
         }
         if (clazz.isAssignableFrom(int[].class)) {
-            return (INBT) new IntArrayNBT((int[]) obj);
+            return new IntArrayNBT((int[]) obj);
         }
         if (clazz.isAssignableFrom(Integer[].class)) {
-            return (INBT) new IntArrayNBT(ArrayUtils.toPrimitive((Integer[]) (Integer[]) obj));
+            return new IntArrayNBT((int[]) ArrayUtils.toPrimitive(obj));
         }
         if (INBTSerializable.class.isAssignableFrom(clazz)) {
-            return (INBT) serialize((INBTSerializable) obj);
+            return serialize((INBTSerializable) obj);
         }
         if (Collection.class.isAssignableFrom(clazz)) {
-            return (INBT) serializeCollection((Collection<Object>) obj);
+            return serializeCollection((Collection<Object>) obj);
         }
         if (Map.Entry.class.isAssignableFrom(clazz)) {
-            return (INBT) serializeEntry((Map.Entry<Object, Object>) obj);
+            return serializeEntry((Map.Entry<Object, Object>) obj);
         }
         if (Map.class.isAssignableFrom(clazz)) {
-            return (INBT) serializeCollection(((Map) obj).entrySet());
+            return serializeCollection(((Map) obj).entrySet());
         }
         throw new UnserializableClassException(clazz);
     }
@@ -122,7 +122,7 @@ public class NBTSerializer {
     private static final <K, V> CompoundNBT serializeEntry(final Map.Entry<K, V> entry) throws UnserializableClassException, IllegalAccessException {
         final Class<K> keyClass = (Class<K>) entry.getKey().getClass();
         final Class<V> valueClass = (Class<V>) entry.getValue().getClass();
-        return serializeEntry((Map.Entry<? extends K, ? extends V>) entry, keyClass, valueClass);
+        return serializeEntry(entry, keyClass, valueClass);
     }
 
     private static final <K, V> CompoundNBT serializeEntry(final Map.Entry<? extends K, ? extends V> entry, final Class<K> keyClass, final Class<V> valueClass) throws IllegalAccessException, UnserializableClassException {
@@ -256,7 +256,7 @@ public class NBTSerializer {
             return (T) ArrayUtils.toObject(((ByteArrayNBT) tag).getAsByteArray());
         }
         if (clazz.isAssignableFrom(String.class)) {
-            return (T) ((StringNBT) tag).getAsString();
+            return (T) tag.getAsString();
         }
         if (clazz.isAssignableFrom(int[].class)) {
             return (T) ((IntArrayNBT) tag).getAsIntArray();

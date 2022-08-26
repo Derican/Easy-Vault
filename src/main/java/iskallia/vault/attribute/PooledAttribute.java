@@ -54,9 +54,9 @@ public abstract class PooledAttribute<T> extends VAttribute.Instance<T> {
             if (this.pools.size() == 0) {
                 return this.getDefaultValue(random);
             }
-            T value = (T) this.pools.get(0).generate(random);
+            T value = this.pools.get(0).generate(random);
             for (int i = 1; i < this.pools.size(); ++i) {
-                value = this.collector.apply(value, (T) this.pools.get(i).generate(random));
+                value = this.collector.apply(value, this.pools.get(i).generate(random));
             }
             return value;
         }
@@ -129,7 +129,7 @@ public abstract class PooledAttribute<T> extends VAttribute.Instance<T> {
         }
 
         public List<T> getEntries() {
-            return (List<T>) this.entries.stream()
+            return this.entries.stream()
                     .map(entry -> entry.value)
                     .collect(Collectors.toList());
         }
@@ -231,7 +231,7 @@ public abstract class PooledAttribute<T> extends VAttribute.Instance<T> {
             public final String name;
             private final ToIntBiFunction<Rolls, Random> function;
 
-            private Type(final String name, final ToIntBiFunction<Rolls, Random> function) {
+            Type(final String name, final ToIntBiFunction<Rolls, Random> function) {
                 this.name = name;
                 this.function = function;
             }

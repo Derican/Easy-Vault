@@ -25,7 +25,7 @@ public class ShardPouchContainer extends Container {
     private final Set<Slot> dragSlots;
 
     public ShardPouchContainer(final int id, final PlayerInventory inventory, final int pouchSlot) {
-        super((ContainerType) ModContainers.SHARD_POUCH_CONTAINER, id);
+        super(ModContainers.SHARD_POUCH_CONTAINER, id);
         this.dragMode = -1;
         this.dragSlots = Sets.newHashSet();
         this.inventory = inventory;
@@ -41,13 +41,13 @@ public class ShardPouchContainer extends Container {
     private void initSlots(final IItemHandler playerInvHandler, final IItemHandler pouchHandler) {
         for (int row = 0; row < 3; ++row) {
             for (int column = 0; column < 9; ++column) {
-                this.addSlot((Slot) new ConditionalReadSlot(playerInvHandler, column + row * 9 + 9, 8 + column * 18, 55 + row * 18, this::canAccess));
+                this.addSlot(new ConditionalReadSlot(playerInvHandler, column + row * 9 + 9, 8 + column * 18, 55 + row * 18, this::canAccess));
             }
         }
         for (int hotbarSlot = 0; hotbarSlot < 9; ++hotbarSlot) {
-            this.addSlot((Slot) new ConditionalReadSlot(playerInvHandler, hotbarSlot, 8 + hotbarSlot * 18, 113, this::canAccess));
+            this.addSlot(new ConditionalReadSlot(playerInvHandler, hotbarSlot, 8 + hotbarSlot * 18, 113, this::canAccess));
         }
-        this.addSlot((Slot) new ConditionalReadSlot(pouchHandler, 0, 80, 16, (slot, stack) -> this.canAccess(slot, stack) && stack.getItem() == ModItems.SOUL_SHARD) {
+        this.addSlot(new ConditionalReadSlot(pouchHandler, 0, 80, 16, (slot, stack) -> this.canAccess(slot, stack) && stack.getItem() == ModItems.SOUL_SHARD) {
             public int getMaxStackSize(@Nonnull final ItemStack stack) {
                 return pouchHandler.getSlotLimit(0);
             }
@@ -138,7 +138,7 @@ public class ShardPouchContainer extends Container {
                         if (dragSlot != null && canAddItemToSlot(dragSlot, mouseStack2, true) && dragSlot.mayPlace(mouseStack2) && (this.dragMode == 2 || mouseStack2.getCount() >= this.dragSlots.size()) && this.canDragTo(dragSlot)) {
                             final ItemStack itemstack14 = mouseStackCopy.copy();
                             final int j2 = dragSlot.hasItem() ? dragSlot.getItem().getCount() : 0;
-                            getQuickCraftSlotCount((Set) this.dragSlots, this.dragMode, itemstack14, j2);
+                            getQuickCraftSlotCount(this.dragSlots, this.dragMode, itemstack14, j2);
                             final int k2 = dragSlot.getMaxStackSize(itemstack14);
                             if (itemstack14.getCount() > k2) {
                                 itemstack14.setCount(k2);

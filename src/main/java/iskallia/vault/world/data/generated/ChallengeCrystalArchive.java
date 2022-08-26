@@ -175,8 +175,8 @@ public class ChallengeCrystalArchive {
     }
 
     private static ItemStack make(final CrystalData data) {
-        final ItemStack crystal = new ItemStack((IItemProvider) ModItems.VAULT_CRYSTAL);
-        crystal.getOrCreateTag().put("CrystalData", (INBT) data.serializeNBT());
+        final ItemStack crystal = new ItemStack(ModItems.VAULT_CRYSTAL);
+        crystal.getOrCreateTag().put("CrystalData", data.serializeNBT());
         return crystal;
     }
 

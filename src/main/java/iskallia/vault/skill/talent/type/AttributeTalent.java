@@ -30,7 +30,7 @@ public class AttributeTalent extends PlayerTalent {
     }
 
     public Attribute getAttribute() {
-        return (Attribute) Registry.ATTRIBUTE.get(new ResourceLocation(this.attribute));
+        return Registry.ATTRIBUTE.get(new ResourceLocation(this.attribute));
     }
 
     public Modifier getModifier() {

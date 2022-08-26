@@ -19,7 +19,7 @@ import java.util.UUID;
 
 public class VaultDoorTileEntity extends TileEntity implements ITickableTileEntity {
     public VaultDoorTileEntity() {
-        super((TileEntityType) ModBlocks.VAULT_DOOR_TILE_ENTITY);
+        super(ModBlocks.VAULT_DOOR_TILE_ENTITY);
     }
 
     public void tick() {

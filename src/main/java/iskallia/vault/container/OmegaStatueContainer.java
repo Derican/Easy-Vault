@@ -8,10 +8,10 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.ListNBT;
 
 public class OmegaStatueContainer extends Container {
-    private CompoundNBT data;
+    private final CompoundNBT data;
 
     public OmegaStatueContainer(final int windowId, final CompoundNBT nbt) {
-        super((ContainerType) ModContainers.OMEGA_STATUE_CONTAINER, windowId);
+        super(ModContainers.OMEGA_STATUE_CONTAINER, windowId);
         this.data = nbt;
     }
 

@@ -21,7 +21,7 @@ public class VaultChampionTrophyTileEntity extends TileEntity
     private int score;
     
     public VaultChampionTrophyTileEntity() {
-        super((TileEntityType)ModBlocks.VAULT_CHAMPION_TROPHY_TILE_ENTITY);
+        super(ModBlocks.VAULT_CHAMPION_TROPHY_TILE_ENTITY);
         this.ownerNickname = "";
         this.ownerUUID = VaultChampionTrophyTileEntity.NIL_UUID;
     }

@@ -15,7 +15,7 @@ public abstract class VaultGoalData {
     public abstract BossBarOverlay getBossBarOverlay();
 
     public static void create(final VaultGoalMessage pkt) {
-        switch ((VaultGoalMessage.VaultGoal) pkt.opcode) {
+        switch (pkt.opcode) {
             case OBELISK_GOAL:
             case OBELISK_MESSAGE: {
                 (VaultGoalData.CURRENT_DATA = new VaultObeliskData()).receive(pkt);

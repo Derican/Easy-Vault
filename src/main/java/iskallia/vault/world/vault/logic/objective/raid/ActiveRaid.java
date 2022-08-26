@@ -74,7 +74,7 @@ public class ActiveRaid {
         final ActiveRaid raid = new ActiveRaid(controller, raidBox, preset);
         world.getEntitiesOfClass(PlayerEntity.class, raidBox).forEach(player -> raid.participatingPlayers.add(player.getUUID()));
         vault.getActiveObjective(RaidChallengeObjective.class).ifPresent(raidObjective -> raidObjective.onRaidStart(vault, world, raid, controller));
-        raid.playSoundToPlayers((IEntityReader) world, SoundEvents.EVOKER_PREPARE_SUMMON, 1.0f, 0.7f);
+        raid.playSoundToPlayers(world, SoundEvents.EVOKER_PREPARE_SUMMON, 1.0f, 0.7f);
         return raid;
     }
 
@@ -104,7 +104,7 @@ public class ActiveRaid {
                     PlayerEntity player = null;
                     if (!players.isEmpty()) {
                         player = MiscUtils.getRandomEntry(players, ActiveRaid.rand);
-                        mob.setTarget((LivingEntity) player);
+                        mob.setTarget(player);
                     }
                 }
                 return false;
@@ -149,14 +149,14 @@ public class ActiveRaid {
                 }
                 for (int i = 0; i < spawnCount2; ++i) {
                     final String mobType = pool.getRandomMob();
-                    final EntityType type = (EntityType) ForgeRegistries.ENTITIES.getValue(new ResourceLocation(mobType));
+                    final EntityType type = ForgeRegistries.ENTITIES.getValue(new ResourceLocation(mobType));
                     if (type != null) {
-                        if (!(!type.canSummon())) {
+                        if (type.canSummon()) {
                             final Vector3f center = new Vector3f(this.controller.getX() + 0.5f, (float) this.controller.getY(), this.controller.getZ() + 0.5f);
                             final Vector3f randomPos = MiscUtils.getRandomCirclePosition(center, new Vector3f(0.0f, 1.0f, 0.0f), 8.0f + ActiveRaid.rand.nextFloat() * 6.0f);
-                            final BlockPos spawnAt = MiscUtils.getEmptyNearby((IWorldReader) world, new BlockPos((double) randomPos.x(), (double) randomPos.y(), (double) randomPos.z())).orElse(BlockPos.ZERO);
+                            final BlockPos spawnAt = MiscUtils.getEmptyNearby(world, new BlockPos(randomPos.x(), randomPos.y(), randomPos.z())).orElse(BlockPos.ZERO);
                             if (!spawnAt.equals(BlockPos.ZERO)) {
-                                final Entity spawned = type.spawn(world, (ItemStack) null, (PlayerEntity) null, spawnAt, SpawnReason.EVENT, true, false);
+                                final Entity spawned = type.spawn(world, null, null, spawnAt, SpawnReason.EVENT, true, false);
                                 if (spawned instanceof MobEntity) {
                                     final GlobalDifficultyData.Difficulty difficulty = GlobalDifficultyData.get(world).getVaultDifficulty();
                                     final MobEntity mob = (MobEntity) spawned;
@@ -171,14 +171,14 @@ public class ActiveRaid {
             }
         });
         this.totalWaveEntities = this.activeEntities.size();
-        this.playSoundToPlayers((IEntityReader) world, SoundEvents.RAID_HORN, 64.0f, 1.0f);
+        this.playSoundToPlayers(world, SoundEvents.RAID_HORN, 64.0f, 1.0f);
     }
 
     private void processSpawnedMob(final MobEntity mob, final VaultRaid vault, final GlobalDifficultyData.Difficulty difficulty, int level) {
         level += vault.getActiveObjective(RaidChallengeObjective.class).map(raidObjective -> raidObjective.getModifiersOfType(MonsterLevelModifier.class).entrySet().stream().mapToInt(entry -> entry.getKey().getLevelAdded(entry.getValue())).sum()).orElse(0);
         mob.setPersistenceRequired();
-        EntityScaler.setScaledEquipment((LivingEntity) mob, vault, difficulty, level, new Random(), EntityScaler.Type.MOB);
-        EntityScaler.setScaled((Entity) mob);
+        EntityScaler.setScaledEquipment(mob, vault, difficulty, level, new Random(), EntityScaler.Type.MOB);
+        EntityScaler.setScaled(mob);
         vault.getActiveObjective(RaidChallengeObjective.class).ifPresent(raidObjective -> raidObjective.getAllModifiers().forEach((modifier, value) -> modifier.affectRaidMob(mob, value)));
     }
 
@@ -232,7 +232,7 @@ public class ActiveRaid {
 
     public void finish(final VaultRaid raid, final ServerWorld world) {
         raid.getActiveObjective(RaidChallengeObjective.class).ifPresent(raidChallenge -> raidChallenge.onRaidFinish(raid, world, this, this.controller));
-        this.playSoundToPlayers((IEntityReader) world, SoundEvents.UI_TOAST_CHALLENGE_COMPLETE, 0.7f, 0.5f);
+        this.playSoundToPlayers(world, SoundEvents.UI_TOAST_CHALLENGE_COMPLETE, 0.7f, 0.5f);
     }
 
     private void playSoundToPlayers(final IEntityReader world, final SoundEvent event, final float volume, final float pitch) {
@@ -240,7 +240,7 @@ public class ActiveRaid {
             final PlayerEntity player = world.getPlayerByUUID(playerId);
             if (player instanceof ServerPlayerEntity) {
                 final SPlaySoundEffectPacket pkt = new SPlaySoundEffectPacket(event, SoundCategory.BLOCKS, player.getX(), player.getY(), player.getZ(), volume, pitch);
-                ((ServerPlayerEntity) player).connection.send((IPacket) pkt);
+                ((ServerPlayerEntity) player).connection.send(pkt);
             }
         });
     }
@@ -250,15 +250,15 @@ public class ActiveRaid {
     }
 
     public void serialize(final CompoundNBT tag) {
-        tag.put("pos", (INBT) NBTHelper.serializeBlockPos(this.controller));
-        tag.put("boxFrom", (INBT) NBTHelper.serializeBlockPos(new BlockPos(this.raidBox.minX, this.raidBox.minY, this.raidBox.minZ)));
-        tag.put("boxTo", (INBT) NBTHelper.serializeBlockPos(new BlockPos(this.raidBox.maxX, this.raidBox.maxY, this.raidBox.maxZ)));
+        tag.put("pos", NBTHelper.serializeBlockPos(this.controller));
+        tag.put("boxFrom", NBTHelper.serializeBlockPos(new BlockPos(this.raidBox.minX, this.raidBox.minY, this.raidBox.minZ)));
+        tag.put("boxTo", NBTHelper.serializeBlockPos(new BlockPos(this.raidBox.maxX, this.raidBox.maxY, this.raidBox.maxZ)));
         tag.putInt("wave", this.wave);
-        tag.put("waves", (INBT) this.preset.serialize());
+        tag.put("waves", this.preset.serialize());
         tag.putInt("startDelay", this.startDelay);
         tag.putInt("totalWaveEntities", this.totalWaveEntities);
-        NBTHelper.writeList(tag, "entities", (Collection<UUID>) this.activeEntities, StringNBT.class, uuid -> StringNBT.valueOf(uuid.toString()));
-        NBTHelper.writeList(tag, "players", (Collection<UUID>) this.participatingPlayers, StringNBT.class, uuid -> StringNBT.valueOf(uuid.toString()));
+        NBTHelper.writeList(tag, "entities", this.activeEntities, StringNBT.class, uuid -> StringNBT.valueOf(uuid.toString()));
+        NBTHelper.writeList(tag, "players", this.participatingPlayers, StringNBT.class, uuid -> StringNBT.valueOf(uuid.toString()));
     }
 
     public static ActiveRaid deserializeNBT(final CompoundNBT nbt) {

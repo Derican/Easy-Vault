@@ -40,7 +40,7 @@ public class VaultSandEntity extends FloatingItemEntity
     }
     
     public static VaultSandEntity create(final World world, final BlockPos pos) {
-        return new VaultSandEntity(world, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, new ItemStack((IItemProvider)ModItems.VAULT_SAND));
+        return new VaultSandEntity(world, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, new ItemStack(ModItems.VAULT_SAND));
     }
     
     @Override
@@ -52,7 +52,7 @@ public class VaultSandEntity extends FloatingItemEntity
             final VaultRaid activeRaid = VaultRaidData.get(sPlayer.getLevel()).getActiveFor(sPlayer);
             if (activeRaid != null) {
                 activeRaid.getProperties().get(VaultRaid.SAND_EVENT).ifPresent(eventData -> {
-                    ((VaultSandEvent)eventData.getBaseValue()).pickupSand(sPlayer);
+                    eventData.getBaseValue().pickupSand(sPlayer);
                     eventData.updateNBT();
                 });
             }

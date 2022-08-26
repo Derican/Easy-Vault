@@ -68,7 +68,7 @@ public class VaultCharmData extends WorldSavedData {
     }
 
     public CompoundNBT save(final CompoundNBT compound) {
-        this.whitelistedItems.forEach((uuid, inventory) -> compound.put(uuid.toString(), (INBT) inventory.serializeNBT()));
+        this.whitelistedItems.forEach((uuid, inventory) -> compound.put(uuid.toString(), inventory.serializeNBT()));
         return compound;
     }
 
@@ -106,7 +106,7 @@ public class VaultCharmData extends WorldSavedData {
             final ListNBT whitelistNbt = new ListNBT();
             this.whitelist.forEach(id -> whitelistNbt.add(StringNBT.valueOf(id.toString())));
             nbt.putInt("InventorySize", this.size);
-            nbt.put("Whitelist", (INBT) whitelistNbt);
+            nbt.put("Whitelist", whitelistNbt);
             return nbt;
         }
 

@@ -89,7 +89,7 @@ public abstract class VaultPiece implements INBTSerializable<CompoundNBT> {
         final CompoundNBT nbt = new CompoundNBT();
         nbt.putString("Id", this.id.toString());
         nbt.putString("Template", this.template.toString());
-        nbt.put("BoundingBox", (INBT) this.boundingBox.createTag());
+        nbt.put("BoundingBox", this.boundingBox.createTag());
         nbt.putInt("Rotation", this.rotation.ordinal());
         nbt.putString("UUID", this.uuid.toString());
         return nbt;
@@ -110,7 +110,7 @@ public abstract class VaultPiece implements INBTSerializable<CompoundNBT> {
     }
 
     public boolean contains(final BlockPos pos) {
-        return this.boundingBox.isInside((Vector3i) pos);
+        return this.boundingBox.isInside(pos);
     }
 
     public BlockPos getMin() {
@@ -127,7 +127,7 @@ public abstract class VaultPiece implements INBTSerializable<CompoundNBT> {
 
     public static VaultPiece fromNBT(final CompoundNBT nbt) {
         final ResourceLocation id = new ResourceLocation(nbt.getString("Id"));
-        final VaultPiece piece = VaultPiece.REGISTRY.getOrDefault((Object) id, () -> null).get();
+        final VaultPiece piece = VaultPiece.REGISTRY.getOrDefault(id, () -> null).get();
         if (piece == null) {
             Vault.LOGGER.error("Piece <" + id + "> is not defined.");
             return null;

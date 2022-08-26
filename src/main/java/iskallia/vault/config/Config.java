@@ -36,7 +36,7 @@ public abstract class Config implements IFeatureConfig {
 
     public <T extends Config> T readConfig() {
         try {
-            return (T) Config.GSON.fromJson((Reader) new FileReader(this.getConfigFile()), (Type) this.getClass());
+            return Config.GSON.fromJson(new FileReader(this.getConfigFile()), (Type) this.getClass());
         } catch (final FileNotFoundException e) {
             this.generateConfig();
             return (T) this;
@@ -54,7 +54,7 @@ public abstract class Config implements IFeatureConfig {
             return;
         }
         final FileWriter writer = new FileWriter(this.getConfigFile());
-        Config.GSON.toJson(this, (Appendable) writer);
+        Config.GSON.toJson(this, writer);
         writer.flush();
         writer.close();
     }

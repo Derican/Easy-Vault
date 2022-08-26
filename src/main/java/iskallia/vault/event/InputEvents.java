@@ -70,7 +70,7 @@ public class InputEvents {
             if (action != 1) {
                 return;
             }
-            minecraft.setScreen((Screen) new AbilitySelectionScreen());
+            minecraft.setScreen(new AbilitySelectionScreen());
             ModNetwork.CHANNEL.sendToServer(new AbilityKeyMessage(true));
         } else if (ModKeybinds.openShardTraderScreen.consumeClick()) {
             ModNetwork.CHANNEL.sendToServer(new ShardTraderScreenMessage());

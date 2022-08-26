@@ -40,7 +40,7 @@ public class ThrowProjectilesGoal<T extends MobEntity> extends GoalTask<T> {
 
     public void start() {
         this.oldStack = this.getEntity().getItemBySlot(EquipmentSlotType.OFFHAND);
-        this.getEntity().setItemSlot(EquipmentSlotType.OFFHAND, new ItemStack((IItemProvider) Items.SNOWBALL));
+        this.getEntity().setItemSlot(EquipmentSlotType.OFFHAND, new ItemStack(Items.SNOWBALL));
     }
 
     public void tick() {
@@ -54,7 +54,7 @@ public class ThrowProjectilesGoal<T extends MobEntity> extends GoalTask<T> {
                 final double d4 = target.getZ() - this.getEntity().getZ();
                 final float f = MathHelper.sqrt(d2 * d2 + d4 * d4) * 0.2f;
                 this.shoot(throwEntity, d2, d3 + f, d4, 1.6f, 4.0f, this.getWorld().random);
-                this.getWorld().playSound((PlayerEntity) null, this.getEntity().blockPosition(), SoundEvents.SNOW_GOLEM_SHOOT, SoundCategory.HOSTILE, 1.0f, 0.4f / (this.getWorld().random.nextFloat() * 0.4f + 0.8f));
+                this.getWorld().playSound(null, this.getEntity().blockPosition(), SoundEvents.SNOW_GOLEM_SHOOT, SoundCategory.HOSTILE, 1.0f, 0.4f / (this.getWorld().random.nextFloat() * 0.4f + 0.8f));
                 this.getWorld().addFreshEntity(throwEntity);
             }
             ++this.progress;
@@ -62,11 +62,11 @@ public class ThrowProjectilesGoal<T extends MobEntity> extends GoalTask<T> {
     }
 
     public void shoot(final Entity projectile, final double x, final double y, final double z, final float velocity, final float inaccuracy, final Random rand) {
-        final Vector3d vector3d = new Vector3d(x, y, z).normalize().add(rand.nextGaussian() * 0.007499999832361937 * inaccuracy, rand.nextGaussian() * 0.007499999832361937 * inaccuracy, rand.nextGaussian() * 0.007499999832361937 * inaccuracy).scale((double) velocity);
+        final Vector3d vector3d = new Vector3d(x, y, z).normalize().add(rand.nextGaussian() * 0.007499999832361937 * inaccuracy, rand.nextGaussian() * 0.007499999832361937 * inaccuracy, rand.nextGaussian() * 0.007499999832361937 * inaccuracy).scale(velocity);
         projectile.setDeltaMovement(vector3d);
         final float f = MathHelper.sqrt(Entity.getHorizontalDistanceSqr(vector3d));
         projectile.yRot = (float) (MathHelper.atan2(vector3d.x, vector3d.z) * 57.2957763671875);
-        projectile.xRot = (float) (MathHelper.atan2(vector3d.y, (double) f) * 57.2957763671875);
+        projectile.xRot = (float) (MathHelper.atan2(vector3d.y, f) * 57.2957763671875);
         projectile.yRotO = projectile.yRot;
         projectile.xRotO = projectile.xRot;
     }

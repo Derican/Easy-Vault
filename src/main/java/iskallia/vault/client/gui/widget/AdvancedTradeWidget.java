@@ -22,7 +22,7 @@ public class AdvancedTradeWidget extends Widget {
     protected TraderCore traderCode;
 
     public AdvancedTradeWidget(final int x, final int y, final TraderCore traderCode, final AdvancedVendingMachineScreen parentScreen) {
-        super(x, y, 0, 0, (ITextComponent) new StringTextComponent(""));
+        super(x, y, 0, 0, new StringTextComponent(""));
         this.parentScreen = parentScreen;
         this.traderCode = traderCode;
     }
@@ -59,7 +59,7 @@ public class AdvancedTradeWidget extends Widget {
             return;
         }
         final boolean isHovered = this.isHovered(mouseX, mouseY);
-        final boolean isSelected = ((AdvancedVendingContainer) this.parentScreen.getMenu()).getSelectedTrade() == this.traderCode;
+        final boolean isSelected = this.parentScreen.getMenu().getSelectedTrade() == this.traderCode;
         blit(matrixStack, this.x, this.y, 277.0f, (isHovered || isSelected) ? 68.0f : 40.0f, 88, 27, 512, 256);
         RenderSystem.disableDepthTest();
         itemRenderer.renderGuiItem(buy, 5 + this.x + tradeBoundaries.x, 6 + this.y + tradeBoundaries.y - yOFfset);

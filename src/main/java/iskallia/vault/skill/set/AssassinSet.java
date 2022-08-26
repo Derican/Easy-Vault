@@ -5,7 +5,7 @@ import iskallia.vault.item.gear.VaultGear;
 
 public class AssassinSet extends PlayerSet {
     @Expose
-    private float increasedFatalStrikeChance;
+    private final float increasedFatalStrikeChance;
 
     public AssassinSet(final float increasedFatalStrikeChance) {
         super(VaultGear.Set.ASSASSIN);

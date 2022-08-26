@@ -59,7 +59,7 @@ public class TrophyStatueTileEntity extends LootStatueTileEntity {
             final ParticleManager mgr = Minecraft.getInstance().particleEngine;
             final BlockPos pos = this.getBlockPos();
             final Vector3d rPos = new Vector3d(pos.getX() + 0.5 + (TrophyStatueTileEntity.rand.nextFloat() - TrophyStatueTileEntity.rand.nextFloat()) * (0.1 + TrophyStatueTileEntity.rand.nextFloat() * 0.6), pos.getY() + 0.5 + (TrophyStatueTileEntity.rand.nextFloat() - TrophyStatueTileEntity.rand.nextFloat()) * (TrophyStatueTileEntity.rand.nextFloat() * 0.2), pos.getZ() + 0.5 + (TrophyStatueTileEntity.rand.nextFloat() - TrophyStatueTileEntity.rand.nextFloat()) * (0.1 + TrophyStatueTileEntity.rand.nextFloat() * 0.6));
-            final SimpleAnimatedParticle p = (SimpleAnimatedParticle) mgr.createParticle((IParticleData) ParticleTypes.FIREWORK, rPos.x, rPos.y, rPos.z, 0.0, 0.0, 0.0);
+            final SimpleAnimatedParticle p = (SimpleAnimatedParticle) mgr.createParticle(ParticleTypes.FIREWORK, rPos.x, rPos.y, rPos.z, 0.0, 0.0, 0.0);
             if (p != null) {
 //                TODO: check if the omit is acceptable
 //                p.baseGravity = 0.0f;
@@ -71,10 +71,10 @@ public class TrophyStatueTileEntity extends LootStatueTileEntity {
     @Override
     public CompoundNBT save(final CompoundNBT nbt) {
         if (this.week != null) {
-            nbt.put("trophyWeek", (INBT) this.week.serialize());
+            nbt.put("trophyWeek", this.week.serialize());
         }
         if (this.recordEntry != null) {
-            nbt.put("recordEntry", (INBT) this.recordEntry.serialize());
+            nbt.put("recordEntry", this.recordEntry.serialize());
         }
         return super.save(nbt);
     }
@@ -98,10 +98,10 @@ public class TrophyStatueTileEntity extends LootStatueTileEntity {
     public CompoundNBT getUpdateTag() {
         final CompoundNBT nbt = super.getUpdateTag();
         if (this.week != null) {
-            nbt.put("trophyWeek", (INBT) this.week.serialize());
+            nbt.put("trophyWeek", this.week.serialize());
         }
         if (this.recordEntry != null) {
-            nbt.put("recordEntry", (INBT) this.recordEntry.serialize());
+            nbt.put("recordEntry", this.recordEntry.serialize());
         }
         return nbt;
     }

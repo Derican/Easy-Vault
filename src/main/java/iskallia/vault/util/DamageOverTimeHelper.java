@@ -19,12 +19,12 @@ public class DamageOverTimeHelper {
     public static void applyDamageOverTime(final LivingEntity target, final DamageSource damageSource, final float totalDamage, final int seconds) {
         ServerScheduler.INSTANCE.schedule(1, () -> {
             final DamageOverTimeEntry entry = new DamageOverTimeEntry(seconds * 20, damageSource, target.getId(), totalDamage / seconds);
-            DamageOverTimeHelper.worldEntries.computeIfAbsent((RegistryKey<World>) target.getCommandSenderWorld().dimension(), key -> new ArrayList()).add(entry);
+            DamageOverTimeHelper.worldEntries.computeIfAbsent(target.getCommandSenderWorld().dimension(), key -> new ArrayList()).add(entry);
         });
     }
 
     public static void invalidateAll(final LivingEntity target) {
-        getDotEntries((Entity) target).forEach(rec$ -> ((DamageOverTimeEntry) rec$).invalidate());
+        getDotEntries(target).forEach(rec$ -> rec$.invalidate());
     }
 
     public static List<DamageOverTimeEntry> getDotEntries(final Entity entity) {
@@ -51,8 +51,8 @@ public class DamageOverTimeHelper {
         if (world.isClientSide()) {
             return;
         }
-        final List<DamageOverTimeEntry> entries = DamageOverTimeHelper.worldEntries.computeIfAbsent((RegistryKey<World>) world.dimension(), key -> new ArrayList());
-        entries.forEach(rec$ -> ((DamageOverTimeEntry) rec$).decrement());
+        final List<DamageOverTimeEntry> entries = DamageOverTimeHelper.worldEntries.computeIfAbsent(world.dimension(), key -> new ArrayList());
+        entries.forEach(rec$ -> rec$.decrement());
         ActiveFlags.IS_DOT_ATTACKING.runIfNotSet(() -> entries.forEach(entry -> {
             if (entry.valid && entry.ticks % 20 == 0) {
                 final Entity e = world.getEntity(entry.entityId);

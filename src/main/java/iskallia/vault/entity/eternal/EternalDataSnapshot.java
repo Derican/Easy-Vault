@@ -118,7 +118,7 @@ public class EternalDataSnapshot implements EternalDataAccess {
 
     @Override
     public Map<EquipmentSlotType, ItemStack> getEquipment() {
-        return Collections.unmodifiableMap((Map<? extends EquipmentSlotType, ? extends ItemStack>) this.equipment);
+        return Collections.unmodifiableMap(this.equipment);
     }
 
     public ItemStack getEquipment(final EquipmentSlotType slotType) {
@@ -126,13 +126,13 @@ public class EternalDataSnapshot implements EternalDataAccess {
     }
 
     public Map<String, Float> getAttributes() {
-        return Collections.unmodifiableMap((Map<? extends String, ? extends Float>) this.attributes);
+        return Collections.unmodifiableMap(this.attributes);
     }
 
     @Override
     public Map<Attribute, Float> getEntityAttributes() {
         return this.getAttributes().entrySet().stream().map(e -> {
-            final Attribute attr = (Attribute) ForgeRegistries.ATTRIBUTES.getValue(new ResourceLocation((String) e.getKey()));
+            final Attribute attr = ForgeRegistries.ATTRIBUTES.getValue(new ResourceLocation(e.getKey()));
             if (attr != null) {
                 return new Tuple<>(attr, e.getValue());
             } else {
@@ -218,14 +218,14 @@ public class EternalDataSnapshot implements EternalDataAccess {
         buffer.writeUtf(this.eternalName);
         buffer.writeInt(this.equipment.size());
         this.equipment.forEach((slot, stack) -> {
-            buffer.writeEnum((Enum) slot);
+            buffer.writeEnum(slot);
             buffer.writeItem(useEquipment ? stack : ItemStack.EMPTY);
             return;
         });
         buffer.writeInt(this.attributes.size());
         this.attributes.forEach((attr, value) -> {
             buffer.writeUtf(attr);
-            buffer.writeFloat((float) value);
+            buffer.writeFloat(value);
             return;
         });
         buffer.writeFloat(this.parry);

@@ -43,7 +43,7 @@ public abstract class VaultModifier implements IVaultModifier {
 
     public ITextComponent getNameComponent() {
         final HoverEvent hover = new HoverEvent(HoverEvent.Action.SHOW_TEXT, new StringTextComponent(this.getDescription()));
-        return (ITextComponent) new StringTextComponent(this.getName()).setStyle(Style.EMPTY.withColor(Color.fromRgb(this.getColor())).withHoverEvent(hover));
+        return new StringTextComponent(this.getName()).setStyle(Style.EMPTY.withColor(Color.fromRgb(this.getColor())).withHoverEvent(hover));
     }
 
     public String getDescription() {

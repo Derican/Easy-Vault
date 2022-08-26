@@ -49,9 +49,9 @@ public class FlawedRubyConfig extends Config {
 
     public static class RubyEntry {
         @Expose
-        private WeightedList<Outcome> outcomes;
+        private final WeightedList<Outcome> outcomes;
         @Expose
-        private RangeEntry additionModifierCount;
+        private final RangeEntry additionModifierCount;
 
         public RubyEntry(final WeightedList<Outcome> outcomes, final RangeEntry additionModifierCount) {
             this.outcomes = outcomes;
@@ -62,6 +62,6 @@ public class FlawedRubyConfig extends Config {
     public enum Outcome {
         FAIL,
         IMBUE,
-        BREAK;
+        BREAK
     }
 }

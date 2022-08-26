@@ -77,7 +77,7 @@ public class CleanseAbilityGroup extends AbilityGroup<CleanseConfig, CleanseAbil
     }
 
     public static CleanseAbilityGroup defaultConfig() {
-        final List<Effect> effects = Lists.newArrayList(new Effect[]{Effects.DIG_SPEED, Effects.DAMAGE_BOOST, Effects.REGENERATION, Effects.SATURATION, Effects.LUCK, Effects.FIRE_RESISTANCE, Effects.NIGHT_VISION});
+        final List<Effect> effects = Lists.newArrayList(Effects.DIG_SPEED, Effects.DAMAGE_BOOST, Effects.REGENERATION, Effects.SATURATION, Effects.LUCK, Effects.FIRE_RESISTANCE, Effects.NIGHT_VISION);
         final CleanseAbilityGroup group = new CleanseAbilityGroup();
         group.addLevel(new CleanseConfig(1, AbilityConfig.Behavior.RELEASE_TO_PERFORM, 600));
         group.addLevel(new CleanseConfig(1, AbilityConfig.Behavior.RELEASE_TO_PERFORM, 540));

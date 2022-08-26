@@ -43,8 +43,8 @@ public class FinalVaultFrameBlockItem extends BlockItem implements ExplosionImmu
         final String displayNickname = McClientHelper.getOnlineProfile(ownerUUID).map(GameProfile::getName).orElse(ownerNickname);
         final IFormattableTextComponent ownerText = new StringTextComponent("Owner:").withStyle(TextFormatting.GOLD);
         final IFormattableTextComponent displayText = new StringTextComponent(displayNickname).withStyle(TextFormatting.GOLD).withStyle(TextFormatting.BOLD);
-        tooltip.add((ITextComponent)ownerText.append((ITextComponent)displayText));
-        super.appendHoverText(stack, worldIn, (List)tooltip, flagIn);
+        tooltip.add(ownerText.append(displayText));
+        super.appendHoverText(stack, worldIn, tooltip, flagIn);
     }
     
     public void inventoryTick(@Nonnull final ItemStack itemStack, final World world, @Nonnull final Entity entity, final int itemSlot, final boolean isSelected) {

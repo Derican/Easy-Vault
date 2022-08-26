@@ -39,7 +39,7 @@ public abstract class MixinSingleJigsawPiece extends JigsawPiece {
         placementsettings.setIgnoreEntities(false);
         placementsettings.setFinalizeEntities(true);
         if (!p_230379_3_) {
-            placementsettings.addProcessor((StructureProcessor) JigsawReplacementStructureProcessor.INSTANCE);
+            placementsettings.addProcessor(JigsawReplacementStructureProcessor.INSTANCE);
         }
         this.processors.get().list().forEach(placementsettings::addProcessor);
         this.getProjection().getProcessors().forEach(placementsettings::addProcessor);

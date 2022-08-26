@@ -15,10 +15,10 @@ public abstract class Command {
     public abstract int getRequiredPermissionLevel();
 
     public void registerCommand(final CommandDispatcher<CommandSource> dispatcher) {
-        final LiteralArgumentBuilder<CommandSource> builder = (LiteralArgumentBuilder<CommandSource>) Commands.literal(this.getName());
+        final LiteralArgumentBuilder<CommandSource> builder = Commands.literal(this.getName());
         builder.requires(sender -> sender.hasPermission(this.getRequiredPermissionLevel()));
         this.build(builder);
-        dispatcher.register((LiteralArgumentBuilder) Commands.literal("the_vault").then((ArgumentBuilder) builder));
+        dispatcher.register(Commands.literal("the_vault").then(builder));
     }
 
     public abstract void build(final LiteralArgumentBuilder<CommandSource> p0);
@@ -26,6 +26,6 @@ public abstract class Command {
     public abstract boolean isDedicatedServerOnly();
 
     protected final void sendFeedback(final CommandContext<CommandSource> context, final String message, final boolean showOps) {
-        ((CommandSource) context.getSource()).sendSuccess((ITextComponent) new StringTextComponent(message), showOps);
+        context.getSource().sendSuccess(new StringTextComponent(message), showOps);
     }
 }

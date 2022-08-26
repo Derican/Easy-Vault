@@ -29,7 +29,7 @@ import java.util.List;
 
 public class PlayerStatisticsTab extends SkillTab {
     public PlayerStatisticsTab(final SkillTreeScreen parentScreen) {
-        super(parentScreen, (ITextComponent) new StringTextComponent("Statistics Tab"));
+        super(parentScreen, new StringTextComponent("Statistics Tab"));
         this.setScrollable(false);
     }
 
@@ -54,7 +54,7 @@ public class PlayerStatisticsTab extends SkillTab {
         final int offsetY = containerBounds.y + Math.round(pxHeight * pxOffsetY);
         final Rectangle bookCt = new Rectangle(offsetX, offsetY, Math.round(108.0f * pxWidth), Math.round(104.0f * pxWidth));
         renderStack.pushPose();
-        renderStack.translate((double) (offsetX + 5), (double) (offsetY + 5), 0.0);
+        renderStack.translate(offsetX + 5, offsetY + 5, 0.0);
         this.renderPlayerAttributes(bookCt, renderStack, mouseX, mouseY, pTicks);
         renderStack.popPose();
         return Collections.emptyList();
@@ -68,8 +68,8 @@ public class PlayerStatisticsTab extends SkillTab {
         int maxLength = 0;
         final StringTextComponent text = new StringTextComponent("");
         for (final Tuple<ITextComponent, Tuple<ITextComponent, Integer>> statTpl : statDisplay) {
-            text.append((ITextComponent) statTpl.getA()).append("\n");
-            final int length = fr.width((ITextProperties) statTpl.getA());
+            text.append(statTpl.getA()).append("\n");
+            final int length = fr.width(statTpl.getA());
             if (length > maxLength) {
                 maxLength = length;
             }
@@ -78,14 +78,14 @@ public class PlayerStatisticsTab extends SkillTab {
         maxLength += numberOffset;
         matrixStack.pushPose();
         final int yOffset = this.renderFastestVaultDisplay(matrixStack, vaultStats, maxLength);
-        matrixStack.translate(0.0, (double) yOffset, 0.0);
-        UIHelper.renderWrappedText(matrixStack, (ITextComponent) text, containerBounds.width, 0);
-        matrixStack.translate((double) maxLength, 0.0, 0.0);
+        matrixStack.translate(0.0, yOffset, 0.0);
+        UIHelper.renderWrappedText(matrixStack, text, containerBounds.width, 0);
+        matrixStack.translate(maxLength, 0.0, 0.0);
         for (final Tuple<ITextComponent, Tuple<ITextComponent, Integer>> statTpl2 : statDisplay) {
-            final Tuple<ITextComponent, Integer> valueDisplayTpl = (Tuple<ITextComponent, Integer>) statTpl2.getB();
+            final Tuple<ITextComponent, Integer> valueDisplayTpl = statTpl2.getB();
             matrixStack.pushPose();
-            matrixStack.translate((double) (-(int) valueDisplayTpl.getB()), 0.0, 0.0);
-            fr.draw(matrixStack, (ITextComponent) valueDisplayTpl.getA(), 0.0f, 0.0f, -15130590);
+            matrixStack.translate(-(int) valueDisplayTpl.getB(), 0.0, 0.0);
+            fr.draw(matrixStack, valueDisplayTpl.getA(), 0.0f, 0.0f, -15130590);
             matrixStack.popPose();
             matrixStack.translate(0.0, 10.0, 0.0);
         }
@@ -97,11 +97,11 @@ public class PlayerStatisticsTab extends SkillTab {
         final PlayerVaultStatsData.PlayerRecordEntry entry = PlayerVaultStatsData.PlayerRecordEntry.deserialize(vaultStats.getCompound("fastestVault"));
         final String displayName = StringUtils.isNullOrEmpty(entry.getPlayerName()) ? "Unclaimed" : entry.getPlayerName();
         final FontRenderer fr = Minecraft.getInstance().font;
-        final ITextComponent display = (ITextComponent) new TranslationTextComponent("stat.the_vault.fastestVault").append(":");
+        final ITextComponent display = new TranslationTextComponent("stat.the_vault.fastestVault").append(":");
         fr.draw(matrixStack, display.getVisualOrderText(), 0.0f, 0.0f, -15130590);
         fr.draw(matrixStack, new StringTextComponent(displayName).getVisualOrderText(), 0.0f, 10.0f, -15130590);
-        final ITextComponent timeString = (ITextComponent) new StringTextComponent(UIHelper.formatTimeString(entry.getTickCount()));
-        final int xOffset = rightShift - fr.width((ITextProperties) timeString);
+        final ITextComponent timeString = new StringTextComponent(UIHelper.formatTimeString(entry.getTickCount()));
+        final int xOffset = rightShift - fr.width(timeString);
         fr.draw(matrixStack, timeString.getVisualOrderText(), (float) xOffset, 10.0f, -15130590);
         return 25;
     }
@@ -140,6 +140,6 @@ public class PlayerStatisticsTab extends SkillTab {
 
     private void renderBookBackground(final Rectangle containerBounds, final MatrixStack renderStack) {
         Minecraft.getInstance().getTextureManager().bind(ReadBookScreen.BOOK_LOCATION);
-        ScreenDrawHelper.draw(7, DefaultVertexFormats.POSITION_COLOR_TEX, (BufferBuilder buf) -> ScreenDrawHelper.rect((IVertexBuilder) buf, renderStack, (float) containerBounds.width, (float) containerBounds.height).at((float) containerBounds.x, (float) containerBounds.y).texVanilla(0.0f, 0.0f, 192.0f, 192.0f).draw());
+        ScreenDrawHelper.draw(7, DefaultVertexFormats.POSITION_COLOR_TEX, (BufferBuilder buf) -> ScreenDrawHelper.rect(buf, renderStack, (float) containerBounds.width, (float) containerBounds.height).at((float) containerBounds.x, (float) containerBounds.y).texVanilla(0.0f, 0.0f, 192.0f, 192.0f).draw());
     }
 }

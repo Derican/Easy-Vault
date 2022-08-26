@@ -39,11 +39,11 @@ public class MobEffectAuraConfig extends EternalAuraConfig.AuraConfig {
         if (world.getGameTime() % 20L != 0L) {
             return;
         }
-        final Effect effect = (Effect) ForgeRegistries.POTIONS.getValue(new ResourceLocation(this.effect));
+        final Effect effect = ForgeRegistries.POTIONS.getValue(new ResourceLocation(this.effect));
         if (effect == null) {
             return;
         }
-        EntityHelper.getNearby((IWorld) world, (Vector3i) new BlockPos(aura.getOffset()), aura.getRadius(), MobEntity.class).forEach(entity -> {
+        EntityHelper.getNearby(world, new BlockPos(aura.getOffset()), aura.getRadius(), MobEntity.class).forEach(entity -> {
             if (!(entity instanceof EternalEntity)) {
                 entity.addEffect(new EffectInstance(effect, 259, this.amplifier, true, true));
             }

@@ -76,18 +76,18 @@ public class EyesoreRenderer extends MobRenderer<EyesoreEntity, EyesoreModel>
     public void render(final EyesoreEntity entity, final float entityYaw, final float partialTicks, final MatrixStack matrixStack, final IRenderTypeBuffer buffer, final int packedLightIn) {
         super.render(entity, entityYaw, partialTicks, matrixStack, buffer, packedLightIn);
         final LivingEntity livingentity = (entity.getEntityData().get(EyesoreEntity.LASER_TARGET)).map(playerId -> entity.getCommandSenderWorld().getPlayerByUUID(playerId)).orElse(null);
-        ((EyesoreModel)this.model).tentaclesRemaining = entity.getTentaclesRemaining();
+        this.model.tentaclesRemaining = entity.getTentaclesRemaining();
         if (livingentity != null) {
             final float f = this.getAttackAnimationScale(entity, partialTicks);
             final float f2 = entity.level.getGameTime() + partialTicks;
             final float f3 = f2 * 0.5f % 1.0f;
             final float f4 = entity.getEyeHeight();
             matrixStack.pushPose();
-            matrixStack.translate(0.0, (double)f4, 0.0);
+            matrixStack.translate(0.0, f4, 0.0);
             Vector3d vector3d = this.getPosition(livingentity, livingentity.getBbHeight() * 0.5, partialTicks);
-            Vector3d vector3d2 = this.getPosition((LivingEntity)entity, f4, partialTicks);
+            Vector3d vector3d2 = this.getPosition(entity, f4, partialTicks);
             final Vector3d eyePos1 = entity.getEyePosition(partialTicks);
-            final RayTraceContext context = new RayTraceContext(eyePos1, vector3d, RayTraceContext.BlockMode.COLLIDER, RayTraceContext.FluidMode.NONE, (Entity)entity);
+            final RayTraceContext context = new RayTraceContext(eyePos1, vector3d, RayTraceContext.BlockMode.COLLIDER, RayTraceContext.FluidMode.NONE, entity);
             final BlockRayTraceResult result = entity.level.clip(context);
             vector3d2 = eyePos1;
             if (result.getType() != RayTraceResult.Type.MISS) {
@@ -132,8 +132,8 @@ public class EyesoreRenderer extends MobRenderer<EyesoreEntity, EyesoreModel>
             final double directionLength = direction.length();
             direction = direction.normalize();
             for (int step = 0; step <= directionLength; ++step) {
-                final Vector3d pos = vector3d2.add(direction.scale((double)step));
-                entity.level.addParticle((IParticleData)RedstoneParticleData.REDSTONE, pos.x, pos.y, pos.z, 0.0, 0.0, 0.0);
+                final Vector3d pos = vector3d2.add(direction.scale(step));
+                entity.level.addParticle(RedstoneParticleData.REDSTONE, pos.x, pos.y, pos.z, 0.0, 0.0, 0.0);
             }
             final RenderType type = RenderTypeDecorator.decorate(EyesoreRenderer.BEAM_RENDER_TYPE, () -> RenderSystem.disableCull(), () -> {});
             final IVertexBuilder ivertexbuilder = buffer.getBuffer(type);
@@ -172,9 +172,9 @@ public class EyesoreRenderer extends MobRenderer<EyesoreEntity, EyesoreModel>
     }
     
     private Vector3d getPosition(final LivingEntity entityLivingBaseIn, final double p_177110_2_, final float p_177110_4_) {
-        final double d0 = MathHelper.lerp((double)p_177110_4_, entityLivingBaseIn.xOld, entityLivingBaseIn.getX());
-        final double d2 = MathHelper.lerp((double)p_177110_4_, entityLivingBaseIn.yOld, entityLivingBaseIn.getY()) + p_177110_2_;
-        final double d3 = MathHelper.lerp((double)p_177110_4_, entityLivingBaseIn.zOld, entityLivingBaseIn.getZ());
+        final double d0 = MathHelper.lerp(p_177110_4_, entityLivingBaseIn.xOld, entityLivingBaseIn.getX());
+        final double d2 = MathHelper.lerp(p_177110_4_, entityLivingBaseIn.yOld, entityLivingBaseIn.getY()) + p_177110_2_;
+        final double d3 = MathHelper.lerp(p_177110_4_, entityLivingBaseIn.zOld, entityLivingBaseIn.getZ());
         return new Vector3d(d0, d2, d3);
     }
     

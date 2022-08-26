@@ -69,7 +69,7 @@ public class AbilityKeyMessage {
                 return;
             } else {
                 final PlayerAbilitiesData abilitiesData = PlayerAbilitiesData.get((ServerWorld) sender.level);
-                final AbilityTree abilityTree = abilitiesData.getAbilities((PlayerEntity) sender);
+                final AbilityTree abilityTree = abilitiesData.getAbilities(sender);
                 if (message.scrollUp) {
                     abilityTree.scrollUp(sender.server);
                 } else if (message.scrollDown) {

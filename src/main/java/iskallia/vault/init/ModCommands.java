@@ -41,8 +41,8 @@ public class ModCommands {
     }
 
     public static void registerArgumentTypes() {
-        ArgumentTypes.register(Vault.id("backup_list_player").toString(), (Class) BackupListArgument.Player.class, (IArgumentSerializer) new ArgumentSerializer((Supplier) BackupListArgument.Player::new));
-        ArgumentTypes.register(Vault.id("backup_list_uuid").toString(), (Class) BackupListArgument.UUIDRef.class, (IArgumentSerializer) new ArgumentSerializer((Supplier) BackupListArgument.UUIDRef::new));
+        ArgumentTypes.register(Vault.id("backup_list_player").toString(), (Class) BackupListArgument.Player.class, new ArgumentSerializer(BackupListArgument.Player::new));
+        ArgumentTypes.register(Vault.id("backup_list_uuid").toString(), (Class) BackupListArgument.UUIDRef.class, new ArgumentSerializer(BackupListArgument.UUIDRef::new));
     }
 
     public static <T extends Command> T registerCommand(final Supplier<T> supplier, final CommandDispatcher<CommandSource> dispatcher, final Commands.EnvironmentType env) {

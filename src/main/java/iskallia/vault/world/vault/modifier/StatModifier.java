@@ -26,6 +26,6 @@ public class StatModifier extends TexturedVaultModifier {
     public enum Statistic {
         PARRY,
         RESISTANCE,
-        COOLDOWN_REDUCTION;
+        COOLDOWN_REDUCTION
     }
 }

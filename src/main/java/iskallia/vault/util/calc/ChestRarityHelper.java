@@ -18,8 +18,8 @@ import net.minecraft.entity.player.ServerPlayerEntity;
 public class ChestRarityHelper {
     public static float getIncreasedChestRarity(final ServerPlayerEntity sPlayer) {
         float increasedRarity = 0.0f;
-        increasedRarity += VaultGearHelper.getAttributeValueOnGearSumFloat((LivingEntity) sPlayer, ModAttributes.CHEST_RARITY);
-        final SetTree sets = PlayerSetsData.get(sPlayer.getLevel()).getSets((PlayerEntity) sPlayer);
+        increasedRarity += VaultGearHelper.getAttributeValueOnGearSumFloat(sPlayer, ModAttributes.CHEST_RARITY);
+        final SetTree sets = PlayerSetsData.get(sPlayer.getLevel()).getSets(sPlayer);
         for (final SetNode<?> node : sets.getNodes()) {
             if (node.getSet() instanceof TreasureSet) {
                 final TreasureSet set = (TreasureSet) node.getSet();

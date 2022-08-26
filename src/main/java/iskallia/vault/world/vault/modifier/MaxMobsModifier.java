@@ -28,7 +28,7 @@ public class MaxMobsModifier extends TexturedVaultModifier {
     @Override
     public void apply(final VaultRaid vault, final VaultPlayer player, final ServerWorld world, final Random random) {
         player.getProperties().get(VaultRaid.SPAWNER).ifPresent(spawner -> {
-            ((VaultSpawner) spawner.getBaseValue()).addMaxMobs(this.maxMobsAddend);
+            spawner.getBaseValue().addMaxMobs(this.maxMobsAddend);
             spawner.updateNBT();
         });
     }
@@ -36,7 +36,7 @@ public class MaxMobsModifier extends TexturedVaultModifier {
     @Override
     public void remove(final VaultRaid vault, final VaultPlayer player, final ServerWorld world, final Random random) {
         player.getProperties().get(VaultRaid.SPAWNER).ifPresent(spawner -> {
-            ((VaultSpawner) spawner.getBaseValue()).addMaxMobs(-this.maxMobsAddend);
+            spawner.getBaseValue().addMaxMobs(-this.maxMobsAddend);
             spawner.updateNBT();
         });
     }

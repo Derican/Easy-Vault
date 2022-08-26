@@ -25,19 +25,19 @@ public class EyestalkModel extends SegmentedModel<EyestalkEntity>
         this.texWidth = 32;
         this.texHeight = 32;
         final ImmutableList.Builder<ModelRenderer> segmentBuilder = ImmutableList.builder();
-        (this.body = new ModelRenderer((Model)this)).setPos(0.0f, 0.0f, 0.0f);
+        (this.body = new ModelRenderer(this)).setPos(0.0f, 0.0f, 0.0f);
         this.body.texOffs(0, 0).addBox(-4.0f, 4.0f, -4.0f, 8.0f, 8.0f, 8.0f, 0.0f, false);
-        (this.tail = new ModelRenderer((Model)this)).setPos(0.0f, 11.5f, 1.0f);
+        (this.tail = new ModelRenderer(this)).setPos(0.0f, 11.5f, 1.0f);
         this.body.addChild(this.tail);
         this.setRotationAngle(this.tail, 0.2618f, 0.0f, 0.0f);
         this.tail.texOffs(0, 16).addBox(-2.0f, -1.3775f, -2.0694f, 4.0f, 8.0f, 4.0f, 0.0f, false);
         segmentBuilder.add(this.tail);
-        this.segments = (ImmutableList<ModelRenderer>)segmentBuilder.build();
+        this.segments = segmentBuilder.build();
     }
     
     @Nonnull
     public Iterable<ModelRenderer> parts() {
-        return (Iterable<ModelRenderer>)this.segments;
+        return this.segments;
     }
     
     public void setupAnim(@Nonnull final EyestalkEntity entity, final float limbSwing, final float limbSwingAmount, final float ageInTicks, final float netHeadYaw, final float headPitch) {

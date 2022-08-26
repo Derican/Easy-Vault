@@ -45,13 +45,13 @@ public class TreasureGoblinEntity extends MonsterEntity {
     protected PlayerEntity lastAttackedPlayer;
 
     public TreasureGoblinEntity(final EntityType<? extends MonsterEntity> type, final World worldIn) {
-        super((EntityType) type, worldIn);
+        super(type, worldIn);
     }
 
     protected void registerGoals() {
-        this.goalSelector.addGoal(3, (Goal) new AvoidEntityGoal((CreatureEntity) this, (Class) PlayerEntity.class, 6.0f, 1.7000000476837158, 2.0));
-        this.goalSelector.addGoal(5, (Goal) new LookAtGoal((MobEntity) this, (Class) PlayerEntity.class, 20.0f));
-        this.goalSelector.addGoal(5, (Goal) new LookRandomlyGoal((MobEntity) this));
+        this.goalSelector.addGoal(3, new AvoidEntityGoal(this, PlayerEntity.class, 6.0f, 1.7000000476837158, 2.0));
+        this.goalSelector.addGoal(5, new LookAtGoal(this, PlayerEntity.class, 20.0f));
+        this.goalSelector.addGoal(5, new LookRandomlyGoal(this));
     }
 
     public boolean isHitByPlayer() {
@@ -103,14 +103,14 @@ public class TreasureGoblinEntity extends MonsterEntity {
     }
 
     public void disappear(final ServerWorld world) {
-        world.despawn((Entity) this);
+        world.despawn(this);
         if (this.lastAttackedPlayer != null) {
             final StringTextComponent bailText = (StringTextComponent) new StringTextComponent("Treasure Goblin escaped from you.").withStyle(Style.EMPTY.withColor(Color.fromRgb(8042883)));
-            this.lastAttackedPlayer.displayClientMessage((ITextComponent) bailText, true);
+            this.lastAttackedPlayer.displayClientMessage(bailText, true);
             this.lastAttackedPlayer.playNotifySound(ModSounds.GOBLIN_BAIL, SoundCategory.MASTER, 0.7f, 1.0f);
             world.playSound(this.lastAttackedPlayer, this.getX(), this.getY(), this.getZ(), ModSounds.GOBLIN_BAIL, SoundCategory.MASTER, 0.7f, 1.0f);
         } else {
-            world.playSound((PlayerEntity) null, this.getX(), this.getY(), this.getZ(), ModSounds.GOBLIN_BAIL, SoundCategory.MASTER, 0.7f, 1.0f);
+            world.playSound(null, this.getX(), this.getY(), this.getZ(), ModSounds.GOBLIN_BAIL, SoundCategory.MASTER, 0.7f, 1.0f);
         }
     }
 

@@ -46,7 +46,7 @@ public class PalettedListPoolElement extends JigsawPiece {
     }
 
     protected static <E extends JigsawPiece> RecordCodecBuilder<E, JigsawPattern.PlacementBehaviour> projection() {
-        return (RecordCodecBuilder<E, JigsawPattern.PlacementBehaviour>) JigsawPattern.PlacementBehaviour.CODEC.fieldOf("projection").forGetter(JigsawPiece::getProjection);
+        return JigsawPattern.PlacementBehaviour.CODEC.fieldOf("projection").forGetter(JigsawPiece::getProjection);
     }
 
     protected static <E extends PalettedListPoolElement> RecordCodecBuilder<E, List<Supplier<StructureProcessorList>>> processors() {

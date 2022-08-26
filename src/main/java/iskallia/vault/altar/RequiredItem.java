@@ -18,12 +18,12 @@ public class RequiredItem {
     }
 
     public RequiredItem(final Item item, final int currentAmount, final int amountRequired) {
-        this(new ItemStack((IItemProvider) item), currentAmount, amountRequired);
+        this(new ItemStack(item), currentAmount, amountRequired);
     }
 
     public static CompoundNBT serializeNBT(final RequiredItem requiredItem) {
         final CompoundNBT nbt = new CompoundNBT();
-        nbt.put("item", (INBT) requiredItem.getItem().serializeNBT());
+        nbt.put("item", requiredItem.getItem().serializeNBT());
         nbt.putInt("currentAmount", requiredItem.getCurrentAmount());
         nbt.putInt("amountRequired", requiredItem.getAmountRequired());
         return nbt;

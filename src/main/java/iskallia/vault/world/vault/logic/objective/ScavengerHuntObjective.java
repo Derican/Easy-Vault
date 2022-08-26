@@ -74,12 +74,12 @@ public class ScavengerHuntObjective extends VaultObjective {
         this.chestWatcher = new ChestWatcher();
         this.inventoryMirror = new Inventory();
         this.submissions = new ArrayList<ItemSubmission>();
-        this.chestInventory = (NonNullList<ItemStack>) NonNullList.withSize(45, ItemStack.EMPTY);
+        this.chestInventory = NonNullList.withSize(45, ItemStack.EMPTY);
         this.requiredSubmissions = requiredSubmissions;
     }
 
     public IInventory getScavengerChestInventory() {
-        return (IInventory) this.inventoryMirror;
+        return this.inventoryMirror;
     }
 
     public ChestWatcher getChestWatcher() {
@@ -95,7 +95,7 @@ public class ScavengerHuntObjective extends VaultObjective {
     }
 
     public List<ItemSubmission> getAllSubmissions() {
-        return Collections.unmodifiableList((List<? extends ItemSubmission>) this.submissions);
+        return Collections.unmodifiableList(this.submissions);
     }
 
     public Predicate<ScavengerHuntConfig.ItemEntry> getGenerationDropFilter() {
@@ -140,7 +140,7 @@ public class ScavengerHuntObjective extends VaultObjective {
     @Nullable
     @Override
     public ITextComponent getObjectiveTargetDescription(final int amount) {
-        return (ITextComponent) new StringTextComponent("Total required Item Types: ").append((ITextComponent) new StringTextComponent(String.valueOf(amount)).withStyle(TextFormatting.GREEN));
+        return new StringTextComponent("Total required Item Types: ").append(new StringTextComponent(String.valueOf(amount)).withStyle(TextFormatting.GREEN));
     }
 
     @Nonnull
@@ -159,12 +159,12 @@ public class ScavengerHuntObjective extends VaultObjective {
 
     @Override
     public ITextComponent getObjectiveDisplayName() {
-        return (ITextComponent) new StringTextComponent("Scavenger Hunt").withStyle(TextFormatting.GREEN);
+        return new StringTextComponent("Scavenger Hunt").withStyle(TextFormatting.GREEN);
     }
 
     @Override
     public ITextComponent getVaultName() {
-        return (ITextComponent) new StringTextComponent("Scavenger Vault");
+        return new StringTextComponent("Scavenger Vault");
     }
 
     @Override
@@ -184,7 +184,7 @@ public class ScavengerHuntObjective extends VaultObjective {
                 boolean addedItem = false;
                 final NonNullList<ItemStack> inventory = this.chestInventory;
                 for (int slot = 0; slot < inventory.size(); ++slot) {
-                    final ItemStack stack = (ItemStack) inventory.get(slot);
+                    final ItemStack stack = inventory.get(slot);
                     if (!stack.isEmpty()) {
                         if (this.trySubmitItem(identifier, stack)) {
                             this.chestInventory.set(slot, stack);
@@ -196,9 +196,9 @@ public class ScavengerHuntObjective extends VaultObjective {
                 return Boolean.valueOf(addedItem);
             }).orElse(false);
             if (activeSubmissions > this.getActiveSubmissionsFilter().count()) {
-                vault.getPlayers().forEach(vPlayer -> vPlayer.runIfPresent(srv, sPlayer -> world.playSound((PlayerEntity) null, sPlayer.blockPosition(), SoundEvents.PLAYER_LEVELUP, SoundCategory.BLOCKS, 1.0f, 1.0f)));
+                vault.getPlayers().forEach(vPlayer -> vPlayer.runIfPresent(srv, sPlayer -> world.playSound(null, sPlayer.blockPosition(), SoundEvents.PLAYER_LEVELUP, SoundCategory.BLOCKS, 1.0f, 1.0f)));
             } else if (addedAnyItem) {
-                vault.getPlayers().forEach(vPlayer -> vPlayer.runIfPresent(srv, sPlayer -> world.playSound((PlayerEntity) null, sPlayer.blockPosition(), SoundEvents.NOTE_BLOCK_BELL, SoundCategory.PLAYERS, 1.1f, 1.4f)));
+                vault.getPlayers().forEach(vPlayer -> vPlayer.runIfPresent(srv, sPlayer -> world.playSound(null, sPlayer.blockPosition(), SoundEvents.NOTE_BLOCK_BELL, SoundCategory.PLAYERS, 1.1f, 1.4f)));
             }
         }
         if (this.isCompleted()) {
@@ -216,7 +216,7 @@ public class ScavengerHuntObjective extends VaultObjective {
         vault.getPlayers().forEach(vPlayer -> vPlayer.runIfPresent(srv, sPlayer -> {
             if (sPlayer.containerMenu instanceof ScavengerChestContainer) {
                 sPlayer.containerMenu.setItem(slot, stack);
-                sPlayer.connection.send((IPacket) new SSetSlotPacket(sPlayer.containerMenu.containerId, slot, stack));
+                sPlayer.connection.send(new SSetSlotPacket(sPlayer.containerMenu.containerId, slot, stack));
             }
         }));
     }
@@ -240,7 +240,7 @@ public class ScavengerHuntObjective extends VaultObjective {
         }
         rewardPlayer.runIfPresent(world.getServer(), sPlayer -> {
             final BlockPos pos = sPlayer.blockPosition();
-            final LootContext.Builder builder = new LootContext.Builder(world).withRandom(world.random).withParameter(LootParameters.THIS_ENTITY, sPlayer).withParameter(LootParameters.ORIGIN, Vector3d.atCenterOf((Vector3i) pos)).withLuck(sPlayer.getLuck());
+            final LootContext.Builder builder = new LootContext.Builder(world).withRandom(world.random).withParameter(LootParameters.THIS_ENTITY, sPlayer).withParameter(LootParameters.ORIGIN, Vector3d.atCenterOf(pos)).withLuck(sPlayer.getLuck());
             final LootContext ctx = builder.create(LootParameterSets.CHEST);
             this.dropRewardCrate(world, vault, pos, ctx);
             for (int i = 1; i < vault.getPlayers().size(); ++i) {
@@ -251,17 +251,17 @@ public class ScavengerHuntObjective extends VaultObjective {
             final IFormattableTextComponent msgContainer = new StringTextComponent("").withStyle(TextFormatting.WHITE);
             final IFormattableTextComponent playerName = sPlayer.getDisplayName().copy();
             playerName.setStyle(Style.EMPTY.withColor(Color.fromRgb(9974168)));
-            MiscUtils.broadcast((ITextComponent) msgContainer.append((ITextComponent) playerName).append(" finished a Scavenger Hunt!"));
+            MiscUtils.broadcast(msgContainer.append(playerName).append(" finished a Scavenger Hunt!"));
         });
     }
 
     private void dropRewardCrate(final ServerWorld world, final VaultRaid vault, final BlockPos pos, final LootContext context) {
         final NonNullList<ItemStack> stacks = this.createLoot(world, vault, context);
         final ItemStack crate = VaultCrateBlock.getCrateWithLoot(ModBlocks.VAULT_CRATE_SCAVENGER, stacks);
-        final ItemEntity item = new ItemEntity((World) world, (double) pos.getX(), (double) pos.getY(), (double) pos.getZ(), crate);
+        final ItemEntity item = new ItemEntity(world, pos.getX(), pos.getY(), pos.getZ(), crate);
         item.setDefaultPickUpDelay();
-        world.addFreshEntity((Entity) item);
-        this.crates.add(new Crate((List<ItemStack>) stacks));
+        world.addFreshEntity(item);
+        this.crates.add(new Crate(stacks));
     }
 
     @Nullable
@@ -295,19 +295,19 @@ public class ScavengerHuntObjective extends VaultObjective {
         for (final ItemSubmission submission : this.submissions) {
             list.add(submission.serialize());
         }
-        tag.put("submissions", (INBT) list);
+        tag.put("submissions", list);
         tag.putInt("requiredSubmissions", this.requiredSubmissions);
         final ListNBT inventoryList = new ListNBT();
         for (int slot = 0; slot < this.chestInventory.size(); ++slot) {
-            final ItemStack stack = (ItemStack) this.chestInventory.get(slot);
+            final ItemStack stack = this.chestInventory.get(slot);
             if (!stack.isEmpty()) {
                 final CompoundNBT itemTag = new CompoundNBT();
                 itemTag.putInt("slot", slot);
-                itemTag.put("item", (INBT) stack.serializeNBT());
+                itemTag.put("item", stack.serializeNBT());
                 inventoryList.add(itemTag);
             }
         }
-        tag.put("inventory", (INBT) inventoryList);
+        tag.put("inventory", inventoryList);
         return tag;
     }
 
@@ -320,7 +320,7 @@ public class ScavengerHuntObjective extends VaultObjective {
             this.submissions.add(ItemSubmission.deserialize(list.getCompound(index)));
         }
         this.requiredSubmissions = tag.getInt("requiredSubmissions");
-        this.chestInventory = (NonNullList<ItemStack>) NonNullList.withSize(45, ItemStack.EMPTY);
+        this.chestInventory = NonNullList.withSize(45, ItemStack.EMPTY);
         final ListNBT inventoryList = tag.getList("inventory", 10);
         for (int i = 0; i < inventoryList.size(); ++i) {
             final CompoundNBT itemTag = inventoryList.getCompound(i);
@@ -370,7 +370,7 @@ public class ScavengerHuntObjective extends VaultObjective {
         }
 
         public static ItemSubmission deserialize(final CompoundNBT tag) {
-            final Item requiredItem = (Item) ForgeRegistries.ITEMS.getValue(new ResourceLocation(tag.getString("item")));
+            final Item requiredItem = ForgeRegistries.ITEMS.getValue(new ResourceLocation(tag.getString("item")));
             final int requiredAmount = tag.getInt("required");
             final int currentAmount = tag.getInt("current");
             final ItemSubmission submitted = new ItemSubmission(requiredItem, requiredAmount);
@@ -403,11 +403,11 @@ public class ScavengerHuntObjective extends VaultObjective {
         }
 
         public ItemStack getItem(final int index) {
-            return (ItemStack) ScavengerHuntObjective.this.chestInventory.get(index);
+            return ScavengerHuntObjective.this.chestInventory.get(index);
         }
 
         public ItemStack removeItem(final int index, final int count) {
-            return ItemStackHelper.removeItem((List) ScavengerHuntObjective.this.chestInventory, index, count);
+            return ItemStackHelper.removeItem(ScavengerHuntObjective.this.chestInventory, index, count);
         }
 
         public ItemStack removeItemNoUpdate(final int index) {

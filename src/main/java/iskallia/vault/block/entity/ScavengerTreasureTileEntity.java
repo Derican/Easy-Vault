@@ -21,11 +21,11 @@ public class ScavengerTreasureTileEntity extends TileEntity implements ITickable
     private static final Random rand;
 
     protected ScavengerTreasureTileEntity(final TileEntityType<?> tileEntityTypeIn) {
-        super((TileEntityType) tileEntityTypeIn);
+        super(tileEntityTypeIn);
     }
 
     public ScavengerTreasureTileEntity() {
-        super((TileEntityType) ModBlocks.SCAVENGER_TREASURE_TILE_ENTITY);
+        super(ModBlocks.SCAVENGER_TREASURE_TILE_ENTITY);
     }
 
     public void tick() {
@@ -40,7 +40,7 @@ public class ScavengerTreasureTileEntity extends TileEntity implements ITickable
             final ParticleManager mgr = Minecraft.getInstance().particleEngine;
             final BlockPos pos = this.getBlockPos();
             final Vector3d rPos = new Vector3d(pos.getX() + 0.5 + (ScavengerTreasureTileEntity.rand.nextFloat() - ScavengerTreasureTileEntity.rand.nextFloat()) * (ScavengerTreasureTileEntity.rand.nextFloat() * 1.5), pos.getY() + 0.5 + (ScavengerTreasureTileEntity.rand.nextFloat() - ScavengerTreasureTileEntity.rand.nextFloat()) * (ScavengerTreasureTileEntity.rand.nextFloat() * 1.5), pos.getZ() + 0.5 + (ScavengerTreasureTileEntity.rand.nextFloat() - ScavengerTreasureTileEntity.rand.nextFloat()) * (ScavengerTreasureTileEntity.rand.nextFloat() * 1.5));
-            final SimpleAnimatedParticle p = (SimpleAnimatedParticle) mgr.createParticle((IParticleData) ParticleTypes.FIREWORK, rPos.x, rPos.y, rPos.z, 0.0, 0.0, 0.0);
+            final SimpleAnimatedParticle p = (SimpleAnimatedParticle) mgr.createParticle(ParticleTypes.FIREWORK, rPos.x, rPos.y, rPos.z, 0.0, 0.0, 0.0);
             if (p != null) {
 //                TODO: check if the omit is acceptable
 //                p.baseGravity = 0.0f;

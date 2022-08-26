@@ -54,7 +54,7 @@ public class PlayerStatisticsCollector {
         if (sPlayer.tickCount % 20 != 0) {
             return;
         }
-        final TalentTree talents = PlayerTalentsData.get(sPlayer.getLevel()).getTalents((PlayerEntity) sPlayer);
+        final TalentTree talents = PlayerTalentsData.get(sPlayer.getLevel()).getTalents(sPlayer);
         final List<AttributeSnapshot> snapshots = new ArrayList<AttributeSnapshot>();
         final List<Attribute> collectingAttributes = PlayerStatisticsCollector.displayedAttributes.get();
         for (final Attribute attribute : collectingAttributes) {
@@ -68,15 +68,15 @@ public class PlayerStatisticsCollector {
             snapshots.add(new AttributeSnapshot(attribute.getDescriptionId(), value, attribute == Attributes.KNOCKBACK_RESISTANCE));
         }
         final float parry = ParryHelper.getPlayerParryChanceUnlimited(sPlayer) * 100.0f;
-        snapshots.add(collectingAttributes.indexOf(Attributes.KNOCKBACK_RESISTANCE), new AttributeSnapshot("stat.the_vault.parry", parry, true).setLimit(AttributeLimitHelper.getParryLimit((PlayerEntity) sPlayer) * 100.0f));
+        snapshots.add(collectingAttributes.indexOf(Attributes.KNOCKBACK_RESISTANCE), new AttributeSnapshot("stat.the_vault.parry", parry, true).setLimit(AttributeLimitHelper.getParryLimit(sPlayer) * 100.0f));
         final float resistance = ResistanceHelper.getPlayerResistancePercentUnlimited(sPlayer) * 100.0f;
-        snapshots.add(collectingAttributes.indexOf(Attributes.KNOCKBACK_RESISTANCE), new AttributeSnapshot("stat.the_vault.resistance", resistance, true).setLimit(AttributeLimitHelper.getResistanceLimit((PlayerEntity) sPlayer) * 100.0f));
+        snapshots.add(collectingAttributes.indexOf(Attributes.KNOCKBACK_RESISTANCE), new AttributeSnapshot("stat.the_vault.resistance", resistance, true).setLimit(AttributeLimitHelper.getResistanceLimit(sPlayer) * 100.0f));
         if (talents.hasLearnedNode(ModConfigs.TALENTS.COMMANDER)) {
             final float summonEternalCooldown = CooldownHelper.getCooldownMultiplierUnlimited(sPlayer, ModConfigs.ABILITIES.SUMMON_ETERNAL) * 100.0f;
-            snapshots.add(collectingAttributes.indexOf(Attributes.KNOCKBACK_RESISTANCE), new AttributeSnapshot("stat.the_vault.cooldown_summoneternal", "stat.the_vault.cooldown", summonEternalCooldown, true).setLimit(AttributeLimitHelper.getCooldownReductionLimit((PlayerEntity) sPlayer) * 100.0f));
+            snapshots.add(collectingAttributes.indexOf(Attributes.KNOCKBACK_RESISTANCE), new AttributeSnapshot("stat.the_vault.cooldown_summoneternal", "stat.the_vault.cooldown", summonEternalCooldown, true).setLimit(AttributeLimitHelper.getCooldownReductionLimit(sPlayer) * 100.0f));
         }
         final float cooldown = CooldownHelper.getCooldownMultiplierUnlimited(sPlayer, null) * 100.0f;
-        snapshots.add(collectingAttributes.indexOf(Attributes.KNOCKBACK_RESISTANCE), new AttributeSnapshot("stat.the_vault.cooldown", cooldown, true).setLimit(AttributeLimitHelper.getCooldownReductionLimit((PlayerEntity) sPlayer) * 100.0f));
+        snapshots.add(collectingAttributes.indexOf(Attributes.KNOCKBACK_RESISTANCE), new AttributeSnapshot("stat.the_vault.cooldown", cooldown, true).setLimit(AttributeLimitHelper.getCooldownReductionLimit(sPlayer) * 100.0f));
         snapshots.add(new AttributeSnapshot("stat.the_vault.chest_rarity", ChestRarityHelper.getIncreasedChestRarity(sPlayer) * 100.0f, true));
         snapshots.add(new AttributeSnapshot("stat.the_vault.thorns_chance", ThornsHelper.getPlayerThornsChance(sPlayer) * 100.0f, true));
         snapshots.add(new AttributeSnapshot("stat.the_vault.thorns_damage", ThornsHelper.getPlayerThornsDamage(sPlayer) * 100.0f, true));
@@ -84,12 +84,12 @@ public class PlayerStatisticsCollector {
         snapshots.add(new AttributeSnapshot("stat.the_vault.fatal_strike_damage", FatalStrikeHelper.getPlayerFatalStrikeDamage(sPlayer) * 100.0f, true));
         final CompoundNBT vaultStats = new CompoundNBT();
         final PlayerVaultStatsData vaultStatsData = PlayerVaultStatsData.get(sPlayer.getLevel());
-        final PlayerStatsData.Stats vaultPlayerStats = PlayerStatsData.get(sPlayer.getLevel()).get((PlayerEntity) sPlayer);
+        final PlayerStatsData.Stats vaultPlayerStats = PlayerStatsData.get(sPlayer.getLevel()).get(sPlayer);
         final PlayerFavourData favourData = PlayerFavourData.get(sPlayer.getLevel());
         final UUID playerUUID = sPlayer.getUUID();
         final PlayerVaultStats stats = vaultStatsData.getVaultStats(playerUUID);
         final VaultRunsSnapshot vaultRunsSnapshot = VaultRunsSnapshot.ofPlayer(sPlayer);
-        vaultStats.put("fastestVault", (INBT) vaultStatsData.getFastestVaultTime().serialize());
+        vaultStats.put("fastestVault", vaultStatsData.getFastestVaultTime().serialize());
         vaultStats.putInt("powerLevel", stats.getTotalSpentSkillPoints() + stats.getUnspentSkillPts());
         vaultStats.putInt("knowledgeLevel", stats.getTotalSpentKnowledgePoints() + stats.getUnspentKnowledgePts());
         vaultStats.putInt("crystalsCrafted", vaultPlayerStats.getCrystals().size());
@@ -101,14 +101,14 @@ public class PlayerStatisticsCollector {
         vaultStats.putInt("vaultRaids", vaultRunsSnapshot.raidsCompleted);
         final CompoundNBT favourStats = new CompoundNBT();
         for (final PlayerFavourData.VaultGodType type : PlayerFavourData.VaultGodType.values()) {
-            favourStats.put(type.name(), (INBT) IntNBT.valueOf(favourData.getFavour(playerUUID, type)));
+            favourStats.put(type.name(), IntNBT.valueOf(favourData.getFavour(playerUUID, type)));
         }
         final CompoundNBT serialized = new CompoundNBT();
         final ListNBT snapshotList = new ListNBT();
         snapshots.forEach(snapshot -> snapshotList.add(snapshot.serialize()));
-        serialized.put("attributes", (INBT) snapshotList);
-        serialized.put("vaultStats", (INBT) vaultStats);
-        serialized.put("favourStats", (INBT) favourStats);
+        serialized.put("attributes", snapshotList);
+        serialized.put("vaultStats", vaultStats);
+        serialized.put("favourStats", favourStats);
         final PlayerStatisticsMessage pkt = new PlayerStatisticsMessage(serialized);
         ModNetwork.CHANNEL.sendTo(pkt, sPlayer.connection.connection, NetworkDirection.PLAY_TO_CLIENT);
     }
@@ -133,7 +133,7 @@ public class PlayerStatisticsCollector {
     }
 
     static {
-        displayedAttributes = (() -> Lists.newArrayList(new Attribute[]{Attributes.MAX_HEALTH, Attributes.ATTACK_DAMAGE, Attributes.ATTACK_SPEED, Attributes.ARMOR, Attributes.ARMOR_TOUGHNESS, Attributes.KNOCKBACK_RESISTANCE, Attributes.LUCK, (Attribute) ForgeMod.REACH_DISTANCE.get(), Attributes.MOVEMENT_SPEED}));
+        displayedAttributes = (() -> Lists.newArrayList(Attributes.MAX_HEALTH, Attributes.ATTACK_DAMAGE, Attributes.ATTACK_SPEED, Attributes.ARMOR, Attributes.ARMOR_TOUGHNESS, Attributes.KNOCKBACK_RESISTANCE, Attributes.LUCK, ForgeMod.REACH_DISTANCE.get(), Attributes.MOVEMENT_SPEED));
     }
 
     public static class VaultRunsSnapshot {
@@ -145,7 +145,7 @@ public class PlayerStatisticsCollector {
         public int raidsCompleted;
 
         public static VaultRunsSnapshot ofPlayer(final ServerPlayerEntity sPlayer) {
-            final PlayerStatsData.Stats vaultPlayerStats = PlayerStatsData.get(sPlayer.getLevel()).get((PlayerEntity) sPlayer);
+            final PlayerStatsData.Stats vaultPlayerStats = PlayerStatsData.get(sPlayer.getLevel()).get(sPlayer);
             final VaultRunsSnapshot snapshot = new VaultRunsSnapshot();
             snapshot.vaultRuns = vaultPlayerStats.getVaults().size();
             for (final VaultRaid recordedRaid : vaultPlayerStats.getVaults()) {

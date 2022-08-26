@@ -107,7 +107,7 @@ public class VaultJigsawHelper {
         }
         final BlockPos nextRoom = roomCenter.relative(targetDir, 95);
         final BlockPos nextRoomEdge = nextRoom.relative(targetDir, 24);
-        return !vault.getProperties().getBase(VaultRaid.BOUNDING_BOX).map(box -> !box.isInside((Vector3i) nextRoomEdge)).orElse(true) && vault.getGenerator().getPiecesAt(nextRoom).isEmpty();
+        return !vault.getProperties().getBase(VaultRaid.BOUNDING_BOX).map(box -> !box.isInside(nextRoomEdge)).orElse(true) && vault.getGenerator().getPiecesAt(nextRoom).isEmpty();
     }
 
     private static List<VaultPiece> placeRandomRoom(final ServerWorld sWorld, final BlockPos.Mutable generationPos, final Direction toCenter, final JigsawPiece roomToGenerate) {
@@ -123,9 +123,9 @@ public class VaultJigsawHelper {
         final MutableBoundingBox jigsawBox = roomToGenerate.getBoundingBox(tplMgr, at, roomRotation);
         final Vector3i size = jigsawBox.getLength();
         final BlockPos directionOffset = new BlockPos(toCenter.getStepX() * size.getX() / 2, -jigsawGroundOffset + size.getY() / 2, toCenter.getStepZ() * size.getZ() / 2);
-        BlockPos genPos = at.offset((Vector3i) directionOffset);
+        BlockPos genPos = at.offset(directionOffset);
         final Vector3i center = jigsawBox.getCenter();
-        genPos = genPos.offset((Vector3i) at.subtract(center));
+        genPos = genPos.offset(at.subtract(center));
         final JigsawPiecePlacer placer = JigsawPiecePlacer.newPlacer(roomToGenerate, sWorld, genPos).withRotation(roomRotation).andJigsawFilter(VaultJigsawHelper.ROOM_FILTER);
         filterAdditions.accept(placer);
         final List<VaultPiece> vaultPieces = placer.placeJigsaw();
@@ -143,7 +143,7 @@ public class VaultJigsawHelper {
         final Vector3i size = jigsawBox.getLength();
         BlockPos directionOffset = new BlockPos(targetDir.getStepX() * size.getX() / 2, 0, targetDir.getStepZ() * size.getZ() / 2);
         directionOffset = directionOffset.offset(-(shift.getStepX() * size.getX()) / 2, -size.getY() / 2 + jigsawGroundOffset, -(shift.getStepZ() * size.getZ()) / 2);
-        final BlockPos genPos = at.offset((Vector3i) directionOffset);
+        final BlockPos genPos = at.offset(directionOffset);
         final List<VaultPiece> vaultPieces = JigsawPiecePlacer.newPlacer(roomToGenerate, sWorld, genPos).withRotation(tunnelRotation).andJigsawFilter(VaultJigsawHelper.TUNNEL_FILTER).placeJigsaw();
         generationPos.move(targetDir.getStepX() * size.getX() / 2, 0, targetDir.getStepZ() * size.getZ() / 2).move(targetDir);
         return vaultPieces;
@@ -230,8 +230,8 @@ public class VaultJigsawHelper {
 
     @Nonnull
     private static JigsawPattern getPool(final ResourceLocation key) {
-        final MinecraftServer srv = (MinecraftServer) LogicalSidedProvider.INSTANCE.get(LogicalSide.SERVER);
-        final MutableRegistry<JigsawPattern> jigsawRegistry = (MutableRegistry<JigsawPattern>) srv.registryAccess().registryOrThrow(Registry.TEMPLATE_POOL_REGISTRY);
+        final MinecraftServer srv = LogicalSidedProvider.INSTANCE.get(LogicalSide.SERVER);
+        final MutableRegistry<JigsawPattern> jigsawRegistry = srv.registryAccess().registryOrThrow(Registry.TEMPLATE_POOL_REGISTRY);
         return jigsawRegistry.getOptional(key).orElseThrow(RuntimeException::new);
     }
 

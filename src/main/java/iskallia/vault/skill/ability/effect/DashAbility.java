@@ -40,12 +40,12 @@ public class DashAbility<C extends DashConfig> extends AbilityEffect<C> {
         player.push(dashVector.x(), dashVector.y(), dashVector.z());
         player.hurtMarked = true;
         ((ServerWorld) player.level).sendParticles((IParticleData) ParticleTypes.POOF, player.getX(), player.getY(), player.getZ(), 50, 1.0, 0.5, 1.0, 0.0);
-        if (GrasshopperNinja.isGrasshopperShape((PlayerEntity) player)) {
-            player.level.playSound((PlayerEntity) player, player.getX(), player.getY(), player.getZ(), ModSounds.GRASSHOPPER_BRRR, SoundCategory.PLAYERS, 0.2f, 1.0f);
+        if (GrasshopperNinja.isGrasshopperShape(player)) {
+            player.level.playSound(player, player.getX(), player.getY(), player.getZ(), ModSounds.GRASSHOPPER_BRRR, SoundCategory.PLAYERS, 0.2f, 1.0f);
             player.playNotifySound(ModSounds.GRASSHOPPER_BRRR, SoundCategory.PLAYERS, 0.2f, 1.0f);
             GrasshopperNinja.achieve(player);
         } else {
-            player.level.playSound((PlayerEntity) player, player.getX(), player.getY(), player.getZ(), ModSounds.DASH_SFX, SoundCategory.PLAYERS, 0.2f, 1.0f);
+            player.level.playSound(player, player.getX(), player.getY(), player.getZ(), ModSounds.DASH_SFX, SoundCategory.PLAYERS, 0.2f, 1.0f);
             player.playNotifySound(ModSounds.DASH_SFX, SoundCategory.PLAYERS, 0.2f, 1.0f);
         }
         return true;

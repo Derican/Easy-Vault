@@ -23,11 +23,11 @@ public class CleanseEffectConfig extends CleanseConfig {
     }
 
     public static CleanseEffectConfig ofEffectNames(final int learningCost, final Behavior behavior, final int cooldown, final int effectAmplifier, final List<ResourceLocation> possibleEffects) {
-        return new CleanseEffectConfig(learningCost, behavior, cooldown, effectAmplifier, (List<String>) possibleEffects.stream().map(ResourceLocation::toString).collect(Collectors.toList()));
+        return new CleanseEffectConfig(learningCost, behavior, cooldown, effectAmplifier, possibleEffects.stream().map(ResourceLocation::toString).collect(Collectors.toList()));
     }
 
     public static CleanseEffectConfig ofEffects(final int learningCost, final Behavior behavior, final int cooldown, final int effectAmplifier, final List<Effect> possibleEffects) {
-        return new CleanseEffectConfig(learningCost, behavior, cooldown, effectAmplifier, (List<String>) possibleEffects.stream().map(effect -> effect.getRegistryName().toString()).collect(Collectors.toList()));
+        return new CleanseEffectConfig(learningCost, behavior, cooldown, effectAmplifier, possibleEffects.stream().map(effect -> effect.getRegistryName().toString()).collect(Collectors.toList()));
     }
 
     public List<String> getPossibleEffects() {

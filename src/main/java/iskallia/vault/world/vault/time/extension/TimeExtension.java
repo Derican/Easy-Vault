@@ -62,14 +62,14 @@ public abstract class TimeExtension implements INBTSerializable<CompoundNBT> {
         final ResourceLocation id = new ResourceLocation(nbt.getString("Id"));
         final TimeExtension extension = TimeExtension.REGISTRY.getOrDefault(id, () -> null).get();
         if (extension == null) {
-            Vault.LOGGER.error("Vault time extension <" + id.toString() + "> is not defined, using fallback.");
+            Vault.LOGGER.error("Vault time extension <" + id + "> is not defined, using fallback.");
             return new FallbackExtension(nbt);
         }
         try {
             extension.deserializeNBT(nbt);
         } catch (final Exception e) {
             e.printStackTrace();
-            Vault.LOGGER.error("Vault time extension <" + id.toString() + "> could not be deserialized, using fallback.");
+            Vault.LOGGER.error("Vault time extension <" + id + "> could not be deserialized, using fallback.");
             return new FallbackExtension(nbt);
         }
         return extension;

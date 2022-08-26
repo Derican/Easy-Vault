@@ -22,12 +22,12 @@ import net.minecraft.world.server.ServerWorld;
 public class TimeAltarBlock extends FillableAltarBlock<TimeAltarTileEntity> {
     @Override
     public TimeAltarTileEntity createTileEntity(final BlockState state, final IBlockReader world) {
-        return (TimeAltarTileEntity) ModBlocks.TIME_ALTAR_TILE_ENTITY.create();
+        return ModBlocks.TIME_ALTAR_TILE_ENTITY.create();
     }
 
     @Override
     public IParticleData getFlameParticle() {
-        return (IParticleData) ModParticles.YELLOW_FLAME.get();
+        return ModParticles.YELLOW_FLAME.get();
     }
 
     @Override
@@ -51,10 +51,10 @@ public class TimeAltarBlock extends FillableAltarBlock<TimeAltarTileEntity> {
         }
         tileEntity.makeProgress(player, 1, sPlayer -> {
             final PlayerFavourData data = PlayerFavourData.get(sPlayer.getLevel());
-            if (TimeAltarBlock.rand.nextFloat() < FillableAltarBlock.getFavourChance((PlayerEntity) sPlayer, PlayerFavourData.VaultGodType.TIMEKEEPER)) {
+            if (TimeAltarBlock.rand.nextFloat() < FillableAltarBlock.getFavourChance(sPlayer, PlayerFavourData.VaultGodType.TIMEKEEPER)) {
                 final PlayerFavourData.VaultGodType vg = this.getAssociatedVaultGod();
-                if (data.addFavour((PlayerEntity) sPlayer, vg, 1)) {
-                    data.addFavour((PlayerEntity) sPlayer, vg.getOther(TimeAltarBlock.rand), -1);
+                if (data.addFavour(sPlayer, vg, 1)) {
+                    data.addFavour(sPlayer, vg.getOther(TimeAltarBlock.rand), -1);
                     FillableAltarBlock.playFavourInfo(sPlayer);
                 }
             }

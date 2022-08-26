@@ -26,7 +26,7 @@ public class TankAbility<C extends TankConfig> extends AbilityEffect<C> {
             return false;
         }
         final EffectInstance newEffect = new EffectInstance(ModEffects.TANK, config.getDurationTicks(), config.getAmplifier(), false, config.getType().showParticles, config.getType().showIcon);
-        player.level.playSound((PlayerEntity) null, player.getX(), player.getY(), player.getZ(), ModSounds.TANK_SFX, SoundCategory.MASTER, 0.175f, 1.0f);
+        player.level.playSound(null, player.getX(), player.getY(), player.getZ(), ModSounds.TANK_SFX, SoundCategory.MASTER, 0.175f, 1.0f);
         player.playNotifySound(ModSounds.TANK_SFX, SoundCategory.MASTER, 0.175f, 1.0f);
         player.addEffect(newEffect);
         return false;

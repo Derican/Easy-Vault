@@ -28,9 +28,9 @@ public class WutaxShardItem extends Item {
     @OnlyIn(Dist.CLIENT)
     public void appendHoverText(final ItemStack stack, @Nullable final World worldIn, final List<ITextComponent> tooltip, final ITooltipFlag flagIn) {
         tooltip.add(StringTextComponent.EMPTY);
-        tooltip.add((ITextComponent) new StringTextComponent("Reduces the level requirement of").withStyle(TextFormatting.GRAY));
-        tooltip.add((ITextComponent) new StringTextComponent("any vault gear by 1 when combined").withStyle(TextFormatting.GRAY));
-        tooltip.add((ITextComponent) new StringTextComponent("in an anvil with a vault gear item.").withStyle(TextFormatting.GRAY));
-        super.appendHoverText(stack, worldIn, (List) tooltip, flagIn);
+        tooltip.add(new StringTextComponent("Reduces the level requirement of").withStyle(TextFormatting.GRAY));
+        tooltip.add(new StringTextComponent("any vault gear by 1 when combined").withStyle(TextFormatting.GRAY));
+        tooltip.add(new StringTextComponent("in an anvil with a vault gear item.").withStyle(TextFormatting.GRAY));
+        super.appendHoverText(stack, worldIn, tooltip, flagIn);
     }
 }

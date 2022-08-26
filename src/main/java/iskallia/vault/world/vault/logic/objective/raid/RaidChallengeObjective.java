@@ -139,13 +139,13 @@ public class RaidChallengeObjective extends VaultObjective {
 
     @Override
     public ITextComponent getObjectiveDisplayName() {
-        return (ITextComponent) new StringTextComponent("Raid").withStyle(TextFormatting.RED);
+        return new StringTextComponent("Raid").withStyle(TextFormatting.RED);
     }
 
     @Nullable
     @Override
     public ITextComponent getObjectiveTargetDescription(final int amount) {
-        return (ITextComponent) ((amount < 0) ? null : new StringTextComponent("Raids to complete: ").append((ITextComponent) new StringTextComponent(String.valueOf(amount)).withStyle(TextFormatting.RED)));
+        return (amount < 0) ? null : new StringTextComponent("Raids to complete: ").append(new StringTextComponent(String.valueOf(amount)).withStyle(TextFormatting.RED));
     }
 
     @Override
@@ -155,7 +155,7 @@ public class RaidChallengeObjective extends VaultObjective {
 
     @Override
     public ITextComponent getVaultName() {
-        return (ITextComponent) new StringTextComponent("Vault Raid");
+        return new StringTextComponent("Vault Raid");
     }
 
     public int getCompletedRaids() {
@@ -178,12 +178,12 @@ public class RaidChallengeObjective extends VaultObjective {
     }
 
     public Map<RaidModifier, Float> getAllModifiers() {
-        return Collections.unmodifiableMap((Map<? extends RaidModifier, ? extends Float>) this.modifierValues);
+        return Collections.unmodifiableMap(this.modifierValues);
     }
 
     public <T extends RaidModifier> Map<T, Float> getModifiersOfType(Class<T> modifierClass) {
         return (Map<T, Float>) this.modifierValues.entrySet().stream()
-                .filter(modifierTpl -> modifierClass.isAssignableFrom(((RaidModifier) modifierTpl.getKey()).getClass()))
+                .filter(modifierTpl -> modifierClass.isAssignableFrom(modifierTpl.getKey().getClass()))
                 .map(tpl -> tpl)
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
     }
@@ -277,7 +277,7 @@ public class RaidChallengeObjective extends VaultObjective {
         raidRoom.setRaidFinished();
         this.getAllModifiers().forEach((modifier1, value) -> modifier1.onVaultRaidFinish(vault, world, controller, raid, value));
         final AxisAlignedBB raidBoundingBox = raid.getRaidBoundingBox();
-        final FloatingItemModifier catalystPlacement = new FloatingItemModifier("", 4, new WeightedList<SingleItemEntry>().add(new SingleItemEntry((IItemProvider) ModItems.VAULT_CATALYST_FRAGMENT), 1), "");
+        final FloatingItemModifier catalystPlacement = new FloatingItemModifier("", 4, new WeightedList<SingleItemEntry>().add(new SingleItemEntry(ModItems.VAULT_CATALYST_FRAGMENT), 1), "");
         vault.getActiveModifiersFor(PlayerFilter.any(), CatalystChanceModifier.class).forEach(modifier2 -> catalystPlacement.onVaultRaidFinish(vault, world, controller, raid, 1.0f));
         final BlockPlacementModifier orePlacement = new BlockPlacementModifier("", ModBlocks.UNKNOWN_ORE, 12, "");
         vault.getActiveModifiersFor(PlayerFilter.any(), LootableModifier.class).forEach(modifier3 -> orePlacement.onVaultRaidFinish(vault, world, controller, raid, modifier3.getAverageMultiplier()));
@@ -337,11 +337,11 @@ public class RaidChallengeObjective extends VaultObjective {
         this.modifierValues.forEach((modifier, value) -> {
             final CompoundNBT nbt = new CompoundNBT();
             nbt.putString("name", modifier.getName());
-            nbt.putFloat("value", (float) value);
+            nbt.putFloat("value", value);
             modifiers.add(nbt);
             return;
         });
-        tag.put("raidModifiers", (INBT) modifiers);
+        tag.put("raidModifiers", modifiers);
         tag.putInt("completedRaids", this.completedRaids);
         tag.putDouble("damageTaken", this.damageTaken);
         if (this.targetRaids >= 0) {

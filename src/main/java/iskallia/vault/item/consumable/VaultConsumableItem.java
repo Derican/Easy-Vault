@@ -44,9 +44,9 @@ public class VaultConsumableItem extends Item {
             return;
         }
         for (final String s : text) {
-            tooltip.add((ITextComponent) new StringTextComponent(s));
+            tooltip.add(new StringTextComponent(s));
         }
-        super.appendHoverText(stack, worldIn, (List) tooltip, flagIn);
+        super.appendHoverText(stack, worldIn, tooltip, flagIn);
     }
 
     public ItemStack finishUsingItem(final ItemStack stack, final World world, final LivingEntity entityLiving) {
@@ -58,38 +58,38 @@ public class VaultConsumableItem extends Item {
                 return stack;
             }
             if (entry.shouldAddAbsorption()) {
-                final TalentTree talents = PlayerTalentsData.get(sPlayer.getLevel()).getTalents((PlayerEntity) sPlayer);
+                final TalentTree talents = PlayerTalentsData.get(sPlayer.getLevel()).getTalents(sPlayer);
                 if (talents.hasLearnedNode(ModConfigs.TALENTS.WARD) || talents.hasLearnedNode(ModConfigs.TALENTS.BARBARIC)) {
                     return stack;
                 }
                 final float targetAbsorption = sPlayer.getAbsorptionAmount() + entry.getAbsorptionAmount();
-                if (targetAbsorption > AbsorptionHelper.getMaxAbsorption((PlayerEntity) sPlayer)) {
+                if (targetAbsorption > AbsorptionHelper.getMaxAbsorption(sPlayer)) {
                     return stack;
                 }
                 sPlayer.setAbsorptionAmount(targetAbsorption);
             }
             for (final ConsumableEffect setting : entry.getEffects()) {
                 final ResourceLocation id = ResourceLocation.tryParse(setting.getEffectId());
-                final Effect effect = (Effect) ForgeRegistries.POTIONS.getValue(id);
+                final Effect effect = ForgeRegistries.POTIONS.getValue(id);
                 if (id != null && effect != null) {
                     final EffectInstance effectInstance = sPlayer.getEffect(effect);
                     if (effectInstance == null) {
                         if (entry.isPowerup()) {
-                            this.applyEffect((PlayerEntity) sPlayer, effect, setting);
-                            this.applyPowerup((PlayerEntity) sPlayer, setting);
+                            this.applyEffect(sPlayer, effect, setting);
+                            this.applyPowerup(sPlayer, setting);
                         } else {
-                            this.applyEffect((PlayerEntity) sPlayer, effect, setting);
+                            this.applyEffect(sPlayer, effect, setting);
                         }
                     } else if (entry.isPowerup()) {
-                        this.addEffect((PlayerEntity) sPlayer, effectInstance, setting);
-                        this.applyPowerup((PlayerEntity) sPlayer, setting);
+                        this.addEffect(sPlayer, effectInstance, setting);
+                        this.applyPowerup(sPlayer, setting);
                     } else if (effectInstance.getAmplifier() < setting.getAmplifier()) {
-                        this.applyEffect((PlayerEntity) sPlayer, effect, setting);
+                        this.applyEffect(sPlayer, effect, setting);
                     } else {
                         if (effectInstance.getDuration() >= setting.getDuration()) {
                             continue;
                         }
-                        this.addEffectDuration((PlayerEntity) sPlayer, effectInstance, setting.getDuration());
+                        this.addEffectDuration(sPlayer, effectInstance, setting.getDuration());
                     }
                 }
             }

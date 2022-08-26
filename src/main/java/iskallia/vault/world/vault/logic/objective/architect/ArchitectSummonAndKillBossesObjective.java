@@ -136,7 +136,7 @@ public class ArchitectSummonAndKillBossesObjective extends ArchitectObjective
         if (vault == null) {
             return false;
         }
-        final VaultRoom room = (VaultRoom)Iterables.getFirst((Iterable)vault.getGenerator().getPiecesAt(origin, VaultRoom.class), (Object)null);
+        final VaultRoom room = (VaultRoom)Iterables.getFirst(vault.getGenerator().getPiecesAt(origin, VaultRoom.class), (Object)null);
         if (room == null) {
             return false;
         }
@@ -188,22 +188,22 @@ public class ArchitectSummonAndKillBossesObjective extends ArchitectObjective
             });
             final EffectMessage msg = EffectMessage.playSound(SoundEvents.NOTE_BLOCK_BELL, SoundCategory.PLAYERS, 0.6f, 1.0f);
             vault.getPlayers().forEach(vPlayer -> vPlayer.runIfPresent(world.getServer(), sPlayer -> ModNetwork.CHANNEL.send(PacketDistributor.PLAYER.with(() -> sPlayer), (Object)msg)));
-            final JigsawPiece roomPiece = (JigsawPiece)modifiers.stream().map(modifier2 -> modifier2.getSpecialRoom(this, vault)).filter(Objects::nonNull).findFirst().orElse(null);
+            final JigsawPiece roomPiece = modifiers.stream().map(modifier2 -> modifier2.getSpecialRoom(this, vault)).filter(Objects::nonNull).findFirst().orElse(null);
             final IFormattableTextComponent txt = new StringTextComponent("").append(choice.getDirectionDisplay()).append(": ");
             for (int i = 0; i < modifiers.size(); ++i) {
-                modifier = (VoteModifier)modifiers.get(i);
+                modifier = modifiers.get(i);
                 if (i != 0) {
                     txt.append(", ");
                 }
                 txt.append(modifier.getDescription());
             }
-            vault.getPlayers().forEach(vPlayer -> vPlayer.runIfPresent(world.getServer(), sPlayer -> sPlayer.sendMessage((ITextComponent)txt, Util.NIL_UUID)));
+            vault.getPlayers().forEach(vPlayer -> vPlayer.runIfPresent(world.getServer(), sPlayer -> sPlayer.sendMessage(txt, Util.NIL_UUID)));
             modifiers.forEach(modifier3 -> modifier3.onApply(this, vault, world));
             final List<VaultPiece> generatedPieces = this.expandVault(vault, world, (VaultRoom) room, session, choice.getDirection(), roomPiece, null);
-            final List<VaultPieceProcessor> postProcessors = (List<VaultPieceProcessor>)modifiers.stream().map(modifier4 -> modifier4.getPostProcessor(this, vault)).filter(Objects::nonNull).collect(Collectors.toList());
+            final List<VaultPieceProcessor> postProcessors = modifiers.stream().map(modifier4 -> modifier4.getPostProcessor(this, vault)).filter(Objects::nonNull).collect(Collectors.toList());
             generatedPieces.forEach(piece -> postProcessors.forEach(processor -> processor.postProcess(vault, world, piece, choice.getDirection())));
             final STitlePacket titlePacket = new STitlePacket(STitlePacket.Type.TITLE, choice.getDirectionDisplay());
-            vault.getPlayers().forEach(vPlayer -> vPlayer.runIfPresent(world.getServer(), sPlayer -> sPlayer.connection.send((IPacket)titlePacket)));
+            vault.getPlayers().forEach(vPlayer -> vPlayer.runIfPresent(world.getServer(), sPlayer -> sPlayer.connection.send(titlePacket)));
         });
     }
 
@@ -271,7 +271,7 @@ public class ArchitectSummonAndKillBossesObjective extends ArchitectObjective
         }
         final Optional<UUID> source = Optional.ofNullable(event.getSource().getEntity()).map((Function<? super Entity, ? extends UUID>)Entity::getUUID);
         final Optional<VaultPlayer> killer = source.flatMap(vault::getPlayer);
-        killer.ifPresent(kPlayer -> kPlayer.runIfPresent(world.getServer(), playerEntity -> vault.getPlayers().forEach(vPlayer -> vPlayer.runIfPresent(world.getServer(), recipient -> recipient.sendMessage(this.getBossKillMessage((PlayerEntity)playerEntity), Util.NIL_UUID)))));
+        killer.ifPresent(kPlayer -> kPlayer.runIfPresent(world.getServer(), playerEntity -> vault.getPlayers().forEach(vPlayer -> vPlayer.runIfPresent(world.getServer(), recipient -> recipient.sendMessage(this.getBossKillMessage(playerEntity), Util.NIL_UUID)))));
         this.currentBossId = null;
         ++this.killedBosses;
         if (!this.hasFulfilledObjective()) {
@@ -286,7 +286,7 @@ public class ArchitectSummonAndKillBossesObjective extends ArchitectObjective
         Collections.shuffle(modifierList);
         final VaultModifier modifier = MiscUtils.getRandomEntry(modifierList, ArchitectSummonAndKillBossesObjective.rand);
         if (modifier != null) {
-            final ITextComponent ct = (ITextComponent)new StringTextComponent("Added ").withStyle(TextFormatting.GRAY).append(modifier.getNameComponent());
+            final ITextComponent ct = new StringTextComponent("Added ").withStyle(TextFormatting.GRAY).append(modifier.getNameComponent());
             vault.getModifiers().addPermanentModifier(modifier);
             vault.getPlayers().forEach(vPlayer -> {
                 modifier.apply(vault, vPlayer, world, world.getRandom());
@@ -299,7 +299,7 @@ public class ArchitectSummonAndKillBossesObjective extends ArchitectObjective
         final IFormattableTextComponent msgContainer = new StringTextComponent("").withStyle(TextFormatting.WHITE);
         final IFormattableTextComponent playerName = player.getDisplayName().copy();
         playerName.setStyle(Style.EMPTY.withColor(Color.fromRgb(9974168)));
-        return (ITextComponent)msgContainer.append((ITextComponent)playerName).append(" defeated a Boss!");
+        return msgContainer.append(playerName).append(" defeated a Boss!");
     }
 
     @Override

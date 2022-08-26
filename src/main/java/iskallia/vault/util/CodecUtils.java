@@ -20,7 +20,7 @@ public class CodecUtils {
     }
 
     public static <T> Optional<T> readNBT(final Codec<T> codec, final INBT nbt) {
-        return codec.parse((DynamicOps) NBTDynamicOps.INSTANCE, nbt).resultOrPartial(Vault.LOGGER::error);
+        return codec.parse(NBTDynamicOps.INSTANCE, nbt).resultOrPartial(Vault.LOGGER::error);
     }
 
     public static <T> void writeNBT(final Codec<T> codec, final T value, final CompoundNBT targetTag, final String targetKey) {

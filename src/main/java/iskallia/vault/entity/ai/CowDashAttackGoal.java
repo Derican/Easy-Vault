@@ -38,7 +38,7 @@ public class CowDashAttackGoal extends Goal {
             return;
         }
         Vector3d dir = target.getEyePosition(1.0f).subtract(this.entity.position());
-        dir = dir.multiply((double) this.dashStrength, (double) this.dashStrength, (double) this.dashStrength);
+        dir = dir.multiply(this.dashStrength, this.dashStrength, this.dashStrength);
         if (dir.y() <= 0.4) {
             dir = new Vector3d(dir.x(), 0.4, dir.z());
         }

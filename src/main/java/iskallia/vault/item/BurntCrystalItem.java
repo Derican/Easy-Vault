@@ -40,7 +40,7 @@ public class BurntCrystalItem extends Item {
         if (stack.getItem() == ModItems.BURNT_CRYSTAL) {
             final BlockPos pos = context.getClickedPos();
             if (this.tryCreatePortal((ServerWorld) context.getLevel(), pos, context.getClickedFace())) {
-                context.getLevel().playSound((PlayerEntity) null, (double) pos.getX(), (double) pos.getY(), (double) pos.getZ(), ModSounds.VAULT_PORTAL_OPEN, SoundCategory.BLOCKS, 1.0f, 1.0f);
+                context.getLevel().playSound(null, pos.getX(), pos.getY(), pos.getZ(), ModSounds.VAULT_PORTAL_OPEN, SoundCategory.BLOCKS, 1.0f, 1.0f);
                 context.getItemInHand().shrink(1);
                 return ActionResultType.SUCCESS;
             }
@@ -49,7 +49,7 @@ public class BurntCrystalItem extends Item {
     }
 
     private boolean tryCreatePortal(final ServerWorld world, final BlockPos pos, final Direction facing) {
-        final Optional<VaultPortalSize> optional = VaultPortalSize.getPortalSize((IWorld) world, pos.relative(facing), Direction.Axis.X, (state, reader, p) -> Arrays.stream(ModConfigs.OTHER_SIDE.getValidFrameBlocks()).anyMatch(b -> b == state.getBlock()));
+        final Optional<VaultPortalSize> optional = VaultPortalSize.getPortalSize(world, pos.relative(facing), Direction.Axis.X, (state, reader, p) -> Arrays.stream(ModConfigs.OTHER_SIDE.getValidFrameBlocks()).anyMatch(b -> b == state.getBlock()));
         final ServerWorld target = world.getServer().getLevel((world.dimension() == Vault.OTHER_SIDE_KEY) ? World.OVERWORLD : Vault.OTHER_SIDE_KEY);
         if (optional.isPresent()) {
             final VaultPortalSize portal = optional.get();
@@ -57,7 +57,7 @@ public class BurntCrystalItem extends Item {
             final BlockPos start = portal.getBottomLeft();
             final BlockPos match = forcePlace(world, start, target, portal);
             data.setLinkedPos(match);
-            data.setLinkedDim((RegistryKey<World>) target.dimension());
+            data.setLinkedDim(target.dimension());
             final BlockState state = ModBlocks.OTHER_SIDE_PORTAL.defaultBlockState().setValue(OtherSidePortalBlock.AXIS, portal.getAxis());
             portal.placePortalBlocks(blockPos -> {
                 world.setBlock(blockPos, state, 3);
@@ -117,7 +117,7 @@ public class BurntCrystalItem extends Item {
         }
         final BlockState state = ModBlocks.OTHER_SIDE_PORTAL.defaultBlockState().setValue(OtherSidePortalBlock.AXIS, current.getAxis());
         final OtherSideData data = new OtherSideData(null);
-        data.setLinkedDim((RegistryKey<World>) source.dimension());
+        data.setLinkedDim(source.dimension());
         data.setLinkedPos(sourcePos);
         BlockPos.betweenClosed(targetPos.relative(Direction.DOWN).relative(current.getRightDir().getOpposite()), targetPos.relative(Direction.UP, current.getHeight()).relative(current.getRightDir(), current.getWidth())).forEach(blockPos -> target.setBlock(blockPos, Blocks.QUARTZ_BRICKS.defaultBlockState(), 3));
         BlockPos.betweenClosed(targetPos, targetPos.relative(Direction.UP, current.getHeight() - 1).relative(current.getRightDir(), current.getWidth() - 1)).forEach(blockPos -> {

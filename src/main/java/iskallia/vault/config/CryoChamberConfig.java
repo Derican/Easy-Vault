@@ -16,9 +16,9 @@ public class CryoChamberConfig extends Config {
     @Expose
     private float UNUSED_TRADER_REWARD_CHANCE;
     @Expose
-    private List<Integer> TRADERS_REQ;
+    private final List<Integer> TRADERS_REQ;
     @Expose
-    private Map<String, Float> PLAYER_TRADER_REQ_MULTIPLIER;
+    private final Map<String, Float> PLAYER_TRADER_REQ_MULTIPLIER;
 
     public CryoChamberConfig() {
         this.TRADERS_REQ = new ArrayList<Integer>();

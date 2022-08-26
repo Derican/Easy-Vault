@@ -44,21 +44,21 @@ public class MobHeadTextures
     
     static {
         REGISTRY = new HashMap<String, ResourceLocation>();
-        register((EntityType<?>)EntityType.CAVE_SPIDER);
-        register((EntityType<?>)EntityType.CREEPER);
-        register((EntityType<?>)EntityType.DROWNED);
-        register((EntityType<?>)EntityType.HUSK);
-        register((EntityType<?>)EntityType.PIGLIN);
-        register((EntityType<?>)EntityType.RAVAGER);
-        register((EntityType<?>)EntityType.SILVERFISH);
-        register((EntityType<?>)EntityType.SKELETON);
-        register((EntityType<?>)EntityType.SPIDER);
-        register((EntityType<?>)EntityType.STRAY);
-        register((EntityType<?>)EntityType.VEX);
-        register((EntityType<?>)EntityType.VINDICATOR);
-        register((EntityType<?>)EntityType.WITCH);
-        register((EntityType<?>)EntityType.WITHER_SKELETON);
-        register((EntityType<?>)EntityType.ZOMBIE);
+        register(EntityType.CAVE_SPIDER);
+        register(EntityType.CREEPER);
+        register(EntityType.DROWNED);
+        register(EntityType.HUSK);
+        register(EntityType.PIGLIN);
+        register(EntityType.RAVAGER);
+        register(EntityType.SILVERFISH);
+        register(EntityType.SKELETON);
+        register(EntityType.SPIDER);
+        register(EntityType.STRAY);
+        register(EntityType.VEX);
+        register(EntityType.VINDICATOR);
+        register(EntityType.WITCH);
+        register(EntityType.WITHER_SKELETON);
+        register(EntityType.ZOMBIE);
         register(ModEntities.BOOGIEMAN);
         register(ModEntities.BLUE_BLAZE);
         register(ModEntities.TREASURE_GOBLIN);

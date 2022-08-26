@@ -59,21 +59,21 @@ public class ArchitectGoalVoteOverlay extends BossBarOverlay {
             final FontRenderer fr = mc.font;
             final int bottom = mc.getWindow().getGuiScaledHeight();
             final float part = displayData.getCompletedPercent();
-            ITextComponent txt = (ITextComponent) new StringTextComponent("Build the vault!").withStyle(TextFormatting.AQUA);
-            fr.drawInBatch(txt.getVisualOrderText(), 8.0f, (float) (bottom - 60), -1, true, renderStack.last().pose(), (IRenderTypeBuffer) buffer, false, 0, LightmapHelper.getPackedFullbrightCoords());
+            ITextComponent txt = new StringTextComponent("Build the vault!").withStyle(TextFormatting.AQUA);
+            fr.drawInBatch(txt.getVisualOrderText(), 8.0f, (float) (bottom - 60), -1, true, renderStack.last().pose(), buffer, false, 0, LightmapHelper.getPackedFullbrightCoords());
             final int lockTime = displayData.getTotalTicksUntilNextVote();
             final String duration = UIHelper.formatTimeString(lockTime);
-            txt = (ITextComponent) new StringTextComponent("Vote Lock Time");
-            fr.drawInBatch(txt.getVisualOrderText(), 8.0f, (float) (bottom - 42), -1, true, renderStack.last().pose(), (IRenderTypeBuffer) buffer, false, 0, LightmapHelper.getPackedFullbrightCoords());
-            txt = (ITextComponent) new StringTextComponent(duration).withStyle((lockTime > 0) ? TextFormatting.RED : TextFormatting.GREEN);
-            fr.drawInBatch(txt.getVisualOrderText(), 28.0f, (float) (bottom - 32), -1, true, renderStack.last().pose(), (IRenderTypeBuffer) buffer, false, 0, LightmapHelper.getPackedFullbrightCoords());
+            txt = new StringTextComponent("Vote Lock Time");
+            fr.drawInBatch(txt.getVisualOrderText(), 8.0f, (float) (bottom - 42), -1, true, renderStack.last().pose(), buffer, false, 0, LightmapHelper.getPackedFullbrightCoords());
+            txt = new StringTextComponent(duration).withStyle((lockTime > 0) ? TextFormatting.RED : TextFormatting.GREEN);
+            fr.drawInBatch(txt.getVisualOrderText(), 28.0f, (float) (bottom - 32), -1, true, renderStack.last().pose(), buffer, false, 0, LightmapHelper.getPackedFullbrightCoords());
             buffer.endBatch();
             RenderSystem.enableBlend();
             RenderSystem.defaultBlendFunc();
             mc.getTextureManager().bind(ArchitectGoalVoteOverlay.ARCHITECT_HUD);
             ScreenDrawHelper.drawQuad(buf -> {
-                ScreenDrawHelper.rect((IVertexBuilder) buf, renderStack).at(15.0f, (float) (bottom - 51)).dim(54.0f, 7.0f).texVanilla(0.0f, 105.0f, 54.0f, 7.0f).draw();
-                ScreenDrawHelper.rect((IVertexBuilder) buf, renderStack).at(16.0f, (float) (bottom - 50)).dim(52.0f * part, 5.0f).texVanilla(0.0f, 113.0f, 52.0f * part, 5.0f).draw();
+                ScreenDrawHelper.rect(buf, renderStack).at(15.0f, (float) (bottom - 51)).dim(54.0f, 7.0f).texVanilla(0.0f, 105.0f, 54.0f, 7.0f).draw();
+                ScreenDrawHelper.rect(buf, renderStack).at(16.0f, (float) (bottom - 50)).dim(52.0f * part, 5.0f).texVanilla(0.0f, 113.0f, 52.0f * part, 5.0f).draw();
                 return;
             });
         }
@@ -112,11 +112,11 @@ public class ArchitectGoalVoteOverlay extends BossBarOverlay {
         final String tplText = "Voting locked: ";
         final String text = tplText + UIHelper.formatTimeString(ticksUntilNextVote);
         final float shift = fr.width(tplText + "00:00") * 1.25f;
-        final ITextComponent textCmp = (ITextComponent) new StringTextComponent(text).withStyle(TextFormatting.RED);
+        final ITextComponent textCmp = new StringTextComponent(text).withStyle(TextFormatting.RED);
         renderStack.pushPose();
-        renderStack.translate((double) (midX - shift / 2.0f), (double) offsetY, 0.0);
+        renderStack.translate(midX - shift / 2.0f, offsetY, 0.0);
         renderStack.scale(scale, scale, 1.0f);
-        fr.drawInBatch(textCmp, 0.0f, 0.0f, -1, false, renderStack.last().pose(), (IRenderTypeBuffer) buffer, true, 0, LightmapHelper.getPackedFullbrightCoords());
+        fr.drawInBatch(textCmp, 0.0f, 0.0f, -1, false, renderStack.last().pose(), buffer, true, 0, LightmapHelper.getPackedFullbrightCoords());
         buffer.endBatch();
         renderStack.popPose();
         return offsetY + 13;
@@ -139,11 +139,11 @@ public class ArchitectGoalVoteOverlay extends BossBarOverlay {
         }
         final float shiftTitleX = fr.width("Vote! 00:00") * 1.25f;
         final String timeRemainingStr = UIHelper.formatTimeString(activeSession.getRemainingVoteTicks());
-        final ITextComponent title = (ITextComponent) new StringTextComponent("Vote! ").append(timeRemainingStr).withStyle(TextFormatting.AQUA);
+        final ITextComponent title = new StringTextComponent("Vote! ").append(timeRemainingStr).withStyle(TextFormatting.AQUA);
         renderStack.pushPose();
-        renderStack.translate((double) (midX - shiftTitleX / 2.0f), (double) offsetY, 0.0);
+        renderStack.translate(midX - shiftTitleX / 2.0f, offsetY, 0.0);
         renderStack.scale(1.25f, 1.25f, 1.0f);
-        fr.drawInBatch(title, 0.0f, 0.0f, -1, false, renderStack.last().pose(), (IRenderTypeBuffer) buffer, true, 0, LightmapHelper.getPackedFullbrightCoords());
+        fr.drawInBatch(title, 0.0f, 0.0f, -1, false, renderStack.last().pose(), buffer, true, 0, LightmapHelper.getPackedFullbrightCoords());
         buffer.endBatch();
         renderStack.popPose();
         offsetY += (int) 12.5f;
@@ -169,27 +169,27 @@ public class ArchitectGoalVoteOverlay extends BossBarOverlay {
             int yShift = 0;
             final IReorderingProcessor bidiDir = choice.getDirectionDisplay("/").getVisualOrderText();
             final int dirLength = fr.width(bidiDir);
-            fr.drawInBatch(bidiDir, barMid - dirLength / 2.0f, (float) (yShift + offsetY), -1, false, renderStack.last().pose(), (IRenderTypeBuffer) buffer, true, 0, LightmapHelper.getPackedFullbrightCoords());
+            fr.drawInBatch(bidiDir, barMid - dirLength / 2.0f, (float) (yShift + offsetY), -1, false, renderStack.last().pose(), buffer, true, 0, LightmapHelper.getPackedFullbrightCoords());
             yShift += 9;
             float scaledShift = 0.0f;
             final float modifierScale = 0.75f;
             renderStack.pushPose();
-            renderStack.translate((double) barMid, (double) (offsetY + yShift), 0.0);
+            renderStack.translate(barMid, offsetY + yShift, 0.0);
             renderStack.scale(modifierScale, modifierScale, 1.0f);
             for (final VoteModifier modifier : choice.getModifiers()) {
                 final int changeSeconds = modifier.getVoteLockDurationChangeSeconds();
                 if (changeSeconds != 0) {
                     final TextFormatting color = (changeSeconds > 0) ? TextFormatting.RED : TextFormatting.GREEN;
                     final String changeDesc = (changeSeconds > 0) ? ("+" + changeSeconds) : String.valueOf(changeSeconds);
-                    final ITextComponent line = (ITextComponent) new StringTextComponent(changeDesc + "s Vote Lock").withStyle(color);
-                    final int voteLockLength = fr.width((ITextProperties) line);
-                    fr.drawInBatch(line.getVisualOrderText(), -voteLockLength / 2.0f, 0.0f, -1, false, renderStack.last().pose(), (IRenderTypeBuffer) buffer, true, 0, LightmapHelper.getPackedFullbrightCoords());
+                    final ITextComponent line = new StringTextComponent(changeDesc + "s Vote Lock").withStyle(color);
+                    final int voteLockLength = fr.width(line);
+                    fr.drawInBatch(line.getVisualOrderText(), -voteLockLength / 2.0f, 0.0f, -1, false, renderStack.last().pose(), buffer, true, 0, LightmapHelper.getPackedFullbrightCoords());
                     renderStack.translate(0.0, 9.0, 0.0);
                     scaledShift += 9.0f;
                 }
                 final IReorderingProcessor bidiDesc = modifier.getDescription().getVisualOrderText();
                 final int descLength = fr.width(bidiDesc);
-                fr.drawInBatch(bidiDesc, -descLength / 2.0f, 0.0f, -1, false, renderStack.last().pose(), (IRenderTypeBuffer) buffer, true, 0, LightmapHelper.getPackedFullbrightCoords());
+                fr.drawInBatch(bidiDesc, -descLength / 2.0f, 0.0f, -1, false, renderStack.last().pose(), buffer, true, 0, LightmapHelper.getPackedFullbrightCoords());
                 renderStack.translate(0.0, 9.0, 0.0);
                 scaledShift += 9.0f;
             }
@@ -213,32 +213,32 @@ public class ArchitectGoalVoteOverlay extends BossBarOverlay {
                 final int vOffset = DirectionChoice.getVOffset(choice.getDirection());
                 lastChoice = choice;
                 if (drawStart) {
-                    ScreenDrawHelper.rect((IVertexBuilder) buf, renderStack).at((float) offsetX, (float) offsetY).dim(3.0f, 8.0f).texVanilla(0.0f, (float) vOffset, 3.0f, 8.0f).draw();
+                    ScreenDrawHelper.rect(buf, renderStack).at((float) offsetX, (float) offsetY).dim(3.0f, 8.0f).texVanilla(0.0f, (float) vOffset, 3.0f, 8.0f).draw();
                     drawX += 3.0f;
                     drawStart = false;
                 }
                 while (part > 0.0f) {
                     final float length = Math.min(8.0f, part);
                     part -= length;
-                    ScreenDrawHelper.rect((IVertexBuilder) buf, renderStack).at(drawX, (float) offsetY).dim(length, 8.0f).texVanilla(100.0f, (float) vOffset, length, 8.0f).draw();
+                    ScreenDrawHelper.rect(buf, renderStack).at(drawX, (float) offsetY).dim(length, 8.0f).texVanilla(100.0f, (float) vOffset, length, 8.0f).draw();
                     drawX += length;
                 }
             }
             final int vOffset2 = DirectionChoice.getVOffset(lastChoice.getDirection());
-            ScreenDrawHelper.rect((IVertexBuilder) buf, renderStack).at(drawX, (float) offsetY).dim(3.0f, 8.0f).texVanilla(96.0f, (float) vOffset2, 3.0f, 8.0f).draw();
+            ScreenDrawHelper.rect(buf, renderStack).at(drawX, (float) offsetY).dim(3.0f, 8.0f).texVanilla(96.0f, (float) vOffset2, 3.0f, 8.0f).draw();
         });
     }
 
     private void drawBarFrame(final MatrixStack renderStack, final int offsetX, final int offsetY) {
         renderStack.pushPose();
         ScreenDrawHelper.drawQuad(buf -> {
-            ScreenDrawHelper.rect((IVertexBuilder) buf, renderStack).at((float) offsetX, (float) offsetY).dim(4.0f, 10.0f).texVanilla(0.0f, 11.0f, 4.0f, 10.0f).draw();
+            ScreenDrawHelper.rect(buf, renderStack).at((float) offsetX, (float) offsetY).dim(4.0f, 10.0f).texVanilla(0.0f, 11.0f, 4.0f, 10.0f).draw();
             int barOffsetX = offsetX + 4;
             for (int i = 0; i < 22; ++i) {
-                ScreenDrawHelper.rect((IVertexBuilder) buf, renderStack).at((float) barOffsetX, (float) offsetY).dim(8.0f, 10.0f).texVanilla(0.0f, 0.0f, 8.0f, 10.0f).draw();
+                ScreenDrawHelper.rect(buf, renderStack).at((float) barOffsetX, (float) offsetY).dim(8.0f, 10.0f).texVanilla(0.0f, 0.0f, 8.0f, 10.0f).draw();
                 barOffsetX += 8;
             }
-            ScreenDrawHelper.rect((IVertexBuilder) buf, renderStack).at((float) barOffsetX, (float) offsetY).dim(4.0f, 10.0f).texVanilla(97.0f, 11.0f, 4.0f, 10.0f).draw();
+            ScreenDrawHelper.rect(buf, renderStack).at((float) barOffsetX, (float) offsetY).dim(4.0f, 10.0f).texVanilla(97.0f, 11.0f, 4.0f, 10.0f).draw();
             return;
         });
         renderStack.popPose();

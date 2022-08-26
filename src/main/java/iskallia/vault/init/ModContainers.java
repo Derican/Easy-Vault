@@ -37,74 +37,74 @@ public class ModContainers {
     public static ContainerType<VaultCharmControllerContainer> VAULT_CHARM_CONTROLLER_CONTAINER;
 
     public static void register(final RegistryEvent.Register<ContainerType<?>> event) {
-        ModContainers.SKILL_TREE_CONTAINER = createContainerType((net.minecraftforge.fml.network.IContainerFactory<SkillTreeContainer>) ((windowId, inventory, buffer) -> {
+        ModContainers.SKILL_TREE_CONTAINER = createContainerType((windowId, inventory, buffer) -> {
             final UUID uniqueID = inventory.player.getUUID();
             final AbilityTree abilityTree = new AbilityTree(uniqueID);
             abilityTree.deserializeNBT(Optional.ofNullable(buffer.readNbt()).orElse(new CompoundNBT()));
             final TalentTree talentTree = new TalentTree(uniqueID);
             talentTree.deserialize(Optional.ofNullable(buffer.readNbt()).orElse(new CompoundNBT()), false);
             return new SkillTreeContainer(windowId, abilityTree, talentTree);
-        }));
-        ModContainers.VAULT_CRATE_CONTAINER = createContainerType((net.minecraftforge.fml.network.IContainerFactory<VaultCrateContainer>) ((windowId, inventory, buffer) -> {
+        });
+        ModContainers.VAULT_CRATE_CONTAINER = createContainerType((windowId, inventory, buffer) -> {
             final World world = inventory.player.getCommandSenderWorld();
             final BlockPos pos = buffer.readBlockPos();
             return new VaultCrateContainer(windowId, world, pos, inventory, inventory.player);
-        }));
-        ModContainers.VENDING_MACHINE_CONTAINER = createContainerType((net.minecraftforge.fml.network.IContainerFactory<VendingMachineContainer>) ((windowId, inventory, buffer) -> {
+        });
+        ModContainers.VENDING_MACHINE_CONTAINER = createContainerType((windowId, inventory, buffer) -> {
             final World world = inventory.player.getCommandSenderWorld();
             final BlockPos pos = buffer.readBlockPos();
             return new VendingMachineContainer(windowId, world, pos, inventory, inventory.player);
-        }));
-        ModContainers.ADVANCED_VENDING_MACHINE_CONTAINER = createContainerType((net.minecraftforge.fml.network.IContainerFactory<AdvancedVendingContainer>) ((windowId, inventory, buffer) -> {
+        });
+        ModContainers.ADVANCED_VENDING_MACHINE_CONTAINER = createContainerType((windowId, inventory, buffer) -> {
             final World world = inventory.player.getCommandSenderWorld();
             final BlockPos pos = buffer.readBlockPos();
             return new AdvancedVendingContainer(windowId, world, pos, inventory, inventory.player);
-        }));
-        ModContainers.RENAMING_CONTAINER = createContainerType((net.minecraftforge.fml.network.IContainerFactory<RenamingContainer>) ((windowId, inventory, buffer) -> {
+        });
+        ModContainers.RENAMING_CONTAINER = createContainerType((windowId, inventory, buffer) -> {
             final CompoundNBT nbt = buffer.readNbt();
             return new RenamingContainer(windowId, (nbt == null) ? new CompoundNBT() : nbt);
-        }));
-        ModContainers.KEY_PRESS_CONTAINER = createContainerType((net.minecraftforge.fml.network.IContainerFactory<KeyPressContainer>) ((windowId, inventory, buffer) -> {
+        });
+        ModContainers.KEY_PRESS_CONTAINER = createContainerType((windowId, inventory, buffer) -> {
             final PlayerEntity player = inventory.player;
             return new KeyPressContainer(windowId, player);
-        }));
-        ModContainers.OMEGA_STATUE_CONTAINER = createContainerType((net.minecraftforge.fml.network.IContainerFactory<OmegaStatueContainer>) ((windowId, inventory, buffer) -> {
+        });
+        ModContainers.OMEGA_STATUE_CONTAINER = createContainerType((windowId, inventory, buffer) -> {
             final CompoundNBT nbt = buffer.readNbt();
             return new OmegaStatueContainer(windowId, (nbt == null) ? new CompoundNBT() : nbt);
-        }));
-        ModContainers.TRANSMOG_TABLE_CONTAINER = createContainerType((net.minecraftforge.fml.network.IContainerFactory<TransmogTableContainer>) ((windowId, inventory, buffer) -> {
+        });
+        ModContainers.TRANSMOG_TABLE_CONTAINER = createContainerType((windowId, inventory, buffer) -> {
             final PlayerEntity player = inventory.player;
             return new TransmogTableContainer(windowId, player);
-        }));
-        ModContainers.SCAVENGER_CHEST_CONTAINER = createContainerType((net.minecraftforge.fml.network.IContainerFactory<ScavengerChestContainer>) ((windowId, inventory, buffer) -> {
+        });
+        ModContainers.SCAVENGER_CHEST_CONTAINER = createContainerType((windowId, inventory, buffer) -> {
             final Inventory inv = new Inventory(45);
-            return new ScavengerChestContainer(windowId, inventory, (IInventory) inv, (IInventory) inv);
-        }));
-        ModContainers.CATALYST_DECRYPTION_CONTAINER = createContainerType((net.minecraftforge.fml.network.IContainerFactory<CatalystDecryptionContainer>) ((windowId, inventory, buffer) -> {
+            return new ScavengerChestContainer(windowId, inventory, inv, inv);
+        });
+        ModContainers.CATALYST_DECRYPTION_CONTAINER = createContainerType((windowId, inventory, buffer) -> {
             final World world = inventory.player.getCommandSenderWorld();
             final BlockPos pos = buffer.readBlockPos();
             return new CatalystDecryptionContainer(windowId, world, pos, inventory);
-        }));
-        ModContainers.SHARD_POUCH_CONTAINER = createContainerType((net.minecraftforge.fml.network.IContainerFactory<ShardPouchContainer>) ((windowId, inventory, data) -> {
+        });
+        ModContainers.SHARD_POUCH_CONTAINER = createContainerType((windowId, inventory, data) -> {
             final int pouchSlot = data.readInt();
             return new ShardPouchContainer(windowId, inventory, pouchSlot);
-        }));
-        ModContainers.SHARD_TRADE_CONTAINER = createContainerType((net.minecraftforge.fml.network.IContainerFactory<ShardTradeContainer>) ((windowId, inventory, data) -> new ShardTradeContainer(windowId, inventory)));
-        ModContainers.CRYOCHAMBER_CONTAINER = createContainerType((net.minecraftforge.fml.network.IContainerFactory<CryochamberContainer>) ((windowId, inventory, buffer) -> {
+        });
+        ModContainers.SHARD_TRADE_CONTAINER = createContainerType((windowId, inventory, data) -> new ShardTradeContainer(windowId, inventory));
+        ModContainers.CRYOCHAMBER_CONTAINER = createContainerType((windowId, inventory, buffer) -> {
             final World world = inventory.player.getCommandSenderWorld();
             final BlockPos pos = buffer.readBlockPos();
             return new CryochamberContainer(windowId, world, pos, inventory);
-        }));
-        ModContainers.GLOBAL_DIFFICULTY_CONTAINER = createContainerType((net.minecraftforge.fml.network.IContainerFactory<GlobalDifficultyContainer>) ((windowId, inventory, buffer) -> {
+        });
+        ModContainers.GLOBAL_DIFFICULTY_CONTAINER = createContainerType((windowId, inventory, buffer) -> {
             final CompoundNBT data = buffer.readNbt();
             return new GlobalDifficultyContainer(windowId, data);
-        }));
-        ModContainers.ETCHING_TRADE_CONTAINER = createContainerType((net.minecraftforge.fml.network.IContainerFactory<EtchingTradeContainer>) ((windowId, inventory, data) -> new EtchingTradeContainer(windowId, inventory, data.readInt())));
-        ModContainers.VAULT_CHARM_CONTROLLER_CONTAINER = createContainerType((net.minecraftforge.fml.network.IContainerFactory<VaultCharmControllerContainer>) ((windowId, inventory, data) -> new VaultCharmControllerContainer(windowId, inventory, data.readNbt())));
-        event.getRegistry().registerAll(new ContainerType[]{(ContainerType) ModContainers.SKILL_TREE_CONTAINER.setRegistryName("ability_tree"), (ContainerType) ModContainers.VAULT_CRATE_CONTAINER.setRegistryName("vault_crate"), (ContainerType) ModContainers.VENDING_MACHINE_CONTAINER.setRegistryName("vending_machine"), (ContainerType) ModContainers.ADVANCED_VENDING_MACHINE_CONTAINER.setRegistryName("advanced_vending_machine"), (ContainerType) ModContainers.RENAMING_CONTAINER.setRegistryName("renaming_container"), (ContainerType) ModContainers.KEY_PRESS_CONTAINER.setRegistryName("key_press_container"), (ContainerType) ModContainers.OMEGA_STATUE_CONTAINER.setRegistryName("omega_statue_container"), (ContainerType) ModContainers.TRANSMOG_TABLE_CONTAINER.setRegistryName("transmog_table_container"), (ContainerType) ModContainers.SCAVENGER_CHEST_CONTAINER.setRegistryName("scavenger_chest_container"), (ContainerType) ModContainers.CATALYST_DECRYPTION_CONTAINER.setRegistryName("catalyst_decryption_container"), (ContainerType) ModContainers.SHARD_POUCH_CONTAINER.setRegistryName("shard_pouch_container"), (ContainerType) ModContainers.SHARD_TRADE_CONTAINER.setRegistryName("shard_trade_container"), (ContainerType) ModContainers.CRYOCHAMBER_CONTAINER.setRegistryName("cryochamber_container"), (ContainerType) ModContainers.GLOBAL_DIFFICULTY_CONTAINER.setRegistryName("global_difficulty_container"), (ContainerType) ModContainers.ETCHING_TRADE_CONTAINER.setRegistryName("etching_trade_container"), (ContainerType) ModContainers.VAULT_CHARM_CONTROLLER_CONTAINER.setRegistryName("looter_charm_controller_container")});
+        });
+        ModContainers.ETCHING_TRADE_CONTAINER = createContainerType((windowId, inventory, data) -> new EtchingTradeContainer(windowId, inventory, data.readInt()));
+        ModContainers.VAULT_CHARM_CONTROLLER_CONTAINER = createContainerType((windowId, inventory, data) -> new VaultCharmControllerContainer(windowId, inventory, data.readNbt()));
+        event.getRegistry().registerAll(ModContainers.SKILL_TREE_CONTAINER.setRegistryName("ability_tree"), ModContainers.VAULT_CRATE_CONTAINER.setRegistryName("vault_crate"), ModContainers.VENDING_MACHINE_CONTAINER.setRegistryName("vending_machine"), ModContainers.ADVANCED_VENDING_MACHINE_CONTAINER.setRegistryName("advanced_vending_machine"), ModContainers.RENAMING_CONTAINER.setRegistryName("renaming_container"), ModContainers.KEY_PRESS_CONTAINER.setRegistryName("key_press_container"), ModContainers.OMEGA_STATUE_CONTAINER.setRegistryName("omega_statue_container"), ModContainers.TRANSMOG_TABLE_CONTAINER.setRegistryName("transmog_table_container"), ModContainers.SCAVENGER_CHEST_CONTAINER.setRegistryName("scavenger_chest_container"), ModContainers.CATALYST_DECRYPTION_CONTAINER.setRegistryName("catalyst_decryption_container"), ModContainers.SHARD_POUCH_CONTAINER.setRegistryName("shard_pouch_container"), ModContainers.SHARD_TRADE_CONTAINER.setRegistryName("shard_trade_container"), ModContainers.CRYOCHAMBER_CONTAINER.setRegistryName("cryochamber_container"), ModContainers.GLOBAL_DIFFICULTY_CONTAINER.setRegistryName("global_difficulty_container"), ModContainers.ETCHING_TRADE_CONTAINER.setRegistryName("etching_trade_container"), ModContainers.VAULT_CHARM_CONTROLLER_CONTAINER.setRegistryName("looter_charm_controller_container"));
     }
 
     private static <T extends Container> ContainerType<T> createContainerType(final IContainerFactory<T> factory) {
-        return (ContainerType<T>) new ContainerType((ContainerType.IFactory) factory);
+        return (ContainerType<T>) new ContainerType(factory);
     }
 }

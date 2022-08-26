@@ -40,19 +40,19 @@ import java.util.function.Function;
 
 public class ParryHelper {
     public static float getPlayerParryChance(final ServerPlayerEntity player) {
-        return MathHelper.clamp(getPlayerParryChanceUnlimited(player), 0.0f, AttributeLimitHelper.getParryLimit((PlayerEntity) player));
+        return MathHelper.clamp(getPlayerParryChanceUnlimited(player), 0.0f, AttributeLimitHelper.getParryLimit(player));
     }
 
     public static float getPlayerParryChanceUnlimited(final ServerPlayerEntity player) {
         float totalParryChance = 0.0f;
-        totalParryChance += getParryChance((LivingEntity) player);
-        final TalentTree talents = PlayerTalentsData.get(player.getLevel()).getTalents((PlayerEntity) player);
+        totalParryChance += getParryChance(player);
+        final TalentTree talents = PlayerTalentsData.get(player.getLevel()).getTalents(player);
         for (final TalentNode<?> talentNode : talents.getLearnedNodes()) {
-            if (talentNode.getTalent() instanceof WardTalent && ArchetypeTalent.isEnabled((World) player.getLevel())) {
+            if (talentNode.getTalent() instanceof WardTalent && ArchetypeTalent.isEnabled(player.getLevel())) {
                 totalParryChance += ((WardTalent) talentNode.getTalent()).getAdditionalParryChance();
             }
         }
-        final SetTree sets = PlayerSetsData.get(player.getLevel()).getSets((PlayerEntity) player);
+        final SetTree sets = PlayerSetsData.get(player.getLevel()).getSets(player);
         for (final SetNode<?> node : sets.getNodes()) {
             if (node.getSet() instanceof NinjaSet) {
                 final NinjaSet set = (NinjaSet) node.getSet();
@@ -63,7 +63,7 @@ public class ParryHelper {
                 totalParryChance += set2.getIncreasedParry();
             }
         }
-        final AbilityTree abilities = PlayerAbilitiesData.get(player.getLevel()).getAbilities((PlayerEntity) player);
+        final AbilityTree abilities = PlayerAbilitiesData.get(player.getLevel()).getAbilities(player);
         final AbilityNode<?, ?> tankNode = abilities.getNodeByName("Tank");
         if (player.getEffect(ModEffects.TANK) != null && "Tank_Parry".equals(tankNode.getSpecialization())) {
             final TankParryConfig parryConfig = (TankParryConfig) tankNode.getAbilityConfig();
@@ -74,7 +74,7 @@ public class ParryHelper {
             final GhostWalkParryConfig parryConfig2 = (GhostWalkParryConfig) ghostWalk.getAbilityConfig();
             totalParryChance += parryConfig2.getAdditionalParryChance();
         }
-        for (final ActiveAura aura : AuraManager.getInstance().getAurasAffecting((Entity) player)) {
+        for (final ActiveAura aura : AuraManager.getInstance().getAurasAffecting(player)) {
             if (aura.getAura() instanceof ParryAuraConfig) {
                 totalParryChance += ((ParryAuraConfig) aura.getAura()).getAdditionalParryChance();
             }
@@ -86,7 +86,7 @@ public class ParryHelper {
                     totalParryChance += ((VaultAttributeInfluence) influence).getValue();
                 }
             }
-            for (final StatModifier modifier : vault.getActiveModifiersFor(PlayerFilter.of((PlayerEntity) player), StatModifier.class)) {
+            for (final StatModifier modifier : vault.getActiveModifiersFor(PlayerFilter.of(player), StatModifier.class)) {
                 if (modifier.getStat() == StatModifier.Statistic.PARRY) {
                     totalParryChance *= modifier.getMultiplier();
                 }

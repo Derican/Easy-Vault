@@ -30,13 +30,13 @@ import java.util.function.Function;
 
 public class ResistanceHelper {
     public static float getPlayerResistancePercent(final ServerPlayerEntity player) {
-        return MathHelper.clamp(getPlayerResistancePercentUnlimited(player), 0.0f, AttributeLimitHelper.getResistanceLimit((PlayerEntity) player));
+        return MathHelper.clamp(getPlayerResistancePercentUnlimited(player), 0.0f, AttributeLimitHelper.getResistanceLimit(player));
     }
 
     public static float getPlayerResistancePercentUnlimited(final ServerPlayerEntity player) {
         float resistancePercent = 0.0f;
-        resistancePercent += getResistancePercent((LivingEntity) player);
-        for (final ActiveAura aura : AuraManager.getInstance().getAurasAffecting((Entity) player)) {
+        resistancePercent += getResistancePercent(player);
+        for (final ActiveAura aura : AuraManager.getInstance().getAurasAffecting(player)) {
             if (aura.getAura() instanceof ResistanceAuraConfig) {
                 resistancePercent += ((ResistanceAuraConfig) aura.getAura()).getAdditionalResistance();
             }
@@ -48,7 +48,7 @@ public class ResistanceHelper {
                     resistancePercent += ((VaultAttributeInfluence) influence).getValue();
                 }
             }
-            for (final StatModifier modifier : vault.getActiveModifiersFor(PlayerFilter.of((PlayerEntity) player), StatModifier.class)) {
+            for (final StatModifier modifier : vault.getActiveModifiersFor(PlayerFilter.of(player), StatModifier.class)) {
                 if (modifier.getStat() == StatModifier.Statistic.RESISTANCE) {
                     resistancePercent *= modifier.getMultiplier();
                 }
@@ -59,7 +59,7 @@ public class ResistanceHelper {
                 }
             }
         }
-        final SetTree sets = PlayerSetsData.get((ServerWorld) player.level).getSets((PlayerEntity) player);
+        final SetTree sets = PlayerSetsData.get((ServerWorld) player.level).getSets(player);
         for (final SetNode<?> node : sets.getNodes()) {
             if (node.getSet() instanceof GolemSet) {
                 final GolemSet set = (GolemSet) node.getSet();

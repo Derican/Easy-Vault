@@ -23,7 +23,7 @@ import javax.annotation.Nullable;
 
 public class CooldownHelper {
     public static float getCooldownMultiplier(final ServerPlayerEntity player, @Nullable final AbilityGroup<?, ?> abilityGroup) {
-        return MathHelper.clamp(getCooldownMultiplierUnlimited(player, abilityGroup), 0.0f, AttributeLimitHelper.getCooldownReductionLimit((PlayerEntity) player));
+        return MathHelper.clamp(getCooldownMultiplierUnlimited(player, abilityGroup), 0.0f, AttributeLimitHelper.getCooldownReductionLimit(player));
     }
 
     public static float getCooldownMultiplierUnlimited(final ServerPlayerEntity player, @Nullable final AbilityGroup<?, ?> abilityGroup) {
@@ -35,7 +35,7 @@ public class CooldownHelper {
             }
         }
         if (abilityGroup == ModConfigs.ABILITIES.SUMMON_ETERNAL) {
-            final TalentTree talents = PlayerTalentsData.get(player.getLevel()).getTalents((PlayerEntity) player);
+            final TalentTree talents = PlayerTalentsData.get(player.getLevel()).getTalents(player);
             multiplier += (float) talents.getLearnedNodes(CommanderTalent.class).stream().mapToDouble(node -> ((CommanderTalent) node.getTalent()).getSummonEternalAdditionalCooldownReduction()).sum();
         }
         final VaultRaid vault = VaultRaidData.get(player.getLevel()).getActiveFor(player);
@@ -45,7 +45,7 @@ public class CooldownHelper {
                     multiplier += ((VaultAttributeInfluence) influence).getValue();
                 }
             }
-            for (final StatModifier modifier : vault.getActiveModifiersFor(PlayerFilter.of((PlayerEntity) player), StatModifier.class)) {
+            for (final StatModifier modifier : vault.getActiveModifiersFor(PlayerFilter.of(player), StatModifier.class)) {
                 if (modifier.getStat() == StatModifier.Statistic.COOLDOWN_REDUCTION) {
                     multiplier *= modifier.getMultiplier();
                 }

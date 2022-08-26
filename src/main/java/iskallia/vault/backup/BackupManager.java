@@ -45,10 +45,10 @@ public class BackupManager {
             }
         }
         if (ModList.get().isLoaded("curios")) {
-            list.addAll((Collection) IntegrationCurios.getSerializedCuriosItemStacks((PlayerEntity) playerEntity));
+            list.addAll(IntegrationCurios.getSerializedCuriosItemStacks(playerEntity));
         }
         final CompoundNBT tag = new CompoundNBT();
-        tag.put("data", (INBT) list);
+        tag.put("data", list);
         final File datFile = getStoredFile(srv, playerEntity.getUUID(), BackupManager.DATE_FORMAT.format(LocalDateTime.now()));
         try {
             CompressedStreamTools.write(tag, datFile);

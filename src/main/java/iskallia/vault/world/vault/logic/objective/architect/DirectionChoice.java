@@ -63,7 +63,7 @@ public class DirectionChoice {
 
     public ITextComponent getDirectionDisplay(@Nullable final String prefix) {
         final String directionName = ((prefix == null) ? "" : prefix) + StringUtils.capitalize(this.getDirection().getName());
-        return (ITextComponent) new StringTextComponent(directionName).withStyle(this.getChatColor());
+        return new StringTextComponent(directionName).withStyle(this.getChatColor());
     }
 
     public void addModifier(final VoteModifier modifier) {
@@ -96,7 +96,7 @@ public class DirectionChoice {
         tag.putInt("votes", this.votes);
         final ListNBT modifierList = new ListNBT();
         this.modifiers.forEach(modifier -> modifierList.add(StringNBT.valueOf(modifier)));
-        tag.put("modifiers", (INBT) modifierList);
+        tag.put("modifiers", modifierList);
         return tag;
     }
 

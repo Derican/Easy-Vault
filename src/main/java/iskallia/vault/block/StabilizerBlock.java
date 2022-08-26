@@ -83,7 +83,7 @@ public class StabilizerBlock extends Block {
 
     private void spawnNoVoteParticles(final World world, final BlockPos pos) {
         for (int i = 0; i < 40; ++i) {
-            final Vector3d particlePos = new Vector3d(pos.getX() - 0.5 + StabilizerBlock.rand.nextFloat() * 2.0f, (double) (pos.getY() + StabilizerBlock.rand.nextFloat() * 8.0f), pos.getZ() - 0.5 + StabilizerBlock.rand.nextFloat() * 2.0f);
+            final Vector3d particlePos = new Vector3d(pos.getX() - 0.5 + StabilizerBlock.rand.nextFloat() * 2.0f, pos.getY() + StabilizerBlock.rand.nextFloat() * 8.0f, pos.getZ() - 0.5 + StabilizerBlock.rand.nextFloat() * 2.0f);
             final EffectMessage pkt = new EffectMessage(EffectMessage.Type.COLORED_FIREWORK, particlePos).addData(buf -> buf.writeInt(10027008));
             ModNetwork.CHANNEL.send(PacketDistributor.ALL.noArg(), pkt);
         }
@@ -91,7 +91,7 @@ public class StabilizerBlock extends Block {
 
     private boolean startPoll(final ServerWorld world, final BlockPos pos) {
         final VaultRaid vault = VaultRaidData.get(world).getAt(world, pos);
-        return vault != null && (vault.getActiveObjective(ArchitectObjective.class).map(ArchitectObjective::getActiveSession).map(VotingSession::getStabilizerPos).map(stabilizer -> stabilizer.equals((Object)pos)).orElse(false) || vault.getActiveObjective(ArchitectObjective.class).map(objective -> objective.createVotingSession(world, pos)).orElse(false));
+        return vault != null && (vault.getActiveObjective(ArchitectObjective.class).map(ArchitectObjective::getActiveSession).map(VotingSession::getStabilizerPos).map(stabilizer -> stabilizer.equals(pos)).orElse(false) || vault.getActiveObjective(ArchitectObjective.class).map(objective -> objective.createVotingSession(world, pos)).orElse(false));
     }
 
     public void onRemove(final BlockState state, final World world, final BlockPos pos, final BlockState newState, final boolean isMoving) {
@@ -128,7 +128,7 @@ public class StabilizerBlock extends Block {
     }
 
     protected void createBlockStateDefinition(final StateContainer.Builder<Block, BlockState> builder) {
-        builder.add(new Property[]{StabilizerBlock.HALF});
+        builder.add(StabilizerBlock.HALF);
     }
 
     static {

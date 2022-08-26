@@ -47,7 +47,7 @@ public class SetTree implements INBTSerializable<CompoundNBT> {
         for (final SetNode<?> node : nodes) {
             NetcodeUtils.runIfPresent(server, this.uuid, player -> {
                 if (node.isActive()) {
-                    node.getSet().onAdded((PlayerEntity) player);
+                    node.getSet().onAdded(player);
                 }
                 return;
             });
@@ -59,13 +59,13 @@ public class SetTree implements INBTSerializable<CompoundNBT> {
     public SetTree tick(final MinecraftServer server) {
         NetcodeUtils.runIfPresent(server, this.uuid, player -> {
             this.nodes.removeIf(node -> node.getLevel() == 0);
-            final List<SetNode<?>> toRemove = this.nodes.stream().filter(SetNode::isActive).filter(setNode -> !setNode.getSet().shouldBeActive((LivingEntity) player)).collect(Collectors.toList());
+            final List<SetNode<?>> toRemove = this.nodes.stream().filter(SetNode::isActive).filter(setNode -> !setNode.getSet().shouldBeActive(player)).collect(Collectors.toList());
             toRemove.forEach(setNode -> this.remove(server, setNode));
             ModConfigs.SETS.getAll().stream().filter(setGroup -> this.nodes.stream().map(setNode -> setNode.getGroup().getName()).noneMatch(s -> s.equals(setGroup.getName()))).forEach(setGroup -> {
                 int i = setGroup.getMaxLevel();
                 while (i > 0) {
                     final PlayerSet set = setGroup.getSet(i);
-                    if (set.shouldBeActive((LivingEntity) player)) {
+                    if (set.shouldBeActive(player)) {
                         this.add(server, new SetNode(setGroup, i));
                         break;
                     } else {
@@ -74,7 +74,7 @@ public class SetTree implements INBTSerializable<CompoundNBT> {
                 }
                 return;
             });
-            this.nodes.forEach(setNode -> setNode.getSet().onTick((PlayerEntity) player));
+            this.nodes.forEach(setNode -> setNode.getSet().onTick(player));
             return;
         });
         return this;
@@ -84,7 +84,7 @@ public class SetTree implements INBTSerializable<CompoundNBT> {
         for (final SetNode<?> node : nodes) {
             NetcodeUtils.runIfPresent(server, this.uuid, player -> {
                 if (node.isActive()) {
-                    node.getSet().onRemoved((PlayerEntity) player);
+                    node.getSet().onRemoved(player);
                 }
                 return;
             });
@@ -97,7 +97,7 @@ public class SetTree implements INBTSerializable<CompoundNBT> {
         final CompoundNBT nbt = new CompoundNBT();
         final ListNBT list = new ListNBT();
         this.nodes.stream().map(SetNode::serializeNBT).forEach(list::add);
-        nbt.put("Nodes", (INBT) list);
+        nbt.put("Nodes", list);
         return nbt;
     }
 

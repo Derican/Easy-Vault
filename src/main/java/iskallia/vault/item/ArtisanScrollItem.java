@@ -36,23 +36,23 @@ public class ArtisanScrollItem extends BasicItem {
 
     public ITextComponent getName(final ItemStack stack) {
         final IFormattableTextComponent displayName = (IFormattableTextComponent) super.getName(stack);
-        return (ITextComponent) displayName.setStyle(Style.EMPTY.withColor(Color.fromRgb(-1213660)));
+        return displayName.setStyle(Style.EMPTY.withColor(Color.fromRgb(-1213660)));
     }
 
     @OnlyIn(Dist.CLIENT)
     @Override
     public void appendHoverText(final ItemStack stack, @Nullable final World worldIn, final List<ITextComponent> tooltip, final ITooltipFlag flagIn) {
         tooltip.add(StringTextComponent.EMPTY);
-        tooltip.add((ITextComponent) new StringTextComponent("Reforges a gear piece to").withStyle(TextFormatting.GRAY));
-        tooltip.add((ITextComponent) new StringTextComponent("it's unidentified state,").withStyle(TextFormatting.GRAY));
-        tooltip.add((ITextComponent) new StringTextComponent("allowing you to re-roll it").withStyle(TextFormatting.GRAY));
+        tooltip.add(new StringTextComponent("Reforges a gear piece to").withStyle(TextFormatting.GRAY));
+        tooltip.add(new StringTextComponent("it's unidentified state,").withStyle(TextFormatting.GRAY));
+        tooltip.add(new StringTextComponent("allowing you to re-roll it").withStyle(TextFormatting.GRAY));
         final Pair<EquipmentSlotType, VAttribute<?, ?>> gearModifier = getPredefinedRoll(stack);
         if (gearModifier != null) {
-            final String slotName = StringUtils.capitalize(((EquipmentSlotType) gearModifier.getFirst()).getName());
-            final ITextComponent attributeTxt = VaultGearHelper.getDisplayName((VAttribute<?, ?>) gearModifier.getSecond());
+            final String slotName = StringUtils.capitalize(gearModifier.getFirst().getName());
+            final ITextComponent attributeTxt = VaultGearHelper.getDisplayName(gearModifier.getSecond());
             tooltip.add(StringTextComponent.EMPTY);
-            tooltip.add((ITextComponent) new StringTextComponent("Only for: ").withStyle(TextFormatting.GRAY).append((ITextComponent) new StringTextComponent(slotName).withStyle(TextFormatting.AQUA)));
-            tooltip.add((ITextComponent) new StringTextComponent("Adds: ").withStyle(TextFormatting.GRAY).append(attributeTxt));
+            tooltip.add(new StringTextComponent("Only for: ").withStyle(TextFormatting.GRAY).append(new StringTextComponent(slotName).withStyle(TextFormatting.AQUA)));
+            tooltip.add(new StringTextComponent("Adds: ").withStyle(TextFormatting.GRAY).append(attributeTxt));
         }
     }
 
@@ -119,7 +119,7 @@ public class ArtisanScrollItem extends BasicItem {
         final String itemKey = MiscUtils.getRandomEntry(tierConfig.BASE_MODIFIERS.keySet(), ArtisanScrollItem.random);
         Item item;
         try {
-            item = (Item) ForgeRegistries.ITEMS.getValue(new ResourceLocation(itemKey));
+            item = ForgeRegistries.ITEMS.getValue(new ResourceLocation(itemKey));
         } catch (final Exception exc) {
             return false;
         }
@@ -141,7 +141,7 @@ public class ArtisanScrollItem extends BasicItem {
         if (generatorPair == null) {
             return false;
         }
-        setPredefinedRoll(out, slotType, (VAttribute<?, ?>) generatorPair.getFirst());
+        setPredefinedRoll(out, slotType, generatorPair.getFirst());
         return true;
     }
 

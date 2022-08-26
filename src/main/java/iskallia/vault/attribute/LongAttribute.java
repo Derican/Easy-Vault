@@ -14,7 +14,7 @@ public class LongAttribute extends NumberAttribute<Long> {
 
     @Override
     public void write(final CompoundNBT nbt) {
-        nbt.putLong("BaseValue", (long) this.getBaseValue());
+        nbt.putLong("BaseValue", this.getBaseValue());
     }
 
     @Override

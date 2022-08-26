@@ -20,10 +20,10 @@ public class MegaJumpDamageAbility extends MegaJumpAbility<MegaJumpDamageConfig>
     @Override
     public boolean onAction(final MegaJumpDamageConfig config, final ServerPlayerEntity player, final boolean active) {
         if (super.onAction(config, player, active)) {
-            final List<LivingEntity> entities = EntityHelper.getNearby((IWorld) player.getCommandSenderWorld(), (Vector3i) player.blockPosition(), config.getRadius(), LivingEntity.class);
+            final List<LivingEntity> entities = EntityHelper.getNearby(player.getCommandSenderWorld(), player.blockPosition(), config.getRadius(), LivingEntity.class);
             entities.removeIf(e -> e instanceof PlayerEntity);
             final float atk = (float) player.getAttributeValue(Attributes.ATTACK_DAMAGE) * config.getPercentAttackDamageDealt();
-            final DamageSource src = DamageSource.playerAttack((PlayerEntity) player);
+            final DamageSource src = DamageSource.playerAttack(player);
             for (final LivingEntity entity : entities) {
                 ActiveFlags.IS_AOE_ATTACKING.runIfNotSet(() -> {
                     if (entity.hurt(src, atk)) {

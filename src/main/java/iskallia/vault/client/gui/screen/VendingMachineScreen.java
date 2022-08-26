@@ -45,7 +45,7 @@ public class VendingMachineScreen extends ContainerScreen<VendingMachineContaine
     public List<TradeWidget> tradeWidgets;
 
     public VendingMachineScreen(final VendingMachineContainer screenContainer, final PlayerInventory inv, final ITextComponent title) {
-        super(screenContainer, inv, (ITextComponent) new StringTextComponent("Vending Machine"));
+        super(screenContainer, inv, new StringTextComponent("Vending Machine"));
         this.tradesContainer = new ScrollableContainer(this::renderTrades);
         this.tradeWidgets = new LinkedList<TradeWidget>();
         this.refreshWidgets();
@@ -55,7 +55,7 @@ public class VendingMachineScreen extends ContainerScreen<VendingMachineContaine
 
     public void refreshWidgets() {
         this.tradeWidgets.clear();
-        final List<TraderCore> cores = ((VendingMachineContainer) this.getMenu()).getTileEntity().getCores();
+        final List<TraderCore> cores = this.getMenu().getTileEntity().getCores();
         for (int i = 0; i < cores.size(); ++i) {
             final TraderCore traderCore = cores.get(i);
             final int x = 0;
@@ -94,15 +94,15 @@ public class VendingMachineScreen extends ContainerScreen<VendingMachineContaine
             final boolean isHovered = tradeWidget.x <= tradeContainerX && tradeContainerX <= tradeWidget.x + 88 && tradeWidget.y <= tradeContainerY && tradeContainerY <= tradeWidget.y + 27;
             if (isHovered) {
                 if (InputEvents.isShiftDown()) {
-                    ((VendingMachineContainer) this.getMenu()).ejectCore(i);
+                    this.getMenu().ejectCore(i);
                     this.refreshWidgets();
                     ModNetwork.CHANNEL.sendToServer(VendingUIMessage.ejectTrade(i));
-                    Minecraft.getInstance().getSoundManager().play((ISound) SimpleSound.forUI(SoundEvents.ITEM_PICKUP, 1.0f));
+                    Minecraft.getInstance().getSoundManager().play(SimpleSound.forUI(SoundEvents.ITEM_PICKUP, 1.0f));
                     break;
                 }
-                ((VendingMachineContainer) this.getMenu()).selectTrade(i);
+                this.getMenu().selectTrade(i);
                 ModNetwork.CHANNEL.sendToServer(VendingUIMessage.selectTrade(i));
-                Minecraft.getInstance().getSoundManager().play((ISound) SimpleSound.forUI(SoundEvents.UI_BUTTON_CLICK, 1.0f));
+                Minecraft.getInstance().getSoundManager().play(SimpleSound.forUI(SoundEvents.UI_BUTTON_CLICK, 1.0f));
                 break;
             } else {
                 ++i;
@@ -126,7 +126,7 @@ public class VendingMachineScreen extends ContainerScreen<VendingMachineContaine
     }
 
     protected void renderLabels(final MatrixStack matrixStack, final int x, final int y) {
-        this.font.draw(matrixStack, (ITextComponent) new StringTextComponent(""), (float) this.titleLabelX, (float) this.titleLabelY, 4210752);
+        this.font.draw(matrixStack, new StringTextComponent(""), (float) this.titleLabelX, (float) this.titleLabelY, 4210752);
     }
 
     public void render(final MatrixStack matrixStack, final int mouseX, final int mouseY, final float partialTicks) {
@@ -138,7 +138,7 @@ public class VendingMachineScreen extends ContainerScreen<VendingMachineContaine
         final int containerHeight = 166;
         minecraft.getTextureManager().bind(VendingMachineScreen.HUD_RESOURCE);
         blit(matrixStack, (int) (midX - containerWidth / 2), (int) (midY - containerHeight / 2), 0.0f, 0.0f, containerWidth, containerHeight, 512, 256);
-        final VendingMachineContainer container = (VendingMachineContainer) this.getMenu();
+        final VendingMachineContainer container = this.getMenu();
         final VendingMachineTileEntity tileEntity = container.getTileEntity();
         final Rectangle tradeBoundaries = this.getTradeBoundaries();
         this.tradesContainer.setBounds(tradeBoundaries);
@@ -180,7 +180,7 @@ public class VendingMachineScreen extends ContainerScreen<VendingMachineContaine
                 } else {
                     final StringTextComponent text = new StringTextComponent("Sold out, sorry!");
                     text.setStyle(Style.EMPTY.withColor(Color.fromRgb(16711680)));
-                    this.renderTooltip(matrixStack, (ITextComponent) text, mouseX, mouseY);
+                    this.renderTooltip(matrixStack, text, mouseX, mouseY);
                 }
             }
         }

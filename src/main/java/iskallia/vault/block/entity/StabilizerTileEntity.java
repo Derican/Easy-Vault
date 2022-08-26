@@ -64,7 +64,7 @@ public class StabilizerTileEntity extends TileEntity implements ITickableTileEnt
     private final List<Object> particleReferences;
 
     public StabilizerTileEntity() {
-        super((TileEntityType) ModBlocks.STABILIZER_TILE_ENTITY);
+        super(ModBlocks.STABILIZER_TILE_ENTITY);
         this.active = false;
         this.timeout = 20;
         this.highlightDirections = new HashSet<Direction>();
@@ -77,13 +77,13 @@ public class StabilizerTileEntity extends TileEntity implements ITickableTileEnt
             final ServerWorld sWorld = (ServerWorld) world;
             final BlockState up = world.getBlockState(this.getBlockPos().above());
             if (!(up.getBlock() instanceof StabilizerBlock)) {
-                world.setBlockAndUpdate(this.getBlockPos().above(), (BlockState) ModBlocks.STABILIZER.defaultBlockState().setValue((Property) StabilizerBlock.HALF, (Comparable) DoubleBlockHalf.UPPER));
+                world.setBlockAndUpdate(this.getBlockPos().above(), ModBlocks.STABILIZER.defaultBlockState().setValue((Property) StabilizerBlock.HALF, (Comparable) DoubleBlockHalf.UPPER));
             }
             final VaultRaid raid = VaultRaidData.get(sWorld).getAt(sWorld, this.getBlockPos());
             if (raid != null) {
                 raid.getActiveObjective(ArchitectSummonAndKillBossesObjective.class).ifPresent(objective -> Direction.Plane.HORIZONTAL.stream().forEach(dir -> {
                     final BlockPos compassPos = this.getBlockPos().below().relative(dir);
-                    sWorld.setBlockAndUpdate(compassPos, (BlockState) ModBlocks.STABILIZER_COMPASS.defaultBlockState().setValue((Property) StabilizerCompassBlock.DIRECTION, (Comparable) dir));
+                    sWorld.setBlockAndUpdate(compassPos, ModBlocks.STABILIZER_COMPASS.defaultBlockState().setValue((Property) StabilizerCompassBlock.DIRECTION, (Comparable) dir));
                 }));
             }
             if (this.active && this.timeout > 0) {
@@ -103,21 +103,21 @@ public class StabilizerTileEntity extends TileEntity implements ITickableTileEnt
         if (this.particleReferences.size() < 3) {
             for (int toAdd = 3 - this.particleReferences.size(), i = 0; i < toAdd; ++i) {
                 final ParticleManager mgr = Minecraft.getInstance().particleEngine;
-                final Particle p = mgr.createParticle((IParticleData) ModParticles.STABILIZER_CUBE.get(), this.worldPosition.getX() + 0.5, this.worldPosition.getY() + 0.5, this.worldPosition.getZ() + 0.5, 0.0, 0.0, 0.0);
+                final Particle p = mgr.createParticle(ModParticles.STABILIZER_CUBE.get(), this.worldPosition.getX() + 0.5, this.worldPosition.getY() + 0.5, this.worldPosition.getZ() + 0.5, 0.0, 0.0, 0.0);
                 this.particleReferences.add(p);
             }
         }
         this.particleReferences.removeIf(ref -> !((Particle) ref).isAlive());
         if (this.isActive()) {
-            final Vector3d particlePos = new Vector3d((double) (this.worldPosition.getX() + StabilizerTileEntity.rand.nextFloat()), (double) (this.worldPosition.getY() + StabilizerTileEntity.rand.nextFloat() * 2.0f), (double) (this.worldPosition.getZ() + StabilizerTileEntity.rand.nextFloat()));
+            final Vector3d particlePos = new Vector3d(this.worldPosition.getX() + StabilizerTileEntity.rand.nextFloat(), this.worldPosition.getY() + StabilizerTileEntity.rand.nextFloat() * 2.0f, this.worldPosition.getZ() + StabilizerTileEntity.rand.nextFloat());
             final ParticleManager mgr2 = Minecraft.getInstance().particleEngine;
-            SimpleAnimatedParticle p2 = (SimpleAnimatedParticle) mgr2.createParticle((IParticleData) ParticleTypes.FIREWORK, particlePos.x, particlePos.y, particlePos.z, 0.0, 0.0, 0.0);
+            SimpleAnimatedParticle p2 = (SimpleAnimatedParticle) mgr2.createParticle(ParticleTypes.FIREWORK, particlePos.x, particlePos.y, particlePos.z, 0.0, 0.0, 0.0);
 //            TODO: check if the omit is acceptable
 //            p2.baseGravity = 0.0f;
             p2.setColor(301982);
             for (final Direction voteDirection : this.highlightDirections) {
-                final Vector3d dirPos = new Vector3d((double) (this.worldPosition.getX() + StabilizerTileEntity.rand.nextFloat()), this.worldPosition.getY() + StabilizerTileEntity.rand.nextFloat() * 0.1, (double) (this.worldPosition.getZ() + StabilizerTileEntity.rand.nextFloat())).add((double) voteDirection.getStepX(), (double) voteDirection.getStepY(), (double) voteDirection.getStepZ());
-                p2 = (SimpleAnimatedParticle) mgr2.createParticle((IParticleData) ParticleTypes.FIREWORK, dirPos.x, dirPos.y, dirPos.z, voteDirection.getStepX() * StabilizerTileEntity.rand.nextFloat() * 0.18, voteDirection.getStepY() * StabilizerTileEntity.rand.nextFloat() * 0.18, voteDirection.getStepZ() * StabilizerTileEntity.rand.nextFloat() * 0.18);
+                final Vector3d dirPos = new Vector3d(this.worldPosition.getX() + StabilizerTileEntity.rand.nextFloat(), this.worldPosition.getY() + StabilizerTileEntity.rand.nextFloat() * 0.1, this.worldPosition.getZ() + StabilizerTileEntity.rand.nextFloat()).add(voteDirection.getStepX(), voteDirection.getStepY(), voteDirection.getStepZ());
+                p2 = (SimpleAnimatedParticle) mgr2.createParticle(ParticleTypes.FIREWORK, dirPos.x, dirPos.y, dirPos.z, voteDirection.getStepX() * StabilizerTileEntity.rand.nextFloat() * 0.18, voteDirection.getStepY() * StabilizerTileEntity.rand.nextFloat() * 0.18, voteDirection.getStepZ() * StabilizerTileEntity.rand.nextFloat() * 0.18);
 //                TODO: check if the omit is acceptable
 //                p2.baseGravity = 4.0E-4f;
                 p2.setColor(this.getDirectionColor(voteDirection));
@@ -180,7 +180,7 @@ public class StabilizerTileEntity extends TileEntity implements ITickableTileEnt
 
     public CompoundNBT save(final CompoundNBT tag) {
         tag.putBoolean("active", this.active);
-        NBTHelper.writeList(tag, "directions", (Collection<Direction>) this.highlightDirections, IntNBT.class, dir -> IntNBT.valueOf(dir.ordinal()));
+        NBTHelper.writeList(tag, "directions", this.highlightDirections, IntNBT.class, dir -> IntNBT.valueOf(dir.ordinal()));
         return super.save(tag);
     }
 

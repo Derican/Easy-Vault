@@ -43,7 +43,7 @@ public class RaidChallengeGenerator extends VaultGenerator {
             this.startChunk = new ChunkPos(jigsaw.getStartPos().getX() >> 4, jigsaw.getStartPos().getZ() >> 4);
             final StructureStart<?> start = ModFeatures.RAID_CHALLENGE_FEATURE.generate(jigsaw, world.registryAccess(), world.getChunkSource().generator, world.getStructureManager(), 0, world.getSeed());
             jigsaw.getGeneratedPieces().stream().flatMap(piece -> VaultPiece.of(piece).stream()).forEach(this.pieces::add);
-            world.getChunk(chunkPos.x, chunkPos.z, ChunkStatus.EMPTY, true).setStartForFeature((Structure) ModStructures.RAID_CHALLENGE, (StructureStart) start);
+            world.getChunk(chunkPos.x, chunkPos.z, ChunkStatus.EMPTY, true).setStartForFeature(ModStructures.RAID_CHALLENGE, start);
             this.tick(world, vault);
             if (!vault.getProperties().exists(VaultRaid.START_POS) || !vault.getProperties().exists(VaultRaid.START_FACING)) {
                 return this.findStartPosition(world, vault, chunkPos, this::getPortalPlacer);

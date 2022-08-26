@@ -41,7 +41,7 @@ import java.util.function.Consumer;
 
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class VaultMagnetItem extends Item {
-    private MagnetType type;
+    private final MagnetType type;
     private static final HashMap<UUID, UUID> pulledItems;
 
     public VaultMagnetItem(final ResourceLocation id, final MagnetType type) {
@@ -56,11 +56,11 @@ public class VaultMagnetItem extends Item {
             return;
         }
         final int totalRepairs = stack.getOrCreateTag().getInt("TotalRepairs");
-        tooltip.add((ITextComponent) new StringTextComponent(" "));
-        tooltip.add((ITextComponent) new StringTextComponent("Enabled: " + (this.isEnabled(stack) ? (TextFormatting.GREEN + "true") : (TextFormatting.RED + "false"))));
-        tooltip.add((ITextComponent) new StringTextComponent("Repairs Remaining: " + this.getColor(30 - totalRepairs) + Math.max(0, 30 - totalRepairs)));
-        tooltip.add((ITextComponent) new StringTextComponent(" "));
-        super.appendHoverText(stack, worldIn, (List) tooltip, flagIn);
+        tooltip.add(new StringTextComponent(" "));
+        tooltip.add(new StringTextComponent("Enabled: " + (this.isEnabled(stack) ? (TextFormatting.GREEN + "true") : (TextFormatting.RED + "false"))));
+        tooltip.add(new StringTextComponent("Repairs Remaining: " + this.getColor(30 - totalRepairs) + Math.max(0, 30 - totalRepairs)));
+        tooltip.add(new StringTextComponent(" "));
+        super.appendHoverText(stack, worldIn, tooltip, flagIn);
     }
 
     private TextFormatting getColor(final int amount) {
@@ -102,7 +102,7 @@ public class VaultMagnetItem extends Item {
             final float speed = settings.getSpeed() / 20.0f;
             final float radius = settings.getRadius();
             if (moveItems) {
-                final List<ItemEntity> items = world.getEntitiesOfClass((Class) ItemEntity.class, player.getBoundingBox().inflate((double) radius));
+                final List<ItemEntity> items = world.getEntitiesOfClass((Class) ItemEntity.class, player.getBoundingBox().inflate(radius));
                 for (final ItemEntity item : items) {
                     if (item.isAlive()) {
                         if (stack.getOrCreateTag().getBoolean("PreventRemoteMovement")) {
@@ -124,7 +124,7 @@ public class VaultMagnetItem extends Item {
                 }
             }
             if (moveXp) {
-                final List<ExperienceOrbEntity> orbs = world.getEntitiesOfClass((Class) ExperienceOrbEntity.class, player.getBoundingBox().inflate((double) radius));
+                final List<ExperienceOrbEntity> orbs = world.getEntitiesOfClass((Class) ExperienceOrbEntity.class, player.getBoundingBox().inflate(radius));
                 for (final ExperienceOrbEntity orb : orbs) {
                     this.moveXpToPlayer(orb, player, speed, instant);
                 }
@@ -242,7 +242,7 @@ public class VaultMagnetItem extends Item {
                     stack.hurtAndBreak(1, (LivingEntity) player, onBroken -> {
                     });
                 } else {
-                    final LazyOptional<IItemHandler> itemHandler = (LazyOptional<IItemHandler>) stack.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY);
+                    final LazyOptional<IItemHandler> itemHandler = stack.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY);
                     itemHandler.ifPresent(h -> {
                         for (int j = 0; j < h.getSlots(); ++j) {
                             final ItemStack stackInHandler = h.getStackInSlot(j);
@@ -266,7 +266,7 @@ public class VaultMagnetItem extends Item {
         PlayerEntity closest = players.get(0);
         double distance = radius;
         for (final PlayerEntity player : players) {
-            final double temp = player.distanceTo((Entity) item);
+            final double temp = player.distanceTo(item);
             if (temp < distance && this.hasEnabledMagnetInRange(player, radius)) {
                 closest = player;
                 distance = temp;
@@ -301,6 +301,6 @@ public class VaultMagnetItem extends Item {
     public enum MagnetType {
         WEAK,
         STRONG,
-        OMEGA;
+        OMEGA
     }
 }

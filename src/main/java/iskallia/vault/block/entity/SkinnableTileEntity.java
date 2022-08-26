@@ -14,7 +14,7 @@ public abstract class SkinnableTileEntity extends TileEntity {
     protected SkinProfile skin;
 
     public SkinnableTileEntity(final TileEntityType<?> tileEntityTypeIn) {
-        super((TileEntityType) tileEntityTypeIn);
+        super(tileEntityTypeIn);
         this.skin = new SkinProfile();
     }
 

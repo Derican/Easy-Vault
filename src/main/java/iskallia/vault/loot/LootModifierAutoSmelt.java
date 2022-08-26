@@ -37,22 +37,22 @@ public class LootModifierAutoSmelt extends LootModifier {
         if (!LootUtils.doesContextFulfillSet(context, LootParameterSets.BLOCK) || !context.hasParam(LootParameters.THIS_ENTITY)) {
             return generatedLoot;
         }
-        final Entity e = (Entity) context.getParamOrNull(LootParameters.THIS_ENTITY);
+        final Entity e = context.getParamOrNull(LootParameters.THIS_ENTITY);
         if (!(e instanceof ServerPlayerEntity)) {
             return generatedLoot;
         }
         final ServerPlayerEntity player = (ServerPlayerEntity) e;
-        final ItemStack tool = (ItemStack) context.getParamOrNull(LootParameters.TOOL);
+        final ItemStack tool = context.getParamOrNull(LootParameters.TOOL);
         if (PaxelEnhancements.getEnhancement(tool) != PaxelEnhancements.AUTO_SMELT) {
             return generatedLoot;
         }
         final ServerWorld world = context.getLevel();
-        final Vector3d pos = (Vector3d) context.getParamOrNull(LootParameters.ORIGIN);
+        final Vector3d pos = context.getParamOrNull(LootParameters.ORIGIN);
         return generatedLoot.stream().filter(stack -> !stack.isEmpty()).map(stack -> {
-            final Optional<Tuple<ItemStack, Float>> furnaceResult = RecipeUtil.findSmeltingResult((World) context.getLevel(), stack);
+            final Optional<Tuple<ItemStack, Float>> furnaceResult = RecipeUtil.findSmeltingResult(context.getLevel(), stack);
             furnaceResult.ifPresent(result -> {
-                BasicEventHooks.firePlayerSmeltedEvent((PlayerEntity) player, (ItemStack) result.getA());
-                final float exp = (float) result.getB();
+                BasicEventHooks.firePlayerSmeltedEvent(player, result.getA());
+                final float exp = result.getB();
                 if (exp > 0.0f) {
                     int iExp = (int) exp;
                     final float partialExp = exp - iExp;
@@ -62,12 +62,12 @@ public class LootModifierAutoSmelt extends LootModifier {
                     while (iExp > 0) {
                         final int expPart = ExperienceOrbEntity.getExperienceValue(iExp);
                         iExp -= expPart;
-                        world.addFreshEntity((Entity) new ExperienceOrbEntity((World) world, pos.x() + 0.5, pos.y() + 0.5, pos.z() + 0.5, expPart));
+                        world.addFreshEntity(new ExperienceOrbEntity(world, pos.x() + 0.5, pos.y() + 0.5, pos.z() + 0.5, expPart));
                     }
                 }
                 return;
             });
-            return (ItemStack) furnaceResult.map(Tuple::getA).orElse(stack);
+            return furnaceResult.map(Tuple::getA).orElse(stack);
         }).collect(Collectors.toList());
     }
 

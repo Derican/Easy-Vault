@@ -65,10 +65,10 @@ public class AncientGoalOverlay {
             msg.add(new StringTextComponent("and escape the Vault!").withStyle(TextFormatting.DARK_AQUA).withStyle(TextFormatting.BOLD).getVisualOrderText());
         }
         matrixStack.pushPose();
-        matrixStack.translate(12.0, (double) (bottom - offsetY - msg.size() * 10), 0.0);
+        matrixStack.translate(12.0, bottom - offsetY - msg.size() * 10, 0.0);
         for (int i = 0; i < msg.size(); ++i) {
             final IReorderingProcessor txt = msg.get(i);
-            fr.drawInBatch(txt, 0.0f, (float) (i * 10), -1, true, matrixStack.last().pose(), (IRenderTypeBuffer) buffer, false, 0, LightmapHelper.getPackedFullbrightCoords());
+            fr.drawInBatch(txt, 0.0f, (float) (i * 10), -1, true, matrixStack.last().pose(), buffer, false, 0, LightmapHelper.getPackedFullbrightCoords());
         }
         buffer.endBatch();
         matrixStack.popPose();
@@ -90,21 +90,21 @@ public class AncientGoalOverlay {
         final int iconWidth = 15;
         final int iconHeight = 27;
         matrixStack.pushPose();
-        matrixStack.translate(12.0, (double) (bottom - 24), 0.0);
-        matrixStack.translate(0.0, (double) (-margin), 0.0);
-        matrixStack.translate(0.0, (double) (-scale * iconHeight), 0.0);
+        matrixStack.translate(12.0, bottom - 24, 0.0);
+        matrixStack.translate(0.0, -margin, 0.0);
+        matrixStack.translate(0.0, -scale * iconHeight, 0.0);
         matrixStack.scale(scale, scale, scale);
         for (int i = 0; i < foundAncients; ++i) {
             final int u = 81;
             final int v = 109;
             AbstractGui.blit(matrixStack, 0, 0, (float) u, (float) v, iconWidth, iconHeight, 256, 256);
-            matrixStack.translate((double) (scale * gap + iconWidth), 0.0, 0.0);
+            matrixStack.translate(scale * gap + iconWidth, 0.0, 0.0);
         }
         for (int i = 0; i < untouchedObelisks; ++i) {
             final int u = 64;
             final int v = 109;
             AbstractGui.blit(matrixStack, 0, 0, (float) u, (float) v, iconWidth, iconHeight, 256, 256);
-            matrixStack.translate((double) (scale * gap + iconWidth), 0.0, 0.0);
+            matrixStack.translate(scale * gap + iconWidth, 0.0, 0.0);
         }
         matrixStack.popPose();
     }

@@ -30,8 +30,8 @@ import net.minecraft.util.text.StringTextComponent;
 public class RenameScreen extends ContainerScreen<RenamingContainer> {
     public static final ResourceLocation TEXTURE;
     private String name;
-    private CompoundNBT data;
-    private RenameType renameType;
+    private final CompoundNBT data;
+    private final RenameType renameType;
     private Button renameButton;
     private ItemStack itemStack;
     private TraderCore core;
@@ -85,16 +85,16 @@ public class RenameScreen extends ContainerScreen<RenamingContainer> {
         this.minecraft.keyboardHandler.setSendRepeatsToGui(true);
         final int i = (this.width - this.imageWidth) / 2;
         final int j = (this.height - this.imageHeight) / 2;
-        (this.nameField = new TextFieldWidget(this.font, i + 34, j + 26, 103, 12, (ITextComponent) new StringTextComponent(this.name))).setCanLoseFocus(false);
+        (this.nameField = new TextFieldWidget(this.font, i + 34, j + 26, 103, 12, new StringTextComponent(this.name))).setCanLoseFocus(false);
         this.nameField.setTextColor(-1);
         this.nameField.setTextColorUneditable(-1);
         this.nameField.setBordered(false);
         this.nameField.setMaxLength(16);
         this.nameField.setResponder(this::rename);
         this.children.add(this.nameField);
-        this.setInitialFocus((IGuiEventListener) this.nameField);
+        this.setInitialFocus(this.nameField);
         this.nameField.setValue(this.name);
-        this.addButton((Widget) (this.renameButton = new Button(i + 31, j + 40, 110, 20, (ITextComponent) new StringTextComponent("Confirm"), this::confirmPressed)));
+        this.addButton((Widget) (this.renameButton = new Button(i + 31, j + 40, 110, 20, new StringTextComponent("Confirm"), this::confirmPressed)));
     }
 
     private void confirmPressed(final Button button) {
@@ -103,7 +103,7 @@ public class RenameScreen extends ContainerScreen<RenamingContainer> {
         switch (this.renameType) {
             case PLAYER_STATUE: {
                 this.data.putString("PlayerNickname", this.name);
-                nbt.put("Data", (INBT) this.data);
+                nbt.put("Data", this.data);
                 break;
             }
             case TRADER_CORE: {
@@ -111,9 +111,9 @@ public class RenameScreen extends ContainerScreen<RenamingContainer> {
                     final CompoundNBT stackNbt = this.itemStack.getOrCreateTag();
                     this.core.setName(this.name);
                     final CompoundNBT coreNbt = NBTSerializer.serialize(this.core);
-                    stackNbt.put("core", (INBT) coreNbt);
+                    stackNbt.put("core", coreNbt);
                     this.itemStack.setTag(stackNbt);
-                    nbt.put("Data", (INBT) this.itemStack.serializeNBT());
+                    nbt.put("Data", this.itemStack.serializeNBT());
                 } catch (final Exception e) {
                     e.printStackTrace();
                 }
@@ -121,14 +121,14 @@ public class RenameScreen extends ContainerScreen<RenamingContainer> {
             }
             case CRYO_CHAMBER: {
                 final CompoundNBT data = new CompoundNBT();
-                data.put("BlockPos", (INBT) NBTUtil.writeBlockPos(this.chamberPos));
+                data.put("BlockPos", NBTUtil.writeBlockPos(this.chamberPos));
                 data.putString("EternalName", this.name);
-                nbt.put("Data", (INBT) data);
+                nbt.put("Data", data);
                 break;
             }
             case VAULT_CRYSTAL: {
                 VaultCrystalItem.getData(this.itemStack).setPlayerBossName(this.name);
-                nbt.put("Data", (INBT) this.itemStack.serializeNBT());
+                nbt.put("Data", this.itemStack.serializeNBT());
                 break;
             }
         }
@@ -154,7 +154,7 @@ public class RenameScreen extends ContainerScreen<RenamingContainer> {
                 this.minecraft.player.closeContainer();
             }
         } else if (keyCode == 257) {
-            Minecraft.getInstance().getSoundManager().play((ISound) SimpleSound.forUI(SoundEvents.UI_BUTTON_CLICK, 1.0f));
+            Minecraft.getInstance().getSoundManager().play(SimpleSound.forUI(SoundEvents.UI_BUTTON_CLICK, 1.0f));
             this.confirmPressed(this.renameButton);
         } else if (keyCode == 69) {
             return true;

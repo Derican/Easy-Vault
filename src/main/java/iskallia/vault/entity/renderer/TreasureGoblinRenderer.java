@@ -50,7 +50,7 @@ public class TreasureGoblinRenderer extends LivingRenderer<TreasureGoblinEntity,
     }
 
     private void setModelVisibilities(final TreasureGoblinEntity entity) {
-        final TreasureGoblinModel model = (TreasureGoblinModel) this.getModel();
+        final TreasureGoblinModel model = this.getModel();
         if (entity.isSpectator()) {
             model.setAllVisible(false);
             model.head.visible = true;

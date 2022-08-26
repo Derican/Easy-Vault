@@ -275,10 +275,10 @@ public class GearAnvilEvents {
             final Pair<EquipmentSlotType, VAttribute<?, ?>> predefinedRemoval = VoidOrbItem.getPredefinedRemoval(event.getRight());
             VAttribute<?, ?> foundAttribute = null;
             if (predefinedRemoval != null) {
-                if (!outputItem.isIntendedForSlot((EquipmentSlotType) predefinedRemoval.getFirst())) {
+                if (!outputItem.isIntendedForSlot(predefinedRemoval.getFirst())) {
                     return;
                 }
-                final List<VAttribute<?, ?>> attributes = VaultGearHelper.getAliasAttributes(((VAttribute) predefinedRemoval.getSecond()).getId());
+                final List<VAttribute<?, ?>> attributes = VaultGearHelper.getAliasAttributes(predefinedRemoval.getSecond().getId());
                 for (final VAttribute<?, ?> attribute : attributes) {
                     if (VaultGearHelper.hasModifier(output, attribute)) {
                         foundAttribute = attribute;
@@ -335,7 +335,7 @@ public class GearAnvilEvents {
         if (ModAttributes.GEAR_STATE.getOrDefault(output, VaultGear.State.UNIDENTIFIED).getValue(output) == VaultGear.State.UNIDENTIFIED) {
             return;
         }
-        if (gearModifier != null && !VaultGearHelper.canRollModifier(output, rarity, tier, (VAttribute<?, ?>) gearModifier.getSecond())) {
+        if (gearModifier != null && !VaultGearHelper.canRollModifier(output, rarity, tier, gearModifier.getSecond())) {
             return;
         }
         VaultGearHelper.removeAllAttributes(output);
@@ -343,8 +343,8 @@ public class GearAnvilEvents {
         ModAttributes.REFORGED.create(output, true);
         VAttribute<?, ?> attribute = null;
         if (gearModifier != null) {
-            final EquipmentSlotType slotType = (EquipmentSlotType) gearModifier.getFirst();
-            attribute = (VAttribute) gearModifier.getSecond();
+            final EquipmentSlotType slotType = gearModifier.getFirst();
+            attribute = gearModifier.getSecond();
             if (!gearItem.isIntendedForSlot(slotType)) {
                 return;
             }
@@ -367,7 +367,7 @@ public class GearAnvilEvents {
             return;
         }
         final ItemStack output = orb.copy();
-        VoidOrbItem.setPredefinedRemoval(output, (EquipmentSlotType) predefinedRoll.getFirst(), (VAttribute<?, ?>) predefinedRoll.getSecond());
+        VoidOrbItem.setPredefinedRemoval(output, predefinedRoll.getFirst(), predefinedRoll.getSecond());
         event.setCost(5);
         event.setMaterialCost(1);
         event.setOutput(output);
@@ -400,7 +400,7 @@ public class GearAnvilEvents {
         }
         event.setCost(5);
         event.setMaterialCost(1);
-        final ItemStack result = new ItemStack((IItemProvider) ModItems.ARTISAN_SCROLL);
+        final ItemStack result = new ItemStack(ModItems.ARTISAN_SCROLL);
         ArtisanScrollItem.setInitialized(result, true);
         event.setOutput(result);
     }

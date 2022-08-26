@@ -22,7 +22,7 @@ import net.minecraft.block.DoorBlock;
 public class UnknownVaultDoorBlock extends DoorBlock {
     public UnknownVaultDoorBlock() {
         super(AbstractBlock.Properties.of(Material.METAL, MaterialColor.DIAMOND).strength(-1.0f, 3600000.0f).sound(SoundType.METAL).noOcclusion());
-        this.registerDefaultState((BlockState) ((BlockState) ((BlockState) ((BlockState) ((BlockState) ((BlockState) this.getStateDefinition().any()).setValue((Property) UnknownVaultDoorBlock.FACING, (Comparable) Direction.NORTH)).setValue((Property) UnknownVaultDoorBlock.OPEN, (Comparable) Boolean.FALSE)).setValue((Property) UnknownVaultDoorBlock.HINGE, (Comparable) DoorHingeSide.LEFT)).setValue((Property) UnknownVaultDoorBlock.POWERED, (Comparable) Boolean.FALSE)).setValue((Property) UnknownVaultDoorBlock.HALF, (Comparable) DoubleBlockHalf.LOWER));
+        this.registerDefaultState(this.getStateDefinition().any().setValue((Property) UnknownVaultDoorBlock.FACING, (Comparable) Direction.NORTH).setValue((Property) UnknownVaultDoorBlock.OPEN, (Comparable) Boolean.FALSE).setValue((Property) UnknownVaultDoorBlock.HINGE, (Comparable) DoorHingeSide.LEFT).setValue((Property) UnknownVaultDoorBlock.POWERED, (Comparable) Boolean.FALSE).setValue((Property) UnknownVaultDoorBlock.HALF, (Comparable) DoubleBlockHalf.LOWER));
     }
 
     public void fillItemCategory(final ItemGroup group, final NonNullList<ItemStack> items) {

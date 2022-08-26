@@ -39,7 +39,7 @@ public class UnidentifiedRelicRecipe extends SpecialRecipe {
     }
 
     public ItemStack assemble(final CraftingInventory inv) {
-        return new ItemStack((IItemProvider) ModItems.UNIDENTIFIED_RELIC);
+        return new ItemStack(ModItems.UNIDENTIFIED_RELIC);
     }
 
     public boolean canCraftInDimensions(final int width, final int height) {
@@ -47,6 +47,6 @@ public class UnidentifiedRelicRecipe extends SpecialRecipe {
     }
 
     public IRecipeSerializer<?> getSerializer() {
-        return (IRecipeSerializer<?>) ModRecipes.Serializer.CRAFTING_SPECIAL_UNIDENTIFIED_RELIC;
+        return ModRecipes.Serializer.CRAFTING_SPECIAL_UNIDENTIFIED_RELIC;
     }
 }

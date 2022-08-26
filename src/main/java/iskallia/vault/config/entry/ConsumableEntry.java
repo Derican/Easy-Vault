@@ -8,13 +8,13 @@ import java.util.List;
 
 public class ConsumableEntry {
     @Expose
-    private String itemId;
+    private final String itemId;
     @Expose
-    private boolean absorption;
+    private final boolean absorption;
     @Expose
-    private float absorptionAmount;
+    private final float absorptionAmount;
     @Expose
-    private List<ConsumableEffect> effects;
+    private final List<ConsumableEffect> effects;
     @Expose
     private String type;
 

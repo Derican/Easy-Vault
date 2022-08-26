@@ -16,9 +16,9 @@ public class KeyPressContainer extends RecipeContainer {
 
     @Override
     protected void addInternalInventorySlots() {
-        this.addSlot(new Slot((IInventory) this.internalInventory, 0, 27, 47));
-        this.addSlot(new Slot((IInventory) this.internalInventory, 1, 76, 47));
-        this.addSlot((Slot) new RecipeOutputSlot(this.internalInventory, this.internalInventory.outputSlotIndex(), 134, 47) {
+        this.addSlot(new Slot(this.internalInventory, 0, 27, 47));
+        this.addSlot(new Slot(this.internalInventory, 1, 76, 47));
+        this.addSlot(new RecipeOutputSlot(this.internalInventory, this.internalInventory.outputSlotIndex(), 134, 47) {
             public ItemStack onTake(final PlayerEntity player, final ItemStack stack) {
                 final ItemStack itemStack = super.onTake(player, stack);
                 if (!player.level.isClientSide && !itemStack.isEmpty()) {

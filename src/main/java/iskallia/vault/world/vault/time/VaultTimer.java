@@ -80,7 +80,7 @@ public class VaultTimer implements INBTSerializable<CompoundNBT> {
         nbt.putInt("StartTime", this.startTime);
         nbt.putInt("TotalTime", this.totalTime);
         nbt.putInt("RunTime", this.runTime);
-        nbt.put("TimeExtensions", (INBT) this.extensions.serializeNBT());
+        nbt.put("TimeExtensions", this.extensions.serializeNBT());
         return nbt;
     }
 

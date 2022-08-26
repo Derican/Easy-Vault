@@ -36,12 +36,12 @@ public class ScavengerChestRenderer extends TileEntityRenderer<ScavengerChestTil
         final boolean isInWorldRender = tileEntity.hasLevel();
         final BlockState renderState = (isInWorldRender ? tileEntity.getBlockState() : ModBlocks.SCAVENGER_CHEST.defaultBlockState().setValue(ChestBlock.FACING, Direction.SOUTH));
         final float hAngle = (renderState.getValue(ChestBlock.FACING)).toYRot();
-        final TileEntityMerger.ICallbackWrapper<? extends ChestTileEntity> lidCallback = (TileEntityMerger.ICallbackWrapper<? extends ChestTileEntity>) TileEntityMerger.ICallback::acceptNone;
-        float lidRotation = ((Float2FloatFunction) lidCallback.apply(ScavengerChestBlock.opennessCombiner((IChestLid) tileEntity))).get(partialTicks);
+        final TileEntityMerger.ICallbackWrapper<? extends ChestTileEntity> lidCallback = TileEntityMerger.ICallback::acceptNone;
+        float lidRotation = lidCallback.apply(ScavengerChestBlock.opennessCombiner(tileEntity)).get(partialTicks);
         lidRotation = 1.0f - lidRotation;
         lidRotation = 1.0f - lidRotation * lidRotation * lidRotation;
         ScavengerChestRenderer.CHEST_MODEL.setLidAngle(lidRotation);
-        final int combinedLidLight = ((Int2IntFunction) lidCallback.apply((TileEntityMerger.ICallback) new DualBrightnessCallback())).applyAsInt(combinedLight);
+        final int combinedLidLight = ((Int2IntFunction) lidCallback.apply(new DualBrightnessCallback())).applyAsInt(combinedLight);
         final IVertexBuilder vb = ScavengerChestRenderer.MATERIAL.buffer(buffer, RenderType::entityCutout);
         matrixStack.pushPose();
         matrixStack.translate(0.5, 0.5, 0.5);

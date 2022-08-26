@@ -51,7 +51,7 @@ public class FloatingItemModifier extends RaidModifier {
             } while (!world.isEmptyBlock(at));
             final ItemStack stack = items.getRandom(FloatingItemModifier.rand);
             if (stack != null && !stack.isEmpty()) {
-                world.addFreshEntity((Entity) FloatingItemEntity.create((World) world, at, stack.copy()));
+                world.addFreshEntity(FloatingItemEntity.create(world, at, stack.copy()));
             }
         }
     }
@@ -66,17 +66,17 @@ public class FloatingItemModifier extends RaidModifier {
     public ITextComponent getDisplay(final float value) {
         final int sets = Math.round(value);
         final String set = (sets > 1) ? "sets" : "set";
-        return (ITextComponent) new StringTextComponent("+" + sets + " " + set + " of " + this.itemDescription).withStyle(TextFormatting.GREEN);
+        return new StringTextComponent("+" + sets + " " + set + " of " + this.itemDescription).withStyle(TextFormatting.GREEN);
     }
 
     public static WeightedList<SingleItemEntry> defaultGemList() {
         final WeightedList<SingleItemEntry> list = new WeightedList<SingleItemEntry>();
-        list.add(new SingleItemEntry(new ItemStack((IItemProvider) ModItems.ALEXANDRITE_GEM)), 1);
-        list.add(new SingleItemEntry(new ItemStack((IItemProvider) ModItems.BENITOITE_GEM)), 1);
-        list.add(new SingleItemEntry(new ItemStack((IItemProvider) ModItems.LARIMAR_GEM)), 1);
-        list.add(new SingleItemEntry(new ItemStack((IItemProvider) ModItems.WUTODIE_GEM)), 1);
-        list.add(new SingleItemEntry(new ItemStack((IItemProvider) ModItems.PAINITE_GEM)), 1);
-        list.add(new SingleItemEntry(new ItemStack((IItemProvider) ModItems.BLACK_OPAL_GEM)), 1);
+        list.add(new SingleItemEntry(new ItemStack(ModItems.ALEXANDRITE_GEM)), 1);
+        list.add(new SingleItemEntry(new ItemStack(ModItems.BENITOITE_GEM)), 1);
+        list.add(new SingleItemEntry(new ItemStack(ModItems.LARIMAR_GEM)), 1);
+        list.add(new SingleItemEntry(new ItemStack(ModItems.WUTODIE_GEM)), 1);
+        list.add(new SingleItemEntry(new ItemStack(ModItems.PAINITE_GEM)), 1);
+        list.add(new SingleItemEntry(new ItemStack(ModItems.BLACK_OPAL_GEM)), 1);
         return list;
     }
 }

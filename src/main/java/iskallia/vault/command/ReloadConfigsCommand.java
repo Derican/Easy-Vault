@@ -35,7 +35,7 @@ public class ReloadConfigsCommand extends Command {
             throw e;
         }
         ModNetwork.CHANNEL.send(PacketDistributor.ALL.noArg(), new ShardGlobalTradeMessage(ModConfigs.SOUL_SHARD.getShardTrades()));
-        ((CommandSource) context.getSource()).sendSuccess((ITextComponent) new StringTextComponent("Configs reloaded!").withStyle(TextFormatting.GREEN), true);
+        context.getSource().sendSuccess(new StringTextComponent("Configs reloaded!").withStyle(TextFormatting.GREEN), true);
         return 0;
     }
 

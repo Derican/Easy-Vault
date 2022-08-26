@@ -45,7 +45,7 @@ public class ClientShardTradeData {
     }
 
     public static Map<Integer, Tuple<ItemStack, Integer>> getAvailableTrades() {
-        return Collections.unmodifiableMap((Map<? extends Integer, ? extends Tuple<ItemStack, Integer>>) ClientShardTradeData.availableTrades);
+        return Collections.unmodifiableMap(ClientShardTradeData.availableTrades);
     }
 
     public static Tuple<ItemStack, Integer> getTradeInfo(final int trade) {

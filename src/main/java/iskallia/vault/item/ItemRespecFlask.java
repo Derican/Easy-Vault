@@ -38,7 +38,7 @@ public class ItemRespecFlask extends Item {
         }
         if (this.allowdedIn(group)) {
             for (final AbilityGroup<?, ?> abilityGroup : ModConfigs.ABILITIES.getAll()) {
-                final ItemStack stack = new ItemStack((IItemProvider) this);
+                final ItemStack stack = new ItemStack(this);
                 setAbility(stack, abilityGroup.getParentName());
                 items.add(stack);
             }
@@ -50,10 +50,10 @@ public class ItemRespecFlask extends Item {
         final String abilityStr = getAbility(stack);
         if (abilityStr != null) {
             final AbilityGroup<?, ?> grp = ModConfigs.ABILITIES.getAbilityGroupByName(abilityStr);
-            final ITextComponent ability = (ITextComponent) new StringTextComponent(grp.getParentName()).withStyle(TextFormatting.GOLD);
+            final ITextComponent ability = new StringTextComponent(grp.getParentName()).withStyle(TextFormatting.GOLD);
             tooltip.add(StringTextComponent.EMPTY);
-            tooltip.add((ITextComponent) new StringTextComponent("Use to remove selected specialization"));
-            tooltip.add((ITextComponent) new StringTextComponent("of ability ").append(ability));
+            tooltip.add(new StringTextComponent("Use to remove selected specialization"));
+            tooltip.add(new StringTextComponent("of ability ").append(ability));
         }
     }
 
@@ -66,7 +66,7 @@ public class ItemRespecFlask extends Item {
             if (stack.getCount() > 1) {
                 while (stack.getCount() > 1) {
                     stack.shrink(1);
-                    final ItemStack flask = new ItemStack((IItemProvider) this);
+                    final ItemStack flask = new ItemStack(this);
                     MiscUtils.giveItem(player, flask);
                 }
             }
@@ -100,24 +100,24 @@ public class ItemRespecFlask extends Item {
         final ItemStack held = player.getItemInHand(hand);
         final String abilityStr = getAbility(held);
         if (abilityStr == null) {
-            return (ActionResult<ItemStack>) ActionResult.pass(held);
+            return ActionResult.pass(held);
         }
         if (world.isClientSide()) {
             if (!this.hasAbilityClient(abilityStr)) {
-                return (ActionResult<ItemStack>) ActionResult.pass(held);
+                return ActionResult.pass(held);
             }
         } else {
             if (!(player instanceof ServerPlayerEntity)) {
-                return (ActionResult<ItemStack>) ActionResult.pass(held);
+                return ActionResult.pass(held);
             }
             final AbilityTree tree = PlayerAbilitiesData.get(((ServerPlayerEntity) player).getLevel()).getAbilities(player);
             final AbilityNode<?, ?> node = tree.getNodeByName(abilityStr);
             if (!node.isLearned() || node.getSpecialization() == null) {
-                return (ActionResult<ItemStack>) ActionResult.pass(held);
+                return ActionResult.pass(held);
             }
         }
         player.startUsingItem(hand);
-        return (ActionResult<ItemStack>) ActionResult.consume(held);
+        return ActionResult.consume(held);
     }
 
     @OnlyIn(Dist.CLIENT)
@@ -143,7 +143,7 @@ public class ItemRespecFlask extends Item {
             final ServerPlayerEntity player = (ServerPlayerEntity) entityLiving;
             final ServerWorld sWorld = (ServerWorld) world;
             final PlayerAbilitiesData data = PlayerAbilitiesData.get(sWorld);
-            final AbilityNode<?, ?> node = data.getAbilities((PlayerEntity) player).getNodeByName(abilityStr);
+            final AbilityNode<?, ?> node = data.getAbilities(player).getNodeByName(abilityStr);
             if (node.isLearned() && node.getSpecialization() != null) {
                 data.selectSpecialization(player, abilityStr, null);
                 if (!player.isCreative()) {

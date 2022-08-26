@@ -37,7 +37,7 @@ public class EnumAttribute<E extends Enum<E>> extends PooledAttribute<E> {
             return Enum.valueOf(this.getEnumClass(), value);
         } catch (final Exception e) {
             final E[] enumConstants = this.getEnumClass().getEnumConstants();
-            return (E) ((enumConstants.length == 0) ? null : enumConstants[0]);
+            return (enumConstants.length == 0) ? null : enumConstants[0];
         }
     }
 

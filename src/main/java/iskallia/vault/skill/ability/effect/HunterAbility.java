@@ -46,11 +46,11 @@ public class HunterAbility<C extends HunterConfig> extends AbilityEffect<C> {
         final ServerWorld sWorld = (ServerWorld) world;
         final ServerPlayerEntity sPlayer = player;
         for (int delay = 0; delay < config.getTickDuration() / 5; ++delay) {
-            ServerScheduler.INSTANCE.schedule(delay * 5, () -> this.selectPositions(config, world, (PlayerEntity) player).forEach(tpl -> {
-                final Color c = (Color) tpl.getB();
+            ServerScheduler.INSTANCE.schedule(delay * 5, () -> this.selectPositions(config, world, player).forEach(tpl -> {
+                final Color c = tpl.getB();
                 for (int i = 0; i < 8; ++i) {
-                    final Vector3d v = MiscUtils.getRandomOffset((BlockPos) tpl.getA(), HunterAbility.rand);
-                    sWorld.sendParticles(sPlayer, (IParticleData) ModParticles.DEPTH_FIREWORK.get(), true, v.x, v.y, v.z, 0, (double) (c.getRed() / 255.0f), (double) (c.getGreen() / 255.0f), (double) (c.getBlue() / 255.0f), 1.0);
+                    final Vector3d v = MiscUtils.getRandomOffset(tpl.getA(), HunterAbility.rand);
+                    sWorld.sendParticles(sPlayer, (IParticleData) ModParticles.DEPTH_FIREWORK.get(), true, v.x, v.y, v.z, 0, c.getRed() / 255.0f, c.getGreen() / 255.0f, c.getBlue() / 255.0f, 1.0);
                 }
             }));
         }
@@ -79,7 +79,7 @@ public class HunterAbility<C extends HunterConfig> extends AbilityEffect<C> {
                 final Chunk ch = world.getChunkSource().getChunkNow(xx, zz);
                 if (ch != null) {
                     ch.getBlockEntities().forEach((pos, tile) -> {
-                        if (tile != null && pos.distSqr((Vector3i) playerOffset) <= radiusSq) {
+                        if (tile != null && pos.distSqr(playerOffset) <= radiusSq) {
                             tileFn.accept(pos, tile);
                         }
                         return;

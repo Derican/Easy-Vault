@@ -45,13 +45,13 @@ public class PlayerSetsData extends WorldSavedData {
     }
 
     public PlayerSetsData add(final ServerPlayerEntity player, final SetNode<?>... nodes) {
-        this.getSets((PlayerEntity) player).add(player.getServer(), nodes);
+        this.getSets(player).add(player.getServer(), nodes);
         this.setDirty();
         return this;
     }
 
     public PlayerSetsData remove(final ServerPlayerEntity player, final SetNode<?>... nodes) {
-        this.getSets((PlayerEntity) player).remove(player.getServer(), nodes);
+        this.getSets(player).remove(player.getServer(), nodes);
         this.setDirty();
         return this;
     }
@@ -62,7 +62,7 @@ public class PlayerSetsData extends WorldSavedData {
         if (oldTalentTree != null) {
             for (final SetNode<?> node : oldTalentTree.getNodes()) {
                 if (node.isActive()) {
-                    ((PlayerSet) node.getSet()).onRemoved((PlayerEntity) player);
+                    node.getSet().onRemoved(player);
                 }
             }
         }
@@ -111,8 +111,8 @@ public class PlayerSetsData extends WorldSavedData {
             talentList.add(abilityTree.serializeNBT());
             return;
         });
-        nbt.put("PlayerEntries", (INBT) playerList);
-        nbt.put("SetEntries", (INBT) talentList);
+        nbt.put("PlayerEntries", playerList);
+        nbt.put("SetEntries", talentList);
         return nbt;
     }
 

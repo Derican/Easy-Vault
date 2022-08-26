@@ -17,7 +17,7 @@ public abstract class RecipeContainer extends Container {
     protected PlayerInventory playerInventory;
 
     protected RecipeContainer(@Nullable final ContainerType<?> containerType, final int windowId, final RecipeInventory internalInventory, final PlayerEntity player) {
-        super((ContainerType) containerType, windowId);
+        super(containerType, windowId);
         this.internalInventory = internalInventory;
         this.playerInventory = player.inventory;
         this.addInternalInventorySlots();
@@ -29,11 +29,11 @@ public abstract class RecipeContainer extends Container {
     protected void addPlayerInventorySlots() {
         for (int row = 0; row < 3; ++row) {
             for (int col = 0; col < 9; ++col) {
-                this.addSlot(new Slot((IInventory) this.playerInventory, col + row * 9 + 9, 8 + col * 18, 84 + row * 18));
+                this.addSlot(new Slot(this.playerInventory, col + row * 9 + 9, 8 + col * 18, 84 + row * 18));
             }
         }
         for (int col2 = 0; col2 < 9; ++col2) {
-            this.addSlot(new Slot((IInventory) this.playerInventory, col2, 8 + col2 * 18, 142));
+            this.addSlot(new Slot(this.playerInventory, col2, 8 + col2 * 18, 142));
         }
     }
 

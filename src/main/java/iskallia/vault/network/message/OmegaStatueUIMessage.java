@@ -35,7 +35,7 @@ public class OmegaStatueUIMessage {
             if (message.opcode == Opcode.SELECT_ITEM) {
                 final ItemStack stack = ItemStack.of(message.payload.getCompound("Item"));
                 final BlockPos statuePos = NBTUtil.readBlockPos(message.payload.getCompound("Position"));
-                final World world = (World) context.getSender().getLevel();
+                final World world = context.getSender().getLevel();
                 final TileEntity te = world.getBlockEntity(statuePos);
                 if (te instanceof LootStatueTileEntity) {
                     ((LootStatueTileEntity) te).setLootItem(stack);
@@ -49,12 +49,12 @@ public class OmegaStatueUIMessage {
     public static OmegaStatueUIMessage selectItem(final ItemStack stack, final BlockPos statuePos) {
         final OmegaStatueUIMessage message = new OmegaStatueUIMessage();
         message.opcode = Opcode.SELECT_ITEM;
-        (message.payload = new CompoundNBT()).put("Item", (INBT) stack.serializeNBT());
-        message.payload.put("Position", (INBT) NBTUtil.writeBlockPos(statuePos));
+        (message.payload = new CompoundNBT()).put("Item", stack.serializeNBT());
+        message.payload.put("Position", NBTUtil.writeBlockPos(statuePos));
         return message;
     }
 
     public enum Opcode {
-        SELECT_ITEM;
+        SELECT_ITEM
     }
 }

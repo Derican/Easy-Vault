@@ -35,13 +35,13 @@ public class MixinEntity {
         }
         if (self.getClass() == ItemEntity.class) {
             final ItemEntity itemEntity = (ItemEntity) self;
-            final Item artifactItem = (Item) ForgeRegistries.ITEMS.getValue(ModBlocks.VAULT_ARTIFACT.getRegistryName());
+            final Item artifactItem = ForgeRegistries.ITEMS.getValue(ModBlocks.VAULT_ARTIFACT.getRegistryName());
             if (itemEntity.getItem().getItem() == artifactItem) {
                 final ServerWorld world = (ServerWorld) self.level;
-                final ItemEntity newItemEntity = new ItemEntity((World) world, self.getX(), self.getY(), self.getZ());
-                newItemEntity.setItem(new ItemStack((IItemProvider) ModItems.ARTIFACT_FRAGMENT));
-                this.spawnParticles((World) world, self.blockPosition());
-                world.loadFromChunk((Entity) newItemEntity);
+                final ItemEntity newItemEntity = new ItemEntity(world, self.getX(), self.getY(), self.getZ());
+                newItemEntity.setItem(new ItemStack(ModItems.ARTIFACT_FRAGMENT));
+                this.spawnParticles(world, self.blockPosition());
+                world.loadFromChunk(newItemEntity);
                 itemEntity.remove();
             }
         }
@@ -54,6 +54,6 @@ public class MixinEntity {
             final double d3 = world.random.nextGaussian() * 0.02;
             ((ServerWorld) world).sendParticles((IParticleData) ParticleTypes.FLAME, pos.getX() + world.random.nextDouble() - d0, pos.getY() + world.random.nextDouble() - d2, pos.getZ() + world.random.nextDouble() - d3, 10, d0, d2, d3, 0.5);
         }
-        world.playSound((PlayerEntity) null, pos, SoundEvents.GENERIC_BURN, SoundCategory.BLOCKS, 1.0f, 1.0f);
+        world.playSound(null, pos, SoundEvents.GENERIC_BURN, SoundCategory.BLOCKS, 1.0f, 1.0f);
     }
 }

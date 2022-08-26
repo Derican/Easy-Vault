@@ -11,7 +11,7 @@ public class VectorHelper {
     }
 
     public static Vector3d getVectorFromPos(final BlockPos pos) {
-        return new Vector3d((double) pos.getX(), (double) pos.getY(), (double) pos.getZ());
+        return new Vector3d(pos.getX(), pos.getY(), pos.getZ());
     }
 
     public static Vector3d add(final Vector3d a, final Vector3d b) {

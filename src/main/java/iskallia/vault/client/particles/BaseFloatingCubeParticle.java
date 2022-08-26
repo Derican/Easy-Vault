@@ -38,9 +38,9 @@ public abstract class BaseFloatingCubeParticle extends Particle {
         this.spriteSet = spriteSet;
         this.originPos = new BlockPos(x, y, z);
         this.size = 0.45f;
-        final Vector3d change = new Vector3d((double) (BaseFloatingCubeParticle.rand.nextFloat() * (BaseFloatingCubeParticle.rand.nextBoolean() ? 1 : -1)), (double) (BaseFloatingCubeParticle.rand.nextFloat() * (BaseFloatingCubeParticle.rand.nextBoolean() ? 1 : -1)), (double) (BaseFloatingCubeParticle.rand.nextFloat() * (BaseFloatingCubeParticle.rand.nextBoolean() ? 1 : -1)));
+        final Vector3d change = new Vector3d(BaseFloatingCubeParticle.rand.nextFloat() * (BaseFloatingCubeParticle.rand.nextBoolean() ? 1 : -1), BaseFloatingCubeParticle.rand.nextFloat() * (BaseFloatingCubeParticle.rand.nextBoolean() ? 1 : -1), BaseFloatingCubeParticle.rand.nextFloat() * (BaseFloatingCubeParticle.rand.nextBoolean() ? 1 : -1));
         this.rotationChange = change.multiply(5.0, 5.0, 5.0);
-        final Vector3d axis = new Vector3d((double) (BaseFloatingCubeParticle.rand.nextFloat() * (BaseFloatingCubeParticle.rand.nextBoolean() ? 1 : -1)), (double) BaseFloatingCubeParticle.rand.nextFloat(), (double) (BaseFloatingCubeParticle.rand.nextFloat() * (BaseFloatingCubeParticle.rand.nextBoolean() ? 1 : -1)));
+        final Vector3d axis = new Vector3d(BaseFloatingCubeParticle.rand.nextFloat() * (BaseFloatingCubeParticle.rand.nextBoolean() ? 1 : -1), BaseFloatingCubeParticle.rand.nextFloat(), BaseFloatingCubeParticle.rand.nextFloat() * (BaseFloatingCubeParticle.rand.nextBoolean() ? 1 : -1));
         this.rotationDegreeAxis = axis.multiply(18.0, 18.0, 18.0);
     }
 
@@ -67,7 +67,7 @@ public abstract class BaseFloatingCubeParticle extends Particle {
 
     private void updateRotations() {
         if (this.effectPercent > 0.0f && this.rotationChange.lengthSqr() > 0.0) {
-            final Vector3d modify = this.rotationChange.multiply((double) this.effectPercent, (double) this.effectPercent, (double) this.effectPercent);
+            final Vector3d modify = this.rotationChange.multiply(this.effectPercent, this.effectPercent, this.effectPercent);
             this.prevRotationDegreeAxis = this.rotationDegreeAxis.scale(1.0);
             this.rotationDegreeAxis = this.rotationDegreeAxis.add(modify);
             this.rotationDegreeAxis = new Vector3d(this.rotationDegreeAxis.x() % 360.0, this.rotationDegreeAxis.y() % 360.0, this.rotationDegreeAxis.z() % 360.0);
@@ -84,22 +84,22 @@ public abstract class BaseFloatingCubeParticle extends Particle {
     protected abstract boolean isActive();
 
     private Vector3d getInterpolatedRotation(final float partialTicks) {
-        return new Vector3d(MathHelper.lerp((double) partialTicks, this.prevRotationDegreeAxis.x(), this.rotationDegreeAxis.x()), MathHelper.lerp((double) partialTicks, this.prevRotationDegreeAxis.y(), this.rotationDegreeAxis.y()), MathHelper.lerp((double) partialTicks, this.prevRotationDegreeAxis.z(), this.rotationDegreeAxis.z()));
+        return new Vector3d(MathHelper.lerp(partialTicks, this.prevRotationDegreeAxis.x(), this.rotationDegreeAxis.x()), MathHelper.lerp(partialTicks, this.prevRotationDegreeAxis.y(), this.rotationDegreeAxis.y()), MathHelper.lerp(partialTicks, this.prevRotationDegreeAxis.z(), this.rotationDegreeAxis.z()));
     }
 
     private double getYOffset(final float partialTicks) {
         final double offset = (Math.sin(this.effectPercent * 3.141592653589793 + 4.71238898038469) + 1.0) / 2.0;
         final double offsetPrev = (Math.sin(this.prevEffectPercent * 3.141592653589793 + 4.71238898038469) + 1.0) / 2.0;
-        return MathHelper.lerp((double) partialTicks, offsetPrev, offset);
+        return MathHelper.lerp(partialTicks, offsetPrev, offset);
     }
 
     public void render(final IVertexBuilder buffer, final ActiveRenderInfo ari, final float partialTicks) {
         RenderSystem.disableAlphaTest();
         final float effectPart = MathHelper.lerp(partialTicks, this.prevEffectPercent, this.effectPercent);
         final Color color = new Color(MiscUtils.blendColors(this.getActiveColor(), 5263440, effectPart));
-        float x = (float) MathHelper.lerp((double) partialTicks, this.xo, this.x);
-        float y = (float) MathHelper.lerp((double) partialTicks, this.yo, this.y);
-        float z = (float) MathHelper.lerp((double) partialTicks, this.zo, this.z);
+        float x = (float) MathHelper.lerp(partialTicks, this.xo, this.x);
+        float y = (float) MathHelper.lerp(partialTicks, this.yo, this.y);
+        float z = (float) MathHelper.lerp(partialTicks, this.zo, this.z);
         final Vector3d cameraPos = ari.getPosition();
         x -= (float) cameraPos.x();
         y -= (float) cameraPos.y();

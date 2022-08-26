@@ -38,11 +38,11 @@ public class VaultChampionTrophy extends Block
     
     public VaultChampionTrophy() {
         super(AbstractBlock.Properties.of(Material.METAL).sound(SoundType.METAL).requiresCorrectToolForDrops().strength(5.0f, 6.0f));
-        this.registerDefaultState((BlockState)((BlockState)((BlockState)this.stateDefinition.any()).setValue((Property)VaultChampionTrophy.FACING, (Comparable)Direction.SOUTH)).setValue((Property)VaultChampionTrophy.VARIANT, (Comparable)Variant.SILVER));
+        this.registerDefaultState(this.stateDefinition.any().setValue((Property)VaultChampionTrophy.FACING, (Comparable)Direction.SOUTH).setValue((Property)VaultChampionTrophy.VARIANT, (Comparable)Variant.SILVER));
     }
     
     protected void createBlockStateDefinition(final StateContainer.Builder<Block, BlockState> builder) {
-        builder.add(new Property[] { (Property)VaultChampionTrophy.FACING, (Property)VaultChampionTrophy.VARIANT });
+        builder.add(VaultChampionTrophy.FACING, VaultChampionTrophy.VARIANT);
     }
     
     @Nonnull
@@ -65,12 +65,12 @@ public class VaultChampionTrophy extends Block
         final CompoundNBT blockEntityTag = stack.getOrCreateTagElement("BlockEntityTag");
         final String variantId = blockEntityTag.contains("Variant", 8) ? blockEntityTag.getString("Variant") : Variant.SILVER.getSerializedName();
         final Variant variant = Variant.valueOf(variantId.toUpperCase());
-        return (BlockState)((BlockState)this.defaultBlockState().setValue((Property)VaultChampionTrophy.FACING, (Comparable)context.getHorizontalDirection())).setValue((Property)VaultChampionTrophy.VARIANT, (Comparable)variant);
+        return this.defaultBlockState().setValue((Property)VaultChampionTrophy.FACING, (Comparable)context.getHorizontalDirection()).setValue((Property)VaultChampionTrophy.VARIANT, (Comparable)variant);
     }
     
     public void playerWillDestroy(@Nonnull final World world, @Nonnull final BlockPos pos, @Nonnull final BlockState state, @Nonnull final PlayerEntity player) {
         if (!world.isClientSide && !player.isCreative()) {
-            final ItemStack itemStack = new ItemStack((IItemProvider)this.getBlock());
+            final ItemStack itemStack = new ItemStack(this.getBlock());
             final CompoundNBT nbt = itemStack.getOrCreateTag();
             final CompoundNBT blockEntityTag = itemStack.getOrCreateTagElement("BlockEntityTag");
             final TileEntity tileEntity = world.getBlockEntity(pos);
@@ -83,7 +83,7 @@ public class VaultChampionTrophy extends Block
             blockEntityTag.putString("Variant", variant.getSerializedName());
             final ItemEntity itemEntity = new ItemEntity(world, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, itemStack);
             itemEntity.setDefaultPickUpDelay();
-            world.addFreshEntity((Entity)itemEntity);
+            world.addFreshEntity(itemEntity);
         }
         super.playerWillDestroy(world, pos, state, player);
     }

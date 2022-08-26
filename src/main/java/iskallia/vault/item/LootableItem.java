@@ -32,6 +32,6 @@ public class LootableItem extends BasicItem {
             }
             heldStack.shrink(1);
         }
-        return (ActionResult<ItemStack>) super.use(world, player, hand);
+        return super.use(world, player, hand);
     }
 }

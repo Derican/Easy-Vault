@@ -7,7 +7,7 @@ import net.minecraft.util.ResourceLocation;
 import java.util.Random;
 
 public interface JigsawPoolProvider {
-    public static final Random rand = new Random();
+    Random rand = new Random();
 
     ResourceLocation getStartRoomId();
 
@@ -16,14 +16,14 @@ public interface JigsawPoolProvider {
     ResourceLocation getTunnelId();
 
     default JigsawPattern getStartRoomPool(final Registry<JigsawPattern> jigsawRegistry) {
-        return (JigsawPattern) jigsawRegistry.get(this.getStartRoomId());
+        return jigsawRegistry.get(this.getStartRoomId());
     }
 
     default JigsawPattern getRoomPool(final Registry<JigsawPattern> jigsawRegistry) {
-        return (JigsawPattern) jigsawRegistry.get(this.getRoomId());
+        return jigsawRegistry.get(this.getRoomId());
     }
 
     default JigsawPattern getTunnelPool(final Registry<JigsawPattern> jigsawRegistry) {
-        return (JigsawPattern) jigsawRegistry.get(this.getTunnelId());
+        return jigsawRegistry.get(this.getTunnelId());
     }
 }

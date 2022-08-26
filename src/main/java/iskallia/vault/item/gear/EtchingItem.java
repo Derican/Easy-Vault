@@ -33,7 +33,7 @@ public class EtchingItem extends BasicItem {
     }
 
     public static ItemStack createEtchingStack(final VaultGear.Set set) {
-        final ItemStack etchingStack = new ItemStack((IItemProvider) ModItems.ETCHING);
+        final ItemStack etchingStack = new ItemStack(ModItems.ETCHING);
         ModAttributes.GEAR_SET.create(etchingStack, set);
         ModAttributes.GEAR_STATE.create(etchingStack, VaultGear.State.IDENTIFIED);
         return etchingStack;
@@ -51,7 +51,7 @@ public class EtchingItem extends BasicItem {
     }
 
     public ActionResult<ItemStack> use(final World world, final PlayerEntity player, final Hand hand) {
-        final ActionResult<ItemStack> result = (ActionResult<ItemStack>) super.use(world, player, hand);
+        final ActionResult<ItemStack> result = super.use(world, player, hand);
         final ItemStack stack = player.getItemInHand(hand);
         if (world.isClientSide()) {
             return result;
@@ -60,7 +60,7 @@ public class EtchingItem extends BasicItem {
             final Optional<EnumAttribute<VaultGear.State>> attribute = ModAttributes.GEAR_STATE.get(stack);
             if (attribute.isPresent() && attribute.get().getValue(stack) == VaultGear.State.UNIDENTIFIED) {
                 attribute.get().setBaseValue(VaultGear.State.ROLLING);
-                return (ActionResult<ItemStack>) ActionResult.fail(stack);
+                return ActionResult.fail(stack);
             }
         }
         return result;
@@ -73,7 +73,7 @@ public class EtchingItem extends BasicItem {
             if (world instanceof ServerWorld && stack.getCount() > 1) {
                 while (stack.getCount() > 1) {
                     stack.shrink(1);
-                    final ItemStack flask = new ItemStack((IItemProvider) this);
+                    final ItemStack flask = new ItemStack(this);
                     MiscUtils.giveItem(player, flask);
                 }
             }
@@ -91,14 +91,14 @@ public class EtchingItem extends BasicItem {
             ModAttributes.GEAR_STATE.create(stack, VaultGear.State.IDENTIFIED);
             stack.getOrCreateTag().remove("RollTicks");
             stack.getOrCreateTag().remove("LastModelHit");
-            world.playSound((PlayerEntity) null, player.blockPosition(), ModSounds.CONFETTI_SFX, SoundCategory.PLAYERS, 0.5f, 1.0f);
+            world.playSound(null, player.blockPosition(), ModSounds.CONFETTI_SFX, SoundCategory.PLAYERS, 0.5f, 1.0f);
             return;
         }
         if ((int) displacement != lastModelHit) {
             final VaultGear.Set set = ModConfigs.ETCHING.getRandomSet();
             ModAttributes.GEAR_SET.create(stack, set);
             stack.getOrCreateTag().putInt("LastModelHit", (int) displacement);
-            world.playSound((PlayerEntity) null, player.blockPosition(), ModSounds.RAFFLE_SFX, SoundCategory.PLAYERS, 0.4f, 1.0f);
+            world.playSound(null, player.blockPosition(), ModSounds.RAFFLE_SFX, SoundCategory.PLAYERS, 0.4f, 1.0f);
         }
         stack.getOrCreateTag().putInt("RollTicks", rollTicks + 1);
     }
@@ -110,7 +110,7 @@ public class EtchingItem extends BasicItem {
         ModAttributes.GEAR_SET.get(stack).map(attribute -> attribute.getValue(stack)).ifPresent(value -> {
             if (value != VaultGear.Set.NONE) {
                 final EtchingConfig.Etching etching = ModConfigs.ETCHING.getFor(value);
-                tooltip.add(new StringTextComponent("Etching: ").append((ITextComponent) new StringTextComponent(value.name()).withStyle(Style.EMPTY.withColor(Color.fromRgb(etching.color)))));
+                tooltip.add(new StringTextComponent("Etching: ").append(new StringTextComponent(value.name()).withStyle(Style.EMPTY.withColor(Color.fromRgb(etching.color)))));
                 tooltip.add(StringTextComponent.EMPTY);
 
                 for (TextComponent descriptionLine : this.split(etching.effectText)) {
@@ -126,12 +126,12 @@ public class EtchingItem extends BasicItem {
         for (final String word : text.split("\\s+")) {
             sb.append(word).append(" ");
             if (sb.length() >= 30) {
-                tooltip.add((TextComponent) new StringTextComponent(sb.toString().trim()));
+                tooltip.add(new StringTextComponent(sb.toString().trim()));
                 sb = new StringBuilder();
             }
         }
         if (sb.length() > 0) {
-            tooltip.add((TextComponent) new StringTextComponent(sb.toString().trim()));
+            tooltip.add(new StringTextComponent(sb.toString().trim()));
         }
         return tooltip;
     }

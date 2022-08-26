@@ -17,8 +17,8 @@ public class PlayerActiveFlags {
             return;
         }
         PlayerActiveFlags.timeouts.forEach((playerId, flagTimeouts) -> {
-            flagTimeouts.forEach(rec$ -> ((FlagTimeout) rec$).tick());
-            flagTimeouts.removeIf(rec$ -> ((FlagTimeout) rec$).isFinished());
+            flagTimeouts.forEach(rec$ -> rec$.tick());
+            flagTimeouts.removeIf(rec$ -> rec$.isFinished());
         });
     }
 
@@ -75,6 +75,6 @@ public class PlayerActiveFlags {
 
     public enum Flag {
         ATTACK_AOE,
-        CHAINING_AOE;
+        CHAINING_AOE
     }
 }

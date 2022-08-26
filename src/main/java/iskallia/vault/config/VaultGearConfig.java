@@ -133,10 +133,10 @@ public abstract class VaultGearConfig extends Config {
                 ModAttributes.DURABILITY.create(stack, random, this.DURABILITY);
             }
             if (this.GEAR_SET != null) {
-                ModAttributes.GEAR_SET.create(stack, random, (VAttribute.Instance.Generator<VaultGear.Set>) this.GEAR_SET);
+                ModAttributes.GEAR_SET.create(stack, random, this.GEAR_SET);
             }
             if (this.IDOL_TYPE != null) {
-                ModAttributes.IDOL_TYPE.create(stack, random, (VAttribute.Instance.Generator<PlayerFavourData.VaultGodType>) this.IDOL_TYPE);
+                ModAttributes.IDOL_TYPE.create(stack, random, this.IDOL_TYPE);
             }
             if (this.GEAR_LEVEL_CHANCE != null) {
                 ModAttributes.GEAR_LEVEL_CHANCE.create(stack, random, this.GEAR_LEVEL_CHANCE);
@@ -916,7 +916,7 @@ public abstract class VaultGearConfig extends Config {
             }).collect(DoubleAttribute.of(NumberAttribute.Type.ADD));
             IDOL_MALEVOLENCE.ATTACK_SPEED = (DoubleAttribute.Generator) DoubleAttribute.generator().add(0.0, PooledAttribute.Rolls.ofEmpty(), pool -> {
             }).collect(DoubleAttribute.of(NumberAttribute.Type.MULTIPLY));
-            (this.BASE_ATTRIBUTES = new LinkedHashMap<String, BaseAttributes>()).put(ModItems.SWORD.getRegistryName().toString().toString(), SWORD);
+            (this.BASE_ATTRIBUTES = new LinkedHashMap<String, BaseAttributes>()).put(ModItems.SWORD.getRegistryName().toString(), SWORD);
             this.BASE_ATTRIBUTES.put(ModItems.AXE.getRegistryName().toString(), AXE);
             this.BASE_ATTRIBUTES.put(ModItems.HELMET.getRegistryName().toString(), HELMET);
             this.BASE_ATTRIBUTES.put(ModItems.CHESTPLATE.getRegistryName().toString(), CHESTPLATE);
@@ -1744,7 +1744,7 @@ public abstract class VaultGearConfig extends Config {
             }
 
             public ITextComponent getDisplay() {
-                return (ITextComponent) new StringTextComponent(this.name).setStyle(this.getDisplayColorStyle());
+                return new StringTextComponent(this.name).setStyle(this.getDisplayColorStyle());
             }
 
             public Style getDisplayColorStyle() {

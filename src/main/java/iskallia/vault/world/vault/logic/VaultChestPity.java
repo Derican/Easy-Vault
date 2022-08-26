@@ -44,7 +44,7 @@ public class VaultChestPity implements INBTSerializable<CompoundNBT>, IVaultTask
 
     public CompoundNBT serializeNBT() {
         final CompoundNBT nbt = new CompoundNBT();
-        this.ticksElapsed.forEach((uuid, ticks) -> nbt.putInt(uuid.toString(), (int) ticks));
+        this.ticksElapsed.forEach((uuid, ticks) -> nbt.putInt(uuid.toString(), ticks));
         return nbt;
     }
 

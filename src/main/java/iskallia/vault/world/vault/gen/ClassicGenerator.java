@@ -72,7 +72,7 @@ public class ClassicGenerator extends VaultGenerator {
             for (int i = maxObjectives; i < obeliskPieces.size(); ++i) {
                 jigsaw.getGeneratedPieces().remove(obeliskPieces.get(i));
             }
-            world.getChunk(chunkPos.x, chunkPos.z, ChunkStatus.EMPTY, true).setStartForFeature((Structure) ModStructures.VAULT_STAR, (StructureStart) start);
+            world.getChunk(chunkPos.x, chunkPos.z, ChunkStatus.EMPTY, true).setStartForFeature(ModStructures.VAULT_STAR, start);
             this.tick(world, vault);
             if (!vault.getProperties().exists(VaultRaid.START_POS) || !vault.getProperties().exists(VaultRaid.START_FACING)) {
                 return this.findStartPosition(world, vault, chunkPos, this::getPortalPlacer);
@@ -87,7 +87,7 @@ public class ClassicGenerator extends VaultGenerator {
     @Override
     public CompoundNBT serializeNBT() {
         final CompoundNBT nbt = super.serializeNBT();
-        nbt.put("FrameBlocks", (INBT) this.frameBlocks.serializeNBT());
+        nbt.put("FrameBlocks", this.frameBlocks.serializeNBT());
         nbt.putInt("Depth", this.depth);
         return nbt;
     }

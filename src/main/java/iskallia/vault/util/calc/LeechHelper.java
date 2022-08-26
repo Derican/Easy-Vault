@@ -25,7 +25,7 @@ import net.minecraft.item.ItemStack;
 public class LeechHelper {
     public static float getPlayerLeechPercent(final ServerPlayerEntity player) {
         float leech = 0.0f;
-        final TalentTree talents = PlayerTalentsData.get(player.getLevel()).getTalents((PlayerEntity) player);
+        final TalentTree talents = PlayerTalentsData.get(player.getLevel()).getTalents(player);
         for (final TalentNode<?> node : talents.getNodes()) {
             if (!(node.getTalent() instanceof VampirismTalent)) {
                 continue;
@@ -33,20 +33,20 @@ public class LeechHelper {
             final VampirismTalent vampirism = (VampirismTalent) node.getTalent();
             leech += vampirism.getLeechRatio();
         }
-        final AbilityTree abilities = PlayerAbilitiesData.get(player.getLevel()).getAbilities((PlayerEntity) player);
+        final AbilityTree abilities = PlayerAbilitiesData.get(player.getLevel()).getAbilities(player);
         for (final AbilityNode<?, ?> node2 : abilities.getNodes()) {
             if (node2.isLearned()) {
                 if (!(node2.getAbility() instanceof RampageAbility)) {
                     continue;
                 }
-                final AbilityConfig cfg = (AbilityConfig) node2.getAbilityConfig();
+                final AbilityConfig cfg = node2.getAbilityConfig();
                 if (!(cfg instanceof RampageLeechConfig)) {
                     continue;
                 }
                 leech += ((RampageLeechConfig) cfg).getLeechPercent();
             }
         }
-        final SetTree sets = PlayerSetsData.get(player.getLevel()).getSets((PlayerEntity) player);
+        final SetTree sets = PlayerSetsData.get(player.getLevel()).getSets(player);
         for (final SetNode<?> node3 : sets.getNodes()) {
             if (!(node3.getSet() instanceof VampirismSet)) {
                 continue;
@@ -54,7 +54,7 @@ public class LeechHelper {
             final VampirismSet set = (VampirismSet) node3.getSet();
             leech += set.getLeechRatio();
         }
-        leech += getLeechPercent((LivingEntity) player);
+        leech += getLeechPercent(player);
         return leech;
     }
 

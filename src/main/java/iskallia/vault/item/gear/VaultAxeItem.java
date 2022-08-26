@@ -26,7 +26,7 @@ import java.util.List;
 
 public class VaultAxeItem extends AxeItem implements VaultGear<VaultAxeItem> {
     public VaultAxeItem(final ResourceLocation id, final Item.Properties builder) {
-        super((IItemTier) Tier.INSTANCE, 0.0f, -2.4f, builder);
+        super(Tier.INSTANCE, 0.0f, -2.4f, builder);
         this.setRegistryName(id);
     }
 
@@ -45,7 +45,7 @@ public class VaultAxeItem extends AxeItem implements VaultGear<VaultAxeItem> {
     }
 
     public Multimap<Attribute, AttributeModifier> getAttributeModifiers(final EquipmentSlotType slot, final ItemStack stack) {
-        return this.getAttributeModifiers(this, slot, stack, (Multimap<Attribute, AttributeModifier>) super.getAttributeModifiers(slot, stack));
+        return this.getAttributeModifiers(this, slot, stack, super.getAttributeModifiers(slot, stack));
     }
 
     public void fillItemCategory(final ItemGroup group, final NonNullList<ItemStack> items) {
@@ -71,7 +71,7 @@ public class VaultAxeItem extends AxeItem implements VaultGear<VaultAxeItem> {
     }
 
     public ActionResult<ItemStack> use(final World world, final PlayerEntity player, final Hand hand) {
-        return this.onItemRightClick(this, world, player, hand, (ActionResult<ItemStack>) super.use(world, player, hand));
+        return this.onItemRightClick(this, world, player, hand, super.use(world, player, hand));
     }
 
     public void inventoryTick(final ItemStack stack, final World world, final Entity entity, final int itemSlot, final boolean isSelected) {
@@ -84,7 +84,7 @@ public class VaultAxeItem extends AxeItem implements VaultGear<VaultAxeItem> {
 
     @OnlyIn(Dist.CLIENT)
     public void appendHoverText(final ItemStack stack, final World world, final List<ITextComponent> tooltip, final ITooltipFlag flag) {
-        super.appendHoverText(stack, world, (List) tooltip, flag);
+        super.appendHoverText(stack, world, tooltip, flag);
         this.addInformation(this, stack, tooltip, Screen.hasShiftDown());
     }
 

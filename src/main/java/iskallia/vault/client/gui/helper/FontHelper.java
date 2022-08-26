@@ -9,7 +9,7 @@ import net.minecraft.util.text.StringTextComponent;
 
 public class FontHelper {
     public static float drawStringWithBorder(final MatrixStack matrixStack, final String text, final float x, final float y, final int color, final int borderColor) {
-        return drawStringWithBorder(matrixStack, (ITextComponent) new StringTextComponent(text), x, y, color, borderColor);
+        return drawStringWithBorder(matrixStack, new StringTextComponent(text), x, y, color, borderColor);
     }
 
     public static float drawStringWithBorder(final MatrixStack matrixStack, final ITextComponent text, final float x, final float y, final int color, final int borderColor) {
@@ -23,7 +23,7 @@ public class FontHelper {
 
     public static int drawTextComponent(final MatrixStack matrixStack, final ITextComponent component, final boolean rightAligned) {
         final FontRenderer fontRenderer = Minecraft.getInstance().font;
-        final int width = fontRenderer.width((ITextProperties) component);
+        final int width = fontRenderer.width(component);
         fontRenderer.drawShadow(matrixStack, component, rightAligned ? ((float) (-width)) : 0.0f, 0.0f, -1052689);
         return width;
     }

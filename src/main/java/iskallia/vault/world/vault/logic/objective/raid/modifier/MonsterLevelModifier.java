@@ -24,7 +24,7 @@ public class MonsterLevelModifier extends RaidModifier {
 
     @Override
     public ITextComponent getDisplay(final float value) {
-        return (ITextComponent) new StringTextComponent("+" + this.getLevelAdded(value) + " to Monster Level").withStyle(TextFormatting.RED);
+        return new StringTextComponent("+" + this.getLevelAdded(value) + " to Monster Level").withStyle(TextFormatting.RED);
     }
 
     public int getLevelAdded(final float value) {

@@ -25,7 +25,7 @@ public class AbilitySelectionWidget extends Widget {
     protected double angleBoundary;
 
     public AbilitySelectionWidget(final int x, final int y, final AbilityNode<?, ?> abilityNode, final double angleBoundary) {
-        super(x, y, 24, 24, (ITextComponent) new StringTextComponent(abilityNode.getName()));
+        super(x, y, 24, 24, new StringTextComponent(abilityNode.getName()));
         this.abilityNode = abilityNode;
         this.angleBoundary = angleBoundary;
     }

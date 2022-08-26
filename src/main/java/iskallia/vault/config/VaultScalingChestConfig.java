@@ -58,7 +58,7 @@ public class VaultScalingChestConfig extends Config {
         if (chance == null) {
             return 0;
         }
-        int generatedAmount = MathHelper.floor((float) chance);
+        int generatedAmount = MathHelper.floor(chance);
         final float decimal = chance - generatedAmount;
         if (VaultScalingChestConfig.rand.nextFloat() < decimal) {
             ++generatedAmount;
@@ -112,7 +112,7 @@ public class VaultScalingChestConfig extends Config {
 
     private static List<Level> setupCommon(final Level level) {
         level.chances.put(VaultRarity.COMMON.name(), 0.2f);
-        return Lists.newArrayList(new Level[]{level});
+        return Lists.newArrayList(level);
     }
 
     private static List<Level> setupDefault(final Level level) {
@@ -120,7 +120,7 @@ public class VaultScalingChestConfig extends Config {
         level.chances.put(VaultRarity.RARE.name(), 0.05f);
         level.chances.put(VaultRarity.EPIC.name(), 0.2f);
         level.chances.put(VaultRarity.OMEGA.name(), 0.5f);
-        return Lists.newArrayList(new Level[]{level});
+        return Lists.newArrayList(level);
     }
 
     static {

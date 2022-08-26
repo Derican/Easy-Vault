@@ -57,7 +57,7 @@ public class EffectCloudEntity extends Entity {
     private UUID ownerUniqueId;
 
     public EffectCloudEntity(final EntityType<? extends EffectCloudEntity> cloud, final World world) {
-        super((EntityType) cloud, world);
+        super(cloud, world);
         this.potion = Potions.EMPTY;
         this.effects = Lists.newArrayList();
         this.reapplicationDelayMap = Maps.newHashMap();
@@ -75,15 +75,15 @@ public class EffectCloudEntity extends Entity {
     }
 
     protected void defineSynchedData() {
-        this.getEntityData().define((DataParameter) EffectCloudEntity.COLOR, 0);
-        this.getEntityData().define((DataParameter) EffectCloudEntity.RADIUS, 0.5f);
-        this.getEntityData().define((DataParameter) EffectCloudEntity.IGNORE_RADIUS, false);
+        this.getEntityData().define(EffectCloudEntity.COLOR, 0);
+        this.getEntityData().define(EffectCloudEntity.RADIUS, 0.5f);
+        this.getEntityData().define(EffectCloudEntity.IGNORE_RADIUS, false);
         this.getEntityData().define((DataParameter) EffectCloudEntity.PARTICLE, ParticleTypes.ENTITY_EFFECT);
     }
 
     public void setRadius(final float radiusIn) {
         if (!this.level.isClientSide) {
-            this.getEntityData().set((DataParameter) EffectCloudEntity.RADIUS, radiusIn);
+            this.getEntityData().set(EffectCloudEntity.RADIUS, radiusIn);
         }
     }
 
@@ -108,9 +108,9 @@ public class EffectCloudEntity extends Entity {
 
     private void updateFixedColor() {
         if (this.potion == Potions.EMPTY && this.effects.isEmpty()) {
-            this.getEntityData().set((DataParameter) EffectCloudEntity.COLOR, 0);
+            this.getEntityData().set(EffectCloudEntity.COLOR, 0);
         } else {
-            this.getEntityData().set((DataParameter) EffectCloudEntity.COLOR, PotionUtils.getColor((Collection) PotionUtils.getAllEffects(this.potion, (Collection) this.effects)));
+            this.getEntityData().set(EffectCloudEntity.COLOR, PotionUtils.getColor(PotionUtils.getAllEffects(this.potion, this.effects)));
         }
     }
 
@@ -127,7 +127,7 @@ public class EffectCloudEntity extends Entity {
 
     public void setColor(final int colorIn) {
         this.colorSet = true;
-        this.getEntityData().set((DataParameter) EffectCloudEntity.COLOR, colorIn);
+        this.getEntityData().set(EffectCloudEntity.COLOR, colorIn);
     }
 
     public boolean affectsOwner() {
@@ -143,11 +143,11 @@ public class EffectCloudEntity extends Entity {
     }
 
     public void setParticleData(final IParticleData particleData) {
-        this.getEntityData().set((DataParameter) EffectCloudEntity.PARTICLE, particleData);
+        this.getEntityData().set(EffectCloudEntity.PARTICLE, particleData);
     }
 
     protected void setIgnoreRadius(final boolean ignoreRadius) {
-        this.getEntityData().set((DataParameter) EffectCloudEntity.IGNORE_RADIUS, ignoreRadius);
+        this.getEntityData().set(EffectCloudEntity.IGNORE_RADIUS, ignoreRadius);
     }
 
     public boolean shouldIgnoreRadius() {
@@ -217,10 +217,10 @@ public class EffectCloudEntity extends Entity {
                             if (distance > radius * radius) {
                                 continue;
                             }
-                            this.reapplicationDelayMap.put((Entity) livingentity, this.tickCount + this.reapplicationDelay);
+                            this.reapplicationDelayMap.put(livingentity, this.tickCount + this.reapplicationDelay);
                             for (final EffectInstance effectinstance : effectsToApply) {
                                 if (effectinstance.getEffect().isInstantenous()) {
-                                    ActiveFlags.IS_AOE_ATTACKING.runIfNotSet(() -> effectinstance.getEffect().applyInstantenousEffect((Entity) this, (Entity) this.getOwner(), livingentity, effectinstance.getAmplifier(), 0.5));
+                                    ActiveFlags.IS_AOE_ATTACKING.runIfNotSet(() -> effectinstance.getEffect().applyInstantenousEffect(this, this.getOwner(), livingentity, effectinstance.getAmplifier(), 0.5));
                                 } else {
                                     livingentity.addEffect(new EffectInstance(effectinstance));
                                 }
@@ -263,7 +263,7 @@ public class EffectCloudEntity extends Entity {
                         final int r = color >> 16 & 0xFF;
                         final int g = color >> 8 & 0xFF;
                         final int b = color & 0xFF;
-                        this.level.addAlwaysVisibleParticle(iparticledata, this.getX() + xOffset, this.getY(), this.getZ() + zOffset, (double) (r / 255.0f), (double) (g / 255.0f), (double) (b / 255.0f));
+                        this.level.addAlwaysVisibleParticle(iparticledata, this.getX() + xOffset, this.getY(), this.getZ() + zOffset, r / 255.0f, g / 255.0f, b / 255.0f);
                     } else {
                         this.level.addAlwaysVisibleParticle(iparticledata, this.getX() + xOffset, this.getY(), this.getZ() + zOffset, 0.0, 0.0, 0.0);
                     }
@@ -281,7 +281,7 @@ public class EffectCloudEntity extends Entity {
                     final int r2 = color2 >> 16 & 0xFF;
                     final int g2 = color2 >> 8 & 0xFF;
                     final int b2 = color2 & 0xFF;
-                    this.level.addAlwaysVisibleParticle(iparticledata, this.getX() + xOffset2, this.getY(), this.getZ() + zOffset2, (double) (r2 / 255.0f), (double) (g2 / 255.0f), (double) (b2 / 255.0f));
+                    this.level.addAlwaysVisibleParticle(iparticledata, this.getX() + xOffset2, this.getY(), this.getZ() + zOffset2, r2 / 255.0f, g2 / 255.0f, b2 / 255.0f);
                 } else {
                     this.level.addAlwaysVisibleParticle(iparticledata, this.getX() + xOffset2, this.getY(), this.getZ() + zOffset2, (0.5 - this.random.nextDouble()) * 0.15, 0.009999999776482582, (0.5 - this.random.nextDouble()) * 0.15);
                 }
@@ -306,7 +306,7 @@ public class EffectCloudEntity extends Entity {
             final ServerWorld sWorld = (ServerWorld) world;
             final LivingEntity owner = this.getOwner();
             if (owner instanceof EternalEntity) {
-                final UUID eternalOwnerUUID = (UUID) ((EternalEntity) owner).getOwner().map(Function.identity(), Entity::getUUID);
+                final UUID eternalOwnerUUID = ((EternalEntity) owner).getOwner().map(Function.identity(), Entity::getUUID);
                 if (targetUUID.equals(eternalOwnerUUID)) {
                     return false;
                 }
@@ -317,7 +317,7 @@ public class EffectCloudEntity extends Entity {
                 ownerUUID = eternalOwnerUUID;
             }
             if (target instanceof EternalEntity) {
-                final UUID eternalTargetOwnerUUID = (UUID) ((EternalEntity) target).getOwner().map(Function.identity(), Entity::getUUID);
+                final UUID eternalTargetOwnerUUID = ((EternalEntity) target).getOwner().map(Function.identity(), Entity::getUUID);
                 if (eternalTargetOwnerUUID.equals(ownerUUID)) {
                     return false;
                 }
@@ -327,9 +327,7 @@ public class EffectCloudEntity extends Entity {
                 }
             }
             final VaultPartyData.Party party2 = VaultPartyData.get(sWorld).getParty(ownerUUID).orElse(null);
-            if (party2 != null && party2.hasMember(targetUUID)) {
-                return false;
-            }
+            return party2 == null || !party2.hasMember(targetUUID);
         }
         return true;
     }
@@ -423,7 +421,7 @@ public class EffectCloudEntity extends Entity {
             for (final EffectInstance effectinstance : this.effects) {
                 listnbt.add(effectinstance.save(new CompoundNBT()));
             }
-            compound.put("Effects", (INBT) listnbt);
+            compound.put("Effects", listnbt);
         }
     }
 
@@ -431,7 +429,7 @@ public class EffectCloudEntity extends Entity {
         if (EffectCloudEntity.RADIUS.equals(key)) {
             this.refreshDimensions();
         }
-        super.onSyncedDataUpdated((DataParameter) key);
+        super.onSyncedDataUpdated(key);
     }
 
     public PushReaction getPistonPushReaction() {
@@ -439,7 +437,7 @@ public class EffectCloudEntity extends Entity {
     }
 
     public IPacket<?> getAddEntityPacket() {
-        return (IPacket<?>) NetworkHooks.getEntitySpawningPacket((Entity) this);
+        return NetworkHooks.getEntitySpawningPacket(this);
     }
 
     public EntitySize getDimensions(final Pose poseIn) {
@@ -466,10 +464,10 @@ public class EffectCloudEntity extends Entity {
 
     static {
         PRIVATE_LOGGER = LogManager.getLogger();
-        RADIUS = EntityDataManager.defineId((Class) EffectCloudEntity.class, DataSerializers.FLOAT);
-        COLOR = EntityDataManager.defineId((Class) EffectCloudEntity.class, DataSerializers.INT);
-        IGNORE_RADIUS = EntityDataManager.defineId((Class) EffectCloudEntity.class, DataSerializers.BOOLEAN);
-        PARTICLE = EntityDataManager.defineId((Class) EffectCloudEntity.class, DataSerializers.PARTICLE);
+        RADIUS = EntityDataManager.defineId(EffectCloudEntity.class, DataSerializers.FLOAT);
+        COLOR = EntityDataManager.defineId(EffectCloudEntity.class, DataSerializers.INT);
+        IGNORE_RADIUS = EntityDataManager.defineId(EffectCloudEntity.class, DataSerializers.BOOLEAN);
+        PARTICLE = EntityDataManager.defineId(EffectCloudEntity.class, DataSerializers.PARTICLE);
     }
 
     public static class Config implements INBTSerializable<CompoundNBT> {
@@ -554,7 +552,7 @@ public class EffectCloudEntity extends Entity {
             nbt.putString("Potion", this.potion);
             final ListNBT effectsList = new ListNBT();
             this.effects.forEach(cloudEffect -> effectsList.add(cloudEffect.serializeNBT()));
-            nbt.put("Effects", (INBT) effectsList);
+            nbt.put("Effects", effectsList);
             nbt.putInt("Duration", this.duration);
             nbt.putFloat("Radius", this.radius);
             nbt.putInt("Color", this.color);
@@ -605,7 +603,7 @@ public class EffectCloudEntity extends Entity {
             }
 
             public Effect getEffect() {
-                return (Effect) Registry.MOB_EFFECT.get(new ResourceLocation(this.effect));
+                return Registry.MOB_EFFECT.get(new ResourceLocation(this.effect));
             }
 
             public int getDuration() {

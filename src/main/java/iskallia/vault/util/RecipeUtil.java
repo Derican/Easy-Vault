@@ -19,7 +19,7 @@ import java.util.Optional;
 public class RecipeUtil {
     @Nonnull
     public static Optional<Tuple<ItemStack, Float>> findSmeltingResult(final World world, final BlockState input) {
-        final ItemStack stack = new ItemStack((IItemProvider) input.getBlock());
+        final ItemStack stack = new ItemStack(input.getBlock());
         if (stack.isEmpty()) {
             return Optional.empty();
         }
@@ -29,7 +29,7 @@ public class RecipeUtil {
     @Nonnull
     public static Optional<Tuple<ItemStack, Float>> findSmeltingResult(final World world, final ItemStack input) {
         final RecipeManager mgr = world.getRecipeManager();
-        final IInventory inv = (IInventory) new Inventory(new ItemStack[]{input});
+        final IInventory inv = new Inventory(new ItemStack[]{input});
         final Optional<IRecipe<IInventory>> optRecipe = (Optional<IRecipe<IInventory>>) ObjectUtils.firstNonNull((Object[]) new Optional[]{mgr.getRecipeFor(IRecipeType.SMELTING, inv, world), mgr.getRecipeFor(IRecipeType.CAMPFIRE_COOKING, inv, world), mgr.getRecipeFor(IRecipeType.SMOKING, inv, world), Optional.empty()});
         return optRecipe.map(recipe -> {
             final ItemStack smeltResult = recipe.assemble(inv).copy();

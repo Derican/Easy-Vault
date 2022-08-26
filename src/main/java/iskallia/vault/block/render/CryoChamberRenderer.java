@@ -140,14 +140,14 @@ public class CryoChamberRenderer extends TileEntityRenderer<CryoChamberTileEntit
         matrixStack.pushPose();
         final float scale = 0.02f;
         final int opacity = 1711276032;
-        final float offset = (float) (-fontRenderer.width((ITextProperties) text) / 2);
+        final float offset = (float) (-fontRenderer.width(text) / 2);
         final Matrix4f matrix4f = matrixStack.last().pose();
         matrixStack.translate(0.5, 2.299999952316284, 0.5);
         matrixStack.scale(scale, scale, scale);
         matrixStack.mulPose(CryoChamberRenderer.mc.getEntityRenderDispatcher().cameraOrientation());
         matrixStack.mulPose(Vector3f.ZP.rotationDegrees(180.0f));
-        fontRenderer.drawInBatch((ITextComponent) text, offset, 0.0f, color, false, matrix4f, buffer, true, opacity, lightLevel);
-        fontRenderer.drawInBatch((ITextComponent) text, offset, 0.0f, -1, false, matrix4f, buffer, false, 0, lightLevel);
+        fontRenderer.drawInBatch(text, offset, 0.0f, color, false, matrix4f, buffer, true, opacity, lightLevel);
+        fontRenderer.drawInBatch(text, offset, 0.0f, -1, false, matrix4f, buffer, false, 0, lightLevel);
         matrixStack.popPose();
     }
 

@@ -25,7 +25,7 @@ public class TransmogTableScreen extends ContainerScreen<TransmogTableContainer>
     }
 
     protected void renderLabels(final MatrixStack matrixStack, final int x, final int y) {
-        this.font.draw(matrixStack, (ITextComponent) new StringTextComponent(""), (float) this.titleLabelX, (float) this.titleLabelY, 4210752);
+        this.font.draw(matrixStack, new StringTextComponent(""), (float) this.titleLabelX, (float) this.titleLabelY, 4210752);
     }
 
     public void render(final MatrixStack matrixStack, final int mouseX, final int mouseY, final float partialTicks) {
@@ -37,7 +37,7 @@ public class TransmogTableScreen extends ContainerScreen<TransmogTableContainer>
         final int containerHeight = 166;
         minecraft.getTextureManager().bind(TransmogTableScreen.GUI_RESOURCE);
         this.blit(matrixStack, (int) (midX - containerWidth / 2), (int) (midY - containerHeight / 2), 0, 0, containerWidth, containerHeight);
-        final TransmogTableInventory transmogInventory = ((TransmogTableContainer) this.menu).getInternalInventory();
+        final TransmogTableInventory transmogInventory = this.menu.getInternalInventory();
         final ItemStack armorStack = transmogInventory.getItem(0);
         if (transmogInventory.isIngredientSlotsFilled() && !transmogInventory.recipeFulfilled()) {
             this.blit(matrixStack, (int) (midX + 15.0f), (int) (midY - 33.0f), 176, 0, 28, 21);

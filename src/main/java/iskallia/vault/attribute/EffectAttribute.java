@@ -35,8 +35,8 @@ public class EffectAttribute extends PooledAttribute<List<EffectAttribute.Instan
             tag.putString("Id", effect.effect);
             effectsList.add(effectTag);
         });
-        tag.put("Effects", (INBT) effectsList);
-        nbt.put("BaseValue", (INBT) tag);
+        tag.put("Effects", effectsList);
+        nbt.put("BaseValue", tag);
     }
 
     @Override
@@ -47,7 +47,7 @@ public class EffectAttribute extends PooledAttribute<List<EffectAttribute.Instan
         }
         final CompoundNBT tag = nbt.getCompound("BaseValue");
         final ListNBT effectsList = tag.getList("Effects", 10);
-        setBaseValue((List<Instance>) effectsList.stream()
+        setBaseValue(effectsList.stream()
                 .map(inbt -> (CompoundNBT) inbt)
                 .map(effect -> new Instance(tag.getString("Id")))
                 .collect(Collectors.toList()));

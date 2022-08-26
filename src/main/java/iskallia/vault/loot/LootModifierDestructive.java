@@ -26,7 +26,7 @@ public class LootModifierDestructive extends LootModifier {
         if (!LootUtils.doesContextFulfillSet(context, LootParameterSets.BLOCK)) {
             return generatedLoot;
         }
-        final ItemStack tool = (ItemStack) context.getParamOrNull(LootParameters.TOOL);
+        final ItemStack tool = context.getParamOrNull(LootParameters.TOOL);
         if (PaxelEnhancements.getEnhancement(tool) != PaxelEnhancements.DESTRUCTIVE) {
             return generatedLoot;
         }

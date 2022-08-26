@@ -43,7 +43,7 @@ public class ParryTalent extends PlayerTalent {
             parryChance = ParryHelper.getParryChance(entity);
         }
         if (ParryTalent.rand.nextFloat() <= parryChance) {
-            world.playSound((PlayerEntity) null, entity.getX(), entity.getY(), entity.getZ(), SoundEvents.SHIELD_BLOCK, SoundCategory.MASTER, 0.5f, 1.0f);
+            world.playSound(null, entity.getX(), entity.getY(), entity.getZ(), SoundEvents.SHIELD_BLOCK, SoundCategory.MASTER, 0.5f, 1.0f);
             event.setCanceled(true);
         }
     }

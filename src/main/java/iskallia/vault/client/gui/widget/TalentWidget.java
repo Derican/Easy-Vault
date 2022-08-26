@@ -41,13 +41,13 @@ public class TalentWidget extends Widget implements ConnectableWidget, Component
     private boolean renderPips;
 
     public TalentWidget(final TalentGroup<?> talentGroup, final TalentTree talentTree, final SkillStyle style) {
-        super(style.x, style.y, 48, pipRowCount(talentTree.getNodeOf(talentGroup).getLevel()) * 10 - 2, (ITextComponent) new StringTextComponent("the_vault.widgets.talent"));
+        super(style.x, style.y, 48, pipRowCount(talentTree.getNodeOf(talentGroup).getLevel()) * 10 - 2, new StringTextComponent("the_vault.widgets.talent"));
         this.renderPips = true;
         this.style = style;
         this.talentGroup = talentGroup;
         this.talentTree = talentTree;
         final TalentNode<?> existingNode = talentTree.getNodeOf(talentGroup);
-        this.locked = (ModConfigs.SKILL_GATES.getGates().isLocked(talentGroup, talentTree) || VaultBarOverlay.vaultLevel < ((PlayerTalent) talentGroup.getTalent(existingNode.getLevel() + 1)).getLevelRequirement());
+        this.locked = (ModConfigs.SKILL_GATES.getGates().isLocked(talentGroup, talentTree) || VaultBarOverlay.vaultLevel < talentGroup.getTalent(existingNode.getLevel() + 1).getLevelRequirement());
         this.selected = false;
     }
 
@@ -139,11 +139,11 @@ public class TalentWidget extends Widget implements ConnectableWidget, Component
             return;
         }
         final List<ITextComponent> tTip = new ArrayList<ITextComponent>();
-        tTip.add((ITextComponent) new StringTextComponent(node.getGroup().getParentName()));
+        tTip.add(new StringTextComponent(node.getGroup().getParentName()));
         if (this.locked) {
             final List<TalentGroup<?>> preconditions = ModConfigs.SKILL_GATES.getGates().getDependencyTalents(this.talentGroup.getParentName());
             if (!preconditions.isEmpty()) {
-                tTip.add((ITextComponent) new StringTextComponent("Requires:").withStyle(TextFormatting.RED));
+                tTip.add(new StringTextComponent("Requires:").withStyle(TextFormatting.RED));
                 preconditions.forEach(talent -> {
 
                     final StringTextComponent stringTextComponent = new StringTextComponent("- " + talent.getParentName());
@@ -154,7 +154,7 @@ public class TalentWidget extends Widget implements ConnectableWidget, Component
         }
         final List<TalentGroup<?>> conflicts = ModConfigs.SKILL_GATES.getGates().getLockedByTalents(this.talentGroup.getParentName());
         if (!conflicts.isEmpty()) {
-            tTip.add((ITextComponent) new StringTextComponent("Cannot be unlocked alongside:").withStyle(TextFormatting.RED));
+            tTip.add(new StringTextComponent("Cannot be unlocked alongside:").withStyle(TextFormatting.RED));
             conflicts.forEach(talent -> {
 
                 final StringTextComponent stringTextComponent2 = new StringTextComponent("- " + talent.getParentName());
@@ -163,18 +163,18 @@ public class TalentWidget extends Widget implements ConnectableWidget, Component
             });
         }
         if (!node.isLearned() && this.talentGroup instanceof ArchetypeTalentGroup) {
-            tTip.add((ITextComponent) new StringTextComponent("Cannot be unlocked alongside").withStyle(TextFormatting.RED));
-            tTip.add((ITextComponent) new StringTextComponent("other archetype talents.").withStyle(TextFormatting.RED));
+            tTip.add(new StringTextComponent("Cannot be unlocked alongside").withStyle(TextFormatting.RED));
+            tTip.add(new StringTextComponent("other archetype talents.").withStyle(TextFormatting.RED));
         }
         if (node.getLevel() < node.getGroup().getMaxLevel()) {
-            final int levelRequirement = ((PlayerTalent) node.getGroup().getTalent(node.getLevel() + 1)).getLevelRequirement();
+            final int levelRequirement = node.getGroup().getTalent(node.getLevel() + 1).getLevelRequirement();
             if (VaultBarOverlay.vaultLevel < levelRequirement) {
-                tTip.add((ITextComponent) new StringTextComponent("Requires level: " + levelRequirement).withStyle(TextFormatting.RED));
+                tTip.add(new StringTextComponent("Requires level: " + levelRequirement).withStyle(TextFormatting.RED));
             }
         }
         matrixStack.pushPose();
-        matrixStack.translate((double) this.x, (double) (this.y - 15), 0.0);
-        GuiUtils.drawHoveringText(matrixStack, (List) tTip, 0, 0, Integer.MAX_VALUE, Integer.MAX_VALUE, -1, Minecraft.getInstance().font);
+        matrixStack.translate(this.x, this.y - 15, 0.0);
+        GuiUtils.drawHoveringText(matrixStack, tTip, 0, 0, Integer.MAX_VALUE, Integer.MAX_VALUE, -1, Minecraft.getInstance().font);
         matrixStack.popPose();
         RenderSystem.enableBlend();
     }
@@ -217,8 +217,8 @@ public class TalentWidget extends Widget implements ConnectableWidget, Component
         final int lineWidth = count * 8 + (count - 1) * 2;
         int remainingFilled = filledCount;
         matrixStack.pushPose();
-        matrixStack.translate((double) x, (double) y, 0.0);
-        matrixStack.translate((double) (-lineWidth / 2.0f), -4.0, 0.0);
+        matrixStack.translate(x, y, 0.0);
+        matrixStack.translate(-lineWidth / 2.0f, -4.0, 0.0);
         for (int i = 0; i < count; ++i) {
             if (remainingFilled > 0) {
                 this.blit(matrixStack, 0, 0, 1, 133, 8, 8);

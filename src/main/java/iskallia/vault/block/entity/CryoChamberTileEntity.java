@@ -69,7 +69,7 @@ public class CryoChamberTileEntity extends TileEntity implements ITickableTileEn
     private final LazyOptional<IItemHandler> handler;
 
     protected CryoChamberTileEntity(final TileEntityType<?> tileEntityType) {
-        super((TileEntityType) tileEntityType);
+        super(tileEntityType);
         this.coreNames = new ArrayList<String>();
         this.maxCores = 0;
         this.infusing = false;
@@ -149,7 +149,7 @@ public class CryoChamberTileEntity extends TileEntity implements ITickableTileEn
             return false;
         }
         final ServerWorld sWorld = (ServerWorld) this.level;
-        sWorld.playSound((PlayerEntity) null, (double) this.worldPosition.getX(), (double) this.worldPosition.getY(), (double) this.worldPosition.getZ(), SoundEvents.SOUL_ESCAPE, SoundCategory.PLAYERS, 1.0f, 1.0f);
+        sWorld.playSound(null, this.worldPosition.getX(), this.worldPosition.getY(), this.worldPosition.getZ(), SoundEvents.SOUL_ESCAPE, SoundCategory.PLAYERS, 1.0f, 1.0f);
         final GameProfile knownProfile = sWorld.getServer().getProfileCache().get(this.getOwner());
         if (knownProfile == null) {
             return false;
@@ -163,11 +163,11 @@ public class CryoChamberTileEntity extends TileEntity implements ITickableTileEn
         }
         this.coreNames.add(core.getName());
         if (core.getTrade() != null && !core.getTrade().wasTradeUsed() && sWorld.random.nextFloat() < ModConfigs.CRYO_CHAMBER.getUnusedTraderRewardChance()) {
-            final PlayerEntity player = sWorld.getNearestPlayer((double) this.worldPosition.getX(), (double) this.worldPosition.getY(), (double) this.worldPosition.getZ(), 3.0, false);
+            final PlayerEntity player = sWorld.getNearestPlayer(this.worldPosition.getX(), this.worldPosition.getY(), this.worldPosition.getZ(), 3.0, false);
             if (player instanceof ServerPlayerEntity) {
-                MiscUtils.giveItem((ServerPlayerEntity) player, new ItemStack((IItemProvider) ModItems.PANDORAS_BOX));
+                MiscUtils.giveItem((ServerPlayerEntity) player, new ItemStack(ModItems.PANDORAS_BOX));
             } else {
-                BlockPos.findClosestMatch(this.getBlockPos(), 7, 2, sWorld::isEmptyBlock).ifPresent(airPos -> Block.popResource((World) sWorld, (BlockPos) airPos, new ItemStack((IItemProvider) ModItems.PANDORAS_BOX)));
+                BlockPos.findClosestMatch(this.getBlockPos(), 7, 2, sWorld::isEmptyBlock).ifPresent(airPos -> Block.popResource(sWorld, airPos, new ItemStack(ModItems.PANDORAS_BOX)));
             }
         }
         this.infusing = true;
@@ -226,7 +226,7 @@ public class CryoChamberTileEntity extends TileEntity implements ITickableTileEn
             this.growEternalTimeRemaining = ModConfigs.CRYO_CHAMBER.getGrowEternalTime();
         }
         if (this.isFull() && !this.growingEternal && this.level.getGameTime() % 40L == 0L) {
-            this.level.playSound((PlayerEntity) null, (double) this.worldPosition.getX(), (double) this.worldPosition.getY(), (double) this.worldPosition.getZ(), SoundEvents.CONDUIT_AMBIENT, SoundCategory.PLAYERS, 0.25f, 1.0f);
+            this.level.playSound(null, this.worldPosition.getX(), this.worldPosition.getY(), this.worldPosition.getZ(), SoundEvents.CONDUIT_AMBIENT, SoundCategory.PLAYERS, 0.25f, 1.0f);
         }
         if (this.infusing) {
             if (this.infusionTimeRemaining-- <= 0) {
@@ -258,9 +258,9 @@ public class CryoChamberTileEntity extends TileEntity implements ITickableTileEn
     public ITextComponent getDisplayName() {
         final EternalData eternal = this.getEternal();
         if (eternal != null) {
-            return (ITextComponent) new StringTextComponent(eternal.getName());
+            return new StringTextComponent(eternal.getName());
         }
-        return (ITextComponent) new StringTextComponent("Cryo Chamber");
+        return new StringTextComponent("Cryo Chamber");
     }
 
     @Nullable
@@ -287,14 +287,14 @@ public class CryoChamberTileEntity extends TileEntity implements ITickableTileEn
                 nameNbt.putString("name" + i, name);
                 list.add(nameNbt);
             }
-            nbt.put("CoresList", (INBT) list);
+            nbt.put("CoresList", list);
         }
         nbt.putInt("MaxCoreCount", this.maxCores);
         nbt.putBoolean("Infusing", this.infusing);
         nbt.putInt("InfusionTimeRemaining", this.infusionTimeRemaining);
         nbt.putBoolean("GrowingEternal", this.growingEternal);
         nbt.putInt("GrowEternalTimeRemaining", this.growEternalTimeRemaining);
-        nbt.put("Inventory", (INBT) this.itemHandler.serializeNBT());
+        nbt.put("Inventory", this.itemHandler.serializeNBT());
         return nbt;
     }
 
@@ -350,7 +350,7 @@ public class CryoChamberTileEntity extends TileEntity implements ITickableTileEn
         if (eternal == null) {
             return nbt;
         }
-        nbt.put("BlockPos", (INBT) NBTUtil.writeBlockPos(this.getBlockPos()));
+        nbt.put("BlockPos", NBTUtil.writeBlockPos(this.getBlockPos()));
         nbt.putString("EternalName", eternal.getName());
         return nbt;
     }

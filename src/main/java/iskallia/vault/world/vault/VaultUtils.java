@@ -29,10 +29,10 @@ public class VaultUtils {
     public static void exitSafely(final ServerWorld world, final ServerPlayerEntity player) {
         final BlockPos rawSpawnPoint = player.getRespawnPosition();
         final Optional<Vector3d> spawnPoint = (rawSpawnPoint != null) ? PlayerEntity.findRespawnPositionAndUseSpawnBlock(world, rawSpawnPoint, player.getRespawnAngle(), player.isRespawnForced(), true) : Optional.empty();
-        final RegistryKey<World> targetDim = (RegistryKey<World>) world.dimension();
-        final RegistryKey<World> sourceDim = (RegistryKey<World>) player.getCommandSenderWorld().dimension();
+        final RegistryKey<World> targetDim = world.dimension();
+        final RegistryKey<World> sourceDim = player.getCommandSenderWorld().dimension();
         if (!targetDim.equals(sourceDim)) {
-            player.changeDimension(world, (ITeleporter) new ITeleporter() {
+            player.changeDimension(world, new ITeleporter() {
                 public Entity placeEntity(final Entity entity, final ServerWorld currentWorld, final ServerWorld destWorld, final float yaw, final Function<Boolean, Entity> repositionEntity) {
                     final Entity repositionedEntity = repositionEntity.apply(false);
                     if (spawnPoint.isPresent()) {
@@ -50,10 +50,10 @@ public class VaultUtils {
         } else if (spawnPoint.isPresent()) {
             final BlockState blockstate = world.getBlockState(rawSpawnPoint);
             final Vector3d spawnPos = spawnPoint.get();
-            if (!blockstate.is((ITag) BlockTags.BEDS) && !blockstate.is(Blocks.RESPAWN_ANCHOR)) {
+            if (!blockstate.is(BlockTags.BEDS) && !blockstate.is(Blocks.RESPAWN_ANCHOR)) {
                 player.teleportTo(world, spawnPos.x, spawnPos.y, spawnPos.z, player.getRespawnAngle(), 0.0f);
             } else {
-                final Vector3d vector3d1 = Vector3d.atBottomCenterOf((Vector3i) rawSpawnPoint).subtract(spawnPos).normalize();
+                final Vector3d vector3d1 = Vector3d.atBottomCenterOf(rawSpawnPoint).subtract(spawnPos).normalize();
                 player.teleportTo(world, spawnPos.x, spawnPos.y, spawnPos.z, (float) MathHelper.wrapDegrees(MathHelper.atan2(vector3d1.z, vector3d1.x) * 57.29577951308232 - 90.0), 0.0f);
             }
             player.teleportTo(spawnPos.x, spawnPos.y, spawnPos.z);
@@ -63,9 +63,9 @@ public class VaultUtils {
     }
 
     public static void moveTo(final ServerWorld world, final Entity entity, final Vector3d pos) {
-        final RegistryKey<World> targetDim = (RegistryKey<World>) world.dimension();
-        final RegistryKey<World> sourceDim = (RegistryKey<World>) entity.getCommandSenderWorld().dimension();
-        entity.changeDimension(world, (ITeleporter) new ITeleporter() {
+        final RegistryKey<World> targetDim = world.dimension();
+        final RegistryKey<World> sourceDim = entity.getCommandSenderWorld().dimension();
+        entity.changeDimension(world, new ITeleporter() {
             public Entity placeEntity(final Entity entity, final ServerWorld currentWorld, final ServerWorld destWorld, final float yaw, final Function<Boolean, Entity> repositionEntity) {
                 final Entity repositionedEntity = repositionEntity.apply(false);
                 repositionedEntity.teleportTo(pos.x(), pos.y(), pos.z());
@@ -80,16 +80,16 @@ public class VaultUtils {
     public static void moveToWorldSpawn(final ServerWorld world, final ServerPlayerEntity player) {
         final BlockPos blockpos = world.getSharedSpawnPos();
         if (!world.dimensionType().hasSkyLight() || world.getServer().getWorldData().getGameType() == GameType.ADVENTURE) {
-            player.teleportTo(world, (double) blockpos.getX(), (double) blockpos.getY(), (double) blockpos.getZ(), 0.0f, 0.0f);
-            player.teleportTo((double) blockpos.getX(), (double) blockpos.getY(), (double) blockpos.getZ());
-            while (!world.noCollision((Entity) player) && player.getY() < 255.0) {
+            player.teleportTo(world, blockpos.getX(), blockpos.getY(), blockpos.getZ(), 0.0f, 0.0f);
+            player.teleportTo(blockpos.getX(), blockpos.getY(), blockpos.getZ());
+            while (!world.noCollision(player) && player.getY() < 255.0) {
                 player.teleportTo(world, player.getX(), player.getY() + 1.0, player.getZ(), 0.0f, 0.0f);
                 player.teleportTo(player.getX(), player.getY(), player.getZ());
             }
             return;
         }
         int i = Math.max(0, world.getServer().getSpawnRadius(world));
-        final int j = MathHelper.floor(world.getWorldBorder().getDistanceToBorder((double) blockpos.getX(), (double) blockpos.getZ()));
+        final int j = MathHelper.floor(world.getWorldBorder().getDistanceToBorder(blockpos.getX(), blockpos.getZ()));
         if (j < i) {
             i = j;
         }
@@ -108,9 +108,9 @@ public class VaultUtils {
             final BlockPos pos = new BlockPos(blockpos.getX() + j3 - i, 0, blockpos.getZ() + k3 - i);
             final OptionalInt height = getSpawnHeight(world, pos.getX(), pos.getZ());
             if (height.isPresent()) {
-                player.teleportTo(world, (double) pos.getX(), (double) height.getAsInt(), (double) pos.getZ(), 0.0f, 0.0f);
-                player.teleportTo((double) pos.getX(), (double) height.getAsInt(), (double) pos.getZ());
-                if (world.noCollision((Entity) player)) {
+                player.teleportTo(world, pos.getX(), height.getAsInt(), pos.getZ(), 0.0f, 0.0f);
+                player.teleportTo(pos.getX(), height.getAsInt(), pos.getZ());
+                if (world.noCollision(player)) {
                     break;
                 }
             }
@@ -126,11 +126,11 @@ public class VaultUtils {
             if (j > top || j <= chunk.getHeight(Heightmap.Type.OCEAN_FLOOR, posX & 0xF, posZ & 0xF)) {
                 for (int k = top + 1; k >= 0; --k) {
                     pos.set(posX, k, posZ);
-                    final BlockState state = world.getBlockState((BlockPos) pos);
+                    final BlockState state = world.getBlockState(pos);
                     if (!state.getFluidState().isEmpty()) {
                         break;
                     }
-                    if (state.equals(world.getBiome((BlockPos) pos).getGenerationSettings().getSurfaceBuilderConfig().getTopMaterial())) {
+                    if (state.equals(world.getBiome(pos).getGenerationSettings().getSurfaceBuilderConfig().getTopMaterial())) {
                         return OptionalInt.of(pos.above().getY());
                     }
                 }
@@ -152,6 +152,6 @@ public class VaultUtils {
             return false;
         }
         final Optional<RegistryKey<World>> dimension = vault.getProperties().getBase(VaultRaid.DIMENSION);
-        return dimension.isPresent() && world.dimension() == dimension.get() && vault.getProperties().getBase(VaultRaid.BOUNDING_BOX).map(box -> box.isInside((Vector3i) pos)).orElse(false);
+        return dimension.isPresent() && world.dimension() == dimension.get() && vault.getProperties().getBase(VaultRaid.BOUNDING_BOX).map(box -> box.isInside(pos)).orElse(false);
     }
 }

@@ -17,7 +17,7 @@ public class ConsumablesConfig extends Config {
     @Expose
     private List<ConsumableEntry> itemEffects;
     @Expose
-    private HashMap<String, List<String>> descriptions;
+    private final HashMap<String, List<String>> descriptions;
 
     public ConsumablesConfig() {
         this.descriptions = new HashMap<String, List<String>>();

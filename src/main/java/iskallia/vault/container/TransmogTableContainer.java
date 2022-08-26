@@ -15,10 +15,10 @@ public class TransmogTableContainer extends RecipeContainer {
 
     @Override
     protected void addInternalInventorySlots() {
-        this.addSlot(new Slot((IInventory) this.internalInventory, 0, 38, 51));
-        this.addSlot(new Slot((IInventory) this.internalInventory, 1, 82, 51));
-        this.addSlot(new Slot((IInventory) this.internalInventory, 2, 60, 29));
-        this.addSlot((Slot) new RecipeOutputSlot((IInventory) this.internalInventory, this.internalInventory.outputSlotIndex(), 137, 52));
+        this.addSlot(new Slot(this.internalInventory, 0, 38, 51));
+        this.addSlot(new Slot(this.internalInventory, 1, 82, 51));
+        this.addSlot(new Slot(this.internalInventory, 2, 60, 29));
+        this.addSlot(new RecipeOutputSlot(this.internalInventory, this.internalInventory.outputSlotIndex(), 137, 52));
     }
 
     public boolean stillValid(final PlayerEntity player) {

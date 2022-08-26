@@ -12,7 +12,7 @@ public class OtherSidePortalTileEntity extends TileEntity {
     private OtherSideData data;
 
     public OtherSidePortalTileEntity() {
-        super((TileEntityType) ModBlocks.OTHER_SIDE_PORTAL_TILE_ENTITY);
+        super(ModBlocks.OTHER_SIDE_PORTAL_TILE_ENTITY);
     }
 
     public void sendUpdates() {
@@ -23,7 +23,7 @@ public class OtherSidePortalTileEntity extends TileEntity {
 
     public CompoundNBT save(final CompoundNBT compound) {
         if (this.data != null) {
-            compound.put("Data", (INBT) this.data.serializeNBT());
+            compound.put("Data", this.data.serializeNBT());
         }
         return super.save(compound);
     }

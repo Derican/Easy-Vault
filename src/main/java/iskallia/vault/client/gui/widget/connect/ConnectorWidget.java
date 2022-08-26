@@ -29,7 +29,7 @@ public class ConnectorWidget extends Widget {
     }
 
     private ConnectorWidget(final Connector connector, final ConnectableWidget source, final ConnectableWidget target, final ConnectorType type) {
-        super(connector.rct.x, connector.rct.y, connector.rct.width, connector.rct.height, (ITextComponent) new StringTextComponent("Connector"));
+        super(connector.rct.x, connector.rct.y, connector.rct.width, connector.rct.height, new StringTextComponent("Connector"));
         this.color = new Color(11184810);
         this.type = type;
         this.connector = connector;
@@ -72,18 +72,18 @@ public class ConnectorWidget extends Widget {
         GL11.glHint(3154, 4354);
         RenderSystem.lineWidth(6.0f * viewportScale);
         ScreenDrawHelper.draw(3, DefaultVertexFormats.POSITION_COLOR, buf -> {
-            this.drawLine((IVertexBuilder) buf, matrixStack, this.connector.from.x, this.connector.from.y, this.connector.to.x, this.connector.to.y, drawColor);
+            this.drawLine(buf, matrixStack, this.connector.from.x, this.connector.from.y, this.connector.to.x, this.connector.to.y, drawColor);
             if (this.type == ConnectorType.ARROW || this.type == ConnectorType.DOUBLE_ARROW) {
                 final Vector2f arrowP1 = VectorHelper.rotateDegrees(this.connector.dir, 35.0f);
-                this.drawLine((IVertexBuilder) buf, matrixStack, -arrowP1.x * 10.0f + this.connector.to.x, -arrowP1.y * 10.0f + this.connector.to.y, this.connector.to.x, this.connector.to.y, drawColor);
+                this.drawLine(buf, matrixStack, -arrowP1.x * 10.0f + this.connector.to.x, -arrowP1.y * 10.0f + this.connector.to.y, this.connector.to.x, this.connector.to.y, drawColor);
                 final Vector2f arrowP2 = VectorHelper.rotateDegrees(this.connector.dir, -35.0f);
-                this.drawLine((IVertexBuilder) buf, matrixStack, -arrowP2.x * 10.0f + this.connector.to.x, -arrowP2.y * 10.0f + this.connector.to.y, this.connector.to.x, this.connector.to.y, drawColor);
+                this.drawLine(buf, matrixStack, -arrowP2.x * 10.0f + this.connector.to.x, -arrowP2.y * 10.0f + this.connector.to.y, this.connector.to.x, this.connector.to.y, drawColor);
             }
             if (this.type == ConnectorType.DOUBLE_ARROW) {
                 final Vector2f arrowP3 = VectorHelper.rotateDegrees(this.connector.dir, 35.0f);
-                this.drawLine((IVertexBuilder) buf, matrixStack, this.connector.from.x, this.connector.from.y, arrowP3.x * 10.0f + this.connector.from.x, arrowP3.y * 10.0f + this.connector.from.y, drawColor);
+                this.drawLine(buf, matrixStack, this.connector.from.x, this.connector.from.y, arrowP3.x * 10.0f + this.connector.from.x, arrowP3.y * 10.0f + this.connector.from.y, drawColor);
                 final Vector2f arrowP4 = VectorHelper.rotateDegrees(this.connector.dir, -35.0f);
-                this.drawLine((IVertexBuilder) buf, matrixStack, this.connector.from.x, this.connector.from.y, arrowP4.x * 10.0f + this.connector.from.x, arrowP4.y * 10.0f + this.connector.from.y, drawColor);
+                this.drawLine(buf, matrixStack, this.connector.from.x, this.connector.from.y, arrowP4.x * 10.0f + this.connector.from.x, arrowP4.y * 10.0f + this.connector.from.y, drawColor);
             }
             return;
         });
@@ -117,6 +117,6 @@ public class ConnectorWidget extends Widget {
     public enum ConnectorType {
         LINE,
         ARROW,
-        DOUBLE_ARROW;
+        DOUBLE_ARROW
     }
 }

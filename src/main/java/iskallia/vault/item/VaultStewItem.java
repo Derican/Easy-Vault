@@ -33,19 +33,19 @@ public class VaultStewItem extends SoupItem {
         if (!world.isClientSide && this.getRarity() == Rarity.MYSTERY) {
             final ItemStack heldStack = player.getItemInHand(hand);
             final String randomPart = ModConfigs.VAULT_STEW.STEW_POOL.getRandom(world.random);
-            final ItemStack stackToDrop = new ItemStack((IItemProvider) Registry.ITEM.getOptional(new ResourceLocation(randomPart)).orElse(Items.AIR));
+            final ItemStack stackToDrop = new ItemStack(Registry.ITEM.getOptional(new ResourceLocation(randomPart)).orElse(Items.AIR));
             ItemRelicBoosterPack.successEffects(world, player.position());
             player.drop(stackToDrop, false, false);
             heldStack.shrink(1);
         }
-        return (ActionResult<ItemStack>) super.use(world, player, hand);
+        return super.use(world, player, hand);
     }
 
     public ItemStack finishUsingItem(final ItemStack stack, final World world, final LivingEntity entity) {
         if (this.getRarity() != Rarity.MYSTERY && entity instanceof ServerPlayerEntity) {
             final ServerPlayerEntity player = (ServerPlayerEntity) entity;
             final PlayerVaultStatsData statsData = PlayerVaultStatsData.get((ServerWorld) world);
-            final PlayerVaultStats stats = statsData.getVaultStats((PlayerEntity) player);
+            final PlayerVaultStats stats = statsData.getVaultStats(player);
             statsData.addVaultExp(player, (int) (stats.getTnl() * this.getRarity().tnlProgress));
         }
         return super.finishUsingItem(stack, world, entity);
@@ -64,7 +64,7 @@ public class VaultStewItem extends SoupItem {
 
         public final float tnlProgress;
 
-        private Rarity(final float tnlProgress) {
+        Rarity(final float tnlProgress) {
             this.tnlProgress = tnlProgress;
         }
     }

@@ -12,7 +12,7 @@ public class TeleportRandomly<T extends LivingEntity> implements INBTSerializabl
     private final Condition<T>[] conditions;
 
     public TeleportRandomly(final T entity) {
-        this(entity, (Condition<T>[]) new Condition[0]);
+        this(entity, new Condition[0]);
     }
 
     public TeleportRandomly(final T entity, final Condition<T>... conditions) {
@@ -26,7 +26,7 @@ public class TeleportRandomly<T extends LivingEntity> implements INBTSerializabl
             if (this.entity.level.random.nextDouble() < chance) {
                 for (int i = 0; i < 64; ++i) {
                     if (this.teleportRandomly()) {
-                        this.entity.level.playSound((PlayerEntity) null, this.entity.xo, this.entity.yo, this.entity.zo, ModSounds.BOSS_TP_SFX, this.entity.getSoundSource(), 1.0f, 1.0f);
+                        this.entity.level.playSound(null, this.entity.xo, this.entity.yo, this.entity.zo, ModSounds.BOSS_TP_SFX, this.entity.getSoundSource(), 1.0f, 1.0f);
                         return true;
                     }
                 }

@@ -17,7 +17,7 @@ public class CleanseApplyAbility extends CleanseAbility<CleanseApplyConfig> {
     protected void removeEffects(final CleanseApplyConfig config, final ServerPlayerEntity player, final List<EffectInstance> effects) {
         super.removeEffects(config, player, effects);
         for (final EffectInstance effect : effects) {
-            final List<LivingEntity> other = EntityHelper.getNearby((IWorld) player.getCommandSenderWorld(), (Vector3i) player.blockPosition(), (float) config.getApplyRadius(), LivingEntity.class);
+            final List<LivingEntity> other = EntityHelper.getNearby(player.getCommandSenderWorld(), player.blockPosition(), (float) config.getApplyRadius(), LivingEntity.class);
             other.removeIf(e -> e instanceof PlayerEntity);
             LivingEntity e = null;
             if (!other.isEmpty()) {

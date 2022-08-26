@@ -32,7 +32,7 @@ public class KnownTalentsMessage {
         final CompoundNBT nbt = new CompoundNBT();
         final ListNBT talents = new ListNBT();
         message.learnedTalents.stream().map(TalentNode::serializeNBT).forEach(talents::add);
-        nbt.put("LearnedTalents", (INBT) talents);
+        nbt.put("LearnedTalents", talents);
         buffer.writeNbt(nbt);
     }
 

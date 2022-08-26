@@ -63,9 +63,9 @@ public class KeyPressBlock extends FallingBlock {
         if (world.isClientSide) {
             return ActionResultType.SUCCESS;
         }
-        NetworkHooks.openGui((ServerPlayerEntity) player, (INamedContainerProvider) new INamedContainerProvider() {
+        NetworkHooks.openGui((ServerPlayerEntity) player, new INamedContainerProvider() {
             public ITextComponent getDisplayName() {
-                return (ITextComponent) new StringTextComponent("Key Press");
+                return new StringTextComponent("Key Press");
             }
 
             @Nullable
@@ -97,7 +97,7 @@ public class KeyPressBlock extends FallingBlock {
     }
 
     protected void createBlockStateDefinition(final StateContainer.Builder<Block, BlockState> builder) {
-        builder.add(new Property[]{KeyPressBlock.FACING});
+        builder.add(KeyPressBlock.FACING);
     }
 
     public boolean isPathfindable(final BlockState state, final IBlockReader worldIn, final BlockPos pos, final PathType type) {
@@ -118,7 +118,7 @@ public class KeyPressBlock extends FallingBlock {
         PART_LOWER_Z = Block.box(4.0, 4.0, 3.0, 12.0, 5.0, 13.0);
         PART_MID_Z = Block.box(6.0, 5.0, 4.0, 10.0, 10.0, 12.0);
         PART_UPPER_Z = Block.box(3.0, 10.0, 0.0, 13.0, 16.0, 16.0);
-        X_AXIS_AABB = VoxelShapes.or(KeyPressBlock.PART_BASE, new VoxelShape[]{KeyPressBlock.PART_LOWER_X, KeyPressBlock.PART_MID_X, KeyPressBlock.PART_UPPER_X});
-        Z_AXIS_AABB = VoxelShapes.or(KeyPressBlock.PART_BASE, new VoxelShape[]{KeyPressBlock.PART_LOWER_Z, KeyPressBlock.PART_MID_Z, KeyPressBlock.PART_UPPER_Z});
+        X_AXIS_AABB = VoxelShapes.or(KeyPressBlock.PART_BASE, KeyPressBlock.PART_LOWER_X, KeyPressBlock.PART_MID_X, KeyPressBlock.PART_UPPER_X);
+        Z_AXIS_AABB = VoxelShapes.or(KeyPressBlock.PART_BASE, KeyPressBlock.PART_LOWER_Z, KeyPressBlock.PART_MID_Z, KeyPressBlock.PART_UPPER_Z);
     }
 }

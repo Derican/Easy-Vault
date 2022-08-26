@@ -36,7 +36,7 @@ public class PlayerSnapshotDump {
         final PlayerSnapshot snapshot = new PlayerSnapshot(sPlayer);
         final ServerWorld sWorld = sPlayer.getLevel();
         snapshot.inVault = (sWorld.dimension() == Vault.VAULT_KEY);
-        final PlayerVaultStats stats = PlayerVaultStatsData.get(sWorld).getVaultStats((PlayerEntity) sPlayer);
+        final PlayerVaultStats stats = PlayerVaultStatsData.get(sWorld).getVaultStats(sPlayer);
         snapshot.vaultLevel = stats.getVaultLevel();
         snapshot.levelPercent = stats.getExp() / (float) stats.getTnl();
         final AttributeModifierManager mgr = sPlayer.getAttributes();
@@ -51,8 +51,8 @@ public class PlayerSnapshotDump {
         snapshot.cooldownReduction = CooldownHelper.getCooldownMultiplier(sPlayer, null);
         snapshot.fatalStrikeChance = FatalStrikeHelper.getPlayerFatalStrikeChance(sPlayer);
         snapshot.fatalStrikeDamage = FatalStrikeHelper.getPlayerFatalStrikeDamage(sPlayer);
-        snapshot.thornsChance = ThornsHelper.getThornsChance((LivingEntity) sPlayer);
-        snapshot.thornsDamage = ThornsHelper.getThornsDamage((LivingEntity) sPlayer);
+        snapshot.thornsChance = ThornsHelper.getThornsChance(sPlayer);
+        snapshot.thornsDamage = ThornsHelper.getThornsDamage(sPlayer);
         Arrays.stream(EquipmentSlotType.values()).forEach(slotType -> {
             final ItemStack stack = sPlayer.getItemBySlot(slotType);
             if (!stack.isEmpty()) {
@@ -60,7 +60,7 @@ public class PlayerSnapshotDump {
             }
             return;
         });
-        final AbilityTree abilities = PlayerAbilitiesData.get(sWorld).getAbilities((PlayerEntity) sPlayer);
+        final AbilityTree abilities = PlayerAbilitiesData.get(sWorld).getAbilities(sPlayer);
         abilities.getLearnedNodes().forEach(node -> {
             if (node.getSpecialization() != null) {
                 snapshot.abilities.put(node.getGroup().getParentName() + ": " + node.getSpecializationName(), node.getLevel());
@@ -69,7 +69,7 @@ public class PlayerSnapshotDump {
             }
             return;
         });
-        final TalentTree talents = PlayerTalentsData.get(sWorld).getTalents((PlayerEntity) sPlayer);
+        final TalentTree talents = PlayerTalentsData.get(sWorld).getTalents(sPlayer);
         talents.getLearnedNodes().forEach(node -> snapshot.talents.put(node.getGroup().getParentName(), node.getLevel()));
         final PlayerStatisticsCollector.VaultRunsSnapshot vaultRunsSnapshot = PlayerStatisticsCollector.VaultRunsSnapshot.ofPlayer(sPlayer);
         snapshot.vaultRuns = vaultRunsSnapshot.vaultRuns;
@@ -81,7 +81,7 @@ public class PlayerSnapshotDump {
         for (final PlayerFavourData.VaultGodType type : PlayerFavourData.VaultGodType.values()) {
             snapshot.favors.put(type.getName(), favourData.getFavour(sPlayer.getUUID(), type));
         }
-        final EternalsData.EternalGroup group = EternalsData.get(sWorld).getEternals((PlayerEntity) sPlayer);
+        final EternalsData.EternalGroup group = EternalsData.get(sWorld).getEternals(sPlayer);
         for (final EternalData eternal : group.getEternals()) {
             String auraName = null;
             if (eternal.getAbilityName() != null) {
@@ -156,7 +156,7 @@ public class PlayerSnapshotDump {
         private final int level;
         private final boolean isAncient;
         private final String auraName;
-        private Map<String, SerializableItemStack> equipment;
+        private final Map<String, SerializableItemStack> equipment;
 
         public EternalInformation(final String name, final int level, final boolean isAncient, final String auraName) {
             this.equipment = new LinkedHashMap<String, SerializableItemStack>();

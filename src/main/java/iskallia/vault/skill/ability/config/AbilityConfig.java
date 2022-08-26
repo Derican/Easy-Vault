@@ -46,6 +46,6 @@ public class AbilityConfig {
     public enum Behavior {
         HOLD_TO_ACTIVATE,
         PRESS_TO_TOGGLE,
-        RELEASE_TO_PERFORM;
+        RELEASE_TO_PERFORM
     }
 }

@@ -125,7 +125,7 @@ public class ActiveEternalData {
     }
 
     private void syncActives(final UUID playerId, final Set<ActiveEternal> eternals) {
-        final MinecraftServer srv = (MinecraftServer) LogicalSidedProvider.INSTANCE.get(LogicalSide.SERVER);
+        final MinecraftServer srv = LogicalSidedProvider.INSTANCE.get(LogicalSide.SERVER);
         if (srv == null) {
             return;
         }

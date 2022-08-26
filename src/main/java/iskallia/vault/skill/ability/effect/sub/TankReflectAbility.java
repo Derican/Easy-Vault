@@ -34,7 +34,7 @@ public class TankReflectAbility extends TankAbility<TankReflectConfig> {
                     final Entity attacker = event.getSource().getEntity();
                     if (attacker instanceof LivingEntity && ((LivingEntity) attacker).getHealth() > 0.0f && TankReflectAbility.rand.nextFloat() < config.getDamageReflectChance()) {
                         final float damage = event.getAmount() * config.getDamageReflectPercent();
-                        attacker.hurt(DamageSource.thorns((Entity) player), damage);
+                        attacker.hurt(DamageSource.thorns(player), damage);
                     }
                 }
             }

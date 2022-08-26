@@ -11,7 +11,7 @@ public class EntityAuraProvider extends AuraProvider {
     private final LivingEntity entity;
 
     protected EntityAuraProvider(final LivingEntity entity, final EternalAuraConfig.AuraConfig aura) {
-        super(entity.getUUID(), (RegistryKey<World>) entity.getCommandSenderWorld().dimension());
+        super(entity.getUUID(), entity.getCommandSenderWorld().dimension());
         this.aura = aura;
         this.entity = entity;
     }

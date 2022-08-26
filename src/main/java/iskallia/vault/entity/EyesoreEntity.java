@@ -76,17 +76,17 @@ public class EyesoreEntity extends GhastEntity implements VaultBoss {
         this.bossInfo = new ServerBossInfo(this.getDisplayName(), BossInfo.Color.RED, BossInfo.Overlay.NOTCHED_10);
         this.noPhysics = true;
         this.setPersistenceRequired();
-        this.getAttribute(Attributes.MAX_HEALTH).setBaseValue((double) ModConfigs.EYESORE.getHealth(this));
+        this.getAttribute(Attributes.MAX_HEALTH).setBaseValue(ModConfigs.EYESORE.getHealth(this));
         this.setHealth(ModConfigs.EYESORE.getHealth(this));
         this.prevHealth = this.getHealth();
     }
 
     public int getTentaclesRemaining() {
-        return (int) this.entityData.get(EyesoreEntity.TENTACLES_REMAINING);
+        return this.entityData.get(EyesoreEntity.TENTACLES_REMAINING);
     }
 
     public State getState() {
-        final Integer ordinal = (Integer) this.entityData.get(EyesoreEntity.STATE);
+        final Integer ordinal = this.entityData.get(EyesoreEntity.STATE);
         return State.values()[ordinal];
     }
 
@@ -140,26 +140,26 @@ public class EyesoreEntity extends GhastEntity implements VaultBoss {
             final float currentMaxHealth = (float) this.getAttribute(Attributes.MAX_HEALTH).getBaseValue();
             if (Math.abs(maxHealth - currentMaxHealth) > 0.1f) {
                 this.setHealth(this.getHealth() / currentMaxHealth * maxHealth);
-                this.getAttribute(Attributes.MAX_HEALTH).setBaseValue((double) maxHealth);
+                this.getAttribute(Attributes.MAX_HEALTH).setBaseValue(maxHealth);
             }
             final ServerWorld serverWorld = (ServerWorld) this.level;
             final VaultRaid vault = VaultRaidData.get(serverWorld).getAt(serverWorld, this.blockPosition());
             if (vault != null && this.level.getGameTime() % 40L == 0L) {
-                vault.getPlayers().stream().map(p -> p.getServerPlayer(((ServerWorld) this.level).getServer())).filter(Optional::isPresent).map(Optional::get).forEach(p -> this.level.playSound((PlayerEntity) null, p.getX(), p.getY(), p.getZ(), SoundEvents.CONDUIT_AMBIENT, SoundCategory.HOSTILE, 1.0f, 0.5f));
+                vault.getPlayers().stream().map(p -> p.getServerPlayer(((ServerWorld) this.level).getServer())).filter(Optional::isPresent).map(Optional::get).forEach(p -> this.level.playSound(null, p.getX(), p.getY(), p.getZ(), SoundEvents.CONDUIT_AMBIENT, SoundCategory.HOSTILE, 1.0f, 0.5f));
             }
             this.brain.tick();
             this.path.tick(this);
             final float healthPercentage = this.getHealth() / this.getMaxHealth();
-            final int tentaclesRemaining = (int) this.entityData.get(EyesoreEntity.TENTACLES_REMAINING);
+            final int tentaclesRemaining = this.entityData.get(EyesoreEntity.TENTACLES_REMAINING);
             final int expectedTentacles = MathHelper.clamp((int) (healthPercentage * 10.0f), 0, 9);
             if (tentaclesRemaining != expectedTentacles) {
                 this.entityData.set(EyesoreEntity.TENTACLES_REMAINING, expectedTentacles);
                 for (int i = 0; i < tentaclesRemaining - expectedTentacles; ++i) {
-                    final EyestalkEntity eyestalkEntity = (EyestalkEntity) ModEntities.EYESTALK.create((World) serverWorld);
+                    final EyestalkEntity eyestalkEntity = ModEntities.EYESTALK.create(serverWorld);
                     if (eyestalkEntity != null) {
                         eyestalkEntity.moveTo(this.getX(), this.getY() + 7.0, this.getZ(), this.xRot, this.yRot);
                         eyestalkEntity.setDeltaMovement(0.0, 0.25, 0.0);
-                        serverWorld.addWithUUID((Entity) eyestalkEntity);
+                        serverWorld.addWithUUID(eyestalkEntity);
                         eyestalkEntity.mother = this.getUUID();
                     }
                 }
@@ -171,11 +171,11 @@ public class EyesoreEntity extends GhastEntity implements VaultBoss {
             this.lookAtTarget(target);
         } else {
             this.laserTick = 0;
-            final PlayerEntity closestPlayer = this.level.getNearestPlayer((Entity) this, 40.0);
+            final PlayerEntity closestPlayer = this.level.getNearestPlayer(this, 40.0);
             if (closestPlayer != null) {
             }
         }
-        if ((boolean) this.getEntityData().get(EyesoreEntity.WATCH_CLIENT) && this.level.isClientSide) {
+        if (this.getEntityData().get(EyesoreEntity.WATCH_CLIENT) && this.level.isClientSide) {
             this.lookAtClientPlayer();
         }
     }
@@ -183,7 +183,7 @@ public class EyesoreEntity extends GhastEntity implements VaultBoss {
     @OnlyIn(Dist.CLIENT)
     private void lookAtClientPlayer() {
         final ClientPlayerEntity playerEntity = Minecraft.getInstance().player;
-        this.lookAtTarget((LivingEntity) playerEntity);
+        this.lookAtTarget(playerEntity);
     }
 
     protected void lookAtTarget(final LivingEntity target) {
@@ -197,7 +197,7 @@ public class EyesoreEntity extends GhastEntity implements VaultBoss {
 
     protected float getTargetPitch(final LivingEntity target) {
         final double d0 = target.getX() - this.getX();
-        final double d2 = this.getEyePosition((Entity) target) - this.getEyeY();
+        final double d2 = this.getEyePosition(target) - this.getEyeY();
         final double d3 = target.getZ() - this.getZ();
         final double d4 = MathHelper.sqrt(d0 * d0 + d3 * d3);
         return (float) (-(MathHelper.atan2(d2, d4) * 57.2957763671875));
@@ -233,22 +233,22 @@ public class EyesoreEntity extends GhastEntity implements VaultBoss {
 
     private boolean teleportToAlter(final double x, final double y, final double z) {
         final BlockPos.Mutable blockpos$mutable = new BlockPos.Mutable(x, y, z);
-        while (blockpos$mutable.getY() > 0 && !this.level.getBlockState((BlockPos) blockpos$mutable).getMaterial().blocksMotion()) {
+        while (blockpos$mutable.getY() > 0 && !this.level.getBlockState(blockpos$mutable).getMaterial().blocksMotion()) {
             blockpos$mutable.move(Direction.DOWN);
         }
-        final BlockState blockstate = this.level.getBlockState((BlockPos) blockpos$mutable);
+        final BlockState blockstate = this.level.getBlockState(blockpos$mutable);
         final boolean flag = blockstate.getMaterial().blocksMotion();
-        final boolean flag2 = blockstate.getFluidState().is((ITag) FluidTags.WATER);
+        final boolean flag2 = blockstate.getFluidState().is(FluidTags.WATER);
         if (!flag || flag2) {
             return false;
         }
-        final EntityTeleportEvent.EnderEntity event = ForgeEventFactory.onEnderTeleport((LivingEntity) this, x, y, z);
+        final EntityTeleportEvent.EnderEntity event = ForgeEventFactory.onEnderTeleport(this, x, y, z);
         if (event.isCanceled()) {
             return false;
         }
         final boolean flag3 = this.randomTeleport(event.getTargetX(), event.getTargetY(), event.getTargetZ(), true);
         if (flag3 && !this.isSilent()) {
-            this.level.playSound((PlayerEntity) null, this.xo, this.yo, this.zo, SoundEvents.ENDERMAN_TELEPORT, this.getSoundSource(), 1.0f, 1.0f);
+            this.level.playSound(null, this.xo, this.yo, this.zo, SoundEvents.ENDERMAN_TELEPORT, this.getSoundSource(), 1.0f, 1.0f);
             this.playSound(SoundEvents.ENDERMAN_TELEPORT, 1.0f, 1.0f);
         }
         return flag3;
@@ -261,15 +261,15 @@ public class EyesoreEntity extends GhastEntity implements VaultBoss {
         final ServerPlayerEntity player = (ServerPlayerEntity) playerEntity;
         final Vector3d posPlayer = player.position();
         final Vector3d posEyesore = this.position();
-        player.hurt(DamageSource.mobAttack((LivingEntity) this), ModConfigs.EYESORE.meleeAttack.getDamage(this));
-        this.applyKnockback((Entity) player, ModConfigs.EYESORE.meleeAttack.knockback, posEyesore.x - posPlayer.x, posEyesore.z - posPlayer.z);
+        player.hurt(DamageSource.mobAttack(this), ModConfigs.EYESORE.meleeAttack.getDamage(this));
+        this.applyKnockback(player, ModConfigs.EYESORE.meleeAttack.knockback, posEyesore.x - posPlayer.x, posEyesore.z - posPlayer.z);
     }
 
     public void applyKnockback(final Entity target, final float strength, final double ratioX, final double ratioZ) {
         if (strength > 0.0f) {
             target.hasImpulse = true;
             final Vector3d vector3d = target.getDeltaMovement();
-            final Vector3d vector3d2 = new Vector3d(ratioX, 0.0, ratioZ).normalize().scale((double) strength);
+            final Vector3d vector3d2 = new Vector3d(ratioX, 0.0, ratioZ).normalize().scale(strength);
             target.setDeltaMovement(vector3d.x / 2.0 - vector3d2.x, this.onGround ? Math.min(0.4, vector3d.y / 2.0 + strength) : vector3d.y, vector3d.z / 2.0 - vector3d2.z);
         }
     }
@@ -314,14 +314,14 @@ public class EyesoreEntity extends GhastEntity implements VaultBoss {
     }
 
     static {
-        STATE = EntityDataManager.defineId((Class) EyesoreEntity.class, DataSerializers.INT);
-        LASER_TARGET = EntityDataManager.defineId((Class) EyesoreEntity.class, DataSerializers.OPTIONAL_UUID);
-        TENTACLES_REMAINING = EntityDataManager.defineId((Class) EyesoreEntity.class, DataSerializers.INT);
-        WATCH_CLIENT = EntityDataManager.defineId((Class) EyesoreEntity.class, DataSerializers.BOOLEAN);
+        STATE = EntityDataManager.defineId(EyesoreEntity.class, DataSerializers.INT);
+        LASER_TARGET = EntityDataManager.defineId(EyesoreEntity.class, DataSerializers.OPTIONAL_UUID);
+        TENTACLES_REMAINING = EntityDataManager.defineId(EyesoreEntity.class, DataSerializers.INT);
+        WATCH_CLIENT = EntityDataManager.defineId(EyesoreEntity.class, DataSerializers.BOOLEAN);
     }
 
     public enum State {
         NORMAL,
-        GIVING_BIRTH;
+        GIVING_BIRTH
     }
 }

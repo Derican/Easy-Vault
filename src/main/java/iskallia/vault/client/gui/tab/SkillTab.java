@@ -84,7 +84,7 @@ public abstract class SkillTab extends Screen {
         final double zoomTargetX = (zoomingX - this.viewportTranslation.x) / this.viewportScale;
         final double zoomTargetY = (zoomingY - this.viewportTranslation.y) / this.viewportScale;
         this.viewportScale += (float) (0.25 * wheel * this.viewportScale);
-        this.viewportScale = (float) MathHelper.clamp((double) this.viewportScale, 0.5, 5.0);
+        this.viewportScale = (float) MathHelper.clamp(this.viewportScale, 0.5, 5.0);
         this.viewportTranslation = new Vector2f((float) (-zoomTargetX * this.viewportScale + zoomingX), (float) (-zoomTargetY * this.viewportScale + zoomingY));
         return mouseScrolled;
     }
@@ -116,7 +116,7 @@ public abstract class SkillTab extends Screen {
                 while (uncoveredHeight > 0.0f) {
                     final float pWidth = Math.min(textureSize, uncoveredWidth) / textureSize;
                     final float pHeight = Math.min(textureSize, uncoveredHeight) / textureSize;
-                    ScreenDrawHelper.rect((IVertexBuilder) buf, matrixStack, currentX, currentY, 0.0f, pWidth * textureSize, pHeight * textureSize).tex(0.31254f, 0.0f, 0.999f * pWidth / 16.0f, 0.999f * pHeight / 16.0f).draw();
+                    ScreenDrawHelper.rect(buf, matrixStack, currentX, currentY, 0.0f, pWidth * textureSize, pHeight * textureSize).tex(0.31254f, 0.0f, 0.999f * pWidth / 16.0f, 0.999f * pHeight / 16.0f).draw();
                     uncoveredHeight -= textureSize;
                     currentY += textureSize;
                 }

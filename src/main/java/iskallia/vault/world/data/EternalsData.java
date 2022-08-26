@@ -153,8 +153,8 @@ public class EternalsData extends WorldSavedData {
             eternalsList.add(eternalGroup.serializeNBT());
             return;
         });
-        nbt.put("PlayerEntries", (INBT) playerList);
-        nbt.put("EternalEntries", (INBT) eternalsList);
+        nbt.put("PlayerEntries", playerList);
+        nbt.put("EternalEntries", eternalsList);
         return nbt;
     }
 
@@ -277,7 +277,7 @@ public class EternalsData extends WorldSavedData {
             final CompoundNBT nbt = new CompoundNBT();
             final ListNBT eternalsList = new ListNBT();
             this.eternals.values().forEach(eternal -> eternalsList.add(eternal.serializeNBT()));
-            nbt.put("EternalsList", (INBT) eternalsList);
+            nbt.put("EternalsList", eternalsList);
             return nbt;
         }
 

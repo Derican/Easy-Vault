@@ -42,7 +42,7 @@ public class AbilityWidget extends Widget implements ConnectableWidget, Componen
     private boolean renderPips;
 
     public AbilityWidget(final String abilityName, final AbilityTree abilityTree, final SkillStyle style) {
-        super(style.x, style.y, 48, pipRowCount(abilityTree.getNodeOf(AbilityRegistry.getAbility(abilityName)).getLevel()) * 10 - 2, (ITextComponent) new StringTextComponent("the_vault.widgets.ability"));
+        super(style.x, style.y, 48, pipRowCount(abilityTree.getNodeOf(AbilityRegistry.getAbility(abilityName)).getLevel()) * 10 - 2, new StringTextComponent("the_vault.widgets.ability"));
         this.selected = false;
         this.hoverable = true;
         this.renderPips = true;
@@ -88,7 +88,7 @@ public class AbilityWidget extends Widget implements ConnectableWidget, Componen
                 return true;
             }
         }
-        return VaultBarOverlay.vaultLevel < ((AbilityConfig) this.makeAbilityNode().getAbilityConfig()).getLevelRequirement();
+        return VaultBarOverlay.vaultLevel < this.makeAbilityNode().getAbilityConfig().getLevelRequirement();
     }
 
     public Point2D.Double getRenderPosition() {
@@ -180,15 +180,15 @@ public class AbilityWidget extends Widget implements ConnectableWidget, Componen
         final AbilityNode<?, ?> node = this.makeAbilityNode();
         final AbilityNode<?, ?> existing = this.abilityTree.getNodeOf(this.getAbility());
         final List<ITextComponent> tTip = new ArrayList<ITextComponent>();
-        tTip.add((ITextComponent) new StringTextComponent(node.getGroup().getParentName()));
+        tTip.add(new StringTextComponent(node.getGroup().getParentName()));
         if (this.isSpecialization()) {
-            tTip.add((ITextComponent) new StringTextComponent(node.getSpecializationName()).withStyle(TextFormatting.ITALIC).withStyle(TextFormatting.GOLD));
+            tTip.add(new StringTextComponent(node.getSpecializationName()).withStyle(TextFormatting.ITALIC).withStyle(TextFormatting.GOLD));
         }
         if (this.isLocked() && this.isSpecialization() && existing.getSpecialization() != null && !existing.getSpecialization().equals(node.getSpecialization())) {
-            tTip.add((ITextComponent) new StringTextComponent("Specialization already in use:").withStyle(TextFormatting.RED));
-            tTip.add((ITextComponent) new StringTextComponent(existing.getSpecializationName()).withStyle(TextFormatting.RED));
+            tTip.add(new StringTextComponent("Specialization already in use:").withStyle(TextFormatting.RED));
+            tTip.add(new StringTextComponent(existing.getSpecializationName()).withStyle(TextFormatting.RED));
         }
-        final int levelRequirement = ((AbilityConfig) node.getGroup().getAbilityConfig(this.abilityName, Math.max(existing.getLevel() - 1, 0))).getLevelRequirement();
+        final int levelRequirement = node.getGroup().getAbilityConfig(this.abilityName, Math.max(existing.getLevel() - 1, 0)).getLevelRequirement();
         if (levelRequirement > 0) {
             TextFormatting color;
             if (VaultBarOverlay.vaultLevel < levelRequirement) {
@@ -196,11 +196,11 @@ public class AbilityWidget extends Widget implements ConnectableWidget, Componen
             } else {
                 color = TextFormatting.GREEN;
             }
-            tTip.add((ITextComponent) new StringTextComponent("Requires level: " + levelRequirement).withStyle(color));
+            tTip.add(new StringTextComponent("Requires level: " + levelRequirement).withStyle(color));
         }
         matrixStack.pushPose();
-        matrixStack.translate((double) this.x, (double) (this.y - 15), 0.0);
-        GuiUtils.drawHoveringText(matrixStack, (List) tTip, 0, 0, Integer.MAX_VALUE, Integer.MAX_VALUE, -1, Minecraft.getInstance().font);
+        matrixStack.translate(this.x, this.y - 15, 0.0);
+        GuiUtils.drawHoveringText(matrixStack, tTip, 0, 0, Integer.MAX_VALUE, Integer.MAX_VALUE, -1, Minecraft.getInstance().font);
         matrixStack.popPose();
         RenderSystem.enableBlend();
     }
@@ -252,8 +252,8 @@ public class AbilityWidget extends Widget implements ConnectableWidget, Componen
         final int lineWidth = count * 8 + (count - 1) * 2;
         int remainingFilled = filledCount;
         matrixStack.pushPose();
-        matrixStack.translate((double) x, (double) y, 0.0);
-        matrixStack.translate((double) (-lineWidth / 2.0f), -4.0, 0.0);
+        matrixStack.translate(x, y, 0.0);
+        matrixStack.translate(-lineWidth / 2.0f, -4.0, 0.0);
         for (int i = 0; i < count; ++i) {
             if (remainingFilled > 0) {
                 this.blit(matrixStack, 0, 0, 1, 133, 8, 8);

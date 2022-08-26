@@ -42,7 +42,7 @@ public class EntityHelper {
     }
 
     public static <T extends Entity> List<T> getNearby(final IWorld world, final Vector3i pos, final float radius, final Class<T> entityClass) {
-        final AxisAlignedBB selectBox = EntityHelper.BOX.move((double) pos.getX(), (double) pos.getY(), (double) pos.getZ()).inflate((double) radius);
+        final AxisAlignedBB selectBox = EntityHelper.BOX.move(pos.getX(), pos.getY(), pos.getZ()).inflate(radius);
         return world.getEntitiesOfClass(entityClass, selectBox, entity -> entity.isAlive() && !entity.isSpectator());
     }
 

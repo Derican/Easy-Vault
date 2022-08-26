@@ -162,23 +162,23 @@ public class LootTablesConfig extends Config {
         }
 
         public ResourceLocation getChest(final VaultRarity rarity) {
-            return new ResourceLocation((String) this.VAULT_CHEST.get(rarity.name()));
+            return new ResourceLocation(this.VAULT_CHEST.get(rarity.name()));
         }
 
         public ResourceLocation getTreasureChest(final VaultRarity rarity) {
-            return new ResourceLocation((String) this.TREASURE_CHEST.get(rarity.name()));
+            return new ResourceLocation(this.TREASURE_CHEST.get(rarity.name()));
         }
 
         public ResourceLocation getAltarChest(final VaultRarity rarity) {
-            return new ResourceLocation((String) this.ALTAR_CHEST.get(rarity.name()));
+            return new ResourceLocation(this.ALTAR_CHEST.get(rarity.name()));
         }
 
         public ResourceLocation getCoopChest(final VaultRarity rarity) {
-            return new ResourceLocation((String) this.COOP_CHEST.get(rarity.name()));
+            return new ResourceLocation(this.COOP_CHEST.get(rarity.name()));
         }
 
         public ResourceLocation getBonusChest(final VaultRarity rarity) {
-            return new ResourceLocation((String) this.BONUS_CHEST.get(rarity.name()));
+            return new ResourceLocation(this.BONUS_CHEST.get(rarity.name()));
         }
 
         public ResourceLocation getAltar() {

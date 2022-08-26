@@ -10,7 +10,7 @@ public enum ActiveFlags {
 
     private int activeReferences;
 
-    private ActiveFlags() {
+    ActiveFlags() {
         this.activeReferences = 0;
     }
 

@@ -19,7 +19,7 @@ public class MixinServerHangWatchdog {
             Arrays.stream(trace).map(StackTraceElement::toString).forEach(joiner::add);
             sb.append(obj).append("\n");
             sb.append("Full Trace:\n");
-            sb.append(joiner.toString());
+            sb.append(joiner);
             return sb;
         }
         return sb.append(obj);

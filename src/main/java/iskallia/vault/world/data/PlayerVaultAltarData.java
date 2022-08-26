@@ -13,8 +13,8 @@ import java.util.function.Supplier;
 
 public class PlayerVaultAltarData extends WorldSavedData {
     protected static final String DATA_NAME = "the_vault_PlayerAltarRecipes";
-    private Map<UUID, AltarInfusionRecipe> playerMap;
-    private HashMap<UUID, List<BlockPos>> playerAltars;
+    private final Map<UUID, AltarInfusionRecipe> playerMap;
+    private final HashMap<UUID, List<BlockPos>> playerAltars;
 
     public PlayerVaultAltarData() {
         super("the_vault_PlayerAltarRecipes");
@@ -120,10 +120,10 @@ public class PlayerVaultAltarData extends WorldSavedData {
             blockPosList.add(positions);
             return;
         });
-        nbt.put("PlayerEntries", (INBT) playerList);
-        nbt.put("AltarRecipeEntries", (INBT) recipeList);
-        nbt.put("PlayerBlockPosEntries", (INBT) playerBlockPosList);
-        nbt.put("BlockPosEntries", (INBT) blockPosList);
+        nbt.put("PlayerEntries", playerList);
+        nbt.put("AltarRecipeEntries", recipeList);
+        nbt.put("PlayerBlockPosEntries", playerBlockPosList);
+        nbt.put("BlockPosEntries", blockPosList);
         return nbt;
     }
 

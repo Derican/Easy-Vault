@@ -28,7 +28,7 @@ public class AncientCryoChamberTileEntity extends CryoChamberTileEntity {
 
     @Nonnull
     public String getEternalName() {
-        return (String) Iterables.getFirst((Iterable) this.coreNames, "Unknown");
+        return Iterables.getFirst(this.coreNames, "Unknown");
     }
 
     @Override
@@ -37,7 +37,7 @@ public class AncientCryoChamberTileEntity extends CryoChamberTileEntity {
             return;
         }
         if (this.getEternalId() != null && this.level.getGameTime() % 40L == 0L) {
-            this.level.playSound((PlayerEntity) null, (double) this.worldPosition.getX(), (double) this.worldPosition.getY(), (double) this.worldPosition.getZ(), SoundEvents.CONDUIT_AMBIENT, SoundCategory.PLAYERS, 0.25f, 1.0f);
+            this.level.playSound(null, this.worldPosition.getX(), this.worldPosition.getY(), this.worldPosition.getZ(), SoundEvents.CONDUIT_AMBIENT, SoundCategory.PLAYERS, 0.25f, 1.0f);
         }
         if (this.getEternalId() == null && !this.coreNames.isEmpty()) {
             this.createAncient();
@@ -60,7 +60,7 @@ public class AncientCryoChamberTileEntity extends CryoChamberTileEntity {
     }
 
     private void createAncient() {
-        final String name = (String) Iterables.getFirst((Iterable) this.coreNames, "Unknown");
+        final String name = Iterables.getFirst(this.coreNames, "Unknown");
         this.eternalId = EternalsData.get((ServerWorld) this.getLevel()).add(this.getOwner(), name, true);
     }
 }

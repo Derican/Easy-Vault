@@ -24,7 +24,7 @@ import java.util.Random;
 
 public class ShardTradeContainer extends AbstractPlayerSensitiveContainer {
     public ShardTradeContainer(final int windowId, final PlayerInventory inventory) {
-        this(windowId, inventory, (IInventory) new Inventory(4));
+        this(windowId, inventory, new Inventory(4));
     }
 
     public ShardTradeContainer(final int windowId, final PlayerInventory inventory, final IInventory tradeView) {
@@ -35,16 +35,16 @@ public class ShardTradeContainer extends AbstractPlayerSensitiveContainer {
     private void initSlots(final PlayerInventory playerInventory, final IInventory tradeView) {
         for (int row = 0; row < 3; ++row) {
             for (int column = 0; column < 9; ++column) {
-                this.addSlot(new Slot((IInventory) playerInventory, column + row * 9 + 9, 8 + column * 18, 102 + row * 18));
+                this.addSlot(new Slot(playerInventory, column + row * 9 + 9, 8 + column * 18, 102 + row * 18));
             }
         }
         for (int hotbarSlot = 0; hotbarSlot < 9; ++hotbarSlot) {
-            this.addSlot(new Slot((IInventory) playerInventory, hotbarSlot, 8 + hotbarSlot * 18, 160));
+            this.addSlot(new Slot(playerInventory, hotbarSlot, 8 + hotbarSlot * 18, 160));
         }
-        this.addSlot((Slot) new RandomSellSlot(tradeView, 0, 34, 36));
-        this.addSlot((Slot) new ShardSellSlot(tradeView, 1, 146, 10));
-        this.addSlot((Slot) new ShardSellSlot(tradeView, 2, 146, 38));
-        this.addSlot((Slot) new ShardSellSlot(tradeView, 3, 146, 66));
+        this.addSlot(new RandomSellSlot(tradeView, 0, 34, 36));
+        this.addSlot(new ShardSellSlot(tradeView, 1, 146, 10));
+        this.addSlot(new ShardSellSlot(tradeView, 2, 146, 38));
+        this.addSlot(new ShardSellSlot(tradeView, 3, 146, 66));
     }
 
     public ItemStack quickMoveStack(final PlayerEntity player, final int index) {
@@ -153,7 +153,7 @@ public class ShardTradeContainer extends AbstractPlayerSensitiveContainer {
                 if (trade2 == null) {
                     return false;
                 }
-                shardCost = (int) trade2.getB();
+                shardCost = trade2.getB();
             }
             final int count = ItemShardPouch.getShardCount(player.inventory);
             return count >= shardCost;
@@ -174,7 +174,7 @@ public class ShardTradeContainer extends AbstractPlayerSensitiveContainer {
                 if (trade2 == null) {
                     return ItemStack.EMPTY;
                 }
-                shardCost = (int) trade2.getB();
+                shardCost = trade2.getB();
             }
             if (ItemShardPouch.reduceShardAmount(player.inventory, shardCost, simulate)) {
                 if (side.isServer() && !simulate) {

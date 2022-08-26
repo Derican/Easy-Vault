@@ -83,7 +83,7 @@ public class FinalVaultFrameRenderer extends TileEntityRenderer<FinalVaultFrameT
             ((IRenderTypeBuffer.Impl)buffer).endBatch(renderType);
         }
         ShaderUtil.releaseShader();
-        final boolean portalFormed = VaultPortalSize.getPortalSize((IWorld)world, blockPos.north(), Direction.Axis.Z, VaultPortalBlock.FRAME).isPresent() || VaultPortalSize.getPortalSize((IWorld)world, blockPos.south(), Direction.Axis.Z, VaultPortalBlock.FRAME).isPresent() || VaultPortalSize.getPortalSize((IWorld)world, blockPos.west(), Direction.Axis.X, VaultPortalBlock.FRAME).isPresent() || VaultPortalSize.getPortalSize((IWorld)world, blockPos.east(), Direction.Axis.X, VaultPortalBlock.FRAME).isPresent();
+        final boolean portalFormed = VaultPortalSize.getPortalSize(world, blockPos.north(), Direction.Axis.Z, VaultPortalBlock.FRAME).isPresent() || VaultPortalSize.getPortalSize(world, blockPos.south(), Direction.Axis.Z, VaultPortalBlock.FRAME).isPresent() || VaultPortalSize.getPortalSize(world, blockPos.west(), Direction.Axis.X, VaultPortalBlock.FRAME).isPresent() || VaultPortalSize.getPortalSize(world, blockPos.east(), Direction.Axis.X, VaultPortalBlock.FRAME).isPresent();
         if (portalFormed) {
             final long now = System.currentTimeMillis();
             final long prevTime = FinalVaultFrameRenderer.PARTICLE_SPAWN_TIMESTAMPS.computeIfAbsent(blockPos, p -> now);
@@ -110,7 +110,7 @@ public class FinalVaultFrameRenderer extends TileEntityRenderer<FinalVaultFrameT
         final float xSpeed = 0.0f;
         final float ySpeed = 0.01f;
         final float zSpeed = 0.0f;
-        world.addParticle((IParticleData)ParticleTypes.SOUL_FIRE_FLAME, (double)x, (double)y, (double)z, (double)xSpeed, (double)ySpeed, (double)zSpeed);
+        world.addParticle(ParticleTypes.SOUL_FIRE_FLAME, x, y, z, xSpeed, ySpeed, zSpeed);
     }
     
     static {

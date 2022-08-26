@@ -52,13 +52,13 @@ public class VaultCrateBlock extends Block {
     public static ItemStack getCrateWithLoot(final VaultCrateBlock crateType, NonNullList<ItemStack> items) {
         if (items.size() > 54) {
             Vault.LOGGER.error("Attempted to get a crate with more than 54 items. Check crate loot table.");
-            items = (NonNullList<ItemStack>) NonNullList.of(ItemStack.EMPTY, items.stream().limit(54L).toArray(ItemStack[]::new));
+            items = NonNullList.of(ItemStack.EMPTY, items.stream().limit(54L).toArray(ItemStack[]::new));
         }
-        final ItemStack crate = new ItemStack((IItemProvider) crateType);
+        final ItemStack crate = new ItemStack(crateType);
         final CompoundNBT nbt = new CompoundNBT();
-        ItemStackHelper.saveAllItems(nbt, (NonNullList) items);
+        ItemStackHelper.saveAllItems(nbt, items);
         if (!nbt.isEmpty()) {
-            crate.addTagElement("BlockEntityTag", (INBT) nbt);
+            crate.addTagElement("BlockEntityTag", nbt);
         }
         return crate;
     }
@@ -72,7 +72,7 @@ public class VaultCrateBlock extends Block {
     }
 
     protected void createBlockStateDefinition(final StateContainer.Builder<Block, BlockState> builder) {
-        builder.add(new Property[]{VaultCrateBlock.HORIZONTAL_FACING, VaultCrateBlock.FACING});
+        builder.add(VaultCrateBlock.HORIZONTAL_FACING, VaultCrateBlock.FACING);
     }
 
     public ActionResultType use(final BlockState state, final World world, final BlockPos pos, final PlayerEntity player, final Hand handIn, final BlockRayTraceResult hit) {
@@ -81,9 +81,9 @@ public class VaultCrateBlock extends Block {
             if (!(tileEntity instanceof VaultCrateTileEntity)) {
                 throw new IllegalStateException("Our named container provider is missing!");
             }
-            final INamedContainerProvider containerProvider = (INamedContainerProvider) new INamedContainerProvider() {
+            final INamedContainerProvider containerProvider = new INamedContainerProvider() {
                 public ITextComponent getDisplayName() {
-                    return (ITextComponent) ((state.getBlock() == ModBlocks.VAULT_CRATE_ARENA) ? new TranslationTextComponent("container.vault.vault_crate_arena") : ((state.getBlock() == ModBlocks.VAULT_CRATE_SCAVENGER) ? new TranslationTextComponent("container.vault.vault_crate_scavenger") : ((state.getBlock() == ModBlocks.VAULT_CRATE_CAKE) ? new TranslationTextComponent("container.vault.vault_crate_cake") : new TranslationTextComponent("container.vault.vault_crate"))));
+                    return (state.getBlock() == ModBlocks.VAULT_CRATE_ARENA) ? new TranslationTextComponent("container.vault.vault_crate_arena") : ((state.getBlock() == ModBlocks.VAULT_CRATE_SCAVENGER) ? new TranslationTextComponent("container.vault.vault_crate_scavenger") : ((state.getBlock() == ModBlocks.VAULT_CRATE_CAKE) ? new TranslationTextComponent("container.vault.vault_crate_cake") : new TranslationTextComponent("container.vault.vault_crate")));
                 }
 
                 public Container createMenu(final int i, final PlayerInventory playerInventory, final PlayerEntity playerEntity) {
@@ -91,7 +91,7 @@ public class VaultCrateBlock extends Block {
                 }
             };
             NetworkHooks.openGui((ServerPlayerEntity) player, containerProvider, tileEntity.getBlockPos());
-            world.playSound((PlayerEntity) null, player.getX(), player.getY(), player.getZ(), SoundEvents.BARREL_OPEN, SoundCategory.BLOCKS, 1.0f, 1.0f);
+            world.playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.BARREL_OPEN, SoundCategory.BLOCKS, 1.0f, 1.0f);
         }
         return ActionResultType.SUCCESS;
     }
@@ -102,14 +102,14 @@ public class VaultCrateBlock extends Block {
         final TileEntity tileentity = world.getBlockEntity(pos);
         if (tileentity instanceof VaultCrateTileEntity) {
             final VaultCrateTileEntity crate = (VaultCrateTileEntity) tileentity;
-            final ItemStack itemstack = new ItemStack((IItemProvider) block);
+            final ItemStack itemstack = new ItemStack(block);
             final CompoundNBT compoundnbt = crate.saveToNbt();
             if (!compoundnbt.isEmpty()) {
-                itemstack.addTagElement("BlockEntityTag", (INBT) compoundnbt);
+                itemstack.addTagElement("BlockEntityTag", compoundnbt);
             }
             final ItemEntity itementity = new ItemEntity(world, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, itemstack);
             itementity.setDefaultPickUpDelay();
-            world.addFreshEntity((Entity) itementity);
+            world.addFreshEntity(itementity);
         }
     }
 
@@ -166,7 +166,7 @@ public class VaultCrateBlock extends Block {
     }
 
     static {
-        HORIZONTAL_FACING = DirectionProperty.create("horizontal_facing", (Predicate) Direction.Plane.HORIZONTAL);
+        HORIZONTAL_FACING = DirectionProperty.create("horizontal_facing", Direction.Plane.HORIZONTAL);
         FACING = BlockStateProperties.FACING;
     }
 }

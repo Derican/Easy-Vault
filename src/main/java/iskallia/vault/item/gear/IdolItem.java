@@ -66,7 +66,7 @@ public class IdolItem extends BasicItem implements VaultGear<IdolItem> {
             final ImmutableMultimap.Builder<Attribute, AttributeModifier> builder = ImmutableMultimap.builder();
             builder.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(IdolItem.ATTACK_DAMAGE_MODIFIER, "Idol modifier", 0.0, AttributeModifier.Operation.ADDITION));
             builder.put(Attributes.ATTACK_SPEED, new AttributeModifier(IdolItem.ATTACK_SPEED_MODIFIER, "Idol modifier", 0.0, AttributeModifier.Operation.ADDITION));
-            return this.getAttributeModifiers(this, slot, stack, (Multimap<Attribute, AttributeModifier>) builder.build());
+            return this.getAttributeModifiers(this, slot, stack, builder.build());
         }
         return ImmutableMultimap.of();
     }
@@ -87,7 +87,7 @@ public class IdolItem extends BasicItem implements VaultGear<IdolItem> {
     }
 
     public ActionResult<ItemStack> use(final World world, final PlayerEntity player, final Hand hand) {
-        return this.onItemRightClick(this, world, player, hand, (ActionResult<ItemStack>) super.use(world, player, hand));
+        return this.onItemRightClick(this, world, player, hand, super.use(world, player, hand));
     }
 
     public void inventoryTick(final ItemStack stack, final World world, final Entity entity, final int itemSlot, final boolean isSelected) {

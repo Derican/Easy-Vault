@@ -94,19 +94,19 @@ public class VaultAltarConfig extends Config {
 
     public List<RequiredItem> getRequiredItemsFromConfig(final ServerWorld world, final BlockPos pos, final ServerPlayerEntity player) {
         final LootContext ctx = new LootContext.Builder(world).withParameter(LootParameters.THIS_ENTITY, player).withRandom(world.random).withLuck(player.getLuck()).create(LootParameterSets.PIGLIN_BARTER);
-        final int vaultLevel = PlayerVaultStatsData.get(world).getVaultStats((PlayerEntity) player).getVaultLevel();
+        final int vaultLevel = PlayerVaultStatsData.get(world).getVaultStats(player).getVaultLevel();
         final int altarLevel = PlayerStatsData.get(world).get(player.getUUID()).getCrystals().size();
         float amtMultiplier = 1.0f;
         float luckyAltarChance = this.LUCKY_ALTAR_CHANCE;
         final GlobalDifficultyData.Difficulty difficulty = GlobalDifficultyData.get(world).getCrystalCost();
         amtMultiplier *= (float) difficulty.getMultiplier();
-        final TalentTree talents = PlayerTalentsData.get(world).getTalents((PlayerEntity) player);
+        final TalentTree talents = PlayerTalentsData.get(world).getTalents(player);
         for (final Object talent : talents.getTalents(LuckyAltarTalent.class)) {
             luckyAltarChance += ((LuckyAltarTalent) talent).getLuckyAltarChance();
         }
         if (VaultAltarConfig.rand.nextFloat() < luckyAltarChance) {
             amtMultiplier = 0.1f;
-            this.spawnLuckyEffects((World) world, pos);
+            this.spawnLuckyEffects(world, pos);
         }
         final LootTable lootTable = world.getServer().getLootTables().get(ModConfigs.LOOT_TABLES.getForLevel(vaultLevel).getAltar());
         final RequiredItem resource = new RequiredItem(Items.CLAY_BALL, 0, 0);
@@ -143,7 +143,7 @@ public class VaultAltarConfig extends Config {
             final Vector3d offset = MiscUtils.getRandomOffset(pos, VaultAltarConfig.rand, 2.0f);
             ((ServerWorld) world).sendParticles((IParticleData) ParticleTypes.HAPPY_VILLAGER, offset.x, offset.y, offset.z, 3, 0.0, 0.0, 0.0, 1.0);
         }
-        world.playSound((PlayerEntity) null, pos, SoundEvents.PLAYER_LEVELUP, SoundCategory.BLOCKS, 1.0f, 1.0f);
+        world.playSound(null, pos, SoundEvents.PLAYER_LEVELUP, SoundCategory.BLOCKS, 1.0f, 1.0f);
     }
 
     public class AltarConfigItem {

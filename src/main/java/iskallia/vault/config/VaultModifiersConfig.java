@@ -60,7 +60,7 @@ public class VaultModifiersConfig extends Config {
     }
 
     public List<VaultModifier> getAll() {
-        Stream<List<VaultModifier>> stream = Stream.<List<VaultModifier>>of(new List[]{this.MAX_MOBS_MODIFIERS, this.TIMER_MODIFIERS, this.LEVEL_MODIFIERS, this.EFFECT_MODIFIERS, this.NO_EXIT_MODIFIERS, this.ADDITIONAL_CHEST_MODIFIERS, this.SCALE_MODIFIERS, this.FRENZY_MODIFIERS, this.TRAPPED_CHESTS_MODIFIERS, this.ARTIFACT_MODIFIERS, this.CATALYST_MODIFIERS, this.LOOTABLE_MODIFIERS, this.INV_RESTORE_MODIFIERS, this.CURSE_ON_HIT_MODIFIERS, this.DURABILITY_DAMAGE_MODIFIERS, this.STAT_MODIFIERS, this.VAULT_FRUIT_PREVENTION_MODIFIERS});
+        Stream<List<VaultModifier>> stream = Stream.of(new List[]{this.MAX_MOBS_MODIFIERS, this.TIMER_MODIFIERS, this.LEVEL_MODIFIERS, this.EFFECT_MODIFIERS, this.NO_EXIT_MODIFIERS, this.ADDITIONAL_CHEST_MODIFIERS, this.SCALE_MODIFIERS, this.FRENZY_MODIFIERS, this.TRAPPED_CHESTS_MODIFIERS, this.ARTIFACT_MODIFIERS, this.CATALYST_MODIFIERS, this.LOOTABLE_MODIFIERS, this.INV_RESTORE_MODIFIERS, this.CURSE_ON_HIT_MODIFIERS, this.DURABILITY_DAMAGE_MODIFIERS, this.STAT_MODIFIERS, this.VAULT_FRUIT_PREVENTION_MODIFIERS});
         Stream<VaultModifier> stream1 = stream.flatMap(Collection::stream);
         List<VaultModifier> list = stream1.collect(Collectors.toList());
         return list;
@@ -194,7 +194,7 @@ public class VaultModifiersConfig extends Config {
         FINAL_WENDARR,
         FINAL_WENDARR_ADDS,
         FINAL_IDONA,
-        FINAL_IDONA_ADDS;
+        FINAL_IDONA_ADDS
     }
 
     public static class Level {

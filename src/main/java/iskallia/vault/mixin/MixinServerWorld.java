@@ -37,7 +37,7 @@ public abstract class MixinServerWorld extends World {
     public abstract MinecraftServer getServer();
 
     protected MixinServerWorld(final ISpawnWorldInfo worldInfo, final RegistryKey<World> dimension, final DimensionType dimensionType, final Supplier<IProfiler> profiler, final boolean isRemote, final boolean isDebug, final long seed) {
-        super(worldInfo, (RegistryKey) dimension, dimensionType, (Supplier) profiler, isRemote, isDebug, seed);
+        super(worldInfo, dimension, dimensionType, profiler, isRemote, isDebug, seed);
     }
 
     @Inject(method = {"<init>"}, at = {@At("RETURN")})

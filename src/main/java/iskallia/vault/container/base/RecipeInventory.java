@@ -13,7 +13,7 @@ public abstract class RecipeInventory implements IInventory {
     protected final NonNullList<ItemStack> slots;
 
     public RecipeInventory(final int inputCount) {
-        this.slots = (NonNullList<ItemStack>) NonNullList.withSize(inputCount + 1, ItemStack.EMPTY);
+        this.slots = NonNullList.withSize(inputCount + 1, ItemStack.EMPTY);
     }
 
     public int getContainerSize() {
@@ -25,24 +25,24 @@ public abstract class RecipeInventory implements IInventory {
     }
 
     public ItemStack getItem(final int index) {
-        return (ItemStack) this.slots.get(index);
+        return this.slots.get(index);
     }
 
     public ItemStack removeItem(final int index, final int count) {
-        final ItemStack itemStack = (ItemStack) this.slots.get(index);
+        final ItemStack itemStack = this.slots.get(index);
         if (index == this.outputSlotIndex() && !itemStack.isEmpty()) {
-            final ItemStack andSplit = ItemStackHelper.removeItem((List) this.slots, index, itemStack.getCount());
+            final ItemStack andSplit = ItemStackHelper.removeItem(this.slots, index, itemStack.getCount());
             this.consumeIngredients();
             this.updateResult();
             return andSplit;
         }
-        final ItemStack splitStack = ItemStackHelper.removeItem((List) this.slots, index, count);
+        final ItemStack splitStack = ItemStackHelper.removeItem(this.slots, index, count);
         this.updateResult();
         return splitStack;
     }
 
     public ItemStack removeItemNoUpdate(final int index) {
-        final ItemStack andRemove = ItemStackHelper.takeItem((List) this.slots, index);
+        final ItemStack andRemove = ItemStackHelper.takeItem(this.slots, index);
         this.updateResult();
         return andRemove;
     }

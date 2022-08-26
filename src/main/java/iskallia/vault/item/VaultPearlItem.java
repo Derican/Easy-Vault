@@ -49,20 +49,20 @@ public class VaultPearlItem extends EnderPearlItem {
 
     public ActionResult<ItemStack> use(final World world, final PlayerEntity player, final Hand hand) {
         if (hand != Hand.MAIN_HAND) {
-            return (ActionResult<ItemStack>) ActionResult.pass(player.getItemInHand(hand));
+            return ActionResult.pass(player.getItemInHand(hand));
         }
         final ItemStack stack = player.getItemInHand(hand);
-        world.playSound((PlayerEntity) null, player.getX(), player.getY(), player.getZ(), SoundEvents.ENDER_PEARL_THROW, SoundCategory.NEUTRAL, 0.5f, 0.4f / (VaultPearlItem.random.nextFloat() * 0.4f + 0.8f));
-        player.getCooldowns().addCooldown((Item) this, 20);
+        world.playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.ENDER_PEARL_THROW, SoundCategory.NEUTRAL, 0.5f, 0.4f / (VaultPearlItem.random.nextFloat() * 0.4f + 0.8f));
+        player.getCooldowns().addCooldown(this, 20);
         if (!world.isClientSide) {
-            final VaultPearlEntity pearl = new VaultPearlEntity(world, (LivingEntity) player);
+            final VaultPearlEntity pearl = new VaultPearlEntity(world, player);
             pearl.setItem(stack);
-            pearl.shootFromRotation((Entity) player, player.xRot, player.yRot, 0.0f, 1.5f, 1.0f);
-            world.addFreshEntity((Entity) pearl);
+            pearl.shootFromRotation(player, player.xRot, player.yRot, 0.0f, 1.5f, 1.0f);
+            world.addFreshEntity(pearl);
             stack.hurtAndBreak(1, (LivingEntity) player, e -> e.broadcastBreakEvent(hand));
         }
         player.awardStat(Stats.ITEM_USED.get(this));
-        return (ActionResult<ItemStack>) ActionResult.sidedSuccess(stack, world.isClientSide());
+        return ActionResult.sidedSuccess(stack, world.isClientSide());
     }
 
     public boolean isEnchantable(final ItemStack stack) {

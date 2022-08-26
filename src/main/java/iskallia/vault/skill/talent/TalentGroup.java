@@ -40,7 +40,7 @@ public class TalentGroup<T extends PlayerTalent> {
         if (level == 0) {
             return this.name + " " + RomanNumber.toRoman(0);
         }
-        return (String) this.getRegistry().inverse().get(this.getTalent(level));
+        return this.getRegistry().inverse().get(this.getTalent(level));
     }
 
     public T getTalent(final int level) {
@@ -84,7 +84,7 @@ public class TalentGroup<T extends PlayerTalent> {
     }
 
     public static TalentGroup<AttributeTalent> ofAttribute(String name, Attribute attribute, String modifierName, int maxLevel, IntUnaryOperator cost, IntToDoubleFunction amount, IntFunction<AttributeModifier.Operation> operation) {
-        AttributeTalent[] talents = (AttributeTalent[]) IntStream.range(0, maxLevel).mapToObj(i -> new AttributeTalent(cost.applyAsInt(i + 1), attribute, new AttributeTalent.Modifier(modifierName + " " + RomanNumber.toRoman(i + 1), amount.applyAsDouble(i + 1), operation.apply(i + 1)))).toArray(x$0 -> new AttributeTalent[x$0]);
+        AttributeTalent[] talents = IntStream.range(0, maxLevel).mapToObj(i -> new AttributeTalent(cost.applyAsInt(i + 1), attribute, new AttributeTalent.Modifier(modifierName + " " + RomanNumber.toRoman(i + 1), amount.applyAsDouble(i + 1), operation.apply(i + 1)))).toArray(x$0 -> new AttributeTalent[x$0]);
         return new TalentGroup<>(name, talents);
     }
 

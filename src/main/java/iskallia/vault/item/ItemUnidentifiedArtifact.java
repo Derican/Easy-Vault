@@ -38,7 +38,7 @@ public class ItemUnidentifiedArtifact extends Item {
         if (!world.isClientSide) {
             final ItemStack heldStack = player.getItemInHand(hand);
             final Vector3d position = player.position();
-            ((ServerWorld) world).playSound((PlayerEntity) null, position.x, position.y, position.z, ModSounds.BOOSTER_PACK_SUCCESS_SFX, SoundCategory.PLAYERS, 1.0f, 1.0f);
+            world.playSound(null, position.x, position.y, position.z, ModSounds.BOOSTER_PACK_SUCCESS_SFX, SoundCategory.PLAYERS, 1.0f, 1.0f);
             ((ServerWorld) world).sendParticles((IParticleData) ParticleTypes.DRAGON_BREATH, position.x, position.y, position.z, 500, 1.0, 1.0, 1.0, 0.5);
             ItemStack artifactStack;
             if (ItemUnidentifiedArtifact.artifactOverride != -1) {
@@ -50,15 +50,15 @@ public class ItemUnidentifiedArtifact extends Item {
             player.drop(artifactStack, false, false);
             heldStack.shrink(1);
         }
-        return (ActionResult<ItemStack>) super.use(world, player, hand);
+        return super.use(world, player, hand);
     }
 
     @OnlyIn(Dist.CLIENT)
     public void appendHoverText(final ItemStack stack, @Nullable final World worldIn, final List<ITextComponent> tooltip, final ITooltipFlag flagIn) {
         final StringTextComponent text = new StringTextComponent("Right click to identify.");
         text.setStyle(Style.EMPTY.withColor(Color.fromRgb(-9472)));
-        tooltip.add((ITextComponent) text);
-        super.appendHoverText(stack, worldIn, (List) tooltip, flagIn);
+        tooltip.add(text);
+        super.appendHoverText(stack, worldIn, tooltip, flagIn);
     }
 
     public boolean isFoil(final ItemStack stack) {

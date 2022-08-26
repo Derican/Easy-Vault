@@ -23,7 +23,7 @@ public class StatueCauldronRenderer extends TileEntityRenderer<StatueCauldronTil
 
     public void render(final StatueCauldronTileEntity tileEntity, final float partialTicks, final MatrixStack matrixStackIn, final IRenderTypeBuffer bufferIn, final int combinedLightIn, final int combinedOverlayIn) {
         final BlockState state = tileEntity.getBlockState();
-        final int level = (int) state.getValue(StatueCauldronBlock.LEVEL);
+        final int level = state.getValue(StatueCauldronBlock.LEVEL);
         final float percentage = tileEntity.getStatueCount() / (float) tileEntity.getRequiredAmount();
         final int height = 14;
         if (level < 3) {

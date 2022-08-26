@@ -4,7 +4,7 @@ import com.google.gson.annotations.Expose;
 
 public class AbsorptionTalent extends PlayerTalent {
     @Expose
-    private float increasedAbsorptionLimit;
+    private final float increasedAbsorptionLimit;
 
     public AbsorptionTalent(final int cost, final float increasedAbsorptionLimit) {
         super(cost);

@@ -46,9 +46,9 @@ public class TransmogTableBlock extends Block {
         if (world.isClientSide) {
             return ActionResultType.SUCCESS;
         }
-        NetworkHooks.openGui((ServerPlayerEntity) player, (INamedContainerProvider) new INamedContainerProvider() {
+        NetworkHooks.openGui((ServerPlayerEntity) player, new INamedContainerProvider() {
             public ITextComponent getDisplayName() {
-                return (ITextComponent) new StringTextComponent("Transmogrification Table");
+                return new StringTextComponent("Transmogrification Table");
             }
 
             @Nullable
@@ -64,7 +64,7 @@ public class TransmogTableBlock extends Block {
     }
 
     protected void createBlockStateDefinition(final StateContainer.Builder<Block, BlockState> builder) {
-        builder.add(new Property[]{TransmogTableBlock.FACING});
+        builder.add(TransmogTableBlock.FACING);
     }
 
     public boolean isPathfindable(final BlockState state, final IBlockReader worldIn, final BlockPos pos, final PathType type) {

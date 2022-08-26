@@ -31,7 +31,7 @@ import java.util.function.Supplier;
 
 public class VoidFluidBlock extends FlowingFluidBlock {
     public VoidFluidBlock(final Supplier<? extends VoidFluid> supplier, final AbstractBlock.Properties properties) {
-        super((Supplier) supplier, properties);
+        super(supplier, properties);
     }
 
     public void entityInside(final BlockState state, final World world, final BlockPos pos, final Entity entity) {
@@ -75,11 +75,11 @@ public class VoidFluidBlock extends FlowingFluidBlock {
         }
         if (!world.isClientSide) {
             final ServerWorld serverWorld = (ServerWorld) world;
-            serverWorld.playSound((PlayerEntity) null, (double) pos.getX(), (double) pos.getY(), (double) pos.getZ(), SoundEvents.ITEM_FRAME_REMOVE_ITEM, SoundCategory.MASTER, 1.0f, (float) Math.random());
+            serverWorld.playSound(null, pos.getX(), pos.getY(), pos.getZ(), SoundEvents.ITEM_FRAME_REMOVE_ITEM, SoundCategory.MASTER, 1.0f, (float) Math.random());
             serverWorld.sendParticles((IParticleData) ParticleTypes.WITCH, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, 100, 0.0, 0.0, 0.0, 3.141592653589793);
         }
         final ItemEntity gemEntity = createGemEntity(world, oreBlock, pos);
-        world.addFreshEntity((Entity) gemEntity);
+        world.addFreshEntity(gemEntity);
     }
 
     @Nonnull
@@ -87,12 +87,12 @@ public class VoidFluidBlock extends FlowingFluidBlock {
         final double x = pos.getX() + 0.5f;
         final double y = pos.getY() + 0.5f;
         final double z = pos.getZ() + 0.5f;
-        final ItemStack itemStack = new ItemStack((IItemProvider) oreBlock.getAssociatedGem(), 2);
+        final ItemStack itemStack = new ItemStack(oreBlock.getAssociatedGem(), 2);
         final ItemEntity itemEntity = new ItemEntity(world, x, y, z, itemStack);
         itemEntity.setPickUpDelay(40);
         final float mag = world.random.nextFloat() * 0.2f;
         final float angle = world.random.nextFloat() * 6.2831855f;
-        itemEntity.setDeltaMovement((double) (-MathHelper.sin(angle) * mag), 0.20000000298023224, (double) (MathHelper.cos(angle) * mag));
+        itemEntity.setDeltaMovement(-MathHelper.sin(angle) * mag, 0.20000000298023224, MathHelper.cos(angle) * mag);
         return itemEntity;
     }
 }

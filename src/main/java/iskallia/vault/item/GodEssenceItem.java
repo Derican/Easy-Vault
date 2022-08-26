@@ -23,6 +23,6 @@ public class GodEssenceItem extends BasicItem
 
     @Nonnull
     public ITextComponent getName(@Nonnull final ItemStack stack) {
-        return (ITextComponent)((IFormattableTextComponent)super.getName(stack)).withStyle(this.godType.getChatColor());
+        return ((IFormattableTextComponent)super.getName(stack)).withStyle(this.godType.getChatColor());
     }
 }

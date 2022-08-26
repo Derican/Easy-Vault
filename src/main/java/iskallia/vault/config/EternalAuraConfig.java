@@ -43,7 +43,7 @@ public class EternalAuraConfig extends Config {
     }
 
     public List<AuraConfig> getAll() {
-        Stream<List<AuraConfig>> stream = Stream.<List<AuraConfig>>of(new List[]{this.EFFECT_AURAS, this.PARRY_AURAS, this.RESISTANCE_AURAS, this.TAUNT_AURAS, this.MOB_EFFECT_AURAS
+        Stream<List<AuraConfig>> stream = Stream.of(new List[]{this.EFFECT_AURAS, this.PARRY_AURAS, this.RESISTANCE_AURAS, this.TAUNT_AURAS, this.MOB_EFFECT_AURAS
         });
         Stream<AuraConfig> stream1 = stream.flatMap(Collection::stream);
         List<AuraConfig> list = stream1.collect(Collectors.toList());
@@ -200,8 +200,8 @@ public class EternalAuraConfig extends Config {
 
         public List<ITextComponent> getTooltip() {
             final List<ITextComponent> ttip = new ArrayList<ITextComponent>();
-            ttip.add((ITextComponent) new StringTextComponent(this.getDisplayName()));
-            ttip.add((ITextComponent) new StringTextComponent(this.getDescription()));
+            ttip.add(new StringTextComponent(this.getDisplayName()));
+            ttip.add(new StringTextComponent(this.getDescription()));
             return ttip;
         }
 

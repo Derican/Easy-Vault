@@ -45,7 +45,7 @@ public class VaultChestConfig extends Config {
     }
 
     public List<VaultChestEffect> getAll() {
-        Stream<List<VaultChestEffect>> stream = Stream.<List<VaultChestEffect>>of(new List[]{this.MOB_TRAP_EFFECTS, this.EXPLOSION_EFFECTS, this.POTION_CLOUD_EFFECTS});
+        Stream<List<VaultChestEffect>> stream = Stream.of(new List[]{this.MOB_TRAP_EFFECTS, this.EXPLOSION_EFFECTS, this.POTION_CLOUD_EFFECTS});
         Stream<VaultChestEffect> stream1 = stream.flatMap(Collection::stream);
         List<VaultChestEffect> list = stream1.collect(Collectors.toList());
         return list;
@@ -65,7 +65,7 @@ public class VaultChestConfig extends Config {
         this.LEVELS = new ArrayList<Level>();
         this.MOB_TRAP_EFFECTS = Arrays.asList(new MobTrapEffect("Mob Trap", 5, new VaultSpawner.Config().withExtraMaxMobs(15).withMinDistance(1.0).withMaxDistance(12.0).withDespawnDistance(32.0)));
         this.EXPLOSION_EFFECTS = Arrays.asList(new ExplosionEffect("Explosion", 4.0f, 0.0, 3.0, 0.0, true, 10.0f, Explosion.Mode.BREAK));
-        this.POTION_CLOUD_EFFECTS = Arrays.asList(new PotionCloudEffect("Poison", new Potion[]{Potions.STRONG_POISON}));
+        this.POTION_CLOUD_EFFECTS = Arrays.asList(new PotionCloudEffect("Poison", Potions.STRONG_POISON));
         final Level level = new Level(5);
         level.DEFAULT_POOL.add("Dummy", 20);
         level.DEFAULT_POOL.add("Explosion", 4);

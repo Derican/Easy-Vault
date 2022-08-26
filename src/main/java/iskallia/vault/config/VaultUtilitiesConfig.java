@@ -10,7 +10,7 @@ public class VaultUtilitiesConfig extends Config {
     @Expose
     private int vaultPearlMaxUses;
     @Expose
-    private HashMap<String, MagnetEntry> magnetSettings;
+    private final HashMap<String, MagnetEntry> magnetSettings;
 
     public VaultUtilitiesConfig() {
         this.magnetSettings = new HashMap<String, MagnetEntry>();

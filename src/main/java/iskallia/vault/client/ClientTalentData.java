@@ -16,7 +16,7 @@ public class ClientTalentData {
 
     @Nonnull
     public static List<TalentNode<?>> getLearnedTalentNodes() {
-        return Collections.unmodifiableList((List<? extends TalentNode<?>>) ClientTalentData.learnedTalents);
+        return Collections.unmodifiableList(ClientTalentData.learnedTalents);
     }
 
     @Nullable

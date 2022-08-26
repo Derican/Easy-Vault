@@ -93,14 +93,14 @@ public class ScrollableContainer extends AbstractGui {
         UIHelper.renderContainerBorder(this, matrixStack, renderBounds, 14, 44, 2, 2, 2, 2, -7631989);
         UIHelper.renderOverflowHidden(matrixStack, ms -> fill(ms, renderBounds.x + 1, renderBounds.y + 1, renderBounds.x + renderBounds.width - 1, renderBounds.y + renderBounds.height - 1, -7631989), ms -> {
             ms.pushPose();
-            ms.translate((double) (renderBounds.x + 1), (double) (renderBounds.y - this.yOffset + 1), 0.0);
+            ms.translate(renderBounds.x + 1, renderBounds.y - this.yOffset + 1, 0.0);
             this.renderer.render(matrixStack, mouseX, mouseY, partialTicks);
             ms.popPose();
             return;
         });
         textureManager.bind(SkillTreeScreen.UI_RESOURCE);
         matrixStack.pushPose();
-        matrixStack.translate((double) (scrollBounds.x + 2), (double) scrollBounds.y, 0.0);
+        matrixStack.translate(scrollBounds.x + 2, scrollBounds.y, 0.0);
         matrixStack.scale(1.0f, (float) scrollBounds.height, 1.0f);
         this.blit(matrixStack, 0, 0, 1, 146, 6, 1);
         matrixStack.popPose();

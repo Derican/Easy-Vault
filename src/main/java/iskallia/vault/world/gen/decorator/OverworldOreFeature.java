@@ -17,7 +17,7 @@ public class OverworldOreFeature extends OreFeature {
     public static Feature<OreFeatureConfig> INSTANCE;
 
     public OverworldOreFeature(final Codec<OreFeatureConfig> codec) {
-        super((Codec) codec);
+        super(codec);
     }
 
     public boolean place(final ISeedReader world, final ChunkGenerator gen, final Random random, final BlockPos pos, final OreFeatureConfig config) {
@@ -35,7 +35,7 @@ public class OverworldOreFeature extends OreFeature {
     }
 
     public static void register(final RegistryEvent.Register<Feature<?>> event) {
-        (OverworldOreFeature.INSTANCE = (Feature<OreFeatureConfig>) new OverworldOreFeature((Codec<OreFeatureConfig>) OreFeatureConfig.CODEC)).setRegistryName(Vault.id("overworld_ore"));
+        (OverworldOreFeature.INSTANCE = new OverworldOreFeature(OreFeatureConfig.CODEC)).setRegistryName(Vault.id("overworld_ore"));
         event.getRegistry().register(OverworldOreFeature.INSTANCE);
     }
 }

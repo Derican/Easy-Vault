@@ -48,7 +48,7 @@ public class FinalLobbyBuilder extends VaultRaidBuilder
                 return null;
             }
         }
-        if (world.getGameRules().getBoolean((GameRules.RuleKey)ModGameRules.FINAL_VAULT_ALLOW_PARTY)) {
+        if (world.getGameRules().getBoolean(ModGameRules.FINAL_VAULT_ALLOW_PARTY)) {
             final VaultPartyData data = VaultPartyData.get(world);
             for (final UUID uuid2 : new ArrayList<>(players)) {
                 data.getParty(uuid2).ifPresent(party -> players.addAll(party.getMembers()));

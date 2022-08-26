@@ -17,7 +17,7 @@ public class VAttribute<T, I extends VAttribute.Instance<T>> {
     private final List<VAttribute<T, I>> modifiers;
 
     public VAttribute(final ResourceLocation id, final Supplier<I> instance) {
-        this(id, instance, (VAttribute[]) new VAttribute[0]);
+        this(id, instance, new VAttribute[0]);
     }
 
     public VAttribute(final ResourceLocation id, final Supplier<I> instance, final VAttribute<T, I>... modifiers) {
@@ -43,7 +43,7 @@ public class VAttribute<T, I extends VAttribute.Instance<T>> {
             final CompoundNBT tag = (CompoundNBT) element;
             if (tag.getString("Id").equals(this.getId().toString())) {
                 final I instance = this.instance.get();
-                instance.parent = (VAttribute<T, ? extends Instance<T>>) this;
+                instance.parent = this;
                 instance.read(instance.delegate = tag);
                 return Optional.of(instance);
             }
@@ -77,16 +77,16 @@ public class VAttribute<T, I extends VAttribute.Instance<T>> {
 
     public I create(final CompoundNBT nbt, final Supplier<T> value) {
         if (!nbt.contains(this.getTagKey(), 9)) {
-            nbt.put(this.getTagKey(), (INBT) new ListNBT());
+            nbt.put(this.getTagKey(), new ListNBT());
         }
         final ListNBT attributesList = nbt.getList(this.getTagKey(), 10);
         final CompoundNBT attributeNBT = attributesList.stream().map(element -> (CompoundNBT) element).filter(tag -> tag.getString("Id").equals(this.getId().toString())).findFirst().orElseGet(() -> {
             final CompoundNBT tag2 = new CompoundNBT();
-            attributesList.add((INBT) tag2);
+            attributesList.add(tag2);
             return tag2;
         });
         final I instance = this.instance.get();
-        instance.parent = (VAttribute<T, ? extends Instance<T>>) this;
+        instance.parent = this;
         instance.delegate = attributeNBT;
         instance.setBaseValue(value.get());
         return instance;
@@ -102,7 +102,7 @@ public class VAttribute<T, I extends VAttribute.Instance<T>> {
             final CompoundNBT tag = (CompoundNBT) element;
             if (tag.getString("Id").equals(this.getId().toString())) {
                 final I instance = this.instance.get();
-                instance.parent = (VAttribute<T, ? extends Instance<T>>) this;
+                instance.parent = this;
                 instance.read(instance.delegate = tag);
                 return Optional.of(instance);
             }
@@ -157,16 +157,16 @@ public class VAttribute<T, I extends VAttribute.Instance<T>> {
     public I create(final ItemStack stack, final Supplier<T> value) {
         final CompoundNBT nbt = stack.getOrCreateTagElement("Vault");
         if (!nbt.contains(this.getTagKey(), 9)) {
-            nbt.put(this.getTagKey(), (INBT) new ListNBT());
+            nbt.put(this.getTagKey(), new ListNBT());
         }
         final ListNBT attributesList = nbt.getList(this.getTagKey(), 10);
         final CompoundNBT attributeNBT = attributesList.stream().map(element -> (CompoundNBT) element).filter(tag -> tag.getString("Id").equals(this.getId().toString())).findFirst().orElseGet(() -> {
             final CompoundNBT tag2 = new CompoundNBT();
-            attributesList.add((INBT) tag2);
+            attributesList.add(tag2);
             return tag2;
         });
         final I instance = this.instance.get();
-        instance.parent = (VAttribute<T, ? extends Instance<T>>) this;
+        instance.parent = this;
         instance.delegate = attributeNBT;
         instance.setBaseValue(value.get());
         return instance;
@@ -218,7 +218,7 @@ public class VAttribute<T, I extends VAttribute.Instance<T>> {
             for (final VAttribute<T, ? extends Instance<T>> modifier : (this.parent).modifiers) {
                 final Optional<? extends Instance<T>> instance = modifier.get(stack);
                 if (instance.isPresent()) {
-                    value = (T) ((Instance) instance.get()).apply(stack, (Instance<Object>) instance.get(), value);
+                    value = (T) ((Instance) instance.get()).apply(stack, instance.get(), value);
                 }
             }
             return value;

@@ -55,7 +55,7 @@ public class FinalBossGenerator extends VaultGenerator
     }
     
     public PortalPlacer getPortalPlacer() {
-        return new PortalPlacer((pos, random, facing) -> (BlockState)ModBlocks.VAULT_PORTAL.defaultBlockState().setValue((Property)VaultPortalBlock.AXIS, (Comparable)facing.getAxis()), (pos, random, facing) -> this.frameBlocks.get(random.nextInt(this.frameBlocks.size())).defaultBlockState());
+        return new PortalPlacer((pos, random, facing) -> ModBlocks.VAULT_PORTAL.defaultBlockState().setValue((Property)VaultPortalBlock.AXIS, (Comparable)facing.getAxis()), (pos, random, facing) -> this.frameBlocks.get(random.nextInt(this.frameBlocks.size())).defaultBlockState());
     }
     
     public FinalBossGenerator setDepth(final int depth) {
@@ -77,7 +77,7 @@ public class FinalBossGenerator extends VaultGenerator
             this.startChunk = new ChunkPos(jigsaw.getStartPos().getX() >> 4, jigsaw.getStartPos().getZ() >> 4);
             final StructureStart<?> start = ModFeatures.FINAL_VAULT_BOSS_FEATURE.generate(jigsaw, world.registryAccess(), world.getChunkSource().generator, world.getStructureManager(), 0, world.getSeed());
             jigsaw.getGeneratedPieces().stream().flatMap(piece -> VaultPiece.of(piece).stream()).forEach(this.pieces::add);
-            world.getChunk(chunkPos.x, chunkPos.z, ChunkStatus.EMPTY, true).setStartForFeature((Structure)ModStructures.FINAL_VAULT_BOSS, (StructureStart)start);
+            world.getChunk(chunkPos.x, chunkPos.z, ChunkStatus.EMPTY, true).setStartForFeature(ModStructures.FINAL_VAULT_BOSS, start);
             this.tick(world, vault);
             if (!vault.getProperties().exists(VaultRaid.START_POS) || !vault.getProperties().exists(VaultRaid.START_FACING)) {
                 return this.findStartPosition(world, vault, chunkPos, this::getPortalPlacer);
@@ -110,7 +110,7 @@ public class FinalBossGenerator extends VaultGenerator
                                 final PortalPlacer placer = portalPlacer.get();
                                 if (placer != null) {
                                     vault.getProperties().create(VaultRaid.START_FACING, direction);
-                                    placer.place((IWorld)world, pos, direction, count, count + 1);
+                                    placer.place(world, pos, direction, count, count + 1);
                                     return true;
                                 }
                                 break Label_0255;
@@ -126,7 +126,7 @@ public class FinalBossGenerator extends VaultGenerator
     @Override
     public CompoundNBT serializeNBT() {
         final CompoundNBT nbt = super.serializeNBT();
-        nbt.put("FrameBlocks", (INBT)this.frameBlocks.serializeNBT());
+        nbt.put("FrameBlocks", this.frameBlocks.serializeNBT());
         nbt.putInt("Depth", this.depth);
         return nbt;
     }

@@ -86,12 +86,12 @@ public class ActiveRaidGoalData extends VaultGoalData {
         final ListNBT positives = tag.getList("positives", 8);
         this.positives = new ArrayList<ITextComponent>();
         for (int i = 0; i < positives.size(); ++i) {
-            this.positives.add((ITextComponent) ITextComponent.Serializer.fromJson(positives.getString(i)));
+            this.positives.add(ITextComponent.Serializer.fromJson(positives.getString(i)));
         }
         final ListNBT negatives = tag.getList("negatives", 8);
         this.negatives = new ArrayList<ITextComponent>();
         for (int j = 0; j < negatives.size(); ++j) {
-            this.negatives.add((ITextComponent) ITextComponent.Serializer.fromJson(negatives.getString(j)));
+            this.negatives.add(ITextComponent.Serializer.fromJson(negatives.getString(j)));
         }
     }
 }

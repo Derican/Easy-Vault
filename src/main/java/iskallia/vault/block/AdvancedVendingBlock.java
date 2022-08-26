@@ -80,13 +80,13 @@ public class AdvancedVendingBlock extends Block {
     }
 
     protected void createBlockStateDefinition(final StateContainer.Builder<Block, BlockState> builder) {
-        builder.add(new Property[]{AdvancedVendingBlock.HALF});
-        builder.add(new Property[]{AdvancedVendingBlock.FACING});
+        builder.add(AdvancedVendingBlock.HALF);
+        builder.add(AdvancedVendingBlock.FACING);
     }
 
     public void playerWillDestroy(final World worldIn, final BlockPos pos, final BlockState state, final PlayerEntity player) {
         if (!worldIn.isClientSide && player.isCreative()) {
-            final DoubleBlockHalf half = (DoubleBlockHalf) state.getValue(AdvancedVendingBlock.HALF);
+            final DoubleBlockHalf half = state.getValue(AdvancedVendingBlock.HALF);
             if (half == DoubleBlockHalf.UPPER) {
                 final BlockPos blockpos = pos.below();
                 final BlockState blockstate = worldIn.getBlockState(blockpos);
@@ -100,11 +100,11 @@ public class AdvancedVendingBlock extends Block {
     }
 
     public BlockState updateShape(final BlockState stateIn, final Direction facing, final BlockState facingState, final IWorld worldIn, final BlockPos currentPos, final BlockPos facingPos) {
-        final DoubleBlockHalf half = (DoubleBlockHalf) stateIn.getValue(AdvancedVendingBlock.HALF);
+        final DoubleBlockHalf half = stateIn.getValue(AdvancedVendingBlock.HALF);
         if (facing.getAxis() == Direction.Axis.Y && half == DoubleBlockHalf.LOWER == (facing == Direction.UP)) {
-            return ((facingState.is((Block) this) && facingState.getValue(AdvancedVendingBlock.HALF) != half) ? stateIn.setValue(AdvancedVendingBlock.FACING, facingState.getValue(AdvancedVendingBlock.FACING)) : Blocks.AIR.defaultBlockState());
+            return ((facingState.is(this) && facingState.getValue(AdvancedVendingBlock.HALF) != half) ? stateIn.setValue(AdvancedVendingBlock.FACING, facingState.getValue(AdvancedVendingBlock.FACING)) : Blocks.AIR.defaultBlockState());
         }
-        return (half == DoubleBlockHalf.LOWER && facing == Direction.DOWN && !stateIn.canSurvive((IWorldReader) worldIn, currentPos)) ? Blocks.AIR.defaultBlockState() : super.updateShape(stateIn, facing, facingState, worldIn, currentPos, facingPos);
+        return (half == DoubleBlockHalf.LOWER && facing == Direction.DOWN && !stateIn.canSurvive(worldIn, currentPos)) ? Blocks.AIR.defaultBlockState() : super.updateShape(stateIn, facing, facingState, worldIn, currentPos, facingPos);
     }
 
     public void setPlacedBy(final World worldIn, final BlockPos pos, final BlockState state, @Nullable final LivingEntity placer, final ItemStack stack) {
@@ -123,10 +123,10 @@ public class AdvancedVendingBlock extends Block {
             return;
         }
         if (state.getValue(AdvancedVendingBlock.HALF) == DoubleBlockHalf.LOWER) {
-            final ItemStack stack = new ItemStack((IItemProvider) this.getBlock());
+            final ItemStack stack = new ItemStack(this.getBlock());
             final CompoundNBT machineNBT = machine.serializeNBT();
             final CompoundNBT stackNBT = new CompoundNBT();
-            stackNBT.put("BlockEntityTag", (INBT) machineNBT);
+            stackNBT.put("BlockEntityTag", machineNBT);
             stack.setTag(stackNBT);
             this.dropVendingMachine(stack, worldIn, pos);
         }
@@ -134,8 +134,8 @@ public class AdvancedVendingBlock extends Block {
     }
 
     private void dropVendingMachine(final ItemStack stack, final World world, final BlockPos pos) {
-        final ItemEntity entity = new ItemEntity(world, (double) pos.getX(), (double) pos.getY(), (double) pos.getZ(), stack);
-        world.addFreshEntity((Entity) entity);
+        final ItemEntity entity = new ItemEntity(world, pos.getX(), pos.getY(), pos.getZ(), stack);
+        world.addFreshEntity(entity);
     }
 
     public ActionResultType use(final BlockState state, final World world, final BlockPos pos, final PlayerEntity player, final Hand hand, final BlockRayTraceResult hit) {
@@ -162,9 +162,9 @@ public class AdvancedVendingBlock extends Block {
             playOpenSound();
             return ActionResultType.SUCCESS;
         }
-        NetworkHooks.openGui((ServerPlayerEntity) player, (INamedContainerProvider) new INamedContainerProvider() {
+        NetworkHooks.openGui((ServerPlayerEntity) player, new INamedContainerProvider() {
             public ITextComponent getDisplayName() {
-                return (ITextComponent) new StringTextComponent("Advanced Vending Machine");
+                return new StringTextComponent("Advanced Vending Machine");
             }
 
             @Nullable
@@ -184,7 +184,7 @@ public class AdvancedVendingBlock extends Block {
     @OnlyIn(Dist.CLIENT)
     public static void playOpenSound() {
         final Minecraft minecraft = Minecraft.getInstance();
-        minecraft.getSoundManager().play((ISound) SimpleSound.forUI(ModSounds.VENDING_MACHINE_SFX, 1.0f, 0.3f));
+        minecraft.getSoundManager().play(SimpleSound.forUI(ModSounds.VENDING_MACHINE_SFX, 1.0f, 0.3f));
     }
 
     public static BlockPos getVendingMachinePos(final BlockState state, final BlockPos pos) {

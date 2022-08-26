@@ -16,7 +16,7 @@ public class StatueWidget extends Widget {
     protected int count;
 
     public StatueWidget(final int x, final int y, final String name, final int count, final StatueCauldronScreen parentScreen) {
-        super(x, y, 0, 0, (ITextComponent) new StringTextComponent(""));
+        super(x, y, 0, 0, new StringTextComponent(""));
         this.parentScreen = parentScreen;
         this.name = name;
         this.count = count;
@@ -35,10 +35,10 @@ public class StatueWidget extends Widget {
         RenderSystem.disableDepthTest();
         final StringTextComponent nameText = new StringTextComponent(this.name);
         final float startXname = 44.0f - minecraft.font.width(nameText.getString()) / 2.0f;
-        minecraft.font.draw(matrixStack, (ITextComponent) nameText, startXname, (float) (this.y + 4), -1);
+        minecraft.font.draw(matrixStack, nameText, startXname, (float) (this.y + 4), -1);
         final StringTextComponent countText = new StringTextComponent("(" + this.count + ")");
         final float startXcount = 44.0f - minecraft.font.width(countText.getString()) / 2.0f;
-        minecraft.font.draw(matrixStack, (ITextComponent) countText, startXcount, (float) (this.y + 14), -1);
+        minecraft.font.draw(matrixStack, countText, startXcount, (float) (this.y + 14), -1);
         RenderSystem.enableDepthTest();
     }
 

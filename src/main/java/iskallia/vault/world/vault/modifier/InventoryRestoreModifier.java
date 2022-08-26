@@ -27,10 +27,10 @@ public class InventoryRestoreModifier extends TexturedVaultModifier {
     public void apply(final VaultRaid vault, final VaultPlayer player, final ServerWorld world, final Random random) {
         player.runIfPresent(world.getServer(), sPlayer -> {
             final PhoenixModifierSnapshotData snapshotData = PhoenixModifierSnapshotData.get(world);
-            if (snapshotData.hasSnapshot((PlayerEntity) sPlayer)) {
-                snapshotData.removeSnapshot((PlayerEntity) sPlayer);
+            if (snapshotData.hasSnapshot(sPlayer)) {
+                snapshotData.removeSnapshot(sPlayer);
             }
-            snapshotData.createSnapshot((PlayerEntity) sPlayer);
+            snapshotData.createSnapshot(sPlayer);
         });
     }
 

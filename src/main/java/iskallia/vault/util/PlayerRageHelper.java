@@ -66,7 +66,7 @@ public class PlayerRageHelper {
         final UUID playerUUID = attacker.getUUID();
         final int lastAttack = PlayerRageHelper.lastAttackTick.getOrDefault(playerUUID, 0);
         if (lastAttack <= attacker.tickCount - 10) {
-            final TalentTree tree = PlayerTalentsData.get(attacker.getLevel()).getTalents((PlayerEntity) attacker);
+            final TalentTree tree = PlayerTalentsData.get(attacker.getLevel()).getTalents(attacker);
             final TalentNode<BarbaricTalent> node = tree.getNodeOf(ModConfigs.TALENTS.BARBARIC);
             if (ArchetypeTalent.isEnabled(world) && node.isLearned()) {
                 final int rage = getCurrentRage(playerUUID, LogicalSide.SERVER);
@@ -91,7 +91,7 @@ public class PlayerRageHelper {
         }
         final ServerPlayerEntity sPlayer = (ServerPlayerEntity) event.player;
         final UUID playerUUID = sPlayer.getUUID();
-        final int rage = getCurrentRage((PlayerEntity) sPlayer, LogicalSide.SERVER);
+        final int rage = getCurrentRage(sPlayer, LogicalSide.SERVER);
         if (rage <= 0) {
             removeExistingDamageBuff(sPlayer);
             return;
@@ -101,9 +101,9 @@ public class PlayerRageHelper {
             removeExistingDamageBuff(sPlayer);
             return;
         }
-        final TalentTree tree = PlayerTalentsData.get(sPlayer.getLevel()).getTalents((PlayerEntity) sPlayer);
+        final TalentTree tree = PlayerTalentsData.get(sPlayer.getLevel()).getTalents(sPlayer);
         final BarbaricTalent talent = tree.getNodeOf(ModConfigs.TALENTS.BARBARIC).getTalent();
-        if (ArchetypeTalent.isEnabled((World) sPlayer.getLevel())) {
+        if (ArchetypeTalent.isEnabled(sPlayer.getLevel())) {
             final int lastTick = PlayerRageHelper.lastAttackTick.getOrDefault(playerUUID, 0);
             if (lastTick < sPlayer.tickCount - talent.getRageDegenTickDelay() && sPlayer.tickCount % 10 == 0) {
                 setCurrentRage(sPlayer, rage - 1);
@@ -130,8 +130,8 @@ public class PlayerRageHelper {
     }
 
     private static boolean canGenerateRage(final ServerPlayerEntity sPlayer) {
-        final TalentTree tree = PlayerTalentsData.get(sPlayer.getLevel()).getTalents((PlayerEntity) sPlayer);
-        return tree.hasLearnedNode(ModConfigs.TALENTS.BARBARIC) && ArchetypeTalent.isEnabled((World) sPlayer.getLevel());
+        final TalentTree tree = PlayerTalentsData.get(sPlayer.getLevel()).getTalents(sPlayer);
+        return tree.hasLearnedNode(ModConfigs.TALENTS.BARBARIC) && ArchetypeTalent.isEnabled(sPlayer.getLevel());
     }
 
     private static void refreshDamageBuff(final ServerPlayerEntity sPlayer, final float dmgMultiplier) {

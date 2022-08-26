@@ -38,10 +38,10 @@ public class ModFeatures {
     }
 
     private static <FC extends IFeatureConfig, F extends Feature<FC>> ConfiguredFeature<FC, F> register(final String name, final ConfiguredFeature<FC, F> feature) {
-        return (ConfiguredFeature<FC, F>) WorldGenRegistries.register(WorldGenRegistries.CONFIGURED_FEATURE, Vault.id(name), feature);
+        return WorldGenRegistries.register(WorldGenRegistries.CONFIGURED_FEATURE, Vault.id(name), feature);
     }
 
     private static <SF extends StructureFeature<FC, F>, FC extends IFeatureConfig, F extends Structure<FC>> SF register(final String name, final SF feature) {
-        return (SF) WorldGenRegistries.register(WorldGenRegistries.CONFIGURED_STRUCTURE_FEATURE, Vault.id(name), feature);
+        return WorldGenRegistries.register(WorldGenRegistries.CONFIGURED_STRUCTURE_FEATURE, Vault.id(name), feature);
     }
 }

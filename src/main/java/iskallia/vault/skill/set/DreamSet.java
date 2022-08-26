@@ -8,13 +8,13 @@ import net.minecraft.potion.Effects;
 public class DreamSet extends EffectSet {
     public static int MULTIPLIER_ID;
     @Expose
-    private float increasedDamage;
+    private final float increasedDamage;
     @Expose
-    private float increasedResistance;
+    private final float increasedResistance;
     @Expose
-    private float increasedParry;
+    private final float increasedParry;
     @Expose
-    private float increasedChestRarity;
+    private final float increasedChestRarity;
 
     public DreamSet(final float increasedDamage, final int hasteAddition, final float increasedResistance, final float increasedParry, final float increasedChestRarity) {
         super(VaultGear.Set.DREAM, Effects.DIG_SPEED, hasteAddition, EffectTalent.Type.HIDDEN, EffectTalent.Operator.ADD);

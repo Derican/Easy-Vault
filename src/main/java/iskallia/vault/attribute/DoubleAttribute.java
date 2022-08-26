@@ -14,7 +14,7 @@ public class DoubleAttribute extends NumberAttribute<Double> {
 
     @Override
     public void write(final CompoundNBT nbt) {
-        nbt.putDouble("BaseValue", (double) this.getBaseValue());
+        nbt.putDouble("BaseValue", this.getBaseValue());
     }
 
     @Override

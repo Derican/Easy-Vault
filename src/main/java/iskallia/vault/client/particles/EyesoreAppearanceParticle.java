@@ -34,7 +34,7 @@ public class EyesoreAppearanceParticle extends Particle
     
     protected EyesoreAppearanceParticle(final ClientWorld world, final double x, final double y, final double z) {
         super(world, x, y, z);
-        this.model = (Model)new EyesoreModel();
+        this.model = new EyesoreModel();
         this.renderType = RenderType.entityTranslucent(EyesoreRenderer.SORE_EYE_TEXTURE);
         this.gravity = 0.0f;
         this.lifetime = 30;

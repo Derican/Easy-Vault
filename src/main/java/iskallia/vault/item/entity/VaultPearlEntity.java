@@ -25,7 +25,7 @@ public class VaultPearlEntity extends EnderPearlEntity {
         }
         final Entity entity = this.getOwner();
         for (int i = 0; i < 32; ++i) {
-            this.level.addParticle((IParticleData) ParticleTypes.PORTAL, this.getX(), this.getY() + this.random.nextDouble() * 2.0, this.getZ(), this.random.nextGaussian(), 0.0, this.random.nextGaussian());
+            this.level.addParticle(ParticleTypes.PORTAL, this.getX(), this.getY() + this.random.nextDouble() * 2.0, this.getZ(), this.random.nextGaussian(), 0.0, this.random.nextGaussian());
         }
         if (!this.level.isClientSide && !this.removed) {
             if (entity instanceof ServerPlayerEntity) {

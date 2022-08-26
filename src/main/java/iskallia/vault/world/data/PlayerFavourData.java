@@ -31,7 +31,7 @@ public class PlayerFavourData extends WorldSavedData {
 
     public boolean addFavour(final PlayerEntity player, final VaultGodType type, final int count) {
         final UUID playerUUID = player.getUUID();
-        int favour = (int) this.favourStats.computeIfAbsent(playerUUID, key -> new HashMap()).getOrDefault(type, 0);
+        int favour = this.favourStats.computeIfAbsent(playerUUID, key -> new HashMap<VaultGodType, Integer>()).getOrDefault(type, 0);
         if (Math.abs(favour + count) > 16) {
             return false;
         }
@@ -69,8 +69,8 @@ public class PlayerFavourData extends WorldSavedData {
     public CompoundNBT save(final CompoundNBT compound) {
         this.favourStats.forEach((uuid, playerFavour) -> {
             final CompoundNBT favourTag = new CompoundNBT();
-            playerFavour.forEach((type, count) -> favourTag.putInt(type.name(), (int) count));
-            compound.put(uuid.toString(), (INBT) favourTag);
+            playerFavour.forEach((type, count) -> favourTag.putInt(type.name(), count));
+            compound.put(uuid.toString(), favourTag);
             return;
         });
         return compound;
@@ -90,7 +90,7 @@ public class PlayerFavourData extends WorldSavedData {
         private final String title;
         private final TextFormatting color;
 
-        private VaultGodType(final String name, final String title, final TextFormatting color) {
+        VaultGodType(final String name, final String title, final TextFormatting color) {
             this.name = name;
             this.title = title;
             this.color = color;
@@ -123,12 +123,12 @@ public class PlayerFavourData extends WorldSavedData {
         }
 
         public ITextComponent getHoverChatComponent() {
-            return (ITextComponent) new StringTextComponent("[Vault God] ").withStyle(TextFormatting.WHITE).append((ITextComponent) new StringTextComponent(this.name + ", " + this.title).withStyle(this.color));
+            return new StringTextComponent("[Vault God] ").withStyle(TextFormatting.WHITE).append(new StringTextComponent(this.name + ", " + this.title).withStyle(this.color));
         }
 
         public ITextComponent getIdolDescription() {
             final String s = this.getName().endsWith("s") ? "" : "s";
-            return (ITextComponent) new StringTextComponent(String.format("%s'%s Idol", this.getName(), s)).withStyle(this.getChatColor());
+            return new StringTextComponent(String.format("%s'%s Idol", this.getName(), s)).withStyle(this.getChatColor());
         }
 
         public IFormattableTextComponent getChosenPrefix() {

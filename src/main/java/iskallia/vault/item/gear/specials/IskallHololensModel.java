@@ -11,7 +11,7 @@ public class IskallHololensModel<T extends LivingEntity> extends VaultGearModel<
         super(modelSize, slotType);
         this.texWidth = 32;
         this.texHeight = 32;
-        (this.Head = new ModelRenderer((Model) this)).setPos(0.0f, 0.0f, 0.0f);
+        (this.Head = new ModelRenderer(this)).setPos(0.0f, 0.0f, 0.0f);
         this.Head.texOffs(0, 0).addBox(-4.0f, -8.0f, -4.0f, 8.0f, 8.0f, 8.0f, 1.0f, false);
     }
 }

@@ -30,7 +30,7 @@ public class VotingSession {
     VotingSession(final CompoundNBT tag) {
         this.voted = new HashSet<String>();
         this.directions = new ArrayList<DirectionChoice>();
-        this.stabilizerPos = CodecUtils.readNBT((com.mojang.serialization.Codec<BlockPos>) BlockPos.CODEC, tag, "pos", BlockPos.ZERO);
+        this.stabilizerPos = CodecUtils.readNBT(BlockPos.CODEC, tag, "pos", BlockPos.ZERO);
         this.voteTicks = tag.getInt("voteTicks");
         final ListNBT directions = tag.getList("directions", 10);
         for (int i = 0; i < directions.size(); ++i) {
@@ -117,13 +117,13 @@ public class VotingSession {
 
     public CompoundNBT serialize() {
         final CompoundNBT tag = new CompoundNBT();
-        CodecUtils.writeNBT((com.mojang.serialization.Codec<BlockPos>) BlockPos.CODEC, this.stabilizerPos, tag, "pos");
+        CodecUtils.writeNBT(BlockPos.CODEC, this.stabilizerPos, tag, "pos");
         tag.putInt("voteTicks", this.voteTicks);
         final ListNBT directions = new ListNBT();
         for (final DirectionChoice choice : this.directions) {
             directions.add(choice.serialize());
         }
-        tag.put("directions", (INBT) directions);
+        tag.put("directions", directions);
         return tag;
     }
 

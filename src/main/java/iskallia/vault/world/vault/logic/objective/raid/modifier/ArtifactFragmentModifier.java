@@ -31,13 +31,13 @@ public class ArtifactFragmentModifier extends RaidModifier {
             return;
         }
         final BlockPos at = controller.relative(Direction.UP, 3);
-        final FloatingItemEntity itemEntity = FloatingItemEntity.create((World) world, at, new ItemStack((IItemProvider) ModItems.ARTIFACT_FRAGMENT));
-        world.addFreshEntity((Entity) itemEntity);
+        final FloatingItemEntity itemEntity = FloatingItemEntity.create(world, at, new ItemStack(ModItems.ARTIFACT_FRAGMENT));
+        world.addFreshEntity(itemEntity);
     }
 
     @Override
     public ITextComponent getDisplay(final float value) {
         final int percDisplay = Math.round(value * 100.0f);
-        return (ITextComponent) new StringTextComponent("+" + percDisplay + "% Artifact Fragment chance").withStyle(TextFormatting.GOLD);
+        return new StringTextComponent("+" + percDisplay + "% Artifact Fragment chance").withStyle(TextFormatting.GOLD);
     }
 }

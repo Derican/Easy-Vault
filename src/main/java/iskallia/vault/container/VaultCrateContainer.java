@@ -21,14 +21,14 @@ import net.minecraftforge.items.wrapper.InvWrapper;
 
 public class VaultCrateContainer extends Container {
     public IItemHandler crateInventory;
-    private PlayerEntity playerEntity;
-    private IItemHandler playerInventory;
-    private BlockPos tilePos;
+    private final PlayerEntity playerEntity;
+    private final IItemHandler playerInventory;
+    private final BlockPos tilePos;
 
     public VaultCrateContainer(final int windowId, final World world, final BlockPos pos, final PlayerInventory playerInventory, final PlayerEntity player) {
-        super((ContainerType) ModContainers.VAULT_CRATE_CONTAINER, windowId);
+        super(ModContainers.VAULT_CRATE_CONTAINER, windowId);
         this.playerEntity = player;
-        this.playerInventory = (IItemHandler) new InvWrapper((IInventory) playerInventory);
+        this.playerInventory = new InvWrapper(playerInventory);
         this.tilePos = pos;
         final TileEntity tileEntity = world.getBlockEntity(pos);
         if (tileEntity != null) {
@@ -37,16 +37,16 @@ public class VaultCrateContainer extends Container {
                 final int i = 36;
                 for (int j = 0; j < 6; ++j) {
                     for (int k = 0; k < 9; ++k) {
-                        this.addSlot((Slot) new SlotItemHandler(h, k + j * 9, 8 + k * 18, 18 + j * 18));
+                        this.addSlot(new SlotItemHandler(h, k + j * 9, 8 + k * 18, 18 + j * 18));
                     }
                 }
                 for (int l = 0; l < 3; ++l) {
                     for (int j2 = 0; j2 < 9; ++j2) {
-                        this.addSlot(new Slot((IInventory) playerInventory, j2 + l * 9 + 9, 8 + j2 * 18, 103 + l * 18 + i));
+                        this.addSlot(new Slot(playerInventory, j2 + l * 9 + 9, 8 + j2 * 18, 103 + l * 18 + i));
                     }
                 }
                 for (int i2 = 0; i2 < 9; ++i2) {
-                    this.addSlot(new Slot((IInventory) playerInventory, i2, 8 + i2 * 18, 161 + i));
+                    this.addSlot(new Slot(playerInventory, i2, 8 + i2 * 18, 161 + i));
                 }
             });
         }
@@ -93,7 +93,7 @@ public class VaultCrateContainer extends Container {
 
     private int addSlotRange(final IItemHandler handler, int index, int x, final int y, final int amount, final int dx) {
         for (int i = 0; i < amount; ++i) {
-            this.addSlot((Slot) new SlotItemHandler(handler, index, x, y));
+            this.addSlot(new SlotItemHandler(handler, index, x, y));
             x += dx;
             ++index;
         }
@@ -102,6 +102,6 @@ public class VaultCrateContainer extends Container {
 
     public void removed(final PlayerEntity player) {
         super.removed(player);
-        player.level.playSound((PlayerEntity) null, player.getX(), player.getY(), player.getZ(), SoundEvents.BARREL_CLOSE, SoundCategory.BLOCKS, 1.0f, 1.0f);
+        player.level.playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.BARREL_CLOSE, SoundCategory.BLOCKS, 1.0f, 1.0f);
     }
 }

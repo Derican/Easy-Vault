@@ -39,7 +39,7 @@ public abstract class AbilityGroup<T extends AbilityConfig, E extends AbilityEff
     }
 
     String getName(final int level) {
-        return (String) this.getNameCache().get(level);
+        return this.getNameCache().get(level);
     }
 
     public T getAbilityConfig(@Nullable final String specialization, int level) {

@@ -71,11 +71,11 @@ public class ModEntities {
     }
 
     private static EntityType<VaultFighterEntity> registerVaultFighter(final int count, final RegistryEvent.Register<EntityType<?>> event) {
-        return registerLiving((count > 0) ? ("vault_fighter_" + count) : "vault_fighter", (EntityType.Builder<VaultFighterEntity>) EntityType.Builder.of(VaultFighterEntity::new, EntityClassification.MONSTER).sized(0.6f, 1.95f), ZombieEntity::createAttributes, event);
+        return registerLiving((count > 0) ? ("vault_fighter_" + count) : "vault_fighter", EntityType.Builder.of(VaultFighterEntity::new, EntityClassification.MONSTER).sized(0.6f, 1.95f), ZombieEntity::createAttributes, event);
     }
 
     private static <T extends Entity> EntityType<T> register(final String name, final EntityType.Builder<T> builder, final RegistryEvent.Register<EntityType<?>> event) {
-        final EntityType<T> entityType = (EntityType<T>) builder.build(Vault.sId(name));
+        final EntityType<T> entityType = builder.build(Vault.sId(name));
         event.getRegistry().register(entityType.setRegistryName(Vault.id(name)));
         return entityType;
     }

@@ -78,7 +78,7 @@ public class ColorizationHelper {
         if (mdl.equals(imm.getModelManager().getMissingModel())) {
             return null;
         }
-        return mdl.getParticleTexture((IModelData) EmptyModelData.INSTANCE);
+        return mdl.getParticleTexture(EmptyModelData.INSTANCE);
     }
 
     private static Optional<Color> getDominantColor(final TextureAtlasSprite tas) {
@@ -91,7 +91,7 @@ public class ColorizationHelper {
             final int color = (dominantColor[0] & 0xFF) << 16 | (dominantColor[1] & 0xFF) << 8 | (dominantColor[2] & 0xFF);
             return Optional.of(new Color(color));
         } catch (final Exception exc) {
-            Vault.LOGGER.error("Item Colorization Helper: Ignoring non-resolvable image " + tas.getName().toString());
+            Vault.LOGGER.error("Item Colorization Helper: Ignoring non-resolvable image " + tas.getName());
             exc.printStackTrace();
             return Optional.empty();
         }

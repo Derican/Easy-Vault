@@ -10,7 +10,7 @@ public class OpcodeMessage<OPC extends Enum<OPC>> {
     public CompoundNBT payload;
 
     public void encodeSelf(final OpcodeMessage<OPC> message, final PacketBuffer buffer) {
-        buffer.writeEnum((Enum) message.opcode);
+        buffer.writeEnum(message.opcode);
         buffer.writeNbt(message.payload);
     }
 

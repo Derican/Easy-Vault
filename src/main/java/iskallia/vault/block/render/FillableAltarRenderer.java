@@ -46,7 +46,7 @@ public class FillableAltarRenderer extends TileEntityRenderer<FillableAltarTileE
             if (tileEntity.getBlockPos().equals(result.getBlockPos())) {
                 final StringTextComponent progressText = (StringTextComponent) (tileEntity.isMaxedOut() ? new StringTextComponent("Right Click to Loot!").setStyle(Style.EMPTY.withColor(Color.fromRgb(-1313364))) : new StringTextComponent(tileEntity.getCurrentProgress() + " / " + tileEntity.getMaxProgress() + " ").append(tileEntity.getRequirementUnit()));
                 this.renderLabel(matrixStack, 0.5f, 2.3f, 0.5f, buffer, combinedLight, tileEntity.getRequirementName());
-                this.renderLabel(matrixStack, 0.5f, 2.1f, 0.5f, buffer, combinedLight, (ITextComponent) progressText);
+                this.renderLabel(matrixStack, 0.5f, 2.1f, 0.5f, buffer, combinedLight, progressText);
             }
         }
     }
@@ -57,9 +57,9 @@ public class FillableAltarRenderer extends TileEntityRenderer<FillableAltarTileE
         matrixStack.pushPose();
         final float scale = 0.02f;
         final int opacity = 1711276032;
-        final float offset = (float) (-fontRenderer.width((ITextProperties) text) / 2);
+        final float offset = (float) (-fontRenderer.width(text) / 2);
         final Matrix4f matrix4f = matrixStack.last().pose();
-        matrixStack.translate((double) x, (double) y, (double) z);
+        matrixStack.translate(x, y, z);
         matrixStack.scale(scale, scale, scale);
         matrixStack.mulPose(minecraft.getEntityRenderDispatcher().cameraOrientation());
         matrixStack.mulPose(Vector3f.ZP.rotationDegrees(180.0f));

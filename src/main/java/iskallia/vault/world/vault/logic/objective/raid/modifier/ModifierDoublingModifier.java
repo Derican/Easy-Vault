@@ -24,6 +24,6 @@ public class ModifierDoublingModifier extends RaidModifier {
 
     @Override
     public ITextComponent getDisplay(final float value) {
-        return (ITextComponent) new StringTextComponent("Doubles values of all existing modifiers").withStyle(TextFormatting.GREEN);
+        return new StringTextComponent("Doubles values of all existing modifiers").withStyle(TextFormatting.GREEN);
     }
 }

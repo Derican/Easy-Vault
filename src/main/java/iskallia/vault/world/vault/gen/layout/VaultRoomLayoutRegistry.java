@@ -13,17 +13,17 @@ public class VaultRoomLayoutRegistry {
     private static final Map<ResourceLocation, Supplier<VaultRoomLayoutGenerator>> layoutRegistry;
 
     public static void init() {
-        VaultRoomLayoutRegistry.layoutRegistry.put(SingularVaultRoomLayout.ID, (Supplier<VaultRoomLayoutGenerator>) SingularVaultRoomLayout::new);
-        VaultRoomLayoutRegistry.layoutRegistry.put(LineRoomLayout.ID, (Supplier<VaultRoomLayoutGenerator>) LineRoomLayout::new);
-        VaultRoomLayoutRegistry.layoutRegistry.put(DiamondRoomLayout.ID, (Supplier<VaultRoomLayoutGenerator>) DiamondRoomLayout::new);
-        VaultRoomLayoutRegistry.layoutRegistry.put(SquareRoomLayout.ID, (Supplier<VaultRoomLayoutGenerator>) SquareRoomLayout::new);
-        VaultRoomLayoutRegistry.layoutRegistry.put(CircleRoomLayout.ID, (Supplier<VaultRoomLayoutGenerator>) CircleRoomLayout::new);
-        VaultRoomLayoutRegistry.layoutRegistry.put(TriangleRoomLayout.ID, (Supplier<VaultRoomLayoutGenerator>) TriangleRoomLayout::new);
-        VaultRoomLayoutRegistry.layoutRegistry.put(SpiralRoomLayout.ID, (Supplier<VaultRoomLayoutGenerator>) SpiralRoomLayout::new);
-        VaultRoomLayoutRegistry.layoutRegistry.put(DebugVaultLayout.ID, (Supplier<VaultRoomLayoutGenerator>) DebugVaultLayout::new);
-        VaultRoomLayoutRegistry.layoutRegistry.put(DenseDiamondRoomLayout.ID, (Supplier<VaultRoomLayoutGenerator>) DenseDiamondRoomLayout::new);
-        VaultRoomLayoutRegistry.layoutRegistry.put(DenseSquareRoomLayout.ID, (Supplier<VaultRoomLayoutGenerator>) DenseSquareRoomLayout::new);
-        VaultRoomLayoutRegistry.layoutRegistry.put(EmptyVaultLayout.ID, (Supplier<VaultRoomLayoutGenerator>)EmptyVaultLayout::new);
+        VaultRoomLayoutRegistry.layoutRegistry.put(SingularVaultRoomLayout.ID, SingularVaultRoomLayout::new);
+        VaultRoomLayoutRegistry.layoutRegistry.put(LineRoomLayout.ID, LineRoomLayout::new);
+        VaultRoomLayoutRegistry.layoutRegistry.put(DiamondRoomLayout.ID, DiamondRoomLayout::new);
+        VaultRoomLayoutRegistry.layoutRegistry.put(SquareRoomLayout.ID, SquareRoomLayout::new);
+        VaultRoomLayoutRegistry.layoutRegistry.put(CircleRoomLayout.ID, CircleRoomLayout::new);
+        VaultRoomLayoutRegistry.layoutRegistry.put(TriangleRoomLayout.ID, TriangleRoomLayout::new);
+        VaultRoomLayoutRegistry.layoutRegistry.put(SpiralRoomLayout.ID, SpiralRoomLayout::new);
+        VaultRoomLayoutRegistry.layoutRegistry.put(DebugVaultLayout.ID, DebugVaultLayout::new);
+        VaultRoomLayoutRegistry.layoutRegistry.put(DenseDiamondRoomLayout.ID, DenseDiamondRoomLayout::new);
+        VaultRoomLayoutRegistry.layoutRegistry.put(DenseSquareRoomLayout.ID, DenseSquareRoomLayout::new);
+        VaultRoomLayoutRegistry.layoutRegistry.put(EmptyVaultLayout.ID, EmptyVaultLayout::new);
 
     }
 
@@ -49,7 +49,7 @@ public class VaultRoomLayoutRegistry {
     public static CompoundNBT serialize(final VaultRoomLayoutGenerator roomLayout) {
         final CompoundNBT layoutTag = new CompoundNBT();
         layoutTag.putString("Id", roomLayout.getId().toString());
-        layoutTag.put("Data", (INBT) roomLayout.serialize());
+        layoutTag.put("Data", roomLayout.serialize());
         return layoutTag;
     }
 

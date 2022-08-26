@@ -45,11 +45,11 @@ public class SetsConfig extends Config {
     }
 
     public List<SetGroup<?>> getAll() {
-        return (List<SetGroup<?>>) Arrays.asList(this.DRAGON, this.RIFT, this.GOLEM, this.ASSASSIN, this.VAMPIRE, this.DRYAD, this.NINJA, this.TREASURE, this.ZOD, this.DIVINITY, this.CARAPACE, this.BLOOD, this.DREAM, this.PORCUPINE);
+        return Arrays.asList(this.DRAGON, this.RIFT, this.GOLEM, this.ASSASSIN, this.VAMPIRE, this.DRYAD, this.NINJA, this.TREASURE, this.ZOD, this.DIVINITY, this.CARAPACE, this.BLOOD, this.DREAM, this.PORCUPINE);
     }
 
     public SetGroup<?> getByName(String name) {
-        return (SetGroup) getAll().stream().filter(group -> group.getParentName().equals(name)).findFirst()
+        return getAll().stream().filter(group -> group.getParentName().equals(name)).findFirst()
                 .orElseThrow(() -> new IllegalStateException("Unknown set with name " + name));
     }
 

@@ -54,7 +54,7 @@ public class BreakableTalent extends PlayerTalent {
         }
         float durabilityDamageMultiplier = 1.0f;
         float preventionChance = 0.0f;
-        final TalentTree talents = PlayerTalentsData.get(player.getLevel()).getTalents((PlayerEntity) player);
+        final TalentTree talents = PlayerTalentsData.get(player.getLevel()).getTalents(player);
         for (final Object talent : talents.getTalents(BreakableTalent.class)) {
             preventionChance += ((BreakableTalent) talent).damagePreventionChance;
             durabilityDamageMultiplier += ((BreakableTalent) talent).damageAsDurabilityMultiplier;
@@ -73,7 +73,7 @@ public class BreakableTalent extends PlayerTalent {
                 }
             }
         }
-        player.getCommandSenderWorld().playSound((PlayerEntity) null, player.getX(), player.getY(), player.getZ(), SoundEvents.IRON_GOLEM_DAMAGE, SoundCategory.MASTER, 0.5f, 1.0f);
+        player.getCommandSenderWorld().playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.IRON_GOLEM_DAMAGE, SoundCategory.MASTER, 0.5f, 1.0f);
         event.setAmount(postArmorAmount);
         if (armorPieces >= 4) {
             event.setAmount(0.0f);

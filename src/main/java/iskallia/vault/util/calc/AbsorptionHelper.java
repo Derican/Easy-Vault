@@ -26,7 +26,7 @@ public class AbsorptionHelper {
         float limit = 12.0f;
         float maxHealthPerc = 0.0f;
         maxHealthPerc += MiscUtils.getTalent(player, ModConfigs.TALENTS.BARRIER).map(TalentNode::getTalent).map(AbsorptionTalent::getIncreasedAbsorptionLimit).orElse(0.0f);
-        if (PlayerSet.isActive(VaultGear.Set.CARAPACE, (LivingEntity) player)) {
+        if (PlayerSet.isActive(VaultGear.Set.CARAPACE, player)) {
             final SetTree sets = PlayerSetsData.get((ServerWorld) player.level).getSets(player);
             for (final SetNode<?> node : sets.getNodes()) {
                 if (!(node.getSet() instanceof CarapaceSet)) {

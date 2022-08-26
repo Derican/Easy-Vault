@@ -8,7 +8,7 @@ import java.util.UUID;
 public class DryadSet extends PlayerSet {
     public static final UUID HEALTH_MODIFIER_ID;
     @Expose
-    private float extraHealth;
+    private final float extraHealth;
 
     public DryadSet(final float extraHealth) {
         super(VaultGear.Set.DRYAD);

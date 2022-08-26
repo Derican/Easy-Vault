@@ -8,11 +8,11 @@ import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.nbt.CompoundNBT;
 
 public class RenamingContainer extends Container {
-    private RenameType type;
-    private CompoundNBT nbt;
+    private final RenameType type;
+    private final CompoundNBT nbt;
 
     public RenamingContainer(final int windowId, final CompoundNBT nbt) {
-        super((ContainerType) ModContainers.RENAMING_CONTAINER, windowId);
+        super(ModContainers.RENAMING_CONTAINER, windowId);
         this.type = RenameType.values()[nbt.getInt("RenameType")];
         this.nbt = nbt.getCompound("Data");
     }

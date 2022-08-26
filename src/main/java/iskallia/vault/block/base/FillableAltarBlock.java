@@ -98,8 +98,8 @@ public abstract class FillableAltarBlock<T extends FillableAltarTileEntity> exte
 
     public static void playFavourInfo(final ServerPlayerEntity sPlayer) {
         final BlockPos pos = sPlayer.blockPosition();
-        sPlayer.level.playSound((PlayerEntity) null, (double) pos.getX(), (double) pos.getY(), (double) pos.getZ(), ModSounds.FAVOUR_UP, SoundCategory.PLAYERS, 0.4f, 0.7f);
-        final ITextComponent msg = (ITextComponent) new StringTextComponent("You gained a favour!").withStyle(TextFormatting.DARK_GREEN).withStyle(TextFormatting.BOLD);
+        sPlayer.level.playSound(null, pos.getX(), pos.getY(), pos.getZ(), ModSounds.FAVOUR_UP, SoundCategory.PLAYERS, 0.4f, 0.7f);
+        final ITextComponent msg = new StringTextComponent("You gained a favour!").withStyle(TextFormatting.DARK_GREEN).withStyle(TextFormatting.BOLD);
         sPlayer.displayClientMessage(msg, true);
     }
 

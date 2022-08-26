@@ -66,11 +66,11 @@ public class VaultAltarTileEntity extends TileEntity implements ITickableTileEnt
     private AltarInfusionRecipe recipe;
     private AltarState altarState;
     private int infusionTimer;
-    private ItemStackHandler itemHandler;
-    private LazyOptional<IItemHandler> handler;
+    private final ItemStackHandler itemHandler;
+    private final LazyOptional<IItemHandler> handler;
 
     public VaultAltarTileEntity() {
-        super((TileEntityType) ModBlocks.VAULT_ALTAR_TILE_ENTITY);
+        super(ModBlocks.VAULT_ALTAR_TILE_ENTITY);
         this.infusionTimer = -666;
         this.itemHandler = this.createHandler();
         this.handler = LazyOptional.of(() -> this.itemHandler);
@@ -151,7 +151,7 @@ public class VaultAltarTileEntity extends TileEntity implements ITickableTileEnt
         }
         final ServerWorld serverWorld = (ServerWorld) this.level;
         PlayerVaultAltarData.get(serverWorld).getAltars(this.owner).forEach(altarPos -> {
-            if (!this.getBlockPos().equals((Object) altarPos)) {
+            if (!this.getBlockPos().equals(altarPos)) {
                 final TileEntity te = this.level.getBlockEntity(altarPos);
                 if (te instanceof VaultAltarTileEntity) {
                     final VaultAltarTileEntity altar = (VaultAltarTileEntity) te;
@@ -162,7 +162,7 @@ public class VaultAltarTileEntity extends TileEntity implements ITickableTileEnt
             }
             return;
         });
-        serverWorld.playSound((PlayerEntity) null, (double) this.getBlockPos().getX(), (double) this.getBlockPos().getY(), (double) this.getBlockPos().getZ(), SoundEvents.BEACON_ACTIVATE, SoundCategory.BLOCKS, 1.0f, 0.5f);
+        serverWorld.playSound(null, this.getBlockPos().getX(), this.getBlockPos().getY(), this.getBlockPos().getZ(), SoundEvents.BEACON_ACTIVATE, SoundCategory.BLOCKS, 1.0f, 0.5f);
         this.infusionTimer = ModConfigs.VAULT_ALTAR.INFUSION_TIME * 20;
         this.altarState = AltarState.INFUSING;
     }
@@ -213,10 +213,10 @@ public class VaultAltarTileEntity extends TileEntity implements ITickableTileEnt
             }
         }
         final List<RequiredItem> idolRequirements = new ArrayList<RequiredItem>();
-        final ItemStack benevolent = new ItemStack((IItemProvider) ModItems.IDOL_BENEVOLENT);
-        final ItemStack malevolence = new ItemStack((IItemProvider) ModItems.IDOL_MALEVOLENCE);
-        final ItemStack omniscient = new ItemStack((IItemProvider) ModItems.IDOL_OMNISCIENT);
-        final ItemStack timekeeper = new ItemStack((IItemProvider) ModItems.IDOL_TIMEKEEPER);
+        final ItemStack benevolent = new ItemStack(ModItems.IDOL_BENEVOLENT);
+        final ItemStack malevolence = new ItemStack(ModItems.IDOL_MALEVOLENCE);
+        final ItemStack omniscient = new ItemStack(ModItems.IDOL_OMNISCIENT);
+        final ItemStack timekeeper = new ItemStack(ModItems.IDOL_TIMEKEEPER);
         ModAttributes.IDOL_TYPE.create(benevolent, PlayerFavourData.VaultGodType.BENEVOLENT);
         ModAttributes.GEAR_STATE.create(benevolent, VaultGear.State.IDENTIFIED);
         ModAttributes.GEAR_MODEL.create(benevolent, 0);
@@ -241,7 +241,7 @@ public class VaultAltarTileEntity extends TileEntity implements ITickableTileEnt
             heldItem.shrink(1);
         }
         this.sendUpdates();
-        world.playSound((PlayerEntity) null, (double) this.getBlockPos().getX(), (double) this.getBlockPos().getY(), (double) this.getBlockPos().getZ(), SoundEvents.END_PORTAL_SPAWN, SoundCategory.BLOCKS, 1.0f, 2.0f);
+        world.playSound(null, this.getBlockPos().getX(), this.getBlockPos().getY(), this.getBlockPos().getZ(), SoundEvents.END_PORTAL_SPAWN, SoundCategory.BLOCKS, 1.0f, 2.0f);
         return ActionResultType.SUCCESS;
     }
 
@@ -250,7 +250,7 @@ public class VaultAltarTileEntity extends TileEntity implements ITickableTileEnt
         this.recipe = null;
         this.infusionTimer = -666;
         if (this.getLevel() != null) {
-            this.getLevel().addFreshEntity((Entity) new ItemEntity(this.getLevel(), this.getBlockPos().getX() + 0.5, this.getBlockPos().getY() + 1.5, this.getBlockPos().getZ() + 0.5, new ItemStack((IItemProvider) ModItems.VAULT_ROCK)));
+            this.getLevel().addFreshEntity(new ItemEntity(this.getLevel(), this.getBlockPos().getX() + 0.5, this.getBlockPos().getY() + 1.5, this.getBlockPos().getZ() + 0.5, new ItemStack(ModItems.VAULT_ROCK)));
         }
         this.sendUpdates();
         return ActionResultType.SUCCESS;
@@ -261,7 +261,7 @@ public class VaultAltarTileEntity extends TileEntity implements ITickableTileEnt
         this.recipe.revertCache();
         this.recipe.setPogInfused(false);
         if (this.level != null) {
-            this.level.playSound((PlayerEntity) null, (double) this.getBlockPos().getX(), (double) this.getBlockPos().getY(), (double) this.getBlockPos().getZ(), SoundEvents.WITHER_DEATH, SoundCategory.BLOCKS, 0.7f, 1.5f);
+            this.level.playSound(null, this.getBlockPos().getX(), this.getBlockPos().getY(), this.getBlockPos().getZ(), SoundEvents.WITHER_DEATH, SoundCategory.BLOCKS, 0.7f, 1.5f);
         }
         this.sendUpdates();
         return ActionResultType.SUCCESS;
@@ -269,16 +269,16 @@ public class VaultAltarTileEntity extends TileEntity implements ITickableTileEnt
 
     private void completeInfusion(final World world) {
         final ServerWorld serverWorld = (ServerWorld) world;
-        final ItemStack crystal = new ItemStack((IItemProvider) ModItems.VAULT_CRYSTAL);
+        final ItemStack crystal = new ItemStack(ModItems.VAULT_CRYSTAL);
         final CrystalData data = new CrystalData(crystal);
         if (this.recipe.isPogInfused()) {
             data.setType(CrystalData.Type.FINAL_LOBBY);
-            serverWorld.playSound((PlayerEntity) null, (double) this.getBlockPos().getX(), (double) this.getBlockPos().getY(), (double) this.getBlockPos().getZ(), SoundEvents.END_PORTAL_SPAWN, SoundCategory.BLOCKS, 1.0f, 0.8f);
+            serverWorld.playSound(null, this.getBlockPos().getX(), this.getBlockPos().getY(), this.getBlockPos().getZ(), SoundEvents.END_PORTAL_SPAWN, SoundCategory.BLOCKS, 1.0f, 0.8f);
         } else {
             final int level = PlayerVaultStatsData.get((ServerWorld) world).getVaultStats(this.owner).getVaultLevel();
             data.setType(ModConfigs.LOOT_TABLES.getForLevel(level).CRYSTAL_TYPE.getRandom(world.getRandom()));
         }
-        world.addFreshEntity((Entity) new ItemEntity(world, this.getBlockPos().getX() + 0.5, this.worldPosition.getY() + 1.5, this.worldPosition.getZ() + 0.5, crystal));
+        world.addFreshEntity(new ItemEntity(world, this.getBlockPos().getX() + 0.5, this.worldPosition.getY() + 1.5, this.worldPosition.getZ() + 0.5, crystal));
         PlayerStatsData.get((ServerWorld) world).onCrystalCrafted(this.owner, this.recipe.getRequiredItems(), data.getType());
         this.resetAltar((ServerWorld) world);
         this.playCompletionEffects(serverWorld);
@@ -287,7 +287,7 @@ public class VaultAltarTileEntity extends TileEntity implements ITickableTileEnt
     private void playInfusionEffects(final ServerWorld world) {
         final float speed = this.infusionTimer * 0.01f - 0.5f;
         if (speed > 0.0f) {
-            world.sendParticles((IParticleData) ParticleTypes.PORTAL, this.worldPosition.getX() + 0.5, this.getBlockPos().getY() + 1.6, this.getBlockPos().getZ() + 0.5, 3, 0.0, 0.0, 0.0, (double) speed);
+            world.sendParticles((IParticleData) ParticleTypes.PORTAL, this.worldPosition.getX() + 0.5, this.getBlockPos().getY() + 1.6, this.getBlockPos().getZ() + 0.5, 3, 0.0, 0.0, 0.0, speed);
         }
     }
 
@@ -298,9 +298,9 @@ public class VaultAltarTileEntity extends TileEntity implements ITickableTileEnt
             if (serverWorld.random.nextFloat() < 0.5f) {
                 offset *= -1.0f;
             }
-            serverWorld.sendParticles((IParticleData) particleData, this.worldPosition.getX() + 0.5, this.worldPosition.getY() + 1.6, this.worldPosition.getZ() + 0.5, 10, (double) offset, (double) offset, (double) offset, 1.0);
+            serverWorld.sendParticles((IParticleData) particleData, this.worldPosition.getX() + 0.5, this.worldPosition.getY() + 1.6, this.worldPosition.getZ() + 0.5, 10, offset, offset, offset, 1.0);
         }
-        serverWorld.playSound((PlayerEntity) null, (double) this.getBlockPos().getX(), (double) this.getBlockPos().getY(), (double) this.getBlockPos().getZ(), SoundEvents.PLAYER_LEVELUP, SoundCategory.BLOCKS, 0.7f, 1.5f);
+        serverWorld.playSound(null, this.getBlockPos().getX(), this.getBlockPos().getY(), this.getBlockPos().getZ(), SoundEvents.PLAYER_LEVELUP, SoundCategory.BLOCKS, 0.7f, 1.5f);
     }
 
     private void resetAltar(final ServerWorld world) {
@@ -366,7 +366,7 @@ public class VaultAltarTileEntity extends TileEntity implements ITickableTileEnt
     }
 
     private boolean isItemInRange(final BlockPos itemPos) {
-        return itemPos.distSqr((Vector3i) this.getBlockPos()) <= 4.0;
+        return itemPos.distSqr(this.getBlockPos()) <= 4.0;
     }
 
     public AxisAlignedBB getAABB(final double range, final double x, final double y, final double z) {
@@ -381,7 +381,7 @@ public class VaultAltarTileEntity extends TileEntity implements ITickableTileEnt
             compound.putUUID("Owner", this.owner);
         }
         if (this.recipe != null) {
-            compound.put("Recipe", (INBT) this.recipe.serialize());
+            compound.put("Recipe", this.recipe.serialize());
         }
         compound.putInt("InfusionTimer", this.infusionTimer);
         return super.save(compound);
@@ -419,7 +419,7 @@ public class VaultAltarTileEntity extends TileEntity implements ITickableTileEnt
             tag.putUUID("Owner", this.owner);
         }
         if (this.recipe != null) {
-            tag.put("Recipe", (INBT) this.recipe.serialize());
+            tag.put("Recipe", this.recipe.serialize());
         }
         tag.putInt("InfusionTimer", this.infusionTimer);
         return tag;
@@ -494,7 +494,7 @@ public class VaultAltarTileEntity extends TileEntity implements ITickableTileEnt
     @Nonnull
     public <T> LazyOptional<T> getCapability(@Nonnull final Capability<T> cap, @Nullable final Direction side) {
         if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
-            return (LazyOptional<T>) this.handler.cast();
+            return this.handler.cast();
         }
         return (LazyOptional<T>) super.getCapability((Capability) cap, side);
     }
@@ -503,6 +503,6 @@ public class VaultAltarTileEntity extends TileEntity implements ITickableTileEnt
         IDLE,
         ACCEPTING,
         COMPLETE,
-        INFUSING;
+        INFUSING
     }
 }

@@ -59,7 +59,7 @@ public interface PlayerSensitiveContainer {
                         if (slot8 != null && canMergeSlotItemStack(player, slot8, itemstack4, true) && slot8.mayPlace(itemstack4) && (this.getDragMode() == 2 || itemstack4.getCount() >= this.getDragSlots().size()) && thisContainer.canDragTo(slot8)) {
                             final ItemStack itemstack5 = itemstack3.copy();
                             final int j3 = slot8.hasItem() ? slot8.getItem().getCount() : 0;
-                            Container.getQuickCraftSlotCount((Set) this.getDragSlots(), this.getDragMode(), itemstack5, j3);
+                            Container.getQuickCraftSlotCount(this.getDragSlots(), this.getDragMode(), itemstack5, j3);
                             final int k2 = Math.min(itemstack5.getMaxStackSize(), slot8.getMaxStackSize(itemstack5));
                             if (itemstack5.getCount() > k2) {
                                 itemstack5.setCount(k2);

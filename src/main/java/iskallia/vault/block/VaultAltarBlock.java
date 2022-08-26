@@ -49,16 +49,16 @@ public class VaultAltarBlock extends Block {
 
     public VaultAltarBlock() {
         super(AbstractBlock.Properties.of(Material.STONE, MaterialColor.DIAMOND).requiresCorrectToolForDrops().strength(3.0f, 3600000.0f).noOcclusion());
-        this.registerDefaultState((BlockState) ((BlockState) this.stateDefinition.any()).setValue((Property) VaultAltarBlock.POWERED, (Comparable) Boolean.FALSE));
+        this.registerDefaultState(this.stateDefinition.any().setValue((Property) VaultAltarBlock.POWERED, (Comparable) Boolean.FALSE));
     }
 
     @Nullable
     public BlockState getStateForPlacement(final BlockItemUseContext context) {
-        return (BlockState) this.defaultBlockState().setValue((Property) VaultAltarBlock.POWERED, (Comparable) Boolean.FALSE);
+        return this.defaultBlockState().setValue((Property) VaultAltarBlock.POWERED, (Comparable) Boolean.FALSE);
     }
 
     protected void createBlockStateDefinition(final StateContainer.Builder<Block, BlockState> builder) {
-        builder.add(new Property[]{(Property) VaultAltarBlock.POWERED});
+        builder.add(VaultAltarBlock.POWERED);
     }
 
     public void animateTick(@Nonnull final BlockState state, @Nonnull final World world, @Nonnull final BlockPos pos, @Nonnull final Random rand) {
@@ -79,14 +79,14 @@ public class VaultAltarBlock extends Block {
             final double d5 = (rand.nextFloat() - 0.5) * 0.5;
             double d6 = (rand.nextFloat() - 0.5) * 0.5;
             final int j = rand.nextInt(2) * 2 - 1;
-            if (!world.getBlockState(pos.west()).is((Block) this) && !world.getBlockState(pos.east()).is((Block) this)) {
+            if (!world.getBlockState(pos.west()).is(this) && !world.getBlockState(pos.east()).is(this)) {
                 d0 = pos.getX() + 0.5 + 0.25 * j;
                 d4 = rand.nextFloat() * 2.0f * j;
             } else {
                 d3 = pos.getZ() + 0.5 + 0.25 * j;
                 d6 = rand.nextFloat() * 2.0f * j;
             }
-            world.addParticle((IParticleData) ParticleTypes.WITCH, d0, d2, d3, d4, d5, d6);
+            world.addParticle(ParticleTypes.WITCH, d0, d2, d3, d4, d5, d6);
         }
     }
 
@@ -138,7 +138,7 @@ public class VaultAltarBlock extends Block {
                 altar.onAltarPowered();
             }
         }
-        worldIn.setBlock(pos, (BlockState) state.setValue((Property) VaultAltarBlock.POWERED, (Comparable) powered), 3);
+        worldIn.setBlock(pos, state.setValue((Property) VaultAltarBlock.POWERED, (Comparable) powered), 3);
     }
 
     public boolean canConnectRedstone(final BlockState state, final IBlockReader world, final BlockPos pos, @Nullable final Direction side) {
@@ -163,11 +163,11 @@ public class VaultAltarBlock extends Block {
             return;
         }
         if (altar.getAltarState() == VaultAltarTileEntity.AltarState.ACCEPTING || altar.getAltarState() == VaultAltarTileEntity.AltarState.COMPLETE) {
-            final ItemEntity entity = new ItemEntity(world, pos.getX() + 0.5, pos.getY() + 1.2, pos.getZ() + 0.5, new ItemStack((IItemProvider) ModItems.VAULT_ROCK));
-            world.addFreshEntity((Entity) entity);
+            final ItemEntity entity = new ItemEntity(world, pos.getX() + 0.5, pos.getY() + 1.2, pos.getZ() + 0.5, new ItemStack(ModItems.VAULT_ROCK));
+            world.addFreshEntity(entity);
         }
-        final ItemEntity entity = new ItemEntity(world, pos.getX() + 0.5, pos.getY() + 1.2, pos.getZ() + 0.5, new ItemStack((IItemProvider) ModBlocks.VAULT_ALTAR));
-        world.addFreshEntity((Entity) entity);
+        final ItemEntity entity = new ItemEntity(world, pos.getX() + 0.5, pos.getY() + 1.2, pos.getZ() + 0.5, new ItemStack(ModBlocks.VAULT_ALTAR));
+        world.addFreshEntity(entity);
         PlayerVaultAltarData.get((ServerWorld) world).removeAltar(altar.getOwner(), pos);
         super.onRemove(state, world, pos, newState, isMoving);
     }

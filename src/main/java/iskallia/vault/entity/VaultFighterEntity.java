@@ -58,8 +58,8 @@ public class VaultFighterEntity extends FighterEntity {
                 final String name = NameProviderPublic.getRandomName();
                 final String star = String.valueOf('\u2726');
                 final int count = Math.max(ModEntities.VAULT_FIGHTER_TYPES.indexOf(this.getType()), 0);
-                final IFormattableTextComponent customName = new StringTextComponent("").append((ITextComponent) new StringTextComponent(Strings.repeat(star, count)).withStyle(TextFormatting.GOLD)).append(" ").append((ITextComponent) new StringTextComponent(name));
-                this.setCustomName((ITextComponent) customName);
+                final IFormattableTextComponent customName = new StringTextComponent("").append(new StringTextComponent(Strings.repeat(star, count)).withStyle(TextFormatting.GOLD)).append(" ").append(new StringTextComponent(name));
+                this.setCustomName(customName);
                 this.getPersistentData().putString("VaultPlayerName", name);
             }
         }

@@ -58,14 +58,14 @@ public class VaultRaidOverlay {
         RenderSystem.disableDepthTest();
         matrixStack.pushPose();
         if (ClientVaultRaidData.showTimer()) {
-            matrixStack.translate((double) (barWidth + 30), (double) (bottom - 25), 0.0);
+            matrixStack.translate(barWidth + 30, bottom - 25, 0.0);
             if (remainingTicks < 600) {
                 matrixStack.mulPose(Vector3f.ZP.rotationDegrees(remainingTicks * 10.0f % 360.0f));
             } else {
                 matrixStack.mulPose(Vector3f.ZP.rotationDegrees((float) (remainingTicks % 360)));
             }
-            matrixStack.translate((double) (-hourglassWidth / 2.0f), (double) (-hourglassHeight / 2.0f), 0.0);
-            ScreenDrawHelper.drawQuad(buf -> ScreenDrawHelper.rect((IVertexBuilder) buf, matrixStack).dim((float) hourglassWidth, (float) hourglassHeight).texVanilla(1.0f, 36.0f, (float) hourglassWidth, (float) hourglassHeight).draw());
+            matrixStack.translate(-hourglassWidth / 2.0f, -hourglassHeight / 2.0f, 0.0);
+            ScreenDrawHelper.drawQuad(buf -> ScreenDrawHelper.rect(buf, matrixStack).dim((float) hourglassWidth, (float) hourglassHeight).texVanilla(1.0f, 36.0f, (float) hourglassWidth, (float) hourglassHeight).draw());
         }
         matrixStack.popPose();
         if (type == VaultOverlayMessage.OverlayType.VAULT) {
@@ -84,7 +84,7 @@ public class VaultRaidOverlay {
         final int modifierSize = 24;
         final int modifierGap = 2;
         ListHelper.traverseOccurrences(modifiers, (index, modifier, occurrence) -> {
-            if (!(!(modifier instanceof TexturedVaultModifier))) {
+            if (modifier instanceof TexturedVaultModifier) {
                 minecraft.getTextureManager().bind(((TexturedVaultModifier) modifier).getIcon());
                 final int x = index % 4;
                 final int y = index / 4;

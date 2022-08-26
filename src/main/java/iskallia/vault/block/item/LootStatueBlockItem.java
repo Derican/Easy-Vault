@@ -40,7 +40,7 @@ public class LootStatueBlockItem extends BlockItem {
         if (nbt != null && nbt.contains("BlockEntityTag", 10)) {
             this.addStatueInformation(nbt.getCompound("BlockEntityTag"), toolTip);
         }
-        super.appendHoverText(stack, worldIn, (List) toolTip, flagIn);
+        super.appendHoverText(stack, worldIn, toolTip, flagIn);
     }
 
     public void inventoryTick(final ItemStack stack, final World world, final Entity entity, final int itemSlot, final boolean isSelected) {
@@ -58,17 +58,17 @@ public class LootStatueBlockItem extends BlockItem {
     @OnlyIn(Dist.CLIENT)
     protected void addStatueInformation(final CompoundNBT dataTag, final List<ITextComponent> toolTip) {
         final String nickname = dataTag.getString("PlayerNickname");
-        toolTip.add((ITextComponent) new StringTextComponent("Player: "));
-        toolTip.add((ITextComponent) new StringTextComponent("- ").append((ITextComponent) new StringTextComponent(nickname).withStyle(TextFormatting.GOLD)));
+        toolTip.add(new StringTextComponent("Player: "));
+        toolTip.add(new StringTextComponent("- ").append(new StringTextComponent(nickname).withStyle(TextFormatting.GOLD)));
         if (this.type.dropsItems()) {
-            ITextComponent itemDescriptor = (ITextComponent) new StringTextComponent("NOT SELECTED").withStyle(TextFormatting.RED);
+            ITextComponent itemDescriptor = new StringTextComponent("NOT SELECTED").withStyle(TextFormatting.RED);
             if (dataTag.contains("LootItem")) {
                 final ItemStack lootItem = ItemStack.of(dataTag.getCompound("LootItem"));
-                itemDescriptor = (ITextComponent) new StringTextComponent(lootItem.getHoverName().getString()).withStyle(TextFormatting.GREEN);
+                itemDescriptor = new StringTextComponent(lootItem.getHoverName().getString()).withStyle(TextFormatting.GREEN);
             }
             toolTip.add(StringTextComponent.EMPTY);
-            toolTip.add((ITextComponent) new StringTextComponent("Item: ").withStyle(TextFormatting.WHITE));
-            toolTip.add((ITextComponent) new StringTextComponent("- ").append(itemDescriptor));
+            toolTip.add(new StringTextComponent("Item: ").withStyle(TextFormatting.WHITE));
+            toolTip.add(new StringTextComponent("- ").append(itemDescriptor));
         }
     }
 
@@ -83,30 +83,30 @@ public class LootStatueBlockItem extends BlockItem {
         ItemStack itemStack = ItemStack.EMPTY;
         switch (type) {
             case GIFT_NORMAL: {
-                itemStack = new ItemStack((IItemProvider) ModBlocks.GIFT_NORMAL_STATUE);
+                itemStack = new ItemStack(ModBlocks.GIFT_NORMAL_STATUE);
                 break;
             }
             case GIFT_MEGA: {
-                itemStack = new ItemStack((IItemProvider) ModBlocks.GIFT_MEGA_STATUE);
+                itemStack = new ItemStack(ModBlocks.GIFT_MEGA_STATUE);
                 break;
             }
             case VAULT_BOSS: {
-                itemStack = new ItemStack((IItemProvider) ModBlocks.VAULT_PLAYER_LOOT_STATUE);
+                itemStack = new ItemStack(ModBlocks.VAULT_PLAYER_LOOT_STATUE);
                 break;
             }
             case OMEGA: {
-                itemStack = new ItemStack((IItemProvider) ModBlocks.OMEGA_STATUE);
+                itemStack = new ItemStack(ModBlocks.OMEGA_STATUE);
                 break;
             }
             case OMEGA_VARIANT: {
-                itemStack = new ItemStack((IItemProvider) ModBlocks.OMEGA_STATUE_VARIANT);
+                itemStack = new ItemStack(ModBlocks.OMEGA_STATUE_VARIANT);
                 break;
             }
         }
         final CompoundNBT nbt = new CompoundNBT();
         initRandomStatue(nbt, type, nickname);
         final CompoundNBT stackNBT = new CompoundNBT();
-        stackNBT.put("BlockEntityTag", (INBT) nbt);
+        stackNBT.put("BlockEntityTag", nbt);
         itemStack.setTag(stackNBT);
         return itemStack;
     }
@@ -118,7 +118,7 @@ public class LootStatueBlockItem extends BlockItem {
             out.putInt("Interval", ModConfigs.STATUE_LOOT.getInterval(type));
             if (!type.isOmega()) {
                 final ItemStack loot = ModConfigs.STATUE_LOOT.randomLoot(type);
-                out.put("LootItem", (INBT) loot.serializeNBT());
+                out.put("LootItem", loot.serializeNBT());
             }
             final int decay = ModConfigs.STATUE_LOOT.getDecay(type);
             out.putInt("ItemsRemaining", decay);

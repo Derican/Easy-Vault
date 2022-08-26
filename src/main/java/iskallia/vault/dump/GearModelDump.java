@@ -27,11 +27,11 @@ public class GearModelDump extends JsonDump {
         putSpecialModels(specialChestModels, ModModels.SpecialGearModel.CHESTPLATE_REGISTRY);
         putSpecialModels(specialLegsModels, ModModels.SpecialGearModel.LEGGINGS_REGISTRY);
         putSpecialModels(specialFeetModels, ModModels.SpecialGearModel.BOOTS_REGISTRY);
-        jsonObject.add("regularModels", (JsonElement) regularModels);
-        jsonObject.add("specialHeadModels", (JsonElement) specialHeadModels);
-        jsonObject.add("specialChestModels", (JsonElement) specialChestModels);
-        jsonObject.add("specialLegsModels", (JsonElement) specialLegsModels);
-        jsonObject.add("specialFeetModels", (JsonElement) specialFeetModels);
+        jsonObject.add("regularModels", regularModels);
+        jsonObject.add("specialHeadModels", specialHeadModels);
+        jsonObject.add("specialChestModels", specialChestModels);
+        jsonObject.add("specialLegsModels", specialLegsModels);
+        jsonObject.add("specialFeetModels", specialFeetModels);
         return jsonObject;
     }
 
@@ -42,10 +42,10 @@ public class GearModelDump extends JsonDump {
             final String modelId = model.getDisplayName().toLowerCase().replace(" ", "_");
             final JsonObject modelJson = new JsonObject();
             modelJson.addProperty("modelId", modelId);
-            modelJson.addProperty("modelIndex", (Number) modelIndex);
+            modelJson.addProperty("modelIndex", modelIndex);
             modelJson.addProperty("name", model.getDisplayName());
             modelJson.addProperty("scrappy", Boolean.valueOf(isScrappy));
-            array.add((JsonElement) modelJson);
+            array.add(modelJson);
         }
     }
 
@@ -56,9 +56,9 @@ public class GearModelDump extends JsonDump {
             final String modelId = model.getDisplayName().toLowerCase().replace(" ", "_");
             final JsonObject modelJson = new JsonObject();
             modelJson.addProperty("modelId", modelId);
-            modelJson.addProperty("modelIndex", (Number) modelIndex);
+            modelJson.addProperty("modelIndex", modelIndex);
             modelJson.addProperty("name", model.getDisplayName());
-            array.add((JsonElement) modelJson);
+            array.add(modelJson);
         }
     }
 }

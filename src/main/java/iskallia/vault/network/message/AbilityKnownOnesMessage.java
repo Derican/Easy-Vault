@@ -32,7 +32,7 @@ public class AbilityKnownOnesMessage {
         final CompoundNBT nbt = new CompoundNBT();
         final ListNBT abilities = new ListNBT();
         message.learnedAbilities.stream().map(AbilityNode::serializeNBT).forEach(abilities::add);
-        nbt.put("LearnedAbilities", (INBT) abilities);
+        nbt.put("LearnedAbilities", abilities);
         buffer.writeNbt(nbt);
     }
 

@@ -62,7 +62,7 @@ public class HourglassRenderer extends TileEntityRenderer<HourglassTileEntity>
     }
     
     private static void shiftY(final float y) {
-        HourglassRenderer.SAND_BOXES = HourglassRenderer.SAND_BOXES.stream().map(box -> box.move(0.0, (double)y, 0.0)).collect(Collectors.toList());
+        HourglassRenderer.SAND_BOXES = HourglassRenderer.SAND_BOXES.stream().map(box -> box.move(0.0, y, 0.0)).collect(Collectors.toList());
     }
     
     private static AxisAlignedBB makeBox(final double x, final double y, final double z, final double width, final double height, final double depth) {

@@ -39,16 +39,16 @@ public class VoidOrbItem extends BasicItem {
     @Override
     public void appendHoverText(final ItemStack stack, @Nullable final World worldIn, final List<ITextComponent> tooltip, final ITooltipFlag flagIn) {
         tooltip.add(StringTextComponent.EMPTY);
-        tooltip.add((ITextComponent) new StringTextComponent("Removes a modifier at random from").withStyle(TextFormatting.GRAY));
-        tooltip.add((ITextComponent) new StringTextComponent("a vault gear item when combined").withStyle(TextFormatting.GRAY));
-        tooltip.add((ITextComponent) new StringTextComponent("in an anvil.").withStyle(TextFormatting.GRAY));
+        tooltip.add(new StringTextComponent("Removes a modifier at random from").withStyle(TextFormatting.GRAY));
+        tooltip.add(new StringTextComponent("a vault gear item when combined").withStyle(TextFormatting.GRAY));
+        tooltip.add(new StringTextComponent("in an anvil.").withStyle(TextFormatting.GRAY));
         final Pair<EquipmentSlotType, VAttribute<?, ?>> gearModifier = getPredefinedRemoval(stack);
         if (gearModifier != null) {
-            final String slotName = StringUtils.capitalize(((EquipmentSlotType) gearModifier.getFirst()).getName());
-            final ITextComponent attributeTxt = VaultGearHelper.getDisplayName((VAttribute<?, ?>) gearModifier.getSecond());
+            final String slotName = StringUtils.capitalize(gearModifier.getFirst().getName());
+            final ITextComponent attributeTxt = VaultGearHelper.getDisplayName(gearModifier.getSecond());
             tooltip.add(StringTextComponent.EMPTY);
-            tooltip.add((ITextComponent) new StringTextComponent("Only for: ").withStyle(TextFormatting.GRAY).append((ITextComponent) new StringTextComponent(slotName).withStyle(TextFormatting.AQUA)));
-            tooltip.add((ITextComponent) new StringTextComponent("Removes: ").withStyle(TextFormatting.GRAY).append(attributeTxt));
+            tooltip.add(new StringTextComponent("Only for: ").withStyle(TextFormatting.GRAY).append(new StringTextComponent(slotName).withStyle(TextFormatting.AQUA)));
+            tooltip.add(new StringTextComponent("Removes: ").withStyle(TextFormatting.GRAY).append(attributeTxt));
         }
     }
 

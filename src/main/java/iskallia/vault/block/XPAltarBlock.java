@@ -21,12 +21,12 @@ import javax.annotation.Nonnull;
 public class XPAltarBlock extends FillableAltarBlock<XpAltarTileEntity> {
     @Override
     public XpAltarTileEntity createTileEntity(final BlockState state, final IBlockReader world) {
-        return (XpAltarTileEntity) ModBlocks.XP_ALTAR_TILE_ENTITY.create();
+        return ModBlocks.XP_ALTAR_TILE_ENTITY.create();
     }
 
     @Override
     public IParticleData getFlameParticle() {
-        return (IParticleData) ModParticles.BLUE_FLAME.get();
+        return ModParticles.BLUE_FLAME.get();
     }
 
     @Override
@@ -58,10 +58,10 @@ public class XPAltarBlock extends FillableAltarBlock<XpAltarTileEntity> {
         player.setExperienceLevels(player.experienceLevel - levelDrain);
         tileEntity.makeProgress(player, levelDrain, sPlayer -> {
             final PlayerFavourData data = PlayerFavourData.get(sPlayer.getLevel());
-            if (XPAltarBlock.rand.nextFloat() < FillableAltarBlock.getFavourChance((PlayerEntity) sPlayer, PlayerFavourData.VaultGodType.OMNISCIENT)) {
+            if (XPAltarBlock.rand.nextFloat() < FillableAltarBlock.getFavourChance(sPlayer, PlayerFavourData.VaultGodType.OMNISCIENT)) {
                 final PlayerFavourData.VaultGodType vg = this.getAssociatedVaultGod();
-                if (data.addFavour((PlayerEntity) sPlayer, vg, 1)) {
-                    data.addFavour((PlayerEntity) sPlayer, vg.getOther(XPAltarBlock.rand), -1);
+                if (data.addFavour(sPlayer, vg, 1)) {
+                    data.addFavour(sPlayer, vg.getOther(XPAltarBlock.rand), -1);
                     FillableAltarBlock.playFavourInfo(sPlayer);
                 }
             }

@@ -34,7 +34,7 @@ public class MysteryEggRecipe extends SpecialRecipe {
     }
 
     public ItemStack assemble(final CraftingInventory inv) {
-        return new ItemStack((IItemProvider) ModItems.MYSTERY_EGG, 4);
+        return new ItemStack(ModItems.MYSTERY_EGG, 4);
     }
 
     public boolean canCraftInDimensions(final int width, final int height) {
@@ -42,6 +42,6 @@ public class MysteryEggRecipe extends SpecialRecipe {
     }
 
     public IRecipeSerializer<?> getSerializer() {
-        return (IRecipeSerializer<?>) ModRecipes.Serializer.MYSTERY_EGG_RECIPE;
+        return ModRecipes.Serializer.MYSTERY_EGG_RECIPE;
     }
 }

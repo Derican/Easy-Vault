@@ -86,14 +86,14 @@ public abstract class ComponentDialog extends AbstractGui {
         this.blit(matrixStack, this.bounds.x, this.bounds.y + this.bounds.height - 5, 0, 52, 5, 5);
         this.blit(matrixStack, this.bounds.x + this.bounds.width - 5, this.bounds.y + this.bounds.height - 5, 8, 52, 5, 5);
         matrixStack.pushPose();
-        matrixStack.translate((double) (this.bounds.x + 5), (double) this.bounds.y, 0.0);
+        matrixStack.translate(this.bounds.x + 5, this.bounds.y, 0.0);
         matrixStack.scale((float) (this.bounds.width - 10), 1.0f, 1.0f);
         this.blit(matrixStack, 0, 0, 6, 44, 1, 5);
         matrixStack.translate(0.0, this.bounds.getHeight() - 5.0, 0.0);
         this.blit(matrixStack, 0, 0, 6, 52, 1, 5);
         matrixStack.popPose();
         matrixStack.pushPose();
-        matrixStack.translate((double) this.bounds.x, (double) (this.bounds.y + 5), 0.0);
+        matrixStack.translate(this.bounds.x, this.bounds.y + 5, 0.0);
         matrixStack.scale(1.0f, (float) (this.bounds.height - 10), 1.0f);
         this.blit(matrixStack, 0, 0, 0, 50, 5, 1);
         matrixStack.translate(this.bounds.getWidth() - 5.0, 0.0, 0.0);

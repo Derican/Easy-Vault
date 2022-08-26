@@ -47,6 +47,6 @@ public class BasicScavengerItem extends BasicTooltipItem {
     }
 
     static {
-        SCAVENGER_ITEM_HINT = (ITextComponent) new TranslationTextComponent("tooltip.the_vault.scavenger_item").withStyle(TextFormatting.GOLD);
+        SCAVENGER_ITEM_HINT = new TranslationTextComponent("tooltip.the_vault.scavenger_item").withStyle(TextFormatting.GOLD);
     }
 }

@@ -30,8 +30,8 @@ public class BlueBlazeEntity extends BlazeEntity implements VaultBoss {
     public RegenAfterAWhile<BlueBlazeEntity> regenAfterAWhile;
 
     public BlueBlazeEntity(final EntityType<? extends BlazeEntity> type, final World world) {
-        super((EntityType) type, world);
-        this.teleportTask = new TeleportRandomly<BlueBlazeEntity>(this, (TeleportRandomly.Condition<BlueBlazeEntity>[]) new TeleportRandomly.Condition[]{(entity, source, amount) -> {
+        super(type, world);
+        this.teleportTask = new TeleportRandomly<BlueBlazeEntity>(this, new TeleportRandomly.Condition[]{(entity, source, amount) -> {
             if (!(source.getEntity() instanceof LivingEntity)) {
                 return 0.2;
             } else {
@@ -47,9 +47,9 @@ public class BlueBlazeEntity extends BlazeEntity implements VaultBoss {
 
     protected void registerGoals() {
         super.registerGoals();
-        this.goalSelector.addGoal(1, (Goal) TeleportGoal.builder(this).start(entity -> entity.getTarget() != null && entity.tickCount % 60 == 0).to(entity -> entity.getTarget().position().add((entity.random.nextDouble() - 0.5) * 8.0, (double) (entity.random.nextInt(16) - 8), (entity.random.nextDouble() - 0.5) * 8.0)).then(entity -> entity.playSound(ModSounds.BOSS_TP_SFX, 1.0f, 1.0f)).build());
-        this.goalSelector.addGoal(1, (Goal) new ThrowProjectilesGoal(this, 96, 10, FighterEntity.SNOWBALLS));
-        this.targetSelector.addGoal(1, (Goal) new NearestAttackableTargetGoal((MobEntity) this, (Class) PlayerEntity.class, false));
+        this.goalSelector.addGoal(1, TeleportGoal.builder(this).start(entity -> entity.getTarget() != null && entity.tickCount % 60 == 0).to(entity -> entity.getTarget().position().add((entity.random.nextDouble() - 0.5) * 8.0, entity.random.nextInt(16) - 8, (entity.random.nextDouble() - 0.5) * 8.0)).then(entity -> entity.playSound(ModSounds.BOSS_TP_SFX, 1.0f, 1.0f)).build());
+        this.goalSelector.addGoal(1, new ThrowProjectilesGoal(this, 96, 10, FighterEntity.SNOWBALLS));
+        this.targetSelector.addGoal(1, new NearestAttackableTargetGoal(this, PlayerEntity.class, false));
         this.getAttribute(Attributes.FOLLOW_RANGE).setBaseValue(100.0);
     }
 

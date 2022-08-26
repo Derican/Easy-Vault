@@ -31,7 +31,7 @@ public class TalentTree {
     public TalentTree(final UUID uuid) {
         this.nodes = new ArrayList<TalentNode<?>>();
         this.uuid = uuid;
-        this.add(null, (TalentNode<?>[]) ModConfigs.TALENTS.getAll().stream().map(talentGroup -> new TalentNode(talentGroup, 0)).toArray(TalentNode[]::new));
+        this.add(null, ModConfigs.TALENTS.getAll().stream().map(talentGroup -> new TalentNode(talentGroup, 0)).toArray(TalentNode[]::new));
     }
 
     public List<TalentNode<?>> getNodes() {
@@ -89,7 +89,7 @@ public class TalentTree {
         for (final TalentNode<?> node : nodes) {
             NetcodeUtils.runIfPresent(server, this.uuid, player -> {
                 if (node.isLearned()) {
-                    node.getTalent().onAdded((PlayerEntity) player);
+                    node.getTalent().onAdded(player);
                 }
                 return;
             });
@@ -99,7 +99,7 @@ public class TalentTree {
     }
 
     public TalentTree tick(final MinecraftServer server) {
-        NetcodeUtils.runIfPresent(server, this.uuid, (ServerPlayerEntity player) -> this.nodes.stream().filter(TalentNode::isLearned).forEach(node -> node.getTalent().tick((PlayerEntity) player)));
+        NetcodeUtils.runIfPresent(server, this.uuid, (ServerPlayerEntity player) -> this.nodes.stream().filter(TalentNode::isLearned).forEach(node -> node.getTalent().tick(player)));
         return this;
     }
 
@@ -107,7 +107,7 @@ public class TalentTree {
         for (final TalentNode<?> node : nodes) {
             NetcodeUtils.runIfPresent(server, this.uuid, player -> {
                 if (node.isLearned()) {
-                    node.getTalent().onRemoved((PlayerEntity) player);
+                    node.getTalent().onRemoved(player);
                 }
                 return;
             });
@@ -129,7 +129,7 @@ public class TalentTree {
         nbt.putInt("version", this.version);
         final ListNBT list = new ListNBT();
         this.nodes.stream().map(TalentNode::serializeNBT).forEach(list::add);
-        nbt.put("Nodes", (INBT) list);
+        nbt.put("Nodes", list);
         return nbt;
     }
 
@@ -153,7 +153,7 @@ public class TalentTree {
             return (group == null) ? null : new TalentNode<>(group, talentLevel);
         }
         int refundedCost = 0;
-        final MinecraftServer srv = (MinecraftServer) LogicalSidedProvider.INSTANCE.get(LogicalSide.SERVER);
+        final MinecraftServer srv = LogicalSidedProvider.INSTANCE.get(LogicalSide.SERVER);
         if (vFrom <= 0 && (talentName.equalsIgnoreCase("Commander") || talentName.equalsIgnoreCase("Ward") || talentName.equalsIgnoreCase("Barbaric") || talentName.equalsIgnoreCase("Frenzy") || talentName.equalsIgnoreCase("Glass Cannon"))) {
             refundedCost += getRefundAmount(talentLevel, new int[]{3, 5, 6, 7, 9});
             talentLevel = 0;

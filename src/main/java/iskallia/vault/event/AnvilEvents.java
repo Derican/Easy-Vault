@@ -88,7 +88,7 @@ public class AnvilEvents {
             final int nextLevel = (currentLevel == bookLevel) ? (currentLevel + 1) : Math.max(currentLevel, bookLevel);
             enchantmentsToApply.put(bookEnchantment, nextLevel);
         }
-        EnchantmentHelper.setEnchantments((Map) enchantmentsToApply, upgradedEquipment);
+        EnchantmentHelper.setEnchantments(enchantmentsToApply, upgradedEquipment);
         if (upgradedEquipment.equals(equipment, true)) {
             event.setCanceled(true);
         } else {
@@ -200,7 +200,7 @@ public class AnvilEvents {
         }
         if (event.getLeft().getItem() instanceof VaultCrystalItem && event.getRight().getItem() instanceof VaultRuneItem) {
             final ServerPlayerEntity sPlayer = (ServerPlayerEntity) event.getPlayer();
-            final int level = PlayerVaultStatsData.get(sPlayer.getLevel()).getVaultStats((PlayerEntity) sPlayer).getVaultLevel();
+            final int level = PlayerVaultStatsData.get(sPlayer.getLevel()).getVaultStats(sPlayer).getVaultLevel();
             final int minLevel = ModConfigs.VAULT_RUNE.getMinimumLevel(event.getRight().getItem()).orElse(0);
             if (level < minLevel) {
                 return;
@@ -233,7 +233,7 @@ public class AnvilEvents {
             return;
         }
         final ItemStack catalyst = event.getLeft().copy();
-        final ItemStack inhibitor = new ItemStack((IItemProvider) ModItems.VAULT_INHIBITOR);
+        final ItemStack inhibitor = new ItemStack(ModItems.VAULT_INHIBITOR);
         final List<ModifierRollResult> modifiers = VaultCatalystItem.getModifierRolls(catalyst).orElse(Collections.emptyList());
         VaultInhibitorItem.setModifierRolls(inhibitor, modifiers);
         event.setOutput(inhibitor);
@@ -365,7 +365,7 @@ public class AnvilEvents {
         }
         final ResourceLocation name = event.getLeft().getItem().getRegistryName();
         if (name.equals(ModBlocks.VAULT_ARTIFACT.getRegistryName())) {
-            event.setOutput(new ItemStack((IItemProvider) ModItems.UNIDENTIFIED_ARTIFACT));
+            event.setOutput(new ItemStack(ModItems.UNIDENTIFIED_ARTIFACT));
             event.setMaterialCost(1);
             event.setCost(1);
         }

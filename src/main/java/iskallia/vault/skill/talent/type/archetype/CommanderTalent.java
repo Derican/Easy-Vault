@@ -75,7 +75,7 @@ public class CommanderTalent extends ArchetypeTalent {
         }
         if (entity instanceof ServerPlayerEntity) {
             final ServerPlayerEntity sPlayer = (ServerPlayerEntity) entity;
-            final TalentTree talents = PlayerTalentsData.get(sPlayer.getLevel()).getTalents((PlayerEntity) sPlayer);
+            final TalentTree talents = PlayerTalentsData.get(sPlayer.getLevel()).getTalents(sPlayer);
             for (final TalentNode<?> node : talents.getLearnedNodes(CommanderTalent.class)) {
                 final CommanderTalent talent = (CommanderTalent) node.getTalent();
                 event.setAmount(event.getAmount() * talent.getDamageTakenMultiplier());
@@ -89,8 +89,8 @@ public class CommanderTalent extends ArchetypeTalent {
             return;
         }
         final ServerPlayerEntity sPlayer = (ServerPlayerEntity) event.player;
-        final TalentTree talents = PlayerTalentsData.get(sPlayer.getLevel()).getTalents((PlayerEntity) sPlayer);
-        if (talents.hasLearnedNode(ModConfigs.TALENTS.COMMANDER) && ArchetypeTalent.isEnabled((World) sPlayer.getLevel())) {
+        final TalentTree talents = PlayerTalentsData.get(sPlayer.getLevel()).getTalents(sPlayer);
+        if (talents.hasLearnedNode(ModConfigs.TALENTS.COMMANDER) && ArchetypeTalent.isEnabled(sPlayer.getLevel())) {
             final float damageMultiplier = talents.getNodeOf(ModConfigs.TALENTS.COMMANDER).getTalent().getDamageDealtMultiplier();
             PlayerDamageHelper.DamageMultiplier existing = CommanderTalent.multiplierMap.get(sPlayer.getUUID());
             if (existing != null) {

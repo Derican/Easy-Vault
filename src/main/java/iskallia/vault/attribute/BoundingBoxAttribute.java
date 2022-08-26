@@ -8,7 +8,7 @@ public class BoundingBoxAttribute extends VAttribute.Instance<MutableBoundingBox
     @Override
     public void write(final CompoundNBT nbt) {
         if (this.getBaseValue() != null) {
-            nbt.put("BaseValue", (INBT) this.getBaseValue().createTag());
+            nbt.put("BaseValue", this.getBaseValue().createTag());
         }
     }
 

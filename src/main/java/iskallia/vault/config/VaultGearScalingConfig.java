@@ -26,7 +26,7 @@ public class VaultGearScalingConfig extends Config {
     protected void reset() {
         this.pooledRarityOutcomes.clear();
         final Level defaultLevel = new Level(0, new WeightedList<GearRarityOutcome>().add(new GearRarityOutcome(0, "Scrappy"), 1));
-        this.pooledRarityOutcomes.put("Scaling", Lists.newArrayList(new Level[]{defaultLevel}));
+        this.pooledRarityOutcomes.put("Scaling", Lists.newArrayList(defaultLevel));
     }
 
     @Nullable

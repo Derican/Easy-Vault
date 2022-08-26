@@ -30,7 +30,7 @@ public class EffectMessage {
         final EffectMessage msg = new EffectMessage(Type.PLAY_SOUND, Vector3d.ZERO);
         msg.addData(buf -> {
             buf.writeUtf(event.getRegistryName().toString());
-            buf.writeEnum((Enum)category);
+            buf.writeEnum(category);
             buf.writeFloat(pitch);
             buf.writeFloat(volume);
             return;
@@ -56,7 +56,7 @@ public class EffectMessage {
     }
 
     public static void encode(final EffectMessage pkt, final PacketBuffer buffer) {
-        buffer.writeEnum((Enum) pkt.effectType);
+        buffer.writeEnum(pkt.effectType);
         buffer.writeDouble(pkt.pos.x);
         buffer.writeDouble(pkt.pos.y);
         buffer.writeDouble(pkt.pos.z);
@@ -83,6 +83,6 @@ public class EffectMessage {
 
     public enum Type {
         COLORED_FIREWORK,
-        PLAY_SOUND;
+        PLAY_SOUND
     }
 }

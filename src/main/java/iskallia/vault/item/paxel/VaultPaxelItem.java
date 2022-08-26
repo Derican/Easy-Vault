@@ -40,12 +40,12 @@ public class VaultPaxelItem extends ToolItem {
     public static final ToolType PAXEL_TOOL_TYPE;
 
     public VaultPaxelItem(final ResourceLocation id) {
-        super(3.0f, -3.0f, (IItemTier) PaxelItemTier.INSTANCE, (Set) Collections.emptySet(), new Item.Properties().tab(ModItems.VAULT_MOD_GROUP).addToolType(VaultPaxelItem.PAXEL_TOOL_TYPE, PaxelItemTier.INSTANCE.getLevel()).stacksTo(1));
+        super(3.0f, -3.0f, PaxelItemTier.INSTANCE, Collections.emptySet(), new Item.Properties().tab(ModItems.VAULT_MOD_GROUP).addToolType(VaultPaxelItem.PAXEL_TOOL_TYPE, PaxelItemTier.INSTANCE.getLevel()).stacksTo(1));
         this.setRegistryName(id);
     }
 
     public Multimap<Attribute, AttributeModifier> getAttributeModifiers(final EquipmentSlotType slot, final ItemStack stack) {
-        return (Multimap<Attribute, AttributeModifier>) super.getAttributeModifiers(slot, stack);
+        return super.getAttributeModifiers(slot, stack);
     }
 
     public int getMaxDamage(final ItemStack itemStack) {
@@ -57,7 +57,7 @@ public class VaultPaxelItem extends ToolItem {
     }
 
     public boolean canApplyAtEnchantingTable(final ItemStack stack, final Enchantment enchantment) {
-        return enchantment != Enchantments.MENDING && (enchantment.canEnchant(new ItemStack((IItemProvider) Items.DIAMOND_SWORD)) || enchantment.canEnchant(new ItemStack((IItemProvider) Items.DIAMOND_AXE)) || enchantment.canEnchant(new ItemStack((IItemProvider) Items.DIAMOND_SHOVEL)) || enchantment.canEnchant(new ItemStack((IItemProvider) Items.DIAMOND_HOE)));
+        return enchantment != Enchantments.MENDING && (enchantment.canEnchant(new ItemStack(Items.DIAMOND_SWORD)) || enchantment.canEnchant(new ItemStack(Items.DIAMOND_AXE)) || enchantment.canEnchant(new ItemStack(Items.DIAMOND_SHOVEL)) || enchantment.canEnchant(new ItemStack(Items.DIAMOND_HOE)));
     }
 
     public boolean isBookEnchantable(final ItemStack stack, final ItemStack book) {
@@ -65,7 +65,7 @@ public class VaultPaxelItem extends ToolItem {
             return false;
         }
         for (final Enchantment e : EnchantmentHelper.getEnchantments(book).keySet()) {
-            if (e.canEnchant(new ItemStack((IItemProvider) Items.DIAMOND_SWORD)) || e.canEnchant(new ItemStack((IItemProvider) Items.DIAMOND_AXE)) || e.canEnchant(new ItemStack((IItemProvider) Items.DIAMOND_SHOVEL)) || e.canEnchant(new ItemStack((IItemProvider) Items.DIAMOND_HOE))) {
+            if (e.canEnchant(new ItemStack(Items.DIAMOND_SWORD)) || e.canEnchant(new ItemStack(Items.DIAMOND_AXE)) || e.canEnchant(new ItemStack(Items.DIAMOND_SHOVEL)) || e.canEnchant(new ItemStack(Items.DIAMOND_HOE))) {
                 return true;
             }
         }
@@ -118,11 +118,11 @@ public class VaultPaxelItem extends ToolItem {
             if (foundResult != null && world.isEmptyBlock(blockpos.above())) {
                 world.playSound(player, blockpos, SoundEvents.SHOVEL_FLATTEN, SoundCategory.BLOCKS, 1.0f, 1.0f);
                 resultToSet = foundResult;
-            } else if (blockstate.getBlock() instanceof CampfireBlock && (boolean) blockstate.getValue(CampfireBlock.LIT)) {
+            } else if (blockstate.getBlock() instanceof CampfireBlock && blockstate.getValue(CampfireBlock.LIT)) {
                 if (!world.isClientSide) {
-                    world.levelEvent((PlayerEntity) null, 1009, blockpos, 0);
+                    world.levelEvent(null, 1009, blockpos, 0);
                 }
-                CampfireBlock.dowse((IWorld) world, blockpos, blockstate);
+                CampfireBlock.dowse(world, blockpos, blockstate);
                 resultToSet = blockstate.setValue(CampfireBlock.LIT, false);
             }
         }
@@ -153,20 +153,20 @@ public class VaultPaxelItem extends ToolItem {
     }
 
     public void appendHoverText(@Nonnull final ItemStack itemStack, @Nullable final World world, final List<ITextComponent> tooltip, final ITooltipFlag flag) {
-        super.appendHoverText(itemStack, world, (List) tooltip, flag);
+        super.appendHoverText(itemStack, world, tooltip, flag);
         final PaxelEnhancement enhancement = PaxelEnhancements.getEnhancement(itemStack);
         if (enhancement != null) {
             final IFormattableTextComponent label = new TranslationTextComponent("paxel_enhancement.name").append(": ");
-            tooltip.add((ITextComponent) label.append((ITextComponent) enhancement.getName().setStyle(Style.EMPTY.withColor(enhancement.getColor()).withBold(Boolean.valueOf(true)))));
-            tooltip.add((ITextComponent) enhancement.getDescription().setStyle(Style.EMPTY.withColor(enhancement.getColor())));
+            tooltip.add(label.append(enhancement.getName().setStyle(Style.EMPTY.withColor(enhancement.getColor()).withBold(Boolean.valueOf(true)))));
+            tooltip.add(enhancement.getDescription().setStyle(Style.EMPTY.withColor(enhancement.getColor())));
         }
         if (PaxelEnhancements.shouldEnhance(itemStack)) {
             final IFormattableTextComponent label = new TranslationTextComponent("paxel_enhancement.name").append(": ");
-            tooltip.add((ITextComponent) label.append((ITextComponent) new StringTextComponent("???").withStyle(TextFormatting.GRAY)));
+            tooltip.add(label.append(new StringTextComponent("???").withStyle(TextFormatting.GRAY)));
         }
         final Map<Enchantment, Integer> enchantments = OverlevelEnchantHelper.getEnchantments(itemStack);
         if (enchantments.size() > 0) {
-            tooltip.add((ITextComponent) new StringTextComponent(""));
+            tooltip.add(new StringTextComponent(""));
         }
     }
 

@@ -130,7 +130,7 @@ public class ArchitectObjective extends VaultObjective {
         this.ticksUntilNextVote = 0;
         this.bossId = null;
         this.isBossDead = false;
-        this.exitPortalLocations = VListNBT.ofCodec((com.mojang.serialization.Codec<BlockPos>) BlockPos.CODEC, BlockPos.ZERO);
+        this.exitPortalLocations = VListNBT.ofCodec(BlockPos.CODEC, BlockPos.ZERO);
         this.collidedWithExitPortal = false;
         this.totalRequiredVotes = ModConfigs.ARCHITECT_EVENT.getRandomTotalRequiredPolls();
     }
@@ -185,7 +185,7 @@ public class ArchitectObjective extends VaultObjective {
                 display.append(choice2.getDirectionDisplay("/"));
             }
             display.append("!");
-            thisRaid.getPlayers().forEach(vPlayer -> vPlayer.runIfPresent(world.getServer(), sPlayer -> sPlayer.sendMessage((ITextComponent) display, Util.NIL_UUID)));
+            thisRaid.getPlayers().forEach(vPlayer -> vPlayer.runIfPresent(world.getServer(), sPlayer -> sPlayer.sendMessage(display, Util.NIL_UUID)));
         }
         return true;
     }
@@ -274,9 +274,9 @@ public class ArchitectObjective extends VaultObjective {
                 subtitlePacket = null;
             }
             vault.getPlayers().forEach(vPlayer -> vPlayer.runIfPresent(world.getServer(), sPlayer -> {
-                sPlayer.connection.send((IPacket) titlePacket);
+                sPlayer.connection.send(titlePacket);
                 if (subtitlePacket != null) {
-                    sPlayer.connection.send((IPacket) subtitlePacket);
+                    sPlayer.connection.send(subtitlePacket);
                 }
             }));
         });
@@ -339,16 +339,16 @@ public class ArchitectObjective extends VaultObjective {
 
     public void spawnBossLoot(final VaultRaid vault, final BlockPos bossPos, final VaultPlayer player, final ServerWorld world, final boolean isBossKill) {
         player.runIfPresent(world.getServer(), playerEntity -> {
-            final LootContext.Builder builder = new LootContext.Builder(world).withRandom(world.random).withParameter(LootParameters.THIS_ENTITY, playerEntity).withParameter(LootParameters.ORIGIN, Vector3d.atCenterOf((Vector3i) bossPos)).withParameter(LootParameters.DAMAGE_SOURCE, DamageSource.playerAttack((PlayerEntity) playerEntity)).withOptionalParameter(LootParameters.KILLER_ENTITY, playerEntity).withOptionalParameter(LootParameters.DIRECT_KILLER_ENTITY, playerEntity).withParameter(LootParameters.LAST_DAMAGE_PLAYER, playerEntity).withLuck(playerEntity.getLuck());
+            final LootContext.Builder builder = new LootContext.Builder(world).withRandom(world.random).withParameter(LootParameters.THIS_ENTITY, playerEntity).withParameter(LootParameters.ORIGIN, Vector3d.atCenterOf(bossPos)).withParameter(LootParameters.DAMAGE_SOURCE, DamageSource.playerAttack(playerEntity)).withOptionalParameter(LootParameters.KILLER_ENTITY, playerEntity).withOptionalParameter(LootParameters.DIRECT_KILLER_ENTITY, playerEntity).withParameter(LootParameters.LAST_DAMAGE_PLAYER, playerEntity).withLuck(playerEntity.getLuck());
             final LootContext ctx = builder.create(LootParameterSets.ENTITY);
-            this.spawnRewardCrate(world, (Vector3i) bossPos, vault, ctx);
+            this.spawnRewardCrate(world, bossPos, vault, ctx);
             for (int i = 1; i < vault.getPlayers().size(); ++i) {
                 if (ArchitectObjective.rand.nextFloat() < 0.5f) {
-                    this.spawnRewardCrate(world, (Vector3i) bossPos, vault, ctx);
+                    this.spawnRewardCrate(world, bossPos, vault, ctx);
                 }
             }
-            MiscUtils.broadcast(isBossKill ? this.getBossKillMessage((PlayerEntity) playerEntity) : this.getEscapeMessage((PlayerEntity) playerEntity));
-            vault.getPlayers().forEach(anyVPlayer -> anyVPlayer.runIfPresent(world.getServer(), anySPlayer -> MiscUtils.broadcast(this.getCompletionMessage((PlayerEntity) anySPlayer))));
+            MiscUtils.broadcast(isBossKill ? this.getBossKillMessage(playerEntity) : this.getEscapeMessage(playerEntity));
+            vault.getPlayers().forEach(anyVPlayer -> anyVPlayer.runIfPresent(world.getServer(), anySPlayer -> MiscUtils.broadcast(this.getCompletionMessage(anySPlayer))));
         });
     }
 
@@ -356,7 +356,7 @@ public class ArchitectObjective extends VaultObjective {
     protected void addSpecialLoot(final ServerWorld world, final VaultRaid vault, final LootContext context, final NonNullList<ItemStack> stacks) {
         super.addSpecialLoot(world, vault, context, stacks);
         if (ModConfigs.ARCHITECT_EVENT.isEnabled()) {
-            stacks.add(new ItemStack((IItemProvider) ModItems.VAULT_GEAR));
+            stacks.add(new ItemStack(ModItems.VAULT_GEAR));
         }
     }
 
@@ -364,30 +364,30 @@ public class ArchitectObjective extends VaultObjective {
         final IFormattableTextComponent msgContainer = new StringTextComponent("").withStyle(TextFormatting.WHITE);
         final IFormattableTextComponent playerName = player.getDisplayName().copy();
         playerName.setStyle(Style.EMPTY.withColor(Color.fromRgb(9974168)));
-        return (ITextComponent) msgContainer.append((ITextComponent) playerName).append(" defeated Boss!");
+        return msgContainer.append(playerName).append(" defeated Boss!");
     }
 
     private ITextComponent getEscapeMessage(final PlayerEntity player) {
         final IFormattableTextComponent msgContainer = new StringTextComponent("").withStyle(TextFormatting.WHITE);
         final IFormattableTextComponent playerName = player.getDisplayName().copy();
         playerName.setStyle(Style.EMPTY.withColor(Color.fromRgb(9974168)));
-        return (ITextComponent) msgContainer.append((ITextComponent) playerName).append(" successfully escaped from the Vault!");
+        return msgContainer.append(playerName).append(" successfully escaped from the Vault!");
     }
 
     private ITextComponent getCompletionMessage(final PlayerEntity player) {
         final IFormattableTextComponent msgContainer = new StringTextComponent("").withStyle(TextFormatting.WHITE);
         final IFormattableTextComponent playerName = player.getDisplayName().copy();
         playerName.setStyle(Style.EMPTY.withColor(Color.fromRgb(9974168)));
-        return (ITextComponent) msgContainer.append((ITextComponent) playerName).append(" finished building a Vault!");
+        return msgContainer.append(playerName).append(" finished building a Vault!");
     }
 
     private void spawnRewardCrate(final ServerWorld world, final Vector3i pos, final VaultRaid vault, final LootContext context) {
         final NonNullList<ItemStack> stacks = this.createLoot(world, vault, context);
         final ItemStack crate = VaultCrateBlock.getCrateWithLoot(ModBlocks.VAULT_CRATE, stacks);
-        final ItemEntity item = new ItemEntity((World) world, (double) pos.getX(), (double) pos.getY(), (double) pos.getZ(), crate);
+        final ItemEntity item = new ItemEntity(world, pos.getX(), pos.getY(), pos.getZ(), crate);
         item.setDefaultPickUpDelay();
-        world.addFreshEntity((Entity) item);
-        this.crates.add(new Crate((List<ItemStack>) stacks));
+        world.addFreshEntity(item);
+        this.crates.add(new Crate(stacks));
     }
 
     public int getTicksUntilNextVote() {
@@ -414,7 +414,7 @@ public class ArchitectObjective extends VaultObjective {
     @Nullable
     @Override
     public ITextComponent getObjectiveTargetDescription(final int amount) {
-        return (ITextComponent) new StringTextComponent("Required amount of votes: ").append((ITextComponent) new StringTextComponent(String.valueOf(amount)).withStyle(TextFormatting.AQUA));
+        return new StringTextComponent("Required amount of votes: ").append(new StringTextComponent(String.valueOf(amount)).withStyle(TextFormatting.AQUA));
     }
 
     @Nonnull
@@ -433,12 +433,12 @@ public class ArchitectObjective extends VaultObjective {
 
     @Override
     public ITextComponent getObjectiveDisplayName() {
-        return (ITextComponent) new StringTextComponent("Build a Vault").withStyle(TextFormatting.AQUA);
+        return new StringTextComponent("Build a Vault").withStyle(TextFormatting.AQUA);
     }
 
     @Override
     public ITextComponent getVaultName() {
-        return (ITextComponent) new StringTextComponent("Architect Vault");
+        return new StringTextComponent("Architect Vault");
     }
 
     @Nonnull
@@ -451,20 +451,20 @@ public class ArchitectObjective extends VaultObjective {
     public CompoundNBT serializeNBT() {
         final CompoundNBT tag = super.serializeNBT();
         if (this.activeSession != null) {
-            tag.put("activeSession", (INBT) this.activeSession.serialize());
+            tag.put("activeSession", this.activeSession.serialize());
         }
         final ListNBT sessions = new ListNBT();
         for (final VotingSession session : this.completedSessions) {
             sessions.add(session.serialize());
         }
-        tag.put("completedSessions", (INBT) sessions);
+        tag.put("completedSessions", sessions);
         tag.putInt("totalRequiredVotes", this.totalRequiredVotes);
         tag.putInt("voteDowntimeTicks", this.voteDowntimeTicks);
         tag.putInt("ticksUntilNextVote", this.ticksUntilNextVote);
         tag.putBoolean("votingLocked", this.votingLocked);
         NBTHelper.writeOptional(tag, "bossId", this.bossId, (nbt, uuid) -> nbt.putUUID("bossId", uuid));
         tag.putBoolean("isBossDead", this.isBossDead);
-        tag.put("exitPortalLocations", (INBT) this.exitPortalLocations.serializeNBT());
+        tag.put("exitPortalLocations", this.exitPortalLocations.serializeNBT());
         tag.putBoolean("collidedWithExitPortal", this.collidedWithExitPortal);
         return tag;
     }

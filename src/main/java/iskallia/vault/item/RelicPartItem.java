@@ -37,8 +37,8 @@ public class RelicPartItem extends Item {
     public void appendHoverText(final ItemStack stack, @Nullable final World world, final List<ITextComponent> tooltip, final ITooltipFlag flag) {
         final StringTextComponent line = new StringTextComponent("Vault Relic - " + this.relicSet.getName());
         line.setStyle(Style.EMPTY.withColor(Color.fromRgb(-3755746)));
-        tooltip.add((ITextComponent) new StringTextComponent(""));
-        tooltip.add((ITextComponent) line);
-        super.appendHoverText(stack, world, (List) tooltip, flag);
+        tooltip.add(new StringTextComponent(""));
+        tooltip.add(line);
+        super.appendHoverText(stack, world, tooltip, flag);
     }
 }

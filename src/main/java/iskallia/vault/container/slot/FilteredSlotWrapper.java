@@ -58,7 +58,7 @@ public class FilteredSlotWrapper extends Slot {
 
     @Nullable
     public Pair<ResourceLocation, ResourceLocation> getNoItemIcon() {
-        return (Pair<ResourceLocation, ResourceLocation>) this.decorated.getNoItemIcon();
+        return this.decorated.getNoItemIcon();
     }
 
     public ItemStack remove(final int amount) {

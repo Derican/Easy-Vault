@@ -45,7 +45,7 @@ public class EffectInfluence extends VaultInfluence {
     @Override
     public void deserializeNBT(final CompoundNBT tag) {
         super.deserializeNBT(tag);
-        this.effect = (Effect) ForgeRegistries.POTIONS.getValue(new ResourceLocation(tag.getString("effect")));
+        this.effect = ForgeRegistries.POTIONS.getValue(new ResourceLocation(tag.getString("effect")));
         this.amplifier = tag.getInt("amplifier");
     }
 

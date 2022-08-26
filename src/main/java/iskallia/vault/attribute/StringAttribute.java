@@ -18,7 +18,7 @@ public class StringAttribute extends PooledAttribute<String> {
 
     @Override
     public void write(final CompoundNBT nbt) {
-        nbt.putString("BaseValue", (String) this.getBaseValue());
+        nbt.putString("BaseValue", this.getBaseValue());
     }
 
     @Override

@@ -48,26 +48,26 @@ public class InvRestoreCommand extends Command {
     }
 
     private int listTimestamps(final CommandContext<CommandSource> ctx) {
-        final CommandSource src = (CommandSource) ctx.getSource();
-        final UUID playerRef = UUIDArgument.getUuid((CommandContext) ctx, "playerUUID");
+        final CommandSource src = ctx.getSource();
+        final UUID playerRef = UUIDArgument.getUuid(ctx, "playerUUID");
         final List<String> timestamps = BackupManager.getMostRecentBackupFileTimestamps(src.getServer(), playerRef);
-        src.sendSuccess((ITextComponent) new StringTextComponent("Last 5 available backups:"), true);
+        src.sendSuccess(new StringTextComponent("Last 5 available backups:"), true);
         timestamps.forEach(timestamp -> {
-            final String restoreCmd = String.format("/%s %s restore %s %s", "the_vault", this.getName(), playerRef.toString(), timestamp);
+            final String restoreCmd = String.format("/%s %s restore %s %s", "the_vault", this.getName(), playerRef, timestamp);
             final ClickEvent ce = new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, restoreCmd);
             final HoverEvent he =
                     new HoverEvent(HoverEvent.Action.SHOW_TEXT, new StringTextComponent("Click to get restore command!"));
             final StringTextComponent feedback = new StringTextComponent(timestamp);
             feedback.setStyle(Style.EMPTY.withClickEvent(ce).withHoverEvent(he));
-            src.sendSuccess((ITextComponent) feedback, true);
+            src.sendSuccess(feedback, true);
             return;
         });
         return 0;
     }
 
     private int restoreUUID(final CommandContext<CommandSource> ctx) throws CommandSyntaxException {
-        final UUID playerRef = UUIDArgument.getUuid((CommandContext) ctx, "playerUUID");
-        if (this.attemptRestore((CommandSource) ctx.getSource(), playerRef, (String) ctx.getArgument("target", (Class) String.class))) {
+        final UUID playerRef = UUIDArgument.getUuid(ctx, "playerUUID");
+        if (this.attemptRestore(ctx.getSource(), playerRef, (String) ctx.getArgument("target", (Class) String.class))) {
             return 1;
         }
         return 0;
@@ -78,7 +78,7 @@ public class InvRestoreCommand extends Command {
         final MinecraftServer srv = src.getServer();
         return BackupManager.getStoredItemStacks(srv, playerRef, target).map(stacks -> {
             if (stacks.isEmpty()) {
-                src.sendSuccess((ITextComponent) new StringTextComponent("Backup file did not contain any items!").withStyle(TextFormatting.RED), true);
+                src.sendSuccess(new StringTextComponent("Backup file did not contain any items!").withStyle(TextFormatting.RED), true);
                 return false;
             } else {
                 final ServerWorld world = playerSource.getLevel();
@@ -88,7 +88,7 @@ public class InvRestoreCommand extends Command {
                 while (i < 2 + chestsRequired) {
                     final BlockPos chestPos = offset.offset(0, 2 + i, 0);
                     if (!World.isInWorldBounds(chestPos) || !world.isEmptyBlock(chestPos)) {
-                        src.sendSuccess((ITextComponent) new StringTextComponent("Empty space above the player is required!").withStyle(TextFormatting.RED), true);
+                        src.sendSuccess(new StringTextComponent("Empty space above the player is required!").withStyle(TextFormatting.RED), true);
                         return false;
                     } else {
                         ++i;
@@ -102,7 +102,7 @@ public class InvRestoreCommand extends Command {
                         if (te instanceof VaultChestTileEntity) {
                             te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(inv -> {
                                 for (int index = 0; index < subStacks.size(); ++index) {
-                                    inv.insertItem(index, (ItemStack) subStacks.get(index), false);
+                                    inv.insertItem(index, subStacks.get(index), false);
                                 }
                             });
                         }
@@ -111,7 +111,7 @@ public class InvRestoreCommand extends Command {
                 return true;
             }
         }).orElseGet(() -> {
-            src.sendSuccess((ITextComponent) new StringTextComponent("No such backup file found!").withStyle(TextFormatting.RED), true);
+            src.sendSuccess(new StringTextComponent("No such backup file found!").withStyle(TextFormatting.RED), true);
             return false;
         });
     }

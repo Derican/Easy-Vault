@@ -10,7 +10,7 @@ import java.util.function.Consumer;
 import java.util.regex.Pattern;
 
 public class CompoundVaultTask extends VaultTask {
-    private List<String> postfix;
+    private final List<String> postfix;
 
     protected CompoundVaultTask() {
         this.postfix = new ArrayList<String>();

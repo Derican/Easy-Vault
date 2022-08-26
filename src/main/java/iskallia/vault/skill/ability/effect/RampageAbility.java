@@ -20,7 +20,7 @@ public class RampageAbility<C extends RampageConfig> extends AbilityEffect<C> {
             return false;
         }
         final EffectInstance newEffect = new EffectInstance(config.getEffect(), config.getDurationTicks(), config.getAmplifier(), false, config.getType().showParticles, config.getType().showIcon);
-        player.level.playSound((PlayerEntity) null, player.getX(), player.getY(), player.getZ(), ModSounds.RAMPAGE_SFX, SoundCategory.PLAYERS, 0.2f, 1.0f);
+        player.level.playSound(null, player.getX(), player.getY(), player.getZ(), ModSounds.RAMPAGE_SFX, SoundCategory.PLAYERS, 0.2f, 1.0f);
         player.playNotifySound(ModSounds.RAMPAGE_SFX, SoundCategory.PLAYERS, 0.2f, 1.0f);
         player.addEffect(newEffect);
         return false;

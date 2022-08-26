@@ -67,7 +67,7 @@ public class ExplosionEffect extends VaultChestEffect {
     @Override
     public void apply(final VaultRaid vault, final VaultPlayer player, final ServerWorld world) {
         player.runIfPresent(world.getServer(), playerEntity -> {
-            world.explode((Entity) playerEntity, playerEntity.getX() + this.getXOffset(), playerEntity.getY() + this.getYOffset(), playerEntity.getZ() + this.getZOffset(), this.getRadius(), this.causesFire(), this.getMode());
+            world.explode(playerEntity, playerEntity.getX() + this.getXOffset(), playerEntity.getY() + this.getYOffset(), playerEntity.getZ() + this.getZOffset(), this.getRadius(), this.causesFire(), this.getMode());
             DamageUtil.shotgunAttack(playerEntity, entity -> entity.hurt(new DamageSource("explosion").setExplosion(), this.getDamage()));
         });
     }

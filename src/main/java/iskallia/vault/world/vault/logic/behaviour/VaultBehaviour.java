@@ -49,8 +49,8 @@ public class VaultBehaviour implements IVaultCondition, IVaultTask, INBTSerializ
 
     public CompoundNBT serializeNBT() {
         final CompoundNBT nbt = new CompoundNBT();
-        nbt.put("Condition", (INBT) this.condition.serializeNBT());
-        nbt.put("Task", (INBT) this.task.serializeNBT());
+        nbt.put("Condition", this.condition.serializeNBT());
+        nbt.put("Task", this.task.serializeNBT());
         return nbt;
     }
 

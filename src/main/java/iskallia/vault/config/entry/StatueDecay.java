@@ -5,9 +5,9 @@ import iskallia.vault.util.MathUtilities;
 
 public class StatueDecay {
     @Expose
-    private int MIN;
+    private final int MIN;
     @Expose
-    private int MAX;
+    private final int MAX;
     public static final StatueDecay NONE;
 
     public StatueDecay(final int min, final int max) {

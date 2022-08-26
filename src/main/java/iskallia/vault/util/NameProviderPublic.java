@@ -41,7 +41,7 @@ public class NameProviderPublic {
 
     static {
         rand = new Random();
-        DEV_NAMES = Lists.newArrayList(new String[]{"KaptainWutax", "iGoodie", "jmilthedude", "Scalda", "Kumara22", "Goktwo", "Aolsen96", "Winter_Grave", "kimandjax", "Monni_21", "Starmute", "MukiTanuki", "RowanArtifex", "HellFirePvP", "Pau1_", "Douwsky", "pomodoko", "Damnsecci", "Derican"});
-        SMP_S2 = Lists.newArrayList(new String[]{"CaptainSparklez", "Stressmonster101", "CaptainPuffy", "AntonioAsh", "ItsFundy", "iskall85", "Tubbo_", "HBomb94", "5uppps", "X33N", "PeteZahHutt", "Seapeekay"});
+        DEV_NAMES = Lists.newArrayList("KaptainWutax", "iGoodie", "jmilthedude", "Scalda", "Kumara22", "Goktwo", "Aolsen96", "Winter_Grave", "kimandjax", "Monni_21", "Starmute", "MukiTanuki", "RowanArtifex", "HellFirePvP", "Pau1_", "Douwsky", "pomodoko", "Damnsecci", "Derican");
+        SMP_S2 = Lists.newArrayList("CaptainSparklez", "Stressmonster101", "CaptainPuffy", "AntonioAsh", "ItsFundy", "iskall85", "Tubbo_", "HBomb94", "5uppps", "X33N", "PeteZahHutt", "Seapeekay");
     }
 }

@@ -18,7 +18,7 @@ public class VoxelUtils {
         }
         VoxelShape first = shapes.get(0);
         for (int i = 1; i < shapes.size(); ++i) {
-            first = VoxelShapes.joinUnoptimized(first, (VoxelShape) shapes.get(i), fct);
+            first = VoxelShapes.joinUnoptimized(first, shapes.get(i), fct);
         }
         return first;
     }

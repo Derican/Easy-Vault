@@ -67,9 +67,9 @@ public class PhoenixSetSnapshotData extends InventorySnapshotData {
             final CrystalData data = vault.getProperties().getBaseOrDefault(VaultRaid.CRYSTAL_DATA, CrystalData.EMPTY);
             return;
         }
-        if (PlayerSet.isActive(VaultGear.Set.PHOENIX, (LivingEntity)player)) {
+        if (PlayerSet.isActive(VaultGear.Set.PHOENIX, player)) {
             final PhoenixSetSnapshotData data2 = get(world);
-            if (data2.hasSnapshot((PlayerEntity)player)) {
+            if (data2.hasSnapshot(player)) {
                 player.addTag("the_vault_restore_phoenixset");
             }
         }

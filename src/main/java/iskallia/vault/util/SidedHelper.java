@@ -30,7 +30,7 @@ public class SidedHelper {
 
     public static List<? extends PlayerEntity> getSidedPlayers() {
         if (Thread.currentThread().getThreadGroup() == SidedThreadGroups.SERVER) {
-            final MinecraftServer srv = (MinecraftServer) LogicalSidedProvider.INSTANCE.get(LogicalSide.SERVER);
+            final MinecraftServer srv = LogicalSidedProvider.INSTANCE.get(LogicalSide.SERVER);
             return srv.getPlayerList().getPlayers();
         }
         return getClientSidePlayers();

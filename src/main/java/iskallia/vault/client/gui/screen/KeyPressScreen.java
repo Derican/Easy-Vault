@@ -22,7 +22,7 @@ public class KeyPressScreen extends ContainerScreen<KeyPressContainer> {
     }
 
     protected void renderLabels(final MatrixStack matrixStack, final int x, final int y) {
-        this.font.draw(matrixStack, (ITextComponent) new StringTextComponent(""), (float) this.titleLabelX, (float) this.titleLabelY, 4210752);
+        this.font.draw(matrixStack, new StringTextComponent(""), (float) this.titleLabelX, (float) this.titleLabelY, 4210752);
     }
 
     public void render(final MatrixStack matrixStack, final int mouseX, final int mouseY, final float partialTicks) {

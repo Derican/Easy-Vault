@@ -20,7 +20,7 @@ public class PlayerArmorOverlay {
         if (event.getType() != RenderGameOverlayEvent.ElementType.ARMOR) {
             return;
         }
-        final PlayerEntity player = (PlayerEntity) Minecraft.getInstance().player;
+        final PlayerEntity player = Minecraft.getInstance().player;
         if (player == null) {
             return;
         }

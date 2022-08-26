@@ -77,7 +77,7 @@ public class JigsawPieceResolver {
         final List<AbstractVillagePiece> resolvedPieces = new ArrayList<AbstractVillagePiece>();
         resolvedPieces.add(beginningPiece);
         final List<Entry> generationEntries = new ArrayList<Entry>();
-        generationEntries.add(new Entry(beginningPiece, (MutableObject) generationBoxRef));
+        generationEntries.add(new Entry(beginningPiece, generationBoxRef));
         while (!generationEntries.isEmpty()) {
             final Entry generationEntry = generationEntries.remove(0);
             this.calculatePieces(resolvedPieces, generationEntries, generationEntry.villagePiece, generationEntry.generationBox, templateManager, jigsawPatternRegistry);
@@ -114,7 +114,7 @@ public class JigsawPieceResolver {
                         Vault.LOGGER.warn("Empty or none existent fallback pool: {}", fallbackConnectorPool);
                     } else {
                         MutableObject<VoxelShape> nextGenerationBox;
-                        if (pieceBox.isInside((Vector3i) expectedConnectionPos)) {
+                        if (pieceBox.isInside(expectedConnectionPos)) {
                             nextGenerationBox = thisPieceGenerationBox;
                             if (thisPieceGenerationBox.getValue() == null) {
                                 thisPieceGenerationBox.setValue(VoxelShapes.create(AxisAlignedBB.of(pieceBox)));
@@ -149,7 +149,7 @@ public class JigsawPieceResolver {
                                         continue;
                                     }
                                     BlockPos nextPiecePos = nextPieceBlockInfo.pos;
-                                    if (connectorPool.equals((Object)Vault.id("final_vault/tenos/obelisk"))) {
+                                    if (connectorPool.equals(Vault.id("final_vault/tenos/obelisk"))) {
                                         nextPiecePos = nextPiecePos.above();
                                     }
                                     final BlockPos pieceDiff = new BlockPos(expectedConnectionPos.getX() - nextPiecePos.getX(), expectedConnectionPos.getY() - nextPiecePos.getY(), expectedConnectionPos.getZ() - nextPiecePos.getZ());
@@ -157,8 +157,8 @@ public class JigsawPieceResolver {
                                     final boolean isNextPieceRigid = nextPiece.getProjection() == JigsawPattern.PlacementBehaviour.RIGID;
                                     final int nextY = nextPiecePos.getY();
                                     final int l1 = jigsawYPos - nextY + JigsawBlock.getFrontFacing(nextPieceBlockInfo.state).getStepY();
-                                    if (VaultPiece.shouldIgnoreCollision(nextPiece) || !VoxelShapes.joinIsNotEmpty((VoxelShape) nextGenerationBox.getValue(), VoxelShapes.create(AxisAlignedBB.of(nextPieceBox).deflate(0.25)), IBooleanFunction.ONLY_SECOND)) {
-                                        nextGenerationBox.setValue(VoxelShapes.joinUnoptimized((VoxelShape) nextGenerationBox.getValue(), VoxelShapes.create(AxisAlignedBB.of(nextPieceBox)), IBooleanFunction.ONLY_FIRST));
+                                    if (VaultPiece.shouldIgnoreCollision(nextPiece) || !VoxelShapes.joinIsNotEmpty(nextGenerationBox.getValue(), VoxelShapes.create(AxisAlignedBB.of(nextPieceBox).deflate(0.25)), IBooleanFunction.ONLY_SECOND)) {
+                                        nextGenerationBox.setValue(VoxelShapes.joinUnoptimized(nextGenerationBox.getValue(), VoxelShapes.create(AxisAlignedBB.of(nextPieceBox)), IBooleanFunction.ONLY_FIRST));
                                         int l2;
                                         if (isNextPieceRigid) {
                                             l2 = piece.getGroundLevelDelta() - l1;
@@ -167,7 +167,7 @@ public class JigsawPieceResolver {
                                         }
                                         final AbstractVillagePiece nextPieceVillagePiece = new AbstractVillagePiece(templateMgr, nextPiece, pieceDiff, l2, nextPieceRotation, nextPieceBox);
                                         resolvedPieces.add(nextPieceVillagePiece);
-                                        generationEntries.add(new Entry(nextPieceVillagePiece, (MutableObject) nextGenerationBox));
+                                        generationEntries.add(new Entry(nextPieceVillagePiece, nextGenerationBox));
                                         continue Label_0086;
                                     }
                                 }

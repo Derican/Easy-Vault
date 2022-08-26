@@ -15,7 +15,7 @@ public class ScavengerChestContainer extends ChestContainer {
     private final IInventory chestOwner;
 
     public ScavengerChestContainer(final int id, final PlayerInventory playerInventory, final IInventory chestOwner, final IInventory scavengerOwner) {
-        super((ContainerType) ModContainers.SCAVENGER_CHEST_CONTAINER, id, playerInventory, scavengerOwner, 5);
+        super(ModContainers.SCAVENGER_CHEST_CONTAINER, id, playerInventory, scavengerOwner, 5);
         this.chestOwner = chestOwner;
     }
 

@@ -39,11 +39,11 @@ public class ClientEffectHelper
     }
     
     private static void playClientSound(final PacketBuffer data) {
-        final SoundEvent event = (SoundEvent)Registry.SOUND_EVENT.get(new ResourceLocation(data.readUtf()));
+        final SoundEvent event = Registry.SOUND_EVENT.get(new ResourceLocation(data.readUtf()));
         final SoundCategory category = (SoundCategory)data.readEnum((Class)SoundCategory.class);
         final float pitch = data.readFloat();
         final float volume = data.readFloat();
-        final PlayerEntity player = (PlayerEntity)Minecraft.getInstance().player;
+        final PlayerEntity player = Minecraft.getInstance().player;
         if (player == null) {
             return;
         }
@@ -53,7 +53,7 @@ public class ClientEffectHelper
     
     private static void spawnColoredFirework(final Vector3d pos, final int color) {
         final ParticleManager mgr = Minecraft.getInstance().particleEngine;
-        final SimpleAnimatedParticle fwParticle = (SimpleAnimatedParticle)mgr.createParticle((IParticleData)ParticleTypes.FIREWORK, pos.x(), pos.y(), pos.z(), 0.0, 0.0, 0.0);
+        final SimpleAnimatedParticle fwParticle = (SimpleAnimatedParticle)mgr.createParticle(ParticleTypes.FIREWORK, pos.x(), pos.y(), pos.z(), 0.0, 0.0, 0.0);
         final Color c = new Color(color);
         fwParticle.setColor(c.getRed() / 255.0f, c.getGreen() / 255.0f, c.getBlue() / 255.0f);
 //        fwParticle.baseGravity = 0.0f;

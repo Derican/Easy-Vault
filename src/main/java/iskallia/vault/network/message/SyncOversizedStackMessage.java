@@ -14,7 +14,7 @@ import java.util.function.Supplier;
 public class SyncOversizedStackMessage {
     private int windowId;
     private int slot;
-    private ItemStack stack;
+    private final ItemStack stack;
 
     public SyncOversizedStackMessage() {
         this.windowId = 0;
@@ -57,7 +57,7 @@ public class SyncOversizedStackMessage {
 
     @OnlyIn(Dist.CLIENT)
     private static void setClientStack(final SyncOversizedStackMessage message) {
-        final PlayerEntity player = (PlayerEntity) Minecraft.getInstance().player;
+        final PlayerEntity player = Minecraft.getInstance().player;
         if (player == null) {
             return;
         }

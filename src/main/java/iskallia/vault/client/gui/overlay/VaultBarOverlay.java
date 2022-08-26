@@ -54,7 +54,7 @@ public class VaultBarOverlay {
         final int gap = 5;
         matrixStack.pushPose();
         if (potionOffsetY > 0) {
-            matrixStack.translate(0.0, (double) potionOffsetY, 0.0);
+            matrixStack.translate(0.0, potionOffsetY, 0.0);
         }
         if (VaultBarOverlay.unspentSkillPoints > 0) {
             minecraft.getTextureManager().bind(VaultBarOverlay.VAULT_HUD_SPRITE);

@@ -13,7 +13,7 @@ public class VBOUtil {
         final BufferBuilder buf = Tessellator.getInstance().getBuilder();
         final VertexBuffer vbo = new VertexBuffer(renderType.format());
         buf.begin(renderType.mode(), renderType.format());
-        model.renderToBuffer(new MatrixStack(), (IVertexBuilder) buf, packedLight, packedOverlay, 1.0f, 1.0f, 1.0f, 1.0f);
+        model.renderToBuffer(new MatrixStack(), buf, packedLight, packedOverlay, 1.0f, 1.0f, 1.0f, 1.0f);
         buf.end();
         vbo.upload(buf);
         return vbo;

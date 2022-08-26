@@ -103,7 +103,7 @@ public class VaultInhibitorItem extends Item {
             return Optional.empty();
         }
         final CompoundNBT tag = stack.getOrCreateTag();
-        return CodecUtils.readNBT((com.mojang.serialization.Codec<List<ModifierRollResult>>) ModifierRollResult.CODEC.listOf(), (INBT) tag.getList("modifiers", 10));
+        return CodecUtils.readNBT(ModifierRollResult.CODEC.listOf(), tag.getList("modifiers", 10));
     }
 
     public static void setModifierRolls(final ItemStack stack, final List<ModifierRollResult> result) {
@@ -111,7 +111,7 @@ public class VaultInhibitorItem extends Item {
             return;
         }
         final CompoundNBT tag = stack.getOrCreateTag();
-        CodecUtils.writeNBT((com.mojang.serialization.Codec<List<ModifierRollResult>>) ModifierRollResult.CODEC.listOf(), result, nbt -> tag.put("modifiers", nbt));
+        CodecUtils.writeNBT(ModifierRollResult.CODEC.listOf(), result, nbt -> tag.put("modifiers", nbt));
     }
 
     static {

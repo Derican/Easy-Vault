@@ -37,7 +37,7 @@ public class DepthFireworkParticle extends SimpleAnimatedParticle {
     }
 
     static {
-        DEPTH_PARTICLE_SHEET_TRANSLUCENT = (IParticleRenderType) new IParticleRenderType() {
+        DEPTH_PARTICLE_SHEET_TRANSLUCENT = new IParticleRenderType() {
             public void begin(final BufferBuilder buf, final TextureManager mgr) {
                 RenderSystem.disableDepthTest();
                 PARTICLE_SHEET_TRANSLUCENT.begin(buf, mgr);
@@ -61,7 +61,7 @@ public class DepthFireworkParticle extends SimpleAnimatedParticle {
         public Particle createParticle(final BasicParticleType type, final ClientWorld world, final double x, final double y, final double z, final double xSpeed, final double ySpeed, final double zSpeed) {
             final DepthFireworkParticle particle = new DepthFireworkParticle(world, x, y, z, 0.0, 0.0, 0.0, this.spriteSet);
             particle.setColor((float) xSpeed, (float) ySpeed, (float) zSpeed);
-            return (Particle) particle;
+            return particle;
         }
     }
 }

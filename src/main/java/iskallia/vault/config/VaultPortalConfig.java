@@ -26,7 +26,7 @@ public class VaultPortalConfig extends Config {
         int i = 0;
         for (final String s : this.VALID_BLOCKS) {
             final ResourceLocation res = new ResourceLocation(s);
-            blocks[i++] = (Block) ForgeRegistries.BLOCKS.getValue(res);
+            blocks[i++] = ForgeRegistries.BLOCKS.getValue(res);
         }
         return blocks;
     }

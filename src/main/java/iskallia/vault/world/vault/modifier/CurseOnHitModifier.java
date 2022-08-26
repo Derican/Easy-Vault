@@ -40,15 +40,15 @@ public class CurseOnHitModifier extends TexturedVaultModifier {
         }
         Effect effect;
         try {
-            effect = (Effect) ForgeRegistries.POTIONS.getValue(new ResourceLocation(this.effectName));
+            effect = ForgeRegistries.POTIONS.getValue(new ResourceLocation(this.effectName));
         } catch (final ResourceLocationException exc) {
-            Vault.LOGGER.error("Invalid resource location: " + this.effectName, (Throwable) exc);
+            Vault.LOGGER.error("Invalid resource location: " + this.effectName, exc);
             return;
         }
-        if (effect == null || EffectTalent.getImmunities((LivingEntity) player).contains(effect)) {
+        if (effect == null || EffectTalent.getImmunities(player).contains(effect)) {
             return;
         }
-        final EffectTalent.CombinedEffects effects = EffectTalent.getEffectData((PlayerEntity) player, player.getLevel(), effect);
+        final EffectTalent.CombinedEffects effects = EffectTalent.getEffectData(player, player.getLevel(), effect);
         final int amplifier = effects.getAmplifier() + this.effectAmplifier + 1;
         player.addEffect(new EffectInstance(effect, this.effectDuration, amplifier, true, false));
     }

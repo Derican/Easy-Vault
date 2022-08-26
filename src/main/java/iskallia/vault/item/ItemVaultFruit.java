@@ -66,23 +66,23 @@ public class ItemVaultFruit extends Item {
     public ActionResult<ItemStack> use(final World worldIn, final PlayerEntity playerIn, final Hand handIn) {
         final ItemStack itemStack = playerIn.getItemInHand(handIn);
         if (playerIn.level.dimension() != Vault.VAULT_KEY) {
-            return (ActionResult<ItemStack>) ActionResult.fail(itemStack);
+            return ActionResult.fail(itemStack);
         }
-        return (ActionResult<ItemStack>) super.use(worldIn, playerIn, handIn);
+        return super.use(worldIn, playerIn, handIn);
     }
 
     @OnlyIn(Dist.CLIENT)
     public void appendHoverText(final ItemStack stack, @Nullable final World worldIn, final List<ITextComponent> tooltip, final ITooltipFlag flagIn) {
-        tooltip.add((ITextComponent) new StringTextComponent(""));
+        tooltip.add(new StringTextComponent(""));
         final StringTextComponent comp = new StringTextComponent("[!] Only edible inside a Vault");
         comp.setStyle(Style.EMPTY.withColor(Color.fromRgb(16711680)).withItalic(Boolean.valueOf(true)));
-        tooltip.add((ITextComponent) comp);
-        super.appendHoverText(stack, worldIn, (List) tooltip, flagIn);
+        tooltip.add(comp);
+        super.appendHoverText(stack, worldIn, tooltip, flagIn);
     }
 
     public ITextComponent getName(final ItemStack stack) {
         final IFormattableTextComponent displayName = (IFormattableTextComponent) super.getName(stack);
-        return (ITextComponent) displayName.setStyle(Style.EMPTY.withColor(Color.fromRgb(16563456)));
+        return displayName.setStyle(Style.EMPTY.withColor(Color.fromRgb(16563456)));
     }
 
     static {
@@ -100,11 +100,11 @@ public class ItemVaultFruit extends Item {
         public ItemStack finishUsingItem(final ItemStack stack, final World worldIn, final LivingEntity entityLiving) {
             if (!worldIn.isClientSide && entityLiving instanceof ServerPlayerEntity) {
                 final ServerPlayerEntity player = (ServerPlayerEntity) entityLiving;
-                if (!this.addTime(worldIn, (PlayerEntity) player)) {
+                if (!this.addTime(worldIn, player)) {
                     return stack;
                 }
-                EntityHelper.changeHealth((LivingEntity) player, -6);
-                worldIn.playSound((PlayerEntity) null, player.getX(), player.getY(), player.getZ(), SoundEvents.CONDUIT_ACTIVATE, SoundCategory.MASTER, 1.0f, 1.0f);
+                EntityHelper.changeHealth(player, -6);
+                worldIn.playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.CONDUIT_ACTIVATE, SoundCategory.MASTER, 1.0f, 1.0f);
             }
             return super.finishUsingItem(stack, worldIn, entityLiving);
         }
@@ -112,20 +112,20 @@ public class ItemVaultFruit extends Item {
         @OnlyIn(Dist.CLIENT)
         @Override
         public void appendHoverText(final ItemStack stack, @Nullable final World worldIn, final List<ITextComponent> tooltip, final ITooltipFlag flagIn) {
-            tooltip.add((ITextComponent) new StringTextComponent(""));
+            tooltip.add(new StringTextComponent(""));
             StringTextComponent comp = new StringTextComponent("A magical lemon with a bitter taste");
             comp.setStyle(Style.EMPTY.withColor(Color.fromRgb(12512238)).withItalic(Boolean.valueOf(true)));
-            tooltip.add((ITextComponent) comp);
+            tooltip.add(comp);
             comp = new StringTextComponent("It is grown on the gorgeous trees of Iskallia.");
             comp.setStyle(Style.EMPTY.withColor(Color.fromRgb(12512238)).withItalic(Boolean.valueOf(true)));
-            tooltip.add((ITextComponent) comp);
-            tooltip.add((ITextComponent) new StringTextComponent(""));
+            tooltip.add(comp);
+            tooltip.add(new StringTextComponent(""));
             comp = new StringTextComponent("- Wipes away 3 hearts");
             comp.setStyle(Style.EMPTY.withColor(Color.fromRgb(16711680)));
-            tooltip.add((ITextComponent) comp);
+            tooltip.add(comp);
             comp = new StringTextComponent("- Adds 30 seconds to the Vault Timer");
             comp.setStyle(Style.EMPTY.withColor(Color.fromRgb(65280)));
-            tooltip.add((ITextComponent) comp);
+            tooltip.add(comp);
             super.appendHoverText(stack, worldIn, tooltip, flagIn);
         }
     }
@@ -141,11 +141,11 @@ public class ItemVaultFruit extends Item {
         public ItemStack finishUsingItem(final ItemStack stack, final World worldIn, final LivingEntity entityLiving) {
             if (!worldIn.isClientSide && entityLiving instanceof ServerPlayerEntity) {
                 final ServerPlayerEntity player = (ServerPlayerEntity) entityLiving;
-                if (!this.addTime(worldIn, (PlayerEntity) player)) {
+                if (!this.addTime(worldIn, player)) {
                     return stack;
                 }
-                EntityHelper.changeHealth((LivingEntity) player, -10);
-                worldIn.playSound((PlayerEntity) null, player.getX(), player.getY(), player.getZ(), SoundEvents.CONDUIT_ACTIVATE, SoundCategory.MASTER, 1.0f, 1.0f);
+                EntityHelper.changeHealth(player, -10);
+                worldIn.playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.CONDUIT_ACTIVATE, SoundCategory.MASTER, 1.0f, 1.0f);
             }
             return super.finishUsingItem(stack, worldIn, entityLiving);
         }
@@ -153,20 +153,20 @@ public class ItemVaultFruit extends Item {
         @OnlyIn(Dist.CLIENT)
         @Override
         public void appendHoverText(final ItemStack stack, @Nullable final World worldIn, final List<ITextComponent> tooltip, final ITooltipFlag flagIn) {
-            tooltip.add((ITextComponent) new StringTextComponent(""));
+            tooltip.add(new StringTextComponent(""));
             StringTextComponent comp = new StringTextComponent("A magical orange with a sour taste");
             comp.setStyle(Style.EMPTY.withColor(Color.fromRgb(12512238)).withItalic(Boolean.valueOf(true)));
-            tooltip.add((ITextComponent) comp);
+            tooltip.add(comp);
             comp = new StringTextComponent("It is grown on the gorgeous trees of Iskallia.");
             comp.setStyle(Style.EMPTY.withColor(Color.fromRgb(12512238)).withItalic(Boolean.valueOf(true)));
-            tooltip.add((ITextComponent) comp);
-            tooltip.add((ITextComponent) new StringTextComponent(""));
+            tooltip.add(comp);
+            tooltip.add(new StringTextComponent(""));
             comp = new StringTextComponent("- Wipes away 5 hearts");
             comp.setStyle(Style.EMPTY.withColor(Color.fromRgb(16711680)));
-            tooltip.add((ITextComponent) comp);
+            tooltip.add(comp);
             comp = new StringTextComponent("- Adds 60 seconds to the Vault Timer");
             comp.setStyle(Style.EMPTY.withColor(Color.fromRgb(65280)));
-            tooltip.add((ITextComponent) comp);
+            tooltip.add(comp);
             super.appendHoverText(stack, worldIn, tooltip, flagIn);
         }
     }
@@ -182,16 +182,16 @@ public class ItemVaultFruit extends Item {
         public ItemStack finishUsingItem(final ItemStack stack, final World worldIn, final LivingEntity entityLiving) {
             if (!worldIn.isClientSide && entityLiving instanceof ServerPlayerEntity) {
                 final ServerPlayerEntity player = (ServerPlayerEntity) entityLiving;
-                if (!this.addTime(worldIn, (PlayerEntity) player)) {
+                if (!this.addTime(worldIn, player)) {
                     return stack;
                 }
-                EntityHelper.changeHealth((LivingEntity) player, -MathUtilities.getRandomInt(10, 20));
+                EntityHelper.changeHealth(player, -MathUtilities.getRandomInt(10, 20));
                 if (MathUtilities.randomFloat(0.0f, 100.0f) <= 50.0f) {
                     player.addEffect(new EffectInstance(Effects.POISON, 600));
                 } else {
                     player.addEffect(new EffectInstance(Effects.WITHER, 600));
                 }
-                worldIn.playSound((PlayerEntity) null, player.getX(), player.getY(), player.getZ(), SoundEvents.CONDUIT_ACTIVATE, SoundCategory.MASTER, 1.0f, 1.0f);
+                worldIn.playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.CONDUIT_ACTIVATE, SoundCategory.MASTER, 1.0f, 1.0f);
             }
             return super.finishUsingItem(stack, worldIn, entityLiving);
         }
@@ -199,23 +199,23 @@ public class ItemVaultFruit extends Item {
         @OnlyIn(Dist.CLIENT)
         @Override
         public void appendHoverText(final ItemStack stack, @Nullable final World worldIn, final List<ITextComponent> tooltip, final ITooltipFlag flagIn) {
-            tooltip.add((ITextComponent) new StringTextComponent(""));
+            tooltip.add(new StringTextComponent(""));
             StringTextComponent comp = new StringTextComponent("A magical pear with a strange taste");
             comp.setStyle(Style.EMPTY.withColor(Color.fromRgb(12512238)).withItalic(Boolean.valueOf(true)));
-            tooltip.add((ITextComponent) comp);
+            tooltip.add(comp);
             comp = new StringTextComponent("It is grown on the gorgeous trees of Iskallia.");
             comp.setStyle(Style.EMPTY.withColor(Color.fromRgb(12512238)).withItalic(Boolean.valueOf(true)));
-            tooltip.add((ITextComponent) comp);
-            tooltip.add((ITextComponent) new StringTextComponent(""));
+            tooltip.add(comp);
+            tooltip.add(new StringTextComponent(""));
             comp = new StringTextComponent("- Wipes away 5 to 10 hearts");
             comp.setStyle(Style.EMPTY.withColor(Color.fromRgb(16711680)));
-            tooltip.add((ITextComponent) comp);
+            tooltip.add(comp);
             comp = new StringTextComponent("- Inflicts with either Wither or Poison effect");
             comp.setStyle(Style.EMPTY.withColor(Color.fromRgb(16711680)));
-            tooltip.add((ITextComponent) comp);
+            tooltip.add(comp);
             comp = new StringTextComponent("- Adds 5 minutes to the Vault Timer");
             comp.setStyle(Style.EMPTY.withColor(Color.fromRgb(65280)));
-            tooltip.add((ITextComponent) comp);
+            tooltip.add(comp);
             super.appendHoverText(stack, worldIn, tooltip, flagIn);
         }
     }
@@ -228,10 +228,10 @@ public class ItemVaultFruit extends Item {
         public ItemStack finishUsingItem(final ItemStack stack, final World worldIn, final LivingEntity entityLiving) {
             if (!worldIn.isClientSide && entityLiving instanceof ServerPlayerEntity) {
                 final ServerPlayerEntity player = (ServerPlayerEntity) entityLiving;
-                if (!this.addTime(worldIn, (PlayerEntity) player)) {
+                if (!this.addTime(worldIn, player)) {
                     return stack;
                 }
-                worldIn.playSound((PlayerEntity) null, player.getX(), player.getY(), player.getZ(), SoundEvents.CONDUIT_ACTIVATE, SoundCategory.MASTER, 1.0f, 1.0f);
+                worldIn.playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.CONDUIT_ACTIVATE, SoundCategory.MASTER, 1.0f, 1.0f);
             }
             return super.finishUsingItem(stack, worldIn, entityLiving);
         }
@@ -239,10 +239,10 @@ public class ItemVaultFruit extends Item {
         @OnlyIn(Dist.CLIENT)
         @Override
         public void appendHoverText(final ItemStack stack, @Nullable final World worldIn, final List<ITextComponent> tooltip, final ITooltipFlag flagIn) {
-            tooltip.add((ITextComponent) new StringTextComponent(""));
+            tooltip.add(new StringTextComponent(""));
             final StringTextComponent comp = new StringTextComponent("- Adds 5 seconds to the Vault Timer");
             comp.setStyle(Style.EMPTY.withColor(Color.fromRgb(65280)));
-            tooltip.add((ITextComponent) comp);
+            tooltip.add(comp);
             super.appendHoverText(stack, worldIn, tooltip, flagIn);
         }
     }

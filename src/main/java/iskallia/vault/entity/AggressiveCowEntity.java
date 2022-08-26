@@ -31,7 +31,7 @@ public class AggressiveCowEntity extends CowEntity {
     protected int dashCooldown;
 
     public AggressiveCowEntity(final EntityType<? extends CowEntity> type, final World worldIn) {
-        super((EntityType) type, worldIn);
+        super(type, worldIn);
         this.dashCooldown = 0;
     }
 
@@ -40,11 +40,11 @@ public class AggressiveCowEntity extends CowEntity {
     }
 
     protected void registerGoals() {
-        this.goalSelector.addGoal(8, (Goal) new WaterAvoidingRandomWalkingGoal((CreatureEntity) this, 1.5));
-        this.goalSelector.addGoal(8, (Goal) new LookAtGoal((MobEntity) this, (Class) PlayerEntity.class, 16.0f));
-        this.goalSelector.addGoal(0, (Goal) new CowDashAttackGoal(this, 0.3f));
-        this.goalSelector.addGoal(1, (Goal) new MobAttackGoal((CreatureEntity) this, 1.5, true));
-        this.targetSelector.addGoal(0, (Goal) new NearestAttackableTargetGoal((MobEntity) this, (Class) PlayerEntity.class, 0, true, false, (Predicate) null));
+        this.goalSelector.addGoal(8, new WaterAvoidingRandomWalkingGoal(this, 1.5));
+        this.goalSelector.addGoal(8, new LookAtGoal(this, PlayerEntity.class, 16.0f));
+        this.goalSelector.addGoal(0, new CowDashAttackGoal(this, 0.3f));
+        this.goalSelector.addGoal(1, new MobAttackGoal(this, 1.5, true));
+        this.targetSelector.addGoal(0, new NearestAttackableTargetGoal(this, PlayerEntity.class, 0, true, false, null));
     }
 
     protected void dropFromLootTable(final DamageSource source, final boolean attackedRecently) {

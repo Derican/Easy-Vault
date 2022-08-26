@@ -33,7 +33,7 @@ public class ScavengerChestTileEntity extends ChestTileEntity {
     private static final Random rand;
 
     protected ScavengerChestTileEntity(final TileEntityType<?> typeIn) {
-        super((TileEntityType) typeIn);
+        super(typeIn);
         this.setItems(NonNullList.withSize(45, ItemStack.EMPTY));
     }
 
@@ -53,7 +53,7 @@ public class ScavengerChestTileEntity extends ChestTileEntity {
         final ParticleManager mgr = Minecraft.getInstance().particleEngine;
         final BlockPos pos = this.getBlockPos();
         final Vector3d rPos = new Vector3d(pos.getX() + 0.5 + (ScavengerChestTileEntity.rand.nextFloat() - ScavengerChestTileEntity.rand.nextFloat()) * (ScavengerChestTileEntity.rand.nextFloat() * 3.0f), pos.getY() + 0.5 + (ScavengerChestTileEntity.rand.nextFloat() - ScavengerChestTileEntity.rand.nextFloat()) * (ScavengerChestTileEntity.rand.nextFloat() * 7.0f), pos.getZ() + 0.5 + (ScavengerChestTileEntity.rand.nextFloat() - ScavengerChestTileEntity.rand.nextFloat()) * (ScavengerChestTileEntity.rand.nextFloat() * 3.0f));
-        final SimpleAnimatedParticle p = (SimpleAnimatedParticle) mgr.createParticle((IParticleData) ParticleTypes.FIREWORK, rPos.x, rPos.y, rPos.z, 0.0, 0.0, 0.0);
+        final SimpleAnimatedParticle p = (SimpleAnimatedParticle) mgr.createParticle(ParticleTypes.FIREWORK, rPos.x, rPos.y, rPos.z, 0.0, 0.0, 0.0);
         if (p != null) {
 //            TODO: check if the omit is acceptable
 //            p.baseGravity = 0.0f;
@@ -66,19 +66,19 @@ public class ScavengerChestTileEntity extends ChestTileEntity {
     }
 
     protected Container createMenu(final int id, final PlayerInventory playerInventory) {
-        Container ct = new ScavengerChestContainer(id, playerInventory, (IInventory) this, (IInventory) this);
+        Container ct = new ScavengerChestContainer(id, playerInventory, this, this);
         if (this.level instanceof ServerWorld) {
             final ServerWorld sWorld = (ServerWorld) this.level;
             final VaultRaid vault = VaultRaidData.get(sWorld).getAt(sWorld, this.getBlockPos());
             if (vault != null) {
                 ct = vault.getActiveObjective(ScavengerHuntObjective.class).map(objective -> {
-                    final Container linkedCt = new ScavengerChestContainer(id, playerInventory, (IInventory) this, objective.getScavengerChestInventory());
-                    linkedCt.addSlotListener((IContainerListener) objective.getChestWatcher());
+                    final Container linkedCt = new ScavengerChestContainer(id, playerInventory, this, objective.getScavengerChestInventory());
+                    linkedCt.addSlotListener(objective.getChestWatcher());
                     return linkedCt;
                 }).orElse(ct);
                 ct = vault.getActiveObjective(TreasureHuntObjective.class).map(objective -> {
-                    final Container linkedCt2 = (Container)new ScavengerChestContainer(id, playerInventory, (IInventory)this, objective.getScavengerChestInventory());
-                    linkedCt2.addSlotListener((IContainerListener)objective.getChestWatcher());
+                    final Container linkedCt2 = new ScavengerChestContainer(id, playerInventory, this, objective.getScavengerChestInventory());
+                    linkedCt2.addSlotListener(objective.getChestWatcher());
                     return linkedCt2;
                 }).orElse(ct);
             }
@@ -87,7 +87,7 @@ public class ScavengerChestTileEntity extends ChestTileEntity {
     }
 
     public ITextComponent getDisplayName() {
-        return (ITextComponent) new TranslationTextComponent(ModBlocks.SCAVENGER_CHEST.getDescriptionId());
+        return new TranslationTextComponent(ModBlocks.SCAVENGER_CHEST.getDescriptionId());
     }
 
     static {

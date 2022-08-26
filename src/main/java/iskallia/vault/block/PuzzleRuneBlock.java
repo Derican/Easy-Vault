@@ -48,7 +48,7 @@ public class PuzzleRuneBlock extends Block {
 
     public PuzzleRuneBlock() {
         super(AbstractBlock.Properties.of(Material.STONE, MaterialColor.STONE).strength(-1.0f, 3600000.0f).noOcclusion().noDrops());
-        this.registerDefaultState((BlockState) ((BlockState) ((BlockState) ((BlockState) this.stateDefinition.any()).setValue((Property) PuzzleRuneBlock.FACING, (Comparable) Direction.SOUTH)).setValue((Property) PuzzleRuneBlock.COLOR, (Comparable) Color.YELLOW)).setValue((Property) PuzzleRuneBlock.RUNE_PLACED, (Comparable) false));
+        this.registerDefaultState(this.stateDefinition.any().setValue((Property) PuzzleRuneBlock.FACING, (Comparable) Direction.SOUTH).setValue((Property) PuzzleRuneBlock.COLOR, (Comparable) Color.YELLOW).setValue((Property) PuzzleRuneBlock.RUNE_PLACED, (Comparable) false));
     }
 
     public void fillItemCategory(final ItemGroup group, final NonNullList<ItemStack> items) {
@@ -56,11 +56,11 @@ public class PuzzleRuneBlock extends Block {
 
     @Nullable
     public BlockState getStateForPlacement(final BlockItemUseContext context) {
-        return (BlockState) ((BlockState) ((BlockState) this.defaultBlockState().setValue((Property) PuzzleRuneBlock.FACING, (Comparable) context.getHorizontalDirection())).setValue((Property) PuzzleRuneBlock.COLOR, (Comparable) ModAttributes.PUZZLE_COLOR.getOrDefault(context.getItemInHand(), Color.YELLOW).getValue(context.getItemInHand()))).setValue((Property) PuzzleRuneBlock.RUNE_PLACED, (Comparable) false);
+        return this.defaultBlockState().setValue((Property) PuzzleRuneBlock.FACING, (Comparable) context.getHorizontalDirection()).setValue((Property) PuzzleRuneBlock.COLOR, (Comparable) ModAttributes.PUZZLE_COLOR.getOrDefault(context.getItemInHand(), Color.YELLOW).getValue(context.getItemInHand())).setValue((Property) PuzzleRuneBlock.RUNE_PLACED, (Comparable) false);
     }
 
     protected void createBlockStateDefinition(final StateContainer.Builder<Block, BlockState> builder) {
-        builder.add(new Property[]{(Property) PuzzleRuneBlock.FACING}).add(new Property[]{(Property) PuzzleRuneBlock.COLOR}).add(new Property[]{(Property) PuzzleRuneBlock.RUNE_PLACED});
+        builder.add(new Property[]{PuzzleRuneBlock.FACING}).add(new Property[]{PuzzleRuneBlock.COLOR}).add(PuzzleRuneBlock.RUNE_PLACED);
     }
 
     public ActionResultType use(final BlockState state, final World world, final BlockPos pos, final PlayerEntity player, final Hand hand, final BlockRayTraceResult hit) {
@@ -69,8 +69,8 @@ public class PuzzleRuneBlock extends Block {
             if (heldStack.getItem() instanceof PuzzleRuneItem && this.isValidKey(heldStack, state)) {
                 heldStack.shrink(1);
                 final BlockState blockState = world.getBlockState(pos);
-                world.setBlock(pos, (BlockState) blockState.setValue((Property) PuzzleRuneBlock.RUNE_PLACED, (Comparable) true), 3);
-                world.playSound((PlayerEntity) null, (double) pos.getX(), (double) pos.getY(), (double) pos.getZ(), SoundEvents.END_PORTAL_FRAME_FILL, SoundCategory.BLOCKS, 1.0f, 1.0f);
+                world.setBlock(pos, blockState.setValue((Property) PuzzleRuneBlock.RUNE_PLACED, (Comparable) true), 3);
+                world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), SoundEvents.END_PORTAL_FRAME_FILL, SoundCategory.BLOCKS, 1.0f, 1.0f);
             }
         }
         return super.use(state, world, pos, player, hand, hit);

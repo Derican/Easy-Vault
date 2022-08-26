@@ -125,7 +125,7 @@ public class SummonAndKillAllBossesObjective extends VaultObjective {
         Collections.shuffle(modifierList);
         final VaultModifier modifier = MiscUtils.getRandomEntry(modifierList, SummonAndKillAllBossesObjective.rand);
         if (modifier != null) {
-            final ITextComponent ct = (ITextComponent) new StringTextComponent("Added ").withStyle(TextFormatting.GRAY).append(modifier.getNameComponent());
+            final ITextComponent ct = new StringTextComponent("Added ").withStyle(TextFormatting.GRAY).append(modifier.getNameComponent());
             vault.getModifiers().addPermanentModifier(modifier);
             vault.getPlayers().forEach(vPlayer -> {
                 modifier.apply(vault, vPlayer, world, world.getRandom());
@@ -146,7 +146,7 @@ public class SummonAndKillAllBossesObjective extends VaultObjective {
     @Nullable
     @Override
     public ITextComponent getObjectiveTargetDescription(final int amount) {
-        return (ITextComponent) new StringTextComponent("Find Obelisks: ").append((ITextComponent) new StringTextComponent(String.valueOf(amount)).withStyle(TextFormatting.GOLD));
+        return new StringTextComponent("Find Obelisks: ").append(new StringTextComponent(String.valueOf(amount)).withStyle(TextFormatting.GOLD));
     }
 
     @Nonnull
@@ -165,7 +165,7 @@ public class SummonAndKillAllBossesObjective extends VaultObjective {
 
     @Override
     public ITextComponent getObjectiveDisplayName() {
-        return (ITextComponent) new StringTextComponent("Kill all Bosses").withStyle(TextFormatting.GOLD);
+        return new StringTextComponent("Kill all Bosses").withStyle(TextFormatting.GOLD);
     }
 
     @Override
@@ -223,7 +223,7 @@ public class SummonAndKillAllBossesObjective extends VaultObjective {
         nbt.putInt("ProgressCount", this.progressCount);
         nbt.putInt("TargetCount", this.targetCount);
         nbt.putInt("BossesCount", this.bossesCount);
-        nbt.put("Bosses", (INBT) this.bosses.serializeNBT());
+        nbt.put("Bosses", this.bosses.serializeNBT());
         nbt.putString("roomPool", this.roomPool.toString());
         nbt.putString("tunnelPool", this.tunnelPool.toString());
         return nbt;

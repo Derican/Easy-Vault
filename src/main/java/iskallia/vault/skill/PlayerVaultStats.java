@@ -97,7 +97,7 @@ public class PlayerVaultStats implements INBTSerializable<CompoundNBT> {
             final double d3 = world.random.nextGaussian() * 1.0;
             ((ServerWorld) world).sendParticles((IParticleData) ParticleTypes.TOTEM_OF_UNDYING, pos.x() + world.random.nextDouble() - 0.5, pos.y() + world.random.nextDouble() - 0.5 + 3.0, pos.z() + world.random.nextDouble() - 0.5, 10, d0, d2, d3, 0.25);
         }
-        world.playSound((PlayerEntity) null, player.blockPosition(), ModSounds.VAULT_LEVEL_UP_SFX, SoundCategory.PLAYERS, 1.0f, 2.0f);
+        world.playSound(null, player.blockPosition(), ModSounds.VAULT_LEVEL_UP_SFX, SoundCategory.PLAYERS, 1.0f, 2.0f);
     }
 
     public PlayerVaultStats spendSkillPoints(final MinecraftServer server, final int amount) {

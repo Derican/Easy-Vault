@@ -20,7 +20,7 @@ public class ModEffects {
     public static final Effect TIMER_ACCELERATION;
 
     public static void register(final RegistryEvent.Register<Effect> event) {
-        event.getRegistry().registerAll(new Effect[]{ModEffects.GHOST_WALK, ModEffects.RAMPAGE, ModEffects.TANK, ModEffects.EXECUTE, ModEffects.TIMER_ACCELERATION, ModEffects.PARRY, ModEffects.RESISTANCE, ModEffects.VAULT_POWERUP, ModEffects.IMMUNITY});
+        event.getRegistry().registerAll(ModEffects.GHOST_WALK, ModEffects.RAMPAGE, ModEffects.TANK, ModEffects.EXECUTE, ModEffects.TIMER_ACCELERATION, ModEffects.PARRY, ModEffects.RESISTANCE, ModEffects.VAULT_POWERUP, ModEffects.IMMUNITY);
     }
 
     static {

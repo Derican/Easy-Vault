@@ -74,13 +74,13 @@ public class MixinNoiseChunkGenerator implements IBiomeUpdate {
         this.minLimitPerlinNoise = new OctavesNoiseGenerator(this.random, IntStream.rangeClosed(-15, 0));
         this.maxLimitPerlinNoise = new OctavesNoiseGenerator(this.random, IntStream.rangeClosed(-15, 0));
         this.mainPerlinNoise = new OctavesNoiseGenerator(this.random, IntStream.rangeClosed(-7, 0));
-        this.surfaceNoise = (INoiseGenerator) (noiseSettings.useSimplexSurfaceNoise() ? new PerlinNoiseGenerator(this.random, IntStream.rangeClosed(-3, 0)) : new OctavesNoiseGenerator(this.random, IntStream.rangeClosed(-3, 0)));
+        this.surfaceNoise = noiseSettings.useSimplexSurfaceNoise() ? new PerlinNoiseGenerator(this.random, IntStream.rangeClosed(-3, 0)) : new OctavesNoiseGenerator(this.random, IntStream.rangeClosed(-3, 0));
         this.random.consumeCount(2620);
         this.depthNoise = new OctavesNoiseGenerator(this.random, IntStream.rangeClosed(-15, 0));
         if (noiseSettings.islandNoiseOverride()) {
             final SharedSeedRandom sharedseedrandom = new SharedSeedRandom(s.getSeed());
             sharedseedrandom.consumeCount(17292);
-            this.islandNoise = new SimplexNoiseGenerator((Random) sharedseedrandom);
+            this.islandNoise = new SimplexNoiseGenerator(sharedseedrandom);
         } else {
             this.islandNoise = null;
         }

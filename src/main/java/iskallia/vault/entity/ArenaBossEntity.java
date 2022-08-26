@@ -29,7 +29,7 @@ public class ArenaBossEntity extends FighterEntity {
 
     public ArenaBossEntity(final EntityType<? extends ZombieEntity> type, final World world) {
         super(type, world);
-        this.teleportTask = new TeleportRandomly<ArenaBossEntity>(this, (TeleportRandomly.Condition<ArenaBossEntity>[]) new TeleportRandomly.Condition[]{(entity, source, amount) -> {
+        this.teleportTask = new TeleportRandomly<ArenaBossEntity>(this, new TeleportRandomly.Condition[]{(entity, source, amount) -> {
             if (!(source.getEntity() instanceof LivingEntity)) {
                 return 0.2;
             } else {
@@ -44,9 +44,9 @@ public class ArenaBossEntity extends FighterEntity {
 
     protected void addBehaviourGoals() {
         super.addBehaviourGoals();
-        this.goalSelector.addGoal(1, (Goal) TeleportGoal.builder(this).start(entity -> entity.getTarget() != null && entity.tickCount % 60 == 0).to(entity -> entity.getTarget().position().add((entity.random.nextDouble() - 0.5) * 8.0, (double) (entity.random.nextInt(16) - 8), (entity.random.nextDouble() - 0.5) * 8.0)).then(entity -> entity.playSound(ModSounds.BOSS_TP_SFX, 1.0f, 1.0f)).build());
-        this.goalSelector.addGoal(1, (Goal) new ThrowProjectilesGoal(this, 96, 10, ArenaBossEntity.SNOWBALLS));
-        this.goalSelector.addGoal(1, (Goal) new AOEGoal(this, e -> !(e instanceof ArenaBossEntity)));
+        this.goalSelector.addGoal(1, TeleportGoal.builder(this).start(entity -> entity.getTarget() != null && entity.tickCount % 60 == 0).to(entity -> entity.getTarget().position().add((entity.random.nextDouble() - 0.5) * 8.0, entity.random.nextInt(16) - 8, (entity.random.nextDouble() - 0.5) * 8.0)).then(entity -> entity.playSound(ModSounds.BOSS_TP_SFX, 1.0f, 1.0f)).build());
+        this.goalSelector.addGoal(1, new ThrowProjectilesGoal(this, 96, 10, ArenaBossEntity.SNOWBALLS));
+        this.goalSelector.addGoal(1, new AOEGoal(this, e -> !(e instanceof ArenaBossEntity)));
         this.getAttribute(Attributes.FOLLOW_RANGE).setBaseValue(100.0);
     }
 
@@ -57,7 +57,7 @@ public class ArenaBossEntity extends FighterEntity {
             final double d3 = this.level.random.nextGaussian() * 0.02;
             ((ServerWorld) this.level).sendParticles((IParticleData) ParticleTypes.POOF, entity.getX() + this.level.random.nextDouble() - d0, entity.getY() + this.level.random.nextDouble() - d2, entity.getZ() + this.level.random.nextDouble() - d3, 10, d0, d2, d3, 1.0);
         }
-        this.level.playSound((PlayerEntity) null, entity.blockPosition(), SoundEvents.IRON_GOLEM_HURT, this.getSoundSource(), 1.0f, 1.0f);
+        this.level.playSound(null, entity.blockPosition(), SoundEvents.IRON_GOLEM_HURT, this.getSoundSource(), 1.0f, 1.0f);
         return 15.0f;
     }
 
@@ -66,21 +66,21 @@ public class ArenaBossEntity extends FighterEntity {
         boolean ret = false;
         if (this.random.nextInt(12) == 0) {
             final double old = this.getAttribute(Attributes.ATTACK_KNOCKBACK).getBaseValue();
-            this.getAttribute(Attributes.ATTACK_KNOCKBACK).setBaseValue((double) this.knockbackAttack(entity));
+            this.getAttribute(Attributes.ATTACK_KNOCKBACK).setBaseValue(this.knockbackAttack(entity));
             final boolean result = super.doHurtTarget(entity);
             this.getAttribute(Attributes.ATTACK_KNOCKBACK).setBaseValue(old);
             ret |= result;
         }
         if (this.random.nextInt(6) == 0) {
-            this.level.broadcastEntityEvent((Entity) this, (byte) 4);
+            this.level.broadcastEntityEvent(this, (byte) 4);
             final float f = (float) this.getAttributeValue(Attributes.ATTACK_DAMAGE);
             final float f2 = ((int) f > 0) ? (f / 2.0f + this.random.nextInt((int) f)) : f;
-            final boolean flag = entity.hurt(DamageSource.mobAttack((LivingEntity) this), f2);
+            final boolean flag = entity.hurt(DamageSource.mobAttack(this), f2);
             if (flag) {
                 entity.setDeltaMovement(entity.getDeltaMovement().add(0.0, 0.6000000238418579, 0.0));
-                this.doEnchantDamageEffects((LivingEntity) this, entity);
+                this.doEnchantDamageEffects(this, entity);
             }
-            this.level.playSound((PlayerEntity) null, entity.blockPosition(), SoundEvents.IRON_GOLEM_HURT, this.getSoundSource(), 1.0f, 1.0f);
+            this.level.playSound(null, entity.blockPosition(), SoundEvents.IRON_GOLEM_HURT, this.getSoundSource(), 1.0f, 1.0f);
             ret |= flag;
         }
         return ret || super.doHurtTarget(entity);

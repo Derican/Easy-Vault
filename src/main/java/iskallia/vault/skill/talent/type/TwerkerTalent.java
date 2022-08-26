@@ -33,11 +33,11 @@ public class TwerkerTalent extends PlayerTalent {
     @Expose
     private int zRange = 2;
     @Expose
-    private boolean growsPumpkinsMelons;
+    private final boolean growsPumpkinsMelons;
     @Expose
-    private boolean growsSugarcaneCactus;
+    private final boolean growsSugarcaneCactus;
     @Expose
-    private boolean growsAnimals;
+    private final boolean growsAnimals;
 
     public TwerkerTalent(final int cost, int range, boolean growsPumpkinsMelons, boolean growsSugarcaneCactus, boolean growsAnimals) {
         super(cost);
@@ -73,12 +73,12 @@ public class TwerkerTalent extends PlayerTalent {
             final BlockState state = world.getBlockState(pos);
             final Block block = world.getBlockState(pos).getBlock();
             if (block instanceof CropsBlock || block instanceof SaplingBlock) {
-                BoneMealItem.applyBonemeal(new ItemStack((IItemProvider) Items.BONE_MEAL), (World) world, pos, player);
+                BoneMealItem.applyBonemeal(new ItemStack(Items.BONE_MEAL), world, pos, player);
                 world.sendParticles((IParticleData) ParticleTypes.HAPPY_VILLAGER, pos.getX(), pos.getY(), pos.getZ(), 100, 1.0, 0.5, 1.0, 0.0);
             }
             if (this.growsPumpkinsMelons && block instanceof StemBlock) {
-                if (((StemBlock) block).isValidBonemealTarget((IBlockReader) world, pos, state, false)) {
-                    BoneMealItem.applyBonemeal(new ItemStack((IItemProvider) Items.BONE_MEAL), (World) world, pos, player);
+                if (((StemBlock) block).isValidBonemealTarget(world, pos, state, false)) {
+                    BoneMealItem.applyBonemeal(new ItemStack(Items.BONE_MEAL), world, pos, player);
                 } else {
                     for (int i = 0; i < 40; ++i) {
                         state.randomTick(world, pos, world.random);
@@ -87,7 +87,7 @@ public class TwerkerTalent extends PlayerTalent {
                 world.sendParticles((IParticleData) ParticleTypes.HAPPY_VILLAGER, pos.getX(), pos.getY(), pos.getZ(), 100, 1.0, 0.5, 1.0, 0.0);
             }
             if (this.growsSugarcaneCactus) {
-                final BlockPos above = new BlockPos((Vector3i) pos).above();
+                final BlockPos above = new BlockPos(pos).above();
                 if (!world.isEmptyBlock(above)) {
                     return;
                 }
@@ -95,13 +95,13 @@ public class TwerkerTalent extends PlayerTalent {
                     int height;
                     for (height = 1; world.getBlockState(pos.below(height)).is(block); ++height) {
                     }
-                    if (height < 3 && TwerkerTalent.rand.nextInt(3) == 0 && ForgeHooks.onCropsGrowPre((World) world, pos, state, true)) {
+                    if (height < 3 && TwerkerTalent.rand.nextInt(3) == 0 && ForgeHooks.onCropsGrowPre(world, pos, state, true)) {
                         world.setBlockAndUpdate(above, block.defaultBlockState());
                         final BlockState newState = state.setValue(BlockStateProperties.AGE_15, 0);
                         world.setBlock(pos, newState, 4);
-                        newState.neighborChanged((World) world, above, block, pos, false);
+                        newState.neighborChanged(world, above, block, pos, false);
                         world.getBlockTicks().scheduleTick(above, block, 1, TickPriority.EXTREMELY_HIGH);
-                        ForgeHooks.onCropsGrowPost((World) world, above, state);
+                        ForgeHooks.onCropsGrowPost(world, above, state);
                         world.sendParticles((IParticleData) ParticleTypes.HAPPY_VILLAGER, pos.getX(), pos.getY(), pos.getZ(), 100, 1.0, 0.5, 1.0, 0.0);
                     }
                 }

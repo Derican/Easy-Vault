@@ -27,7 +27,7 @@ public class VaultCharmUpgrade extends BasicItem {
     }
 
     public ITextComponent getName(final ItemStack stack) {
-        return (ITextComponent) new StringTextComponent("Vault Charm Upgrade (" + this.tier.getName() + ")");
+        return new StringTextComponent("Vault Charm Upgrade (" + this.tier.getName() + ")");
     }
 
     @OnlyIn(Dist.CLIENT)
@@ -41,9 +41,9 @@ public class VaultCharmUpgrade extends BasicItem {
         final List<ITextComponent> tooltip = new ArrayList<ITextComponent>();
         if (ModConfigs.VAULT_CHARM != null) {
             final int slotCount = tier.getSlotAmount();
-            tooltip.add((ITextComponent) new StringTextComponent("Increases the amount of slots"));
-            tooltip.add((ITextComponent) new StringTextComponent("that items can be added to the"));
-            tooltip.add((ITextComponent) new StringTextComponent("Vault Charm Whitelist to " + TextFormatting.YELLOW + slotCount));
+            tooltip.add(new StringTextComponent("Increases the amount of slots"));
+            tooltip.add(new StringTextComponent("that items can be added to the"));
+            tooltip.add(new StringTextComponent("Vault Charm Whitelist to " + TextFormatting.YELLOW + slotCount));
         }
         return tooltip;
     }
@@ -61,7 +61,7 @@ public class VaultCharmUpgrade extends BasicItem {
         private final String name;
         private final int tier;
 
-        private Tier(final String name, final int tier) {
+        Tier(final String name, final int tier) {
             this.name = name;
             this.tier = tier;
         }

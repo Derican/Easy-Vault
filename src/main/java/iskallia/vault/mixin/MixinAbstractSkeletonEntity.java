@@ -20,7 +20,7 @@ public class MixinAbstractSkeletonEntity {
         final AbstractArrowEntity shot = (AbstractArrowEntity) entityIn;
         final double dmg = shooter.getAttributeValue(Attributes.ATTACK_DAMAGE);
         shot.setBaseDamage(dmg + 1.0 + shooter.getCommandSenderWorld().getDifficulty().getId() * 0.11);
-        final int power = EnchantmentHelper.getEnchantmentLevel(Enchantments.POWER_ARROWS, (LivingEntity) shooter);
+        final int power = EnchantmentHelper.getEnchantmentLevel(Enchantments.POWER_ARROWS, shooter);
         if (power > 0) {
             shot.setBaseDamage(shot.getBaseDamage() + (power + 1) * 0.5);
         }

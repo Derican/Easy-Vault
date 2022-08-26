@@ -13,7 +13,7 @@ import java.util.function.Function;
 import java.util.function.Supplier;
 
 public class VListNBT<T, N extends INBT> implements INBTSerializable<ListNBT>, List<T> {
-    private List<T> delegate;
+    private final List<T> delegate;
     private final Function<T, N> write;
     private final Function<N, T> read;
 
@@ -24,12 +24,12 @@ public class VListNBT<T, N extends INBT> implements INBTSerializable<ListNBT>, L
     }
 
     public VListNBT(final Function<T, N> write, final Function<N, T> read) {
-        this((List) new ArrayList(), write, read);
+        this(new ArrayList(), write, read);
     }
 
     public ListNBT serializeNBT() {
         final ListNBT nbt = new ListNBT();
-        this.delegate.forEach(value -> nbt.add(this.write.apply((T) value)));
+        this.delegate.forEach(value -> nbt.add(this.write.apply(value)));
         return nbt;
     }
 
@@ -141,7 +141,7 @@ public class VListNBT<T, N extends INBT> implements INBTSerializable<ListNBT>, L
     public static <T extends INBTSerializable<N>, N extends INBT> VListNBT<T, N> of(final Supplier<T> supplier) {
         return new VListNBT<T, N>(INBTSerializable::serializeNBT, n -> {
             final T value = supplier.get();
-            ((INBTSerializable) value).deserializeNBT(n);
+            value.deserializeNBT(n);
             return value;
         });
     }

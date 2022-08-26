@@ -88,7 +88,7 @@ public class PlayerEvents {
         }
         if (event.getTarget() instanceof LivingEntity) {
             final LivingEntity target = (LivingEntity) event.getTarget();
-            EntityHelper.getNearby((IWorld) attacker.level, (Vector3i) attacker.blockPosition(), 9.0f, EternalEntity.class).forEach(eternal -> eternal.setTarget(target));
+            EntityHelper.getNearby(attacker.level, attacker.blockPosition(), 9.0f, EternalEntity.class).forEach(eternal -> eternal.setTarget(target));
         }
     }
 
@@ -120,7 +120,7 @@ public class PlayerEvents {
         for (final EquipmentSlotType slot : EquipmentSlotType.values()) {
             if (slot.getType().equals(EquipmentSlotType.Group.ARMOR)) {
                 final ItemStack stack = player.getItemBySlot(slot);
-                final int level = PlayerVaultStatsData.get((ServerWorld) event.player.level).getVaultStats((PlayerEntity) player).getVaultLevel();
+                final int level = PlayerVaultStatsData.get((ServerWorld) event.player.level).getVaultStats(player).getVaultLevel();
                 if (ModAttributes.MIN_VAULT_LEVEL.exists(stack) && level < ModAttributes.MIN_VAULT_LEVEL.get(stack).get().getValue(stack)) {
                     player.drop(stack.copy(), false, false);
                     stack.setCount(0);
@@ -135,8 +135,8 @@ public class PlayerEvents {
             return;
         }
         final ServerPlayerEntity player = (ServerPlayerEntity) event.player;
-        final SetTree sets = PlayerSetsData.get(player.getLevel()).getSets((PlayerEntity) player);
-        if (PlayerSet.isActive(VaultGear.Set.DRAGON, (LivingEntity) player) && !PlayerDamageHelper.getMultiplier(player, DragonSet.MULTIPLIER_ID).isPresent()) {
+        final SetTree sets = PlayerSetsData.get(player.getLevel()).getSets(player);
+        if (PlayerSet.isActive(VaultGear.Set.DRAGON, player) && !PlayerDamageHelper.getMultiplier(player, DragonSet.MULTIPLIER_ID).isPresent()) {
             float multiplier = 1.0f;
             for (final SetNode<?> node : sets.getNodes()) {
                 if (!(node.getSet() instanceof DragonSet)) {
@@ -146,10 +146,10 @@ public class PlayerEvents {
                 multiplier += set.getDamageMultiplier();
             }
             PlayerDamageHelper.applyMultiplier(DragonSet.MULTIPLIER_ID, (ServerPlayerEntity) event.player, multiplier, PlayerDamageHelper.Operation.ADDITIVE_MULTIPLY, false);
-        } else if (!PlayerSet.isActive(VaultGear.Set.DRAGON, (LivingEntity) player)) {
+        } else if (!PlayerSet.isActive(VaultGear.Set.DRAGON, player)) {
             PlayerDamageHelper.removeMultiplier(player, DragonSet.MULTIPLIER_ID);
         }
-        if (PlayerSet.isActive(VaultGear.Set.DREAM, (LivingEntity) player) && !PlayerDamageHelper.getMultiplier(player, DreamSet.MULTIPLIER_ID).isPresent()) {
+        if (PlayerSet.isActive(VaultGear.Set.DREAM, player) && !PlayerDamageHelper.getMultiplier(player, DreamSet.MULTIPLIER_ID).isPresent()) {
             float multiplier = 1.0f;
             for (final SetNode<?> node : sets.getNodes()) {
                 if (node.getSet() instanceof DreamSet) {
@@ -158,11 +158,11 @@ public class PlayerEvents {
                 }
             }
             PlayerDamageHelper.applyMultiplier(DreamSet.MULTIPLIER_ID, (ServerPlayerEntity) event.player, multiplier, PlayerDamageHelper.Operation.ADDITIVE_MULTIPLY, false);
-        } else if (!PlayerSet.isActive(VaultGear.Set.DREAM, (LivingEntity) player)) {
+        } else if (!PlayerSet.isActive(VaultGear.Set.DREAM, player)) {
             PlayerDamageHelper.removeMultiplier(player, DreamSet.MULTIPLIER_ID);
         }
         player.getAttribute(Attributes.MAX_HEALTH).removeModifier(DryadSet.HEALTH_MODIFIER_ID);
-        if (PlayerSet.isActive(VaultGear.Set.DRYAD, (LivingEntity) player)) {
+        if (PlayerSet.isActive(VaultGear.Set.DRYAD, player)) {
             float health = 0.0f;
             for (final SetNode<?> node : sets.getNodes()) {
                 if (!(node.getSet() instanceof DryadSet)) {
@@ -171,9 +171,9 @@ public class PlayerEvents {
                 final DryadSet set3 = (DryadSet) node.getSet();
                 health += set3.getExtraHealth();
             }
-            player.getAttribute(Attributes.MAX_HEALTH).addTransientModifier(new AttributeModifier(DryadSet.HEALTH_MODIFIER_ID, "Dryad Bonus Health", (double) health, AttributeModifier.Operation.ADDITION));
+            player.getAttribute(Attributes.MAX_HEALTH).addTransientModifier(new AttributeModifier(DryadSet.HEALTH_MODIFIER_ID, "Dryad Bonus Health", health, AttributeModifier.Operation.ADDITION));
         }
-        if (PlayerSet.isActive(VaultGear.Set.BLOOD, (LivingEntity) player) && !PlayerDamageHelper.getMultiplier(player, BloodSet.MULTIPLIER_ID).isPresent()) {
+        if (PlayerSet.isActive(VaultGear.Set.BLOOD, player) && !PlayerDamageHelper.getMultiplier(player, BloodSet.MULTIPLIER_ID).isPresent()) {
             float multiplier = 0.0f;
             for (final SetNode<?> node : sets.getNodes()) {
                 if (!(node.getSet() instanceof BloodSet)) {
@@ -183,7 +183,7 @@ public class PlayerEvents {
                 multiplier += set4.getDamageMultiplier();
             }
             PlayerDamageHelper.applyMultiplier(BloodSet.MULTIPLIER_ID, (ServerPlayerEntity) event.player, multiplier, PlayerDamageHelper.Operation.ADDITIVE_MULTIPLY);
-        } else if (!PlayerSet.isActive(VaultGear.Set.BLOOD, (LivingEntity) player)) {
+        } else if (!PlayerSet.isActive(VaultGear.Set.BLOOD, player)) {
             PlayerDamageHelper.removeMultiplier(player, BloodSet.MULTIPLIER_ID);
         }
     }
@@ -205,11 +205,11 @@ public class PlayerEvents {
             final Random rand = event.getWorld().getRandom();
             final VaultRarity rarity = ((VaultChestTileEntity) tile).getRarity();
             if (rarity == VaultRarity.EPIC) {
-                event.getWorld().playSound((PlayerEntity) null, event.getPos(), ModSounds.VAULT_CHEST_EPIC_OPEN, SoundCategory.BLOCKS, 0.5f, rand.nextFloat() * 0.1f + 0.9f);
+                event.getWorld().playSound(null, event.getPos(), ModSounds.VAULT_CHEST_EPIC_OPEN, SoundCategory.BLOCKS, 0.5f, rand.nextFloat() * 0.1f + 0.9f);
             } else if (rarity == VaultRarity.OMEGA) {
-                event.getWorld().playSound((PlayerEntity) null, event.getPos(), ModSounds.VAULT_CHEST_OMEGA_OPEN, SoundCategory.BLOCKS, 0.5f, rand.nextFloat() * 0.1f + 0.9f);
+                event.getWorld().playSound(null, event.getPos(), ModSounds.VAULT_CHEST_OMEGA_OPEN, SoundCategory.BLOCKS, 0.5f, rand.nextFloat() * 0.1f + 0.9f);
             } else if (rarity == VaultRarity.RARE) {
-                event.getWorld().playSound((PlayerEntity) null, event.getPos(), ModSounds.VAULT_CHEST_RARE_OPEN, SoundCategory.BLOCKS, 0.5f, rand.nextFloat() * 0.1f + 0.9f);
+                event.getWorld().playSound(null, event.getPos(), ModSounds.VAULT_CHEST_RARE_OPEN, SoundCategory.BLOCKS, 0.5f, rand.nextFloat() * 0.1f + 0.9f);
             }
         }
     }
@@ -280,7 +280,7 @@ public class PlayerEvents {
         if (whitelist.contains(stack.getItem().getRegistryName())) {
             event.setCanceled(true);
             itemEntity.remove();
-            world.playSound((PlayerEntity) null, player.blockPosition(), SoundEvents.ITEM_PICKUP, SoundCategory.PLAYERS, 0.2f, (world.random.nextFloat() - world.random.nextFloat()) * 1.4f + 2.0f);
+            world.playSound(null, player.blockPosition(), SoundEvents.ITEM_PICKUP, SoundCategory.PLAYERS, 0.2f, (world.random.nextFloat() - world.random.nextFloat()) * 1.4f + 2.0f);
         }
     }
 

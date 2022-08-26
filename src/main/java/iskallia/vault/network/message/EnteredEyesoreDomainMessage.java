@@ -45,7 +45,7 @@ public class EnteredEyesoreDomainMessage
                 for (int count = 4, dx = -count; dx <= count; ++dx) {
                     for (int dy = -count; dy <= count; ++dy) {
                         for (int dz = -count; dz <= count; ++dz) {
-                            world.addParticle((IParticleData)ModParticles.EYESORE_APPEARANCE.get(), true, pos.x + dx * 8, pos.y + dy * 8, pos.z + dz * 8, 0.0, 0.0, 0.0);
+                            world.addParticle(ModParticles.EYESORE_APPEARANCE.get(), true, pos.x + dx * 8, pos.y + dy * 8, pos.z + dz * 8, 0.0, 0.0, 0.0);
                         }
                     }
                 }

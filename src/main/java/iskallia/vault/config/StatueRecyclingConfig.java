@@ -8,9 +8,9 @@ public class StatueRecyclingConfig extends Config {
     @Expose
     private int defaultRequirement;
     @Expose
-    private HashMap<String, Integer> playerRequirement;
+    private final HashMap<String, Integer> playerRequirement;
     @Expose
-    private HashMap<String, Integer> itemValues;
+    private final HashMap<String, Integer> itemValues;
 
     public StatueRecyclingConfig() {
         this.playerRequirement = new HashMap<String, Integer>();

@@ -17,7 +17,7 @@ public class BloodAltarTileEntity extends FillableAltarTileEntity {
 
     @Override
     public ITextComponent getRequirementName() {
-        return (ITextComponent) new StringTextComponent("Health Points");
+        return new StringTextComponent("Health Points");
     }
 
     @Override
@@ -27,7 +27,7 @@ public class BloodAltarTileEntity extends FillableAltarTileEntity {
 
     @Override
     public ITextComponent getRequirementUnit() {
-        return (ITextComponent) new StringTextComponent("hearts");
+        return new StringTextComponent("hearts");
     }
 
     @Override

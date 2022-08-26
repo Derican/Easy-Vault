@@ -24,7 +24,7 @@ public class FinalVaultFrameTileEntity extends TileEntity
     protected SkinProfile skin;
     
     public FinalVaultFrameTileEntity() {
-        super((TileEntityType)ModBlocks.FINAL_VAULT_FRAME_TILE_ENTITY);
+        super(ModBlocks.FINAL_VAULT_FRAME_TILE_ENTITY);
         this.ownerNickname = "";
         this.ownerUUID = FinalVaultFrameTileEntity.NIL_UUID;
         this.skin = new SkinProfile();

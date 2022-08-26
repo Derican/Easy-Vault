@@ -17,7 +17,7 @@ public abstract class AbstractPlayerSensitiveContainer extends Container impleme
     private final Set<Slot> dragSlots;
 
     protected AbstractPlayerSensitiveContainer(@Nullable final ContainerType<?> type, final int id) {
-        super((ContainerType) type, id);
+        super(type, id);
         this.dragMode = -1;
         this.dragSlots = Sets.newHashSet();
     }

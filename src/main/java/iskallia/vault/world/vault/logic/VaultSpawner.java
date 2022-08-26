@@ -38,7 +38,7 @@ import java.util.stream.Collectors;
 public class VaultSpawner implements INBTSerializable<CompoundNBT>, IVaultTask {
     private Config config;
     private Config oldConfig;
-    private VMapNBT<Integer, Config> configHistory;
+    private final VMapNBT<Integer, Config> configHistory;
     private VListNBT<UUID, StringNBT> spawnedMobIds;
 
     public VaultSpawner() {
@@ -93,7 +93,7 @@ public class VaultSpawner implements INBTSerializable<CompoundNBT>, IVaultTask {
 
     protected void updateMobIds(final ServerWorld world, final ServerPlayerEntity player) {
         this.spawnedMobIds = this.spawnedMobIds.stream().map(world::getEntity).filter(Objects::nonNull).filter(entity -> {
-            final double distanceSq = entity.distanceToSqr((Entity) player);
+            final double distanceSq = entity.distanceToSqr(player);
             final double despawnDistance = this.getConfig().getDespawnDistance();
             if (distanceSq > despawnDistance * despawnDistance) {
                 entity.remove();
@@ -130,38 +130,38 @@ public class VaultSpawner implements INBTSerializable<CompoundNBT>, IVaultTask {
         if (vault.getProperties().getBaseOrDefault(VaultRaid.COW_VAULT, false)) {
             final AggressiveCowEntity replaced = VaultCowOverrides.replaceVaultEntity(vault, entity, world);
             if (replaced != null) {
-                entity = (LivingEntity) replaced;
+                entity = replaced;
             }
         }
         final BlockState state = world.getBlockState(new BlockPos(x, y - 1, z));
-        if (!state.isValidSpawn((IBlockReader) world, new BlockPos(x, y - 1, z), entity.getType())) {
+        if (!state.isValidSpawn(world, new BlockPos(x, y - 1, z), entity.getType())) {
             return null;
         }
-        final AxisAlignedBB entityBox = entity.getType().getAABB(x + 0.5, (double) y, z + 0.5);
+        final AxisAlignedBB entityBox = entity.getType().getAABB(x + 0.5, y, z + 0.5);
         if (!world.noCollision(entityBox)) {
             return null;
         }
-        entity.moveTo((double) (x + 0.5f), (double) (y + 0.2f), (double) (z + 0.5f), (float) (random.nextDouble() * 2.0 * 3.141592653589793), 0.0f);
+        entity.moveTo(x + 0.5f, y + 0.2f, z + 0.5f, (float) (random.nextDouble() * 2.0 * 3.141592653589793), 0.0f);
         if (entity instanceof MobEntity) {
             ((MobEntity) entity).spawnAnim();
-            ((MobEntity) entity).finalizeSpawn((IServerWorld) world, new DifficultyInstance(Difficulty.PEACEFUL, 13000L, 0L, 0.0f), SpawnReason.STRUCTURE, (ILivingEntityData) null, (CompoundNBT) null);
+            ((MobEntity) entity).finalizeSpawn(world, new DifficultyInstance(Difficulty.PEACEFUL, 13000L, 0L, 0.0f), SpawnReason.STRUCTURE, null, null);
         }
         final GlobalDifficultyData.Difficulty difficulty = GlobalDifficultyData.get(world).getVaultDifficulty();
         EntityScaler.setScaledEquipment(entity, vault, difficulty, vaultLevel, random, EntityScaler.Type.MOB);
-        EntityScaler.setScaled((Entity) entity);
-        world.addWithUUID((Entity) entity);
+        EntityScaler.setScaled(entity);
+        world.addWithUUID(entity);
         return entity;
     }
 
     private static LivingEntity createMob(final ServerWorld world, final int vaultLevel, final Random random) {
-        return ModConfigs.VAULT_MOBS.getForLevel(vaultLevel).MOB_POOL.getRandom(random).create((World) world);
+        return ModConfigs.VAULT_MOBS.getForLevel(vaultLevel).MOB_POOL.getRandom(random).create(world);
     }
 
     public CompoundNBT serializeNBT() {
         final CompoundNBT nbt = new CompoundNBT();
-        nbt.put("Config", (INBT) this.getConfig().serializeNBT());
-        nbt.put("ConfigHistory", (INBT) this.configHistory.serializeNBT());
-        nbt.put("SpawnedMobsIds", (INBT) this.spawnedMobIds.serializeNBT());
+        nbt.put("Config", this.getConfig().serializeNBT());
+        nbt.put("ConfigHistory", this.configHistory.serializeNBT());
+        nbt.put("SpawnedMobsIds", this.spawnedMobIds.serializeNBT());
         return nbt;
     }
 

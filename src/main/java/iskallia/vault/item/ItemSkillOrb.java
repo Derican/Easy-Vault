@@ -23,7 +23,7 @@ public class ItemSkillOrb extends Item {
 
     public ActionResult<ItemStack> use(final World world, final PlayerEntity player, final Hand hand) {
         final ItemStack heldItemStack = player.getItemInHand(hand);
-        world.playSound((PlayerEntity) null, player.getX(), player.getY(), player.getZ(), SoundEvents.PLAYER_LEVELUP, SoundCategory.NEUTRAL, 0.5f, 0.4f / (ItemSkillOrb.random.nextFloat() * 0.4f + 0.8f));
+        world.playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.PLAYER_LEVELUP, SoundCategory.NEUTRAL, 0.5f, 0.4f / (ItemSkillOrb.random.nextFloat() * 0.4f + 0.8f));
         if (!world.isClientSide) {
             final PlayerVaultStatsData statsData = PlayerVaultStatsData.get((ServerWorld) world);
             statsData.addSkillPoint((ServerPlayerEntity) player, 1);
@@ -32,6 +32,6 @@ public class ItemSkillOrb extends Item {
         if (!player.abilities.instabuild) {
             heldItemStack.shrink(1);
         }
-        return (ActionResult<ItemStack>) ActionResult.sidedSuccess(heldItemStack, world.isClientSide());
+        return ActionResult.sidedSuccess(heldItemStack, world.isClientSide());
     }
 }

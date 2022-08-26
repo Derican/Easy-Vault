@@ -157,9 +157,9 @@ public class FinalArchitectEventConfig extends Config {
 
     public static class ModifierPair {
         @Expose
-        private String positive;
+        private final String positive;
         @Expose
-        private String negative;
+        private final String negative;
 
         public ModifierPair(final String positive, final String negative) {
             this.positive = positive;

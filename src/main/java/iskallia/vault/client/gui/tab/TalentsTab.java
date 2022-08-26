@@ -27,7 +27,7 @@ public class TalentsTab extends SkillTab {
     private TalentWidget selectedWidget;
 
     public TalentsTab(final TalentDialog talentDialog, final SkillTreeScreen parentScreen) {
-        super(parentScreen, (ITextComponent) new StringTextComponent("Talents Tab"));
+        super(parentScreen, new StringTextComponent("Talents Tab"));
         this.talentWidgets = new HashMap<String, TalentWidget>();
         this.talentConnectors = new LinkedList<ConnectorWidget>();
         this.talentDialog = talentDialog;
@@ -36,7 +36,7 @@ public class TalentsTab extends SkillTab {
     @Override
     public void refresh() {
         this.talentWidgets.clear();
-        final TalentTree talentTree = ((SkillTreeContainer) this.parentScreen.getMenu()).getTalentTree();
+        final TalentTree talentTree = this.parentScreen.getMenu().getTalentTree();
         ModConfigs.TALENTS_GUI.getStyles().forEach((talentName, style) -> this.talentWidgets.put(talentName, new TalentWidget(ModConfigs.TALENTS.getByName(talentName), talentTree, style)));
         ModConfigs.TALENTS_GUI.getStyles().forEach((researchName, style) -> {
             final TalentWidget target = this.talentWidgets.get(researchName);
@@ -91,9 +91,9 @@ public class TalentsTab extends SkillTab {
         RenderSystem.enableBlend();
         final Point2D.Float midpoint = MiscUtils.getMidpoint(this.parentScreen.getContainerBounds());
         renderStack.pushPose();
-        renderStack.translate((double) midpoint.x, (double) midpoint.y, 0.0);
+        renderStack.translate(midpoint.x, midpoint.y, 0.0);
         renderStack.scale(this.viewportScale, this.viewportScale, 1.0f);
-        renderStack.translate((double) this.viewportTranslation.x, (double) this.viewportTranslation.y, 0.0);
+        renderStack.translate(this.viewportTranslation.x, this.viewportTranslation.y, 0.0);
         final int containerMouseX = (int) ((mouseX - midpoint.x) / this.viewportScale - this.viewportTranslation.x);
         final int containerMouseY = (int) ((mouseY - midpoint.y) / this.viewportScale - this.viewportTranslation.y);
         for (final ConnectorWidget talentConnector : this.talentConnectors) {

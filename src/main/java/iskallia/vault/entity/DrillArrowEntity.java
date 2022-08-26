@@ -32,7 +32,7 @@ public class DrillArrowEntity extends ArrowEntity {
     private boolean doBreak;
 
     public DrillArrowEntity(final EntityType<? extends DrillArrowEntity> type, final World worldIn) {
-        super((EntityType) type, worldIn);
+        super(type, worldIn);
         this.maxBreakCount = 0;
         this.breakCount = 0;
         this.doBreak = true;
@@ -45,7 +45,7 @@ public class DrillArrowEntity extends ArrowEntity {
 
     public DrillArrowEntity(final World worldIn, final LivingEntity shooter) {
         this(worldIn, shooter.getX(), shooter.getEyeY() - 0.10000000149011612, shooter.getZ());
-        this.setOwner((Entity) shooter);
+        this.setOwner(shooter);
         if (shooter instanceof PlayerEntity) {
             this.pickup = AbstractArrowEntity.PickupStatus.ALLOWED;
         }
@@ -69,8 +69,8 @@ public class DrillArrowEntity extends ArrowEntity {
     private void playEffects() {
         final Vector3d vec = this.position();
         for (int i = 0; i < 5; ++i) {
-            final Vector3d v = vec.add((double) (this.random.nextFloat() * 0.4f * (this.random.nextBoolean() ? 1 : -1)), (double) (this.random.nextFloat() * 0.4f * (this.random.nextBoolean() ? 1 : -1)), (double) (this.random.nextFloat() * 0.4f * (this.random.nextBoolean() ? 1 : -1)));
-            this.level.addParticle((IParticleData) ParticleTypes.CAMPFIRE_COSY_SMOKE, v.x, v.y, v.z, 0.0, 0.0, 0.0);
+            final Vector3d v = vec.add(this.random.nextFloat() * 0.4f * (this.random.nextBoolean() ? 1 : -1), this.random.nextFloat() * 0.4f * (this.random.nextBoolean() ? 1 : -1), this.random.nextFloat() * 0.4f * (this.random.nextBoolean() ? 1 : -1));
+            this.level.addParticle(ParticleTypes.CAMPFIRE_COSY_SMOKE, v.x, v.y, v.z, 0.0, 0.0, 0.0);
         }
     }
 
@@ -87,10 +87,10 @@ public class DrillArrowEntity extends ArrowEntity {
                 break;
             }
             final BlockState state = world.getBlockState(offset);
-            if (state.isAir((IBlockReader) world, offset) || (state.requiresCorrectToolForDrops() && state.getHarvestLevel() > 2)) {
+            if (state.isAir(world, offset) || (state.requiresCorrectToolForDrops() && state.getHarvestLevel() > 2)) {
                 continue;
             }
-            final float hardness = state.getDestroySpeed((IBlockReader) world, offset);
+            final float hardness = state.getDestroySpeed(world, offset);
             if (hardness < 0.0f || hardness > 25.0f || !this.destroyBlock(world, offset, state, player)) {
                 continue;
             }
@@ -99,9 +99,9 @@ public class DrillArrowEntity extends ArrowEntity {
     }
 
     private boolean destroyBlock(final World world, final BlockPos pos, final BlockState state, final ServerPlayerEntity player) {
-        final ItemStack miningItem = new ItemStack((IItemProvider) Items.DIAMOND_PICKAXE);
-        Block.dropResources(world.getBlockState(pos), world, pos, world.getBlockEntity(pos), (Entity) null, miningItem);
-        return state.removedByPlayer(world, pos, (PlayerEntity) player, true, state.getFluidState());
+        final ItemStack miningItem = new ItemStack(Items.DIAMOND_PICKAXE);
+        Block.dropResources(world.getBlockState(pos), world, pos, world.getBlockEntity(pos), null, miningItem);
+        return state.removedByPlayer(world, pos, player, true, state.getFluidState());
     }
 
     protected void onHit(final RayTraceResult result) {
@@ -129,6 +129,6 @@ public class DrillArrowEntity extends ArrowEntity {
     }
 
     public IPacket<?> getAddEntityPacket() {
-        return (IPacket<?>) NetworkHooks.getEntitySpawningPacket((Entity) this);
+        return NetworkHooks.getEntitySpawningPacket(this);
     }
 }

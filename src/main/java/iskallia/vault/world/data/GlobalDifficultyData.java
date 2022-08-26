@@ -56,9 +56,9 @@ public class GlobalDifficultyData extends WorldSavedData {
             final CompoundNBT data = new CompoundNBT();
             data.putInt("VaultDifficulty", Difficulty.STANDARD.ordinal());
             data.putInt("CrystalCost", Difficulty.STANDARD.ordinal());
-            NetworkHooks.openGui(sPlayer, (INamedContainerProvider) new INamedContainerProvider() {
+            NetworkHooks.openGui(sPlayer, new INamedContainerProvider() {
                 public ITextComponent getDisplayName() {
-                    return (ITextComponent) new StringTextComponent("Welcome Vault Hunter!");
+                    return new StringTextComponent("Welcome Vault Hunter!");
                 }
 
                 @Nullable
@@ -101,7 +101,7 @@ public class GlobalDifficultyData extends WorldSavedData {
 
         double multiplier;
 
-        private Difficulty(final double multiplier) {
+        Difficulty(final double multiplier) {
             this.multiplier = multiplier;
         }
 

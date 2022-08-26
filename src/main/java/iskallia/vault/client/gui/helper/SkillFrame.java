@@ -9,7 +9,7 @@ public enum SkillFrame {
 
     ResourceBoundary resourceBoundary;
 
-    private SkillFrame(final ResourceBoundary resourceBoundary) {
+    SkillFrame(final ResourceBoundary resourceBoundary) {
         this.resourceBoundary = resourceBoundary;
     }
 

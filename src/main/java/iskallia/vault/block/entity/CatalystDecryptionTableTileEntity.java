@@ -31,7 +31,7 @@ public class CatalystDecryptionTableTileEntity extends TileEntity implements INa
     private final ItemStackHandler handler;
 
     public CatalystDecryptionTableTileEntity() {
-        super((TileEntityType) ModBlocks.CATALYST_DECRYPTION_TABLE_TILE_ENTITY);
+        super(ModBlocks.CATALYST_DECRYPTION_TABLE_TILE_ENTITY);
         this.handler = new ItemStackHandler(11) {
             protected void onContentsChanged(final int slot) {
                 super.onContentsChanged(slot);
@@ -67,20 +67,20 @@ public class CatalystDecryptionTableTileEntity extends TileEntity implements INa
     }
 
     public CompoundNBT save(final CompoundNBT tag) {
-        tag.put("inventory", (INBT) this.handler.serializeNBT());
+        tag.put("inventory", this.handler.serializeNBT());
         return super.save(tag);
     }
 
     @Nonnull
     public <T> LazyOptional<T> getCapability(@Nonnull final Capability<T> cap, @Nullable final Direction side) {
         if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
-            return (LazyOptional<T>) LazyOptional.of(() -> this.handler).cast();
+            return LazyOptional.of(() -> this.handler).cast();
         }
         return (LazyOptional<T>) super.getCapability((Capability) cap, side);
     }
 
     public ITextComponent getDisplayName() {
-        return (ITextComponent) new StringTextComponent("Catalyst Decryption Table");
+        return new StringTextComponent("Catalyst Decryption Table");
     }
 
     @Nullable

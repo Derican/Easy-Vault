@@ -48,8 +48,8 @@ public class NBTHelper {
             valuesList.add(mapper.apply(value));
             return;
         });
-        nbt.put(name + "Keys", (INBT) uuidList);
-        nbt.put(name + "Values", (INBT) valuesList);
+        nbt.put(name + "Keys", uuidList);
+        nbt.put(name + "Values", valuesList);
     }
 
     public static <T, N extends INBT> List<T> readList(final CompoundNBT nbt, final String name, final Class<N> nbtType, final Function<N, T> mapper) {
@@ -64,7 +64,7 @@ public class NBTHelper {
     public static <T, N extends INBT> void writeList(final CompoundNBT nbt, final String name, final Collection<T> list, final Class<N> nbtType, final Function<T, N> mapper) {
         final ListNBT listNBT = new ListNBT();
         list.forEach(item -> listNBT.add(mapper.apply(item)));
-        nbt.put(name, (INBT) listNBT);
+        nbt.put(name, listNBT);
     }
 
     public static <T extends Enum<T>> void writeEnum(final CompoundNBT nbt, final String key, final T enumValue) {
@@ -83,13 +83,13 @@ public class NBTHelper {
         if (object != null) {
             final CompoundNBT write = new CompoundNBT();
             writer.accept(write, object);
-            nbt.put(key, (INBT) write);
+            nbt.put(key, write);
         }
     }
 
     @Nullable
     public static <T> T readOptional(final CompoundNBT nbt, final String key, final Function<CompoundNBT, T> reader) {
-        return readOptional(nbt, key, reader, (T) null);
+        return readOptional(nbt, key, reader, null);
     }
 
     @Nullable

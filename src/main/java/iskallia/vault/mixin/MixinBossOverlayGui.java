@@ -29,14 +29,14 @@ public abstract class MixinBossOverlayGui {
         final Map<UUID, Entity> entities = new HashMap<UUID, Entity>();
         Minecraft.getInstance().level.entitiesForRendering().forEach(entity -> entities.put(entity.getUUID(), entity));
         return this.events.entrySet().stream().sorted(Comparator.comparingDouble(o -> {
-            final PlayerEntity player = (PlayerEntity) Minecraft.getInstance().player;
+            final PlayerEntity player = Minecraft.getInstance().player;
             final Entity entity2 = entities.get(o.getKey());
             if (entity2 == null) {
                 return 2.147483647E9;
             } else if (player.getName().getString().equals(entity2.getCustomName().getString())) {
                 return -2.147483648E9;
             } else {
-                return (double) player.distanceTo(entity2);
+                return player.distanceTo(entity2);
             }
         })).map(Map.Entry::getValue).collect(Collectors.toList());
     }

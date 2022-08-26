@@ -53,10 +53,10 @@ public abstract class VaultXPFoodItem extends Item {
                 vaultLevel = this.getVaultLevel();
             }
             if (vaultLevel >= this.levelLimit) {
-                return (ActionResult<ItemStack>) ActionResult.pass(player.getItemInHand(hand));
+                return ActionResult.pass(player.getItemInHand(hand));
             }
         }
-        return (ActionResult<ItemStack>) super.use(world, player, hand);
+        return super.use(world, player, hand);
     }
 
     @OnlyIn(Dist.CLIENT)
@@ -76,7 +76,7 @@ public abstract class VaultXPFoodItem extends Item {
     public void appendHoverText(final ItemStack stack, @Nullable final World worldIn, final List<ITextComponent> tooltip, final ITooltipFlag flagIn) {
         if (this.levelLimit > 0) {
             tooltip.add(StringTextComponent.EMPTY);
-            tooltip.add((ITextComponent) new StringTextComponent("Can't be consumed after Level: ").withStyle(TextFormatting.GRAY).append((ITextComponent) new StringTextComponent(String.valueOf(this.levelLimit)).withStyle(TextFormatting.AQUA)));
+            tooltip.add(new StringTextComponent("Can't be consumed after Level: ").withStyle(TextFormatting.GRAY).append(new StringTextComponent(String.valueOf(this.levelLimit)).withStyle(TextFormatting.AQUA)));
         }
     }
 
@@ -103,7 +103,7 @@ public abstract class VaultXPFoodItem extends Item {
         @Override
         public void grantExp(final ServerPlayerEntity sPlayer) {
             final PlayerVaultStatsData statsData = PlayerVaultStatsData.get(sPlayer.getLevel());
-            final PlayerVaultStats stats = statsData.getVaultStats((PlayerEntity) sPlayer);
+            final PlayerVaultStats stats = statsData.getVaultStats(sPlayer);
             final float randomPercentage = MathUtilities.randomFloat(this.min.get(), this.max.get());
             statsData.addVaultExp(sPlayer, (int) (stats.getTnl() * randomPercentage));
         }

@@ -35,7 +35,7 @@ public class VaultCharmControllerContainer extends Container {
     private float scrollDelta;
 
     public VaultCharmControllerContainer(final int windowId, final PlayerInventory playerInventory, final CompoundNBT data) {
-        super((ContainerType) ModContainers.VAULT_CHARM_CONTROLLER_CONTAINER, windowId);
+        super(ModContainers.VAULT_CHARM_CONTROLLER_CONTAINER, windowId);
         this.currentStart = 0;
         this.currentEnd = 53;
         this.scrollDelta = 0.0f;
@@ -50,10 +50,10 @@ public class VaultCharmControllerContainer extends Container {
     }
 
     private void initVisibleItems() {
-        this.visibleItems = (IInventory) new Inventory(this.inventorySize);
+        this.visibleItems = new Inventory(this.inventorySize);
         int index = 0;
         for (final ResourceLocation id : this.whitelist) {
-            this.visibleItems.setItem(index, new ItemStack((IItemProvider) ForgeRegistries.ITEMS.getValue(id)));
+            this.visibleItems.setItem(index, new ItemStack(ForgeRegistries.ITEMS.getValue(id)));
             ++index;
         }
     }
@@ -61,18 +61,18 @@ public class VaultCharmControllerContainer extends Container {
     private void initPlayerInventorySlots(final PlayerInventory playerInventory) {
         for (int row = 0; row < 3; ++row) {
             for (int column = 0; column < 9; ++column) {
-                this.addSlot(new Slot((IInventory) playerInventory, column + row * 9 + 9, 9 + column * 18, 140 + row * 18));
+                this.addSlot(new Slot(playerInventory, column + row * 9 + 9, 9 + column * 18, 140 + row * 18));
             }
         }
         for (int hotbarSlot = 0; hotbarSlot < 9; ++hotbarSlot) {
-            this.addSlot(new Slot((IInventory) playerInventory, hotbarSlot, 9 + hotbarSlot * 18, 198));
+            this.addSlot(new Slot(playerInventory, hotbarSlot, 9 + hotbarSlot * 18, 198));
         }
     }
 
     private void initCharmControllerSlots() {
         for (int rows = Math.min(6, this.inventorySize / 9), row = 0; row < rows; ++row) {
             for (int column = 0; column < 9; ++column) {
-                this.addSlot((Slot) new VaultCharmControllerSlot(this.visibleItems, column + row * 9, 9 + column * 18, 18 + row * 18));
+                this.addSlot(new VaultCharmControllerSlot(this.visibleItems, column + row * 9, 9 + column * 18, 18 + row * 18));
             }
         }
     }
@@ -108,7 +108,7 @@ public class VaultCharmControllerContainer extends Container {
 //                this.lastSlots.set(i, ItemStack.EMPTY);
             } else {
                 final ResourceLocation id = this.whitelist.get(whitelistIndex);
-                final ItemStack stack = new ItemStack((IItemProvider) ForgeRegistries.ITEMS.getValue(id));
+                final ItemStack stack = new ItemStack(ForgeRegistries.ITEMS.getValue(id));
                 this.visibleItems.setItem(i, stack);
 //                this.lastSlots.add(i, stack);
             }
@@ -136,7 +136,7 @@ public class VaultCharmControllerContainer extends Container {
         if (this.whitelist.size() < this.inventorySize && !this.whitelist.contains(stack.getItem().getRegistryName())) {
             this.whitelist.add(stack.getItem().getRegistryName());
             final float pitch = MathUtilities.randomFloat(0.9f, 1.1f);
-            playerIn.level.playSound((PlayerEntity) null, playerIn.blockPosition(), SoundEvents.FUNGUS_BREAK, SoundCategory.PLAYERS, 0.7f, pitch);
+            playerIn.level.playSound(null, playerIn.blockPosition(), SoundEvents.FUNGUS_BREAK, SoundCategory.PLAYERS, 0.7f, pitch);
             this.updateVisibleItems();
             return ItemStack.EMPTY;
         }

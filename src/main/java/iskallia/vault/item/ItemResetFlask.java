@@ -49,7 +49,7 @@ public class ItemResetFlask extends Item {
         }
         if (this.allowdedIn(group)) {
             for (final AbilityGroup<?, ?> abilityGroup : ModConfigs.ABILITIES.getAll()) {
-                final ItemStack stack = new ItemStack((IItemProvider) this);
+                final ItemStack stack = new ItemStack(this);
                 setSkillable(stack, abilityGroup.getParentName());
                 items.add(stack);
             }
@@ -59,7 +59,7 @@ public class ItemResetFlask extends Item {
                     if (talentName.equals("Lucky Altar")) {
                         continue;
                     }
-                    final ItemStack stack2 = new ItemStack((IItemProvider) this);
+                    final ItemStack stack2 = new ItemStack(this);
                     setSkillable(stack2, talentGroup.getParentName());
                     items.add(stack2);
                 }
@@ -72,14 +72,14 @@ public class ItemResetFlask extends Item {
         final String skillableStr = getSkillable(stack);
         if (skillableStr != null) {
             ModConfigs.ABILITIES.getAbility(skillableStr).ifPresent(abilityGrp -> {
-                final ITextComponent ability = (ITextComponent) new StringTextComponent(abilityGrp.getParentName()).withStyle(TextFormatting.GOLD);
+                final ITextComponent ability = new StringTextComponent(abilityGrp.getParentName()).withStyle(TextFormatting.GOLD);
                 tooltip.add(StringTextComponent.EMPTY);
                 tooltip.add(new StringTextComponent("Remove one level of Ability ").append(ability));
                 tooltip.add(new StringTextComponent("and regain the Skillpoints spent."));
                 return;
             });
             ModConfigs.TALENTS.getTalent(skillableStr).ifPresent(talentGrp -> {
-                final ITextComponent talent = (ITextComponent) new StringTextComponent(talentGrp.getParentName()).withStyle(TextFormatting.AQUA);
+                final ITextComponent talent = new StringTextComponent(talentGrp.getParentName()).withStyle(TextFormatting.AQUA);
                 tooltip.add(StringTextComponent.EMPTY);
                 tooltip.add(new StringTextComponent("Remove one level of Talent ").append(talent));
                 tooltip.add(new StringTextComponent("and regain the Skillpoints spent."));
@@ -96,7 +96,7 @@ public class ItemResetFlask extends Item {
             if (stack.getCount() > 1) {
                 while (stack.getCount() > 1) {
                     stack.shrink(1);
-                    final ItemStack flask = new ItemStack((IItemProvider) this);
+                    final ItemStack flask = new ItemStack(this);
                     MiscUtils.giveItem(player, flask);
                 }
             }
@@ -116,28 +116,28 @@ public class ItemResetFlask extends Item {
         final ItemStack held = player.getItemInHand(hand);
         final String skillableStr = getSkillable(held);
         if (skillableStr == null) {
-            return (ActionResult<ItemStack>) ActionResult.pass(held);
+            return ActionResult.pass(held);
         }
         if (world.isClientSide()) {
             if (!this.canRevertSkillableClient(skillableStr)) {
-                return (ActionResult<ItemStack>) ActionResult.pass(held);
+                return ActionResult.pass(held);
             }
         } else {
             if (!(player instanceof ServerPlayerEntity)) {
-                return (ActionResult<ItemStack>) ActionResult.pass(held);
+                return ActionResult.pass(held);
             }
             final Optional<AbilityGroup<?, ?>> abilityOpt = ModConfigs.ABILITIES.getAbility(skillableStr);
             if (abilityOpt.isPresent()) {
                 final AbilityTree abilityTree = PlayerAbilitiesData.get(((ServerPlayerEntity) player).getLevel()).getAbilities(player);
                 final AbilityNode<?, ?> node = abilityTree.getNodeOf(abilityOpt.get());
                 if (!node.isLearned()) {
-                    return (ActionResult<ItemStack>) ActionResult.pass(held);
+                    return ActionResult.pass(held);
                 }
                 if (node.getLevel() == 1) {
                     final List<AbilityGroup<?, ?>> dependentNodes = ModConfigs.SKILL_GATES.getGates().getAbilitiesDependingOn(node.getGroup().getParentName());
                     for (final AbilityGroup<?, ?> dependent : dependentNodes) {
                         if (abilityTree.getNodeOf(dependent).isLearned()) {
-                            return (ActionResult<ItemStack>) ActionResult.pass(held);
+                            return ActionResult.pass(held);
                         }
                     }
                 }
@@ -147,20 +147,20 @@ public class ItemResetFlask extends Item {
                 final TalentTree talentTree = PlayerTalentsData.get(((ServerPlayerEntity) player).getLevel()).getTalents(player);
                 final TalentNode<?> node2 = talentTree.getNodeOf(talentOpt.get());
                 if (!node2.isLearned()) {
-                    return (ActionResult<ItemStack>) ActionResult.pass(held);
+                    return ActionResult.pass(held);
                 }
                 if (node2.getLevel() == 1) {
                     final List<TalentGroup<?>> dependentNodes2 = ModConfigs.SKILL_GATES.getGates().getTalentsDependingOn(node2.getGroup().getParentName());
                     for (final TalentGroup<?> dependent2 : dependentNodes2) {
                         if (talentTree.getNodeOf(dependent2).isLearned()) {
-                            return (ActionResult<ItemStack>) ActionResult.pass(held);
+                            return ActionResult.pass(held);
                         }
                     }
                 }
             }
         }
         player.startUsingItem(hand);
-        return (ActionResult<ItemStack>) ActionResult.consume(held);
+        return ActionResult.consume(held);
     }
 
     @OnlyIn(Dist.CLIENT)
@@ -236,7 +236,7 @@ public class ItemResetFlask extends Item {
             final ServerWorld sWorld = (ServerWorld) world;
             ModConfigs.ABILITIES.getAbility(skillableStr).ifPresent(ability -> {
                 final PlayerAbilitiesData abilitiesData = PlayerAbilitiesData.get(sWorld);
-                final AbilityTree abilityTree = abilitiesData.getAbilities((PlayerEntity) player);
+                final AbilityTree abilityTree = abilitiesData.getAbilities(player);
                 final AbilityNode<?, ?> node = abilityTree.getNodeOf(ability);
                 if (node.isLearned()) {
                     if (node.getLevel() == 1) {
@@ -248,7 +248,7 @@ public class ItemResetFlask extends Item {
                             }
                         }
                     }
-                    PlayerVaultStatsData.get(sWorld).spendSkillPts(player, -((AbilityConfig) node.getAbilityConfig()).getLearningCost());
+                    PlayerVaultStatsData.get(sWorld).spendSkillPts(player, -node.getAbilityConfig().getLearningCost());
                     abilitiesData.downgradeAbility(player, node);
                     if (!player.isCreative()) {
                         stack.shrink(1);
@@ -258,7 +258,7 @@ public class ItemResetFlask extends Item {
             });
             ModConfigs.TALENTS.getTalent(skillableStr).ifPresent(talent -> {
                 final PlayerTalentsData talentsData = PlayerTalentsData.get(sWorld);
-                final TalentTree talentTree = talentsData.getTalents((PlayerEntity) player);
+                final TalentTree talentTree = talentsData.getTalents(player);
                 final TalentNode<?> node2 = talentTree.getNodeOf((TalentGroup<?>) talent);
                 if (node2.isLearned()) {
                     if (node2.getLevel() == 1) {
@@ -270,7 +270,7 @@ public class ItemResetFlask extends Item {
                             }
                         }
                     }
-                    PlayerVaultStatsData.get(sWorld).spendSkillPts(player, -((PlayerTalent) node2.getTalent()).getCost());
+                    PlayerVaultStatsData.get(sWorld).spendSkillPts(player, -node2.getTalent().getCost());
                     talentsData.downgradeTalent(player, node2);
                     if (!player.isCreative()) {
                         stack.shrink(1);

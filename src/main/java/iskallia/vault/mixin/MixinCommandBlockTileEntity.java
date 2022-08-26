@@ -29,7 +29,7 @@ public abstract class MixinCommandBlockTileEntity extends TileEntity {
     public abstract void setPowered(final boolean p0);
 
     public MixinCommandBlockTileEntity(final TileEntityType<?> type) {
-        super((TileEntityType) type);
+        super(type);
     }
 
     @Inject(method = {"clearRemoved"}, at = {@At("RETURN")})

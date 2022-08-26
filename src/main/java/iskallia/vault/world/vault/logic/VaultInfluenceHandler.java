@@ -74,31 +74,31 @@ public class VaultInfluenceHandler {
         }
         positives.forEach((type1, favour1) -> {
             final Tuple<VaultInfluence, String> influenceResult = getPositiveInfluence(type1, Math.abs(favour1));
-            influences.addInfluence((VaultInfluence) influenceResult.getA(), vault, world);
+            influences.addInfluence(influenceResult.getA(), vault, world);
             final String message = VaultInfluenceHandler.messages.get(type1).getPositiveMessage();
             final IFormattableTextComponent vgName = new StringTextComponent(type1.getName()).withStyle(type1.getChatColor());
             vgName.withStyle(style -> style.withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, type1.getHoverChatComponent())));
-            final IFormattableTextComponent txt = (IFormattableTextComponent) new StringTextComponent("");
-            txt.append((ITextComponent) new StringTextComponent("[VG] ").withStyle(TextFormatting.DARK_PURPLE)).append((ITextComponent) vgName).append((ITextComponent) new StringTextComponent(": ").withStyle(TextFormatting.WHITE)).append((ITextComponent) new StringTextComponent(message));
-            final IFormattableTextComponent info = new StringTextComponent((String) influenceResult.getB()).withStyle(TextFormatting.DARK_GRAY);
+            final IFormattableTextComponent txt = new StringTextComponent("");
+            txt.append(new StringTextComponent("[VG] ").withStyle(TextFormatting.DARK_PURPLE)).append(vgName).append(new StringTextComponent(": ").withStyle(TextFormatting.WHITE)).append(new StringTextComponent(message));
+            final IFormattableTextComponent info = new StringTextComponent(influenceResult.getB()).withStyle(TextFormatting.DARK_GRAY);
             vault.getPlayers().forEach(vPlayer1 -> vPlayer1.runIfPresent(world.getServer(), sPlayer -> {
-                sPlayer.sendMessage((ITextComponent) txt, Util.NIL_UUID);
-                sPlayer.sendMessage((ITextComponent) info, Util.NIL_UUID);
+                sPlayer.sendMessage(txt, Util.NIL_UUID);
+                sPlayer.sendMessage(info, Util.NIL_UUID);
             }));
             return;
         });
         negatives.forEach((type2, favour2) -> {
             final Tuple<VaultInfluence, String> influenceResult2 = getNegativeInfluence(type2, Math.abs(favour2));
-            influences.addInfluence((VaultInfluence) influenceResult2.getA(), vault, world);
+            influences.addInfluence(influenceResult2.getA(), vault, world);
             final String message2 = VaultInfluenceHandler.messages.get(type2).getNegativeMessage();
             final IFormattableTextComponent vgName2 = new StringTextComponent(type2.getName()).withStyle(type2.getChatColor());
             vgName2.withStyle(style -> style.withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, type2.getHoverChatComponent())));
-            final IFormattableTextComponent txt2 = (IFormattableTextComponent) new StringTextComponent("");
-            txt2.append((ITextComponent) new StringTextComponent("[VG] ").withStyle(TextFormatting.DARK_PURPLE)).append((ITextComponent) vgName2).append((ITextComponent) new StringTextComponent(": ").withStyle(TextFormatting.WHITE)).append((ITextComponent) new StringTextComponent(message2));
-            final IFormattableTextComponent info2 = new StringTextComponent((String) influenceResult2.getB()).withStyle(TextFormatting.DARK_GRAY);
+            final IFormattableTextComponent txt2 = new StringTextComponent("");
+            txt2.append(new StringTextComponent("[VG] ").withStyle(TextFormatting.DARK_PURPLE)).append(vgName2).append(new StringTextComponent(": ").withStyle(TextFormatting.WHITE)).append(new StringTextComponent(message2));
+            final IFormattableTextComponent info2 = new StringTextComponent(influenceResult2.getB()).withStyle(TextFormatting.DARK_GRAY);
             vault.getPlayers().forEach(vPlayer2 -> vPlayer2.runIfPresent(world.getServer(), sPlayer -> {
-                sPlayer.sendMessage((ITextComponent) txt2, Util.NIL_UUID);
-                sPlayer.sendMessage((ITextComponent) info2, Util.NIL_UUID);
+                sPlayer.sendMessage(txt2, Util.NIL_UUID);
+                sPlayer.sendMessage(info2, Util.NIL_UUID);
             }));
         });
     }
@@ -243,7 +243,7 @@ public class VaultInfluenceHandler {
                     default: {
                         final int more2 = 10 + Math.round((favour - 4) * 3.333f);
                         final float perc = more2 / 100.0f;
-                        influence = new MobAttributeInfluence(Attributes.MOVEMENT_SPEED, new AttributeModifier(VaultInfluenceHandler.OMNISCIENT_SPEED_REDUCTION, "Favours", (double) perc, AttributeModifier.Operation.MULTIPLY_TOTAL));
+                        influence = new MobAttributeInfluence(Attributes.MOVEMENT_SPEED, new AttributeModifier(VaultInfluenceHandler.OMNISCIENT_SPEED_REDUCTION, "Favours", perc, AttributeModifier.Operation.MULTIPLY_TOTAL));
                         text = "Monsters move " + more2 + "% faster";
                         break;
                     }
@@ -256,7 +256,7 @@ public class VaultInfluenceHandler {
                 switch (VaultInfluenceHandler.rand.nextInt(2)) {
                     case 1: {
                         final int more = 20 + (favour - 4) * 15;
-                        influence = new MobAttributeInfluence(Attributes.MAX_HEALTH, new AttributeModifier(VaultInfluenceHandler.BENEVOLENT_HP_REDUCTION, "Favours", (double) (more / 100.0f), AttributeModifier.Operation.MULTIPLY_TOTAL));
+                        influence = new MobAttributeInfluence(Attributes.MAX_HEALTH, new AttributeModifier(VaultInfluenceHandler.BENEVOLENT_HP_REDUCTION, "Favours", more / 100.0f, AttributeModifier.Operation.MULTIPLY_TOTAL));
                         text = "Monsters have " + more + "% more Health";
                         break;
                     }

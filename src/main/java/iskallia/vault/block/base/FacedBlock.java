@@ -39,7 +39,7 @@ public abstract class FacedBlock extends Block {
     }
 
     protected void createBlockStateDefinition(final StateContainer.Builder<Block, BlockState> builder) {
-        builder.add(new Property[]{FacedBlock.FACING});
+        builder.add(FacedBlock.FACING);
     }
 
     public boolean isPathfindable(final BlockState state, final IBlockReader worldIn, final BlockPos pos, final PathType type) {

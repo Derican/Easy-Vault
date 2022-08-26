@@ -33,7 +33,7 @@ public class ItemDrillArrow extends ArrowItem {
     public void fillItemCategory(final ItemGroup group, final NonNullList<ItemStack> items) {
         if (this.allowdedIn(group)) {
             for (final ArrowTier tier : ArrowTier.values()) {
-                final ItemStack stack = new ItemStack((IItemProvider) this);
+                final ItemStack stack = new ItemStack(this);
                 setArrowTier(stack, tier);
                 items.add(stack);
             }
@@ -42,11 +42,11 @@ public class ItemDrillArrow extends ArrowItem {
 
     @OnlyIn(Dist.CLIENT)
     public void appendHoverText(final ItemStack stack, @Nullable final World worldIn, final List<ITextComponent> tooltip, final ITooltipFlag flagIn) {
-        tooltip.add((ITextComponent) new TranslationTextComponent(getArrowTier(stack).getName()).withStyle(TextFormatting.GOLD));
+        tooltip.add(new TranslationTextComponent(getArrowTier(stack).getName()).withStyle(TextFormatting.GOLD));
     }
 
     public AbstractArrowEntity createArrow(final World world, final ItemStack stack, final LivingEntity shooter) {
-        return (AbstractArrowEntity) new DrillArrowEntity(world, shooter).setMaxBreakCount(getArrowTier(stack).getBreakCount());
+        return new DrillArrowEntity(world, shooter).setMaxBreakCount(getArrowTier(stack).getBreakCount());
     }
 
     public boolean isInfinite(final ItemStack stack, final ItemStack bow, final PlayerEntity player) {
@@ -76,7 +76,7 @@ public class ItemDrillArrow extends ArrowItem {
 
         private final int breakCount;
 
-        private ArrowTier(final int breakCount) {
+        ArrowTier(final int breakCount) {
             this.breakCount = breakCount;
         }
 

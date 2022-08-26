@@ -36,13 +36,13 @@ public class OpenSkillTreeMessage {
                 return;
             } else {
                 final PlayerAbilitiesData playerAbilitiesData = PlayerAbilitiesData.get((ServerWorld) sender.level);
-                final AbilityTree abilityTree = playerAbilitiesData.getAbilities((PlayerEntity) sender);
+                final AbilityTree abilityTree = playerAbilitiesData.getAbilities(sender);
                 final PlayerTalentsData playerTalentsData = PlayerTalentsData.get((ServerWorld) sender.level);
-                final TalentTree talentTree = playerTalentsData.getTalents((PlayerEntity) sender);
-                NetworkHooks.openGui(sender, (INamedContainerProvider) new INamedContainerProvider() {
+                final TalentTree talentTree = playerTalentsData.getTalents(sender);
+                NetworkHooks.openGui(sender, new INamedContainerProvider() {
 
                     public ITextComponent getDisplayName() {
-                        return (ITextComponent) new TranslationTextComponent("container.vault.ability_tree");
+                        return new TranslationTextComponent("container.vault.ability_tree");
                     }
 
                     @Nullable

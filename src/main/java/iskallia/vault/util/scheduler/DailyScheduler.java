@@ -38,11 +38,11 @@ public class DailyScheduler {
         }
         final ZonedDateTime now = ZonedDateTime.now(ZoneId.of("UTC"));
         ZonedDateTime nextRun = now.withHour(hour).withMinute(minute).withSecond(second);
-        if (now.compareTo((ChronoZonedDateTime<?>) nextRun) > 0) {
+        if (now.compareTo(nextRun) > 0) {
             nextRun = nextRun.plusDays(1L);
         }
         DailyScheduler.scheduler.executorService.scheduleAtFixedRate(() -> {
-            final MinecraftServer srv = (MinecraftServer) LogicalSidedProvider.INSTANCE.get(LogicalSide.SERVER);
+            final MinecraftServer srv = LogicalSidedProvider.INSTANCE.get(LogicalSide.SERVER);
             srv.execute(task);
         }, Duration.between(now, nextRun).getSeconds(), TimeUnit.DAYS.toSeconds(1L), TimeUnit.SECONDS);
     }

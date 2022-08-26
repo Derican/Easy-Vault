@@ -146,7 +146,7 @@ public abstract class VaultObjective implements INBTSerializable<CompoundNBT>, I
     }
 
     public ITextComponent getVaultName() {
-        return (ITextComponent) new StringTextComponent("Vault");
+        return new StringTextComponent("Vault");
     }
 
     @Deprecated
@@ -242,7 +242,7 @@ public abstract class VaultObjective implements INBTSerializable<CompoundNBT>, I
         final NonNullList<ItemStack> stacks = NonNullList.create();
         final NonNullList<ItemStack> specialLoot = NonNullList.create();
         this.addSpecialLoot(world, vault, context, specialLoot);
-        stacks.addAll((Collection) rewardLootTable.getRandomItems(context));
+        stacks.addAll(rewardLootTable.getRandomItems(context));
         vault.getPlayers().stream().filter(player -> player instanceof VaultRunner).findAny().ifPresent(vPlayer -> {
             final VaultTimer timer = vPlayer.getTimer();
             final float pTimeLeft = MathHelper.clamp(1.0f - timer.getRunTime() / (float) timer.getTotalTime(), 0.0f, 1.0f);
@@ -251,7 +251,7 @@ public abstract class VaultObjective implements INBTSerializable<CompoundNBT>, I
             additionalLoot.addAll(rewardLootTable.getRandomItems(context));
             final int rolls = Math.round(additionalLoot.size() * pTimeLeft);
             if (rolls > 0) {
-                stacks.addAll((Collection) additionalLoot.subList(0, rolls));
+                stacks.addAll(additionalLoot.subList(0, rolls));
             }
             return;
         });
@@ -259,8 +259,8 @@ public abstract class VaultObjective implements INBTSerializable<CompoundNBT>, I
         for (int i = 0; i < stacks.size() - 54 + specialLoot.size(); ++i) {
             stacks.remove(world.random.nextInt(stacks.size()));
         }
-        stacks.addAll((Collection) specialLoot);
-        Collections.shuffle((List<?>) stacks);
+        stacks.addAll(specialLoot);
+        Collections.shuffle(stacks);
         return stacks;
     }
 
@@ -269,7 +269,7 @@ public abstract class VaultObjective implements INBTSerializable<CompoundNBT>, I
         final LootTablesConfig.Level config = ModConfigs.LOOT_TABLES.getForLevel(level);
         final int eternals = EternalsData.get(world).getTotalEternals();
         if (eternals > 0) {
-            stacks.add(new ItemStack((IItemProvider) ModItems.ETERNAL_SOUL, Math.min(world.random.nextInt(eternals) + 1, 64)));
+            stacks.add(new ItemStack(ModItems.ETERNAL_SOUL, Math.min(world.random.nextInt(eternals) + 1, 64)));
         }
         if (vault.getProperties().getBase(VaultRaid.IS_RAFFLE).orElse(false)) {
             final String name = vault.getProperties().getValue(VaultRaid.PLAYER_BOSS_NAME);
@@ -278,12 +278,12 @@ public abstract class VaultObjective implements INBTSerializable<CompoundNBT>, I
             }
         }
         for (int traders = ModConfigs.SCALING_CHEST_REWARDS.traderCount(this.getId(), VaultRarity.COMMON, level), i = 0; i < traders; ++i) {
-            stacks.add(new ItemStack((IItemProvider) ModItems.TRADER_CORE));
+            stacks.add(new ItemStack(ModItems.TRADER_CORE));
         }
         for (int statues = ModConfigs.SCALING_CHEST_REWARDS.statueCount(this.getId(), VaultRarity.COMMON, level), j = 0; j < statues; ++j) {
-            ItemStack statue = new ItemStack((IItemProvider) ModBlocks.GIFT_NORMAL_STATUE);
+            ItemStack statue = new ItemStack(ModBlocks.GIFT_NORMAL_STATUE);
             if (ModConfigs.SCALING_CHEST_REWARDS.isMegaStatue()) {
-                statue = new ItemStack((IItemProvider) ModBlocks.GIFT_MEGA_STATUE);
+                statue = new ItemStack(ModBlocks.GIFT_MEGA_STATUE);
             }
             stacks.add(statue);
         }
@@ -297,7 +297,7 @@ public abstract class VaultObjective implements INBTSerializable<CompoundNBT>, I
                 chance *= 2.0f;
             }
             if (world.getRandom().nextFloat() < chance) {
-                stacks.add(new ItemStack((IItemProvider) ModItems.UNIDENTIFIED_ARTIFACT));
+                stacks.add(new ItemStack(ModItems.UNIDENTIFIED_ARTIFACT));
             }
         }
     }
@@ -306,12 +306,12 @@ public abstract class VaultObjective implements INBTSerializable<CompoundNBT>, I
         final CompoundNBT nbt = new CompoundNBT();
         nbt.putString("Id", this.getId().toString());
         nbt.putBoolean("Completed", this.isCompleted());
-        nbt.put("OnTick", (INBT) this.onTick.serializeNBT());
-        nbt.put("OnComplete", (INBT) this.onComplete.serializeNBT());
+        nbt.put("OnTick", this.onTick.serializeNBT());
+        nbt.put("OnComplete", this.onComplete.serializeNBT());
         if (this.getCompletionTime() != -1) {
             nbt.putInt("CompletionTime", this.getCompletionTime());
         }
-        nbt.put("Crates", (INBT) this.crates.serializeNBT());
+        nbt.put("Crates", this.crates.serializeNBT());
         return nbt;
     }
 
@@ -367,7 +367,7 @@ public abstract class VaultObjective implements INBTSerializable<CompoundNBT>, I
     }
 
     static {
-        REGISTRY = (BiMap) HashBiMap.create();
+        REGISTRY = HashBiMap.create();
         rand = new Random();
     }
 
@@ -391,7 +391,7 @@ public abstract class VaultObjective implements INBTSerializable<CompoundNBT>, I
             final CompoundNBT nbt = new CompoundNBT();
             final ListNBT contentsList = new ListNBT();
             this.contents.forEach(stack -> contentsList.add(stack.save(new CompoundNBT())));
-            nbt.put("Contents", (INBT) contentsList);
+            nbt.put("Contents", contentsList);
             return nbt;
         }
 

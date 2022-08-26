@@ -36,14 +36,14 @@ public class StatueCauldronScreen extends Screen {
     public static final ResourceLocation HUD_RESOURCE;
     public ScrollableContainer statuesContainer;
     public List<StatueWidget> statueWidgets;
-    private SkinProfile selected;
+    private final SkinProfile selected;
     private final ClientWorld world;
     private final BlockPos pos;
-    private int xSize;
-    private int ySize;
+    private final int xSize;
+    private final int ySize;
 
     public StatueCauldronScreen(final ClientWorld world, final BlockPos pos) {
-        super((ITextComponent) new StringTextComponent("Statue Cauldron"));
+        super(new StringTextComponent("Statue Cauldron"));
         this.world = world;
         this.pos = pos;
         this.selected = new SkinProfile();
@@ -60,7 +60,7 @@ public class StatueCauldronScreen extends Screen {
 
     public boolean keyPressed(final int keyCode, final int scanCode, final int modifiers) {
         if (keyCode == 256 || keyCode == 69) {
-            final PlayerEntity player = (PlayerEntity) Minecraft.getInstance().player;
+            final PlayerEntity player = Minecraft.getInstance().player;
             if (player != null) {
                 player.closeContainer();
             }
@@ -113,7 +113,7 @@ public class StatueCauldronScreen extends Screen {
         final int percent = MathHelper.floor(progress * 100.0f);
         final float startX = midX + 97.0f - this.font.width(percent + "%") / 2.0f;
         final float startY = midY - 78.0f;
-        this.font.draw(matrixStack, (ITextComponent) new StringTextComponent(percent + "%"), startX, startY, 4210752);
+        this.font.draw(matrixStack, new StringTextComponent(percent + "%"), startX, startY, 4210752);
         final int barHeight = 140;
         final int textureHeight = MathHelper.floor(barHeight * progress);
         final float barX = midX + 89.0f;
@@ -237,7 +237,7 @@ public class StatueCauldronScreen extends Screen {
             final boolean isHovered = statueWidget.x <= tradeContainerX && tradeContainerX <= statueWidget.x + 88 && statueWidget.y <= tradeContainerY && tradeContainerY <= statueWidget.y + 27;
             if (isHovered) {
                 this.selected.updateSkin(statueWidget.getName());
-                Minecraft.getInstance().getSoundManager().play((ISound) SimpleSound.forUI(SoundEvents.UI_BUTTON_CLICK, 1.0f));
+                Minecraft.getInstance().getSoundManager().play(SimpleSound.forUI(SoundEvents.UI_BUTTON_CLICK, 1.0f));
                 break;
             }
         }

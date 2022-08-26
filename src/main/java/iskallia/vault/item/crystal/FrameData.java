@@ -30,7 +30,7 @@ public class FrameData implements INBTSerializable<CompoundNBT> {
         final CompoundNBT nbt = new CompoundNBT();
         final ListNBT tilesList = new ListNBT();
         this.tiles.forEach(tile -> tilesList.add(tile.serializeNBT()));
-        nbt.put("Tiles", (INBT) tilesList);
+        nbt.put("Tiles", tilesList);
         return nbt;
     }
 
@@ -61,7 +61,7 @@ public class FrameData implements INBTSerializable<CompoundNBT> {
         public CompoundNBT serializeNBT() {
             final CompoundNBT nbt = new CompoundNBT();
             nbt.putString("Block", this.block.getRegistryName().toString());
-            nbt.put("Data", (INBT) this.data.copy());
+            nbt.put("Data", this.data.copy());
             nbt.putInt("PosX", this.pos.getX());
             nbt.putInt("PosY", this.pos.getY());
             nbt.putInt("PosZ", this.pos.getZ());
@@ -69,7 +69,7 @@ public class FrameData implements INBTSerializable<CompoundNBT> {
         }
 
         public void deserializeNBT(final CompoundNBT nbt) {
-            this.block = (Block) ForgeRegistries.BLOCKS.getValue(new ResourceLocation(nbt.getString("Block")));
+            this.block = ForgeRegistries.BLOCKS.getValue(new ResourceLocation(nbt.getString("Block")));
             this.data = nbt.getCompound("Data").copy();
             this.pos = new BlockPos(nbt.getInt("PosX"), nbt.getInt("PosY"), nbt.getInt("PosZ"));
         }

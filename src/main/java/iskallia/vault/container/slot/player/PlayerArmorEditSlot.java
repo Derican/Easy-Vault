@@ -20,7 +20,7 @@ public class PlayerArmorEditSlot extends Slot {
     private final EquipmentSlotType slotType;
 
     public PlayerArmorEditSlot(final PlayerInventory inventory, final EquipmentSlotType slotType, final int index, final int xPosition, final int yPosition) {
-        super((IInventory) inventory, index, xPosition, yPosition);
+        super(inventory, index, xPosition, yPosition);
         this.playerInventory = inventory;
         this.slotType = slotType;
     }
@@ -30,7 +30,7 @@ public class PlayerArmorEditSlot extends Slot {
     }
 
     public boolean mayPlace(final ItemStack stack) {
-        return stack.canEquip(this.slotType, (Entity) this.playerInventory.player);
+        return stack.canEquip(this.slotType, this.playerInventory.player);
     }
 
     @Nullable
@@ -39,7 +39,7 @@ public class PlayerArmorEditSlot extends Slot {
         if (this.slotType.getType() != EquipmentSlotType.Group.ARMOR) {
             return null;
         }
-        return (Pair<ResourceLocation, ResourceLocation>) Pair.of(PlayerContainer.BLOCK_ATLAS, PlayerArmorEditSlot.ARMOR_SLOT_TEXTURES[this.slotType.getIndex()]);
+        return Pair.of(PlayerContainer.BLOCK_ATLAS, PlayerArmorEditSlot.ARMOR_SLOT_TEXTURES[this.slotType.getIndex()]);
     }
 
     static {

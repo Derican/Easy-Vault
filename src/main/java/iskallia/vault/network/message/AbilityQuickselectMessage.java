@@ -41,13 +41,13 @@ public class AbilityQuickselectMessage {
                     return;
                 } else {
                     final PlayerAbilitiesData abilitiesData = PlayerAbilitiesData.get((ServerWorld) sender.level);
-                    final AbilityTree abilityTree = abilitiesData.getAbilities((PlayerEntity) sender);
+                    final AbilityTree abilityTree = abilitiesData.getAbilities(sender);
                     final AbilityNode<?, ?> abilityNode = abilityTree.getNodeOf(ability);
                     if (!abilityNode.isLearned()) {
                         return;
                     } else {
                         abilityTree.quickSelectAbility(sender.server, ability.getParentName());
-                        if (!abilityNode.equals(abilityTree.getSelectedAbility()) || ((AbilityConfig) abilityNode.getAbilityConfig()).getBehavior() != AbilityConfig.Behavior.RELEASE_TO_PERFORM || abilityTree.isOnCooldown(abilityNode)) {
+                        if (!abilityNode.equals(abilityTree.getSelectedAbility()) || abilityNode.getAbilityConfig().getBehavior() != AbilityConfig.Behavior.RELEASE_TO_PERFORM || abilityTree.isOnCooldown(abilityNode)) {
                             return;
                         } else {
                             abilityTree.keyUp(sender.server);

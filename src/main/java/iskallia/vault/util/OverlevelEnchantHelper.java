@@ -34,7 +34,7 @@ public class OverlevelEnchantHelper {
             final CompoundNBT enchantmentNBT = enchantmentsNBT.getCompound(i);
             final ResourceLocation id = new ResourceLocation(enchantmentNBT.getString("id"));
             final int level = enchantmentNBT.getInt("lvl");
-            final Enchantment enchantment = (Enchantment) ForgeRegistries.ENCHANTMENTS.getValue(id);
+            final Enchantment enchantment = ForgeRegistries.ENCHANTMENTS.getValue(id);
             if (enchantment != null) {
                 enchantments.put(enchantment, level);
             }
@@ -46,7 +46,7 @@ public class OverlevelEnchantHelper {
         final Map<Enchantment, Integer> enchantments = EnchantmentHelper.getEnchantments(itemStack);
         final int level = enchantments.getOrDefault(Enchantments.BLOCK_FORTUNE, 0);
         enchantments.put(Enchantments.BLOCK_FORTUNE, level + amount);
-        EnchantmentHelper.setEnchantments((Map) enchantments, itemStack);
+        EnchantmentHelper.setEnchantments(enchantments, itemStack);
         return itemStack;
     }
 }

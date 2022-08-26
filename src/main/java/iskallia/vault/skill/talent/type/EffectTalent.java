@@ -83,7 +83,7 @@ public class EffectTalent extends PlayerTalent {
     }
 
     public Effect getEffect() {
-        return (Effect) Registry.MOB_EFFECT.get(new ResourceLocation(this.effect));
+        return Registry.MOB_EFFECT.get(new ResourceLocation(this.effect));
     }
 
     public int getAmplifier() {
@@ -108,9 +108,9 @@ public class EffectTalent extends PlayerTalent {
         if (player.level.isClientSide || event.phase == TickEvent.Phase.START) {
             return;
         }
-        final Collection<Effect> immunities = getImmunities((LivingEntity) player);
+        final Collection<Effect> immunities = getImmunities(player);
         final Map<Effect, CombinedEffects> effectMap = getEffectData(player, (ServerWorld) player.getCommandSenderWorld(), effect -> !immunities.contains(effect));
-        applyEffects((LivingEntity) player, effectMap);
+        applyEffects(player, effectMap);
     }
 
     public static void applyEffects(final LivingEntity entity, final Map<Effect, CombinedEffects> effects) {
@@ -171,7 +171,7 @@ public class EffectTalent extends PlayerTalent {
                     if (!(node2.getAbility() instanceof GhostWalkAbility)) {
                         continue;
                     }
-                    final AbilityConfig cfg = (AbilityConfig) node2.getAbilityConfig();
+                    final AbilityConfig cfg = node2.getAbilityConfig();
                     if (!(cfg instanceof GhostWalkRegenerationConfig)) {
                         continue;
                     }
@@ -232,7 +232,7 @@ public class EffectTalent extends PlayerTalent {
             }
             return;
         });
-        effectMap.values().forEach(rec$ -> ((CombinedEffects) rec$).finish());
+        effectMap.values().forEach(rec$ -> rec$.finish());
         return effectMap;
     }
 
@@ -253,7 +253,7 @@ public class EffectTalent extends PlayerTalent {
                 }
             }
         }
-        effectMap.values().forEach(rec$ -> ((CombinedEffects) rec$).finish());
+        effectMap.values().forEach(rec$ -> rec$.finish());
         return effectMap;
     }
 
@@ -285,7 +285,7 @@ public class EffectTalent extends PlayerTalent {
         public final boolean showParticles;
         public final boolean showIcon;
 
-        private Type(final String name, final boolean showParticles, final boolean showIcon) {
+        Type(final String name, final boolean showParticles, final boolean showIcon) {
             this.name = name;
             this.showParticles = showParticles;
             this.showIcon = showIcon;
@@ -312,7 +312,7 @@ public class EffectTalent extends PlayerTalent {
         private static final Map<String, Operator> STRING_TO_TYPE;
         public final String name;
 
-        private Operator(final String name) {
+        Operator(final String name) {
             this.name = name;
         }
 

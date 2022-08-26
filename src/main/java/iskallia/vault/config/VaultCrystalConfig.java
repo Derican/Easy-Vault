@@ -13,7 +13,7 @@ public class VaultCrystalConfig extends Config {
     public int EPIC_WEIGHT;
     @Expose
     public int OMEGA_WEIGHT;
-    private Random rand;
+    private final Random rand;
 
     public VaultCrystalConfig() {
         this.rand = new Random();

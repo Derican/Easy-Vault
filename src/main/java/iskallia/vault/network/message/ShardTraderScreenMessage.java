@@ -22,7 +22,7 @@ public class ShardTraderScreenMessage {
         final NetworkEvent.Context context = contextSupplier.get();
         context.enqueueWork(() -> {
             final ServerWorld sWorld = context.getSender().getLevel();
-            final RegistryKey<World> dimKey = (RegistryKey<World>) sWorld.dimension();
+            final RegistryKey<World> dimKey = sWorld.dimension();
             if (dimKey == Vault.VAULT_KEY) {
                 return;
             } else {

@@ -53,12 +53,12 @@ public class KillTheBossObjective extends VaultObjective {
     public void tick(final VaultRaid vault, final PlayerFilter filter, final ServerWorld world) {
         super.tick(vault, filter, world);
         if (this.bossId == null) {
-            final EyesoreEntity boss = (EyesoreEntity) ModEntities.EYESORE.create((World) world);
+            final EyesoreEntity boss = ModEntities.EYESORE.create(world);
             final Optional<VaultPiece> room = vault.getGenerator().getPieces(FinalVaultBoss.class).stream().findFirst();
             if (room.isPresent()) {
                 final Vector3i pos = room.get().getCenter();
                 boss.moveTo(pos.getX() + 0.5, pos.getY() + 0.2, pos.getZ() + 0.5, 0.0f, 0.0f);
-                world.addWithUUID((Entity) boss);
+                world.addWithUUID(boss);
                 this.bossId = boss.getUUID();
             } else {
                 this.bossDead = true;
@@ -88,13 +88,13 @@ public class KillTheBossObjective extends VaultObjective {
 
     @Override
     public ITextComponent getObjectiveDisplayName() {
-        return (ITextComponent) new StringTextComponent("Kill the Boss").withStyle(TextFormatting.OBFUSCATED);
+        return new StringTextComponent("Kill the Boss").withStyle(TextFormatting.OBFUSCATED);
     }
 
     @Nullable
     @Override
     public ITextComponent getObjectiveTargetDescription(final int amount) {
-        return (ITextComponent) new StringTextComponent("Kill the Boss").withStyle(TextFormatting.OBFUSCATED);
+        return new StringTextComponent("Kill the Boss").withStyle(TextFormatting.OBFUSCATED);
     }
 
     @Nullable

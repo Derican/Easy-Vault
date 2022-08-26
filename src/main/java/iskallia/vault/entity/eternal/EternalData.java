@@ -187,7 +187,7 @@ public class EternalData implements INBTSerializable<CompoundNBT>, EternalDataAc
     }
 
     public Map<EquipmentSlotType, ItemStack> getEquipment() {
-        return Collections.unmodifiableMap((Map<? extends EquipmentSlotType, ? extends ItemStack>) this.equipment);
+        return Collections.unmodifiableMap(this.equipment);
     }
 
     public ItemStack getStack(final EquipmentSlotType slot) {
@@ -200,7 +200,7 @@ public class EternalData implements INBTSerializable<CompoundNBT>, EternalDataAc
     }
 
     public Map<Attribute, Float> getEntityAttributes() {
-        return Collections.unmodifiableMap((Map<? extends Attribute, ? extends Float>) this.attributes.getAttributes());
+        return Collections.unmodifiableMap(this.attributes.getAttributes());
     }
 
     public EquipmentInventory getEquipmentInventory(final Runnable onChange) {
@@ -214,17 +214,17 @@ public class EternalData implements INBTSerializable<CompoundNBT>, EternalDataAc
         nbt.putString("originalName", this.getOriginalName());
         nbt.putLong("eternalSeed", this.getSeed());
         final CompoundNBT tag = new CompoundNBT();
-        this.equipment.forEach((slot, stack) -> tag.put(slot.getName(), (INBT) stack.serializeNBT()));
-        nbt.put("equipment", (INBT) tag);
+        this.equipment.forEach((slot, stack) -> tag.put(slot.getName(), stack.serializeNBT()));
+        nbt.put("equipment", tag);
         if (this.getAura() != null) {
-            nbt.put("ability", (INBT) this.getAura().serializeNBT());
+            nbt.put("ability", this.getAura().serializeNBT());
         }
         nbt.putInt("level", this.level);
         nbt.putInt("usedLevels", this.usedLevels);
         nbt.putInt("levelExp", this.levelExp);
         nbt.putBoolean("alive", this.alive);
         nbt.putBoolean("ancient", this.ancient);
-        nbt.put("attributes", (INBT) this.attributes.serializeNBT());
+        nbt.put("attributes", this.attributes.serializeNBT());
         return nbt;
     }
 

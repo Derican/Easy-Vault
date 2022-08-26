@@ -41,8 +41,8 @@ public class SoulShardConfig extends Config {
     protected void reset() {
         this.shardTradePrice = 1000;
         this.shardTrades.clear();
-        this.shardTrades.add(new ShardTrade(new SingleItemEntry((IItemProvider) ModItems.SKILL_ESSENCE), 1500, 2500), 1);
-        this.shardTrades.add(new ShardTrade(new SingleItemEntry((IItemProvider) ModItems.STAR_ESSENCE), 900, 1200), 1);
+        this.shardTrades.add(new ShardTrade(new SingleItemEntry(ModItems.SKILL_ESSENCE), 1500, 2500), 1);
+        this.shardTrades.add(new ShardTrade(new SingleItemEntry(ModItems.STAR_ESSENCE), 900, 1200), 1);
         this.defaultShardDrops = new DropRange(1, 1, 1.0f);
         this.shardDrops.clear();
         this.shardDrops.put(EntityType.ZOMBIE.getRegistryName().toString(), new DropRange(1, 1, 0.5f));

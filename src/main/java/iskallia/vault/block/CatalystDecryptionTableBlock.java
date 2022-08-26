@@ -89,7 +89,7 @@ public class CatalystDecryptionTableBlock extends Block {
             if (tileentity instanceof CatalystDecryptionTableTileEntity) {
                 tileentity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(handler -> {
                     for (int i = 0; i < handler.getSlots(); ++i) {
-                        InventoryHelper.dropItemStack(worldIn, (double) pos.getX(), (double) pos.getY(), (double) pos.getZ(), handler.getStackInSlot(i));
+                        InventoryHelper.dropItemStack(worldIn, pos.getX(), pos.getY(), pos.getZ(), handler.getStackInSlot(i));
                     }
                 });
             }
@@ -114,7 +114,7 @@ public class CatalystDecryptionTableBlock extends Block {
     }
 
     protected void createBlockStateDefinition(final StateContainer.Builder<Block, BlockState> builder) {
-        builder.add(new Property[]{CatalystDecryptionTableBlock.FACING});
+        builder.add(CatalystDecryptionTableBlock.FACING);
     }
 
     public boolean hasTileEntity(final BlockState state) {

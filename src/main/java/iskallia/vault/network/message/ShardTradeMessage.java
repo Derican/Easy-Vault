@@ -49,9 +49,9 @@ public class ShardTradeMessage {
         buffer.writeLong(message.seed);
         buffer.writeInt(message.availableTrades.size());
         message.availableTrades.forEach((index, tradeTpl) -> {
-            buffer.writeInt((int) index);
-            buffer.writeItem((ItemStack) tradeTpl.getA());
-            buffer.writeInt((int) tradeTpl.getB());
+            buffer.writeInt(index);
+            buffer.writeItem(tradeTpl.getA());
+            buffer.writeInt(tradeTpl.getB());
         });
     }
 

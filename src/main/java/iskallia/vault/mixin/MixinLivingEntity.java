@@ -39,7 +39,7 @@ public abstract class MixinLivingEntity extends Entity {
     protected static EntitySize SLEEPING_DIMENSIONS;
 
     public MixinLivingEntity(final EntityType<?> entityType, final World world) {
-        super((EntityType) entityType, world);
+        super(entityType, world);
         this.prevSize = -1.0f;
     }
 
@@ -119,7 +119,7 @@ public abstract class MixinLivingEntity extends Entity {
 
     @Inject(method = {"checkTotemDeathProtection"}, at = {@At(value = "RETURN", ordinal = 1)}, cancellable = true)
     private void checkTotemDeathProtection(final DamageSource damageSourceIn, final CallbackInfoReturnable<Boolean> cir) {
-        if ((boolean) cir.getReturnValue() || damageSourceIn.isBypassInvul()) {
+        if (cir.getReturnValue() || damageSourceIn.isBypassInvul()) {
             return;
         }
         ItemStack idol = ItemStack.EMPTY;
@@ -142,7 +142,7 @@ public abstract class MixinLivingEntity extends Entity {
             ((LivingEntity) (Object) this).addEffect(new EffectInstance(Effects.REGENERATION, 900, 1));
             ((LivingEntity) (Object) this).addEffect(new EffectInstance(Effects.ABSORPTION, 100, 1));
             ((LivingEntity) (Object) this).addEffect(new EffectInstance(Effects.FIRE_RESISTANCE, 800, 0));
-            this.level.broadcastEntityEvent((Entity) this, (byte) 35);
+            this.level.broadcastEntityEvent(this, (byte) 35);
             cir.setReturnValue(true);
         }
     }

@@ -6,7 +6,7 @@ import java.util.HashMap;
 
 public class VaultCharmConfig extends Config {
     @Expose
-    private HashMap<Integer, Integer> tierMultipliers;
+    private final HashMap<Integer, Integer> tierMultipliers;
 
     public VaultCharmConfig() {
         this.tierMultipliers = new HashMap<Integer, Integer>();

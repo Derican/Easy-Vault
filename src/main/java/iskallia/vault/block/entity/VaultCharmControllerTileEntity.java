@@ -20,12 +20,12 @@ import javax.annotation.Nullable;
 
 public class VaultCharmControllerTileEntity extends TileEntity implements INamedContainerProvider {
     public VaultCharmControllerTileEntity() {
-        super((TileEntityType) ModBlocks.VAULT_CHARM_CONTROLLER_TILE_ENTITY);
+        super(ModBlocks.VAULT_CHARM_CONTROLLER_TILE_ENTITY);
     }
 
     @Nonnull
     public ITextComponent getDisplayName() {
-        return (ITextComponent) new StringTextComponent("Vault Charm Inscription Table");
+        return new StringTextComponent("Vault Charm Inscription Table");
     }
 
     @Nullable

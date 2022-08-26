@@ -78,7 +78,7 @@ public class VaultCrystalCatalystConfig extends Config {
         public IFormattableTextComponent getDisplayName() {
             final StringTextComponent cmp = new StringTextComponent(this.displayName);
             cmp.setStyle(Style.EMPTY.withColor(Color.fromRgb(this.color)));
-            return (IFormattableTextComponent) cmp;
+            return cmp;
         }
 
         @Nullable

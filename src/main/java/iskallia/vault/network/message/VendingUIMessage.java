@@ -66,6 +66,6 @@ public class VendingUIMessage {
 
     public enum Opcode {
         SELECT_TRADE,
-        EJECT_CORE;
+        EJECT_CORE
     }
 }

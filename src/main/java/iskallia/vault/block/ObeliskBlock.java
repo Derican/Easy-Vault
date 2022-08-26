@@ -57,7 +57,7 @@ public class ObeliskBlock extends Block {
 
     public ObeliskBlock() {
         super(AbstractBlock.Properties.of(Material.STONE).sound(SoundType.METAL).strength(-1.0f, 3600000.0f).noDrops());
-        this.registerDefaultState((BlockState) ((BlockState) ((BlockState) this.stateDefinition.any()).setValue((Property) ObeliskBlock.HALF, (Comparable) DoubleBlockHalf.LOWER)).setValue((Property) ObeliskBlock.COMPLETION, (Comparable) 0));
+        this.registerDefaultState(this.stateDefinition.any().setValue((Property) ObeliskBlock.HALF, (Comparable) DoubleBlockHalf.LOWER).setValue((Property) ObeliskBlock.COMPLETION, (Comparable) 0));
     }
 
     public VoxelShape getShape(final BlockState state, final IBlockReader worldIn, final BlockPos pos, final ISelectionContext context) {
@@ -82,7 +82,7 @@ public class ObeliskBlock extends Block {
     public ActionResultType use(final BlockState state, final World world, final BlockPos pos, final PlayerEntity player, final Hand hand, final BlockRayTraceResult hit) {
         if (state.getValue((Property) ObeliskBlock.HALF) != DoubleBlockHalf.UPPER) {
             if ((int) state.getValue((Property) ObeliskBlock.COMPLETION) != 4 && this.newBlockActivated(state, world, pos, player, hand, hit)) {
-                final BlockState newState = (BlockState) state.setValue((Property) ObeliskBlock.COMPLETION, (Comparable) 4);
+                final BlockState newState = state.setValue((Property) ObeliskBlock.COMPLETION, (Comparable) 4);
                 world.setBlockAndUpdate(pos, newState);
                 this.spawnParticles(world, pos);
             }
@@ -142,11 +142,11 @@ public class ObeliskBlock extends Block {
             final double d3 = world.random.nextGaussian() * 0.02;
             ((ServerWorld) world).sendParticles((IParticleData) ParticleTypes.POOF, pos.getX() + world.random.nextDouble() - d0, pos.getY() + world.random.nextDouble() - d2, pos.getZ() + world.random.nextDouble() - d3, 10, d0, d2, d3, 1.0);
         }
-        world.playSound((PlayerEntity) null, pos, SoundEvents.CONDUIT_ACTIVATE, SoundCategory.BLOCKS, 1.0f, 1.0f);
+        world.playSound(null, pos, SoundEvents.CONDUIT_ACTIVATE, SoundCategory.BLOCKS, 1.0f, 1.0f);
     }
 
     protected void createBlockStateDefinition(final StateContainer.Builder<Block, BlockState> builder) {
-        builder.add(new Property[]{(Property) ObeliskBlock.HALF}).add(new Property[]{(Property) ObeliskBlock.COMPLETION});
+        builder.add(new Property[]{ObeliskBlock.HALF}).add(ObeliskBlock.COMPLETION);
     }
 
     public void onRemove(final BlockState state, final World world, final BlockPos pos, final BlockState newState, final boolean isMoving) {

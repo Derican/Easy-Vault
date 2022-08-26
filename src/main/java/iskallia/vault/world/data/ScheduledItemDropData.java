@@ -86,10 +86,10 @@ public class ScheduledItemDropData extends WorldSavedData {
         this.scheduledItems.forEach((uuid, drops) -> {
             final ListNBT dropsList = new ListNBT();
             drops.forEach(stack -> dropsList.add(stack.serializeNBT()));
-            savTag.put(uuid.toString(), (INBT) dropsList);
+            savTag.put(uuid.toString(), dropsList);
             return;
         });
-        tag.put("drops", (INBT) savTag);
+        tag.put("drops", savTag);
         return tag;
     }
 

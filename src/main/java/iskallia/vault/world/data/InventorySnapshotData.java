@@ -74,7 +74,7 @@ public abstract class InventorySnapshotData extends WorldSavedData {
     }
 
     public CompoundNBT save(final CompoundNBT compound) {
-        compound.put("Players", (INBT) this.snapshotData.serializeNBT());
+        compound.put("Players", this.snapshotData.serializeNBT());
         return compound;
     }
 
@@ -157,11 +157,11 @@ public abstract class InventorySnapshotData extends WorldSavedData {
 
         public CompoundNBT serializeNBT() {
             final CompoundNBT nbt = new CompoundNBT();
-            nbt.put("InvIds", (INBT) this.invIds.serializeNBT());
-            nbt.put("Items", (INBT) this.items.serializeNBT());
+            nbt.put("InvIds", this.invIds.serializeNBT());
+            nbt.put("Items", this.items.serializeNBT());
             final CompoundNBT customData = new CompoundNBT();
             this.customInventoryData.forEach((BiConsumer<? super String, ? super CompoundNBT>) customData::put);
-            nbt.put("customData", (INBT) customData);
+            nbt.put("customData", customData);
             nbt.putBoolean("removeSnapshotItems", this.removeSnapshotItems);
             nbt.putBoolean("replaceExisting", this.replaceExisting);
             return nbt;

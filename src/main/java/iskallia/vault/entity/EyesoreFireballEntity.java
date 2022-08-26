@@ -33,21 +33,21 @@ public class EyesoreFireballEntity extends ProjectileItemEntity
     public int explosionPower;
     
     public EyesoreFireballEntity(final EntityType<? extends ProjectileItemEntity> type, final World world) {
-        super((EntityType)type, world);
+        super(type, world);
         this.explosionPower = 1;
-        this.setItem(new ItemStack((IItemProvider)Items.FIRE_CHARGE));
+        this.setItem(new ItemStack(Items.FIRE_CHARGE));
     }
     
     public EyesoreFireballEntity(final World world, final LivingEntity thrower) {
-        super((EntityType)ModEntities.EYESORE_FIREBALL, thrower, world);
+        super(ModEntities.EYESORE_FIREBALL, thrower, world);
         this.explosionPower = 1;
-        this.setItem(new ItemStack((IItemProvider)Items.FIRE_CHARGE));
+        this.setItem(new ItemStack(Items.FIRE_CHARGE));
     }
     
     protected void onHit(final RayTraceResult result) {
         super.onHit(result);
         if (!this.level.isClientSide) {
-            this.level.explode((Entity)null, this.getX(), this.getY(), this.getZ(), (float)this.explosionPower, Explosion.Mode.NONE);
+            this.level.explode(null, this.getX(), this.getY(), this.getZ(), (float)this.explosionPower, Explosion.Mode.NONE);
             this.remove();
         }
     }
@@ -57,7 +57,7 @@ public class EyesoreFireballEntity extends ProjectileItemEntity
         if (!this.level.isClientSide) {
             final Entity target = result.getEntity();
             final Entity shooter = this.getOwner();
-            final DamageSource source = new IndirectEntityDamageSource("fireball", (Entity)this, shooter).setMagic();
+            final DamageSource source = new IndirectEntityDamageSource("fireball", this, shooter).setMagic();
             final float damage = ModConfigs.EYESORE.basicAttack.getDamage(this);
             target.hurt(source, damage);
             if (shooter instanceof LivingEntity) {
@@ -76,9 +76,9 @@ public class EyesoreFireballEntity extends ProjectileItemEntity
     public void playEffects() {
         final Vector3d vec = this.position();
         for (int i = 0; i < 5; ++i) {
-            final Vector3d v = vec.add((double)(this.random.nextFloat() * 0.4f * (this.random.nextBoolean() ? 1 : -1)), (double)(this.random.nextFloat() * 0.4f * (this.random.nextBoolean() ? 1 : -1)), (double)(this.random.nextFloat() * 0.4f * (this.random.nextBoolean() ? 1 : -1)));
-            this.level.addParticle((IParticleData)ModParticles.RED_FLAME.get(), v.x, v.y, v.z, 0.0, 0.0, 0.0);
-            this.level.addParticle((IParticleData)ParticleTypes.FLAME, v.x, v.y, v.z, 0.0, 0.0, 0.0);
+            final Vector3d v = vec.add(this.random.nextFloat() * 0.4f * (this.random.nextBoolean() ? 1 : -1), this.random.nextFloat() * 0.4f * (this.random.nextBoolean() ? 1 : -1), this.random.nextFloat() * 0.4f * (this.random.nextBoolean() ? 1 : -1));
+            this.level.addParticle(ModParticles.RED_FLAME.get(), v.x, v.y, v.z, 0.0, 0.0, 0.0);
+            this.level.addParticle(ParticleTypes.FLAME, v.x, v.y, v.z, 0.0, 0.0, 0.0);
         }
     }
     
@@ -111,6 +111,6 @@ public class EyesoreFireballEntity extends ProjectileItemEntity
     }
     
     public IPacket<?> getAddEntityPacket() {
-        return (IPacket<?>)NetworkHooks.getEntitySpawningPacket((Entity)this);
+        return NetworkHooks.getEntitySpawningPacket(this);
     }
 }

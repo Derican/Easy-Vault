@@ -29,7 +29,7 @@ public class ExecuteAbility<C extends ExecuteConfig> extends AbilityEffect<C> {
             return false;
         }
         final EffectInstance newEffect = new EffectInstance(config.getEffect(), config.getEffectDuration(), config.getAmplifier(), false, config.getType().showParticles, config.getType().showIcon);
-        player.level.playSound((PlayerEntity) player, player.getX(), player.getY(), player.getZ(), ModSounds.EXECUTION_SFX, SoundCategory.PLAYERS, 0.4f, 1.0f);
+        player.level.playSound(player, player.getX(), player.getY(), player.getZ(), ModSounds.EXECUTION_SFX, SoundCategory.PLAYERS, 0.4f, 1.0f);
         player.playNotifySound(ModSounds.EXECUTION_SFX, SoundCategory.PLAYERS, 0.4f, 1.0f);
         player.addEffect(newEffect);
         return false;
@@ -67,7 +67,7 @@ public class ExecuteAbility<C extends ExecuteConfig> extends AbilityEffect<C> {
         event.setAmount(event.getAmount() + dmgDealt);
         player.getMainHandItem().hurtAndBreak(1, (LivingEntity) player, playerEntity -> {
         });
-        player.level.playSound((PlayerEntity) null, player.getX(), player.getY(), player.getZ(), SoundEvents.EVOKER_CAST_SPELL, SoundCategory.MASTER, 1.0f, 1.0f);
+        player.level.playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.EVOKER_CAST_SPELL, SoundCategory.MASTER, 1.0f, 1.0f);
         if (this.removeEffect(cfg)) {
             player.removeEffect(ModEffects.EXECUTE);
         } else {

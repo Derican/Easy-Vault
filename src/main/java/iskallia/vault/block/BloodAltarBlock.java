@@ -23,12 +23,12 @@ import javax.annotation.Nonnull;
 public class BloodAltarBlock extends FillableAltarBlock<BloodAltarTileEntity> {
     @Override
     public BloodAltarTileEntity createTileEntity(final BlockState state, final IBlockReader world) {
-        return (BloodAltarTileEntity) ModBlocks.BLOOD_ALTAR_TILE_ENTITY.create();
+        return ModBlocks.BLOOD_ALTAR_TILE_ENTITY.create();
     }
 
     @Override
     public IParticleData getFlameParticle() {
-        return (IParticleData) ModParticles.GREEN_FLAME.get();
+        return ModParticles.GREEN_FLAME.get();
     }
 
     @Override
@@ -53,13 +53,13 @@ public class BloodAltarBlock extends FillableAltarBlock<BloodAltarTileEntity> {
             });
             return ActionResultType.SUCCESS;
         }
-        EntityHelper.changeHealth((LivingEntity) player, -2);
+        EntityHelper.changeHealth(player, -2);
         tileEntity.makeProgress(player, 1, sPlayer -> {
             final PlayerFavourData data = PlayerFavourData.get(sPlayer.getLevel());
-            if (BloodAltarBlock.rand.nextFloat() < FillableAltarBlock.getFavourChance((PlayerEntity) sPlayer, PlayerFavourData.VaultGodType.BENEVOLENT)) {
+            if (BloodAltarBlock.rand.nextFloat() < FillableAltarBlock.getFavourChance(sPlayer, PlayerFavourData.VaultGodType.BENEVOLENT)) {
                 final PlayerFavourData.VaultGodType vg = this.getAssociatedVaultGod();
-                if (data.addFavour((PlayerEntity) sPlayer, vg, 1)) {
-                    data.addFavour((PlayerEntity) sPlayer, vg.getOther(BloodAltarBlock.rand), -1);
+                if (data.addFavour(sPlayer, vg, 1)) {
+                    data.addFavour(sPlayer, vg.getOther(BloodAltarBlock.rand), -1);
                     FillableAltarBlock.playFavourInfo(sPlayer);
                 }
             }

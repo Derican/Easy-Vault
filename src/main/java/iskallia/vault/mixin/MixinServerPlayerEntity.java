@@ -31,6 +31,6 @@ public abstract class MixinServerPlayerEntity extends PlayerEntity
     @Redirect(method = { "restoreFrom" }, at = @At(value = "INVOKE", target = "Lnet/minecraft/world/GameRules;getBoolean(Lnet/minecraft/world/GameRules$RuleKey;)Z"))
     public boolean yes(final GameRules instance, final GameRules.RuleKey<GameRules.BooleanValue> key) {
         final VaultRaid vault = VaultRaidData.get(this.getLevel()).getActiveFor(this.getUUID());
-        return vault != null || instance.getBoolean((GameRules.RuleKey)key);
+        return vault != null || instance.getBoolean(key);
     }
 }

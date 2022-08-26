@@ -47,13 +47,13 @@ public class CrystalCommand extends Command {
         builder.then(Commands.literal("objectiveCount").then(Commands.argument("count", (ArgumentType) IntegerArgumentType.integer(1)).executes(this::setObjectiveCount)));
         builder.then(Commands.literal("objective").then(Commands.argument("crystalObjective", (ArgumentType) StringArgumentType.string()).executes(this::setObjective)));
         builder.then(Commands.literal("clearObjective").executes(this::clearObjective));
-        builder.then(Commands.literal("type").then(Commands.argument("crystalType", (ArgumentType) EnumArgument.enumArgument((Class) CrystalData.Type.class)).executes(this::setType)));
+        builder.then(Commands.literal("type").then(Commands.argument("crystalType", EnumArgument.enumArgument((Class) CrystalData.Type.class)).executes(this::setType)));
     }
 
     private int canGenerateTreasureRooms(final CommandContext<CommandSource> ctx) throws CommandSyntaxException {
         final ItemStack crystal = this.getCrystal(ctx);
         final CrystalData data = VaultCrystalItem.getData(crystal);
-        final boolean generateTreasureRooms = BoolArgumentType.getBool((CommandContext) ctx, "generate");
+        final boolean generateTreasureRooms = BoolArgumentType.getBool(ctx, "generate");
         data.setCanGenerateTreasureRooms(generateTreasureRooms);
         return 0;
     }
@@ -61,7 +61,7 @@ public class CrystalCommand extends Command {
     private int setCanTriggerInfluences(final CommandContext<CommandSource> ctx) throws CommandSyntaxException {
         final ItemStack crystal = this.getCrystal(ctx);
         final CrystalData data = VaultCrystalItem.getData(crystal);
-        final boolean triggerInfluences = BoolArgumentType.getBool((CommandContext) ctx, "trigger");
+        final boolean triggerInfluences = BoolArgumentType.getBool(ctx, "trigger");
         data.setCanTriggerInfluences(triggerInfluences);
         return 0;
     }
@@ -69,7 +69,7 @@ public class CrystalCommand extends Command {
     private int setRollsRandom(final CommandContext<CommandSource> ctx) throws CommandSyntaxException {
         final ItemStack crystal = this.getCrystal(ctx);
         final CrystalData data = VaultCrystalItem.getData(crystal);
-        final boolean randomModifiers = BoolArgumentType.getBool((CommandContext) ctx, "random");
+        final boolean randomModifiers = BoolArgumentType.getBool(ctx, "random");
         data.setPreventsRandomModifiers(randomModifiers);
         return 0;
     }
@@ -77,7 +77,7 @@ public class CrystalCommand extends Command {
     private int setModifiable(final CommandContext<CommandSource> ctx) throws CommandSyntaxException {
         final ItemStack crystal = this.getCrystal(ctx);
         final CrystalData data = VaultCrystalItem.getData(crystal);
-        final boolean modifiable = BoolArgumentType.getBool((CommandContext) ctx, "modifiable");
+        final boolean modifiable = BoolArgumentType.getBool(ctx, "modifiable");
         data.setModifiable(modifiable);
         return 0;
     }
@@ -85,12 +85,12 @@ public class CrystalCommand extends Command {
     private int addRoom(final CommandContext<CommandSource> ctx) throws CommandSyntaxException {
         final ItemStack crystal = this.getCrystal(ctx);
         final CrystalData data = VaultCrystalItem.getData(crystal);
-        final String roomKey = StringArgumentType.getString((CommandContext) ctx, "roomKey");
+        final String roomKey = StringArgumentType.getString(ctx, "roomKey");
         if (VaultRoomNames.getName(roomKey) == null) {
-            ((CommandSource) ctx.getSource()).getPlayerOrException().sendMessage((ITextComponent) new StringTextComponent("Unknown Room: " + roomKey), Util.NIL_UUID);
+            ctx.getSource().getPlayerOrException().sendMessage(new StringTextComponent("Unknown Room: " + roomKey), Util.NIL_UUID);
             return 0;
         }
-        for (int amount = IntegerArgumentType.getInteger((CommandContext) ctx, "amount"), i = 0; i < amount; ++i) {
+        for (int amount = IntegerArgumentType.getInteger(ctx, "amount"), i = 0; i < amount; ++i) {
             data.addGuaranteedRoom(roomKey);
         }
         return 0;
@@ -99,10 +99,10 @@ public class CrystalCommand extends Command {
     private int addModifier(final CommandContext<CommandSource> ctx) throws CommandSyntaxException {
         final ItemStack crystal = this.getCrystal(ctx);
         final CrystalData data = VaultCrystalItem.getData(crystal);
-        final String modifierStr = StringArgumentType.getString((CommandContext) ctx, "modifier");
+        final String modifierStr = StringArgumentType.getString(ctx, "modifier");
         final VaultModifier modifier = ModConfigs.VAULT_MODIFIERS.getByName(modifierStr);
         if (modifier == null) {
-            ((CommandSource) ctx.getSource()).getPlayerOrException().sendMessage((ITextComponent) new StringTextComponent("Unknown Modifier: " + modifierStr), Util.NIL_UUID);
+            ctx.getSource().getPlayerOrException().sendMessage(new StringTextComponent("Unknown Modifier: " + modifierStr), Util.NIL_UUID);
             return 0;
         }
         data.addModifier(modifierStr);
@@ -112,7 +112,7 @@ public class CrystalCommand extends Command {
     private int setObjectiveCount(final CommandContext<CommandSource> ctx) throws CommandSyntaxException {
         final ItemStack crystal = this.getCrystal(ctx);
         final CrystalData data = VaultCrystalItem.getData(crystal);
-        final int count = IntegerArgumentType.getInteger((CommandContext) ctx, "count");
+        final int count = IntegerArgumentType.getInteger(ctx, "count");
         data.setTargetObjectiveCount(count);
         return 0;
     }
@@ -127,11 +127,11 @@ public class CrystalCommand extends Command {
     private int setObjective(final CommandContext<CommandSource> ctx) throws CommandSyntaxException {
         final ItemStack crystal = this.getCrystal(ctx);
         final CrystalData data = VaultCrystalItem.getData(crystal);
-        final String objectiveStr = StringArgumentType.getString((CommandContext) ctx, "crystalObjective");
+        final String objectiveStr = StringArgumentType.getString(ctx, "crystalObjective");
         VaultRaid.ARCHITECT_EVENT.get();
         final VaultObjective objective = VaultObjective.getObjective(new ResourceLocation(objectiveStr));
         if (objective == null) {
-            ((CommandSource) ctx.getSource()).getPlayerOrException().sendMessage((ITextComponent) new StringTextComponent("Unknown Objective: " + objectiveStr), Util.NIL_UUID);
+            ctx.getSource().getPlayerOrException().sendMessage(new StringTextComponent("Unknown Objective: " + objectiveStr), Util.NIL_UUID);
             return 0;
         }
         data.setSelectedObjective(objective.getId());
@@ -143,7 +143,7 @@ public class CrystalCommand extends Command {
         final CrystalData data = VaultCrystalItem.getData(crystal);
         final CrystalData.Type type = (CrystalData.Type) ctx.getArgument("crystalType", (Class) CrystalData.Type.class);
         if (type == CrystalData.Type.RAFFLE) {
-            data.setPlayerBossName(((CommandSource) ctx.getSource()).getPlayerOrException().getName().getString());
+            data.setPlayerBossName(ctx.getSource().getPlayerOrException().getName().getString());
         } else {
             if (data.getPlayerBossName() != null) {
                 data.setPlayerBossName("");
@@ -154,10 +154,10 @@ public class CrystalCommand extends Command {
     }
 
     private ItemStack getCrystal(final CommandContext<CommandSource> ctx) throws CommandSyntaxException {
-        final ServerPlayerEntity player = ((CommandSource) ctx.getSource()).getPlayerOrException();
+        final ServerPlayerEntity player = ctx.getSource().getPlayerOrException();
         final ItemStack held = player.getItemInHand(Hand.MAIN_HAND);
         if (held.isEmpty() || !(held.getItem() instanceof VaultCrystalItem)) {
-            player.sendMessage((ITextComponent) new StringTextComponent("Not holding crystal!"), Util.NIL_UUID);
+            player.sendMessage(new StringTextComponent("Not holding crystal!"), Util.NIL_UUID);
             throw new RuntimeException();
         }
         return held;

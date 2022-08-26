@@ -12,7 +12,7 @@ public class SkillTreeContainer extends Container {
     private final TalentTree talentTree;
 
     public SkillTreeContainer(final int windowId, final AbilityTree abilityTree, final TalentTree talentTree) {
-        super((ContainerType) ModContainers.SKILL_TREE_CONTAINER, windowId);
+        super(ModContainers.SKILL_TREE_CONTAINER, windowId);
         this.abilityTree = abilityTree;
         this.talentTree = talentTree;
     }

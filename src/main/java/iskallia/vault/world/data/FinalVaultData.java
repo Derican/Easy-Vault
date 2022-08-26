@@ -15,7 +15,7 @@ import net.minecraft.world.storage.WorldSavedData;
 public class FinalVaultData extends WorldSavedData
 {
     protected static final String DATA_NAME = "the_vault_FinalVault";
-    private VMapNBT<UUID, Integer> timesCompleted;
+    private final VMapNBT<UUID, Integer> timesCompleted;
     
     public FinalVaultData() {
         super("the_vault_FinalVault");
@@ -36,7 +36,7 @@ public class FinalVaultData extends WorldSavedData
     }
     
     public CompoundNBT save(final CompoundNBT nbt) {
-        nbt.put("timesCompleted", (INBT)this.timesCompleted.serializeNBT());
+        nbt.put("timesCompleted", this.timesCompleted.serializeNBT());
         return nbt;
     }
     

@@ -45,8 +45,8 @@ public class EntityScaler {
         final ServerWorld sWorld = (ServerWorld) world;
         final MonsterEntity livingEntity = (MonsterEntity) entity;
         final GlobalDifficultyData.Difficulty difficulty = GlobalDifficultyData.get(sWorld).getVaultDifficulty();
-        vault.getProperties().getBase(VaultRaid.LEVEL).ifPresent(level -> setScaledEquipment((LivingEntity) livingEntity, vault, difficulty, level, new Random(), Type.MOB));
-        setScaled((Entity) livingEntity);
+        vault.getProperties().getBase(VaultRaid.LEVEL).ifPresent(level -> setScaledEquipment(livingEntity, vault, difficulty, level, new Random(), Type.MOB));
+        setScaled(livingEntity);
         livingEntity.setPersistenceRequired();
     }
 
@@ -60,7 +60,7 @@ public class EntityScaler {
 
     public static void setScaledEquipment(final LivingEntity entity, final VaultRaid vault, final GlobalDifficultyData.Difficulty vaultDifficulty, final int level, final Random random, final Type type) {
         final VaultMobsConfig.Level overrides = ModConfigs.VAULT_MOBS.getForLevel(level);
-        if (!isScaled((Entity) entity)) {
+        if (!isScaled(entity)) {
             VaultMobsConfig.Mob.scale(entity, vault, vaultDifficulty);
         }
         vault.getActiveObjective(ArchitectSummonAndKillBossesObjective.class).ifPresent(objective -> {
@@ -69,7 +69,7 @@ public class EntityScaler {
                 do {
                     randomId = UUID.randomUUID();
                 } while (entity.getAttributes().hasModifier(Attributes.MAX_HEALTH, randomId));
-                entity.getAttribute(Attributes.MAX_HEALTH).addPermanentModifier(new AttributeModifier(randomId, "Final Architect Health", (double)objective.getCombinedMobHealthMultiplier(), AttributeModifier.Operation.MULTIPLY_BASE));
+                entity.getAttribute(Attributes.MAX_HEALTH).addPermanentModifier(new AttributeModifier(randomId, "Final Architect Health", objective.getCombinedMobHealthMultiplier(), AttributeModifier.Operation.MULTIPLY_BASE));
             }
             entity.heal(1000000.0f);
         });
@@ -77,7 +77,7 @@ public class EntityScaler {
             if (slot.getType() != EquipmentSlotType.Group.HAND || entity.getItemBySlot(slot).isEmpty()) {
                 final ItemStack loot = type.loot.apply(overrides, slot);
                 for (int i = 0; i < type.trials.apply(overrides); ++i) {
-                    EnchantmentHelper.enchantItem(random, loot, EnchantmentHelper.getEnchantmentCost(random, (int) type.level.apply(overrides), 15, loot), true);
+                    EnchantmentHelper.enchantItem(random, loot, EnchantmentHelper.getEnchantmentCost(random, type.level.apply(overrides), 15, loot), true);
                 }
                 entity.setItemSlot(slot, loot);
                 if (entity instanceof MobEntity) {
@@ -96,7 +96,7 @@ public class EntityScaler {
         private final Function<VaultMobsConfig.Level, Integer> trials;
         private final Function<VaultMobsConfig.Level, Integer> level;
 
-        private Type(final BiFunction<VaultMobsConfig.Level, EquipmentSlotType, ItemStack> loot, final Function<VaultMobsConfig.Level, Integer> trials, final Function<VaultMobsConfig.Level, Integer> level) {
+        Type(final BiFunction<VaultMobsConfig.Level, EquipmentSlotType, ItemStack> loot, final Function<VaultMobsConfig.Level, Integer> trials, final Function<VaultMobsConfig.Level, Integer> level) {
             this.loot = loot;
             this.trials = trials;
             this.level = level;

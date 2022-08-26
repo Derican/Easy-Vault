@@ -39,7 +39,7 @@ public class VaultObeliskData extends VaultGoalData {
     @Override
     public void receive(final VaultGoalMessage pkt) {
         final CompoundNBT data = pkt.payload;
-        this.message = (ITextComponent) ITextComponent.Serializer.fromJson(data.getString("Message"));
+        this.message = ITextComponent.Serializer.fromJson(data.getString("Message"));
         if (data.contains("MaxObelisks", 3)) {
             this.maxObelisks = data.getInt("MaxObelisks");
         }

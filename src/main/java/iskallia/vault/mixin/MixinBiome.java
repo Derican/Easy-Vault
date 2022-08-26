@@ -35,7 +35,7 @@ public abstract class MixinBiome {
         }
         final ChunkPos startChunk = vault.getGenerator().getStartChunk();
         if ((pos.getX() >> 4 != startChunk.x || pos.getZ() >> 4 != startChunk.z) && worldGenRegion.getLevel().getChunkSource().hasChunk(startChunk.x, startChunk.z)) {
-            worldGenRegion.getLevel().getChunk(startChunk.x, startChunk.z).getAllStarts().values().forEach(start -> start.placeInChunk((ISeedReader) worldGenRegion, structureManager, chunkGenerator, (Random) rand, new MutableBoundingBox(pos.getX(), pos.getZ(), pos.getX() + 15, pos.getZ() + 15), new ChunkPos(pos)));
+            worldGenRegion.getLevel().getChunk(startChunk.x, startChunk.z).getAllStarts().values().forEach(start -> start.placeInChunk(worldGenRegion, structureManager, chunkGenerator, rand, new MutableBoundingBox(pos.getX(), pos.getZ(), pos.getX() + 15, pos.getZ() + 15), new ChunkPos(pos)));
         } else {
             Vault.LOGGER.error("Start chunk at [" + startChunk.x + ", " + startChunk.z + "] has no ticket. Failed to generate chunk [" + (pos.getX() >> 4) + ", " + (pos.getZ() >> 4) + "].");
         }

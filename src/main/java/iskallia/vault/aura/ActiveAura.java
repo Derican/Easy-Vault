@@ -30,7 +30,7 @@ public class ActiveAura {
     }
 
     public boolean isAffected(final Entity entity) {
-        final RegistryKey<World> entityWorld = (RegistryKey<World>) entity.getCommandSenderWorld().dimension();
+        final RegistryKey<World> entityWorld = entity.getCommandSenderWorld().dimension();
         if (!this.worldKey.equals(entityWorld)) {
             return false;
         }

@@ -216,11 +216,11 @@ public class RaidConfig extends Config {
 
     public static class ConfiguredWave {
         @Expose
-        private int min;
+        private final int min;
         @Expose
-        private int max;
+        private final int max;
         @Expose
-        private String mobPool;
+        private final String mobPool;
 
         public ConfiguredWave(final int min, final int max, final String mobPool) {
             this.min = min;

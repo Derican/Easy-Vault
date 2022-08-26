@@ -38,8 +38,8 @@ public class VaultCowOverrides {
             spawned.addTag("replaced_entity");
             return null;
         }
-        EntityScaler.scaleVaultEntity(vault, (Entity) spawned);
-        final AggressiveCowEntity override = (AggressiveCowEntity) ModEntities.AGGRESSIVE_COW.create((World) world);
+        EntityScaler.scaleVaultEntity(vault, spawned);
+        final AggressiveCowEntity override = ModEntities.AGGRESSIVE_COW.create(world);
         final AttributeModifierManager mgr = override.getAttributes();
         for (final Attribute attr : ForgeRegistries.ATTRIBUTES) {
             if (spawned.getAttributes().hasAttribute(attr) && mgr.hasAttribute(attr)) {

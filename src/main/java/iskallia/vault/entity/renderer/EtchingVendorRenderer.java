@@ -17,8 +17,8 @@ public class EtchingVendorRenderer extends MobRenderer<EtchingVendorEntity, Vill
 
     public EtchingVendorRenderer(final EntityRendererManager renderManagerIn) {
         super(renderManagerIn, new VillagerModel(0.0f), 0.5f);
-        this.addLayer((LayerRenderer) new HeadLayer((IEntityRenderer) this));
-        this.addLayer((LayerRenderer) new CrossedArmsItemLayer((IEntityRenderer) this));
+        this.addLayer(new HeadLayer(this));
+        this.addLayer(new CrossedArmsItemLayer(this));
     }
 
     public ResourceLocation getTextureLocation(final EtchingVendorEntity entity) {

@@ -17,7 +17,7 @@ public enum VaultLogic {
     private final VaultRaid.Factory factory;
     private final Supplier<Function<Integer, VaultObjective>> objectiveGenerator;
 
-    private VaultLogic(final VaultRaid.Factory factory, final Supplier<Function<Integer, VaultObjective>> objectiveGenerator) {
+    VaultLogic(final VaultRaid.Factory factory, final Supplier<Function<Integer, VaultObjective>> objectiveGenerator) {
         this.factory = factory;
         this.objectiveGenerator = objectiveGenerator;
     }

@@ -41,10 +41,10 @@ public class ItemRelicBoosterPack extends Item {
             ItemStack stackToDrop = ItemStack.EMPTY;
             if (rand == 99) {
                 final RelicPartItem randomPart = ModConfigs.VAULT_RELICS.getRandomPart();
-                stackToDrop = new ItemStack((IItemProvider) randomPart);
+                stackToDrop = new ItemStack(randomPart);
                 successEffects(world, player.position());
             } else if (rand == 98) {
-                stackToDrop = new ItemStack((IItemProvider) ModItems.MYSTERY_BOX);
+                stackToDrop = new ItemStack(ModItems.MYSTERY_BOX);
                 successEffects(world, player.position());
             } else if (rand == 97 && "architect_event".equals(getKey(heldStack))) {
                 stackToDrop = VaultCrystalItem.getCrystalWithObjective(VaultRaid.ARCHITECT_EVENT.get().getId());
@@ -61,19 +61,19 @@ public class ItemRelicBoosterPack extends Item {
             }
             heldStack.shrink(1);
         }
-        return (ActionResult<ItemStack>) super.use(world, player, hand);
+        return super.use(world, player, hand);
     }
 
     @OnlyIn(Dist.CLIENT)
     public void appendHoverText(final ItemStack stack, @Nullable final World world, final List<ITextComponent> tooltip, final ITooltipFlag flagIn) {
-        super.appendHoverText(stack, world, (List) tooltip, flagIn);
+        super.appendHoverText(stack, world, tooltip, flagIn);
         if ("architect_event".equals(getKey(stack))) {
-            tooltip.add((ITextComponent) new StringTextComponent("Architect").withStyle(TextFormatting.AQUA));
+            tooltip.add(new StringTextComponent("Architect").withStyle(TextFormatting.AQUA));
         }
     }
 
     public static ItemStack getArchitectBoosterPack() {
-        final ItemStack stack = new ItemStack((IItemProvider) ModItems.RELIC_BOOSTER_PACK);
+        final ItemStack stack = new ItemStack(ModItems.RELIC_BOOSTER_PACK);
         stack.getOrCreateTag().putString("eventKey", "architect_event");
         return stack;
     }
@@ -87,12 +87,12 @@ public class ItemRelicBoosterPack extends Item {
     }
 
     public static void successEffects(final World world, final Vector3d pos) {
-        world.playSound((PlayerEntity) null, pos.x, pos.y, pos.z, ModSounds.BOOSTER_PACK_SUCCESS_SFX, SoundCategory.PLAYERS, 1.0f, 1.0f);
+        world.playSound(null, pos.x, pos.y, pos.z, ModSounds.BOOSTER_PACK_SUCCESS_SFX, SoundCategory.PLAYERS, 1.0f, 1.0f);
         ((ServerWorld) world).sendParticles((IParticleData) ParticleTypes.DRAGON_BREATH, pos.x, pos.y, pos.z, 500, 1.0, 1.0, 1.0, 0.5);
     }
 
     public static void failureEffects(final World world, final Vector3d pos) {
-        world.playSound((PlayerEntity) null, pos.x, pos.y, pos.z, ModSounds.BOOSTER_PACK_FAIL_SFX, SoundCategory.PLAYERS, 1.0f, 1.0f);
+        world.playSound(null, pos.x, pos.y, pos.z, ModSounds.BOOSTER_PACK_FAIL_SFX, SoundCategory.PLAYERS, 1.0f, 1.0f);
         ((ServerWorld) world).sendParticles((IParticleData) ParticleTypes.SMOKE, pos.x, pos.y, pos.z, 500, 1.0, 1.0, 1.0, 0.5);
     }
 }

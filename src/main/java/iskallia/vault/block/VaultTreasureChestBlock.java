@@ -30,7 +30,7 @@ public class VaultTreasureChestBlock extends VaultChestBlock {
             return null;
         }
         final VaultTreasureChestTileEntity chest = (VaultTreasureChestTileEntity) te;
-        return (INamedContainerProvider) new INamedContainerProvider() {
+        return new INamedContainerProvider() {
             public ITextComponent getDisplayName() {
                 return ((VaultTreasureChestTileEntity) te).getDisplayName();
             }
@@ -39,7 +39,7 @@ public class VaultTreasureChestBlock extends VaultChestBlock {
             public Container createMenu(final int containerId, final PlayerInventory playerInventory, final PlayerEntity player) {
                 if (chest.canOpen(player)) {
                     chest.unpackLootTable(player);
-                    return ChestContainer.sixRows(containerId, playerInventory, (IInventory) chest);
+                    return ChestContainer.sixRows(containerId, playerInventory, chest);
                 }
                 return null;
             }
@@ -48,6 +48,6 @@ public class VaultTreasureChestBlock extends VaultChestBlock {
 
     @Override
     public TileEntity newBlockEntity(final IBlockReader world) {
-        return (TileEntity) new VaultTreasureChestTileEntity();
+        return new VaultTreasureChestTileEntity();
     }
 }

@@ -465,8 +465,8 @@ public class VaultRaid implements INBTSerializable<CompoundNBT> {
         }
         this.getModifiers().tick(this, world, PlayerFilter.any());
         new ArrayList<>(this.players).forEach((player) -> {
-            ((VaultPlayer) player).tick(this, world);
-            ((VaultPlayer) player).sendIfPresent(world.getServer(), new VaultModifierMessage(this, ((VaultPlayer) player)));
+            player.tick(this, world);
+            player.sendIfPresent(world.getServer(), new VaultModifierMessage(this, player));
             return;
         });
         this.getAllObjectives().stream().filter(objective -> objective.isCompleted() && objective.getCompletionTime() < 0).peek(objective -> objective.setCompletionTime(this.getTimer().getRunTime())).forEach(objective -> objective.complete(this, world));
@@ -486,14 +486,14 @@ public class VaultRaid implements INBTSerializable<CompoundNBT> {
 
     public CompoundNBT serializeNBT() {
         final CompoundNBT nbt = new CompoundNBT();
-        nbt.put("Timer", (INBT) this.timer.serializeNBT());
-        nbt.put("Generator", (INBT) this.generator.serializeNBT());
-        nbt.put("Modifiers", (INBT) this.modifiers.serializeNBT());
-        nbt.put("influence", (INBT) this.influence.serializeNBT());
-        nbt.put("Properties", (INBT) this.properties.serializeNBT());
-        nbt.put("Objectives", (INBT) this.objectives.serializeNBT());
-        nbt.put("Events", (INBT) this.events.serializeNBT());
-        nbt.put("Players", (INBT) this.players.serializeNBT());
+        nbt.put("Timer", this.timer.serializeNBT());
+        nbt.put("Generator", this.generator.serializeNBT());
+        nbt.put("Modifiers", this.modifiers.serializeNBT());
+        nbt.put("influence", this.influence.serializeNBT());
+        nbt.put("Properties", this.properties.serializeNBT());
+        nbt.put("Objectives", this.objectives.serializeNBT());
+        nbt.put("Events", this.events.serializeNBT());
+        nbt.put("Players", this.players.serializeNBT());
         nbt.putLong("CreationTime", this.getCreationTime());
         NBTHelper.writeOptional(nbt, "activeRaid", this.activeRaid, (tag, raid) -> raid.serialize(tag));
         return nbt;
@@ -513,7 +513,7 @@ public class VaultRaid implements INBTSerializable<CompoundNBT> {
     }
 
     public static VaultRaid classic(final VaultGenerator generator, final VaultTask initializer, final RaidProperties properties, final VaultObjective objective, final List<VaultEvent<?>> events, final Map<VaultPlayerType, Set<ServerPlayerEntity>> playersMap) {
-        final MinecraftServer srv = (MinecraftServer) LogicalSidedProvider.INSTANCE.get(LogicalSide.SERVER);
+        final MinecraftServer srv = LogicalSidedProvider.INSTANCE.get(LogicalSide.SERVER);
         final VaultRaid vault = new VaultRaid(generator, initializer, properties, events, playersMap.entrySet().stream().flatMap(entry -> {
             final VaultPlayerType type = entry.getKey();
             final Set<ServerPlayerEntity> players = entry.getValue();
@@ -543,7 +543,7 @@ public class VaultRaid implements INBTSerializable<CompoundNBT> {
     }
 
     public static VaultRaid coop(final VaultGenerator generator, final VaultTask initializer, final RaidProperties properties, final VaultObjective objective, final List<VaultEvent<?>> events, final Map<VaultPlayerType, Set<ServerPlayerEntity>> playersMap) {
-        final MinecraftServer srv = (MinecraftServer) LogicalSidedProvider.INSTANCE.get(LogicalSide.SERVER);
+        final MinecraftServer srv = LogicalSidedProvider.INSTANCE.get(LogicalSide.SERVER);
         final VaultRaid vault = new VaultRaid(generator, initializer, properties, events, playersMap.entrySet().stream().flatMap(entry -> {
             final VaultPlayerType type = entry.getKey();
             final Set<ServerPlayerEntity> players = entry.getValue();
@@ -573,7 +573,7 @@ public class VaultRaid implements INBTSerializable<CompoundNBT> {
     }
 
     public static VaultRaid lobby(final VaultGenerator generator, final VaultTask initializer, final RaidProperties properties, final VaultObjective objective, final List<VaultEvent<?>> events, final Map<VaultPlayerType, Set<ServerPlayerEntity>> playersMap) {
-        final MinecraftServer srv = (MinecraftServer) LogicalSidedProvider.INSTANCE.get(LogicalSide.SERVER);
+        final MinecraftServer srv = LogicalSidedProvider.INSTANCE.get(LogicalSide.SERVER);
         final VaultRaid vault = new VaultRaid(generator, initializer, properties, events, playersMap.entrySet().stream().flatMap(entry -> {
             final Set<ServerPlayerEntity> players = entry.getValue();
             return players.stream().map(player -> {
@@ -591,7 +591,7 @@ public class VaultRaid implements INBTSerializable<CompoundNBT> {
     }
 
     public static VaultRaid boss(final VaultGenerator generator, final VaultTask initializer, final RaidProperties properties, final VaultObjective objective, final List<VaultEvent<?>> events, final Map<VaultPlayerType, Set<ServerPlayerEntity>> playersMap) {
-        final MinecraftServer srv = (MinecraftServer) LogicalSidedProvider.INSTANCE.get(LogicalSide.SERVER);
+        final MinecraftServer srv = LogicalSidedProvider.INSTANCE.get(LogicalSide.SERVER);
         final VaultRaid vault = new VaultRaid(generator, initializer, properties, events, playersMap.entrySet().stream().flatMap(entry -> {
             final Set<ServerPlayerEntity> players = entry.getValue();
             return players.stream().map(player -> {
@@ -619,29 +619,29 @@ public class VaultRaid implements INBTSerializable<CompoundNBT> {
     }
 
     static {
-        TimeExtension.REGISTRY.put(FruitExtension.ID, (Supplier<TimeExtension>) FruitExtension::new);
-        TimeExtension.REGISTRY.put(RelicSetExtension.ID, (Supplier<TimeExtension>) RelicSetExtension::new);
-        TimeExtension.REGISTRY.put(FallbackExtension.ID, (Supplier<TimeExtension>) FallbackExtension::new);
-        TimeExtension.REGISTRY.put(WinExtension.ID, (Supplier<TimeExtension>) WinExtension::new);
-        TimeExtension.REGISTRY.put(ModifierExtension.ID, (Supplier<TimeExtension>) ModifierExtension::new);
-        TimeExtension.REGISTRY.put(TimeAltarExtension.ID, (Supplier<TimeExtension>) TimeAltarExtension::new);
-        TimeExtension.REGISTRY.put(AccelerationExtension.ID, (Supplier<TimeExtension>) AccelerationExtension::new);
-        TimeExtension.REGISTRY.put(RoomGenerationExtension.ID, (Supplier<TimeExtension>) RoomGenerationExtension::new);
-        TimeExtension.REGISTRY.put(FavourExtension.ID, (Supplier<TimeExtension>) FavourExtension::new);
-        TimeExtension.REGISTRY.put(SandExtension.ID, (Supplier<TimeExtension>) SandExtension::new);
-        VaultPlayer.REGISTRY.put(VaultRunner.ID, (Supplier<VaultPlayer>) VaultRunner::new);
-        VaultPlayer.REGISTRY.put(VaultSpectator.ID, (Supplier<VaultPlayer>) VaultSpectator::new);
-        VaultPlayer.REGISTRY.put(VaultMember.ID, (Supplier<VaultPlayer>) VaultMember::new);
-        VaultPiece.REGISTRY.put(VaultObelisk.ID, (Supplier<VaultPiece>) VaultObelisk::new);
-        VaultPiece.REGISTRY.put(VaultRoom.ID, (Supplier<VaultPiece>) VaultRoom::new);
-        VaultPiece.REGISTRY.put(VaultStart.ID, (Supplier<VaultPiece>) VaultStart::new);
-        VaultPiece.REGISTRY.put(VaultTreasure.ID, (Supplier<VaultPiece>) VaultTreasure::new);
-        VaultPiece.REGISTRY.put(VaultTunnel.ID, (Supplier<VaultPiece>) VaultTunnel::new);
-        VaultPiece.REGISTRY.put(VaultRaidRoom.ID, (Supplier<VaultPiece>) VaultRaidRoom::new);
-        VaultPiece.REGISTRY.put(FinalVaultLobby.ID, (Supplier<VaultPiece>) FinalVaultLobby::new);
-        VaultPiece.REGISTRY.put(VaultPortal.ID, (Supplier<VaultPiece>) VaultPortal::new);
-        VaultPiece.REGISTRY.put(VaultGodEye.ID, (Supplier<VaultPiece>) VaultGodEye::new);
-        VaultPiece.REGISTRY.put(FinalVaultBoss.ID, (Supplier<VaultPiece>) FinalVaultBoss::new);
+        TimeExtension.REGISTRY.put(FruitExtension.ID, FruitExtension::new);
+        TimeExtension.REGISTRY.put(RelicSetExtension.ID, RelicSetExtension::new);
+        TimeExtension.REGISTRY.put(FallbackExtension.ID, FallbackExtension::new);
+        TimeExtension.REGISTRY.put(WinExtension.ID, WinExtension::new);
+        TimeExtension.REGISTRY.put(ModifierExtension.ID, ModifierExtension::new);
+        TimeExtension.REGISTRY.put(TimeAltarExtension.ID, TimeAltarExtension::new);
+        TimeExtension.REGISTRY.put(AccelerationExtension.ID, AccelerationExtension::new);
+        TimeExtension.REGISTRY.put(RoomGenerationExtension.ID, RoomGenerationExtension::new);
+        TimeExtension.REGISTRY.put(FavourExtension.ID, FavourExtension::new);
+        TimeExtension.REGISTRY.put(SandExtension.ID, SandExtension::new);
+        VaultPlayer.REGISTRY.put(VaultRunner.ID, VaultRunner::new);
+        VaultPlayer.REGISTRY.put(VaultSpectator.ID, VaultSpectator::new);
+        VaultPlayer.REGISTRY.put(VaultMember.ID, VaultMember::new);
+        VaultPiece.REGISTRY.put(VaultObelisk.ID, VaultObelisk::new);
+        VaultPiece.REGISTRY.put(VaultRoom.ID, VaultRoom::new);
+        VaultPiece.REGISTRY.put(VaultStart.ID, VaultStart::new);
+        VaultPiece.REGISTRY.put(VaultTreasure.ID, VaultTreasure::new);
+        VaultPiece.REGISTRY.put(VaultTunnel.ID, VaultTunnel::new);
+        VaultPiece.REGISTRY.put(VaultRaidRoom.ID, VaultRaidRoom::new);
+        VaultPiece.REGISTRY.put(FinalVaultLobby.ID, FinalVaultLobby::new);
+        VaultPiece.REGISTRY.put(VaultPortal.ID, VaultPortal::new);
+        VaultPiece.REGISTRY.put(VaultGodEye.ID, VaultGodEye::new);
+        VaultPiece.REGISTRY.put(FinalVaultBoss.ID, FinalVaultBoss::new);
         VaultRoomLayoutRegistry.init();
         VaultInfluenceRegistry.init();
         SINGLE_STAR = VaultGenerator.register(() -> new FragmentedVaultGenerator(Vault.id("single_star")));
@@ -677,7 +677,7 @@ public class VaultRaid implements INBTSerializable<CompoundNBT> {
         IS_SPECTATOR = VaultCondition.register(Vault.id("is_spectator"), (vault, player, world) -> player instanceof VaultSpectator);
         IS_OUTSIDE = VaultCondition.register(Vault.id("is_outside"), (vault, player, world) -> {
             final boolean[] outside = {false};
-            player.runIfPresent(world.getServer(), sPlayer -> outside[0] = !VaultUtils.inVault(vault, (Entity) sPlayer));
+            player.runIfPresent(world.getServer(), sPlayer -> outside[0] = !VaultUtils.inVault(vault, sPlayer));
             return outside[0];
         });
         AFTER_GRACE_PERIOD = VaultCondition.register(Vault.id("after_grace_period"), (vault, player, world) -> vault.getTimer().getRunTime() > 300);
@@ -732,7 +732,7 @@ public class VaultRaid implements INBTSerializable<CompoundNBT> {
                             for (int xx = min.getX(); xx <= max.getX(); ++xx) {
                                 for (int yy = min.getY(); yy <= max.getY(); ++yy) {
                                     for (int zz = min.getZ(); zz <= max.getZ(); ++zz) {
-                                        final BlockState state = world.getBlockState((BlockPos) pos.set(xx, yy, zz));
+                                        final BlockState state = world.getBlockState(pos.set(xx, yy, zz));
                                         if (state.getBlock() == ModBlocks.VAULT_PORTAL) {
                                             if (sPlayer.isOnPortalCooldown()) {
                                                 sPlayer.setPortalCooldown();
@@ -740,7 +740,7 @@ public class VaultRaid implements INBTSerializable<CompoundNBT> {
                                             } else if (!vault.canExit(player)) {
                                                 final StringTextComponent text = new StringTextComponent("You cannot exit this Vault!");
                                                 text.setStyle(Style.EMPTY.withColor(Color.fromRgb(16711680)));
-                                                sPlayer.displayClientMessage((ITextComponent) text, true);
+                                                sPlayer.displayClientMessage(text, true);
                                                 return;
                                             } else {
                                                 vault.getAllObjectives().forEach(objective -> objective.notifyBail(vault, player, world));
@@ -749,7 +749,7 @@ public class VaultRaid implements INBTSerializable<CompoundNBT> {
                                                 final IFormattableTextComponent playerName = sPlayer.getDisplayName().copy();
                                                 playerName.setStyle(Style.EMPTY.withColor(Color.fromRgb(9974168)));
                                                 final StringTextComponent suffix = new StringTextComponent(" bailed.");
-                                                world.getServer().getPlayerList().broadcastMessage((ITextComponent) new StringTextComponent("").append((ITextComponent) playerName).append((ITextComponent) suffix), ChatType.CHAT, player.getPlayerId());
+                                                world.getServer().getPlayerList().broadcastMessage(new StringTextComponent("").append(playerName).append(suffix), ChatType.CHAT, player.getPlayerId());
                                             }
                                         }
                                     }
@@ -771,11 +771,11 @@ public class VaultRaid implements INBTSerializable<CompoundNBT> {
                         final BlockPos min2 = new BlockPos(box2.minX + 0.001, box2.minY + 0.001, box2.minZ + 0.001);
                         final BlockPos max2 = new BlockPos(box2.maxX - 0.001, box2.maxY - 0.001, box2.maxZ - 0.001);
                         final BlockPos.Mutable pos2 = new BlockPos.Mutable();
-                        if (!(!world.hasChunksAt(min2, max2))) {
+                        if (world.hasChunksAt(min2, max2)) {
                             for (int i = min2.getX(); i <= max2.getX(); ++i) {
                                 for (int j = min2.getY(); j <= max2.getY(); ++j) {
                                     for (int k = min2.getZ(); k <= max2.getZ(); ++k) {
-                                        final BlockState state2 = world.getBlockState((BlockPos) pos2.set(i, j, k));
+                                        final BlockState state2 = world.getBlockState(pos2.set(i, j, k));
                                         if (state2.getBlock() == ModBlocks.VAULT_PORTAL) {
                                             if (sPlayer.isOnPortalCooldown()) {
                                                 sPlayer.setPortalCooldown();
@@ -783,7 +783,7 @@ public class VaultRaid implements INBTSerializable<CompoundNBT> {
                                             } else if (!vault.canExit(player)) {
                                                 final StringTextComponent text2 = new StringTextComponent("You cannot exit this Vault!");
                                                 text2.setStyle(Style.EMPTY.withColor(Color.fromRgb(16711680)));
-                                                sPlayer.displayClientMessage((ITextComponent) text2, true);
+                                                sPlayer.displayClientMessage(text2, true);
                                                 return;
                                             } else {
                                                 vault.getAllObjectives().forEach(objective -> objective.notifyBail(vault, player, world));
@@ -793,7 +793,7 @@ public class VaultRaid implements INBTSerializable<CompoundNBT> {
                                                 final IFormattableTextComponent playerName2 = sPlayer.getDisplayName().copy();
                                                 playerName2.setStyle(Style.EMPTY.withColor(Color.fromRgb(9974168)));
                                                 final StringTextComponent suffix2 = new StringTextComponent(" bailed.");
-                                                world.getServer().getPlayerList().broadcastMessage((ITextComponent) new StringTextComponent("").append((ITextComponent) playerName2).append((ITextComponent) suffix2), ChatType.CHAT, player.getPlayerId());
+                                                world.getServer().getPlayerList().broadcastMessage(new StringTextComponent("").append(playerName2).append(suffix2), ChatType.CHAT, player.getPlayerId());
                                             }
                                         }
                                     }
@@ -811,11 +811,11 @@ public class VaultRaid implements INBTSerializable<CompoundNBT> {
                 final BlockPos min3 = new BlockPos(box3.minX + 0.001, box3.minY + 0.001, box3.minZ + 0.001);
                 final BlockPos max3 = new BlockPos(box3.maxX - 0.001, box3.maxY - 0.001, box3.maxZ - 0.001);
                 final BlockPos.Mutable pos3 = new BlockPos.Mutable();
-                if (!(!world.hasChunksAt(min3, max3))) {
+                if (world.hasChunksAt(min3, max3)) {
                     for (int l = min3.getX(); l <= max3.getX(); ++l) {
                         for (int m = min3.getY(); m <= max3.getY(); ++m) {
                             for (int k2 = min3.getZ(); k2 <= max3.getZ(); ++k2) {
-                                final BlockState state3 = world.getBlockState((BlockPos) pos3.set(l, m, k2));
+                                final BlockState state3 = world.getBlockState(pos3.set(l, m, k2));
                                 if (state3.getBlock() == ModBlocks.VAULT_PORTAL) {
                                     if (sPlayer.isOnPortalCooldown()) {
                                         sPlayer.setPortalCooldown();
@@ -823,7 +823,7 @@ public class VaultRaid implements INBTSerializable<CompoundNBT> {
                                     } else if (!vault.canExit(player)) {
                                         final StringTextComponent text3 = new StringTextComponent("You cannot exit this Vault!");
                                         text3.setStyle(Style.EMPTY.withColor(Color.fromRgb(16711680)));
-                                        sPlayer.displayClientMessage((ITextComponent) text3, true);
+                                        sPlayer.displayClientMessage(text3, true);
                                         return;
                                     } else {
                                         vault.getAllObjectives().forEach(objective -> objective.notifyBail(vault, player, world));
@@ -839,7 +839,7 @@ public class VaultRaid implements INBTSerializable<CompoundNBT> {
                                         final IFormattableTextComponent playerName3 = sPlayer.getDisplayName().copy();
                                         playerName3.setStyle(Style.EMPTY.withColor(Color.fromRgb(9974168)));
                                         final StringTextComponent suffix3 = new StringTextComponent(" bailed.");
-                                        world.getServer().getPlayerList().broadcastMessage((ITextComponent) new StringTextComponent("").append((ITextComponent) playerName3).append((ITextComponent) suffix3), ChatType.CHAT, player.getPlayerId());
+                                        world.getServer().getPlayerList().broadcastMessage(new StringTextComponent("").append(playerName3).append(suffix3), ChatType.CHAT, player.getPlayerId());
                                     }
                                 }
                             }
@@ -855,7 +855,7 @@ public class VaultRaid implements INBTSerializable<CompoundNBT> {
                 return;
             } else {
                 player.getProperties().get(VaultRaid.SPAWNER).ifPresent(attribute -> {
-                    final VaultSpawner spawner = (VaultSpawner) attribute.getBaseValue();
+                    final VaultSpawner spawner = attribute.getBaseValue();
                     if (player.getTimer().getRunTime() >= 300) {
                         final int level = player.getProperties().getValue(VaultRaid.LEVEL);
                         final VaultSpawner.Config c = ModConfigs.VAULT_MOBS.getForLevel(level).MOB_MISC.SPAWNER;
@@ -868,7 +868,7 @@ public class VaultRaid implements INBTSerializable<CompoundNBT> {
             }
         });
         TICK_LOBBY = VaultTask.register(Vault.id("tick_lobby"), (vault, player, world) -> vault.getProperties().get(VaultRaid.LOBBY).ifPresent(attribute -> {
-            final VaultLobby lobby = (VaultLobby) attribute.getBaseValue();
+            final VaultLobby lobby = attribute.getBaseValue();
             lobby.execute(vault, player, world);
             vault.getProperties().create(VaultRaid.LOBBY, lobby);
         }));
@@ -886,7 +886,7 @@ public class VaultRaid implements INBTSerializable<CompoundNBT> {
             final MutableBoundingBox box4 = vault.getProperties().getValue(VaultRaid.BOUNDING_BOX);
             if (start == null) {
                 Vault.LOGGER.warn("No vault start was found.");
-                playerEntity.teleportTo(world, (double) (box4.x0 + box4.getXSpan() / 2.0f), 256.0, (double) (box4.z0 + box4.getZSpan() / 2.0f), playerEntity.yRot, playerEntity.xRot);
+                playerEntity.teleportTo(world, box4.x0 + box4.getXSpan() / 2.0f, 256.0, box4.z0 + box4.getZSpan() / 2.0f, playerEntity.yRot, playerEntity.xRot);
             } else {
                 playerEntity.teleportTo(world, start.getX() + 0.5, start.getY() + 0.2, start.getZ() + 0.5, (facing == null) ? (world.getRandom().nextFloat() * 360.0f) : facing.getClockWise().toYRot(), 0.0f);
             }
@@ -1020,7 +1020,7 @@ public class VaultRaid implements INBTSerializable<CompoundNBT> {
                         ItemStackHelper.loadAllItems(tag, stacks);
                         for (int i2 = 0; i2 < stacks.size(); ++i2) {
                             if (((ItemStack) stacks.get(i2)).getItem() instanceof BasicScavengerItem) {
-                                stacks.set(i2, (Object) ItemStack.EMPTY);
+                                stacks.set(i2, ItemStack.EMPTY);
                             }
                         }
                         ItemStackHelper.saveAllItems(tag, stacks);
@@ -1031,8 +1031,8 @@ public class VaultRaid implements INBTSerializable<CompoundNBT> {
         SAVE_SOULBOUND_GEAR = VaultTask.register(Vault.id("save_soulbound_gear"), (vault, player, world) -> player.runIfPresent(world.getServer(), sPlayer -> {
             if (!vault.getProperties().exists(VaultRaid.PARENT)) {
                 final SoulboundSnapshotData data = SoulboundSnapshotData.get(world);
-                if (!data.hasSnapshot((PlayerEntity) sPlayer)) {
-                    data.createSnapshot((PlayerEntity) sPlayer);
+                if (!data.hasSnapshot(sPlayer)) {
+                    data.createSnapshot(sPlayer);
                 }
             }
         }));
@@ -1052,9 +1052,9 @@ public class VaultRaid implements INBTSerializable<CompoundNBT> {
                 player.getTimer().addTime(new WinExtension(player.getTimer(), 400), 0);
                 player.runIfPresent(world.getServer(), playerEntity -> {
 
-                    final Entity fireworks = new FireworkRocketEntity((World) world, playerEntity.getX(), playerEntity.getY(), playerEntity.getZ(), new ItemStack((IItemProvider) Items.FIREWORK_ROCKET));
+                    final Entity fireworks = new FireworkRocketEntity(world, playerEntity.getX(), playerEntity.getY(), playerEntity.getZ(), new ItemStack(Items.FIREWORK_ROCKET));
                     world.addFreshEntity(fireworks);
-                    world.playSound((PlayerEntity) null, playerEntity.getX(), playerEntity.getY(), playerEntity.getZ(), SoundEvents.UI_TOAST_CHALLENGE_COMPLETE, SoundCategory.MASTER, 1.0f, 1.0f);
+                    world.playSound(null, playerEntity.getX(), playerEntity.getY(), playerEntity.getZ(), SoundEvents.UI_TOAST_CHALLENGE_COMPLETE, SoundCategory.MASTER, 1.0f, 1.0f);
                     StringTextComponent title = new StringTextComponent("Branch Cleared!");
                     title.setStyle(Style.EMPTY.withColor(Color.fromRgb(14536734)));
                     final StringTextComponent subtitle = new StringTextComponent("Place your essence in the eye.");
@@ -1062,8 +1062,8 @@ public class VaultRaid implements INBTSerializable<CompoundNBT> {
                     if (vault.getProperties().getValue(VaultRaid.CRYSTAL_DATA).getType() == CrystalData.Type.FINAL_BOSS) {
                         title = new StringTextComponent("The End...");
                     }
-                    final STitlePacket titlePacket = new STitlePacket(STitlePacket.Type.TITLE, (ITextComponent) title);
-                    playerEntity.connection.send((IPacket) titlePacket);
+                    final STitlePacket titlePacket = new STitlePacket(STitlePacket.Type.TITLE, title);
+                    playerEntity.connection.send(titlePacket);
                 });
             }
             return;
@@ -1072,8 +1072,8 @@ public class VaultRaid implements INBTSerializable<CompoundNBT> {
             if (player instanceof VaultSpectator) {
                 playerEntity.gameMode.setGameModeForPlayer(((VaultSpectator) player).oldGameType);
             }
-            world.playSound((PlayerEntity) null, playerEntity.getX(), playerEntity.getY(), playerEntity.getZ(), ModSounds.VAULT_PORTAL_LEAVE, SoundCategory.PLAYERS, 1.0f, 1.0f);
-            world.playSound((PlayerEntity) null, (Entity) playerEntity, ModSounds.VAULT_PORTAL_LEAVE, SoundCategory.PLAYERS, 1.0f, 1.0f);
+            world.playSound(null, playerEntity.getX(), playerEntity.getY(), playerEntity.getZ(), ModSounds.VAULT_PORTAL_LEAVE, SoundCategory.PLAYERS, 1.0f, 1.0f);
+            world.playSound(null, playerEntity, ModSounds.VAULT_PORTAL_LEAVE, SoundCategory.PLAYERS, 1.0f, 1.0f);
             player.exit();
             VaultRaid.HIDE_OVERLAY.execute(vault, player, world);
             final UUID parent = vault.getProperties().getBase(VaultRaid.PARENT).orElse(null);
@@ -1085,14 +1085,14 @@ public class VaultRaid implements INBTSerializable<CompoundNBT> {
                     member.getBehaviours().add(new VaultBehaviour(VaultRaid.IS_OUTSIDE, VaultRaid.TP_TO_START));
                     member.getBehaviours().add(new VaultBehaviour(VaultRaid.IS_DEAD.negate(), VaultRaid.TICK_LOBBY));
                     parentVault.getPlayers().add(member);
-                    VaultRaid.TP_TO_START.execute(parentVault, member, world.getServer().getLevel((RegistryKey) parentVault.getProperties().getValue(VaultRaid.DIMENSION)));
+                    VaultRaid.TP_TO_START.execute(parentVault, member, world.getServer().getLevel(parentVault.getProperties().getValue(VaultRaid.DIMENSION)));
                     if (vault.getActiveObjectives().stream().allMatch(VaultObjective::isCompleted)) {
                         VaultRaid.FINAL_VICTORY_SCENE.execute(vault, player, world);
-                        player.runIfPresent(world.getServer(), sPlayer -> lobby.snapshots.removeSnapshot((PlayerEntity) sPlayer));
+                        player.runIfPresent(world.getServer(), sPlayer -> lobby.snapshots.removeSnapshot(sPlayer));
                     } else {
                         player.runIfPresent(world.getServer(), sPlayer -> {
-                            lobby.snapshots.restoreSnapshot((PlayerEntity) sPlayer);
-                            lobby.snapshots.removeSnapshot((PlayerEntity) sPlayer);
+                            lobby.snapshots.restoreSnapshot(sPlayer);
+                            lobby.snapshots.removeSnapshot(sPlayer);
                             return;
                         });
                     }
@@ -1110,11 +1110,11 @@ public class VaultRaid implements INBTSerializable<CompoundNBT> {
             if (player instanceof VaultSpectator) {
                 playerEntity.gameMode.setGameModeForPlayer(((VaultSpectator) player).oldGameType);
             }
-            world.playSound((PlayerEntity) null, playerEntity.getX(), playerEntity.getY(), playerEntity.getZ(), ModSounds.TIMER_KILL_SFX, SoundCategory.PLAYERS, 1.0f, 1.0f);
-            world.playSound((PlayerEntity) null, (Entity) playerEntity, ModSounds.TIMER_KILL_SFX, SoundCategory.PLAYERS, 1.0f, 1.0f);
-            playerEntity.inventory.clearOrCountMatchingItems(stack -> true, -1, (IInventory) playerEntity.inventoryMenu.getCraftSlots());
+            world.playSound(null, playerEntity.getX(), playerEntity.getY(), playerEntity.getZ(), ModSounds.TIMER_KILL_SFX, SoundCategory.PLAYERS, 1.0f, 1.0f);
+            world.playSound(null, playerEntity, ModSounds.TIMER_KILL_SFX, SoundCategory.PLAYERS, 1.0f, 1.0f);
+            playerEntity.inventory.clearOrCountMatchingItems(stack -> true, -1, playerEntity.inventoryMenu.getCraftSlots());
             playerEntity.containerMenu.broadcastChanges();
-            playerEntity.inventoryMenu.slotsChanged((IInventory) playerEntity.inventory);
+            playerEntity.inventoryMenu.slotsChanged(playerEntity.inventory);
             playerEntity.broadcastCarriedItem();
             playerEntity.hurt(new DamageSource("vaultFailed").bypassArmor().bypassInvul(), 1.0E8f);
             player.exit();
@@ -1128,7 +1128,7 @@ public class VaultRaid implements INBTSerializable<CompoundNBT> {
                     member2.getBehaviours().add(new VaultBehaviour(VaultRaid.IS_OUTSIDE, VaultRaid.TP_TO_START));
                     member2.getBehaviours().add(new VaultBehaviour(VaultRaid.IS_DEAD.negate(), VaultRaid.TICK_LOBBY));
                     parentVault2.getPlayers().add(member2);
-                    player.runIfPresent(world.getServer(), sPlayer -> lobby.snapshots.restoreSnapshot((PlayerEntity) sPlayer));
+                    player.runIfPresent(world.getServer(), sPlayer -> lobby.snapshots.restoreSnapshot(sPlayer));
                     parentVault2.getProperties().create(VaultRaid.LOBBY, lobby);
                     lobby.exitVault(vault, world, parentVault2, member2, playerEntity, true);
                     vault.getPlayers().remove(player);
@@ -1144,17 +1144,17 @@ public class VaultRaid implements INBTSerializable<CompoundNBT> {
                 player.getTimer().addTime(new WinExtension(player.getTimer(), 400), 0);
                 player.runIfPresent(world.getServer(), playerEntity -> {
 
-                    final Entity fireworks2 = new FireworkRocketEntity((World) world, playerEntity.getX(), playerEntity.getY(), playerEntity.getZ(), new ItemStack((IItemProvider) Items.FIREWORK_ROCKET));
+                    final Entity fireworks2 = new FireworkRocketEntity(world, playerEntity.getX(), playerEntity.getY(), playerEntity.getZ(), new ItemStack(Items.FIREWORK_ROCKET));
                     world.addFreshEntity(fireworks2);
-                    world.playSound((PlayerEntity) null, playerEntity.getX(), playerEntity.getY(), playerEntity.getZ(), SoundEvents.UI_TOAST_CHALLENGE_COMPLETE, SoundCategory.MASTER, 1.0f, 1.0f);
+                    world.playSound(null, playerEntity.getX(), playerEntity.getY(), playerEntity.getZ(), SoundEvents.UI_TOAST_CHALLENGE_COMPLETE, SoundCategory.MASTER, 1.0f, 1.0f);
                     final StringTextComponent title2 = new StringTextComponent("Vault Cleared!");
                     title2.setStyle(Style.EMPTY.withColor(Color.fromRgb(14536734)));
                     final StringTextComponent subtitle2 = new StringTextComponent("You'll be teleported back soon...");
                     subtitle2.setStyle(Style.EMPTY.withColor(Color.fromRgb(14536734)));
-                    final STitlePacket titlePacket2 = new STitlePacket(STitlePacket.Type.TITLE, (ITextComponent) title2);
-                    final STitlePacket subtitlePacket = new STitlePacket(STitlePacket.Type.SUBTITLE, (ITextComponent) subtitle2);
-                    playerEntity.connection.send((IPacket) titlePacket2);
-                    playerEntity.connection.send((IPacket) subtitlePacket);
+                    final STitlePacket titlePacket2 = new STitlePacket(STitlePacket.Type.TITLE, title2);
+                    final STitlePacket subtitlePacket = new STitlePacket(STitlePacket.Type.SUBTITLE, subtitle2);
+                    playerEntity.connection.send(titlePacket2);
+                    playerEntity.connection.send(subtitlePacket);
                 });
             }
             return;
@@ -1166,16 +1166,16 @@ public class VaultRaid implements INBTSerializable<CompoundNBT> {
                 title3.setStyle(Style.EMPTY.withColor(Color.fromRgb(14536734)));
                 IFormattableTextComponent formattableTextComponent;
                 if (vault.canExit(player)) {
-                    formattableTextComponent = new StringTextComponent("Good luck, ").append(playerEntity.getName()).append((ITextComponent) new StringTextComponent("!"));
+                    formattableTextComponent = new StringTextComponent("Good luck, ").append(playerEntity.getName()).append(new StringTextComponent("!"));
                 } else {
-                    formattableTextComponent = new StringTextComponent("No exit this time, ").append(playerEntity.getName()).append((ITextComponent) new StringTextComponent("!"));
+                    formattableTextComponent = new StringTextComponent("No exit this time, ").append(playerEntity.getName()).append(new StringTextComponent("!"));
                 }
-                final ITextComponent subtitle3 = (ITextComponent) formattableTextComponent;
+                final ITextComponent subtitle3 = formattableTextComponent;
                 ((IFormattableTextComponent) subtitle3).setStyle(Style.EMPTY.withColor(Color.fromRgb(14536734)));
-                final STitlePacket titlePacket3 = new STitlePacket(STitlePacket.Type.TITLE, (ITextComponent) title3);
+                final STitlePacket titlePacket3 = new STitlePacket(STitlePacket.Type.TITLE, title3);
                 final STitlePacket subtitlePacket2 = new STitlePacket(STitlePacket.Type.SUBTITLE, subtitle3);
-                playerEntity.connection.send((IPacket) titlePacket3);
-                playerEntity.connection.send((IPacket) subtitlePacket2);
+                playerEntity.connection.send(titlePacket3);
+                playerEntity.connection.send(subtitlePacket2);
             }
             final StringTextComponent text4 = new StringTextComponent("");
             final AtomicBoolean startsWithVowel = new AtomicBoolean(false);
@@ -1186,11 +1186,11 @@ public class VaultRaid implements INBTSerializable<CompoundNBT> {
                     startsWithVowel.set(c3 == 'a' || c3 == 'e' || c3 == 'i' || c3 == 'o' || c3 == 'u');
                 }
                 if (i != vault.getModifiers().size() - 1) {
-                    text4.append((ITextComponent) new StringTextComponent(", "));
+                    text4.append(new StringTextComponent(", "));
                 }
                 return;
             });
-            Object vaultName = vault.getActiveObjectives().stream().findFirst().map(VaultObjective::getVaultName).orElse((ITextComponent) new StringTextComponent("Vault"));
+            Object vaultName = vault.getActiveObjectives().stream().findFirst().map(VaultObjective::getVaultName).orElse(new StringTextComponent("Vault"));
             if (vault.getModifiers().isEmpty()) {
                 final char c2 = ((ITextComponent) vaultName).getString().toLowerCase().charAt(0);
                 startsWithVowel.set(c2 == 'a' || c2 == 'e' || c2 == 'i' || c2 == 'o' || c2 == 'u');
@@ -1230,13 +1230,13 @@ public class VaultRaid implements INBTSerializable<CompoundNBT> {
                 }
             }
             if (!vault.getModifiers().isEmpty()) {
-                text4.append((ITextComponent) new StringTextComponent(" "));
+                text4.append(new StringTextComponent(" "));
             }
             if (vault.getProperties().getBaseOrDefault(VaultRaid.COW_VAULT, false) && !vault.getProperties().exists(VaultRaid.PARENT)) {
                 final StringTextComponent txt = new StringTextComponent("Vault that doesn't exist!");
                 final StringTextComponent hoverText = new StringTextComponent("A vault that doesn't exist.\nThe Vault gods are not responsible for events that transpire here.\n\nThis realm may also harbor additional riches.");
                 ((IFormattableTextComponent) txt).setStyle(Style.EMPTY.withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, hoverText)).withColor(Color.fromRgb(9974168)));
-                text4.append((ITextComponent) txt);
+                text4.append(txt);
             } else {
                 text4.append((ITextComponent) vaultName).append("!");
             }
@@ -1244,7 +1244,7 @@ public class VaultRaid implements INBTSerializable<CompoundNBT> {
             text4.setStyle(Style.EMPTY.withColor(Color.fromRgb(16777215)));
             final IFormattableTextComponent playerName4 = playerEntity.getDisplayName().copy();
             playerName4.setStyle(Style.EMPTY.withColor(Color.fromRgb(9974168)));
-            world.getServer().getPlayerList().broadcastMessage((ITextComponent) playerName4.append((ITextComponent) prefix).append((ITextComponent) text4), ChatType.CHAT, player.getPlayerId());
+            world.getServer().getPlayerList().broadcastMessage(playerName4.append(prefix).append(text4), ChatType.CHAT, player.getPlayerId());
         }));
         SUMMON_AND_KILL_BOSS = VaultObjective.register(() -> new SummonAndKillBossObjective(Vault.id("summon_and_kill_boss")));
         SCAVENGER_HUNT = VaultObjective.register(() -> new ScavengerHuntObjective(Vault.id("scavenger_hunt")));
@@ -1259,8 +1259,8 @@ public class VaultRaid implements INBTSerializable<CompoundNBT> {
         KILL_THE_BOSS = VaultObjective.register(() -> new KillTheBossObjective(Vault.id("kill_the_boss")));
         TRIGGER_BOSS_SUMMON = VaultEvent.register(Vault.id("trigger_boss_summon"), Event.class, (vault, event) -> {
         });
-        SCALE_MOB = VaultEvent.register(Vault.id("scale_mob"), LivingEvent.LivingUpdateEvent.class, (BiConsumer<VaultRaid, LivingEvent.LivingUpdateEvent>) EntityScaler::scaleVaultEntity);
-        SCALE_MOB_JOIN = VaultEvent.register(Vault.id("scale_mob_join"), EntityJoinWorldEvent.class, (BiConsumer<VaultRaid, EntityJoinWorldEvent>) EntityScaler::scaleVaultEntity);
+        SCALE_MOB = VaultEvent.register(Vault.id("scale_mob"), LivingEvent.LivingUpdateEvent.class, EntityScaler::scaleVaultEntity);
+        SCALE_MOB_JOIN = VaultEvent.register(Vault.id("scale_mob_join"), EntityJoinWorldEvent.class, EntityScaler::scaleVaultEntity);
         BLOCK_NATURAL_SPAWNING = VaultEvent.register(Vault.id("block_natural_spawning"), LivingSpawnEvent.CheckSpawn.class, (vault, event) -> {
             if (!VaultUtils.inVault(vault, event.getEntity())) {
                 return;
@@ -1292,8 +1292,8 @@ public class VaultRaid implements INBTSerializable<CompoundNBT> {
                         final AggressiveCowEntity replaced = VaultCowOverrides.replaceVaultEntity(vault, (LivingEntity) entity, (ServerWorld) event.getWorld());
                         if (replaced != null) {
                             final Vector3d pos4 = entity.position();
-                            ((LivingEntity) replaced).absMoveTo(pos4.x, pos4.y, pos4.z, entity.yRot, entity.xRot);
-                            ServerScheduler.INSTANCE.schedule(1, () -> event.getWorld().addFreshEntity((Entity) replaced));
+                            replaced.absMoveTo(pos4.x, pos4.y, pos4.z, entity.yRot, entity.xRot);
+                            ServerScheduler.INSTANCE.schedule(1, () -> event.getWorld().addFreshEntity(replaced));
                             event.setCanceled(true);
                         }
                     }
@@ -1314,7 +1314,7 @@ public class VaultRaid implements INBTSerializable<CompoundNBT> {
                 return;
             } else {
                 final LivingEntity entity2 = (LivingEntity) event.getEntity();
-                vault.getActiveModifiersFor(PlayerFilter.any(), ScaleModifier.class).forEach(modifier -> entity2.getAttribute(ModAttributes.SIZE_SCALE).setBaseValue((double) modifier.getScale()));
+                vault.getActiveModifiersFor(PlayerFilter.any(), ScaleModifier.class).forEach(modifier -> entity2.getAttribute(ModAttributes.SIZE_SCALE).setBaseValue(modifier.getScale()));
                 return;
             }
         });
@@ -1343,9 +1343,9 @@ public class VaultRaid implements INBTSerializable<CompoundNBT> {
             }
         });
         APPLY_INFLUENCE_MODIFIERS = VaultEvent.register(Vault.id("influence_modifiers"), EntityJoinWorldEvent.class, (vault, event) -> {
-            if (!(!(event.getWorld() instanceof ServerWorld))) {
-                if (!(!VaultUtils.inVault(vault, event.getEntity()))) {
-                    if (!(!(event.getEntity() instanceof LivingEntity))) {
+            if (event.getWorld() instanceof ServerWorld) {
+                if (VaultUtils.inVault(vault, event.getEntity())) {
+                    if (event.getEntity() instanceof LivingEntity) {
                         if (!(event.getEntity() instanceof PlayerEntity)) {
                             if (!(event.getEntity() instanceof EternalEntity)) {
                                 final LivingEntity entity4 = (LivingEntity) event.getEntity();
@@ -1433,7 +1433,7 @@ public class VaultRaid implements INBTSerializable<CompoundNBT> {
         }
 
         public VaultRaid build() {
-            return this.logic.getFactory().create((VaultGenerator) this.generator.get(), this.initializer, this.attributes, this.objective, this.events, this.players);
+            return this.logic.getFactory().create(this.generator.get(), this.initializer, this.attributes, this.objective, this.events, this.players);
         }
     }
 

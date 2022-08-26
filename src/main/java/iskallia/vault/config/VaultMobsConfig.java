@@ -49,9 +49,9 @@ public class VaultMobsConfig extends Config {
     public static final Item[] DIAMOND_WEAPONS;
     public static final Item[] NETHERITE_WEAPONS;
     @Expose
-    private Map<String, List<Mob.AttributeOverride>> ATTRIBUTE_OVERRIDES;
+    private final Map<String, List<Mob.AttributeOverride>> ATTRIBUTE_OVERRIDES;
     @Expose
-    private List<Level> LEVEL_OVERRIDES;
+    private final List<Level> LEVEL_OVERRIDES;
 
     public VaultMobsConfig() {
         this.ATTRIBUTE_OVERRIDES = new LinkedHashMap<String, List<Mob.AttributeOverride>>();
@@ -87,7 +87,7 @@ public class VaultMobsConfig extends Config {
         attributes.add(new Mob.AttributeOverride(ModAttributes.CRIT_CHANCE, 0.0, 0.5, "set", 0.8, 0.05));
         attributes.add(new Mob.AttributeOverride(ModAttributes.CRIT_MULTIPLIER, 0.0, 0.1, "set", 0.8, 0.1));
         this.ATTRIBUTE_OVERRIDES.put(EntityType.ZOMBIE.getRegistryName().toString(), attributes);
-        this.LEVEL_OVERRIDES.add(new Level(0).mobAdd(Items.WOODEN_SWORD, 1).mobAdd(Items.STONE_SWORD, 2).bossAdd(Items.STONE_SWORD, 1).bossAdd(Items.GOLDEN_SWORD, 2).raffleAdd(Items.DIAMOND_SWORD, 1).mob((EntityType<? extends LivingEntity>) EntityType.ZOMBIE, 1).boss((EntityType<? extends LivingEntity>) ModEntities.ROBOT, 1).raffle((EntityType<? extends LivingEntity>) ModEntities.ARENA_BOSS, 1).mobMisc(3, 1, new VaultSpawner.Config().withStartMaxMobs(5).withMinDistance(10.0).withMaxDistance(24.0).withDespawnDistance(26.0)).bossMisc(3, 1).raffleMisc(3, 1));
+        this.LEVEL_OVERRIDES.add(new Level(0).mobAdd(Items.WOODEN_SWORD, 1).mobAdd(Items.STONE_SWORD, 2).bossAdd(Items.STONE_SWORD, 1).bossAdd(Items.GOLDEN_SWORD, 2).raffleAdd(Items.DIAMOND_SWORD, 1).mob(EntityType.ZOMBIE, 1).boss(ModEntities.ROBOT, 1).raffle(ModEntities.ARENA_BOSS, 1).mobMisc(3, 1, new VaultSpawner.Config().withStartMaxMobs(5).withMinDistance(10.0).withMaxDistance(24.0).withDespawnDistance(26.0)).bossMisc(3, 1).raffleMisc(3, 1));
     }
 
     static {
@@ -232,7 +232,7 @@ public class VaultMobsConfig extends Config {
                 final String itemName = itemStr.substring(0, part);
                 final String nbt = itemStr.substring(part);
                 final Item item = Registry.ITEM.getOptional(new ResourceLocation(itemName)).orElse(Items.AIR);
-                final ItemStack itemStack = new ItemStack((IItemProvider) item);
+                final ItemStack itemStack = new ItemStack(item);
                 try {
                     itemStack.setTag(JsonToNBT.parseTag(nbt));
                 } catch (final CommandSyntaxException e) {
@@ -241,7 +241,7 @@ public class VaultMobsConfig extends Config {
                 return itemStack;
             }
             final Item item2 = Registry.ITEM.getOptional(new ResourceLocation(itemStr)).orElse(Items.AIR);
-            return new ItemStack((IItemProvider) item2);
+            return new ItemStack(item2);
         }
 
         public ItemStack getForBoss(final EquipmentSlotType slot) {
@@ -254,7 +254,7 @@ public class VaultMobsConfig extends Config {
                 final String itemName = itemStr.substring(0, part);
                 final String nbt = itemStr.substring(part);
                 final Item item = Registry.ITEM.getOptional(new ResourceLocation(itemName)).orElse(Items.AIR);
-                final ItemStack itemStack = new ItemStack((IItemProvider) item);
+                final ItemStack itemStack = new ItemStack(item);
                 try {
                     itemStack.setTag(JsonToNBT.parseTag(nbt));
                 } catch (final CommandSyntaxException e) {
@@ -263,7 +263,7 @@ public class VaultMobsConfig extends Config {
                 return itemStack;
             }
             final Item item2 = Registry.ITEM.getOptional(new ResourceLocation(itemStr)).orElse(Items.AIR);
-            return new ItemStack((IItemProvider) item2);
+            return new ItemStack(item2);
         }
 
         public ItemStack getForRaffle(final EquipmentSlotType slot) {
@@ -276,7 +276,7 @@ public class VaultMobsConfig extends Config {
                 final String itemName = itemStr.substring(0, part);
                 final String nbt = itemStr.substring(part);
                 final Item item = Registry.ITEM.getOptional(new ResourceLocation(itemName)).orElse(Items.AIR);
-                final ItemStack itemStack = new ItemStack((IItemProvider) item);
+                final ItemStack itemStack = new ItemStack(item);
                 try {
                     itemStack.setTag(JsonToNBT.parseTag(nbt));
                 } catch (final CommandSyntaxException e) {
@@ -285,7 +285,7 @@ public class VaultMobsConfig extends Config {
                 return itemStack;
             }
             final Item item2 = Registry.ITEM.getOptional(new ResourceLocation(itemStr)).orElse(Items.AIR);
-            return new ItemStack((IItemProvider) item2);
+            return new ItemStack(item2);
         }
 
         public Optional<Mob> getMob(final LivingEntity entity) {
@@ -299,20 +299,20 @@ public class VaultMobsConfig extends Config {
 
     public static class Mob {
         @Expose
-        private String NAME;
+        private final String NAME;
 
         public Mob(final EntityType<?> type) {
             this.NAME = type.getRegistryName().toString();
         }
 
         public EntityType<?> getType() {
-            return (EntityType<?>) Registry.ENTITY_TYPE.getOptional(new ResourceLocation(this.NAME)).orElse(EntityType.BAT);
+            return Registry.ENTITY_TYPE.getOptional(new ResourceLocation(this.NAME)).orElse(EntityType.BAT);
         }
 
         public static LivingEntity scale(final LivingEntity entity, final VaultRaid vault, final GlobalDifficultyData.Difficulty vaultDifficulty) {
             int level = vault.getProperties().getValue(VaultRaid.LEVEL);
             final UUID host = vault.getProperties().getBaseOrDefault(VaultRaid.HOST, (UUID) null);
-            final MinecraftServer srv = (MinecraftServer) LogicalSidedProvider.INSTANCE.get(LogicalSide.SERVER);
+            final MinecraftServer srv = LogicalSidedProvider.INSTANCE.get(LogicalSide.SERVER);
             if (srv != null && host != null) {
                 level += NetcodeUtils.runIfPresent(srv, host, (ServerPlayerEntity sPlayer) -> ModConfigs.PLAYER_SCALING.getMobLevelAdjustment(sPlayer.getName().getString())).orElse(0);
             }

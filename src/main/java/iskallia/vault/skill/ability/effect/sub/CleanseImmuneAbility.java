@@ -30,7 +30,7 @@ public class CleanseImmuneAbility extends CleanseAbility<CleanseImmuneConfig> {
         final ServerWorld world = (ServerWorld) player.getCommandSenderWorld();
         final PlayerImmunityData data = PlayerImmunityData.get(world);
         Collections.shuffle(effects);
-        data.addEffect((PlayerEntity) player, effects.get(0));
+        data.addEffect(player, effects.get(0));
         effects.forEach(effect -> player.removeEffect(effect.getEffect()));
         final EffectInstance activeEffect = player.getEffect(ModEffects.IMMUNITY);
         final EffectInstance newEffect = new EffectInstance(ModEffects.IMMUNITY, config.getImmunityDuration(), 0, false, false, true);

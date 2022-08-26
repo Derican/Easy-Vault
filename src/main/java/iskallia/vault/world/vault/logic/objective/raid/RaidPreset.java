@@ -67,7 +67,7 @@ public class RaidPreset {
         final CompoundNBT tag = new CompoundNBT();
         final ListNBT waveTag = new ListNBT();
         this.waves.forEach(wave -> waveTag.add(wave.serialize()));
-        tag.put("waves", (INBT) waveTag);
+        tag.put("waves", waveTag);
         return tag;
     }
 
@@ -95,7 +95,7 @@ public class RaidPreset {
             final CompoundNBT tag = new CompoundNBT();
             final ListNBT waveTag = new ListNBT();
             this.waveSpawns.forEach(wave -> waveTag.add(wave.serialize()));
-            tag.put("waves", (INBT) waveTag);
+            tag.put("waves", waveTag);
             return tag;
         }
 

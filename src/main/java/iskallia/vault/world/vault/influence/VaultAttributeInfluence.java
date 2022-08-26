@@ -22,7 +22,7 @@ public class VaultAttributeInfluence extends VaultInfluence {
     }
 
     public static Supplier<VaultInfluence> newInstance(final Type type) {
-        return (Supplier<VaultInfluence>) (() -> new VaultAttributeInfluence(type));
+        return () -> new VaultAttributeInfluence(type);
     }
 
     public Type getType() {
@@ -61,6 +61,6 @@ public class VaultAttributeInfluence extends VaultInfluence {
         HEALING_EFFECTIVENESS,
         SOUL_SHARD_DROPS,
         FATAL_STRIKE_CHANCE,
-        FATAL_STRIKE_DAMAGE;
+        FATAL_STRIKE_DAMAGE
     }
 }

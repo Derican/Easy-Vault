@@ -38,7 +38,7 @@ public class BreadcrumbFeature extends Feature<NoFeatureConfig> {
     public static Feature<NoFeatureConfig> INSTANCE;
 
     public BreadcrumbFeature(final Codec<NoFeatureConfig> codec) {
-        super((Codec) codec);
+        super(codec);
     }
 
     public boolean place(final ISeedReader world, final ChunkGenerator gen, final Random rand, final BlockPos pos, final NoFeatureConfig config) {
@@ -70,19 +70,19 @@ public class BreadcrumbFeature extends Feature<NoFeatureConfig> {
 
             for (ChunkPos pos : chunks) {
                 final BlockPos featurePos = pos.getWorldPosition();
-                placeBreadcrumbFeatures(vault, (ISeedReader) sWorld, (at, state) -> featurePlacementFilter.test(at) && sWorld.setBlock(at, state, 2), sWorld.getRandom(), featurePos);
+                placeBreadcrumbFeatures(vault, sWorld, (at, state) -> featurePlacementFilter.test(at) && sWorld.setBlock(at, state, 2), sWorld.getRandom(), featurePos);
             }
         });
     }
 
     private static void placeBreadcrumbFeatures(final VaultRaid vault, final ISeedReader world, final BiPredicate<BlockPos, BlockState> blockPlacer, final Random rand, final BlockPos featurePos) {
-        vault.getActiveObjective(ScavengerHuntObjective.class).ifPresent(objective -> doTreasureSpawnPass(rand, (IWorld) world, blockPlacer, featurePos));
-        vault.getActiveObjective(TreasureHuntObjective.class).ifPresent(objective -> doTreasureSpawnPass(rand, (IWorld) world, blockPlacer, featurePos));
+        vault.getActiveObjective(ScavengerHuntObjective.class).ifPresent(objective -> doTreasureSpawnPass(rand, world, blockPlacer, featurePos));
+        vault.getActiveObjective(TreasureHuntObjective.class).ifPresent(objective -> doTreasureSpawnPass(rand, world, blockPlacer, featurePos));
         if (!vault.getProperties().exists(VaultRaid.PARENT)) {
-            doChestSpawnPass(rand, (IWorld) world, blockPlacer, featurePos, ModBlocks.VAULT_CHEST.defaultBlockState());
+            doChestSpawnPass(rand, world, blockPlacer, featurePos, ModBlocks.VAULT_CHEST.defaultBlockState());
             final List<VaultPlayer> runners = vault.getPlayers().stream().filter(vaultPlayer -> vaultPlayer instanceof VaultRunner).collect(Collectors.toList());
             for (int i = 0; i < runners.size() - 1; ++i) {
-                doChestSpawnPass(rand, (IWorld) world, blockPlacer, featurePos, ModBlocks.VAULT_COOP_CHEST.defaultBlockState());
+                doChestSpawnPass(rand, world, blockPlacer, featurePos, ModBlocks.VAULT_COOP_CHEST.defaultBlockState());
             }
         }
         if (!vault.getProperties().exists(VaultRaid.PARENT)) {
@@ -94,7 +94,7 @@ public class BreadcrumbFeature extends Feature<NoFeatureConfig> {
         vault.getActiveModifiersFor(PlayerFilter.any(), ChestModifier.class).forEach(modifier -> {
             final int attempts = modifier.getChestGenerationAttempts();
             for (int i = 0; i < modifier.getAdditionalBonusChestPasses(); ++i) {
-                doChestSpawnPass(rand, (IWorld) world, blockPlacer, featurePos, ModBlocks.VAULT_BONUS_CHEST.defaultBlockState(), attempts);
+                doChestSpawnPass(rand, world, blockPlacer, featurePos, ModBlocks.VAULT_BONUS_CHEST.defaultBlockState(), attempts);
             }
         });
     }
@@ -120,7 +120,7 @@ public class BreadcrumbFeature extends Feature<NoFeatureConfig> {
             final int y = rand.nextInt(64);
             final BlockPos offset = pos.offset(x, y, z);
             final BlockState state = world.getBlockState(offset);
-            if (state.getBlock() == Blocks.AIR && world.getBlockState(offset.below()).isFaceSturdy((IBlockReader) world, offset, Direction.UP) && blockPlacer.test(offset, toPlace)) {
+            if (state.getBlock() == Blocks.AIR && world.getBlockState(offset.below()).isFaceSturdy(world, offset, Direction.UP) && blockPlacer.test(offset, toPlace)) {
                 pass.accept(offset);
             }
         }
@@ -136,7 +136,7 @@ public class BreadcrumbFeature extends Feature<NoFeatureConfig> {
     }
 
     public static void register(final RegistryEvent.Register<Feature<?>> event) {
-        (BreadcrumbFeature.INSTANCE = new BreadcrumbFeature((Codec<NoFeatureConfig>) NoFeatureConfig.CODEC)).setRegistryName(Vault.id("breadcrumb_chest"));
+        (BreadcrumbFeature.INSTANCE = new BreadcrumbFeature(NoFeatureConfig.CODEC)).setRegistryName(Vault.id("breadcrumb_chest"));
         event.getRegistry().register(BreadcrumbFeature.INSTANCE);
     }
 }

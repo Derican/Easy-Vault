@@ -28,7 +28,7 @@ public class CrystalStat implements INBTSerializable<CompoundNBT> {
     public CompoundNBT serializeNBT() {
         final CompoundNBT nbt = new CompoundNBT();
         nbt.putString("Type", this.type.name());
-        nbt.put("Recipe", (INBT) this.recipe.serializeNBT());
+        nbt.put("Recipe", this.recipe.serializeNBT());
         nbt.putLong("Time", this.time);
         return nbt;
     }

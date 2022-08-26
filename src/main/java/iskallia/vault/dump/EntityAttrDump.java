@@ -41,19 +41,19 @@ public class EntityAttrDump extends JsonDump {
         this.getAttributes(entityType).forEach((attr, attrInstance) -> {
             final JsonObject jsonEntry = new JsonObject();
             jsonEntry.addProperty("attributeId", attr.getRegistryName().toString());
-            jsonEntry.addProperty("value", (Number) attrInstance.getValue());
-            attributesJson.add((JsonElement) jsonEntry);
+            jsonEntry.addProperty("value", attrInstance.getValue());
+            attributesJson.add(jsonEntry);
             return;
         });
         if (entityId == null) {
             throw new InternalError();
         }
-        root.add(entityId.toString(), (JsonElement) attributesJson);
+        root.add(entityId.toString(), attributesJson);
     }
 
     private <T extends LivingEntity> Map<Attribute, ModifiableAttributeInstance> getAttributes(final EntityType<T> entityType) {
         try {
-            final AttributeModifierMap attributes = GlobalEntityTypeAttributes.getSupplier((EntityType) entityType);
+            final AttributeModifierMap attributes = GlobalEntityTypeAttributes.getSupplier(entityType);
             final Field attributeMapField = AttributeModifierMap.class.getDeclaredField("attributeMap");
             attributeMapField.setAccessible(true);
             return (Map) attributeMapField.get(attributes);

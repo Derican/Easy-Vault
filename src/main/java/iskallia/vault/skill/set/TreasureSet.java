@@ -5,7 +5,7 @@ import iskallia.vault.item.gear.VaultGear;
 
 public class TreasureSet extends PlayerSet {
     @Expose
-    private float increasedChestRarity;
+    private final float increasedChestRarity;
 
     public TreasureSet(final float increasedChestRarity) {
         super(VaultGear.Set.TREASURE);

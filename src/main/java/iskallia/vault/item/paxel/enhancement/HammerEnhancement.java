@@ -45,15 +45,15 @@ public class HammerEnhancement extends PaxelEnhancement {
         final Direction.Axis axis = calcBreakAxis(player, centerPos);
         final List<BlockPos> sidePoses = breakPoses(centerPos, axis);
         final BlockState centerState = world.getBlockState(centerPos);
-        final float centerHardness = centerState.getDestroySpeed((IBlockReader) world, centerPos);
+        final float centerHardness = centerState.getDestroySpeed(world, centerPos);
         ActiveFlags.IS_AOE_MINING.runIfNotSet(() -> {
 
             for (BlockPos sidePos : sidePoses) {
                 final BlockState state = world.getBlockState(sidePos);
-                if (state.getBlock().isAir(state, (IBlockReader) world, sidePos)) {
+                if (state.getBlock().isAir(state, world, sidePos)) {
                     continue;
                 } else {
-                    final float sideHardness = state.getDestroySpeed((IBlockReader) world, sidePos);
+                    final float sideHardness = state.getDestroySpeed(world, sidePos);
                     if (sideHardness <= centerHardness) {
                         if (sideHardness == -1.0f) {
                             continue;
@@ -63,7 +63,7 @@ public class HammerEnhancement extends PaxelEnhancement {
                                 BlockHelper.breakBlock(world, player, sidePos, true, true);
                                 BlockHelper.damageMiningItem(heldStack, player, 1);
                             } finally {
-                                BlockDropCaptureHelper.getCapturedStacksAndStop().forEach(entity -> Block.popResource((World) world, entity.blockPosition(), entity.getItem()));
+                                BlockDropCaptureHelper.getCapturedStacksAndStop().forEach(entity -> Block.popResource(world, entity.blockPosition(), entity.getItem()));
                             }
                         }
                     } else {
@@ -78,7 +78,7 @@ public class HammerEnhancement extends PaxelEnhancement {
         final Vector3d eyePosition = player.getEyePosition(1.0f);
         final Vector3d look = player.getViewVector(1.0f);
         final Vector3d endPos = eyePosition.add(look.x * 5.0, look.y * 5.0, look.z * 5.0);
-        final RayTraceContext rayTraceContext = new RayTraceContext(player.getEyePosition(1.0f), endPos, RayTraceContext.BlockMode.OUTLINE, RayTraceContext.FluidMode.NONE, (Entity) player);
+        final RayTraceContext rayTraceContext = new RayTraceContext(player.getEyePosition(1.0f), endPos, RayTraceContext.BlockMode.OUTLINE, RayTraceContext.FluidMode.NONE, player);
         final BlockRayTraceResult result = player.level.clip(rayTraceContext);
         return result.getDirection().getAxis();
     }

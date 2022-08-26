@@ -44,7 +44,7 @@ public class FrenzyTalent extends ArchetypeTalent {
             return;
         }
         final ServerPlayerEntity sPlayer = (ServerPlayerEntity) event.player;
-        final TalentTree talents = PlayerTalentsData.get(sPlayer.getLevel()).getTalents((PlayerEntity) sPlayer);
+        final TalentTree talents = PlayerTalentsData.get(sPlayer.getLevel()).getTalents(sPlayer);
         final float healthPart = sPlayer.getHealth() / sPlayer.getMaxHealth();
         boolean fulfillsFrenzyConditions = false;
         float damageMultiplier = 1.0f;
@@ -55,7 +55,7 @@ public class FrenzyTalent extends ArchetypeTalent {
                 break;
             }
         }
-        if (fulfillsFrenzyConditions && ArchetypeTalent.isEnabled((World) sPlayer.getLevel())) {
+        if (fulfillsFrenzyConditions && ArchetypeTalent.isEnabled(sPlayer.getLevel())) {
             PlayerDamageHelper.DamageMultiplier existing = FrenzyTalent.multiplierMap.get(sPlayer.getUUID());
             if (existing != null) {
                 if (existing.getMultiplier() == damageMultiplier) {

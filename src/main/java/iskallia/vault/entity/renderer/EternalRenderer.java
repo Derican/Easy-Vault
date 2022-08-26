@@ -42,12 +42,12 @@ public class EternalRenderer extends LivingRenderer<EternalEntity, EternalModel>
 
     public EternalRenderer(final EntityRendererManager renderManager, final boolean useSmallArms) {
         super(renderManager, new EternalModel(0.0f, useSmallArms), 0.5f);
-        this.addLayer((LayerRenderer) new BipedArmorLayer((IEntityRenderer) this, new BipedModel(0.5f), new BipedModel(1.0f)));
-        this.addLayer((LayerRenderer) new HeldItemLayer((IEntityRenderer) this));
-        this.addLayer((LayerRenderer) new ArrowLayer((LivingRenderer) this));
-        this.addLayer((LayerRenderer) new HeadLayer((IEntityRenderer) this));
-        this.addLayer((LayerRenderer) new ElytraLayer((IEntityRenderer) this));
-        this.addLayer((LayerRenderer) new BeeStingerLayer((LivingRenderer) this));
+        this.addLayer(new BipedArmorLayer(this, new BipedModel(0.5f), new BipedModel(1.0f)));
+        this.addLayer(new HeldItemLayer(this));
+        this.addLayer(new ArrowLayer(this));
+        this.addLayer(new HeadLayer(this));
+        this.addLayer(new ElytraLayer(this));
+        this.addLayer(new BeeStingerLayer(this));
     }
 
     protected void preRenderCallback(final EternalEntity entity, final MatrixStack matrixStack, final float partialTickTime) {
@@ -70,8 +70,8 @@ public class EternalRenderer extends LivingRenderer<EternalEntity, EternalModel>
         matrixStack.scale(scale, scale, scale);
         matrixStack.mulPose(Vector3f.YP.rotationDegrees((float) entity.tickCount));
         matrixStack.mulPose(Vector3f.ZP.rotationDegrees(20.0f));
-        final ItemStack itemStack = new ItemStack((IItemProvider) Registry.ITEM.get(Vault.id("mvp_crown")));
-        final IBakedModel ibakedmodel = Minecraft.getInstance().getItemRenderer().getModel(itemStack, (World) null, (LivingEntity) null);
+        final ItemStack itemStack = new ItemStack(Registry.ITEM.get(Vault.id("mvp_crown")));
+        final IBakedModel ibakedmodel = Minecraft.getInstance().getItemRenderer().getModel(itemStack, null, null);
         Minecraft.getInstance().getItemRenderer().render(itemStack, ItemCameraTransforms.TransformType.GROUND, true, matrixStack, buffer, 15728864, 655360, ibakedmodel);
         matrixStack.popPose();
     }
@@ -81,7 +81,7 @@ public class EternalRenderer extends LivingRenderer<EternalEntity, EternalModel>
     }
 
     private void setModelVisibilities(final EternalEntity clientPlayer) {
-        final EternalModel playermodel = (EternalModel) this.getModel();
+        final EternalModel playermodel = this.getModel();
         if (clientPlayer.isSpectator()) {
             playermodel.setAllVisible(false);
             playermodel.head.visible = true;
@@ -139,22 +139,22 @@ public class EternalRenderer extends LivingRenderer<EternalEntity, EternalModel>
     }
 
     protected void renderName(final EternalEntity entityIn, final ITextComponent displayNameIn, final MatrixStack matrixStackIn, final IRenderTypeBuffer bufferIn, final int packedLightIn) {
-        final double d0 = this.entityRenderDispatcher.distanceToSqr((Entity) entityIn);
+        final double d0 = this.entityRenderDispatcher.distanceToSqr(entityIn);
         matrixStackIn.pushPose();
         super.renderNameTag(entityIn, displayNameIn, matrixStackIn, bufferIn, packedLightIn);
         matrixStackIn.popPose();
     }
 
     public void renderRightArm(final MatrixStack matrixStackIn, final IRenderTypeBuffer bufferIn, final int combinedLightIn, final EternalEntity playerIn) {
-        this.renderItem(matrixStackIn, bufferIn, combinedLightIn, playerIn, ((EternalModel) this.model).rightArm, ((EternalModel) this.model).rightSleeve);
+        this.renderItem(matrixStackIn, bufferIn, combinedLightIn, playerIn, this.model.rightArm, this.model.rightSleeve);
     }
 
     public void renderLeftArm(final MatrixStack matrixStackIn, final IRenderTypeBuffer bufferIn, final int combinedLightIn, final EternalEntity playerIn) {
-        this.renderItem(matrixStackIn, bufferIn, combinedLightIn, playerIn, ((EternalModel) this.model).leftArm, ((EternalModel) this.model).leftSleeve);
+        this.renderItem(matrixStackIn, bufferIn, combinedLightIn, playerIn, this.model.leftArm, this.model.leftSleeve);
     }
 
     private void renderItem(final MatrixStack matrixStackIn, final IRenderTypeBuffer buffer, final int combinedLight, final EternalEntity entity, final ModelRenderer rendererArm, final ModelRenderer rendererArmWear) {
-        final EternalModel playermodel = (EternalModel) this.getModel();
+        final EternalModel playermodel = this.getModel();
         this.setModelVisibilities(entity);
         playermodel.attackTime = 0.0f;
         playermodel.crouching = false;

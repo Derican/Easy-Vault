@@ -44,52 +44,52 @@ public class EternalCommand extends Command {
     }
 
     private int setEternal(final CommandContext<CommandSource> context) throws CommandSyntaxException {
-        final ServerPlayerEntity sPlayer = ((CommandSource) context.getSource()).getPlayerOrException();
+        final ServerPlayerEntity sPlayer = context.getSource().getPlayerOrException();
         final ItemStack held = sPlayer.getItemInHand(Hand.MAIN_HAND);
         if (held.isEmpty() || !(held.getItem() instanceof BlockItem) || !(((BlockItem) held.getItem()).getBlock() instanceof CryoChamberBlock)) {
-            sPlayer.sendMessage((ITextComponent) new StringTextComponent("Not holding cryochamber!").withStyle(TextFormatting.RED), Util.NIL_UUID);
+            sPlayer.sendMessage(new StringTextComponent("Not holding cryochamber!").withStyle(TextFormatting.RED), Util.NIL_UUID);
             return 0;
         }
-        final UUID eternalUUID = UUIDArgument.getUuid((CommandContext) context, "uuid");
+        final UUID eternalUUID = UUIDArgument.getUuid(context, "uuid");
         final EternalsData data = EternalsData.get(sPlayer.getLevel());
         final EternalData eternal = data.getEternal(eternalUUID);
         if (eternal == null) {
-            sPlayer.sendMessage((ITextComponent) new StringTextComponent("Specified eternal does not exist!").withStyle(TextFormatting.RED), Util.NIL_UUID);
+            sPlayer.sendMessage(new StringTextComponent("Specified eternal does not exist!").withStyle(TextFormatting.RED), Util.NIL_UUID);
             return 0;
         }
         final CompoundNBT tag = held.getOrCreateTagElement("BlockEntityTag");
         tag.putUUID("EternalId", eternalUUID);
-        sPlayer.sendMessage((ITextComponent) new StringTextComponent("Eternal set!").withStyle(TextFormatting.GREEN), Util.NIL_UUID);
+        sPlayer.sendMessage(new StringTextComponent("Eternal set!").withStyle(TextFormatting.GREEN), Util.NIL_UUID);
         return 0;
     }
 
     private int listEternals(final CommandContext<CommandSource> context) throws CommandSyntaxException {
-        final ServerPlayerEntity sPlayer = ((CommandSource) context.getSource()).getPlayerOrException();
-        final UUID playerId = UUIDArgument.getUuid((CommandContext) context, "playerId");
+        final ServerPlayerEntity sPlayer = context.getSource().getPlayerOrException();
+        final UUID playerId = UUIDArgument.getUuid(context, "playerId");
         final EternalsData data = EternalsData.get(sPlayer.getLevel());
         final EternalsData.EternalGroup group = data.getEternals(playerId);
-        sPlayer.sendMessage((ITextComponent) new StringTextComponent("Eternals:").withStyle(TextFormatting.GREEN), Util.NIL_UUID);
+        sPlayer.sendMessage(new StringTextComponent("Eternals:").withStyle(TextFormatting.GREEN), Util.NIL_UUID);
         for (final EternalData eternal : group.getEternals()) {
-            final IFormattableTextComponent txt = (IFormattableTextComponent) new StringTextComponent(eternal.getId().toString() + " / " + eternal.getName());
+            final IFormattableTextComponent txt = new StringTextComponent(eternal.getId().toString() + " / " + eternal.getName());
             txt.withStyle(style -> {
                 final HoverEvent hoverEvent = new HoverEvent(HoverEvent.Action.SHOW_TEXT, new StringTextComponent("Copy UUID"));
                 return style.withHoverEvent(hoverEvent);
             });
             txt.withStyle(style -> style.withClickEvent(new ClickEvent(ClickEvent.Action.COPY_TO_CLIPBOARD, eternal.getId().toString())));
-            sPlayer.sendMessage((ITextComponent) txt, Util.NIL_UUID);
+            sPlayer.sendMessage(txt, Util.NIL_UUID);
         }
         return 0;
     }
 
     private int removeEternal(final CommandContext<CommandSource> context) throws CommandSyntaxException {
-        final ServerPlayerEntity sPlayer = ((CommandSource) context.getSource()).getPlayerOrException();
-        final UUID eternalUUID = UUIDArgument.getUuid((CommandContext) context, "uuid");
+        final ServerPlayerEntity sPlayer = context.getSource().getPlayerOrException();
+        final UUID eternalUUID = UUIDArgument.getUuid(context, "uuid");
         final EternalsData data = EternalsData.get(sPlayer.getLevel());
         if (data.removeEternal(eternalUUID)) {
-            sPlayer.sendMessage((ITextComponent) new StringTextComponent("Eternal removed!").withStyle(TextFormatting.GREEN), Util.NIL_UUID);
+            sPlayer.sendMessage(new StringTextComponent("Eternal removed!").withStyle(TextFormatting.GREEN), Util.NIL_UUID);
             return 0;
         }
-        sPlayer.sendMessage((ITextComponent) new StringTextComponent("Specified eternal does not exist!").withStyle(TextFormatting.RED), Util.NIL_UUID);
+        sPlayer.sendMessage(new StringTextComponent("Specified eternal does not exist!").withStyle(TextFormatting.RED), Util.NIL_UUID);
         return 0;
     }
 

@@ -31,8 +31,8 @@ public class ModRecipes {
         public static SpecialRecipeSerializer<MysteryEggRecipe> MYSTERY_EGG_RECIPE;
 
         public static void register(final RegistryEvent.Register<IRecipeSerializer<?>> event) {
-            Serializer.CRAFTING_SPECIAL_RELIC_SET = (SpecialRecipeSerializer<RelicSetRecipe>) register(event, "crafting_special_relic_set", new SpecialRecipeSerializer<>(RelicSetRecipe::new));
-            Serializer.CRAFTING_SPECIAL_UNIDENTIFIED_RELIC = (SpecialRecipeSerializer<UnidentifiedRelicRecipe>) register(event, "crafting_special_unidentified_relic", new SpecialRecipeSerializer<>(UnidentifiedRelicRecipe::new));
+            Serializer.CRAFTING_SPECIAL_RELIC_SET = register(event, "crafting_special_relic_set", new SpecialRecipeSerializer<>(RelicSetRecipe::new));
+            Serializer.CRAFTING_SPECIAL_UNIDENTIFIED_RELIC = register(event, "crafting_special_unidentified_relic", new SpecialRecipeSerializer<>(UnidentifiedRelicRecipe::new));
             Serializer.NON_RAFFLE_CRYSTAL_SHAPED = register(event, "non_raffle_crystal_shaped", new NonRaffleCrystalShapedRecipe.Serializer());
             Serializer.COPY_NBT_SHAPELESS = register(event, "crafting_shapeless_copy_nbt", new ShapelessCopyNbtRecipe.Serializer());
             Serializer.MYSTERY_EGG_RECIPE = register(event, "mystery_egg", new SpecialRecipeSerializer<>(MysteryEggRecipe::new));
