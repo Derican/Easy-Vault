@@ -1,7 +1,3 @@
-// 
-// Decompiled by Procyon v0.6.0
-// 
-
 package iskallia.vault.util;
 
 import net.minecraft.network.play.ServerPlayNetHandler;

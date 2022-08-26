@@ -1,7 +1,3 @@
-// 
-// Decompiled by Procyon v0.6.0
-// 
-
 package iskallia.vault.block.item;
 
 import net.minecraft.entity.player.ServerPlayerEntity;
@@ -44,7 +40,7 @@ public class FinalVaultFrameBlockItem extends BlockItem implements ExplosionImmu
         final String stringUUID = blockEntityTag.getString("OwnerUUID");
         final UUID ownerUUID = stringUUID.isEmpty() ? new UUID(0L, 0L) : UUID.fromString(stringUUID);
         final String ownerNickname = blockEntityTag.getString("OwnerNickname");
-        final String displayNickname = McClientHelper.getOnlineProfile(ownerUUID).map((Function<? super GameProfile, ? extends String>)GameProfile::getName).orElse(ownerNickname);
+        final String displayNickname = McClientHelper.getOnlineProfile(ownerUUID).map(GameProfile::getName).orElse(ownerNickname);
         final IFormattableTextComponent ownerText = new StringTextComponent("Owner:").withStyle(TextFormatting.GOLD);
         final IFormattableTextComponent displayText = new StringTextComponent(displayNickname).withStyle(TextFormatting.GOLD).withStyle(TextFormatting.BOLD);
         tooltip.add((ITextComponent)ownerText.append((ITextComponent)displayText));

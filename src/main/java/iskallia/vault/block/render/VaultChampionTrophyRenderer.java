@@ -1,7 +1,3 @@
-// 
-// Decompiled by Procyon v0.6.0
-// 
-
 package iskallia.vault.block.render;
 
 import net.minecraft.tileentity.TileEntity;
@@ -38,7 +34,7 @@ public class VaultChampionTrophyRenderer extends TileEntityRenderer<VaultChampio
         }
         final BlockState blockState = tileEntity.getBlockState();
         final Direction facing = (Direction)blockState.getValue((Property)VaultChampionTrophy.FACING);
-        final String ownerNickname = McClientHelper.getOnlineProfile(tileEntity.getOwnerUUID()).map((Function<? super GameProfile, ? extends String>)GameProfile::getName).orElse(tileEntity.getOwnerNickname());
+        final String ownerNickname = McClientHelper.getOnlineProfile(tileEntity.getOwnerUUID()).map(GameProfile::getName).orElse(tileEntity.getOwnerNickname());
         final int score = tileEntity.getScore();
         this.drawNameplate(matrixStack, buffer, ownerNickname, score, facing, combinedLight, combinedOverlay);
     }

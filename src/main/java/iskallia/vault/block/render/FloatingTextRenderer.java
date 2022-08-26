@@ -1,7 +1,3 @@
-// 
-// Decompiled by Procyon v0.6.0
-// 
-
 package iskallia.vault.block.render;
 
 import net.minecraft.tileentity.TileEntity;
