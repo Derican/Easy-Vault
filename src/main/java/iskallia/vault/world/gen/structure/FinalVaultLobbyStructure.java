@@ -113,7 +113,7 @@ public class FinalVaultLobbyStructure extends Structure<FinalVaultLobbyStructure
         }
         
         static {
-            START = JigsawPatternRegistry.register(new JigsawPattern(Vault.id("final_vault/starts"), new ResourceLocation("empty"), (List)ImmutableList.of((Object)Pair.of((Object)JigsawPiece.single(Vault.sId("final_vault/starts"), ProcessorLists.EMPTY), (Object)1)), JigsawPattern.PlacementBehaviour.RIGID));
+            START = JigsawPatternRegistry.register(new JigsawPattern(Vault.id("final_vault/starts"), new ResourceLocation("empty"), ImmutableList.of(Pair.of(JigsawPiece.single(Vault.sId("final_vault/starts"), ProcessorLists.EMPTY), 1)), JigsawPattern.PlacementBehaviour.RIGID));
         }
     }
 }

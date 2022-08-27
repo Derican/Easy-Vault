@@ -117,7 +117,7 @@ public class FinalVaultBossStructure extends Structure<FinalVaultBossStructure.C
         }
 
         static {
-            START = JigsawPatternRegistry.register(new JigsawPattern(Vault.id("final_vault/boss"), new ResourceLocation("empty"), (List) ImmutableList.of((Object) Pair.of((Object) JigsawPiece.single(Vault.sId("final_vault/boss"), ProcessorLists.EMPTY), (Object) 1)), JigsawPattern.PlacementBehaviour.RIGID));
+            START = JigsawPatternRegistry.register(new JigsawPattern(Vault.id("final_vault/boss"), new ResourceLocation("empty"), ImmutableList.of(Pair.of(JigsawPiece.single(Vault.sId("final_vault/boss"), ProcessorLists.EMPTY), 1)), JigsawPattern.PlacementBehaviour.RIGID));
         }
     }
 }

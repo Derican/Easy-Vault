@@ -1,12 +1,14 @@
 package iskallia.vault.world.gen.structure.pool;
 
 import com.google.common.collect.Lists;
+import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.datafixers.kinds.Applicative;
 import com.mojang.datafixers.util.Either;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.DataResult;
 import com.mojang.serialization.DynamicOps;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import iskallia.vault.Vault;
 import iskallia.vault.init.ModStructures;
 import net.minecraft.block.Blocks;
 import net.minecraft.state.properties.StructureMode;
@@ -104,9 +106,15 @@ public class PalettedSinglePoolElement extends JigsawPiece {
     public boolean generate(@Nullable final Supplier<StructureProcessorList> extra, final TemplateManager templateManager, final ISeedReader world, final StructureManager structureManager, final ChunkGenerator chunkGen, final BlockPos pos1, final BlockPos pos2, final Rotation rotation, final MutableBoundingBox box, final Random random, final boolean keepJigsaws, final int updateFlags) {
         final Template template = this.getTemplate(templateManager);
         final PlacementSettings placementsettings = this.getSettings(extra, rotation, box, keepJigsaws);
-        if (!template.placeInWorld(world, pos1, pos2, placementsettings, random, updateFlags)) {
+        try {
+            if (!template.placeInWorld(world, pos1, pos2, placementsettings, random, updateFlags)) {
+                return false;
+            }
+        } catch (Exception e){
+            Vault.LOGGER.error(this.toString());
             return false;
         }
+
         for (final Object info : Template.processBlockInfos(world, pos1, pos2, placementsettings, this.getDataMarkers(templateManager, pos1, rotation, false), template)) {
             this.handleDataMarker(world, ((Template.BlockInfo) info), pos1, rotation, random, box);
         }

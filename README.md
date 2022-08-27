@@ -26,6 +26,7 @@ Witch skull is removed due to runtime error. Pull requests are appreciated!
 
 ## Changelog
 
+- 28 Aug,2022 Fix structure generation chunk limit and upper slab in floating_ship/s5
 - 23 Aug,2022 Fix Vault gear config initialization crash
 - 20 Aug,2022 Fix Twerker talent
 - 14 Aug,2022 Fix chests textures, add recipe for advanced vending machine

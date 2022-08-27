@@ -44,6 +44,7 @@ public class FragmentedVaultGenerator extends VaultGenerator {
     public FragmentedVaultGenerator(final ResourceLocation id) {
         super(id);
     }
+
     public FragmentedVaultGenerator setLayout(final VaultSizeConfig.SizeLayout layout) {
         this.layout = layout;
         return this;
@@ -79,6 +80,17 @@ public class FragmentedVaultGenerator extends VaultGenerator {
         gen.getGeneratedPieces().stream().flatMap(piece -> VaultPiece.of(piece).stream()).forEach(this.pieces::add);
         this.removeRandomObjectivePieces(vault, gen, layout.getObjectiveRoomRatio());
         world.getChunk(this.startChunk.x, this.startChunk.z, ChunkStatus.EMPTY, true).setStartForFeature(ModStructures.VAULT_STAR, start);
+        int minX = this.pieces.stream().mapToInt(vaultPiece -> vaultPiece.getBoundingBox().getCenter().getX() >> 4).min().orElse(this.startChunk.x);
+        int minZ = this.pieces.stream().mapToInt(vaultPiece -> vaultPiece.getBoundingBox().getCenter().getZ() >> 4).min().orElse(this.startChunk.z);
+        int maxX = this.pieces.stream().mapToInt(vaultPiece -> vaultPiece.getBoundingBox().getCenter().getX() >> 4).max().orElse(this.startChunk.x);
+        int maxZ = this.pieces.stream().mapToInt(vaultPiece -> vaultPiece.getBoundingBox().getCenter().getZ() >> 4).max().orElse(this.startChunk.z);
+        for (int dx = MathHelper.floor((minX - this.startChunk.x) / 16.0); dx <= MathHelper.ceil((maxX - this.startChunk.x) / 16.0); dx++) {
+            for (int dz = MathHelper.floor((minZ - this.startChunk.z) / 16.0); dz <= MathHelper.ceil((maxZ - this.startChunk.z) / 16.0); dz++) {
+                final StructureStart<?> dummyStart = ModFeatures.VAULT_FEATURE.generate(gen, world.registryAccess(), world.getChunkSource().generator, world.getStructureManager(), 0, world.getSeed());
+                if (dx != 0 || dz != 0)
+                    world.getChunk(this.startChunk.x + dx * 16, this.startChunk.z + dz * 16, ChunkStatus.EMPTY, true).setStartForFeature(ModStructures.VAULT_STAR, dummyStart);
+            }
+        }
         this.tick(world, vault);
         return (!vault.getProperties().exists(VaultRaid.START_POS) || !vault.getProperties().exists(VaultRaid.START_FACING)) && this.findStartPosition(world, vault, this.startChunk, () -> new PortalPlacer((pos1, random, facing) -> ModBlocks.VAULT_PORTAL.defaultBlockState().setValue(VaultPortalBlock.AXIS, facing.getAxis()), (pos1, random, facing) -> Blocks.BLACKSTONE.defaultBlockState()));
     }
